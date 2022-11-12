@@ -1,0 +1,14 @@
+<div class="holding-section">
+  <div class="holding-line">
+    <p class="holding-prefix" *ngIf="unlockedGreen">You have </p><app-number-display *ngIf="unlockedGreen" [name]="'greenParticles'" [style]="'green-text holding-amount'" [type]="'currency'"></app-number-display><p *ngIf="unlockedGreen" class="holding-prefix">Green Particles</p>
+  </div>
+  <div class="holding-line">
+    <p class="holding-prefix" *ngIf="unlockedYellow">You have </p><app-number-display *ngIf="unlockedYellow" [name]="'yellowParticles'" [style]="'yellow-text holding-amount'" [type]="'currency'"></app-number-display><p *ngIf="unlockedYellow" class="holding-prefix">Yellow Particles</p>
+  </div>
+  <div class="holding-line">
+    <p class="holding-prefix">You have </p><app-number-display [name]="'redParticles'" [style]="'red-text holding-amount'" [type]="'currency'"></app-number-display><p class="holding-prefix">Red Particles</p>
+  </div>
+</div>
+<div class="page">
+  <router-outlet></router-outlet>
+</div>

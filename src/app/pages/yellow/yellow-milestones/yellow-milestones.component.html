@@ -1,0 +1,10 @@
+<div class="holding-line">
+  <p class="holding-prefix">You have </p>
+  <app-number-display [name]="'yellows'" [style]="'yellow-text holding-amount'" [type]="'currency'"></app-number-display>
+  <p class="holding-prefix">Yellows</p>
+</div>
+<div class="upgrade-row">
+  <div *ngFor="let milestone of milestones">
+    <app-milestone *ngIf="milestone.unlocked" [milestone]="milestone"></app-milestone>
+  </div>
+</div>

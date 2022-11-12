@@ -1,0 +1,10 @@
+.section {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: baseline;
+}
+p {
+  margin: 0 16px;
+}
+
