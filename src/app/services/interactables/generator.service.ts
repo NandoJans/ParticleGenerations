@@ -80,7 +80,7 @@ export class GeneratorService {
     {
       name: 'yellow-fusion-generator', displayName: 'Yellow Fusion Generator', auto: false, style: 'yellow-style',
       baseCost: new Num(1, 0), cost: new Num(1, 0), increase: new Num(1, 0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'yellowParticles',
-      generates: 'yellowFusion', baseMultiplier: new Num(1, 0), multiplier: new Num(1, 0), amount: new Num(1, 0) , type: 'yellow-fusion', resetId: 'yellowFusionGenerators', unlocked: true,
+      generates: 'yellowFusion', baseMultiplier: new Num(1, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'yellow-fusion', resetId: 'yellowFusionGenerators', unlocked: true,
       requirement: ['upgrade', 'unlock-yellow-fusion', new Num(1, 0)]
     },
   ];

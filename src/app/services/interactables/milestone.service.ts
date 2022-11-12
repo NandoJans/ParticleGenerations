@@ -86,12 +86,7 @@ export class MilestoneService {
 
   static action() {
     this.milestones.forEach((milestone) => {
-      /*if (upgrade.name === 'red-generator-extension') {
-        for (let i = 2; i <= upgrade.bought.num+1; i++) {
-          GeneratorService.setValue('red-generator-'+i, 'unlocked', true);
-        }
-      }*/
-      if (milestone.action !== undefined && HoldingsService.get(milestone.requirement[0]).greq(milestone.requirement[1])) {
+      if (milestone.action !== undefined && HoldingsService.get(milestone.currency).greq(milestone.cost)) {
         // @ts-ignore
         milestone.action.execute();
       }

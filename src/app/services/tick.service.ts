@@ -52,10 +52,10 @@ export class TickService {
         lastCalled += 5000;
       }
 
-      this.gameTick()
+      this.gameTick(new Num(0.5, 0))
 
       lastCalled = Date.now();
-    }, 50)
+    }, 25)
 
     setInterval(() => {
       DataManagerService.save()

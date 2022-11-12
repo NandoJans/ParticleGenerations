@@ -6,7 +6,7 @@ export const yellowFusionUpgrades = [
     name: 'unlock-yellow-fusion', displayName: 'Unlock Yellow Fusion', description: 'Start yellow fusion to boost yellow generators.', auto: false,
     baseCost: new Num(1,5), cost: new Num(1, 5), increase: new Num(1,1), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'yellowParticles',
     baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'yellow-fusion', resetId: 'yellow-fusion', style: 'yellow-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['yellows', new Num(5, 1)],
-    action: new Action('amplifyGenerator', 'yellow-fusion-generator', new Num(1, 0), 'bought')
+    action: new Action('amplifyGenerator', 'yellow-fusion-generator', new Num(1, 0), 'amount')
   },
   {
     name: 'accelerate-yellow-fusion', displayName: 'Better condition', description: 'Make better conditions to accelerate fusion.', auto: false,
