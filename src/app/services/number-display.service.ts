@@ -48,7 +48,7 @@ export class NumberDisplayService {
                 const effectType = entry.effect[0];
                 if (effectType === 'power') {
 
-                  element.innerHTML = 'x' + HoldingsService.get(entry.effect[1]).pow(entry.effect[2], false).toString(true)
+                  element.innerHTML = 'x' + HoldingsService.get(entry.effect[1]).pow(entry.effect[2], false).add(new Num(1, 0), false).toString(true)
                 } else if (effectType === 'multiply') {
 
                   element.innerHTML = 'x' + HoldingsService.get(entry.effect[1]).mul(entry.effect[2], false).add(new Num(1, 0), false).toString(true)

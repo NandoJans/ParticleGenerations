@@ -180,7 +180,7 @@ export class GeneratorService {
 
         const yellowPower = HoldingsService.get('yellowPower')
         if (yellowPower.greq(new Num(1, 0))) {
-          generator.multiplier.mul(yellowPower.pow(new Num(5, 0), false));
+          generator.multiplier.mul(yellowPower.pow(new Num(5, 0), false).add(new Num(1, 0), false));
         }
       }
 
