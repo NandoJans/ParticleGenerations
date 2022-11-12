@@ -111,11 +111,6 @@ export class UpgradeService {
 
   static action() {
     this.upgrades.forEach((upgrade) => {
-      /*if (upgrade.name === 'red-generator-extension') {
-        for (let i = 2; i <= upgrade.bought.num+1; i++) {
-          GeneratorService.setValue('red-generator-'+i, 'unlocked', true);
-        }
-      }*/
       if (upgrade.action !== undefined && upgrade.bought.greq(new Num(1, 0))) {
         // @ts-ignore
         upgrade.action.execute();
