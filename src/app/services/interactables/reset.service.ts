@@ -31,9 +31,9 @@ export class ResetService {
 
   static reset(resets: string) {
     HoldingsService.set('redParticles', new Num(1, 2));
+    HoldingsService.set('redAccelerators', new Num(1, 0));
     this.resetGenerators('redParticleGenerators')
     if (resets === 'redParticleGenerators') return;
-    HoldingsService.set('redAccelerators', new Num(1, 0));
     HoldingsService.set('yellowPower', new Num(0, 0));
     HoldingsService.set('yellowFusion', new Num(1, 0));
     this.resetGenerators('redAccelerators')

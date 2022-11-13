@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import {Milestone, Upgrade} from "../../globals";
-import {Num} from "../../num";
+import {Milestone} from "../../globals";
 import {HoldingsService} from "../holdings.service";
 import {yellowMilestones} from "./milestones/yellow";
-import {UpgradeService} from "./upgrade.service";
 
 @Injectable({
   providedIn: 'root'
@@ -16,16 +14,16 @@ export class MilestoneService {
     const save = {};
     this.milestones.forEach((milestone) => {
       // @ts-ignore
-      save[upgrade.name] = {unlocked: upgrade.unlocked}
+      save[milestone.name] = {unlocked: milestone.unlocked}
     })
-    localStorage['upgrades'] = JSON.stringify(save);
+    localStorage['milestones'] = JSON.stringify(save);
   }
 
   static load() {
-    const upgrades = JSON.parse(localStorage['upgrades']);
+    const milestones = JSON.parse(localStorage['milestones']);
     this.milestones.forEach((milestone) => {
-      if (upgrades[milestone.name] !== undefined) {
-        Object.entries(upgrades[milestone.name]).forEach((value) => {
+      if (milestones[milestone.name] !== undefined) {
+        Object.entries(milestones[milestone.name]).forEach((value) => {
           // @ts-ignore
           upgrade[value[0]] = value[1];
         })

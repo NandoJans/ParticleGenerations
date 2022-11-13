@@ -13,6 +13,5 @@ export class YellowMilestonesComponent implements OnInit {
 
   ngOnInit(): void {
     this.milestones = MilestoneService.getMilestones('yellow-milestone')
-    console.log(this.milestones)
   }
 }

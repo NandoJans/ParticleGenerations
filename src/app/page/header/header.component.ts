@@ -16,8 +16,6 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.docYellow = PrestigeLayersService.getValue('yellow', 'prestigeButton');
-    console.log(this.docYellow)
     this.docGreen = PrestigeLayersService.getValue('green', 'prestigeButton');
-    console.log(this.docGreen)
   }
 }

@@ -4,6 +4,7 @@ import {GeneratorService} from "./interactables/generator.service";
 import {UpgradeService} from "./interactables/upgrade.service";
 import {NavigationsService} from "./navigations.service";
 import {PrestigeLayersService} from "./prestige-layers.service";
+import {MilestoneService} from "./interactables/milestone.service";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class DataManagerService {
     HoldingsService.save();
     GeneratorService.save();
     UpgradeService.save();
+    //MilestoneService.save();
     NavigationsService.save();
     PrestigeLayersService.save();
   }
@@ -24,6 +26,7 @@ export class DataManagerService {
     HoldingsService.load();
     GeneratorService.load();
     UpgradeService.load();
+    //MilestoneService.load();
     PrestigeLayersService.load();
     NavigationsService.load();
   }

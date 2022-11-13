@@ -19,7 +19,6 @@ export class MilestoneComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.milestone)
     this.name = this.milestone?.name;
     this.description = this.milestone?.description;
     this.displayName = this.milestone?.displayName;

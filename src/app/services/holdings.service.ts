@@ -53,6 +53,7 @@ export class HoldingsService {
     switch (holding) {
       case 'redParticles': return 'RP';
       case 'yellowParticles': return 'YP';
+      case 'yellows': return 'y';
       case 'redAccelerators': return 'RA';
       default: return '';
     }

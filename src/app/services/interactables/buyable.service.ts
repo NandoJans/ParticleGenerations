@@ -66,6 +66,7 @@ export class BuyableService {
         const button = (<HTMLButtonElement> document.getElementById('buyable-'+buyable.name))
         if (button !== null) {
           if (buyable.oneTime && buyable.bought.greq(new Num(1, 0))) {
+            button.setAttribute('disabled', '');
             button.className = 'maxed';
           } else if (HoldingsService.get(buyable.currency).greq(buyable.cost)) {
             button.removeAttribute('disabled');
