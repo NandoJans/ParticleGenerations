@@ -50,7 +50,7 @@ export class NavigationsService {
     this.navigations.forEach((nav) => {
       if (nav.name === subNavigation.parent) parentLocation = nav.location;
     })
-    return parentLocation + '/' + subNavigation.location;
+    return '?/' + parentLocation + '/' + subNavigation.location;
   }
 
   constructor() { }

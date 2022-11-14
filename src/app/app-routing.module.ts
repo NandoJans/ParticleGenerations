@@ -11,14 +11,14 @@ import {YellowFusionComponent} from "./pages/yellow/yellow-fusion/yellow-fusion.
 
 const routes: Routes = [
   { path: '', component: RedComponent },
-  { path: 'red/particles', component: RedComponent },
-  { path: 'red/accelerators', component: AcceleratorsComponent },
-  { path: 'red/upgrades', component: RedUpgradesComponent },
-  { path: 'yellow/upgrades', component: YellowUpgradesComponent },
-  { path: 'yellow/generators', component: YellowGeneratorsComponent },
-  { path: 'yellow/fusion', component: YellowFusionComponent },
-  { path: 'yellow/milestones', component: YellowMilestonesComponent },
-  { path: 'automators/red', component: RedAutomatorsComponent },
+  { path: '?/red/particles', component: RedComponent },
+  { path: '?/red/accelerators', component: AcceleratorsComponent },
+  { path: '?/red/upgrades', component: RedUpgradesComponent },
+  { path: '?/yellow/upgrades', component: YellowUpgradesComponent },
+  { path: '?/yellow/generators', component: YellowGeneratorsComponent },
+  { path: '?/yellow/fusion', component: YellowFusionComponent },
+  { path: '?/yellow/milestones', component: YellowMilestonesComponent },
+  { path: '?/automators/red', component: RedAutomatorsComponent },
 ];
 
 @NgModule({
