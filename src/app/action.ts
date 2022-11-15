@@ -23,10 +23,6 @@ export class Action {
     this.action = action;
   }
 
-  multiplier() {
-
-  }
-
   globalMultiplier(target: string, amount: Num) {
     GlobalMultipliersService.correct(target, amount);
   }
@@ -41,11 +37,20 @@ export class Action {
 
   basedOnUpgrade() {
     // @ts-ignore
-    this.globalMultiplier(this.target, UpgradeService.getValue(this.subject, 'buffer').pow(UpgradeService.getValue(this.subject, this.variable), false));
+    this.globalMultiplier(this.target, UpgradeService.getValue(this.subject, 'buffer').pow(UpgradeService.getValue(this.subject, this.variable), false).pow(this.amount, false));
+  }
+
+  basedOnGenerator() {
+    // @ts-ignore
+    this.globalMultiplier(this.target, GeneratorService.getValue(this.subject, this.variable).pow(this.amount, false).add(new Num(1, 0), false));
   }
 
   increaseBuffer() {
     UpgradeService.increaseBuffer(this.target, this.amount);
+  }
+
+  increaseMultiplier() {
+    GeneratorService.increaseMultiplier(this.target, this.amount);
   }
 
   unlock() {
@@ -54,6 +59,10 @@ export class Action {
 
   setAction() {
     UpgradeService.setValue(this.target, this.type, this.action)
+  }
+
+  setHolding() {
+    HoldingsService.set(this.target, this.amount);
   }
 
   amplifyUpgrade() {
@@ -81,13 +90,15 @@ export class Action {
   execute = () => {
     if (this.hasRequirement()) {
       switch (this.type) {
-        case 'multiplier': this.multiplier(); break;
         case 'globalMultiplier': this.globalMultiplier(this.target, this.amount); break;
         case 'basedOnHolding': this.basedOnHolding(); break;
         case 'basedOnUpgrade': this.basedOnUpgrade(); break;
+        case 'basedOnGenerator': this.basedOnGenerator(); break;
         case 'increaseBuffer': this.increaseBuffer(); break;
+        case 'increaseMultiplier': this.increaseMultiplier(); break;
         case 'unlock': this.unlock(); break;
         case 'setAction': this.setAction(); break;
+        case 'setHolding': this.setHolding(); break;
         case 'amplifyUpgrade': this.amplifyUpgrade(); break;
         case 'amplifyUpgrades': this.amplifyUpgrades(); break;
         case 'amplifyGenerator': this.amplifyGenerator(); break;

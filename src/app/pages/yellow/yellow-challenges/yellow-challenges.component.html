@@ -1,0 +1,11 @@
+<div class="holding-line">
+  <p>Current Challenge: {{activeChallenge}}</p>
+</div>
+<div class="generators-row">
+  <div *ngFor="let challenge of challenges">
+    <app-challenge *ngIf="challenge.unlocked" [challenge]="challenge"></app-challenge>
+  </div>
+</div>
+<div class="holding-line" style="padding-top: 50px">
+  <app-button [text]="'Leave Challenge'" [style]="'normal-button'" (click)="leaveChallenge()"></app-button>
+</div>

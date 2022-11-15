@@ -5,6 +5,7 @@ import {UpgradeService} from "./interactables/upgrade.service";
 import {PrestigeLayersService} from "./prestige-layers.service";
 import {Num} from "../num";
 import {MilestoneService} from "./interactables/milestone.service";
+import {AutomatorService} from "./interactables/automator.service";
 
 @Injectable({
   providedIn: 'root'
@@ -90,8 +91,11 @@ export class NumberDisplayService {
             } else if (UpgradeService.getValue(entry.name, entry.type) !== 0) {
               element.innerHTML = UpgradeService.getValue(entry.name, entry.type).toString();
               if (entry.currency !== undefined || entry.type === 'cost') element.innerHTML += ' '+ HoldingsService.getAbbreviation(entry.currency)
-            } else {
+            } else if (MilestoneService.getValue(entry.name, entry.type) !== 0) {
               element.innerHTML = MilestoneService.getValue(entry.name, entry.type).toString();
+              if (entry.currency !== undefined || entry.type === 'cost') element.innerHTML += ' '+ HoldingsService.getAbbreviation(entry.currency)
+            } else {
+              element.innerHTML = AutomatorService.getValue(entry.name, entry.type).toString();
               if (entry.currency !== undefined || entry.type === 'cost') element.innerHTML += ' '+ HoldingsService.getAbbreviation(entry.currency)
             }
             break;

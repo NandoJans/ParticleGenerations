@@ -21,6 +21,12 @@ import { RedAutomatorsComponent } from './pages/automators/red-automators/red-au
 import { YellowGeneratorsComponent } from './pages/yellow/yellow-generators/yellow-generators.component';
 import { MilestoneComponent } from './components/particles/milestone/milestone.component';
 import { YellowFusionComponent } from './pages/yellow/yellow-fusion/yellow-fusion.component';
+import { YellowChallengesComponent } from './pages/yellow/yellow-challenges/yellow-challenges.component';
+import { ChallengeComponent } from './components/particles/challenge/challenge.component';
+import { PrestigeAutomatorsComponent } from './pages/automators/prestige-automators/prestige-automators.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { AutomatorComponent } from './components/particles/automator/automator.component';
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -42,12 +48,19 @@ import { YellowFusionComponent } from './pages/yellow/yellow-fusion/yellow-fusio
     RedAutomatorsComponent,
     YellowGeneratorsComponent,
     MilestoneComponent,
-    YellowFusionComponent
+    YellowFusionComponent,
+    YellowChallengesComponent,
+    ChallengeComponent,
+    PrestigeAutomatorsComponent,
+    AutomatorComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        FormsModule,
+        MatCheckboxModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -1,0 +1,5 @@
+<div class="upgrade-row">
+  <div *ngFor="let automator of automators">
+    <app-automator *ngIf="automator.unlocked"  [automator]="automator" [isPrestigeAutomator]="true"></app-automator>
+  </div>
+</div>

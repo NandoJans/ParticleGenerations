@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Num} from "../../../num";
-import {Generator, Upgrade} from "../../../globals";
+import {Upgrade} from "../../../globals";
+import {UpgradeService} from "../../../services/interactables/upgrade.service";
+import {Form, FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-upgrade',

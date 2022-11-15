@@ -1,0 +1,7 @@
+<div [class]="'challenge '+style">
+  <h4>{{ displayName }}</h4>
+  <p>Reach {{goal}} {{description}}</p>
+  <p>Reward: {{rewardDescription}}</p>
+  <app-number-display [name]="name" [style]="''" [effect]="effect" [type]="'effect'"></app-number-display>
+  <app-button [text]="'Start Challenge'" [style]="'challenge-button'" [identifier]="name" (click)="start()"></app-button>
+</div>

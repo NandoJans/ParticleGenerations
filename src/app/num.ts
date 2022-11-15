@@ -35,13 +35,13 @@ export class Num {
       if (x) {
         return String(this.num.toFixed(2))
       } else {
-        return String(Math.round(this.num))
+        return String(Math.floor(this.num))
       }
     } else {
       if (x) {
         return String((this.num * 10 ** this.exp).toFixed(2)).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
       } else {
-        return String(Math.round(this.num * 10 ** this.exp)).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        return String(Math.floor(this.num * 10 ** this.exp)).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
       }
     }
   }

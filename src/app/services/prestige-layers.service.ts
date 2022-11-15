@@ -3,6 +3,7 @@ import {Num} from "../num";
 import {HoldingsService} from "./holdings.service";
 import {ResetService} from "./interactables/reset.service";
 import {GlobalMultipliersService} from "./globals/global-multipliers.service";
+import {ChallengeService} from "./interactables/challenge.service";
 
 @Injectable({
   providedIn: 'root'
@@ -64,18 +65,31 @@ export class PrestigeLayersService {
   static prestige(name: string | undefined) {
     if (name !== undefined) {
       name = name.toLowerCase();
-      this.setValue(name, 'unlocked', true)
+      const requirement = this.getValue(name, 'requirement')
       // @ts-ignore
-      HoldingsService.add(name+'Particles', this.getValue(name, 'gain'))
-      HoldingsService.add(name+'s', new Num(1, 0))
-      ResetService.reset(name);
+      if (HoldingsService.get(requirement[0]).greq(requirement[1])) {
+        this.setValue(name, 'unlocked', true)
+        // @ts-ignore
+        HoldingsService.add(name+'Particles', this.getValue(name, 'gain'))
+        HoldingsService.add(name+'s', new Num(1, 0))
+        ChallengeService.prestige()
+        ResetService.reset(name);
+      }
     }
+  }
+
+  static showPrestigeButton(prestigeName: string) {
+    this.prestiges.forEach(prestige => {
+      if (prestige['name'] === prestigeName) {
+        (document.getElementById(prestige['prestigeButton']) as HTMLElement).style.display = 'unset';
+      }
+    })
   }
 
   static unlock() {
     this.prestiges.forEach(prestige => {
       const requirement = prestige['requirement']
-      if (HoldingsService.get(requirement[0]).greq(requirement[1])) {
+      if (HoldingsService.get(requirement[0]).greq(requirement[1]) && ChallengeService.shouldHidePrestigeButton()) {
         // @ts-ignore
         (document.getElementById(prestige['prestigeButton']) as HTMLElement).style.display = 'unset';
       } else {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Upgrade} from "../../../globals";
-import {UpgradeService} from "../../../services/interactables/upgrade.service";
+import {Automator} from "../../../globals";
+import {AutomatorService} from "../../../services/interactables/automator.service";
 
 @Component({
   selector: 'app-red-automators',
@@ -8,11 +8,10 @@ import {UpgradeService} from "../../../services/interactables/upgrade.service";
   styleUrls: ['./red-automators.component.css']
 })
 export class RedAutomatorsComponent implements OnInit {
-  automators: Upgrade[] = [];
+  automators: Automator[] = [];
   constructor() { }
 
   ngOnInit(): void {
-    this.automators = UpgradeService.getUpgrades('red-automators')
+    this.automators = AutomatorService.getAutomators('red-automators')
   }
-
 }

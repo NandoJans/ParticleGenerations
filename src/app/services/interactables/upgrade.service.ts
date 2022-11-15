@@ -8,6 +8,11 @@ import {redAccelerators} from "./upgrades/red/accelerator";
 import {yellowUpgrades} from "./upgrades/yellow/upgrade";
 import {redAutomators} from "./upgrades/automators/red";
 import {yellowFusionUpgrades} from "./upgrades/yellow/fusion";
+import {prestigeAutomators} from "./upgrades/automators/prestige";
+import {PrestigeLayersService} from "../prestige-layers.service";
+import {PrestigeAutomatorsComponent} from "../../pages/automators/prestige-automators/prestige-automators.component";
+import {DataManagerService} from "../data-manager.service";
+import {toNumbers} from "@angular/compiler-cli/src/version_helpers";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +24,6 @@ export class UpgradeService {
       yellowUpgrades,
       redGeneratorUpgrades,
       redAccelerators,
-      redAutomators
   )
 
   static save() {

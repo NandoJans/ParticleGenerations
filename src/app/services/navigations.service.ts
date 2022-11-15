@@ -25,10 +25,12 @@ export class NavigationsService {
 
     { name: 'yellowUpgrades', displayName: 'Upgrades', location: 'upgrades', parent: 'yellow', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
     { name: 'yellowGenerators', displayName: 'Generators', location: 'generators', parent: 'yellow', unlocked: false, requirement: ['yellowParticles', new Num(1, 2)]  },
+    { name: 'yellowChallenges', displayName: 'Challenges', location: 'challenges', parent: 'yellow', unlocked: false, requirement: ['yellowParticles', new Num(1, 5)]  },
     { name: 'yellowFusion', displayName: 'Fusion', location: 'fusion', parent: 'yellow', unlocked: false, requirement: ['yellows', new Num(1, 100)]  },
     { name: 'yellowMilestones', displayName: 'Milestones', location: 'milestones', parent: 'yellow', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
 
     { name: 'redAutomators', displayName: 'Red', location: 'red', parent: 'automators', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
+    { name: 'prestigeAutomators', displayName: 'Prestige', location: 'prestige', parent: 'automators', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
   ]
 
   static selectedNavigation: string = 'red';

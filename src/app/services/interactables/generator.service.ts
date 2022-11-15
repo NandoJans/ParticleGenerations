@@ -42,10 +42,15 @@ export class GeneratorService {
     },
     // Accelerators
     {
-      name: 'red-accelerator-generator', displayName: 'Red Accelerator Generator', auto: false, style: 'red-style',
+      name: 'red-accelerator-generator-1', displayName: 'Red Accelerator Generator 1', auto: false, style: 'red-style',
       baseCost: new Num(1, 0), cost: new Num(1, 0), increase: new Num(1, 1), scaling: new Num(1, 1), bought: new Num(0, 0), currency: 'redAccelerators',
       generates: 'redAccelerators', baseMultiplier: new Num(2, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'red-accelerators', resetId: 'redAccelerators', unlocked: false,
       requirement: ['holding', 'redParticles', new Num(1, 20)]
+    },
+    {
+      name: 'red-accelerator-generator-2', displayName: 'Red Accelerator Generator 2', auto: false, style: 'red-style',
+      baseCost: new Num(1, 10), cost: new Num(1, 10), increase: new Num(1, 2), scaling: new Num(1, 1), bought: new Num(0, 0), currency: 'redAccelerators',
+      generates: 'red-accelerator-generator-1', baseMultiplier: new Num(2, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'red-accelerators', resetId: 'redAccelerators', unlocked: false, requirement: ['']
     },
     {
       name: 'yellow-generator-1', displayName: 'Yellow Generator 1', auto: false, style: 'yellow-style',
@@ -107,14 +112,24 @@ export class GeneratorService {
     return 0;
   }
 
+  static increaseMultiplier(target: string, amount: Num) {
+    this.generators.forEach((generator) => {
+      if (generator.name === target) {
+        // @ts-ignore
+        generator.multiplier = generator.multiplier.add(amount, false);
+      }
+    })
+  }
 
   static generate(extra: Num = new Num(1, 0)) {
     this.generators.forEach((generator) => {
-      // @ts-ignore
-      const add: Num = generator.amount.mul(generator.multiplier, false).mul(new Num(1, 0), false);
-      add.mul(extra);
-      if (HoldingsService.get(generator.generates) !== undefined) HoldingsService.add(generator.generates, add)
-      if (this.get(generator.generates) !== undefined) this.addValue(generator.generates, 'amount', add)
+      if (generator.requirement[0] !== 'never') {
+        // @ts-ignore
+        const add: Num = generator.amount.mul(generator.multiplier, false).mul(new Num(1, 0), false);
+        add.mul(extra);
+        if (HoldingsService.get(generator.generates) !== undefined) HoldingsService.add(generator.generates, add)
+        if (this.get(generator.generates) !== undefined) this.addValue(generator.generates, 'amount', add)
+      }
     })
   }
 
@@ -186,6 +201,7 @@ export class GeneratorService {
 
       if (generator.type === 'yellow-particles') {
         generator.multiplier.mul(HoldingsService.get('yellowFusion').pow(new Num(3, -1), false))
+        generator.multiplier.mul(GlobalMultipliersService.get('yellowParticleGenerators'))
       }
 
       if (generator.type == 'red-accelerators') {

@@ -9,6 +9,7 @@ export class GlobalMultipliersService {
     redParticleGenerators: new Num(1, 0),
     redAcceleratorGenerators: new Num(1, 0),
     yellowParticlesGain: new Num(1, 0),
+    yellowParticleGenerators: new Num(1, 0),
     yellowFusion: new Num(1, 0),
   };
 
@@ -19,6 +20,7 @@ export class GlobalMultipliersService {
       redParticleGenerators: new Num(1, 0),
       redAcceleratorGenerators: new Num(1, 0),
       yellowParticlesGain: new Num(1, 0),
+      yellowParticleGenerators: new Num(1, 0),
       yellowFusion: new Num(1, 0),
     }
   }

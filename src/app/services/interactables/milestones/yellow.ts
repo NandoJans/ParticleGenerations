@@ -16,5 +16,10 @@ export const yellowMilestones: Milestone[] = [
     name: 'red-upgrades-no-reset', displayName: 'Red upgrades keeper', description: 'You keep your red upgrades on going yellow.', type: 'yellow-milestone', style: 'yellow-style',
     unlocked: false, requirement: ['yellows', new Num(1, 0)], cost: new Num(5, 1), currency: 'yellows', buffer: new Num(1, 0),
     action: new Action('amplifyUpgrades', 'red-upgrades', 'yellow-upgrades', 'resetId'),
+  },
+  {
+    name: 'no-red-extension-reset', displayName: 'Red extension banner', description: 'Red extensions don\'t reset generators.', type: 'yellow-milestone', style: 'yellow-style',
+    unlocked: false, requirement: ['yellows', new Num(1, 0)], cost: new Num(5, 3), currency: 'yellows', buffer: new Num(1, 0),
+    action: new Action('amplifyUpgrade', 'red-generator-extension', 'none', 'resets'),
   }
 ]

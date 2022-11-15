@@ -10,6 +10,9 @@ import {Num} from "../num";
 import {PrestigeLayersService} from "./prestige-layers.service";
 import {DataManagerService} from "./data-manager.service";
 import {MilestoneService} from "./interactables/milestone.service";
+import {ChallengeService} from "./interactables/challenge.service";
+import {PrestigeAutomatorsComponent} from "../pages/automators/prestige-automators/prestige-automators.component";
+import {AutomatorService} from "./interactables/automator.service";
 
 @Injectable({
   providedIn: 'root'
@@ -23,24 +26,38 @@ export class TickService {
     UpgradeService.correctBuffer();
     GlobalMultipliersService.reset();
 
+    AutomatorService.setAutos();
     this.buyables.compare();
     this.buyables.correctCosts();
 
+    ChallengeService.applyNerfs();
+
     UpgradeService.action();
     MilestoneService.action();
+    ChallengeService.action();
 
     GeneratorService.correctMultipliers();
+    ChallengeService.applyNerfs();
     GeneratorService.generate(speed);
+
+    //HoldingsService.set('redParticles', new Num(1, 1360))
+    //HoldingsService.set('yellowParticles', new Num(1, 15))
+    //HoldingsService.set('yellows', new Num(5, 3))
 
     GeneratorService.unlock();
     UpgradeService.unlock();
     NavigationsService.unlock();
     PrestigeLayersService.unlock();
     MilestoneService.unlock();
+    ChallengeService.unlock();
+    AutomatorService.unlock();
 
+    ChallengeService.checkGoal();
     PrestigeLayersService.calculateGain();
 
     this.numberDisplay.reload();
+
+    AutomatorService.prestigeAutomators();
   }
 
   tick() {

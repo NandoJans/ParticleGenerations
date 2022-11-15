@@ -4,6 +4,7 @@ import {GeneratorService} from "./generator.service";
 import {Num} from "../../num";
 import {ResetService} from "./reset.service";
 import {UpgradeService} from "./upgrade.service";
+import {AutomatorService} from "./automator.service";
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,11 @@ export class BuyableService {
       if (buyable.name === name) {
         this.buyAction(buyable)
         if (buyable.resets !== 'none') ResetService.reset(buyable.resets);
+      }
+    })
+    AutomatorService.automators.forEach((buyable) => {
+      if (buyable.name === name) {
+        this.buyAction(buyable)
       }
     })
   }
@@ -66,6 +72,23 @@ export class BuyableService {
         const button = (<HTMLButtonElement> document.getElementById('buyable-'+buyable.name))
         if (button !== null) {
           if (buyable.oneTime && buyable.bought.greq(new Num(1, 0))) {
+            button.setAttribute('disabled', '');
+            button.className = 'maxed';
+          } else if (HoldingsService.get(buyable.currency).greq(buyable.cost)) {
+            button.removeAttribute('disabled');
+            button.className = 'buyable';
+          } else {
+            button.setAttribute('disabled', '');
+            button.className = '';
+          }
+        }
+      }
+    })
+    AutomatorService.automators.forEach((buyable) => {
+      if (buyable.unlocked) {
+        const button = (<HTMLButtonElement> document.getElementById('buyable-'+buyable.name))
+        if (button !== null) {
+          if (buyable.bought.greq(new Num(1, 0))) {
             button.setAttribute('disabled', '');
             button.className = 'maxed';
           } else if (HoldingsService.get(buyable.currency).greq(buyable.cost)) {

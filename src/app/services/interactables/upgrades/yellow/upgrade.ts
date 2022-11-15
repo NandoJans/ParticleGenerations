@@ -67,6 +67,6 @@ export const yellowUpgrades: Upgrade[] = [
     name: 'start-with-red-accelerators', displayName: 'Accelerator Starter', description: 'Start yellows with red accelerators unlocked.', auto: false,
     baseCost: new Num(1,1), cost: new Num(1, 1), increase: new Num(1,1), scaling: new Num(0, 0), bought: new Num(0, 0), currency: 'yellowParticles',
     baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'yellow-upgrades', resetId: 'yellow-upgades', style: 'yellow-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['yellows', new Num(1, 0)],
-    action: new Action('amplifyGenerators', 'red-accelerators', ['none'], 'requirement')
+    action: new Action('amplifyGenerator', 'red-accelerator-generator-1', ['none'], 'requirement')
   },
 ]

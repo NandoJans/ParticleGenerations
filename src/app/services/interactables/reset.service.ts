@@ -42,7 +42,7 @@ export class ResetService {
     this.resetUpgrades('red-particles')
     this.resetUpgrades('red-upgrades')
     DataManagerService.save()
-    window.location.reload();
+    if (!HoldingsService.get('yellows').greq(new Num(1, 2))) window.location.reload();
     if (resets === 'yellow') return;
     HoldingsService.set('yellowParticles', new Num(0, 0));
     this.resetUpgrades('yellow-upgrades')
