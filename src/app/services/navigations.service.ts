@@ -36,15 +36,22 @@ export class NavigationsService {
   static selectedNavigation: string = 'red';
 
   static save() {
-    localStorage['selectedNavigation'] = JSON.stringify(this.selectedNavigation)
-    localStorage['navigations'] = JSON.stringify(this.navigations);
-    localStorage['subNavigations'] = JSON.stringify(this.subNavigations);
+    const save: any = {}
+    const navigations: any[] = [];
+    navigations.concat(this.subNavigations, this.navigations).forEach((navigation) => {
+      save[navigation.name] = navigation.unlocked;
+    })
+    localStorage['navigations'] = JSON.stringify(save)
+    localStorage['selectedNavigation'] = JSON.stringify(this.selectedNavigation);
   }
 
   static load() {
-    this.selectedNavigation = JSON.parse(localStorage['selectedNavigation'])
-    this.navigations = JSON.parse(localStorage['navigations']);
-    this.subNavigations = JSON.parse(localStorage['subNavigations']);
+    this.selectedNavigation = JSON.parse(localStorage['selectedNavigation']);
+    const loadedNavigations = JSON.parse(localStorage['navigations'])
+    const navigations: any[] = [];
+    navigations.concat(this.subNavigations, this.navigations).forEach((navigation) => {
+      if (loadedNavigations[navigation.name] !== undefined) navigation.unlocked = loadedNavigations[navigation.name];
+    })
   }
 
   static getLocation(subNavigation: SubNavigation) {

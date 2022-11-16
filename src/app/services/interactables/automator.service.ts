@@ -101,7 +101,8 @@ export class AutomatorService {
     this.automators.forEach((automator) => {
       if (automator.name === name) {
         const num: any[] = amount.split('e')
-        if (num[1] === undefined) num[1] = 0;
+        if (num[1] === undefined) num[1] = '0';
+        console.log(num)
         automator.waitFor = new Num(parseInt(num[0]), parseInt(num[1]));
       }
     })

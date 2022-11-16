@@ -26,12 +26,12 @@ export class DataManagerService {
   }
 
   static load() {
-    HoldingsService.load();
-    GeneratorService.load();
-    UpgradeService.load();
-    PrestigeLayersService.load();
-    NavigationsService.load();
-    ChallengeService.load();
-    AutomatorService.load();
+    if (localStorage['holdings'] !== undefined) HoldingsService.load();
+    if (localStorage['generators'] !== undefined) GeneratorService.load();
+    if (localStorage['upgrades'] !== undefined) UpgradeService.load();
+    if (localStorage['prestiges'] !== undefined) PrestigeLayersService.load();
+    if (localStorage['navigations'] !== undefined) NavigationsService.load();
+    if (localStorage['challenges'] !== undefined) ChallengeService.load();
+    if (localStorage['automators'] !== undefined)  AutomatorService.load();
   }
 }

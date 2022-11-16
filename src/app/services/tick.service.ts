@@ -27,6 +27,7 @@ export class TickService {
     GlobalMultipliersService.reset();
 
     AutomatorService.setAutos();
+    ChallengeService.applyNerfs();
     this.buyables.compare();
     this.buyables.correctCosts();
 
@@ -40,8 +41,8 @@ export class TickService {
     ChallengeService.applyNerfs();
     GeneratorService.generate(speed);
 
-    //HoldingsService.set('redParticles', new Num(1, 1360))
-    //HoldingsService.set('yellowParticles', new Num(1, 15))
+    //HoldingsService.set('redParticles', new Num(1, 3000))
+    HoldingsService.set('yellowParticles', new Num(1, 29))
     //HoldingsService.set('yellows', new Num(5, 3))
 
     GeneratorService.unlock();

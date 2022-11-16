@@ -145,10 +145,12 @@ export class GeneratorService {
   static load() {
     const generators = JSON.parse(localStorage['generators']);
     this.generators.forEach((generator) => {
-      Object.entries(generators[generator.name]).forEach((value) => {
-        // @ts-ignore
-        generator[value[0]] = new Num(value[1]['num'], value[1]['exp']);
-      })
+      if (generators[generator.name] !== undefined) {
+        Object.entries(generators[generator.name]).forEach((value) => {
+          // @ts-ignore
+          generator[value[0]] = new Num(value[1]['num'], value[1]['exp']);
+        })
+      }
     })
   }
 

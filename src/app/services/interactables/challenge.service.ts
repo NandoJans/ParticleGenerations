@@ -30,10 +30,12 @@ export class ChallengeService {
   static load() {
     const challenges = JSON.parse(localStorage['challenges']);
     this.challenges.forEach((challenge) => {
-      Object.entries(challenges[challenge.name]).forEach((value) => {
-        // @ts-ignore
-        challenge[value[0]] = value[1];
-      })
+      if (challenges[challenge.name] !== undefined) {
+        Object.entries(challenges[challenge.name]).forEach((value) => {
+          // @ts-ignore
+          challenge[value[0]] = value[1];
+        })
+      }
       if (challenge.name === JSON.parse(localStorage['activeChallenge'])) {
         this.activeChallenge = challenge;
       }

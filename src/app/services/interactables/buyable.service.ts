@@ -32,6 +32,10 @@ export class BuyableService {
       if (buyable.name === name) {
         this.buyAction(buyable)
         if (buyable.resets !== 'none') ResetService.reset(buyable.resets);
+        while (HoldingsService.get(buyable.currency).greq(buyable.cost) && !buyable.oneTime) {
+          this.buyAction(buyable);
+          if (buyable.resets !== 'none') ResetService.reset(buyable.resets);
+        }
       }
     })
     AutomatorService.automators.forEach((buyable) => {
@@ -66,7 +70,12 @@ export class BuyableService {
       if (HoldingsService.get(buyable.currency).greq(buyable.cost) && buyable['unlocked'] && buyable['auto']) {
         this.buyAction(buyable);
         if (buyable.resets !== 'none') ResetService.reset(buyable.resets);
+        while (HoldingsService.get(buyable.currency).greq(buyable.cost) && !buyable.oneTime) {
+          this.buyAction(buyable);
+          if (buyable.resets !== 'none') ResetService.reset(buyable.resets);
+        }
       }
+
 
       if (buyable.unlocked && !buyable['auto']) {
         const button = (<HTMLButtonElement> document.getElementById('buyable-'+buyable.name))

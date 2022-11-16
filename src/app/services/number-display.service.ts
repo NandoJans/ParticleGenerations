@@ -73,6 +73,9 @@ export class NumberDisplayService {
                 } else if (effectType === 'basedOnUpgrade') {
 
                   element.innerHTML = 'Current: x' + entry.effect[4].pow(UpgradeService.getValue(entry.effect[2], entry.effect[3]), false).toString(true)
+                } else if (effectType === 'basedOnGenerator') {
+
+                    element.innerHTML = 'Current: x' + entry.effect[4].pow(UpgradeService.getValue(entry.effect[2], entry.effect[3]), false).toString(true)
                 } else if (effectType === 'increaseBuffer') {
 
                 }
