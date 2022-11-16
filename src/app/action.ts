@@ -3,6 +3,7 @@ import {UpgradeService} from "./services/interactables/upgrade.service";
 import {Num} from "./num";
 import {HoldingsService} from "./services/holdings.service";
 import {GeneratorService} from "./services/interactables/generator.service";
+import {ChallengeService} from "./services/interactables/challenge.service";
 
 export class Action {
   type: string;
@@ -29,7 +30,8 @@ export class Action {
 
   basedOnHolding() {
     if (this.variable === 'exponent') {
-      this.globalMultiplier(this.target, new Num(HoldingsService.get(this.subject).exp, 0))
+      // @ts-ignore
+      this.globalMultiplier(this.target, new Num(HoldingsService.get(this.subject).exp, 0).pow(this.amount, false))
     } else {
       this.globalMultiplier(this.target, HoldingsService.get(this.subject).mul(this.amount, false).add(new Num(1, 0), false));
     }

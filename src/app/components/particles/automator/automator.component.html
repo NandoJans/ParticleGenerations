@@ -1,10 +1,12 @@
 <div [class]="'upgrade '+style" [id]="name">
   <h4>{{ displayName }}</h4>
-  <form [formGroup]="formGroup" (change)="onChange()">
+  <form class="automator-form" [formGroup]="formGroup" (change)="onChange()">
     <label *ngIf="isPrestigeAutomator">Wait For: </label>
     <input *ngIf="isPrestigeAutomator" formControlName="waitFor" [(ngModel)]="waitForValue">
-    <label>Active: </label>
-    <input type="checkbox" class="checkbox" formControlName="active" [(ngModel)]="activeValue">
+    <div>
+      <label>Active: </label>
+      <input type="checkbox" class="checkbox" formControlName="active" [(ngModel)]="activeValue">
+    </div>
   </form>
   <app-buyable style="width: 100%;" [name]="name" [cost]="cost" [currency]="currency"></app-buyable>
 </div>

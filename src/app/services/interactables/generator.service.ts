@@ -123,7 +123,7 @@ export class GeneratorService {
 
   static generate(extra: Num = new Num(1, 0)) {
     this.generators.forEach((generator) => {
-      if (generator.requirement[0] !== 'never') {
+      if (generator.requirement[0] !== 'never' && generator.unlocked) {
         // @ts-ignore
         const add: Num = generator.amount.mul(generator.multiplier, false).mul(new Num(1, 0), false);
         add.mul(extra);
@@ -183,38 +183,40 @@ export class GeneratorService {
 
   static correctMultipliers() {
     this.generators.forEach((generator) => {
-      let base = generator.baseMultiplier;
-      // @ts-ignore
-      generator.multiplier = base.pow(generator.bought, false)
+      if (generator.unlocked) {
+        let base = generator.baseMultiplier;
+        // @ts-ignore
+        generator.multiplier = base.pow(generator.bought, false)
 
-      if (generator.type === 'red-particles') {
+        if (generator.type === 'red-particles') {
 
-        generator.multiplier.mul(GlobalMultipliersService.get('redParticleGenerators'))
-        const redAccelerators = HoldingsService.get('redAccelerators')
-        if (redAccelerators.div(new Num(1, 3), false).greq(new Num(1, 0))) {
-          generator.multiplier.mul(redAccelerators.div(new Num(1, 3), false));
+          generator.multiplier.mul(GlobalMultipliersService.get('redParticleGenerators'))
+          const redAccelerators = HoldingsService.get('redAccelerators')
+          if (redAccelerators.div(new Num(1, 3), false).greq(new Num(1, 0))) {
+            generator.multiplier.mul(redAccelerators.div(new Num(1, 3), false));
+          }
+
+          const yellowPower = HoldingsService.get('yellowPower')
+          if (yellowPower.greq(new Num(1, 0))) {
+            generator.multiplier.mul(yellowPower.pow(new Num(5, 0), false).add(new Num(1, 0), false));
+          }
         }
 
-        const yellowPower = HoldingsService.get('yellowPower')
-        if (yellowPower.greq(new Num(1, 0))) {
-          generator.multiplier.mul(yellowPower.pow(new Num(5, 0), false).add(new Num(1, 0), false));
+        if (generator.type === 'yellow-particles') {
+          generator.multiplier.mul(HoldingsService.get('yellowFusion').pow(new Num(2, -1), false))
+          generator.multiplier.mul(GlobalMultipliersService.get('yellowParticleGenerators'))
         }
-      }
 
-      if (generator.type === 'yellow-particles') {
-        generator.multiplier.mul(HoldingsService.get('yellowFusion').pow(new Num(3, -1), false))
-        generator.multiplier.mul(GlobalMultipliersService.get('yellowParticleGenerators'))
-      }
+        if (generator.type == 'red-accelerators') {
+          generator.multiplier.mul(GlobalMultipliersService.get('redAcceleratorGenerators'))
+        }
 
-      if (generator.type == 'red-accelerators') {
-        generator.multiplier.mul(GlobalMultipliersService.get('redAcceleratorGenerators'))
-      }
-
-      if (generator.name == 'yellow-fusion-generator') {
-        generator.multiplier.mul(GlobalMultipliersService.get('yellowFusion'));
-        let yellowFusion = HoldingsService.get('yellowFusion');
-        generator.multiplier.mul(yellowFusion.add(new Num(1, 0), false).div(new Num(3, 3), false));
-        if (yellowFusion.greq(new Num(1, 110))) HoldingsService.set('yellowFusion', new Num(1, 110));
+        if (generator.name == 'yellow-fusion-generator') {
+          generator.multiplier.mul(GlobalMultipliersService.get('yellowFusion'));
+          let yellowFusion = HoldingsService.get('yellowFusion');
+          generator.multiplier.mul(yellowFusion.add(new Num(1, 0), false).div(new Num(2, 3), false));
+          if (yellowFusion.greq(new Num(1, 110))) HoldingsService.set('yellowFusion', new Num(1, 110));
+        }
       }
     })
   }

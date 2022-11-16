@@ -10,7 +10,7 @@ import {Num} from "../../../num";
 })
 export class YellowFusionComponent implements OnInit {
   upgrades: Upgrade[] = [];
-  effect: any[] = ['power', 'yellowFusion', new Num(3, -1)];
+  effect: any[] = ['power', 'yellowFusion', new Num(2, -1)];
   constructor() { }
 
   ngOnInit(): void {

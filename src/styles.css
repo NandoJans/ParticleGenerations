@@ -8,12 +8,15 @@
   --text-color-green: rgb(93, 231, 77);
   --red-button-color: rgb(170, 45, 45);
   --yellow-button-color: rgb(231, 237, 50);
+  --fusion-red-color: rgb(229, 91, 47);
   --green-button-color: rgb(100, 210, 74);
   --dark-button-color: rgb(67, 67, 67);
   --transparent-background-red: rgba(199, 77, 77, 0.3);
   --transparent-background-yellow: rgba(220, 213, 44, 0.3);
+  --fusion-red-background-color: rgb(229, 91, 47, 0.3);
   --transparent-background-green: rgba(79, 219, 56, 0.3);
   --transparent-background-dark: rgba(89, 89, 89, 0.3);
+  --transparent-background-light: rgba(229, 229, 229, 0.3);
 }
 
 html, body {
@@ -39,7 +42,7 @@ header {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  position: sticky;
+  position: fixed;
   left: 0;
   top: 0;
 }
@@ -47,11 +50,9 @@ header {
 main {
   display: flex;
   width: 100%;
-  height: 100%;
   justify-content: space-around;
   align-items: center;
   flex-direction: column;
-  padding-bottom: 100%;
 }
 
 .page {
@@ -60,7 +61,7 @@ main {
 }
 
 footer {
-  height: 10%;
+  height: 15%;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -182,6 +183,7 @@ footer {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  border-radius: 1px;
 }
 
 .red-style {
@@ -203,6 +205,33 @@ footer {
   border: solid 2px var(--dark-button-color);
   border-radius: 3px;
   background-color: var(--transparent-background-dark);
+}
+
+.automator-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 70px;
+}
+
+.automator-form div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.checkbox {
+  width: 25px;
+}
+
+.fusion-style {
+  border: solid 1px var(--yellow-button-color);
+  background: linear-gradient(135deg, var(--transparent-background-yellow), var(--fusion-red-background-color));
+}
+
+.accelerator-style {
+  border: solid 1px var(--red-button-color);
+  background: linear-gradient(45deg, var(--transparent-background-light), var(--transparent-background-red));
 }
 
 .upgrade p {
@@ -272,15 +301,15 @@ button {
 }
 
 .red-challenge {
-  background: linear-gradient(var(--dark-button-color), var(--red-button-color));
+  background: linear-gradient(var(--transparent-background-dark), var(--transparent-background-red));
 }
 
 .yellow-challenge {
-  background: linear-gradient(var(--dark-button-color), var(--yellow-button-color));
+  background: linear-gradient(var(--transparent-background-dark), var(--transparent-background-yellow));
 }
 
 .green-challenge {
-  background: linear-gradient(var(--dark-button-color), var(--green-button-color));
+  background: linear-gradient(var(--transparent-background-dark), var(--transparent-background-green));
 }
 
 .yellow-prestige {
@@ -297,6 +326,48 @@ button {
 }
 .green-prestige:hover {
   background-color: var(--green-button-color);
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.timeline-event {
+  width: 250px;
+  height: 100px;
+  padding: 5px;
+  background: var(--dark-button-color);
+  border: solid 2px var(--text-color-main);
+  border-radius: 3px;
+}
+
+.reached {
+  border: solid 2px var(--green-button-color) !important;
+  border-radius: 3px;
+}
+
+.progress-bar-container {
+  width: 16%;
+  height: 100px;
+  margin: 0 42%;
+  background: var(--dark-button-color);
+}
+
+.progress-bar {
+  width: 100%;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--green-button-color);
+}
+
+.progress-bar p {
+  text-align: center;
 }
 
 

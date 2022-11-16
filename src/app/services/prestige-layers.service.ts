@@ -4,6 +4,7 @@ import {HoldingsService} from "./holdings.service";
 import {ResetService} from "./interactables/reset.service";
 import {GlobalMultipliersService} from "./globals/global-multipliers.service";
 import {ChallengeService} from "./interactables/challenge.service";
+import {DataManagerService} from "./data-manager.service";
 
 @Injectable({
   providedIn: 'root'
@@ -74,6 +75,7 @@ export class PrestigeLayersService {
         HoldingsService.add(name+'s', new Num(1, 0))
         ChallengeService.prestige()
         ResetService.reset(name);
+        DataManagerService.load();
       }
     }
   }

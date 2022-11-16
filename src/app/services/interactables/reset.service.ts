@@ -4,6 +4,7 @@ import {UpgradeService} from "./upgrade.service";
 import {Num} from "../../num";
 import {HoldingsService} from "../holdings.service";
 import {DataManagerService} from "../data-manager.service";
+import {ChallengeService} from "./challenge.service";
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,15 @@ export class ResetService {
       if (upgrade.resetId === type) {
         upgrade.bought = new Num(0, 0);
         upgrade.amount = new Num(0, 0);
+        if (upgrade.requirement[0] === 'never') upgrade.unlocked = false;
+      }
+    })
+  }
+
+  static resetChallenges(type: string) {
+    ChallengeService.challenges.forEach((challenge) => {
+      if (challenge.resetId === type) {
+        challenge.completed = false;
       }
     })
   }
@@ -34,6 +44,7 @@ export class ResetService {
     HoldingsService.set('redAccelerators', new Num(1, 0));
     this.resetGenerators('redParticleGenerators')
     if (resets === 'redParticleGenerators') return;
+
     HoldingsService.set('yellowPower', new Num(0, 0));
     HoldingsService.set('yellowFusion', new Num(1, 0));
     this.resetGenerators('redAccelerators')
@@ -42,10 +53,13 @@ export class ResetService {
     this.resetUpgrades('red-particles')
     this.resetUpgrades('red-upgrades')
     DataManagerService.save()
-    if (!HoldingsService.get('yellows').greq(new Num(1, 2))) window.location.reload();
     if (resets === 'yellow') return;
+
     HoldingsService.set('yellowParticles', new Num(0, 0));
     this.resetUpgrades('yellow-upgrades')
+    this.resetGenerators('yellow-particles')
+    this.resetUpgrades('yellow-fusion')
+    this.resetChallenges('yellow-challenges')
     if (resets === 'green') return;
   }
 }

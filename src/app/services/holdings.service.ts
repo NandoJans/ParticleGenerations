@@ -44,8 +44,10 @@ export class HoldingsService {
   static load() {
     const holdings = JSON.parse(localStorage['holdings']);
     Object.entries(this.holdings).forEach((holding) => {
-      // @ts-ignore
-      this.holdings[holding[0]]['amount'] = new Num(holdings[holding[0]]['amount']['num'], holdings[holding[0]]['amount']['exp']);
+      if (holdings[holding[0]] !== undefined) {
+        // @ts-ignore
+        this.holdings[holding[0]]['amount'] = new Num(holdings[holding[0]]['amount']['num'], holdings[holding[0]]['amount']['exp']);
+      }
     })
   }
 

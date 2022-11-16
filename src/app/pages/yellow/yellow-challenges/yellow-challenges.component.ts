@@ -20,5 +20,4 @@ export class YellowChallengesComponent implements OnInit {
     this.challenges = ChallengeService.getChallenges('yellow-challenges')
     this.activeChallenge = ChallengeService.getActiveChallenge();
   }
-
 }

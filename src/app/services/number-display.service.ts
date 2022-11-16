@@ -50,7 +50,7 @@ export class NumberDisplayService {
                 const effectType = entry.effect[0];
                 if (effectType === 'power') {
 
-                  element.innerHTML = 'x' + HoldingsService.get(entry.effect[1]).pow(entry.effect[2], false).add(new Num(1, 0), false).toString(true)
+                  element.innerHTML = 'x' + HoldingsService.get(entry.effect[1]).pow(entry.effect[2], false).toString(true)
                 } else if (effectType === 'multiply') {
 
                   element.innerHTML = 'x' + HoldingsService.get(entry.effect[1]).mul(entry.effect[2], false).add(new Num(1, 0), false).toString(true)
@@ -61,22 +61,20 @@ export class NumberDisplayService {
 
                   element.innerHTML = 'Current: x' + entry.effect[3].mul(UpgradeService.getValue(entry.name, 'bought'), false)
                 } else if (effectType === 'basedOnHolding') {
-
                   if (entry.effect[3] === 'exponent') {
-                      element.innerHTML = 'Current: x' + entry.effect[4].mul(UpgradeService.getValue(entry.name, 'bought'), false)
-                      .mul(new Num(HoldingsService.get(entry.effect[2])['exp'], 0), false).toString(true)
+                      element.innerHTML = 'Current: x' + new Num(HoldingsService.get(entry.effect[2]).exp, 0).pow(entry.effect[4], false);
                   } else {
-                    element.innerHTML = 'Current: x' + entry.effect[4].mul(UpgradeService.getValue(entry.name, 'bought'), false)
-                      .mul(HoldingsService.get(entry.effect[2]), false)
-                      .mul(entry.effect[1], false).toString(true)
+                    element.innerHTML = 'Current: x' + HoldingsService.get(entry.effect[2]).mul(entry.effect[4], false).add(new Num(1, 0), false)
                   }
                 } else if (effectType === 'basedOnUpgrade') {
 
-                  element.innerHTML = 'Current: x' + entry.effect[4].pow(UpgradeService.getValue(entry.effect[2], entry.effect[3]), false).toString(true)
+                  element.innerHTML = 'Current: x' + UpgradeService.getValue(entry.effect[2], 'buffer').pow(UpgradeService.getValue(entry.effect[2], entry.effect[3]), false).pow(entry.effect[4], false).toString(true)
                 } else if (effectType === 'basedOnGenerator') {
 
-                    element.innerHTML = 'Current: x' + entry.effect[4].pow(UpgradeService.getValue(entry.effect[2], entry.effect[3]), false).toString(true)
+                    element.innerHTML = 'Current: x' + GeneratorService.getValue(entry.effect[2], entry.effect[3]).pow(entry.effect[4], false).add(new Num(1, 0), false).toString(true)
                 } else if (effectType === 'increaseBuffer') {
+
+                } else if (effectType === 'amplifyUpgrade') {
 
                 }
               }

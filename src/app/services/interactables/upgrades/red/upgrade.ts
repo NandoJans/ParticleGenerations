@@ -13,13 +13,13 @@ export const redUpgrades: Upgrade[] = [
     name: 'unlock-red-generators-booster', displayName: 'Unlock Generator Booster', description: 'Adds a booster upgrade for red particle generators.', auto: false,
     baseCost: new Num(1,60), cost: new Num(1, 60), increase: new Num(1,0), scaling: new Num(0, 0), bought: new Num(0, 0), currency: 'redParticles',
     baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'red-upgrades', resetId: 'red-upgrades', style: 'red-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['redParticles', new Num(1, 40)],
-    action: new Action('unlock', 'red-generator-booster')
+    action: new Action('amplifyUpgrade', 'red-generator-booster', ['none'], 'requirement')
   },
   {
     name: 'red-accelerators-particles-based', displayName: 'Accelerator Particles', description: 'Gives a multiplier to the accelerators generator based on particles.', auto: false,
     baseCost: new Num(1,65), cost: new Num(1, 65), increase: new Num(1,0), scaling: new Num(0, 0), bought: new Num(0, 0), currency: 'redParticles',
     baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'red-upgrades', resetId: 'red-upgrades', style: 'red-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['redParticles', new Num(1, 40)],
-    action: new Action('basedOnHolding', 'redAcceleratorGenerators', new Num(0, 0), 'exponent', 'redParticles')
+    action: new Action('basedOnHolding', 'redAcceleratorGenerators', new Num(1, 0), 'exponent', 'redParticles')
   },
   {
     name: 'red-booster-multiplier-upgrade', displayName: 'Booster Multiplier Amplifier', description: 'Increase the multiplier of the red generator booster.', auto: false,

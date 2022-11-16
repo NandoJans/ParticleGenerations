@@ -1,7 +1,7 @@
-<div [class]="'challenge '+style">
+<div [class]="'challenge '+style" [id]="name">
   <h4>{{ displayName }}</h4>
-  <p>Reach {{goal}} {{description}}</p>
+  <p>Reach {{goal}} Red Particles {{description}}</p>
   <p>Reward: {{rewardDescription}}</p>
   <app-number-display [name]="name" [style]="''" [effect]="effect" [type]="'effect'"></app-number-display>
-  <app-button [text]="'Start Challenge'" [style]="'challenge-button'" [identifier]="name" (click)="start()"></app-button>
+  <app-button [text]="'Start Challenge'" [style]="'challenge-button'" [identifier]="name+'-button'" (click)="start()"></app-button>
 </div>

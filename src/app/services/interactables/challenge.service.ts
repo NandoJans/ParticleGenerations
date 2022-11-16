@@ -67,7 +67,6 @@ export class ChallengeService {
     this.activeChallenge.completed = true;
     this.activeChallenge = undefined;
     DataManagerService.save();
-    DataManagerService.load();
   }
 
   static leaveChallenge() {
@@ -103,20 +102,25 @@ export class ChallengeService {
     return retArr;
   }
 
+  static disable() {
+    this.challenges.forEach((challenge) => {challenge.disabled = true})
+  }
+
   static unlock() {
     this.challenges.forEach(challenge => {
       if (HoldingsService.get(challenge.requirement[0]).greq(challenge.requirement[1])) {
         challenge.unlocked = true;
       }
-      if (challenge.completed && (<HTMLElement> document.getElementById(challenge.name)) !== null) {
-        (<HTMLElement> document.getElementById(challenge.name)).innerHTML = 'Completed'
+      if (challenge.completed && (<HTMLElement> document.getElementById(challenge.name+'-button')) !== null) {
+        (<HTMLElement> document.getElementById(challenge.name+'-button')).innerHTML = 'Completed';
+        (<HTMLElement> document.getElementById(challenge.name)).classList.add('reached');
       }
     })
   }
 
   static action() {
     this.challenges.forEach(challenge => {
-      if (challenge.completed) {
+      if (challenge.completed && !challenge.disabled) {
         challenge.reward.execute();
       }
     })

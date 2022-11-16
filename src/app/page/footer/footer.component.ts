@@ -27,5 +27,6 @@ export class FooterComponent implements OnInit {
   ngOnInit(): void {
     this.navigations = NavigationsService.getNavigations();
     this.subNavigations = NavigationsService.getSubNavigations(NavigationsService.selectedNavigation);
+    this.router.navigate(['?/'+NavigationsService.selectedNavigation+'/'+NavigationsService.selectedSubNavigation])
   }
 }

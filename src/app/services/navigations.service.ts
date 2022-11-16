@@ -26,14 +26,18 @@ export class NavigationsService {
     { name: 'yellowUpgrades', displayName: 'Upgrades', location: 'upgrades', parent: 'yellow', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
     { name: 'yellowGenerators', displayName: 'Generators', location: 'generators', parent: 'yellow', unlocked: false, requirement: ['yellowParticles', new Num(1, 2)]  },
     { name: 'yellowChallenges', displayName: 'Challenges', location: 'challenges', parent: 'yellow', unlocked: false, requirement: ['yellowParticles', new Num(1, 5)]  },
-    { name: 'yellowFusion', displayName: 'Fusion', location: 'fusion', parent: 'yellow', unlocked: false, requirement: ['yellows', new Num(1, 100)]  },
+    { name: 'yellowFusion', displayName: 'Fusion', location: 'fusion', parent: 'yellow', unlocked: false, requirement: ['yellowParticles', new Num(1, 32)]  },
     { name: 'yellowMilestones', displayName: 'Milestones', location: 'milestones', parent: 'yellow', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
 
     { name: 'redAutomators', displayName: 'Red', location: 'red', parent: 'automators', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
     { name: 'prestigeAutomators', displayName: 'Prestige', location: 'prestige', parent: 'automators', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
+
+    { name: 'redTimeline', displayName: 'Red', location: 'red', parent: 'timeline', unlocked: true, requirement: 'none'},
+    { name: 'yellowTimeline', displayName: 'Yellow', location: 'yellow', parent: 'timeline', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
   ]
 
   static selectedNavigation: string = 'red';
+  static selectedSubNavigation: string = 'particles';
 
   static save() {
     const save: any = {}
@@ -43,10 +47,12 @@ export class NavigationsService {
     })
     localStorage['navigations'] = JSON.stringify(save)
     localStorage['selectedNavigation'] = JSON.stringify(this.selectedNavigation);
+    localStorage['selectedSubNavigation'] = JSON.stringify(this.selectedSubNavigation);
   }
 
   static load() {
-    this.selectedNavigation = JSON.parse(localStorage['selectedNavigation']);
+    if (localStorage['selectedNavigation'] !== undefined) this.selectedNavigation = JSON.parse(localStorage['selectedNavigation']);
+    if (localStorage['selectedSubNavigation'] !== undefined) this.selectedSubNavigation = JSON.parse(localStorage['selectedSubNavigation']);
     const loadedNavigations = JSON.parse(localStorage['navigations'])
     const navigations: any[] = [];
     navigations.concat(this.subNavigations, this.navigations).forEach((navigation) => {
@@ -56,8 +62,12 @@ export class NavigationsService {
 
   static getLocation(subNavigation: SubNavigation) {
     let parentLocation: string = '';
+    this.selectedSubNavigation = subNavigation.location;
     this.navigations.forEach((nav) => {
-      if (nav.name === subNavigation.parent) parentLocation = nav.location;
+      if (nav.name === subNavigation.parent) {
+        parentLocation = nav.location
+        this.selectedNavigation = nav.location
+      }
     })
     return '?/' + parentLocation + '/' + subNavigation.location;
   }

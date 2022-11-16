@@ -105,10 +105,16 @@ export class UpgradeService {
 
   static unlock() {
     this.upgrades.forEach((upgrade) => {
-      if (upgrade.requirement[0] !== 'none') {
+      if (upgrade.requirement[0] !== 'none' && upgrade.requirement[0] !== 'never') {
         if (HoldingsService.get(upgrade.requirement[0]).greq(upgrade.requirement[1])) {
           upgrade.unlocked = true;
+        } else {
+          upgrade.unlocked = false;
         }
+      } else if (upgrade.requirement[0] === 'never') {
+        upgrade.unlocked = false;
+      } else if (upgrade.requirement[0] === 'none') {
+        upgrade.unlocked = true;
       }
     })
   }

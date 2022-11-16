@@ -27,6 +27,11 @@ import { PrestigeAutomatorsComponent } from './pages/automators/prestige-automat
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { AutomatorComponent } from './components/particles/automator/automator.component';
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { RedTimelineComponent } from './pages/timeline/red-timeline/red-timeline.component';
+import { TimelineComponent } from './components/particles/timeline/timeline.component';
+import { TimelineEventComponent } from './components/particles/timeline-event/timeline-event.component';
+import { YellowTimelineComponent } from './pages/timeline/yellow-timeline/yellow-timeline.component';
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 @NgModule({
   declarations: [
@@ -52,14 +57,19 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     YellowChallengesComponent,
     ChallengeComponent,
     PrestigeAutomatorsComponent,
-    AutomatorComponent
+    AutomatorComponent,
+    RedTimelineComponent,
+    TimelineComponent,
+    TimelineEventComponent,
+    YellowTimelineComponent
   ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         ReactiveFormsModule,
         FormsModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatProgressBarModule
     ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,3 +1,6 @@
+<div class="holding-line">
+  <p>An amount can be specified for each automator. The automator will wait for the specified amount of particles gained when prestiging.</p>
+</div>
 <div class="upgrade-row">
   <div *ngFor="let automator of automators">
     <app-automator *ngIf="automator.unlocked"  [automator]="automator" [isPrestigeAutomator]="true"></app-automator>
