@@ -36,6 +36,7 @@ export class BuyableService {
         while (HoldingsService.get(buyable.currency).greq(buyable.cost) && !buyable.oneTime) {
           this.buyAction(buyable);
           if (buyable.resets !== 'none') ResetService.reset(buyable.resets);
+          if (buyable.limit !== undefined && buyable.bought.greq(buyable.limit)) break;
         }
       }
     })
