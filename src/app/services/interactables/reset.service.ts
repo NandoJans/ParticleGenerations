@@ -60,7 +60,7 @@ export class ResetService {
   }
 
   static reset(resets: string) {
-    HoldingsService.set('redParticles', new Num(1, 2));
+    HoldingsService.set('redParticles', HoldingsService.get('redParticlesStart').copy());
     HoldingsService.set('redAccelerators', new Num(1, 0));
     this.resetGenerators('redParticleGenerators')
     if (resets === 'redParticleGenerators') return;

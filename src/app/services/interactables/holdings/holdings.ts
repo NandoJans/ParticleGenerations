@@ -2,6 +2,7 @@ import {Num} from "../../../num";
 
 export const holdings = {
   redParticles: {amount: new Num(1, 2)},
+  redParticlesStart: {amount: new Num(1, 2)},
   redAccelerators: {amount: new Num(1, 0)/*, action: new Action('basedOnHolding', 'redParticleGenerators', new Num(1, -3))*/},
   yellowParticles: {amount: new Num(0, 0)},
   yellows: {amount: new Num(0, 0)},
