@@ -131,6 +131,10 @@ export class Num {
     let ret_num = this.num * x.num
     let ret_exp = this.exp + x.exp
 
+    if (ret_num === 0) {
+      ret_exp = 0;
+    }
+
     if (ret_num < 0.0001 && ret_exp > 1) {
       ret_num = 0.0001
     }

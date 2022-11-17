@@ -45,7 +45,7 @@ export class TickService {
     GeneratorService.generate(speed);
 
     //HoldingsService.set('redParticles', new Num(1, 2000))
-    //HoldingsService.set('yellowParticles', new Num(1, 110))
+    HoldingsService.set('yellowParticles', new Num(1, 110))
     //HoldingsService.set('greenParticles', new Num(1, 0))
     //HoldingsService.set('yellows', new Num(5, 3))
     //HoldingsService.set('yellowFusion', new Num(1, 110))

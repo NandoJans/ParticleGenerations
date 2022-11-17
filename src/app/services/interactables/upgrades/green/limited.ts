@@ -15,7 +15,7 @@ export const limitedGreenUpgrades: Upgrade[] = [
     baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'green-limited-upgrades', resetId: 'green-limited-upgrades', style: 'limited-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['greens', new Num(1, 0)],
     action: [
       new Action('decreaseHolding', 'greenSouls', new Num(3, 0), 'cost', 'red-accelerator-buffer'),
-      new Action('basedOnHolding', 'greenParticleGenerators', new Num(1, -1), 'power', 'greenEnergy'),
+      new Action('basedOnHolding', 'greenParticleGenerators', new Num(1, -2), 'power', 'greenEnergy'),
     ]
   },
   {
