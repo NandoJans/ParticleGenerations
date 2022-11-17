@@ -67,6 +67,7 @@ export class ChallengeService {
     this.activeChallenge.completed = true;
     this.activeChallenge = undefined;
     DataManagerService.save();
+    window.location.reload();
   }
 
   static leaveChallenge() {

@@ -73,10 +73,9 @@ export class PrestigeLayersService {
         // @ts-ignore
         HoldingsService.add(name+'Particles', this.getValue(name, 'gain'))
         HoldingsService.add(name+'s', new Num(1, 0))
-        ChallengeService.prestige()
         ResetService.reset(name);
         DataManagerService.load();
-        window.location.reload();
+        if (ChallengeService.activeChallenge !== undefined) ChallengeService.prestige();
       }
     }
   }
