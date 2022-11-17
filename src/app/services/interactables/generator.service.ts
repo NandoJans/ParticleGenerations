@@ -244,6 +244,10 @@ export class GeneratorService {
           if (yellowPower.greq(new Num(1, 0))) {
             generator.multiplier.mul(yellowPower.pow(new Num(5, 0), false).add(new Num(1, 0), false));
           }
+
+          if (!generator.multiplier.greq(new Num(1, 0))) {
+            generator.multiplier = new Num(1, 0)
+          }
         }
 
         if (generator.type === 'yellow-particles') {
