@@ -31,6 +31,7 @@ export class TickService {
 
   gameTick(speed: Num = new Num(1, 0)) {
     this.mainAction();
+
     UpgradeService.correctBuffer();
     GlobalMultipliersService.reset();
 

@@ -189,6 +189,9 @@ export class Num {
       ret_exp += 1
       ret_num_2 /= 10
     }
+
+    if (ret_num_2 < 0.001) ret_num_2 = 0.001
+
     while (ret_num_2 < 1 && ret_num_2 !== 0) {
       ret_exp -= 1
       ret_num_2 *= 10
