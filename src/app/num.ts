@@ -204,7 +204,7 @@ export class Num {
 
   // @ts-ignore
   log = (x: Num, overwrite: boolean) => {
-    let ret_num = (this.exp * 10 + this.num) / (x.num * 10 ** x.exp);
+    let ret_num = (this.exp * 10 + this.num - 1) / (x.num * 10 ** x.exp);
     let ret_exp = 0;
 
     if (overwrite) {
