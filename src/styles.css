@@ -184,6 +184,7 @@ footer {
   justify-content: space-between;
   align-items: center;
   border-radius: 1px;
+  box-shadow: 2px 2px 0 var(--background-color-1);
 }
 
 .red-style {
