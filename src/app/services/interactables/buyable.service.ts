@@ -5,6 +5,7 @@ import {Num} from "../../num";
 import {ResetService} from "./reset.service";
 import {UpgradeService} from "./upgrade.service";
 import {AutomatorService} from "./automator.service";
+import {MilestoneService} from "./milestone.service";
 
 @Injectable({
   providedIn: 'root'
@@ -83,6 +84,7 @@ export class BuyableService {
           if (buyable.oneTime && buyable.bought.greq(new Num(1, 0))) {
             button.setAttribute('disabled', '');
             button.className = 'maxed';
+            button.innerHTML = 'Bought';
           } else if (HoldingsService.get(buyable.currency).greq(buyable.cost)) {
             button.removeAttribute('disabled');
             button.className = 'buyable';
@@ -100,6 +102,7 @@ export class BuyableService {
           if (buyable.bought.greq(new Num(1, 0))) {
             button.setAttribute('disabled', '');
             button.className = 'maxed';
+            button.innerHTML = 'Bought';
           } else if (HoldingsService.get(buyable.currency).greq(buyable.cost)) {
             button.removeAttribute('disabled');
             button.className = 'buyable';

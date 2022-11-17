@@ -13,6 +13,8 @@ import {PrestigeLayersService} from "../prestige-layers.service";
 import {PrestigeAutomatorsComponent} from "../../pages/automators/prestige-automators/prestige-automators.component";
 import {DataManagerService} from "../data-manager.service";
 import {toNumbers} from "@angular/compiler-cli/src/version_helpers";
+import {greenSacrifice} from "./upgrades/green/sacrifice";
+import {limitedGreenUpgrades} from "./upgrades/green/limited";
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +22,8 @@ import {toNumbers} from "@angular/compiler-cli/src/version_helpers";
 export class UpgradeService {
   static upgrades: Upgrade[] =
     redUpgrades.concat(
+      greenSacrifice,
+      limitedGreenUpgrades,
       yellowFusionUpgrades,
       yellowUpgrades,
       redGeneratorUpgrades,
@@ -121,7 +125,12 @@ export class UpgradeService {
 
   static action() {
     this.upgrades.forEach((upgrade) => {
-      if (upgrade.action !== undefined && upgrade.bought.greq(new Num(1, 0))) {
+      if (upgrade.name === 'red-generator-booster') {
+        upgrade.amount = upgrade.bought.copy()
+        // @ts-ignore
+        upgrade.amount = upgrade.amount.add(HoldingsService.get('greenEnergy').log(new Num(0.5, 0), false), false)
+      }
+      if ((upgrade.action !== undefined && upgrade.bought.greq(new Num(1, 0))) || upgrade.name === 'red-generator-booster') {
         // @ts-ignore
         upgrade.action.execute();
       }

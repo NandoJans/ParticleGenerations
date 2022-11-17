@@ -50,7 +50,15 @@ export class NumberDisplayService {
                 const effectType = entry.effect[0];
                 if (effectType === 'power') {
 
-                  element.innerHTML = 'x' + HoldingsService.get(entry.effect[1]).pow(entry.effect[2], false).toString(true)
+                  if (entry.effect[3] === 'holdingPower') {
+                    console.log()
+                    element.innerHTML = 'x' + HoldingsService.get(entry.effect[1]).pow(HoldingsService.get(entry.effect[2]), false).toString(true)
+                  } else {
+                    element.innerHTML = 'x' + HoldingsService.get(entry.effect[1]).pow(entry.effect[2], false).toString(true)
+                  }
+                } else if (effectType === 'log') {
+
+                  element.innerHTML = HoldingsService.get(entry.effect[1]).log(entry.effect[2], false).toString()
                 } else if (effectType === 'multiply') {
 
                   element.innerHTML = 'x' + HoldingsService.get(entry.effect[1]).mul(entry.effect[2], false).add(new Num(1, 0), false).toString(true)
@@ -64,7 +72,7 @@ export class NumberDisplayService {
                   if (entry.effect[3] === 'exponent') {
                       element.innerHTML = 'Current: x' + new Num(HoldingsService.get(entry.effect[2]).exp, 0).pow(entry.effect[4], false);
                   } else {
-                    element.innerHTML = 'Current: x' + HoldingsService.get(entry.effect[2]).mul(entry.effect[4], false).add(new Num(1, 0), false)
+                    element.innerHTML = 'Current: x' + HoldingsService.get(entry.effect[2]).mul(entry.effect[1], false).add(new Num(1, 0), false).toString(true)
                   }
                 } else if (effectType === 'basedOnUpgrade') {
 

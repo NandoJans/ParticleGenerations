@@ -32,6 +32,9 @@ import { TimelineComponent } from './components/particles/timeline/timeline.comp
 import { TimelineEventComponent } from './components/particles/timeline-event/timeline-event.component';
 import { YellowTimelineComponent } from './pages/timeline/yellow-timeline/yellow-timeline.component';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
+import { GreenGeneratorsComponent } from './pages/green/green-generators/green-generators.component';
+import { GreenTimelineComponent } from './pages/timeline/green-timeline/green-timeline.component';
+import { GreenSacrificeComponent } from './pages/green/green-sacrifice/green-sacrifice.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +64,10 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
     RedTimelineComponent,
     TimelineComponent,
     TimelineEventComponent,
-    YellowTimelineComponent
+    YellowTimelineComponent,
+    GreenGeneratorsComponent,
+    GreenTimelineComponent,
+    GreenSacrificeComponent
   ],
     imports: [
         BrowserModule,

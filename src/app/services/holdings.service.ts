@@ -57,6 +57,7 @@ export class HoldingsService {
       case 'yellowParticles': return 'YP';
       case 'yellows': return 'y';
       case 'redAccelerators': return 'RA';
+      case 'greenParticles': return 'GP';
       default: return '';
     }
   }

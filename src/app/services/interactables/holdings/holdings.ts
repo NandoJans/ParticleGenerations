@@ -1,5 +1,4 @@
 import {Num} from "../../../num";
-import {Action} from "../../../action";
 
 export const holdings = {
   redParticles: {amount: new Num(1, 2)},
@@ -8,6 +7,9 @@ export const holdings = {
   yellows: {amount: new Num(0, 0)},
   yellowPower: {amount: new Num(0, 0)},
   yellowFusion: {amount: new Num(1, 0)},
+  yellowFusionPower: {amount: new Num(2, -1)},
   greenParticles: {amount: new Num(0, 0)},
   greens: {amount: new Num(0, 0)},
+  greenEnergy: {amount: new Num(0, 0)},
+  greenSouls: {amount: new Num(0, 0)},
 }

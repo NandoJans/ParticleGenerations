@@ -27,7 +27,7 @@ export class TimelineService {
 
     {
       name: 'yellow-particles', displayName: 'Another new universe', description: 'When red particles are not enough.', hasProgress: false,
-      unlocked: false, requirement: ['yellowParticles', new Num(1, 0)], type: 'yellow-timeline', reached: false, unlock: ['yellowParticles', new Num(1, 0)]
+      unlocked: true, requirement: ['none'], type: 'yellow-timeline', reached: false, unlock: ['yellowParticles', new Num(1, 0)]
     },
     {
       name: 'yellow-generators', displayName: 'Boosting the red', description: 'So yellow particles are friendly.', hasProgress: true,
@@ -44,6 +44,11 @@ export class TimelineService {
     {
       name: 'green-phase', displayName: 'A step into greenification', description: 'Green energy is the best.', hasProgress: true,
       unlocked: false, requirement: ['yellowParticles', new Num(1, 32)], type: 'yellow-timeline', reached: false, unlock: ['yellowParticles', new Num(1, 110)]
+    },
+
+    {
+      name: 'green-phase', displayName: 'And there we have it', description: 'For all our needs of free boosters. Like we don\'t have enough.', hasProgress: false,
+      unlocked: true, requirement: ['none'], type: 'green-timeline', reached: false, unlock: ['greenParticles', new Num(1, 1)]
     },
   ]
 
@@ -77,7 +82,7 @@ export class TimelineService {
 
   static unlock() {
     this.events.forEach((event) => {
-      if (!event.unlocked) {
+      if (!event.unlocked && event.requirement[0] !== 'none') {
         const doc = (<HTMLElement> document.getElementById(event.name))
         if (HoldingsService.get(event.requirement[0]).greq(event.requirement[1])) {
           event.unlocked = true;
@@ -110,7 +115,7 @@ export class TimelineService {
         if (event.reached) {
           doc.style.height = '100%';
           doc.innerHTML = '<p>100%</p>';
-        } else if (event.unlocked) {
+        } else if (event.unlocked && event.hasProgress) {
           const num1 = event.requirement[1].exp + event.requirement[1].num / 10;
           const num2 = event.unlock[1].exp + event.unlock[1].num / 10
           const holding = HoldingsService.get(event.unlock[0])

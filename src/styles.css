@@ -201,6 +201,37 @@ footer {
   background-color: var(--transparent-background-green);
 }
 
+.sacrifice-style {
+  background-color: var(--background-color-1);
+  color: var(--green-button-color);
+  border: solid 1px var(--green-button-color);
+  border-radius: 3px;
+  height: 80px;
+}
+
+.limited-style {
+  border: solid 1px var(--green-button-color);
+  background-color: var(--transparent-background-green);
+  border-radius: 3px;
+  height: 100px;
+}
+
+.red-style .maxed {
+  background-color: var(--red-button-color) !important;
+}
+
+.yellow-style .maxed, .fusion-style .maxed {
+  background-color: var(--yellow-button-color) !important;
+}
+
+.green-style .maxed {
+  background-color: var(--green-button-color) !important;
+}
+
+.automator .maxed {
+  background-color: var(--dark-button-color) !important;
+}
+
 .automator {
   border: solid 2px var(--dark-button-color);
   border-radius: 3px;

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Upgrade} from "../../../globals";
 import {UpgradeService} from "../../../services/interactables/upgrade.service";
-import {Num} from "../../../num";
 
 @Component({
   selector: 'app-yellow-fusion',
@@ -10,7 +9,7 @@ import {Num} from "../../../num";
 })
 export class YellowFusionComponent implements OnInit {
   upgrades: Upgrade[] = [];
-  effect: any[] = ['power', 'yellowFusion', new Num(2, -1)];
+  effect: any[] = ['power', 'yellowFusion', 'yellowFusionPower', 'holdingPower'];
   constructor() { }
 
   ngOnInit(): void {

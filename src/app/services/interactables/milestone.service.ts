@@ -87,6 +87,11 @@ export class MilestoneService {
       if (milestone.action !== undefined && HoldingsService.get(milestone.currency).greq(milestone.cost)) {
         // @ts-ignore
         milestone.action.execute();
+        const button = (<HTMLButtonElement> document.getElementById('buyable-'+milestone.name))
+        if (button !== null) {
+          button.className = 'maxed';
+          button.innerHTML = 'Reached';
+        }
       }
     })
   }

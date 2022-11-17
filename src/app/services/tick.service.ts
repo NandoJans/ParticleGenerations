@@ -1,4 +1,4 @@
-import {Host, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HoldingsService} from "./holdings.service";
 import {NumberDisplayService} from "./number-display.service";
 import {GeneratorService} from "./interactables/generator.service";
@@ -11,9 +11,9 @@ import {PrestigeLayersService} from "./prestige-layers.service";
 import {DataManagerService} from "./data-manager.service";
 import {MilestoneService} from "./interactables/milestone.service";
 import {ChallengeService} from "./interactables/challenge.service";
-import {PrestigeAutomatorsComponent} from "../pages/automators/prestige-automators/prestige-automators.component";
 import {AutomatorService} from "./interactables/automator.service";
 import {TimelineService} from "./timeline.service";
+import {mainActions} from "./interactables/action/mainActions";
 
 @Injectable({
   providedIn: 'root'
@@ -23,14 +23,16 @@ export class TickService {
   constructor(private holdings: HoldingsService, private numberDisplay: NumberDisplayService, private generators: GeneratorService,
               private upgrades: UpgradeService, private buyables: BuyableService) { }
 
+  mainAction() {
+    mainActions.forEach((action) => {
+      action.execute();
+    })
+  }
+
   gameTick(speed: Num = new Num(1, 0)) {
+    this.mainAction();
     UpgradeService.correctBuffer();
     GlobalMultipliersService.reset();
-
-    AutomatorService.setAutos();
-    ChallengeService.applyNerfs();
-    this.buyables.compare();
-    this.buyables.correctCosts();
 
     ChallengeService.applyNerfs();
 
@@ -46,6 +48,11 @@ export class TickService {
     //HoldingsService.set('yellowParticles', new Num(1, 40))
     //HoldingsService.set('yellows', new Num(5, 3))
     //HoldingsService.set('yellowFusion', new Num(1, 110))
+
+    AutomatorService.setAutos();
+    ChallengeService.applyNerfs();
+    this.buyables.compare();
+    this.buyables.correctCosts();
 
     GeneratorService.unlock();
     UpgradeService.unlock();

@@ -4,6 +4,8 @@ import {Generator} from "../../globals";
 import {Num} from "../../num";
 import {GlobalMultipliersService} from "../globals/global-multipliers.service";
 import {UpgradeService} from "./upgrade.service";
+import {shouldBeautify} from "@angular-devkit/build-angular/src/utils/environment-options";
+import {ChallengeService} from "./challenge.service";
 
 @Injectable({
   providedIn: 'root'
@@ -85,8 +87,39 @@ export class GeneratorService {
     {
       name: 'yellow-fusion-generator', displayName: 'Yellow Fusion Generator', auto: false, style: 'yellow-style',
       baseCost: new Num(1, 0), cost: new Num(1, 0), increase: new Num(1, 0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'yellowParticles',
-      generates: 'yellowFusion', baseMultiplier: new Num(1, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'yellow-fusion', resetId: 'yellowFusionGenerators', unlocked: true,
+      generates: 'yellowFusion', baseMultiplier: new Num(0, 0), multiplier: new Num(0, 0), amount: new Num(0, 0) , type: 'yellow-fusion', resetId: 'yellowFusionGenerators', unlocked: true,
       requirement: ['upgrade', 'unlock-yellow-fusion', new Num(1, 0)]
+    },
+
+    {
+      name: 'green-generator-1', displayName: 'Green Generator 1', auto: false, style: 'green-style',
+      baseCost: new Num(1, 0), cost: new Num(1, 0), increase: new Num(5, 1), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenParticles',
+      generates: 'greenEnergy', baseMultiplier: new Num(5, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'green-particles', resetId: 'greenParticleGenerators', unlocked: true,
+      requirement: ['holding', 'greens', new Num(1, 0)]
+    },
+    {
+      name: 'green-generator-2', displayName: 'Green Generator 2', auto: false, style: 'green-style',
+      baseCost: new Num(5, 0), cost: new Num(5, 0), increase: new Num(2.5, 1), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenParticles',
+      generates: 'greenEnergy', baseMultiplier: new Num(5, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'green-particles', resetId: 'greenParticleGenerators', unlocked: true,
+      requirement: ['holding', 'greens', new Num(1, 0)]
+    },
+    {
+      name: 'green-generator-3', displayName: 'Green Generator 3', auto: false, style: 'green-style',
+      baseCost: new Num(2.5, 1), cost: new Num(2.5, 1), increase: new Num(1.25, 2), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenParticles',
+      generates: 'greenEnergy', baseMultiplier: new Num(5, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'green-particles', resetId: 'greenParticleGenerators', unlocked: true,
+      requirement: ['holding', 'greens', new Num(1, 0)]
+    },
+    {
+      name: 'green-generator-4', displayName: 'Green Generator 4', auto: false, style: 'green-style',
+      baseCost: new Num(1, 5000), cost: new Num(1, 5000), increase: new Num(5, 1), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenParticles',
+      generates: 'greenEnergy', baseMultiplier: new Num(5, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'green-particles', resetId: 'greenParticleGenerators', unlocked: true,
+      requirement: ['holding', 'greens', new Num(1, 0)]
+    },
+    {
+      name: 'green-generator-5', displayName: 'Green Generator 5', auto: false, style: 'green-style',
+      baseCost: new Num(1, 5000), cost: new Num(1, 5000), increase: new Num(5, 1), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenParticles',
+      generates: 'greenEnergy', baseMultiplier: new Num(5, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'green-particles', resetId: 'greenParticleGenerators', unlocked: true,
+      requirement: ['holding', 'greens', new Num(1, 0)]
     },
   ];
 
@@ -123,10 +156,18 @@ export class GeneratorService {
 
   static generate(extra: Num = new Num(1, 0)) {
     this.generators.forEach((generator) => {
-      if (generator.requirement[0] !== 'never' && generator.unlocked) {
+      let shouldGenerate = generator.requirement[0] !== 'never'
+      if (ChallengeService.activeChallenge !== undefined) shouldGenerate = shouldGenerate && generator.unlocked
+      if (shouldGenerate) {
         // @ts-ignore
-        const add: Num = generator.amount.mul(generator.multiplier, false).mul(new Num(1, 0), false);
+        let add: Num = generator.amount.mul(generator.multiplier, false).mul(new Num(1, 0), false);
         add.mul(extra);
+
+        if (generator.type === 'yellow-fusion') {
+          if (HoldingsService.get('yellowFusion').greq(new Num(1, 110))) {
+            add = new Num(0, 0);
+          }
+        }
         if (HoldingsService.get(generator.generates) !== undefined) HoldingsService.add(generator.generates, add)
         if (this.get(generator.generates) !== undefined) this.addValue(generator.generates, 'amount', add)
       }
@@ -192,7 +233,10 @@ export class GeneratorService {
 
           generator.multiplier.mul(GlobalMultipliersService.get('redParticleGenerators'))
           const redAccelerators = HoldingsService.get('redAccelerators')
-          if (redAccelerators.div(new Num(1, 3), false).greq(new Num(1, 0))) {
+
+          if (UpgradeService.getValue('red-accelerator-buffer', 'bought').greq(new Num(1, 0))) {
+            generator.multiplier.mul(redAccelerators.pow(new Num(1.5, 0), false))
+          } else if (redAccelerators.div(new Num(1, 3), false).greq(new Num(1, 0))) {
             generator.multiplier.mul(redAccelerators.div(new Num(1, 3), false));
           }
 
@@ -203,7 +247,7 @@ export class GeneratorService {
         }
 
         if (generator.type === 'yellow-particles') {
-          generator.multiplier.mul(HoldingsService.get('yellowFusion').pow(new Num(2, -1), false))
+          generator.multiplier.mul(HoldingsService.get('yellowFusion').pow(HoldingsService.get('yellowFusionPower'), false))
           generator.multiplier.mul(GlobalMultipliersService.get('yellowParticleGenerators'))
         }
 

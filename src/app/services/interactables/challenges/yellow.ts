@@ -7,7 +7,7 @@ export const yellowChallenges: Challenge[] = [
     name: 'yellow-challenge-1', displayName: 'Yellow Challenge 1', description: 'without any red generator boosts.', goal: new Num(1, 1100), currency: 'redParticles', completed: false, disabled: false,
     rewardDescription: 'Gain a multiplier to red accelerators based on red generator boosts.', style: 'yellow-challenge', resetId: 'yellow-challenges', type: 'yellow-challenges', prestige: 'yellow', unlocked: false,
     requirement: ['yellowParticles', new Num(1, 5)],
-    reward: new Action('basedOnUpgrade', 'redAcceleratorGenerators', new Num(1, 0), 'bought', 'red-generator-booster'),
+    reward: new Action('basedOnUpgrade', 'redAcceleratorGenerators', new Num(1, 0), 'amount', 'red-generator-booster'),
     nerfs: [
       new Action('amplifyUpgrade', 'red-generator-booster', new Num(1, 0), 'buffer'),
     ]
@@ -101,33 +101,14 @@ export const yellowChallenges: Challenge[] = [
     ]
   },
   {
-    name: 'yellow-challenge-8', displayName: 'Yellow Challenge 8', description: 'when the game is totally different.', goal: new Num(1, 10000), currency: 'redParticles', completed: false, disabled: false,
+    name: 'yellow-challenge-8', displayName: 'Yellow Challenge 8', description: 'when yellow generators generate second red accelerator generators.', goal: new Num(1, 8800), currency: 'redParticles', completed: false, disabled: false,
     rewardDescription: 'Make yellow fusion much more powerfull.', style: 'yellow-challenge', resetId: 'yellow-challenges', type: 'yellow-challenges', prestige: 'yellow', unlocked: false,
-    requirement: ['yellowParticles', new Num(1, 1000)],
-    reward: new Action('basedOnHolding', 'redParticleGenerators', new Num(1, 0), '', 'yellowFusion'),
+    requirement: ['yellowParticles', new Num(1, 75)],
+    reward: new Action('setHolding', 'yellowFusionPower', new Num(4, -1)),
     nerfs: [
-      new Action('setHolding', 'yellowPower', new Num(1, 0)),
-
-      new Action('amplifyGenerator', 'red-accelerator-generator-1', ['holding', 'redParticles', new Num(1, 25)], 'requirement'),
-      new Action('amplifyGenerator', 'red-accelerator-generator-2', ['holding', 'redParticles', new Num(1, 40)], 'requirement'),
-      new Action('amplifyGenerator', 'red-accelerator-generator-2', new Num(1, 5), 'baseCost'),
-      new Action('amplifyUpgrade', 'red-accelerator-multiplier-1', ['redParticles', new Num(1, 35)], 'requirement'),
-      new Action('amplifyUpgrade', 'red-accelerator-multiplier-2', ['redParticles', new Num(1, 6000)], 'requirement'),
-      new Action('amplifyUpgrade', 'red-accelerator-multiplier-3', ['redParticles', new Num(1, 1000000)], 'requirement'),
-
-      new Action('amplifyGenerators', 'yellow-particles', new Num(0, 0), 'amount'),
-
-      new Action('amplifyGenerator', 'yellow-generator-1', ['holding', 'redParticles', new Num(1, 100000)], 'requirement'),
-      new Action('amplifyGenerator', 'yellow-generator-2', ['holding', 'redParticles', new Num(1, 100000)], 'requirement'),
-      new Action('amplifyGenerator', 'yellow-generator-3', ['holding', 'redParticles', new Num(1, 100000)], 'requirement'),
-      new Action('amplifyGenerator', 'yellow-generator-4', ['holding', 'redParticles', new Num(1, 100000)], 'requirement'),
-      new Action('amplifyGenerator', 'yellow-generator-5', ['holding', 'redParticles', new Num(1, 100000)], 'requirement'),
-
-      new Action('amplifyUpgrades', 'red-particles', new Num(1, 0), 'buffer'),
-      new Action('amplifyUpgrades', 'red-upgrades', new Action('', ''), 'action'),
-      new Action('amplifyUpgrades', 'yellow-upgrades', new Action('', ''), 'action'),
-      new Action('setHolding', 'yellowFusion', new Num(1, 0)),
-      new Action('amplifyGenerator', 'yellow-fusion-generator', new Num(0, 0), 'multiplier'),
+      new Action('amplifyGenerator', 'yellow-generator-1', 'red-accelerator-generator-2', 'generates'),
+      new Action('amplifyUpgrade', 'accelerate-yellow-fusion', new Num(1.05, 0), 'buffer'),
+      new Action('amplifyUpgrade', 'increase-yellow-fusion', new Num(1.075, 0), 'buffer'),
     ]
   },
 ]

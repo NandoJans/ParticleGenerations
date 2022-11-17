@@ -12,6 +12,9 @@ import {YellowChallengesComponent} from "./pages/yellow/yellow-challenges/yellow
 import {PrestigeAutomatorsComponent} from "./pages/automators/prestige-automators/prestige-automators.component";
 import {RedTimelineComponent} from "./pages/timeline/red-timeline/red-timeline.component";
 import {YellowTimelineComponent} from "./pages/timeline/yellow-timeline/yellow-timeline.component";
+import {GreenGeneratorsComponent} from "./pages/green/green-generators/green-generators.component";
+import {GreenTimelineComponent} from "./pages/timeline/green-timeline/green-timeline.component";
+import {GreenSacrificeComponent} from "./pages/green/green-sacrifice/green-sacrifice.component";
 
 const routes: Routes = [
   { path: '', component: RedComponent },
@@ -23,10 +26,13 @@ const routes: Routes = [
   { path: '?/yellow/challenges', component: YellowChallengesComponent },
   { path: '?/yellow/fusion', component: YellowFusionComponent },
   { path: '?/yellow/milestones', component: YellowMilestonesComponent },
+  { path: '?/green/generators', component: GreenGeneratorsComponent },
+  { path: '?/green/sacrifice', component: GreenSacrificeComponent },
   { path: '?/automators/red', component: RedAutomatorsComponent },
   { path: '?/automators/prestige', component: PrestigeAutomatorsComponent },
   { path: '?/timeline/red', component: RedTimelineComponent },
   { path: '?/timeline/yellow', component: YellowTimelineComponent },
+  { path: '?/timeline/green', component: GreenTimelineComponent },
 ];
 
 @NgModule({

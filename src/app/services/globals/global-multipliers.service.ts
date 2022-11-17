@@ -11,6 +11,7 @@ export class GlobalMultipliersService {
     yellowParticlesGain: new Num(1, 0),
     yellowParticleGenerators: new Num(1, 0),
     yellowFusion: new Num(1, 0),
+    yellowFusionPower: new Num(2, -1),
   };
 
   constructor() { }
@@ -22,6 +23,7 @@ export class GlobalMultipliersService {
       yellowParticlesGain: new Num(1, 0),
       yellowParticleGenerators: new Num(1, 0),
       yellowFusion: new Num(1, 0),
+      yellowFusionPower: new Num(2, -1),
     }
   }
 

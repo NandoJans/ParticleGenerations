@@ -12,10 +12,11 @@ import {DataManagerService} from "./data-manager.service";
 })
 export class NavigationsService {
   static navigations: Navigation[] = [
-    { name: 'red', displayName: 'Red', location: 'red', unlocked: true, requirement: 'none' },
-    { name: 'yellow', displayName: 'Yellow', location: 'yellow', unlocked: false, requirement: ['yellows', new Num(1, 0)] },
-    { name: 'automators', displayName: 'Automators', location: 'automators', unlocked: false, requirement: ['yellows', new Num(1, 0)] },
-    { name: 'timeline', displayName: 'Timeline', location: 'timeline', unlocked: true, requirement: 'none' },
+    { name: 'red', displayName: 'R', location: 'red', unlocked: true, requirement: 'none', wasOn: 'particles' },
+    { name: 'yellow', displayName: 'Y', location: 'yellow', unlocked: false, requirement: ['yellows', new Num(1, 0)], wasOn: 'upgrades' },
+    { name: 'green', displayName: 'G', location: 'green', unlocked: false, requirement: ['greens', new Num(1, 0)], wasOn: 'generators' },
+    { name: 'automators', displayName: 'A', location: 'automators', unlocked: false, requirement: ['yellows', new Num(1, 0)], wasOn: 'red' },
+    { name: 'timeline', displayName: 'T', location: 'timeline', unlocked: true, requirement: 'none', wasOn: 'red' },
   ]
 
   static subNavigations: SubNavigation[] = [
@@ -29,11 +30,15 @@ export class NavigationsService {
     { name: 'yellowFusion', displayName: 'Fusion', location: 'fusion', parent: 'yellow', unlocked: false, requirement: ['yellowParticles', new Num(1, 32)]  },
     { name: 'yellowMilestones', displayName: 'Milestones', location: 'milestones', parent: 'yellow', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
 
+    { name: 'greenGenerators', displayName: 'Generators', location: 'generators', parent: 'green', unlocked: false, requirement: ['greens', new Num(1, 0)]  },
+    { name: 'greenSacrifice', displayName: 'Sacrifice', location: 'sacrifice', parent: 'green', unlocked: false, requirement: ['greens', new Num(1, 0)]  },
+
     { name: 'redAutomators', displayName: 'Red', location: 'red', parent: 'automators', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
     { name: 'prestigeAutomators', displayName: 'Prestige', location: 'prestige', parent: 'automators', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
 
     { name: 'redTimeline', displayName: 'Red', location: 'red', parent: 'timeline', unlocked: true, requirement: 'none'},
     { name: 'yellowTimeline', displayName: 'Yellow', location: 'yellow', parent: 'timeline', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
+    { name: 'greenTimeline', displayName: 'Green', location: 'green', parent: 'timeline', unlocked: false, requirement: ['greens', new Num(1, 0)]  },
   ]
 
   static selectedNavigation: string = 'red';
@@ -41,9 +46,11 @@ export class NavigationsService {
 
   static save() {
     const save: any = {}
-    const navigations: any[] = [];
-    navigations.concat(this.subNavigations, this.navigations).forEach((navigation) => {
-      save[navigation.name] = navigation.unlocked;
+    this.navigations.forEach((navigation) => {
+      save[navigation.name] = {unlocked: navigation.unlocked, wasOn: navigation.wasOn};
+    })
+    this.subNavigations.forEach((navigation) => {
+      save[navigation.name] = {unlocked: navigation.unlocked};
     })
     localStorage['navigations'] = JSON.stringify(save)
     localStorage['selectedNavigation'] = JSON.stringify(this.selectedNavigation);
@@ -56,8 +63,24 @@ export class NavigationsService {
     const loadedNavigations = JSON.parse(localStorage['navigations'])
     const navigations: any[] = [];
     navigations.concat(this.subNavigations, this.navigations).forEach((navigation) => {
-      if (loadedNavigations[navigation.name] !== undefined) navigation.unlocked = loadedNavigations[navigation.name];
+      if (loadedNavigations[navigation.name] !== undefined) {
+        navigation.unlocked = loadedNavigations[navigation.name]['unlocked']
+        if (loadedNavigations[navigation.name]['wasOn'] !== undefined) {
+          navigation.wasOn = loadedNavigations[navigation.name]['wasOn']
+        }
+      }
     })
+  }
+
+  static getNavigationValue(name: string, value: string) {
+    let retValue = undefined
+    this.navigations.forEach((nav) => {
+      if (nav.name === name) {
+        // @ts-ignore
+        return retValue = nav[value];
+      }
+    })
+    return retValue
   }
 
   static getLocation(subNavigation: SubNavigation) {
@@ -67,6 +90,7 @@ export class NavigationsService {
       if (nav.name === subNavigation.parent) {
         parentLocation = nav.location
         this.selectedNavigation = nav.location
+        nav.wasOn = subNavigation.location
       }
     })
     return '?/' + parentLocation + '/' + subNavigation.location;
@@ -91,13 +115,16 @@ export class NavigationsService {
   }
 
   static unlock() {
-    this.navigations.concat(this.subNavigations).forEach((navigation) => {
+    const perm: any[] = [];
+    perm.concat(this.subNavigations, this.navigations).forEach((navigation) => {
       if (navigation.requirement !== 'none' && !navigation.unlocked) {
         if (HoldingsService.get(navigation.requirement[0]).greq(navigation.requirement[1])) {
           navigation.unlocked = true;
           DataManagerService.save()
           window.location.reload();
         }
+      } else if (navigation.requirement === 'none') {
+        navigation.unlocked = true;
       }
     })
   }

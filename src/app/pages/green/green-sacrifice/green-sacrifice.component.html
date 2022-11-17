@@ -1,0 +1,15 @@
+<div class="holding-line">
+  <p class="holding-prefix">You have </p>
+  <app-number-display [name]="'greenSouls'" [style]="'green-text holding-amount'" [type]="'currency'"></app-number-display>
+  <p class="holding-prefix">Green Souls</p>
+</div>
+<div class="upgrade-row">
+  <div *ngFor="let sacrifice of sacrifices">
+    <app-upgrade *ngIf="sacrifice.unlocked"  [upgrade]="sacrifice"></app-upgrade>
+  </div>
+</div>
+<div class="upgrade-row">
+  <div *ngFor="let upgrade of upgrades">
+    <app-upgrade *ngIf="upgrade.unlocked"  [upgrade]="upgrade"></app-upgrade>
+  </div>
+</div>

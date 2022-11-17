@@ -5,6 +5,8 @@ import {Num} from "../../num";
 import {HoldingsService} from "../holdings.service";
 import {DataManagerService} from "../data-manager.service";
 import {ChallengeService} from "./challenge.service";
+import {AutomatorService} from "./automator.service";
+import {MilestoneService} from "./milestone.service";
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +41,24 @@ export class ResetService {
     })
   }
 
+  static resetAutomators(type: string) {
+    AutomatorService.automators.forEach((automator) => {
+      if (automator.resetId === type) {
+        automator.bought = new Num(0, 0);
+      } else if (automator.name === type) {
+        automator.bought = new Num(0, 0);
+      }
+    })
+  }
+
+  static resetMilestones(type: string) {
+    MilestoneService.milestones.forEach((milestone) => {
+      if (milestone.type === type) {
+        milestone.unlocked = false;
+      }
+    })
+  }
+
   static reset(resets: string) {
     HoldingsService.set('redParticles', new Num(1, 2));
     HoldingsService.set('redAccelerators', new Num(1, 0));
@@ -53,13 +73,23 @@ export class ResetService {
     this.resetUpgrades('red-particles')
     this.resetUpgrades('red-upgrades')
     DataManagerService.save()
+    if (!HoldingsService.get('yellows').greq(new Num(5, 1))) window.location.reload();
     if (resets === 'yellow') return;
 
     HoldingsService.set('yellowParticles', new Num(0, 0));
+    HoldingsService.set('yellows', new Num(0, 0));
+    HoldingsService.set('yellowFusion', new Num(1, 0));
+    HoldingsService.set('yellowPower', new Num(1, 0));
+    HoldingsService.set('yellowFusionPower', new Num(2, -1));
+    this.resetAutomators('red-automators')
+    this.resetAutomators('go-yellow-automator')
     this.resetUpgrades('yellow-upgrades')
-    this.resetGenerators('yellow-particles')
+    this.resetGenerators('yellowParticleGenerators')
+    this.resetGenerators('yellowFusionGenerators')
     this.resetUpgrades('yellow-fusion')
     this.resetChallenges('yellow-challenges')
+    DataManagerService.save()
+    if (HoldingsService.get('greens').greq(new Num(5, 1))) window.location.reload();
     if (resets === 'green') return;
   }
 }

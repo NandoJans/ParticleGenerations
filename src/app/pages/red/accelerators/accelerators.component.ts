@@ -19,6 +19,9 @@ export class AcceleratorsComponent implements OnInit {
   ngOnInit(): void {
     this.generators = GeneratorService.getGenerators('red-accelerators');
     this.upgrades = UpgradeService.getUpgrades('red-accelerators');
+    if (UpgradeService.getValue('red-accelerator-buffer', 'bought').greq(new Num(1, 0))) {
+      this.effect = ['power', 'redAccelerators', new Num(1.5, 0)]
+    }
   }
 
 }

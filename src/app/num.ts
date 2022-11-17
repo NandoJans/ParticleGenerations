@@ -190,6 +190,19 @@ export class Num {
     }
   }
 
+  // @ts-ignore
+  log = (x: Num, overwrite: boolean) => {
+    let ret_num = this.exp * 10 / (x.num * 10 ** x.exp);
+    let ret_exp = 0;
+
+    if (overwrite) {
+      this.exp = ret_exp
+      this.num = ret_num
+    } else {
+      return new Num(ret_num, ret_exp)
+    }
+  }
+
 
   greq = (x: Num) => {
     if (this.exp > x.exp) {return true}

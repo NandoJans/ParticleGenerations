@@ -67,6 +67,20 @@ export class Action {
     HoldingsService.set(this.target, this.amount);
   }
 
+  mulHolding() {
+    HoldingsService.get(this.target).mul(this.amount);
+  }
+
+  increaseHolding() {
+    // @ts-ignore
+    HoldingsService.add(this.target, this.amount.mul(UpgradeService.getValue(this.subject, this.variable), false))
+  }
+
+  decreaseHolding() {
+    // @ts-ignore
+    HoldingsService.remove(this.target, this.amount.mul(UpgradeService.getValue(this.subject, this.variable), false))
+  }
+
   amplifyUpgrade() {
     UpgradeService.setValue(this.target, this.variable, this.amount);
   }
@@ -101,6 +115,9 @@ export class Action {
         case 'unlock': this.unlock(); break;
         case 'setAction': this.setAction(); break;
         case 'setHolding': this.setHolding(); break;
+        case 'mulHolding': this.mulHolding(); break;
+        case 'increaseHolding': this.increaseHolding(); break;
+        case 'decreaseHolding': this.decreaseHolding(); break;
         case 'amplifyUpgrade': this.amplifyUpgrade(); break;
         case 'amplifyUpgrades': this.amplifyUpgrades(); break;
         case 'amplifyGenerator': this.amplifyGenerator(); break;
