@@ -217,6 +217,10 @@ footer {
   height: 100px;
 }
 
+.limited-style .maxed {
+  background-color: var(--green-button-color);
+}
+
 .red-style .maxed {
   background-color: var(--red-button-color) !important;
 }

@@ -77,15 +77,16 @@ export class ResetService {
     if (resets === 'yellow') return;
 
     HoldingsService.set('yellowParticles', new Num(0, 0));
-    HoldingsService.set('yellows', new Num(0, 0));
     HoldingsService.set('yellowFusion', new Num(1, 0));
     HoldingsService.set('yellowPower', new Num(1, 0));
     HoldingsService.set('yellowFusionPower', new Num(2, -1));
+    HoldingsService.set('greenEnergy', new Num(1, 0));
     this.resetAutomators('red-automators')
     this.resetAutomators('go-yellow-automator')
     this.resetUpgrades('yellow-upgrades')
     this.resetGenerators('yellowParticleGenerators')
     this.resetGenerators('yellowFusionGenerators')
+    this.resetGenerators('greenParticleGenerators', 'amount')
     this.resetUpgrades('yellow-fusion')
     this.resetChallenges('yellow-challenges')
     DataManagerService.save()

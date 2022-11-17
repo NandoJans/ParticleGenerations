@@ -15,6 +15,7 @@ import {DataManagerService} from "../data-manager.service";
 import {toNumbers} from "@angular/compiler-cli/src/version_helpers";
 import {greenSacrifice} from "./upgrades/green/sacrifice";
 import {limitedGreenUpgrades} from "./upgrades/green/limited";
+import {Action} from "../../action";
 
 @Injectable({
   providedIn: 'root'
@@ -109,6 +110,10 @@ export class UpgradeService {
 
   static unlock() {
     this.upgrades.forEach((upgrade) => {
+      if (upgrade.limit !== undefined) {
+        upgrade.oneTime = upgrade.bought.greq(upgrade.limit);
+      }
+
       if (upgrade.requirement[0] !== 'none' && upgrade.requirement[0] !== 'never') {
         if (HoldingsService.get(upgrade.requirement[0]).greq(upgrade.requirement[1])) {
           upgrade.unlocked = true;
@@ -127,12 +132,18 @@ export class UpgradeService {
     this.upgrades.forEach((upgrade) => {
       if (upgrade.name === 'red-generator-booster') {
         upgrade.amount = upgrade.bought.copy()
+
         // @ts-ignore
-        upgrade.amount = upgrade.amount.add(HoldingsService.get('greenEnergy').log(new Num(0.5, 0), false), false)
+        upgrade.amount = upgrade.amount.add(HoldingsService.get('greenEnergy').log(new Num(0.5, 0), false), false);
       }
       if ((upgrade.action !== undefined && upgrade.bought.greq(new Num(1, 0))) || upgrade.name === 'red-generator-booster') {
-        // @ts-ignore
-        upgrade.action.execute();
+        if (upgrade.action instanceof Action) {
+          upgrade.action.execute()
+        } else {
+          upgrade.action?.forEach(action => {
+            action.execute();
+          })
+        }
       }
     })
   }

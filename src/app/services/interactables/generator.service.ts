@@ -261,6 +261,10 @@ export class GeneratorService {
           generator.multiplier.mul(yellowFusion.add(new Num(1, 0), false).div(new Num(2, 3), false));
           if (yellowFusion.greq(new Num(1, 110))) HoldingsService.set('yellowFusion', new Num(1, 110));
         }
+
+        if (generator.type === 'green-particles') {
+          generator.multiplier.mul(GlobalMultipliersService.get('greenParticleGenerators'))
+        }
       }
     })
   }

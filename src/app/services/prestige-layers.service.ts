@@ -76,6 +76,7 @@ export class PrestigeLayersService {
         ChallengeService.prestige()
         ResetService.reset(name);
         DataManagerService.load();
+        window.location.reload();
       }
     }
   }

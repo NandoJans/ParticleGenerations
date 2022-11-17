@@ -32,6 +32,8 @@ export class Action {
     if (this.variable === 'exponent') {
       // @ts-ignore
       this.globalMultiplier(this.target, new Num(HoldingsService.get(this.subject).exp, 0).pow(this.amount, false))
+    } else if (this.variable === 'power') {
+      this.globalMultiplier(this.target, HoldingsService.get(this.subject).pow(this.amount, false));
     } else {
       this.globalMultiplier(this.target, HoldingsService.get(this.subject).mul(this.amount, false).add(new Num(1, 0), false));
     }

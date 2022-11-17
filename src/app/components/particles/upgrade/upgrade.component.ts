@@ -3,6 +3,7 @@ import {Num} from "../../../num";
 import {Upgrade} from "../../../globals";
 import {UpgradeService} from "../../../services/interactables/upgrade.service";
 import {Form, FormControl, FormGroup} from "@angular/forms";
+import {Action} from "../../../action";
 
 @Component({
   selector: 'app-upgrade',
@@ -33,7 +34,7 @@ export class UpgradeComponent implements OnInit {
     this.oneTime = this.upgrade?.oneTime;
     this.style = this.upgrade?.style;
     const action = this.upgrade?.action
-    if (action !== undefined) this.effect = [action['type'], action['amount'], action['subject'], action['variable'], this.upgrade?.buffer];
+    if (action !== undefined && action instanceof Action) this.effect = [action['type'], action['amount'], action['subject'], action['variable'], this.upgrade?.buffer];
   }
 
 }

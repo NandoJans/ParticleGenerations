@@ -65,6 +65,10 @@ export class Num {
       ret_num = this.num + x.num
     }
 
+    if (ret_num < 0.0001 && ret_exp > 1) {
+      ret_num = 0.0001
+    }
+
     while (ret_num >= 10 && ret_num !== 0) {
       ret_exp += 1
       ret_num /= 10
@@ -75,10 +79,10 @@ export class Num {
     }
 
     if (overwrite) {
-      this.num = Number(ret_num.toFixed(10))
+      this.num = ret_num
       this.exp = ret_exp
     } else {
-      return new Num(Number(ret_num.toFixed(10)), ret_exp)
+      return new Num(ret_num, ret_exp)
     }
   }
 
@@ -126,6 +130,10 @@ export class Num {
   mul = (x: Num, overwrite = true) => {
     let ret_num = this.num * x.num
     let ret_exp = this.exp + x.exp
+
+    if (ret_num < 0.0001 && ret_exp > 1) {
+      ret_num = 0.0001
+    }
 
     if (ret_num >= 10) {
       ret_exp += 1
@@ -192,7 +200,7 @@ export class Num {
 
   // @ts-ignore
   log = (x: Num, overwrite: boolean) => {
-    let ret_num = this.exp * 10 / (x.num * 10 ** x.exp);
+    let ret_num = (this.exp * 10 + this.num) / (x.num * 10 ** x.exp);
     let ret_exp = 0;
 
     if (overwrite) {
