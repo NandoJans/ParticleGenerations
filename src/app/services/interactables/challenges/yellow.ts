@@ -44,7 +44,7 @@ export const yellowChallenges: Challenge[] = [
       new Action('amplifyGenerators', 'red-accelerators', ['none'], 'requirement'),
       new Action('amplifyGenerators', 'red-accelerators', false, 'auto'),
       new Action('amplifyGenerator', 'red-accelerator-generator-1', new Num(1, 2), 'baseMultiplier'),
-      new Action('amplifyGenerator', 'red-accelerator-generator-2', new Num(1, 2), 'baseMultiplier'),
+      new Action('amplifyGenerator', 'red-accelerator-generator-2', new Num(1, 3), 'baseMultiplier'),
       new Action('amplifyUpgrade', 'red-accelerator-multiplier-1', ['redParticles', new Num(1, 130)], 'requirement'),
       new Action('amplifyUpgrade', 'red-accelerator-multiplier-2', ['redParticles', new Num(1, 250)], 'requirement'),
       new Action('amplifyUpgrade', 'red-accelerator-multiplier-3', ['redParticles', new Num(1, 830)], 'requirement'),
