@@ -52,7 +52,7 @@ export const yellowChallenges: Challenge[] = [
       new Action('amplifyUpgrade', 'red-accelerator-multiplier-1', new Num(1, 3), 'increase'),
       new Action('amplifyUpgrade', 'red-accelerator-multiplier-2', new Num(1, 49), 'baseCost'),
       new Action('amplifyUpgrade', 'red-accelerator-multiplier-2', new Num(1, 4), 'increase'),
-      new Action('amplifyUpgrade', 'red-accelerator-multiplier-3', new Num(1, 159), 'baseCost'),
+      new Action('amplifyUpgrade', 'red-accelerator-multiplier-3', new Num(1, 142), 'baseCost'),
       new Action('amplifyUpgrade', 'red-accelerator-multiplier-3', new Num(1, 5), 'increase'),
       new Action('amplifyUpgrades', 'red-accelerators', false, 'auto'),
       new Action('increaseBuffer', 'red-accelerator-multiplier-1', new Num(1, 1), 'buffer'),
