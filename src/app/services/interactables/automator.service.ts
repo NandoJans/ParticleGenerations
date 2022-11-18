@@ -7,6 +7,8 @@ import {Num} from "../../num";
 import {UpgradeService} from "./upgrade.service";
 import {PrestigeLayersService} from "../prestige-layers.service";
 import {HoldingsService} from "../holdings.service";
+import {Action} from "../../action";
+import {yellowAutomators} from "./upgrades/automators/yellow";
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +16,7 @@ import {HoldingsService} from "../holdings.service";
 export class AutomatorService {
   static automators: Automator[] = prestigeAutomators.concat(
     redAutomators,
+    yellowAutomators,
   )
 
   static save() {
@@ -84,6 +87,15 @@ export class AutomatorService {
       }
     }
     return 0;
+  }
+
+  static setValues(type: string, value: string, set: any) {
+    this.automators.forEach((automator) => {
+      if (automator.type === type) {
+        // @ts-ignore
+        automator[value] = set
+      }
+    })
   }
 
 

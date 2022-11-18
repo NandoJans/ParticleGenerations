@@ -7,4 +7,9 @@ export const prestigeAutomators: Automator[] = [
     type: 'prestige-automators', resetId: 'prestige-automators', style: 'automator', unlocked: false, active: false, requirement: ['yellows', new Num(1, 0)],
     target: 'yellow-prestige', targetType: 'prestige', waitFor: new Num(0, 0), layer: 'yellow'
   },
+  {
+    name: 'go-green-automator', displayName: 'Go Green Automator', cost: new Num(1, 3), bought: new Num(0, 0), currency: 'greenParticles',
+    type: 'prestige-automators', resetId: 'prestige-automators', style: 'automator', unlocked: false, active: false, requirement: ['greens', new Num(1, 0)],
+    target: 'green-prestige', targetType: 'prestige', waitFor: new Num(0, 0), layer: 'green'
+  },
 ]

@@ -1,4 +1,4 @@
-import {Injectable, OnInit} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Num} from "../num";
 import {holdings} from "./interactables/holdings/holdings";
 
@@ -58,6 +58,9 @@ export class HoldingsService {
       case 'yellows': return 'y';
       case 'redAccelerators': return 'RA';
       case 'greenParticles': return 'GP';
+      case 'greenEnergy': return 'GE';
+      case 'darkEnergy': return 'DE';
+      case 'greenSouls': return 'GS';
       default: return '';
     }
   }

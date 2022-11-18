@@ -35,6 +35,9 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
 import { GreenGeneratorsComponent } from './pages/green/green-generators/green-generators.component';
 import { GreenTimelineComponent } from './pages/timeline/green-timeline/green-timeline.component';
 import { GreenSacrificeComponent } from './pages/green/green-sacrifice/green-sacrifice.component';
+import { GreenMilestonesComponent } from './pages/green/green-milestones/green-milestones.component';
+import { DarkEnergyComponent } from './pages/green/dark-energy/dark-energy.component';
+import { YellowAutomatorsComponent } from './pages/automators/yellow-automators/yellow-automators.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +70,10 @@ import { GreenSacrificeComponent } from './pages/green/green-sacrifice/green-sac
     YellowTimelineComponent,
     GreenGeneratorsComponent,
     GreenTimelineComponent,
-    GreenSacrificeComponent
+    GreenSacrificeComponent,
+    GreenMilestonesComponent,
+    DarkEnergyComponent,
+    YellowAutomatorsComponent
   ],
     imports: [
         BrowserModule,

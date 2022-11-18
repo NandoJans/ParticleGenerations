@@ -4,7 +4,6 @@ import {Generator} from "../../globals";
 import {Num} from "../../num";
 import {GlobalMultipliersService} from "../globals/global-multipliers.service";
 import {UpgradeService} from "./upgrade.service";
-import {shouldBeautify} from "@angular-devkit/build-angular/src/utils/environment-options";
 import {ChallengeService} from "./challenge.service";
 
 @Injectable({
@@ -164,7 +163,7 @@ export class GeneratorService {
         add.mul(extra);
 
         if (generator.type === 'yellow-fusion') {
-          if (HoldingsService.get('yellowFusion').greq(new Num(1, 110))) {
+          if (HoldingsService.get('yellowFusion').greq(HoldingsService.get('yellowFusionMax'))) {
             add = new Num(0, 0);
           }
         }
@@ -264,7 +263,7 @@ export class GeneratorService {
           generator.multiplier.mul(GlobalMultipliersService.get('yellowFusion'));
           let yellowFusion = HoldingsService.get('yellowFusion');
           generator.multiplier.mul(yellowFusion.add(new Num(1, 0), false).div(new Num(2, 3), false));
-          if (yellowFusion.greq(new Num(1, 110))) HoldingsService.set('yellowFusion', new Num(1, 110));
+          if (yellowFusion.greq(HoldingsService.get('yellowFusionMax'))) HoldingsService.set('yellowFusion', HoldingsService.get('yellowFusionMax').copy());
         }
 
         if (generator.type === 'green-particles') {

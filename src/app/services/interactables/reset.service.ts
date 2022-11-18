@@ -61,7 +61,7 @@ export class ResetService {
 
   static reset(resets: string) {
     HoldingsService.set('redParticles', HoldingsService.get('redParticlesStart').copy());
-    HoldingsService.set('redAccelerators', new Num(1, 0));
+    HoldingsService.set('redAccelerators', HoldingsService.get('redAcceleratorsStart').copy());
     this.resetGenerators('redParticleGenerators')
     if (resets === 'redParticleGenerators') return;
 
@@ -81,7 +81,7 @@ export class ResetService {
     HoldingsService.set('yellowPower', new Num(1, 0));
     HoldingsService.set('yellowFusionPower', new Num(2, -1));
     HoldingsService.set('greenEnergy', new Num(1, 0));
-    this.resetAutomators('red-automators')
+    if (!MilestoneService.isReached('autobuyers-no-reset')) {this.resetAutomators('red-automators')}
     this.resetAutomators('go-yellow-automator')
     this.resetUpgrades('yellow-upgrades')
     this.resetGenerators('yellowParticleGenerators')
@@ -90,7 +90,7 @@ export class ResetService {
     this.resetUpgrades('yellow-fusion')
     this.resetChallenges('yellow-challenges')
     DataManagerService.save()
-    if (HoldingsService.get('greens').greq(new Num(5, 1))) window.location.reload();
+    if (!HoldingsService.get('greens').greq(new Num(5, 1))) window.location.reload();
     if (resets === 'green') return;
   }
 }

@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import {Milestone} from "../../globals";
 import {HoldingsService} from "../holdings.service";
 import {yellowMilestones} from "./milestones/yellow";
+import {greenMilestones} from "./milestones/green";
 
 @Injectable({
   providedIn: 'root'
 })
 export class MilestoneService {
   static milestones: Milestone[] =
-    yellowMilestones
+    yellowMilestones.concat(greenMilestones)
 
   static save() {
     const save = {};
@@ -41,6 +42,17 @@ export class MilestoneService {
     })
 
     return ret_arr;
+  }
+
+  static isReached(name: string) {
+    for (let i = 0; i < this.milestones.length; i++) {
+      const milestone = this.milestones[i];
+      if (milestone.name === name) {
+        // @ts-ignore
+        return HoldingsService.get(milestone.currency).greq(milestone.cost);
+      }
+    }
+    return false;
   }
 
   static getValue(name: string, value: string) {

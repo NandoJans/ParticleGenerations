@@ -15,6 +15,9 @@ import {YellowTimelineComponent} from "./pages/timeline/yellow-timeline/yellow-t
 import {GreenGeneratorsComponent} from "./pages/green/green-generators/green-generators.component";
 import {GreenTimelineComponent} from "./pages/timeline/green-timeline/green-timeline.component";
 import {GreenSacrificeComponent} from "./pages/green/green-sacrifice/green-sacrifice.component";
+import {GreenMilestonesComponent} from "./pages/green/green-milestones/green-milestones.component";
+import {DarkEnergyComponent} from "./pages/green/dark-energy/dark-energy.component";
+import {YellowAutomatorsComponent} from "./pages/automators/yellow-automators/yellow-automators.component";
 
 const routes: Routes = [
   { path: '', component: RedComponent },
@@ -28,7 +31,10 @@ const routes: Routes = [
   { path: '?/yellow/milestones', component: YellowMilestonesComponent },
   { path: '?/green/generators', component: GreenGeneratorsComponent },
   { path: '?/green/sacrifice', component: GreenSacrificeComponent },
+  { path: '?/green/milestones', component: GreenMilestonesComponent },
+  { path: '?/green/darkenergy', component: DarkEnergyComponent },
   { path: '?/automators/red', component: RedAutomatorsComponent },
+  { path: '?/automators/yellow', component: YellowAutomatorsComponent },
   { path: '?/automators/prestige', component: PrestigeAutomatorsComponent },
   { path: '?/timeline/red', component: RedTimelineComponent },
   { path: '?/timeline/yellow', component: YellowTimelineComponent },

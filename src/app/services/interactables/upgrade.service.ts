@@ -16,6 +16,7 @@ import {toNumbers} from "@angular/compiler-cli/src/version_helpers";
 import {greenSacrifice} from "./upgrades/green/sacrifice";
 import {limitedGreenUpgrades} from "./upgrades/green/limited";
 import {Action} from "../../action";
+import {darkenergyUpgrades} from "./upgrades/green/darkenergy";
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,7 @@ export class UpgradeService {
   static upgrades: Upgrade[] =
     redUpgrades.concat(
       greenSacrifice,
+      darkenergyUpgrades,
       limitedGreenUpgrades,
       yellowFusionUpgrades,
       yellowUpgrades,

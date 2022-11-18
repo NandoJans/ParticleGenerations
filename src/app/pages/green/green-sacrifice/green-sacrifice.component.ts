@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {Upgrade} from "../../../globals";
 import {UpgradeService} from "../../../services/interactables/upgrade.service";
+import {Num} from "../../../num";
+import {HoldingsService} from "../../../services/holdings.service";
 
 @Component({
   selector: 'app-green-sacrifice',
@@ -11,6 +13,18 @@ export class GreenSacrificeComponent implements OnInit {
   sacrifices: Upgrade[] = [];
   upgrades: Upgrade[] = [];
   constructor() { }
+
+  respecSouls() {
+    console.log('hi')
+    UpgradeService.getUpgrades('green-limited-upgrades').forEach((upgrade) => {
+      upgrade.bought.mul(new Num(0, 0))
+      const doc = (<HTMLElement> document.getElementById('buyable-'+upgrade.name));
+      if (doc !== undefined) {
+        doc.innerHTML = upgrade.cost.toString() + ' ' + HoldingsService.getAbbreviation(upgrade.currency);
+        doc.classList.remove('maxed');
+      }
+    })
+  }
 
   ngOnInit(): void {
     this.sacrifices = UpgradeService.getUpgrades('green-sacrifices');

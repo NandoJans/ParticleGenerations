@@ -5,6 +5,8 @@ import {ResetService} from "./reset.service";
 import {HoldingsService} from "../holdings.service";
 import {PrestigeLayersService} from "../prestige-layers.service";
 import {DataManagerService} from "../data-manager.service";
+import {UpgradeService} from "./upgrade.service";
+import {MilestoneService} from "./milestone.service";
 
 @Injectable({
   providedIn: 'root'
@@ -111,6 +113,9 @@ export class ChallengeService {
     this.challenges.forEach(challenge => {
       if (HoldingsService.get(challenge.requirement[0]).greq(challenge.requirement[1])) {
         challenge.unlocked = true;
+        if (MilestoneService.isReached('auto-complete-'+challenge.prestige+'-challenges')) {
+          challenge.completed = true;
+        }
       }
       if (challenge.completed && (<HTMLElement> document.getElementById(challenge.name+'-button')) !== null) {
         (<HTMLElement> document.getElementById(challenge.name+'-button')).innerHTML = 'Completed';
@@ -123,6 +128,16 @@ export class ChallengeService {
     this.challenges.forEach(challenge => {
       if (challenge.completed && !challenge.disabled) {
         challenge.reward.execute();
+      }
+    })
+  }
+
+  static setValues(type: string, value: string, set: any) {
+    this.challenges.forEach((challenge) => {
+      if (challenge.type == type) {
+
+        // @ts-ignore
+        challenge[value] = set
       }
     })
   }

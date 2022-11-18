@@ -20,20 +20,23 @@ export class NavigationsService {
   ]
 
   static subNavigations: SubNavigation[] = [
-    { name: 'redParticles', displayName: 'Particles', location: 'particles', parent: 'red', unlocked: true, requirement: 'none' },
+    { name: 'redParticles', displayName: 'Gen', location: 'particles', parent: 'red', unlocked: true, requirement: 'none' },
     { name: 'redAccelerators', displayName: 'Accelerators', location: 'accelerators', parent: 'red', unlocked: false, requirement: ['redParticles', new Num(1, 20)]  },
     { name: 'redUpgrades', displayName: 'Upgrades', location: 'upgrades', parent: 'red', unlocked: false, requirement: ['redParticles', new Num(1, 40)]  },
 
-    { name: 'yellowUpgrades', displayName: 'Upgrades', location: 'upgrades', parent: 'yellow', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
-    { name: 'yellowGenerators', displayName: 'Generators', location: 'generators', parent: 'yellow', unlocked: false, requirement: ['yellowParticles', new Num(1, 2)]  },
-    { name: 'yellowChallenges', displayName: 'Challenges', location: 'challenges', parent: 'yellow', unlocked: false, requirement: ['yellowParticles', new Num(1, 5)]  },
-    { name: 'yellowFusion', displayName: 'Fusion', location: 'fusion', parent: 'yellow', unlocked: false, requirement: ['yellowParticles', new Num(1, 32)]  },
-    { name: 'yellowMilestones', displayName: 'Milestones', location: 'milestones', parent: 'yellow', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
+    { name: 'yellowUpgrades', displayName: 'Up', location: 'upgrades', parent: 'yellow', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
+    { name: 'yellowGenerators', displayName: 'Gen', location: 'generators', parent: 'yellow', unlocked: false, requirement: ['yellowParticles', new Num(1, 2)]  },
+    { name: 'yellowChallenges', displayName: 'Chal', location: 'challenges', parent: 'yellow', unlocked: false, requirement: ['yellowParticles', new Num(1, 5)]  },
+    { name: 'yellowFusion', displayName: 'Fuse', location: 'fusion', parent: 'yellow', unlocked: false, requirement: ['yellowParticles', new Num(1, 32)]  },
+    { name: 'yellowMilestones', displayName: 'Mile', location: 'milestones', parent: 'yellow', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
 
     { name: 'greenGenerators', displayName: 'Generators', location: 'generators', parent: 'green', unlocked: false, requirement: ['greens', new Num(1, 0)]  },
     { name: 'greenSacrifice', displayName: 'Sacrifice', location: 'sacrifice', parent: 'green', unlocked: false, requirement: ['greens', new Num(1, 0)]  },
+    { name: 'darkEnergy', displayName: 'Dark Energy', location: 'darkenergy', parent: 'green', unlocked: false, requirement: ['greens', new Num(1, 1)]  },
+    { name: 'greenMilestones', displayName: 'Milestones', location: 'milestones', parent: 'green', unlocked: false, requirement: ['greens', new Num(1, 0)]  },
 
     { name: 'redAutomators', displayName: 'Red', location: 'red', parent: 'automators', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
+    { name: 'yellowAutomators', displayName: 'Yellow', location: 'yellow', parent: 'automators', unlocked: false, requirement: ['greens', new Num(1, 0)]  },
     { name: 'prestigeAutomators', displayName: 'Prestige', location: 'prestige', parent: 'automators', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
 
     { name: 'redTimeline', displayName: 'Red', location: 'red', parent: 'timeline', unlocked: true, requirement: 'none'},

@@ -47,8 +47,12 @@ export class TimelineService {
     },
 
     {
-      name: 'green-phase', displayName: 'And there we have it', description: 'For all our needs of free boosters. Like we don\'t have enough.', hasProgress: false,
+      name: 'green-phase-start', displayName: 'And there we have it', description: 'For all our needs of free boosters. Like we don\'t have enough.', hasProgress: false,
       unlocked: true, requirement: ['none'], type: 'green-timeline', reached: false, unlock: ['greenParticles', new Num(1, 0)]
+    },
+    {
+      name: 'dark-energy', displayName: 'This is different', description: 'What if we compress green energy.', hasProgress: true,
+      unlocked: true, requirement: ['greens', new Num(1, 0)], type: 'green-timeline', reached: false, unlock: ['greens', new Num(1, 1)]
     },
   ]
 

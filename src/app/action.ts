@@ -4,6 +4,7 @@ import {Num} from "./num";
 import {HoldingsService} from "./services/holdings.service";
 import {GeneratorService} from "./services/interactables/generator.service";
 import {ChallengeService} from "./services/interactables/challenge.service";
+import {AutomatorService} from "./services/interactables/automator.service";
 
 export class Action {
   type: string;
@@ -44,6 +45,16 @@ export class Action {
     this.globalMultiplier(this.target, UpgradeService.getValue(this.subject, 'buffer').pow(UpgradeService.getValue(this.subject, this.variable), false).pow(this.amount, false));
   }
 
+  basedOnUpgradeMul() {
+    // @ts-ignore
+    this.globalMultiplier(this.target, UpgradeService.getValue(this.subject, 'buffer').mul(UpgradeService.getValue(this.subject, this.variable), false).pow(this.amount, false));
+  }
+
+  basedOnUpgradeAmount() {
+    // @ts-ignore
+    this.globalMultiplier(this.target, new Num(2, 0).pow(UpgradeService.getValue(this.subject, this.variable).sub(new Num(1, 0), false), false));
+  }
+
   basedOnGenerator() {
     // @ts-ignore
     this.globalMultiplier(this.target, GeneratorService.getValue(this.subject, this.variable).pow(this.amount, false).add(new Num(1, 0), false));
@@ -78,9 +89,19 @@ export class Action {
     HoldingsService.add(this.target, this.amount.mul(UpgradeService.getValue(this.subject, this.variable), false))
   }
 
+  increaseHoldingIncremental() {
+    // @ts-ignore
+    HoldingsService.get(this.target).mul(this.amount.pow(UpgradeService.getValue(this.subject, this.variable), false))
+  }
+
   decreaseHolding() {
     // @ts-ignore
     HoldingsService.remove(this.target, this.amount.mul(UpgradeService.getValue(this.subject, this.variable), false))
+  }
+
+  decreaseHoldingIncremental() {
+    // @ts-ignore
+    HoldingsService.remove(this.target, this.amount.pow(UpgradeService.getValue(this.subject, this.variable).sub(new Num(1, 0), false), false))
   }
 
   amplifyUpgrade() {
@@ -92,13 +113,13 @@ export class Action {
   }
 
   amplifyGenerator() {
-    console.log()
     GeneratorService.setValue(this.target, this.variable, this.amount);
   }
 
   amplifyGenerators() {
     GeneratorService.setValues(this.target, this.variable, this.amount);
   }
+
 
   hasRequirement() {
     if (this.requirement === undefined) return true;
@@ -111,6 +132,8 @@ export class Action {
         case 'globalMultiplier': this.globalMultiplier(this.target, this.amount); break;
         case 'basedOnHolding': this.basedOnHolding(); break;
         case 'basedOnUpgrade': this.basedOnUpgrade(); break;
+        case 'basedOnUpgradeMul': this.basedOnUpgradeMul(); break;
+        case 'basedOnUpgradeAmount': this.basedOnUpgrade(); break;
         case 'basedOnGenerator': this.basedOnGenerator(); break;
         case 'increaseBuffer': this.increaseBuffer(); break;
         case 'increaseMultiplier': this.increaseMultiplier(); break;
@@ -119,7 +142,9 @@ export class Action {
         case 'setHolding': this.setHolding(); break;
         case 'mulHolding': this.mulHolding(); break;
         case 'increaseHolding': this.increaseHolding(); break;
+        case 'increaseHoldingIncremental': this.increaseHoldingIncremental(); break;
         case 'decreaseHolding': this.decreaseHolding(); break;
+        case 'decreaseHoldingIncremental': this.decreaseHoldingIncremental(); break;
         case 'amplifyUpgrade': this.amplifyUpgrade(); break;
         case 'amplifyUpgrades': this.amplifyUpgrades(); break;
         case 'amplifyGenerator': this.amplifyGenerator(); break;

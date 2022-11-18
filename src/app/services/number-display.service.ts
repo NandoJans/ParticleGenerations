@@ -76,13 +76,18 @@ export class NumberDisplayService {
                   }
                 } else if (effectType === 'basedOnUpgrade') {
 
-                  element.innerHTML = 'Current: x' + UpgradeService.getValue(entry.effect[2], 'buffer').pow(UpgradeService.getValue(entry.effect[2], entry.effect[3]), false).pow(entry.effect[4], false).toString(true)
+                  element.innerHTML = 'Current: x' + UpgradeService.getValue(entry.effect[2], 'buffer').pow(UpgradeService.getValue(entry.effect[2], entry.effect[3]), false).toString(true)
+                } else if (effectType === 'basedOnUpgradeMul') {
+
+                  element.innerHTML = 'Current: x' + UpgradeService.getValue(entry.effect[2], 'buffer').mul(UpgradeService.getValue(entry.effect[2], entry.effect[3]), false).pow(entry.effect[4], false).toString(true)
                 } else if (effectType === 'basedOnGenerator') {
 
-                    element.innerHTML = 'Current: x' + GeneratorService.getValue(entry.effect[2], entry.effect[3]).pow(entry.effect[4], false).add(new Num(1, 0), false).toString(true)
+                  element.innerHTML = 'Current: x' + GeneratorService.getValue(entry.effect[2], entry.effect[3]).pow(entry.effect[4], false).add(new Num(1, 0), false).toString(true)
                 } else if (effectType === 'increaseBuffer') {
 
-                } else if (effectType === 'amplifyUpgrade') {
+                } else if (effectType === 'increaseHoldingIncremental') {
+                  element.innerHTML = 'Current: x' + entry.effect[1].pow(UpgradeService.getValue(entry.effect[2], entry.effect[3]), false)
+                }  else if (effectType === 'amplifyUpgrade') {
 
                 }
               }

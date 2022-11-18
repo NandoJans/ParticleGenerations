@@ -27,6 +27,8 @@ export class TickService {
     mainActions.forEach((action) => {
       action.execute();
     })
+    HoldingsService.remove('darkEnergy', HoldingsService.get('darkEnergySubtract'))
+    HoldingsService.set('yellowFusionMax', new Num(1, 110))
   }
 
   gameTick(speed: Num = new Num(1, 0)) {
@@ -47,8 +49,9 @@ export class TickService {
 
     //HoldingsService.set('redParticles', new Num(1, 2000))
     //HoldingsService.set('yellowParticles', new Num(1, 110))
-    //HoldingsService.set('greenParticles', new Num(1, 0))
+    //HoldingsService.set('greenParticles', new Num(5, 0))
     //HoldingsService.set('yellows', new Num(5, 3))
+    //HoldingsService.set('greens', new Num(5, 3))
     //HoldingsService.set('yellowFusion', new Num(1, 110))
 
     AutomatorService.setAutos();

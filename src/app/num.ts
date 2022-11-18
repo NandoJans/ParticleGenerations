@@ -118,6 +118,8 @@ export class Num {
       ret_num *= 10
     }
 
+    if (ret_num === 0) ret_exp = 0;
+
     if (overwrite) {
       this.num = Number(ret_num.toFixed(10))
       this.exp = ret_exp
@@ -220,6 +222,8 @@ export class Num {
 
 
   greq = (x: Num) => {
+    if (this.num === 0 && x.num !== 0) return false;
+    if (x.num === 0 && this.num !== 0) return true;
     if (this.exp > x.exp) {return true}
     else if (this.exp == x.exp) {
       return this.num >= x.num;
