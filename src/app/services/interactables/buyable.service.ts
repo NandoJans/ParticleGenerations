@@ -30,7 +30,7 @@ export class BuyableService {
       }
     })
     UpgradeService.upgrades.forEach((buyable) => {
-      if (buyable.name === name) {
+      if (buyable.name === name && HoldingsService.get(buyable.currency).greq(buyable.cost)) {
         this.buyAction(buyable)
         if (buyable.resets !== 'none') ResetService.reset(buyable.resets);
         while (HoldingsService.get(buyable.currency).greq(buyable.cost) && !buyable.oneTime) {
