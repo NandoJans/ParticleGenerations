@@ -80,6 +80,7 @@ export class TickService {
     let lastCalled = Date.now();
     setInterval(() => {
       if (!HoldingsService.get('greenEnergy').greq(new Num(1, 0))) {HoldingsService.set('greenEnergy', new Num(1, 0))}
+      if (!HoldingsService.get('redParticles').greq(new Num(2, 1))) {HoldingsService.set('redParticles', new Num(2, 1))}
       while (lastCalled+5000 < Date.now()) {
         this.gameTick(new Num(1, 2))
 
