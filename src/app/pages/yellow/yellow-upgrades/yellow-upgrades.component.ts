@@ -8,11 +8,13 @@ import {UpgradeService} from "../../../services/interactables/upgrade.service";
   styleUrls: ['./yellow-upgrades.component.css']
 })
 export class YellowUpgradesComponent implements OnInit {
+  repeatableUpgrades: Upgrade[] = [];
   upgrades: Upgrade[] = [];
 
   constructor() { }
 
   ngOnInit(): void {
+    this.repeatableUpgrades = UpgradeService.getUpgrades('yellow-upgrades-repeatable')
     this.upgrades = UpgradeService.getUpgrades('yellow-upgrades')
   }
 

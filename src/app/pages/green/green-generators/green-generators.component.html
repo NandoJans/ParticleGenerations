@@ -13,3 +13,8 @@
     <app-generator *ngIf="generator.unlocked" [generator]="generator"></app-generator>
   </div>
 </div>
+<div class="generators-row">
+  <div *ngFor="let upgrade of upgrades">
+    <app-upgrade *ngIf="upgrade.unlocked" [upgrade]="upgrade"></app-upgrade>
+  </div>
+</div>

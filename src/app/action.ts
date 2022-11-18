@@ -101,7 +101,7 @@ export class Action {
 
   decreaseHoldingIncremental() {
     // @ts-ignore
-    HoldingsService.remove(this.target, this.amount.pow(UpgradeService.getValue(this.subject, this.variable).sub(new Num(1, 0), false), false))
+    HoldingsService.remove(this.target, this.amount.pow(UpgradeService.getValue(this.subject, this.variable), false).sub(new Num(1, 0), false))
   }
 
   amplifyUpgrade() {

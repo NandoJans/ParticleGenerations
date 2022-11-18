@@ -24,6 +24,11 @@ export const greenMilestones: Milestone[] = [
     action: new Action('setHolding', 'redAcceleratorsStart', new Num(1, 10)),
   },
   {
+    name: 'keep-yellow-upgrades', displayName: 'Keep yellow upgrades', description: 'You keep your yellow upgrades on going green.', type: 'green-milestone', style: 'green-style',
+    unlocked: false, requirement: ['greens', new Num(1, 0)], cost: new Num(5, 0), currency: 'greens', buffer: new Num(1, 0),
+    action: new Action('amplifyUpgrades', 'yellow-upgrades', 'green-upgrades', 'resetId'),
+  },
+  {
     name: 'auto-complete-yellow-challenges', displayName: 'Yellow Challenges dodger', description: 'Complete yellow challenges as soon as you would unlock them.', type: 'green-milestone', style: 'green-style',
     unlocked: false, requirement: ['greens', new Num(1, 0)], cost: new Num(1, 1), currency: 'greens', buffer: new Num(1, 0),
     action: new Action('', 'redAcceleratorsStart', new Num(1, 10)),

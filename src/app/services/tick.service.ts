@@ -51,8 +51,10 @@ export class TickService {
     //HoldingsService.set('yellowParticles', new Num(1, 110))
     //HoldingsService.set('greenParticles', new Num(5, 0))
     //HoldingsService.set('yellows', new Num(5, 3))
-    //HoldingsService.set('greens', new Num(5, 3))
+    //HoldingsService.set('greens', new Num(1, 1))
     //HoldingsService.set('yellowFusion', new Num(1, 110))
+    //HoldingsService.set('greenEnergy', new Num(1, 20))
+    //console.log(HoldingsService.get('darkEnergy').toString())
 
     AutomatorService.setAutos();
     ChallengeService.applyNerfs();

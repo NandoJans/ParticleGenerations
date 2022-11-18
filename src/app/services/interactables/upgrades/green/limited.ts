@@ -14,7 +14,7 @@ export const limitedGreenUpgrades: Upgrade[] = [
     baseCost: new Num(3,0), cost: new Num(3, 0), increase: new Num(1,0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenSouls',
     baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'green-limited-upgrades', resetId: 'green-limited-upgrades', style: 'limited-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['greens', new Num(1, 0)],
     action: [
-      new Action('basedOnHolding', 'greenParticleGenerators', new Num(1, -2), 'power', 'greenEnergy'),
+      new Action('basedOnHolding', 'greenParticleGenerators', new Num(3, -2), 'power', 'greenEnergy'),
       new Action('decreaseHolding', 'greenSouls', new Num(3, 0), 'cost', 'red-accelerator-buffer'),
     ]
   },
@@ -34,6 +34,15 @@ export const limitedGreenUpgrades: Upgrade[] = [
     action: [
       new Action('increaseBuffer', 'red-generator-booster', new Num(3, 0)),
       new Action('decreaseHolding', 'greenSouls', new Num(1, 1), 'cost', 'red-accelerator-buffer'),
+    ]
+  },
+  {
+    name: 'green-buffs-yellow-generators', displayName: 'Green generators boost yellow generators', description: '', auto: false,
+    baseCost: new Num(1.6,1), cost: new Num(1.6, 1), increase: new Num(1,0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenSouls',
+    baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'green-limited-upgrades', resetId: 'green-limited-upgrades', style: 'limited-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['greens', new Num(1, 0)],
+    action: [
+      new Action('basedOnGenerator', 'yellowParticleGenerators', new Num(2, 1), 'amount', 'green-generator-1'),
+      new Action('decreaseHolding', 'greenSouls', new Num(1.6, 1), 'cost', 'red-accelerator-buffer'),
     ]
   },
 ]

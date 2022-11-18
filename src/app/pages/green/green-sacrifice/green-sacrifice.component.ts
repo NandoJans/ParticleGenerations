@@ -15,7 +15,6 @@ export class GreenSacrificeComponent implements OnInit {
   constructor() { }
 
   respecSouls() {
-    console.log('hi')
     UpgradeService.getUpgrades('green-limited-upgrades').forEach((upgrade) => {
       upgrade.bought.mul(new Num(0, 0))
       const doc = (<HTMLElement> document.getElementById('buyable-'+upgrade.name));

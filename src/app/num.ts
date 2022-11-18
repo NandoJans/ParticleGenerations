@@ -222,8 +222,8 @@ export class Num {
 
 
   greq = (x: Num) => {
-    if (this.num === 0 && x.num !== 0) return false;
-    if (x.num === 0 && this.num !== 0) return true;
+    //if (this.num === 0 && x.num !== 0) return false;
+    //if (x.num === 0 && this.num !== 0) return true;
     if (this.exp > x.exp) {return true}
     else if (this.exp == x.exp) {
       return this.num >= x.num;

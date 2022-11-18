@@ -6,13 +6,13 @@ export const yellowUpgrades: Upgrade[] = [
   {
     name: 'yellow-repeatable-multiplier', displayName: 'Multiply 2', description: 'Multiply red generators by 2', auto: false,
     baseCost: new Num(1,0), cost: new Num(1, 0), increase: new Num(1,1), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'yellowParticles',
-    baseBuffer: new Num(2, 0), buffer: new Num(2, 0), amount: new Num(0, 0), type: 'yellow-upgrades', resetId: 'yellow-upgrades', style: 'yellow-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['yellows', new Num(1, 0)],
+    baseBuffer: new Num(2, 0), buffer: new Num(2, 0), amount: new Num(0, 0), type: 'yellow-upgrades-repeatable', resetId: 'yellow-upgrades', style: 'yellow-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['yellows', new Num(1, 0)],
     action: new Action('basedOnUpgrade', 'redParticleGenerators', new Num(1, 0), 'bought', 'yellow-repeatable-multiplier')
   },
   {
     name: 'yellow-particle-multiplier', displayName: 'Multiply particles by 2', description: 'Multiply yellow particles by 2', auto: false,
     baseCost: new Num(1,0), cost: new Num(1, 0), increase: new Num(1,1), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'yellowParticles',
-    baseBuffer: new Num(2, 0), buffer: new Num(2, 0), amount: new Num(0, 0), type: 'yellow-upgrades', resetId: 'yellow-upgrades', style: 'yellow-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['yellows', new Num(1, 0)],
+    baseBuffer: new Num(2, 0), buffer: new Num(2, 0), amount: new Num(0, 0), type: 'yellow-upgrades-repeatable', resetId: 'yellow-upgrades', style: 'yellow-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['yellows', new Num(1, 0)],
     action: new Action('basedOnUpgrade', 'yellowParticlesGain', new Num(1, 0), 'bought', 'yellow-particle-multiplier')
   },
   {

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {GeneratorService} from "../../../services/interactables/generator.service";
-import {Generator} from "../../../globals";
+import {Generator, Upgrade} from "../../../globals";
 import {Num} from "../../../num";
+import {UpgradeService} from "../../../services/interactables/upgrade.service";
 
 @Component({
   selector: 'app-green-generators',
@@ -10,12 +11,14 @@ import {Num} from "../../../num";
 })
 export class GreenGeneratorsComponent implements OnInit {
   generators: Generator[] = [];
-  effect: any[] = ['log', 'greenEnergy', new Num(0.5, 0)]
+  upgrades: Upgrade[] = [];
+  effect: any[] = ['log', 'greenEnergy', new Num(0.8, 0)]
 
   constructor() { }
 
   ngOnInit(): void {
     this.generators = GeneratorService.getGenerators('green-particles');
+    this.upgrades = UpgradeService.getUpgrades('green-upgrade');
   }
 
 }

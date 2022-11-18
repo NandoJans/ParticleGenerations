@@ -13,6 +13,9 @@
     <app-upgrade *ngIf="sacrifice.unlocked"  [upgrade]="sacrifice"></app-upgrade>
   </div>
 </div>
+<div class="holding-line">
+  <app-button [text]="'Respec Dark Energy'" (click)="respecDark()" [style]="'sacrifice-button'"></app-button>
+</div>
 <div class="upgrade-row">
   <div *ngFor="let upgrade of upgrades">
     <app-upgrade *ngIf="upgrade.unlocked"  [upgrade]="upgrade"></app-upgrade>

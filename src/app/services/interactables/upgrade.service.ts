@@ -6,17 +6,12 @@ import {redUpgrades} from "./upgrades/red/upgrade";
 import {redGeneratorUpgrades} from "./upgrades/red/generator";
 import {redAccelerators} from "./upgrades/red/accelerator";
 import {yellowUpgrades} from "./upgrades/yellow/upgrade";
-import {redAutomators} from "./upgrades/automators/red";
 import {yellowFusionUpgrades} from "./upgrades/yellow/fusion";
-import {prestigeAutomators} from "./upgrades/automators/prestige";
-import {PrestigeLayersService} from "../prestige-layers.service";
-import {PrestigeAutomatorsComponent} from "../../pages/automators/prestige-automators/prestige-automators.component";
-import {DataManagerService} from "../data-manager.service";
-import {toNumbers} from "@angular/compiler-cli/src/version_helpers";
 import {greenSacrifice} from "./upgrades/green/sacrifice";
 import {limitedGreenUpgrades} from "./upgrades/green/limited";
 import {Action} from "../../action";
 import {darkenergyUpgrades} from "./upgrades/green/darkenergy";
+import {greenUpgrades} from "./upgrades/green/upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +20,7 @@ export class UpgradeService {
   static upgrades: Upgrade[] =
     redUpgrades.concat(
       greenSacrifice,
+      greenUpgrades,
       darkenergyUpgrades,
       limitedGreenUpgrades,
       yellowFusionUpgrades,
@@ -136,7 +132,7 @@ export class UpgradeService {
         upgrade.amount = upgrade.bought.copy()
 
         // @ts-ignore
-        upgrade.amount = upgrade.amount.add(HoldingsService.get('greenEnergy').log(new Num(0.5, 0), false), false);
+        upgrade.amount = upgrade.amount.add(HoldingsService.get('greenEnergy').log(new Num(0.8, 0), false), false);
       }
       if ((upgrade.action !== undefined && upgrade.bought.greq(new Num(1, 0))) || upgrade.name === 'red-generator-booster') {
         if (upgrade.action instanceof Action) {
