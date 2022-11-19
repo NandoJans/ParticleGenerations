@@ -70,7 +70,9 @@ export class NumberDisplayService {
                   element.innerHTML = 'Current: x' + entry.effect[3].mul(UpgradeService.getValue(entry.name, 'bought'), false)
                 } else if (effectType === 'basedOnHolding') {
                   if (entry.effect[3] === 'exponent') {
-                      element.innerHTML = 'Current: x' + new Num(HoldingsService.get(entry.effect[2]).exp, 0).pow(entry.effect[4], false);
+                    element.innerHTML = 'Current: x' + new Num(HoldingsService.get(entry.effect[2]).exp, 0).pow(entry.effect[4], false);
+                  } else if (entry.effect[3] === 'power') {
+                    element.innerHTML = 'Current: x' + HoldingsService.get(entry.effect[2]).pow(entry.effect[1], false).toString(true)
                   } else {
                     element.innerHTML = 'Current: x' + HoldingsService.get(entry.effect[2]).mul(entry.effect[1], false).add(new Num(1, 0), false).toString(true)
                   }

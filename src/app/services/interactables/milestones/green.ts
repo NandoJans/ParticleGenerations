@@ -36,6 +36,6 @@ export const greenMilestones: Milestone[] = [
   {
     name: 'yellow-fusion-keeper', displayName: 'Yellow Fusion Starter', description: 'Start greens with fusion unlocked.', type: 'green-milestone', style: 'green-style',
     unlocked: false, requirement: ['greens', new Num(1, 0)], cost: new Num(2, 1), currency: 'greens', buffer: new Num(1, 0),
-    action: new Action('amplifyUpgrade', 'unlock-yellow-fusion', 'green-ugprades', 'resetId'),
+    action: new Action('amplifyUpgrades', 'yellow-fusion', 'green-upgrades', 'resetId'),
   },
 ]

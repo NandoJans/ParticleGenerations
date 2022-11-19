@@ -14,6 +14,7 @@ import {ChallengeService} from "./interactables/challenge.service";
 import {AutomatorService} from "./interactables/automator.service";
 import {TimelineService} from "./timeline.service";
 import {mainActions} from "./interactables/action/mainActions";
+import {Searcher} from "../Searcher";
 
 @Injectable({
   providedIn: 'root'
@@ -49,9 +50,9 @@ export class TickService {
 
     //HoldingsService.set('redParticles', new Num(1, 2000))
     //HoldingsService.set('yellowParticles', new Num(3, 14))
-    //HoldingsService.set('greenParticles', new Num(5, 0))
-    //HoldingsService.set('yellows', new Num(5, 3))
-    //HoldingsService.set('greens', new Num(1, 1))
+    //HoldingsService.set('greenParticles', new Num(1, 3))
+    HoldingsService.set('yellows', new Num(5, 3))
+    //HoldingsService.set('greens', new Num(1, 2))
     //HoldingsService.set('yellowFusion', new Num(1, 110))
     //HoldingsService.set('greenEnergy', new Num(1, 20))
     //console.log(HoldingsService.get('darkEnergy').toString())
@@ -91,7 +92,6 @@ export class TickService {
 
         lastCalled += 5000;
       }
-
       this.gameTick(new Num(0.5, 0))
 
       lastCalled = Date.now();

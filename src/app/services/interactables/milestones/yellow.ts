@@ -16,7 +16,7 @@ export const yellowMilestones: Milestone[] = [
   {
     name: 'red-booster-no-reset', displayName: 'Red booster starter', description: 'You start with red boosters unlocked.', type: 'yellow-milestone', style: 'yellow-style',
     unlocked: false, requirement: ['yellows', new Num(1, 0)], cost: new Num(1, 1), currency: 'yellows', buffer: new Num(1, 0),
-    action: new Action('amplifyUpgrade', 'red-generator-booster-upgrade', 'yellow-upgrades', 'resetId'),
+    action: new Action('amplifyUpgrade', 'unlock-red-generators-booster', 'yellow-upgrades', 'resetId'),
   },
   {
     name: 'red-upgrades-no-reset', displayName: 'Red upgrades keeper', description: 'You keep your red upgrades on going yellow.', type: 'yellow-milestone', style: 'yellow-style',

@@ -52,7 +52,8 @@ export class BuyableService {
 
   compare() {
     GeneratorService.generators.forEach((buyable) => {
-      if (HoldingsService.get(buyable.currency).greq(buyable.cost) && buyable['unlocked'] && buyable['auto']) {
+      if (HoldingsService.get(buyable.currency).greq(buyable.cost) && buyable['unlocked']
+        && buyable['auto']) {
         while (HoldingsService.get(buyable.currency).greq(buyable.cost)) {
           this.buyAction(buyable);
         }
@@ -72,10 +73,12 @@ export class BuyableService {
       }
     })
     UpgradeService.upgrades.forEach((buyable) => {
-      if (HoldingsService.get(buyable.currency).greq(buyable.cost) && buyable['unlocked'] && buyable['auto']) {
+      if (HoldingsService.get(buyable.currency).greq(buyable.cost) && buyable['unlocked'] &&
+        buyable['auto'] && (buyable.limit === undefined || !buyable.cost.greq(buyable.limit))) {
         this.buyAction(buyable);
         if (buyable.resets !== 'none') ResetService.reset(buyable.resets);
-        while (HoldingsService.get(buyable.currency).greq(buyable.cost) && !buyable.oneTime) {
+        while (HoldingsService.get(buyable.currency).greq(buyable.cost) && !buyable.oneTime
+          && (buyable.limit === undefined || !buyable.cost.greq(buyable.limit))) {
           this.buyAction(buyable);
           if (buyable.resets !== 'none') ResetService.reset(buyable.resets);
         }

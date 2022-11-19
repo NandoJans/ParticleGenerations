@@ -69,6 +69,12 @@ export class Num {
       ret_num = 0.0001
     }
 
+    if (ret_num > 1e10) {
+      let buff = Math.round(ret_num).toString().length-1
+      ret_exp += buff
+      ret_num *= 1 ** -buff
+    }
+
     while (ret_num >= 10 && ret_num !== 0) {
       ret_exp += 1
       ret_num /= 10
@@ -186,6 +192,12 @@ export class Num {
       return ret_num_1;
     }
     let ret_num_2 = this.num ** (x.num * 10 ** x.exp)
+
+    if (ret_num_2 > 10) {
+      let buff = Math.round(ret_num_2).toString().length-1
+      ret_exp += buff
+      ret_num_2 *= 10 ** -buff
+    }
 
     while (ret_num_2 >= 10 && ret_num_2 !== 0) {
       ret_exp += 1

@@ -110,13 +110,13 @@ export class GeneratorService {
     },
     {
       name: 'green-generator-4', displayName: 'Green Generator 4', auto: false, style: 'green-style',
-      baseCost: new Num(1, 5000), cost: new Num(1, 5000), increase: new Num(5, 1), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenParticles',
+      baseCost: new Num(5, 3), cost: new Num(5, 3), increase: new Num(5, 1), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenParticles',
       generates: 'green-generator-3', baseMultiplier: new Num(5, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'green-particles', resetId: 'greenParticleGenerators', unlocked: true,
       requirement: ['holding', 'greens', new Num(1, 0)]
     },
     {
       name: 'green-generator-5', displayName: 'Green Generator 5', auto: false, style: 'green-style',
-      baseCost: new Num(1, 5000), cost: new Num(1, 5000), increase: new Num(5, 1), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenParticles',
+      baseCost: new Num(1, 5), cost: new Num(1, 5), increase: new Num(1, 2), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenParticles',
       generates: 'green-generator-4', baseMultiplier: new Num(5, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'green-particles', resetId: 'greenParticleGenerators', unlocked: true,
       requirement: ['holding', 'greens', new Num(1, 0)]
     },

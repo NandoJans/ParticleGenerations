@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {TickService} from "./services/tick.service";
 import {DataManagerService} from "./services/data-manager.service";
+import {UpgradeService} from "./services/interactables/upgrade.service";
+import {Searcher} from "./Searcher";
 
 @Component({
   selector: 'app-root',
@@ -15,7 +17,7 @@ export class AppComponent implements OnInit{
 
 
   ngOnInit(): void {
-    this.tick.tick();
     DataManagerService.load();
+    this.tick.tick();
   }
 }

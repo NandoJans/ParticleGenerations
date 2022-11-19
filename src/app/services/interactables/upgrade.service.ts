@@ -12,6 +12,8 @@ import {limitedGreenUpgrades} from "./upgrades/green/limited";
 import {Action} from "../../action";
 import {darkenergyUpgrades} from "./upgrades/green/darkenergy";
 import {greenUpgrades} from "./upgrades/green/upgrade";
+import {Searcher} from "../../Searcher";
+import {Sorter} from "../../Sorter";
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +30,17 @@ export class UpgradeService {
       redGeneratorUpgrades,
       redAccelerators,
   )
+  static sortedUpgrades: Upgrade[] =
+    Sorter.sort(redUpgrades.concat(
+      greenSacrifice,
+      greenUpgrades,
+      darkenergyUpgrades,
+      limitedGreenUpgrades,
+      yellowFusionUpgrades,
+      yellowUpgrades,
+      redGeneratorUpgrades,
+      redAccelerators,
+    ), 'name');
 
   static save() {
     const save = {};
@@ -63,14 +76,9 @@ export class UpgradeService {
   }
 
   static getValue(name: string, value: string) {
-    for (let i = 0; i < this.upgrades.length; i++) {
-      const upgrade = this.upgrades[i];
-      if (upgrade.name === name) {
-        // @ts-ignore
-        return upgrade[value];
-      }
-    }
-    return 0;
+    const retValue = Searcher.search(this.sortedUpgrades, 'name', name)
+    if (retValue === undefined) return 0
+    else return retValue[value]
   }
 
   static setValues(type: string, value: string, set: any) {
@@ -83,12 +91,10 @@ export class UpgradeService {
   }
 
   static setValue(name: string, value: string, set: any) {
-    this.upgrades.forEach((upgrade) => {
-      if (upgrade.name === name) {
-        // @ts-ignore
-        upgrade[value] = set;
-      }
-    })
+    const retValue = Searcher.search(this.sortedUpgrades, 'name', name)
+    if (retValue !== undefined && retValue[value] !== undefined) {
+      retValue[value] = set;
+    }
   }
 
   static increaseBuffer(name: string, add: any) {
