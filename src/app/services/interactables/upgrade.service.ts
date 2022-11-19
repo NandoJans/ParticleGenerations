@@ -91,19 +91,17 @@ export class UpgradeService {
   }
 
   static setValue(name: string, value: string, set: any) {
-    const retValue = Searcher.search(this.sortedUpgrades, 'name', name)
-    if (retValue !== undefined && retValue[value] !== undefined) {
-      retValue[value] = set;
+    const upgrade = Searcher.search(this.sortedUpgrades, 'name', name)
+    if (upgrade !== undefined && upgrade[value] !== undefined) {
+      upgrade[value] = set;
     }
   }
 
   static increaseBuffer(name: string, add: any) {
-    this.upgrades.forEach((upgrade) => {
-      if (upgrade.name === name) {
-        // @ts-ignore
-        upgrade['buffer'] = upgrade['buffer'].add(add, false);
-      }
-    })
+    const upgrade = Searcher.search(this.sortedUpgrades, 'name', name)
+    if (upgrade !== undefined && upgrade['buffer'] !== undefined) {
+      upgrade['buffer'] = upgrade['buffer'].add(add, false);
+    }
   }
 
   static correctBuffer() {

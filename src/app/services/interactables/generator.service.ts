@@ -5,122 +5,29 @@ import {Num} from "../../num";
 import {GlobalMultipliersService} from "../globals/global-multipliers.service";
 import {UpgradeService} from "./upgrade.service";
 import {ChallengeService} from "./challenge.service";
+import {redParticleGenerators} from "./generators/red/particles";
+import {redAcceleratorGenerators} from "./generators/red/accelerators";
+import {yellowParticleGenerators} from "./generators/yellow/particles";
+import {greenParticleGenerators} from "./generators/green/particles";
+import {Sorter} from "../../Sorter";
+import {Searcher} from "../../Searcher";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GeneratorService {
-  static generators: Generator[] = [
-    {
-      name: 'red-generator-1', displayName: 'Red Generator 1', auto: false, style: 'red-style',
-      baseCost: new Num(1, 1), cost: new Num(1, 1), increase: new Num(1, 1), scaling: new Num(1, 1), bought: new Num(0, 0), currency: 'redParticles',
-      generates: 'redParticles', baseMultiplier: new Num(2, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'red-particles', resetId: 'redParticleGenerators', unlocked: true,
-      requirement: ['none']
-    },
-    {
-      name: 'red-generator-2', displayName: 'Red Generator 2', auto: false, style: 'red-style',
-      baseCost: new Num(1, 2), cost: new Num(1, 2), increase: new Num(1, 2), scaling: new Num(1, 1), bought: new Num(0, 0), currency: 'redParticles',
-      generates: 'red-generator-1', baseMultiplier: new Num(2, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'red-particles', resetId: 'redParticleGenerators', unlocked: false,
-      requirement: ['upgrade', 'red-generator-extension', new Num(1, 0)]
-    },
-    {
-      name: 'red-generator-3', displayName: 'Red Generator 3', auto: false, style: 'red-style',
-      baseCost: new Num(1, 3), cost: new Num(1, 3), increase: new Num(1, 3), scaling: new Num(1, 1), bought: new Num(0, 0), currency: 'redParticles',
-      generates: 'red-generator-2', baseMultiplier: new Num(2, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'red-particles', resetId: 'redParticleGenerators', unlocked: false,
-      requirement: ['upgrade', 'red-generator-extension', new Num(2, 0)]
-    },
-    {
-      name: 'red-generator-4', displayName: 'Red Generator 4', auto: false, style: 'red-style',
-      baseCost: new Num(1, 4), cost: new Num(1, 4), increase: new Num(1, 4), scaling: new Num(1, 1), bought: new Num(0, 0), currency: 'redParticles',
-      generates: 'red-generator-3', baseMultiplier: new Num(2, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'red-particles', resetId: 'redParticleGenerators', unlocked: false,
-      requirement: ['upgrade', 'red-generator-extension', new Num(3, 0)]
-    },
-    {
-      name: 'red-generator-5', displayName: 'Red Generator 5', auto: false, style: 'red-style',
-      baseCost: new Num(1, 5), cost: new Num(1, 5), increase: new Num(1, 5), scaling: new Num(1, 1), bought: new Num(0, 0), currency: 'redParticles',
-      generates: 'red-generator-4', baseMultiplier: new Num(2, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'red-particles', resetId: 'redParticleGenerators', unlocked: false,
-      requirement: ['upgrade', 'red-generator-extension', new Num(4, 0)]
-    },
-    // Accelerators
-    {
-      name: 'red-accelerator-generator-1', displayName: 'Red Accelerator Generator 1', auto: false, style: 'red-style',
-      baseCost: new Num(1, 0), cost: new Num(1, 0), increase: new Num(1, 1), scaling: new Num(1, 1), bought: new Num(0, 0), currency: 'redAccelerators',
-      generates: 'redAccelerators', baseMultiplier: new Num(2, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'red-accelerators', resetId: 'redAccelerators', unlocked: false,
-      requirement: ['holding', 'redParticles', new Num(1, 20)]
-    },
-    {
-      name: 'red-accelerator-generator-2', displayName: 'Red Accelerator Generator 2', auto: false, style: 'red-style',
-      baseCost: new Num(1, 10), cost: new Num(1, 10), increase: new Num(1, 2), scaling: new Num(1, 1), bought: new Num(0, 0), currency: 'redAccelerators',
-      generates: 'red-accelerator-generator-1', baseMultiplier: new Num(2, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'red-accelerators', resetId: 'redAccelerators', unlocked: false, requirement: ['']
-    },
-    {
-      name: 'yellow-generator-1', displayName: 'Yellow Generator 1', auto: false, style: 'yellow-style',
-      baseCost: new Num(1, 2), cost: new Num(1, 2), increase: new Num(1, 1), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'yellowParticles',
-      generates: 'yellowPower', baseMultiplier: new Num(20, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'yellow-particles', resetId: 'yellowParticleGenerators', unlocked: true,
-      requirement: ['holding', 'yellowParticles', new Num(1, 2)]
-    },
-    {
-      name: 'yellow-generator-2', displayName: 'Yellow Generator 2', auto: false, style: 'yellow-style',
-      baseCost: new Num(1, 3), cost: new Num(1, 3), increase: new Num(1, 2), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'yellowParticles',
-      generates: 'yellow-generator-1', baseMultiplier: new Num(20, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'yellow-particles', resetId: 'yellowParticleGenerators', unlocked: true,
-      requirement: ['holding', 'yellowParticles', new Num(1, 2)]
-    },
-    {
-      name: 'yellow-generator-3', displayName: 'Yellow Generator 3', auto: false, style: 'yellow-style',
-      baseCost: new Num(1, 4), cost: new Num(1, 4), increase: new Num(1, 3), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'yellowParticles',
-      generates: 'yellow-generator-2', baseMultiplier: new Num(20, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'yellow-particles', resetId: 'yellowParticleGenerators', unlocked: true,
-      requirement: ['holding', 'yellowParticles', new Num(1, 2)]
-    },
-    {
-      name: 'yellow-generator-4', displayName: 'Yellow Generator 4', auto: false, style: 'yellow-style',
-      baseCost: new Num(1, 5), cost: new Num(1, 5), increase: new Num(1, 4), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'yellowParticles',
-      generates: 'yellow-generator-3', baseMultiplier: new Num(20, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'yellow-particles', resetId: 'yellowParticleGenerators', unlocked: true,
-      requirement: ['holding', 'yellowParticles', new Num(1, 2)]
-    },
-    {
-      name: 'yellow-generator-5', displayName: 'Yellow Generator 5', auto: false, style: 'yellow-style',
-      baseCost: new Num(1, 6), cost: new Num(1, 6), increase: new Num(1, 5), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'yellowParticles',
-      generates: 'yellow-generator-4', baseMultiplier: new Num(20, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'yellow-particles', resetId: 'yellowParticleGenerators', unlocked: true,
-      requirement: ['holding', 'yellowParticles', new Num(1, 2)]
-    },
-    {
-      name: 'yellow-fusion-generator', displayName: 'Yellow Fusion Generator', auto: false, style: 'yellow-style',
-      baseCost: new Num(1, 0), cost: new Num(1, 0), increase: new Num(1, 0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'yellowParticles',
-      generates: 'yellowFusion', baseMultiplier: new Num(0, 0), multiplier: new Num(0, 0), amount: new Num(0, 0) , type: 'yellow-fusion', resetId: 'yellowFusionGenerators', unlocked: true,
-      requirement: ['upgrade', 'unlock-yellow-fusion', new Num(1, 0)]
-    },
+  static generators: Generator[] = redParticleGenerators.concat(
+    redAcceleratorGenerators,
+    yellowParticleGenerators,
+    greenParticleGenerators
+  )
 
-    {
-      name: 'green-generator-1', displayName: 'Green Generator 1', auto: false, style: 'green-style',
-      baseCost: new Num(1, 0), cost: new Num(1, 0), increase: new Num(5, 1), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenParticles',
-      generates: 'greenEnergy', baseMultiplier: new Num(5, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'green-particles', resetId: 'greenParticleGenerators', unlocked: true,
-      requirement: ['holding', 'greens', new Num(1, 0)]
-    },
-    {
-      name: 'green-generator-2', displayName: 'Green Generator 2', auto: false, style: 'green-style',
-      baseCost: new Num(5, 0), cost: new Num(5, 0), increase: new Num(2.5, 1), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenParticles',
-      generates: 'green-generator-1', baseMultiplier: new Num(5, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'green-particles', resetId: 'greenParticleGenerators', unlocked: true,
-      requirement: ['holding', 'greens', new Num(1, 0)]
-    },
-    {
-      name: 'green-generator-3', displayName: 'Green Generator 3', auto: false, style: 'green-style',
-      baseCost: new Num(2.5, 1), cost: new Num(2.5, 1), increase: new Num(1.25, 2), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenParticles',
-      generates: 'green-generator-2', baseMultiplier: new Num(5, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'green-particles', resetId: 'greenParticleGenerators', unlocked: true,
-      requirement: ['holding', 'greens', new Num(1, 0)]
-    },
-    {
-      name: 'green-generator-4', displayName: 'Green Generator 4', auto: false, style: 'green-style',
-      baseCost: new Num(5, 3), cost: new Num(5, 3), increase: new Num(5, 1), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenParticles',
-      generates: 'green-generator-3', baseMultiplier: new Num(5, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'green-particles', resetId: 'greenParticleGenerators', unlocked: true,
-      requirement: ['holding', 'greens', new Num(1, 0)]
-    },
-    {
-      name: 'green-generator-5', displayName: 'Green Generator 5', auto: false, style: 'green-style',
-      baseCost: new Num(1, 5), cost: new Num(1, 5), increase: new Num(1, 2), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenParticles',
-      generates: 'green-generator-4', baseMultiplier: new Num(5, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'green-particles', resetId: 'greenParticleGenerators', unlocked: true,
-      requirement: ['holding', 'greens', new Num(1, 0)]
-    },
-  ];
+  static sortedGenerators: Generator[] =
+    Sorter.sort(redParticleGenerators.concat(
+      redAcceleratorGenerators,
+      yellowParticleGenerators,
+      greenParticleGenerators
+    ), 'name')
 
   static get(name: string) {
     for (let i = 0; i < this.generators.length; i++) {
@@ -134,23 +41,18 @@ export class GeneratorService {
   }
 
   static getValue(name: string, value: string) {
-    for (let i = 0; i < this.generators.length; i++) {
-      const generator = this.generators[i];
-      if (generator.name === name) {
-        // @ts-ignore
-        return generator[value];
-      }
+    const generator = Searcher.search(this.sortedGenerators, 'name', name)
+    if (generator !== undefined) {
+      return generator[value]
     }
     return 0;
   }
 
-  static increaseMultiplier(target: string, amount: Num) {
-    this.generators.forEach((generator) => {
-      if (generator.name === target) {
-        // @ts-ignore
-        generator.multiplier = generator.multiplier.add(amount, false);
-      }
-    })
+  static increaseMultiplier(name: string, amount: Num) {
+    const generator = Searcher.search(this.sortedGenerators, 'name', name)
+    if (generator !== undefined) {
+      generator['multiplier'] += generator['multiplier'].add(amount, false)
+    }
   }
 
   static generate(extra: Num = new Num(1, 0)) {
