@@ -224,8 +224,10 @@ export class Num {
   greq = (x: Num) => {
     //if (this.num === 0 && x.num !== 0) return false;
     //if (x.num === 0 && this.num !== 0) return true;
+    this.exp = Math.round(this.exp)
+    x.exp = Math.round(x.exp)
     if (this.exp > x.exp) {return true}
-    else if (this.exp == x.exp) {
+    else if (this.exp === x.exp) {
       return this.num >= x.num;
     } else {
       return false
