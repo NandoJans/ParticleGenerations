@@ -5,11 +5,11 @@
 </div>
 <div class="holding-line">
   <p class="holding-prefix">They boost yellow generators by </p>
-  <app-number-display [name]="'yellowFusion'" [style]="'yellow-text holding-amount'" [type]="'effect'" [effect]="effect"></app-number-display>
+  <app-number-display [name]="''" [style]="'yellow-text holding-amount'" [type]="'effect'" [effect]="effect"></app-number-display>
 </div>
 <div *ngIf="hasUpgrade" class="holding-line">
   <p class="holding-prefix">They boost red generators by </p>
-  <app-number-display [name]="'yellowFusion'" [style]="'yellow-text holding-amount'" [type]="'effect'" [effect]="redEffect"></app-number-display>
+  <app-number-display [name]="'yellowFusion'" [style]="'red-text holding-amount'" [type]="'effect'" [effect]="redEffect"></app-number-display>
 </div>
 <div class="generators-row">
   <div *ngFor="let upgrade of upgrades">

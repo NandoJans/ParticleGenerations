@@ -11,7 +11,7 @@ import {Num} from "../../../num";
 export class YellowFusionComponent implements OnInit {
   upgrades: Upgrade[] = [];
   effect: any[] = ['power', 'yellowFusion', 'yellowFusionPower', 'holdingPower'];
-  redEffect: any[] = ['basedOnHolding', new Num(3, 0), 'fusion-boost-red-generators', 'power'];
+  redEffect: any[] = ['power', 'yellowFusion', new Num(1, 1), ''];
   hasUpgrade: boolean = false;
   constructor() { }
 
