@@ -6,6 +6,7 @@ import {ResetService} from "./reset.service";
 import {UpgradeService} from "./upgrade.service";
 import {AutomatorService} from "./automator.service";
 import {MilestoneService} from "./milestone.service";
+import {Tester} from "../../Tester";
 
 @Injectable({
   providedIn: 'root'
@@ -54,8 +55,23 @@ export class BuyableService {
     GeneratorService.generators.forEach((buyable) => {
       if (HoldingsService.get(buyable.currency).greq(buyable.cost) && buyable['unlocked']
         && buyable['auto']) {
+        //const upgradeAmount = HoldingsService.get(buyable.currency).log(buyable.increase, false);
+        //console.log(upgradeAmount.toString())
         while (HoldingsService.get(buyable.currency).greq(buyable.cost)) {
-          this.buyAction(buyable);
+          // @ts-ignore
+          const futureCost: Num = buyable.baseCost.mul(buyable.increase.mul(buyable.scaling.pow(buyable.bought.add(new Num(1, 1), false), false), false).pow(buyable.bought.add(new Num(1, 1), false), false), false)
+
+          Tester.add('Bought')
+
+          if (HoldingsService.get(buyable.currency).greq(futureCost)) {
+            HoldingsService.remove(buyable.currency, futureCost)
+            GeneratorService.addValue(buyable.name, 'amount', new Num(1,1))
+            // @ts-ignore
+            buyable.bought.add(new Num(1, 1));
+            this.correctCosts();
+          } else {
+            this.buyAction(buyable);
+          }
         }
       }
 

@@ -72,12 +72,10 @@ export class Num {
     }
 
     while (ret_num >= 10 && ret_num !== 0) {
-      Tester.add('Add')
       ret_exp += 1
       ret_num /= 10
     }
     while (ret_num < 1 && ret_num !== 0) {
-      Tester.add('Add')
       ret_num *= 10
       ret_exp -= 1
     }
@@ -114,12 +112,10 @@ export class Num {
     }
 
     while (ret_num >= 10 && ret_num !== 0) {
-      Tester.add('Sub')
       ret_exp += 1
       ret_num /= 10
     }
     while (ret_num < 1 && ret_num !== 0) {
-      Tester.add('Sub')
       ret_exp -= 1
       ret_num *= 10
     }
@@ -189,7 +185,6 @@ export class Num {
       ret_num_1.mul(this.pow(x.div(new Num(2, 0), false), false))
       // @ts-ignore
       ret_num_1.mul(this.pow(x.div(new Num(2, 0), false), false))
-      Tester.add('Infinities')
       return ret_num_1;
     }
 
@@ -204,28 +199,10 @@ export class Num {
         ret_num_2 *= 10 ** -buff
       }
     }
-    if (ret_num_2 < 1) {
-      let arr = ret_num_2.toString().split('e');
-      if (arr[1] !== undefined) {
-        ret_num_2 = parseFloat(arr[0])
-        ret_exp = parseInt(arr[1].slice(1))
-      } else {
-        let buff = Math.floor(ret_num_2).toString().length
-        ret_exp += buff
-        ret_num_2 *= 10 ** -buff
-      }
-    }
-
-    while (ret_num_2 >= 10 && ret_num_2 !== 0) {
-      Tester.add('Pow')
-      ret_exp += 1
-      ret_num_2 /= 10
-    }
 
     if (ret_num_2 < 0.001) ret_num_2 = 0.001
 
     while (ret_num_2 < 1 && ret_num_2 !== 0) {
-      Tester.add('Pow')
       ret_exp -= 1
       ret_num_2 *= 10
     }
