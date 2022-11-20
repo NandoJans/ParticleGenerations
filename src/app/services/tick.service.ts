@@ -15,6 +15,7 @@ import {AutomatorService} from "./interactables/automator.service";
 import {TimelineService} from "./timeline.service";
 import {mainActions} from "./interactables/action/mainActions";
 import {Searcher} from "../Searcher";
+import {Tester} from "../Tester";
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +51,7 @@ export class TickService {
 
     //HoldingsService.set('redParticles', new Num(1, 2000))
     //HoldingsService.set('yellowParticles', new Num(3, 14))
-    //HoldingsService.set('greenParticles', new Num(5, 3))
+    //HoldingsService.set('greenParticles', new Num(5, 300))
     //HoldingsService.set('yellows', new Num(5, 3))
     //HoldingsService.set('greens', new Num(1, 2))
     //HoldingsService.set('yellowFusion', new Num(1, 110))
@@ -99,6 +100,8 @@ export class TickService {
 
     setInterval(() => {
       DataManagerService.save()
+      Tester.print();
+      Tester.reset();
     }, 5000)
   }
 }

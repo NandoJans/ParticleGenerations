@@ -1,3 +1,5 @@
+import {Tester} from "./Tester";
+
 export class Num {
   num: number;
   exp: number;
@@ -51,7 +53,7 @@ export class Num {
   }
 
   // @ts-ignore
-  add = (x: Num, overwrite = true) => {
+  add = (x: Num, overwrite = true, depth: number = 0) => {
     let ret_num = this.num
     let ret_exp = this.exp
 
@@ -70,10 +72,12 @@ export class Num {
     }
 
     while (ret_num >= 10 && ret_num !== 0) {
+      Tester.add('Add')
       ret_exp += 1
       ret_num /= 10
     }
     while (ret_num < 1 && ret_num !== 0) {
+      Tester.add('Add')
       ret_num *= 10
       ret_exp -= 1
     }
@@ -110,10 +114,12 @@ export class Num {
     }
 
     while (ret_num >= 10 && ret_num !== 0) {
+      Tester.add('Sub')
       ret_exp += 1
       ret_num /= 10
     }
     while (ret_num < 1 && ret_num !== 0) {
+      Tester.add('Sub')
       ret_exp -= 1
       ret_num *= 10
     }
@@ -139,12 +145,6 @@ export class Num {
 
     if (ret_num < 0.0001 && ret_exp > 1) {
       ret_num = 0.0001
-    }
-
-    if (ret_num > 10) {
-      let buff = Math.round(ret_num).toString().length-1
-      ret_exp += buff
-      ret_num *= 10 ** -buff
     }
 
     if (ret_num >= 10) {
@@ -179,28 +179,45 @@ export class Num {
   }
 
   // @ts-ignore
-  pow = (x: Num, overwrite: boolean = true, depth: number = 0) => {
+  pow = (x: Num, overwrite: boolean = true) => {
     let ret_num_1: Num = new Num(1, 0);
     let ret_exp = this.exp * (x.num * 10 ** x.exp);
-
-    if (this.num ** (x.num * 10 ** x.exp) === Infinity) {
-      // @ts-ignore
-      ret_num_1.mul(this.pow(x.div(new Num(2, 0), false), false))
-      // @ts-ignore
-      ret_num_1.mul(this.pow(x.div(new Num(2, 0), false), false))
-      return ret_num_1;
-    }
     let ret_num_2 = this.num ** (x.num * 10 ** x.exp)
 
-    if (ret_num_2 > 10) {
+    if (ret_num_2 === Infinity) {
+      // @ts-ignore
+      ret_num_1.mul(this.pow(x.div(new Num(2, 0), false), false))
+      // @ts-ignore
+      ret_num_1.mul(this.pow(x.div(new Num(2, 0), false), false))
+      Tester.add('Infinities')
+      return ret_num_1;
+    }
+
+    if (ret_num_2 >= 10) {
       let arr = ret_num_2.toString().split('e');
       if (arr[1] !== undefined) {
         ret_num_2 = parseFloat(arr[0])
         ret_exp = parseInt(arr[1].slice(1))
+      } else {
+        let buff = Math.floor(ret_num_2).toString().length
+        ret_exp += buff
+        ret_num_2 *= 10 ** -buff
+      }
+    }
+    if (ret_num_2 < 1) {
+      let arr = ret_num_2.toString().split('e');
+      if (arr[1] !== undefined) {
+        ret_num_2 = parseFloat(arr[0])
+        ret_exp = parseInt(arr[1].slice(1))
+      } else {
+        let buff = Math.floor(ret_num_2).toString().length
+        ret_exp += buff
+        ret_num_2 *= 10 ** -buff
       }
     }
 
     while (ret_num_2 >= 10 && ret_num_2 !== 0) {
+      Tester.add('Pow')
       ret_exp += 1
       ret_num_2 /= 10
     }
@@ -208,6 +225,7 @@ export class Num {
     if (ret_num_2 < 0.001) ret_num_2 = 0.001
 
     while (ret_num_2 < 1 && ret_num_2 !== 0) {
+      Tester.add('Pow')
       ret_exp -= 1
       ret_num_2 *= 10
     }
