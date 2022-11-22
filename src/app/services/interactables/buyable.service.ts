@@ -5,8 +5,7 @@ import {Num} from "../../num";
 import {ResetService} from "./reset.service";
 import {UpgradeService} from "./upgrade.service";
 import {AutomatorService} from "./automator.service";
-import {MilestoneService} from "./milestone.service";
-import {Tester} from "../../Tester";
+import {Generator, Upgrade, Automator} from "../../globals";
 
 @Injectable({
   providedIn: 'root'
@@ -16,30 +15,68 @@ export class BuyableService {
 
   buyAction (buyable: any) {
     HoldingsService.remove(buyable.currency, buyable.cost)
-    GeneratorService.addValue(buyable.name, 'amount', new Num(1,0))
+    if (buyable.amount !== undefined) buyable.amount.add(new Num(1, 0));
     // @ts-ignore
     buyable.bought.add(new Num(1, 0));
     this.correctCosts();
   }
 
+  bulkBuyAction (buyable: any, cost: Num, bulk: Num) {
+    HoldingsService.remove(buyable.currency, cost)
+    buyable.amount.add(bulk);
+    // @ts-ignore
+    buyable.bought.add(bulk);
+    this.correctCosts();
+  }
+
+  calculateBulk(buyable: Upgrade | Generator) {
+    const a = buyable.increase
+    const b = buyable.scaling
+    const x = HoldingsService.get(buyable.currency)
+    const y = buyable.baseCost
+    const two = new Num(2, 0)
+    const four = new Num(4, 0)
+    let futureBuying: Num;
+
+    if (b.greq(new Num(2, 0))) {
+      // @ts-ignore
+      futureBuying = a.ln(false).sub(a.ln(false).pow(two, false).add(four.mul(b.ln(false), false).mul(x.div(y, false).ln(false), false), false).sqrt(false), false).div(two.mul(b.ln(false), false), false)
+      // @ts-ignore
+      futureBuying = futureBuying.negate(false).floor(false)
+    } else {
+      futureBuying = x.div(y, false).ln(false).div(a.ln(false), false).floor(false)
+    }
+    // @ts-ignore
+    let futureCost = buyable.baseCost.mul(buyable.increase.mul(buyable.scaling.pow(futureBuying, false), false).pow(futureBuying, false), false)
+    // @ts-ignore
+    futureBuying = futureBuying.sub(buyable.bought, false).add(new Num(1, 0), false)
+    return [futureBuying, futureCost]
+  }
+
   buy(name: string | undefined) {
     GeneratorService.generators.forEach((buyable) => {
       if (buyable.name === name) {
-        while (HoldingsService.get(buyable.currency).greq(buyable.cost)) {
-          this.buyAction(buyable)
+        const result = this.calculateBulk(buyable)
+
+        // @ts-ignore
+        if (result[0].greq(new Num(1, 0)) && HoldingsService.get(buyable.currency).greq(result[1])) {
+          // @ts-ignore
+          this.bulkBuyAction(buyable, result[1], result[0]);
         }
       }
     })
     UpgradeService.upgrades.forEach((buyable) => {
       if (buyable.name === name && HoldingsService.get(buyable.currency).greq(buyable.cost)) {
-        this.buyAction(buyable)
-        if (buyable.resets !== 'none') ResetService.reset(buyable.resets);
-        if (buyable.noMax === undefined || !buyable.noMax) {
+        if (buyable.resets !== 'none' || (buyable.noMax !== undefined && buyable.noMax) || buyable.oneTime) {
+          this.buyAction(buyable);
+          if (buyable.resets !== 'none') ResetService.reset(buyable.resets);
+        } else {
+          const result = this.calculateBulk(buyable)
 
-          while (HoldingsService.get(buyable.currency).greq(buyable.cost) && !buyable.oneTime) {
-            this.buyAction(buyable);
-            if (buyable.resets !== 'none') ResetService.reset(buyable.resets);
-            if (buyable.limit !== undefined && buyable.bought.greq(buyable.limit)) break;
+          // @ts-ignore
+          if (result[0].greq(new Num(1, 0)) && HoldingsService.get(buyable.currency).greq(result[1])) {
+            // @ts-ignore
+            this.bulkBuyAction(buyable, result[1], result[0]);
           }
         }
       }
@@ -55,23 +92,11 @@ export class BuyableService {
     GeneratorService.generators.forEach((buyable) => {
       if (HoldingsService.get(buyable.currency).greq(buyable.cost) && buyable['unlocked']
         && buyable['auto']) {
-        //const upgradeAmount = HoldingsService.get(buyable.currency).log(buyable.increase, false);
-        //console.log(upgradeAmount.toString())
-        while (HoldingsService.get(buyable.currency).greq(buyable.cost)) {
+        const result = this.calculateBulk(buyable)
+        // @ts-ignore
+        if (result[0].greq(new Num(1, 0)) && HoldingsService.get(buyable.currency).greq(result[1])) {
           // @ts-ignore
-          const futureCost: Num = buyable.baseCost.mul(buyable.increase.mul(buyable.scaling.pow(buyable.bought.add(new Num(1, 1), false), false), false).pow(buyable.bought.add(new Num(1, 1), false), false), false)
-
-          Tester.add('Bought')
-
-          if (HoldingsService.get(buyable.currency).greq(futureCost)) {
-            HoldingsService.remove(buyable.currency, futureCost)
-            GeneratorService.addValue(buyable.name, 'amount', new Num(1,1))
-            // @ts-ignore
-            buyable.bought.add(new Num(1, 1));
-            this.correctCosts();
-          } else {
-            this.buyAction(buyable);
-          }
+          this.bulkBuyAction(buyable, result[1], result[0]);
         }
       }
 
@@ -91,12 +116,17 @@ export class BuyableService {
     UpgradeService.upgrades.forEach((buyable) => {
       if (HoldingsService.get(buyable.currency).greq(buyable.cost) && buyable['unlocked'] &&
         buyable['auto'] && (buyable.limit === undefined || !buyable.cost.greq(buyable.limit))) {
-        this.buyAction(buyable);
-        if (buyable.resets !== 'none') ResetService.reset(buyable.resets);
-        while (HoldingsService.get(buyable.currency).greq(buyable.cost) && !buyable.oneTime
-          && (buyable.limit === undefined || !buyable.cost.greq(buyable.limit))) {
+        if (buyable.resets !== 'none') {
           this.buyAction(buyable);
-          if (buyable.resets !== 'none') ResetService.reset(buyable.resets);
+          ResetService.reset(buyable.resets);
+        } else {
+          const result = this.calculateBulk(buyable)
+
+          // @ts-ignore
+          if (result[0].greq(new Num(1, 0)) && HoldingsService.get(buyable.currency).greq(result[1])) {
+            // @ts-ignore
+            this.bulkBuyAction(buyable, result[1], result[0]);
+          }
         }
       }
 
@@ -157,6 +187,9 @@ export class BuyableService {
           buyableDoc.classList.add('bought');
         }
       } else {
+        if (buyable.name === 'red-generator-booster') {
+
+        }
         // @ts-ignore
         buyable.cost = buyable.baseCost.mul(buyable.increase.mul(buyable.scaling.pow(buyable.bought, false), false).pow(buyable.bought, false), false)
       }

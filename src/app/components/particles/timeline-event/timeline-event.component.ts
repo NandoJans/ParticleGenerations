@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TimelineEvent} from "../../../globals";
+import {HoldingsService} from "../../../services/holdings.service";
 
 @Component({
   selector: 'app-timeline-event',
@@ -12,6 +13,7 @@ export class TimelineEventComponent implements OnInit {
   displayName: string | undefined;
   description: string | undefined;
   requirement: string | undefined;
+  abbreviation: string | undefined;
   unlocked: boolean | undefined;
   hasProgress: boolean | undefined;
   constructor() { }
@@ -23,6 +25,7 @@ export class TimelineEventComponent implements OnInit {
     this.unlocked = this.timelineEvent?.unlocked
     this.hasProgress = this.timelineEvent?.hasProgress
     this.requirement = this.timelineEvent?.unlock[1].toString()
+    this.abbreviation = HoldingsService.getAbbreviation(this.timelineEvent?.unlock[0])
   }
 
 }

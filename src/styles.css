@@ -147,7 +147,7 @@ footer {
 }
 
 .generator {
-  width: 125px;
+  width: 150px;
   border: solid 1px var(--red-button-color);
   background: var(--transparent-background-red);
   border-radius: 3px;

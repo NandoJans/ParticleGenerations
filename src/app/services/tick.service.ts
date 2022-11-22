@@ -14,7 +14,6 @@ import {ChallengeService} from "./interactables/challenge.service";
 import {AutomatorService} from "./interactables/automator.service";
 import {TimelineService} from "./timeline.service";
 import {mainActions} from "./interactables/action/mainActions";
-import {Searcher} from "../Searcher";
 import {Tester} from "../Tester";
 
 @Injectable({
@@ -49,13 +48,13 @@ export class TickService {
     ChallengeService.applyNerfs();
     GeneratorService.generate(speed);
 
-    //HoldingsService.set('redParticles', new Num(1, 2000))
+    //HoldingsService.set('redParticles', new Num(1, 60))
     //HoldingsService.set('yellowParticles', new Num(3, 14))
-    //HoldingsService.set('greenParticles', new Num(5, 300))
+    //HoldingsService.set('greenParticles', new Num(5, 10))
     //HoldingsService.set('yellows', new Num(5, 3))
     //HoldingsService.set('greens', new Num(1, 2))
     //HoldingsService.set('yellowFusion', new Num(1, 110))
-    //HoldingsService.set('greenEnergy', new Num(1, 20))
+    //HoldingsService.set('greenEnergy', new Num(1, 0))
     //console.log(HoldingsService.get('darkEnergy').toString())
 
     AutomatorService.setAutos();
@@ -88,6 +87,8 @@ export class TickService {
     setInterval(() => {
       if (!HoldingsService.get('greenEnergy').greq(new Num(1, 0))) {HoldingsService.set('greenEnergy', new Num(1, 0))}
       if (!HoldingsService.get('redParticles').greq(new Num(2, 1))) {HoldingsService.set('redParticles', new Num(2, 1))}
+      if (!HoldingsService.get('yellowParticles').greq(new Num(1, 0))) {HoldingsService.set('yellowParticles', new Num(0, 0))}
+      if (!HoldingsService.get('greenParticles').greq(new Num(1, 0))) {HoldingsService.set('greenParticles', new Num(0, 0))}
       while (lastCalled+5000 < Date.now()) {
         this.gameTick(new Num(1, 2))
 

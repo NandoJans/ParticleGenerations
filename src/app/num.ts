@@ -67,15 +67,15 @@ export class Num {
       ret_num = this.num + x.num
     }
 
-    if (ret_num < 0.0001 && ret_exp > 1) {
+    if (ret_num < 0.0001 && ret_num > 0) {
       ret_num = 0.0001
     }
 
-    while (ret_num >= 10 && ret_num !== 0) {
+    while (ret_num >= 10 || ret_num <= -10 && ret_num !== 0) {
       ret_exp += 1
       ret_num /= 10
     }
-    while (ret_num < 1 && ret_num !== 0) {
+    while (ret_num < 1 && ret_num !== 0 && ret_num > 0) {
       ret_num *= 10
       ret_exp -= 1
     }
@@ -94,28 +94,23 @@ export class Num {
     let ret_num;
     let div;
 
-    if (this.exp >= x.exp) {
-      div = this.exp - x.exp;
-      ret_exp = this.exp;
-      ret_num = this.num - x.num / 10 ** div
+    div = x.exp - this.exp;
+    ret_exp = this.exp;
+    if (div > 10) {
+      ret_exp = x.exp
+      ret_num = -x.num;
+
+    } else if (div < -10) {
+      ret_num = this.num
     } else {
-      div = x.exp - x.exp;
-      ret_exp = x.exp;
-      ret_num = x.num - this.num / 10 ** div
+      ret_num = this.num - x.num * 10 ** div
     }
 
-    if (ret_num < 0) {
-      ret_num = 0
-    }
-    if (ret_exp < 0) {
-      ret_exp = 0
-    }
-
-    while (ret_num >= 10 && ret_num !== 0) {
+    while (ret_num >= 10 || ret_num <= -10 && ret_num !== 0) {
       ret_exp += 1
       ret_num /= 10
     }
-    while (ret_num < 1 && ret_num !== 0) {
+    while (ret_num < 1 && ret_num !== 0 && ret_num > 0) {
       ret_exp -= 1
       ret_num *= 10
     }
@@ -143,7 +138,7 @@ export class Num {
       ret_num = 0.0001
     }
 
-    if (ret_num >= 10) {
+    if (ret_num >= 10 || ret_num <= -10) {
       ret_exp += 1
       ret_num /= 10
     }
@@ -161,7 +156,7 @@ export class Num {
     let ret_num = this.num / x.num
     let ret_exp = this.exp - x.exp
 
-    if (ret_num < 1 && ret_exp > 0) {
+    if (ret_num < 1 && ret_exp > 0 && ret_num > 0) {
       ret_exp -= 1
       ret_num *= 10
     }
@@ -176,47 +171,44 @@ export class Num {
 
   // @ts-ignore
   pow = (x: Num, overwrite: boolean = true) => {
-    let ret_num_1: Num = new Num(1, 0);
     let ret_exp = this.exp * (x.num * 10 ** x.exp);
-    let ret_num_2 = this.num ** (x.num * 10 ** x.exp)
+    let ret_num = this.num ** (x.num * 10 ** x.exp)
 
-    if (ret_num_2 === Infinity) {
-      // @ts-ignore
-      ret_num_1.mul(this.pow(x.div(new Num(2, 0), false), false))
-      // @ts-ignore
-      ret_num_1.mul(this.pow(x.div(new Num(2, 0), false), false))
-      return ret_num_1;
+    if (ret_num > 1e10) {
+      ret_num = Math.log10(this.num) * (x.num * 10 ** x.exp)
+      ret_exp += Math.floor(ret_num)
+      ret_num = Math.pow(10, Number('0.'+ret_num.toString().split('.')[1]))
     }
 
-    if (ret_num_2 >= 10) {
-      let arr = ret_num_2.toString().split('e');
+    if (ret_num >= 10) {
+      let arr = ret_num.toString().split('e');
       if (arr[1] !== undefined) {
-        ret_num_2 = parseFloat(arr[0])
+        ret_num = parseFloat(arr[0])
         ret_exp = parseInt(arr[1].slice(1))
       } else {
-        let buff = Math.floor(ret_num_2).toString().length
+        let buff = Math.floor(ret_num).toString().length
         ret_exp += buff
-        ret_num_2 *= 10 ** -buff
+        ret_num *= 10 ** -buff
       }
     }
 
-    if (ret_num_2 < 0.001) ret_num_2 = 0.001
+    if (ret_num < 0.001) ret_num = 0.001
 
-    while (ret_num_2 < 1 && ret_num_2 !== 0) {
+    while (ret_num < 1 && ret_num !== 0 && ret_num > 0) {
       ret_exp -= 1
-      ret_num_2 *= 10
+      ret_num *= 10
     }
 
     if (overwrite) {
       this.exp = ret_exp
-      this.num = ret_num_2
+      this.num = ret_num
     } else {
-      return new Num(ret_num_2, ret_exp)
+      return new Num(ret_num, ret_exp)
     }
   }
 
   // @ts-ignore
-  log = (x: Num, overwrite: boolean) => {
+  log = (x: Num, overwrite: boolean = true) => {
     let ret_num = (this.exp * 10 + this.num - 1) / (x.num * 10 ** x.exp);
     let ret_exp = 0;
 
@@ -228,14 +220,107 @@ export class Num {
     }
   }
 
+  // @ts-ignore
+  log10 = (overwrite: boolean = true) => {
+    let ret_num = this.exp + Math.log10(this.num);
+    let ret_exp = 0
+
+    if (overwrite) {
+      this.exp = ret_exp
+      this.num = ret_num
+    } else {
+      return new Num(ret_num, ret_exp)
+    }
+  }
+
+  // @ts-ignore
+  ln = (overwrite: boolean = true) => {
+    const ret_exp = 0
+    const ret_num = Math.log(10) * (this.exp + Math.log10(this.num))
+
+    if (overwrite) {
+      this.exp = ret_exp
+      this.num = ret_num
+    } else {
+      return new Num(ret_num, ret_exp)
+    }
+  }
+
+  // @ts-ignore
+  negate = (overwrite: boolean = true) => {
+    const ret_exp = this.exp
+    const ret_num = -this.num
+
+    if (overwrite) {
+      this.exp = ret_exp
+      this.num = ret_num
+    } else {
+      return new Num(ret_num, ret_exp)
+    }
+  }
+
+  // @ts-ignore
+  floor = (overwrite: boolean = true) => {
+    let ret_exp = this.exp
+    let ret_num = this.num
+
+    if (ret_exp <= 10) {
+      ret_num = Math.floor(ret_num * 10 ** ret_exp);
+      ret_exp = 0;
+    }
+
+    while (ret_num >= 10 || ret_num <= -10) {
+      ret_exp += 1
+      ret_num /= 10
+    }
+
+    if (overwrite) {
+      this.exp = ret_exp
+      this.num = ret_num
+    } else {
+      return new Num(ret_num, ret_exp)
+    }
+  }
+
+  // @ts-ignore
+  sqrt = (overwrite: boolean = true) => {
+    let ret_num = this.num;
+    let ret_exp = this.exp;
+
+    if (ret_exp % 2 === 0) {
+      ret_num = Math.sqrt(this.num)
+    } else {
+      ret_num = Math.sqrt(this.num * 10)
+    }
+
+    ret_exp /= 2;
+
+    if (ret_num >= 10) {
+      ret_exp += 1
+      ret_num /= 10
+    }
+
+    if (overwrite) {
+      this.exp = Math.floor(ret_exp)
+      this.num = ret_num
+    } else {
+      return new Num(ret_num, Math.floor(ret_exp))
+    }
+  }
+
 
   greq = (x: Num) => {
     //if (this.num === 0 && x.num !== 0) return false;
     //if (x.num === 0 && this.num !== 0) return true;
     this.exp = Math.round(this.exp)
     x.exp = Math.round(x.exp)
-    if (this.exp > x.exp) {return true}
-    else if (this.exp === x.exp) {
+    if (x.num < 0 && this.num > 0) {
+      return true
+    } else if (x.num > 0 && this.num < 0) {
+      return false
+    } else if (this.exp > x.exp) {
+      return true
+    } else if (this.exp === x.exp) {
       return this.num >= x.num;
     } else {
       return false

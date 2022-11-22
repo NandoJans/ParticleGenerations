@@ -65,7 +65,8 @@ export class GeneratorService {
         add.mul(extra);
 
         if (generator.type === 'yellow-fusion') {
-          if (HoldingsService.get('yellowFusion').greq(HoldingsService.get('yellowFusionMax'))) {
+          const hasLimit = UpgradeService.getValue('remove-fusion-limit', 'bought').greq(new Num(1, 0))
+          if (HoldingsService.get('yellowFusion').greq(HoldingsService.get('yellowFusionMax')) && !hasLimit) {
             add = new Num(0, 0);
           }
         }
@@ -165,7 +166,16 @@ export class GeneratorService {
           generator.multiplier.mul(GlobalMultipliersService.get('yellowFusion'));
           let yellowFusion = HoldingsService.get('yellowFusion');
           generator.multiplier.mul(yellowFusion.add(new Num(1, 0), false).div(new Num(2, 3), false));
-          if (yellowFusion.greq(HoldingsService.get('yellowFusionMax'))) HoldingsService.set('yellowFusion', HoldingsService.get('yellowFusionMax').copy());
+
+          const hasLimit = UpgradeService.getValue('remove-fusion-limit', 'bought').greq(new Num(1, 0))
+          if (hasLimit) {
+            const division = new Num(HoldingsService.get('yellowFusion').exp / HoldingsService.get('yellowFusionMax').exp, 0)
+            if (division.greq(new Num(1, 0))) {
+              generator.multiplier.div(division)
+            }
+          } else if (yellowFusion.greq(HoldingsService.get('yellowFusionMax'))) {
+
+          }
         }
 
         if (generator.type === 'green-particles') {
