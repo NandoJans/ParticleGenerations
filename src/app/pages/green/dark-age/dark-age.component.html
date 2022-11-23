@@ -1,0 +1,20 @@
+<div class="holding-line">
+  <p class="holding-prefix">You have </p>
+  <app-number-display [name]="'darkPower'" [style]="'dark-text holding-amount'" [type]="'currency'"></app-number-display>
+  <p class="holding-prefix">Dark Power</p>
+</div>
+<div class="holding-line">
+  <p class="holding-prefix">They multiply your Dark Energy gain by </p>
+  <app-number-display [name]="'darkPowerEffect'" [style]="'dark-text holding-amount'" [type]="'effect'" [effect]="darkPowerEffect"></app-number-display>
+</div>
+<div class="upgrade-row">
+  <app-challenge *ngIf="darkAge.unlocked" [challenge]="darkAge"></app-challenge>
+</div>
+<div class="holding-line">
+  <p class="holding-prefix" *ngIf="darkAgeActive">You will gain </p>
+  <app-number-display *ngIf="darkAgeActive" [name]="'darkPowerGain'" [style]="'dark-text holding-amount'" [type]="'effect'" [effect]="darkPowerGain"></app-number-display>
+  <p class="holding-prefix" *ngIf="darkAgeActive">Dark Power on going green</p>
+</div>
+<div class="holding-line" style="padding-top: 50px">
+  <app-button [text]="'Leave Dark Age'" [style]="'normal-button'" (click)="leaveChallenge()"></app-button>
+</div>

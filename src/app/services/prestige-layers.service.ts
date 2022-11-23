@@ -73,9 +73,14 @@ export class PrestigeLayersService {
         // @ts-ignore
         HoldingsService.add(name+'Particles', this.getValue(name, 'gain'))
         HoldingsService.add(name+'s', new Num(1, 0))
+        if (ChallengeService.activeChallenge?.name === 'dark-age' && name === 'green' && new Num(Math.floor(HoldingsService.get('yellowParticles').exp / 110), 0).greq(HoldingsService.get('darkPower'))) {
+
+          // @ts-ignore
+          HoldingsService.add('darkPower', new Num(Math.floor(HoldingsService.get('yellowParticles').exp / 110), 0).sub(HoldingsService.get('darkPower'), false))
+        }
         ResetService.reset(name);
         DataManagerService.load();
-        if (ChallengeService.activeChallenge !== undefined) ChallengeService.prestige();
+        ChallengeService.prestige(name);
       }
     }
   }
@@ -91,7 +96,15 @@ export class PrestigeLayersService {
   static unlock() {
     this.prestiges.forEach(prestige => {
       const requirement = prestige['requirement']
-      if (HoldingsService.get(requirement[0]).greq(requirement[1]) && ChallengeService.shouldHidePrestigeButton()) {
+      if (ChallengeService.activeChallenge?.name === 'dark-age'  ) {
+
+        (document.getElementById(prestige['prestigeButton']) as HTMLElement).style.display = 'none';
+
+        if (HoldingsService.get(requirement[0]).greq(requirement[1]) && prestige.name === 'yellow') {
+          // @ts-ignore
+          (document.getElementById(prestige['prestigeButton']) as HTMLElement).style.display = 'unset';
+        }
+      } else if (HoldingsService.get(requirement[0]).greq(requirement[1]) && ChallengeService.shouldHidePrestigeButton()) {
         // @ts-ignore
         (document.getElementById(prestige['prestigeButton']) as HTMLElement).style.display = 'unset';
       } else {

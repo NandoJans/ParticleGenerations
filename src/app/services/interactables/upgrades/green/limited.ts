@@ -71,4 +71,13 @@ export const limitedGreenUpgrades: Upgrade[] = [
       new Action('decreaseHolding', 'greenSouls', new Num(1, 2), 'cost', 'red-accelerator-buffer'),
     ]
   },
+  {
+    name: 'super-increase-fusion', displayName: 'Increase Yellow Fusion by 20x.', description: '', auto: false, noMax: true,
+    baseCost: new Num(1,2), cost: new Num(1, 2), increase: new Num(1,0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenSouls',
+    baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'green-limited-upgrades', resetId: 'green-limited-upgrades', style: 'limited-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['greens', new Num(1, 0)],
+    action: [
+      new Action('globalMultiplier', 'yellowFusion', new Num(2, 1)),
+      new Action('decreaseHolding', 'greenSouls', new Num(1, 2), 'cost', 'red-accelerator-buffer'),
+    ]
+  },
 ]

@@ -147,6 +147,9 @@ export class UpgradeService {
           })
         }
       }
+      if (upgrade.name === 'dark-energy-compressor') {
+        HoldingsService.get('darkEnergy').mul(new Num(5, 0).pow(HoldingsService.get('darkPower'), false))
+      }
     })
   }
 }

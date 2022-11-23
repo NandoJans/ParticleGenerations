@@ -5,14 +5,14 @@ import {ResetService} from "./reset.service";
 import {HoldingsService} from "../holdings.service";
 import {PrestigeLayersService} from "../prestige-layers.service";
 import {DataManagerService} from "../data-manager.service";
-import {UpgradeService} from "./upgrade.service";
 import {MilestoneService} from "./milestone.service";
+import {darkAge} from "./challenges/green";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChallengeService {
-  static challenges: Challenge[] = yellowChallenges;
+  static challenges: Challenge[] = yellowChallenges.concat(darkAge);
   static activeChallenge: Challenge | undefined = undefined;
 
   static save() {
@@ -58,14 +58,14 @@ export class ChallengeService {
     this.challenges.forEach((challenge) => {
       if (challenge.name === name) {
         this.activeChallenge = challenge;
-        ResetService.reset('yellow');
+        ResetService.reset(challenge.prestige);
         window.location.reload();
       }
     })
   }
 
-  static prestige() {
-    if (this.activeChallenge === undefined) return
+  static prestige(prestige: string) {
+    if (this.activeChallenge === undefined || this.activeChallenge.prestige !== prestige) return
     this.activeChallenge.completed = true;
     this.activeChallenge = undefined;
     DataManagerService.save();
@@ -113,7 +113,7 @@ export class ChallengeService {
     this.challenges.forEach(challenge => {
       if (HoldingsService.get(challenge.requirement[0]).greq(challenge.requirement[1])) {
         challenge.unlocked = true;
-        if (MilestoneService.isReached('auto-complete-'+challenge.prestige+'-challenges')) {
+        if (MilestoneService.isReached('auto-complete-'+challenge.prestige+'-challenges') && challenge.type === 'yellow-challenges') {
           challenge.completed = true;
         }
       }

@@ -56,7 +56,7 @@ export class TimelineService {
     },
     {
       name: 'ascending', displayName: 'Coming soon', description: 'Ascending to an alternate dark universe.', hasProgress: true,
-      unlocked: true, requirement: ['greenParticles', new Num(1, 0)], type: 'green-timeline', reached: false, unlock: ['greens', new Num(1, 10)]
+      unlocked: true, requirement: ['greenParticles', new Num(1, 0)], type: 'green-timeline', reached: false, unlock: ['greenParticles', new Num(1, 10)]
     },
   ]
 

@@ -6,6 +6,7 @@ import {PrestigeLayersService} from "./prestige-layers.service";
 import {Num} from "../num";
 import {MilestoneService} from "./interactables/milestone.service";
 import {AutomatorService} from "./interactables/automator.service";
+import {ChallengeService} from "./interactables/challenge.service";
 
 @Injectable({
   providedIn: 'root'
@@ -67,7 +68,7 @@ export class NumberDisplayService {
                   element.innerHTML = 'Current: x'
                 } else if (effectType === 'globalMultiplier') {
 
-                  element.innerHTML = 'Current: x' + entry.effect[3].mul(UpgradeService.getValue(entry.name, 'bought'), false)
+                  //element.innerHTML = 'Current: x' + entry.effect[3].mul(UpgradeService.getValue(entry.name, 'bought'), false)
                 } else if (effectType === 'basedOnHolding') {
                   if (entry.effect[3] === 'exponent') {
                     element.innerHTML = 'Current: x' + new Num(HoldingsService.get(entry.effect[2]).exp, 0).pow(entry.effect[4], false);
@@ -91,6 +92,12 @@ export class NumberDisplayService {
                   element.innerHTML = 'Current: x' + entry.effect[1].pow(UpgradeService.getValue(entry.effect[2], entry.effect[3]), false)
                 }  else if (effectType === 'amplifyUpgrade') {
 
+                } else if (effectType === 'darkPowerGain') {
+                  // @ts-ignore
+                  element.innerHTML = ''+new Num(Math.floor(HoldingsService.get('yellowParticles').exp / 110), 0).sub(HoldingsService.get('darkPower'), false).toString()
+                } else if (effectType === 'darkPowerEffect') {
+                  // @ts-ignore
+                  element.innerHTML = 'x' + new Num(5, 0).pow(HoldingsService.get('darkPower'), false).toString()
                 }
               }
             break;

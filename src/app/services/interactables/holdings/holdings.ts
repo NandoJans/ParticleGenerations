@@ -17,4 +17,6 @@ export const holdings = {
   greenSouls: {amount: new Num(0, 0)},
   darkEnergy: {amount: new Num(0, 0)},
   darkEnergySubtract: {amount: new Num(0, 0)},
+  darkAgeMax: {amount: new Num(1, 110)},
+  darkPower: {amount: new Num(0, 0)},
 }

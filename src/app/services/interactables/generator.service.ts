@@ -117,7 +117,7 @@ export class GeneratorService {
 
   static setValues(type: string, value: string, set: any) {
     this.generators.forEach((generator) => {
-      if (generator.type === type) {
+      if (generator.type === type || generator.type === 'all') {
         // @ts-ignore
         generator[value] = set;
       }
@@ -169,9 +169,10 @@ export class GeneratorService {
 
           const hasLimit = UpgradeService.getValue('remove-fusion-limit', 'bought').greq(new Num(1, 0))
           if (hasLimit) {
-            const division = new Num(HoldingsService.get('yellowFusion').exp / HoldingsService.get('yellowFusionMax').exp, 0)
-            if (division.greq(new Num(1, 0))) {
-              generator.multiplier.div(division)
+            const division = new Num(HoldingsService.get('yellowFusionMax').exp / HoldingsService.get('yellowFusion').exp, 0)
+            if (!division.greq(new Num(1, 0))) {
+              // @ts-ignore
+              generator.multiplier.mul(division.pow(new Num(2, 0), false))
             }
           } else if (yellowFusion.greq(HoldingsService.get('yellowFusionMax'))) {
 
@@ -180,6 +181,10 @@ export class GeneratorService {
 
         if (generator.type === 'green-particles') {
           generator.multiplier.mul(GlobalMultipliersService.get('greenParticleGenerators'))
+        }
+
+        if (ChallengeService.activeChallenge?.name === 'dark-age' && generator.name !== 'yellow-fusion-generator') {
+          generator.multiplier.pow(new Num(0.46, 0))
         }
       }
     })

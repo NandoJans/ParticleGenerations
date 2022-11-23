@@ -29,6 +29,10 @@ export class Action {
     GlobalMultipliersService.correct(target, amount);
   }
 
+  globalMultiplierPower(target: string, amount: Num) {
+    GlobalMultipliersService.power(target, amount);
+  }
+
   basedOnHolding() {
     if (this.variable === 'exponent') {
       // @ts-ignore
@@ -130,6 +134,7 @@ export class Action {
     if (this.hasRequirement()) {
       switch (this.type) {
         case 'globalMultiplier': this.globalMultiplier(this.target, this.amount); break;
+        case 'globalMultiplierPower': this.globalMultiplierPower(this.target, this.amount); break;
         case 'basedOnHolding': this.basedOnHolding(); break;
         case 'basedOnUpgrade': this.basedOnUpgrade(); break;
         case 'basedOnUpgradeMul': this.basedOnUpgradeMul(); break;

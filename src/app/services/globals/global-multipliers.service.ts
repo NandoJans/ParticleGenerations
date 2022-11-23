@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Num} from "../../num";
+import {darkAge} from "../interactables/challenges/green";
 
 @Injectable({
   providedIn: 'root'
@@ -39,5 +40,10 @@ export class GlobalMultipliersService {
   static correct(multiplier: string, multiply: any) {
     // @ts-ignore
     this.multipliers[multiplier].mul(multiply)
+  }
+
+  static power(multiplier: string, power: any) {
+    // @ts-ignore
+    this.multipliers[multiplier].pow(power)
   }
 }

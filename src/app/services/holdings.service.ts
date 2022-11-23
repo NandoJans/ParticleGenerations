@@ -61,6 +61,7 @@ export class HoldingsService {
       case 'greenEnergy': return 'GE';
       case 'darkEnergy': return 'DE';
       case 'greenSouls': return 'GS';
+      case 'greens': return 'g';
       default: return '';
     }
   }

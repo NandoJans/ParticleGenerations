@@ -18,6 +18,7 @@ import {GreenSacrificeComponent} from "./pages/green/green-sacrifice/green-sacri
 import {GreenMilestonesComponent} from "./pages/green/green-milestones/green-milestones.component";
 import {DarkEnergyComponent} from "./pages/green/dark-energy/dark-energy.component";
 import {YellowAutomatorsComponent} from "./pages/automators/yellow-automators/yellow-automators.component";
+import {DarkAgeComponent} from "./pages/green/dark-age/dark-age.component";
 
 const routes: Routes = [
   { path: '', component: RedComponent },
@@ -33,6 +34,7 @@ const routes: Routes = [
   { path: '?/green/sacrifice', component: GreenSacrificeComponent },
   { path: '?/green/milestones', component: GreenMilestonesComponent },
   { path: '?/green/darkenergy', component: DarkEnergyComponent },
+  { path: '?/green/darkage', component: DarkAgeComponent },
   { path: '?/automators/red', component: RedAutomatorsComponent },
   { path: '?/automators/yellow', component: YellowAutomatorsComponent },
   { path: '?/automators/prestige', component: PrestigeAutomatorsComponent },
