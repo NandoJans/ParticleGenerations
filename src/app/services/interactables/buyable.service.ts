@@ -29,10 +29,10 @@ export class BuyableService {
     this.correctCosts();
   }
 
-  calculateBulk(buyable: Upgrade | Generator) {
+  calculateBulk(buyable: Upgrade | Generator, split: Num = new Num(1, 0)) {
     const a = buyable.increase
     const b = buyable.scaling
-    const x = HoldingsService.get(buyable.currency)
+    const x = HoldingsService.get(buyable.currency).div(split, false)
     const y = buyable.baseCost
     const two = new Num(2, 0)
     const four = new Num(4, 0)

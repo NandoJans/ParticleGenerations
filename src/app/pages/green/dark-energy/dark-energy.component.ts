@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {Upgrade} from "../../../globals";
 import {UpgradeService} from "../../../services/interactables/upgrade.service";
 import {Num} from "../../../num";
+import {BuyableService} from "../../../services/interactables/buyable.service";
+import {HoldingsService} from "../../../services/holdings.service";
 
 @Component({
   selector: 'app-dark-energy',
@@ -11,12 +13,24 @@ import {Num} from "../../../num";
 export class DarkEnergyComponent implements OnInit {
   sacrifices: Upgrade[] = [];
   upgrades: Upgrade[] = [];
-  constructor() { }
+  constructor(private buyables: BuyableService) { }
 
   respecDark() {
     UpgradeService.getUpgrades('dark-upgrade').forEach((upgrade) => {
       upgrade.bought.mul(new Num(0, 0))
     })
+  }
+
+  splitEqual() {
+    this.upgrades.forEach(upgrade => {
+      const result: any[] = this.buyables.calculateBulk(upgrade, new Num(5, 0))
+      // @ts-ignore
+      if (result[0].greq(new Num(1, 0)) && HoldingsService.get(upgrade.currency).greq(result[1])) {
+        // @ts-ignore
+        this.buyables.bulkBuyAction(upgrade, result[1], result[0]);
+      }
+    })
+    this.buyables.buy('dark-');
   }
 
   ngOnInit(): void {

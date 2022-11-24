@@ -78,7 +78,8 @@ export class PrestigeLayersService {
         // @ts-ignore
         HoldingsService.add(name+'Particles', this.getValue(name, 'gain'))
         HoldingsService.add(name+'s', new Num(1, 0))
-        if (ChallengeService.activeChallenge?.name === 'dark-age' && name === 'green' && new Num(Math.floor(HoldingsService.get('yellowParticles').exp / 110), 0).greq(HoldingsService.get('darkPower'))) {
+        // @ts-ignore
+        if (ChallengeService.activeChallenge?.name === 'dark-age' && name === 'green' && new Num(Math.floor(HoldingsService.get('yellowParticles').exp / 110), 0).add(new Num(0, 0), false).greq(HoldingsService.get('darkPower'))) {
 
           // @ts-ignore
           HoldingsService.add('darkPower', new Num(Math.floor(HoldingsService.get('yellowParticles').exp / 110), 0).sub(HoldingsService.get('darkPower'), false))
