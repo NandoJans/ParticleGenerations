@@ -66,7 +66,14 @@ export class ResetService {
     if (resets === 'redParticleGenerators') return;
 
     HoldingsService.set('yellowPower', new Num(0, 0));
-    HoldingsService.set('yellowFusion', new Num(1, 0));
+
+    const requirement = MilestoneService.getValue('divide-yellow-fusion', 'requirement')
+    if (HoldingsService.get(requirement[0]).greq(requirement[1])) {
+      HoldingsService.get('yellowFusion').div(new Num(1, 110));
+    } else {
+      HoldingsService.set('yellowFusion', new Num(1, 0));
+    }
+
     this.resetGenerators('redAccelerators')
     this.resetGenerators('yellowParticleGenerators', 'amount')
     this.resetUpgrades('red-accelerators')
@@ -77,7 +84,6 @@ export class ResetService {
     if (resets === 'yellow') return;
 
     HoldingsService.set('yellowParticles', new Num(0, 0));
-    HoldingsService.set('yellowFusion', new Num(1, 0));
     HoldingsService.set('yellowPower', new Num(1, 0));
     HoldingsService.set('yellowFusionPower', new Num(2, -1));
     HoldingsService.set('greenEnergy', new Num(1, 0));

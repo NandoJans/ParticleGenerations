@@ -38,4 +38,9 @@ export const greenMilestones: Milestone[] = [
     unlocked: false, requirement: ['greens', new Num(1, 0)], cost: new Num(2, 1), currency: 'greens', buffer: new Num(1, 0),
     action: new Action('amplifyUpgrades', 'yellow-fusion', 'green-upgrades', 'resetId'),
   },
+  {
+    name: 'divide-yellow-fusion', displayName: 'Divide Yellow Fusion', description: 'Divide yellow fusion on going yellow.', type: 'green-milestone', style: 'green-style',
+    unlocked: false, requirement: ['greens', new Num(1, 0)], cost: new Num(1, 3), currency: 'greens', buffer: new Num(1, 0),
+    action: new Action('', ''),
+  },
 ]

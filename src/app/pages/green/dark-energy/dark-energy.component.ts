@@ -23,7 +23,7 @@ export class DarkEnergyComponent implements OnInit {
 
   splitEqual() {
     this.upgrades.forEach(upgrade => {
-      const result: any[] = this.buyables.calculateBulk(upgrade, new Num(5, 0))
+      const result: any[] = this.buyables.calculateBulk(upgrade, new Num(25, 0))
       // @ts-ignore
       if (result[0].greq(new Num(1, 0)) && HoldingsService.get(upgrade.currency).greq(result[1])) {
         // @ts-ignore

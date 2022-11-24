@@ -30,11 +30,11 @@ export class NavigationsService {
     { name: 'yellowFusion', displayName: 'Fuse', location: 'fusion', parent: 'yellow', unlocked: false, requirement: ['yellowParticles', new Num(1, 32)]  },
     { name: 'yellowMilestones', displayName: 'Mile', location: 'milestones', parent: 'yellow', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
 
-    { name: 'greenGenerators', displayName: 'Generators', location: 'generators', parent: 'green', unlocked: false, requirement: ['greens', new Num(1, 0)]  },
-    { name: 'greenSacrifice', displayName: 'Sacrifice', location: 'sacrifice', parent: 'green', unlocked: false, requirement: ['greens', new Num(1, 0)]  },
+    { name: 'greenGenerators', displayName: 'Gen', location: 'generators', parent: 'green', unlocked: false, requirement: ['greens', new Num(1, 0)]  },
+    { name: 'greenSacrifice', displayName: 'Sac', location: 'sacrifice', parent: 'green', unlocked: false, requirement: ['greens', new Num(1, 0)]  },
     { name: 'darkEnergy', displayName: 'DE', location: 'darkenergy', parent: 'green', unlocked: false, requirement: ['greens', new Num(1, 1)]  },
     { name: 'darkAge', displayName: 'DA', location: 'darkage', parent: 'green', unlocked: false, requirement: ['greenParticles', new Num(1, 10)]  },
-    { name: 'greenMilestones', displayName: 'Milestones', location: 'milestones', parent: 'green', unlocked: false, requirement: ['greens', new Num(1, 0)]  },
+    { name: 'greenMilestones', displayName: 'Mile', location: 'milestones', parent: 'green', unlocked: false, requirement: ['greens', new Num(1, 0)]  },
 
     { name: 'redAutomators', displayName: 'Red', location: 'red', parent: 'automators', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
     { name: 'yellowAutomators', displayName: 'Yellow', location: 'yellow', parent: 'automators', unlocked: false, requirement: ['greens', new Num(1, 0)]  },
