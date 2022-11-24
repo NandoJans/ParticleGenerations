@@ -80,4 +80,12 @@ export const limitedGreenUpgrades: Upgrade[] = [
       new Action('decreaseHolding', 'greenSouls', new Num(1, 2), 'cost', 'red-accelerator-buffer'),
     ]
   },
+  {
+    name: 'yellow-idle-gain', displayName: 'Gain 1% of your yellows gained on yellow per second.', description: '', auto: false, noMax: true,
+    baseCost: new Num(2,2), cost: new Num(2, 2), increase: new Num(1,0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenSouls',
+    baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'green-limited-upgrades', resetId: 'green-limited-upgrades', style: 'limited-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['greens', new Num(1, 0)],
+    action: [
+      new Action('decreaseHolding', 'greenSouls', new Num(2, 2), 'cost', 'red-accelerator-buffer'),
+    ]
+  },
 ]

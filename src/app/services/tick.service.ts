@@ -14,7 +14,6 @@ import {ChallengeService} from "./interactables/challenge.service";
 import {AutomatorService} from "./interactables/automator.service";
 import {TimelineService} from "./timeline.service";
 import {mainActions} from "./interactables/action/mainActions";
-import {Tester} from "../Tester";
 
 @Injectable({
   providedIn: 'root'
@@ -101,8 +100,6 @@ export class TickService {
 
     setInterval(() => {
       DataManagerService.save()
-      Tester.print();
-      Tester.reset();
     }, 5000)
   }
 }

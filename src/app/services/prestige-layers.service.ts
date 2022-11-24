@@ -5,6 +5,7 @@ import {ResetService} from "./interactables/reset.service";
 import {GlobalMultipliersService} from "./globals/global-multipliers.service";
 import {ChallengeService} from "./interactables/challenge.service";
 import {DataManagerService} from "./data-manager.service";
+import {UpgradeService} from "./interactables/upgrade.service";
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +60,10 @@ export class PrestigeLayersService {
       const gain = GlobalMultipliersService.get(prestige['multiplier'])
       if (gain !== undefined) {
         prestige['gain'] = prestige['gain'].mul(gain, false)
+      }
+
+      if (UpgradeService.getValue(prestige.name+'-idle-gain', 'bought') !== 0 && UpgradeService.getValue(prestige.name+'-idle-gain', 'bought').greq(new Num(1, 0))) {
+        HoldingsService.add(prestige.name+'Particles', prestige.gain.div(new Num(1, 2), false))
       }
     })
   }

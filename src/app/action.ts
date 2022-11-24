@@ -3,8 +3,6 @@ import {UpgradeService} from "./services/interactables/upgrade.service";
 import {Num} from "./num";
 import {HoldingsService} from "./services/holdings.service";
 import {GeneratorService} from "./services/interactables/generator.service";
-import {ChallengeService} from "./services/interactables/challenge.service";
-import {AutomatorService} from "./services/interactables/automator.service";
 
 export class Action {
   type: string;

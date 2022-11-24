@@ -1,5 +1,3 @@
-import {Tester} from "./Tester";
-
 export class Num {
   num: number;
   exp: number;
