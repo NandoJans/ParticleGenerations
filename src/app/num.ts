@@ -310,6 +310,12 @@ export class Num {
   greq = (x: Num) => {
     //if (this.num === 0 && x.num !== 0) return false;
     //if (x.num === 0 && this.num !== 0) return true;
+    if (isNaN(this.num)) {
+      this.num = 1
+    }
+    if (isNaN(x.num)) {
+      x.num = 1
+    }
     this.exp = Math.round(this.exp)
     x.exp = Math.round(x.exp)
     if (x.num < 0 && this.num > 0) {

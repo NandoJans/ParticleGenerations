@@ -102,8 +102,13 @@ export class Action {
   }
 
   decreaseHoldingIncremental() {
-    // @ts-ignore
-    HoldingsService.remove(this.target, this.amount.pow(UpgradeService.getValue(this.subject, this.variable), false).sub(new Num(1, 0), false))
+    if (UpgradeService.getValue(this.subject, this.variable) !== 0) {
+      // @ts-ignore
+      HoldingsService.remove(this.target, this.amount.pow(UpgradeService.getValue(this.subject, this.variable), false).sub(new Num(1, 0), false))
+    } else if (GeneratorService.getValue(this.subject, this.variable) !== 0) {
+      // @ts-ignore
+      HoldingsService.remove(this.target, this.amount.pow(GeneratorService.getValue(this.subject, this.variable), false).sub(new Num(1, 0), false))
+    }
   }
 
   amplifyUpgrade() {

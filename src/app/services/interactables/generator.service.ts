@@ -172,7 +172,7 @@ export class GeneratorService {
             const division = new Num(HoldingsService.get('yellowFusion').exp / HoldingsService.get('yellowFusionMax').exp, 0)
             if (division.greq(new Num(1, 0))) {
               // @ts-ignore
-              generator.multiplier.div(new Num(2, 0).pow(division.sub(new Num(1, 0), false), false))
+              generator.multiplier.div(new Num(1.5, 0).pow(division.sub(new Num(1, 0), false), false))
             }
           } else if (yellowFusion.greq(HoldingsService.get('yellowFusionMax'))) {
             HoldingsService.set('yellowFusion', HoldingsService.get('yellowFusionMax').copy())
@@ -181,6 +181,10 @@ export class GeneratorService {
 
         if (generator.type === 'green-particles') {
           generator.multiplier.mul(GlobalMultipliersService.get('greenParticleGenerators'))
+        }
+
+        if (generator.type === 'nuclear-decay') {
+          generator.multiplier.mul(GlobalMultipliersService.get('nuclearDecayGenerators'))
         }
 
         if (ChallengeService.activeChallenge?.name === 'dark-age' && generator.name !== 'yellow-fusion-generator') {

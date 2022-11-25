@@ -34,6 +34,7 @@ export class NavigationsService {
     { name: 'greenSacrifice', displayName: 'Sac', location: 'sacrifice', parent: 'green', unlocked: false, requirement: ['greens', new Num(1, 0)]  },
     { name: 'darkEnergy', displayName: 'DE', location: 'darkenergy', parent: 'green', unlocked: false, requirement: ['greens', new Num(1, 1)]  },
     { name: 'darkAge', displayName: 'DA', location: 'darkage', parent: 'green', unlocked: false, requirement: ['greenParticles', new Num(1, 10)]  },
+    { name: 'nuclearDecay', displayName: 'ND', location: 'nucleardecay', parent: 'green', unlocked: false, requirement: ['greenParticles', new Num(1, 30)]  },
     { name: 'greenMilestones', displayName: 'Mile', location: 'milestones', parent: 'green', unlocked: false, requirement: ['greens', new Num(1, 0)]  },
 
     { name: 'redAutomators', displayName: 'Red', location: 'red', parent: 'automators', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },

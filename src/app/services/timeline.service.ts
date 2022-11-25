@@ -52,11 +52,19 @@ export class TimelineService {
     },
     {
       name: 'dark-energy', displayName: 'This is different', description: 'What if we compress green energy.', hasProgress: true,
-      unlocked: true, requirement: ['greens', new Num(1, 0)], type: 'green-timeline', reached: false, unlock: ['greens', new Num(1, 1)]
+      unlocked: false, requirement: ['greens', new Num(1, 0)], type: 'green-timeline', reached: false, unlock: ['greens', new Num(1, 1)]
     },
     {
-      name: 'ascending', displayName: 'Coming soon', description: 'Ascending to an alternate dark universe.', hasProgress: true,
-      unlocked: true, requirement: ['greenParticles', new Num(1, 0)], type: 'green-timeline', reached: false, unlock: ['greenParticles', new Num(1, 10)]
+      name: 'ascending', displayName: 'Dark ages are coming.', description: 'Ascending to an alternate dark universe.', hasProgress: true,
+      unlocked: false, requirement: ['greenParticles', new Num(1, 0)], type: 'green-timeline', reached: false, unlock: ['greenParticles', new Num(1, 10)]
+    },
+    {
+      name: 'nuclear-decay', displayName: 'Overwhelmed by green souls?', description: 'There is another use for green souls you know.', hasProgress: true,
+      unlocked: false, requirement: ['greenParticles', new Num(1, 0)], type: 'green-timeline', reached: false, unlock: ['greenParticles', new Num(1, 30)]
+    },
+    {
+      name: 'blue-phase', displayName: 'When a star dies', description: 'What is this blue substance produced when stars die.', hasProgress: true,
+      unlocked: false, requirement: ['greenParticles', new Num(1, 30)], type: 'green-timeline', reached: false, unlock: ['greenParticles', new Num(1, 110)]
     },
   ]
 

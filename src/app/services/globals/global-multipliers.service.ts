@@ -14,7 +14,8 @@ export class GlobalMultipliersService {
     yellowFusion: new Num(1, 0),
     yellowFusionPower: new Num(2, -1),
     greenParticleGenerators: new Num(1, 0),
-    greenParticlesGain: new Num(1, 0)
+    greenParticlesGain: new Num(1, 0),
+    nuclearDecayGenerators: new Num(1, 0)
   };
 
   constructor() { }
@@ -28,7 +29,8 @@ export class GlobalMultipliersService {
       yellowFusion: new Num(1, 0),
       yellowFusionPower: new Num(2, -1),
       greenParticleGenerators: new Num(1, 0),
-      greenParticlesGain: new Num(1, 0)
+      greenParticlesGain: new Num(1, 0),
+      nuclearDecayGenerators: new Num(1, 0)
     }
   }
 
