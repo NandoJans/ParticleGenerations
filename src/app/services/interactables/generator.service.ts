@@ -169,13 +169,13 @@ export class GeneratorService {
 
           const hasLimit = UpgradeService.getValue('remove-fusion-limit', 'bought').greq(new Num(1, 0))
           if (hasLimit) {
-            const division = new Num(HoldingsService.get('yellowFusionMax').exp / HoldingsService.get('yellowFusion').exp, 0)
-            if (!division.greq(new Num(1, 0))) {
+            const division = new Num(HoldingsService.get('yellowFusion').exp / HoldingsService.get('yellowFusionMax').exp, 0)
+            if (division.greq(new Num(1, 0))) {
               // @ts-ignore
-              generator.multiplier.mul(division.pow(new Num(2, 0), false))
+              generator.multiplier.div(new Num(2, 0).pow(division.sub(new Num(1, 0), false), false))
             }
           } else if (yellowFusion.greq(HoldingsService.get('yellowFusionMax'))) {
-
+            HoldingsService.set('yellowFusion', HoldingsService.get('yellowFusionMax').copy())
           }
         }
 

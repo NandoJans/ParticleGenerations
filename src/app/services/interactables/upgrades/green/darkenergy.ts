@@ -41,9 +41,9 @@ export const darkenergyUpgrades: Upgrade[] = [
   {
     name: 'dark-yellow-fusion', displayName: 'Dark yellow fusion', description: '', auto: false, noMax: true,
     baseCost: new Num(1,0), cost: new Num(1, 0), increase: new Num(2,0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'darkEnergy',
-    baseBuffer: new Num(1, 1), buffer: new Num(1, 1), amount: new Num(0, 0), type: 'dark-upgrade', resetId: 'dark-upgrade', style: 'sacrifice-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['greens', new Num(1, 1)],
+    baseBuffer: new Num(1, 5), buffer: new Num(1, 5), amount: new Num(0, 0), type: 'dark-upgrade', resetId: 'dark-upgrade', style: 'sacrifice-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['greens', new Num(1, 1)],
     action: [
-      new Action('increaseHoldingIncremental', 'yellowFusionMax', new Num(1, 10), 'bought', 'dark-yellow-fusion'),
+      new Action('increaseHoldingIncremental', 'yellowFusionMax', new Num(1, 5), 'bought', 'dark-yellow-fusion'),
       new Action('decreaseHoldingIncremental', 'darkEnergy', new Num(2, 0), 'bought', 'dark-yellow-fusion'),
     ]
   },

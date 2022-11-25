@@ -101,7 +101,7 @@ export const yellowChallenges: Challenge[] = [
     ]
   },
   {
-    name: 'yellow-challenge-8', displayName: 'Yellow Challenge 8', description: 'when yellow generators generate second red accelerator generators.', goal: new Num(1, 6100), currency: 'redParticles', completed: false, disabled: false,
+    name: 'yellow-challenge-8', displayName: 'Yellow Challenge 8', description: 'when yellow generators generate second red accelerator generators.', goal: new Num(1, 5500), currency: 'redParticles', completed: false, disabled: false,
     rewardDescription: 'Make yellow fusion much more powerfull.', style: 'yellow-challenge', resetId: 'yellow-challenges', type: 'yellow-challenges', prestige: 'yellow', unlocked: false, instantComplete: false,
     requirement: ['yellowParticles', new Num(1, 75)],
     reward: new Action('setHolding', 'yellowFusionPower', new Num(4, -1)),

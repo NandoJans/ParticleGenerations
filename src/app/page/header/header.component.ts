@@ -10,12 +10,16 @@ export class HeaderComponent implements OnInit {
   redParticles: string = '';
 
   docYellow: string | undefined;
-
   docGreen: string | undefined;
-  constructor(private layers: PrestigeLayersService) { }
+  docBlue: string | undefined;
+  docPurple: string | undefined;
+
+  constructor() { }
 
   ngOnInit(): void {
     this.docYellow = PrestigeLayersService.getValue('yellow', 'prestigeButton');
     this.docGreen = PrestigeLayersService.getValue('green', 'prestigeButton');
+    this.docBlue = PrestigeLayersService.getValue('blue', 'prestigeButton');
+    this.docPurple = PrestigeLayersService.getValue('purple', 'prestigeButton');
   }
 }

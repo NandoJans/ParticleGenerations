@@ -19,4 +19,5 @@ export const holdings = {
   darkEnergySubtract: {amount: new Num(0, 0)},
   darkAgeMax: {amount: new Num(1, 110)},
   darkPower: {amount: new Num(0, 0)},
+  blueParticles: {amount: new Num(0, 0)},
 }

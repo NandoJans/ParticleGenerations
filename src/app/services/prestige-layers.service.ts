@@ -14,6 +14,8 @@ export class PrestigeLayersService {
   static prestiges: any[] = [
     { name: 'yellow', requirement: ['redParticles', new Num(1, 110)], prestigeButton: 'prestige-yellow', unlocked: false, gain: new Num(1, 0), multiplier: 'yellowParticlesGain'},
     { name: 'green', requirement: ['yellowParticles', new Num(1, 110)], prestigeButton: 'prestige-green', unlocked: false, gain: new Num(1, 0), multiplier: 'greenParticlesGain'},
+    { name: 'blue', requirement: ['greenParticles', new Num(1, 110)], prestigeButton: 'prestige-blue', unlocked: false, gain: new Num(1, 0), multiplier: 'blueParticlesGain'},
+    { name: 'purple', requirement: ['blueParticles', new Num(1, 110)], prestigeButton: 'prestige-purple', unlocked: false, gain: new Num(1, 0), multiplier: 'purpleParticlesGain'},
   ]
 
   static save() {
