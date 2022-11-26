@@ -104,10 +104,10 @@ export class Action {
   decreaseHoldingIncremental() {
     if (UpgradeService.getValue(this.subject, this.variable) !== 0) {
       // @ts-ignore
-      HoldingsService.remove(this.target, this.amount.pow(UpgradeService.getValue(this.subject, this.variable), false).sub(new Num(1, 0), false))
+      HoldingsService.remove(this.target, UpgradeService.getValue(this.subject, 'baseCost').mul(UpgradeService.getValue(this.subject, 'increase').pow(UpgradeService.getValue(this.subject, this.variable), false), false).sub(new Num(1, 0), false))
     } else if (GeneratorService.getValue(this.subject, this.variable) !== 0) {
       // @ts-ignore
-      HoldingsService.remove(this.target, this.amount.pow(GeneratorService.getValue(this.subject, this.variable), false).sub(new Num(1, 0), false))
+      HoldingsService.remove(this.target, GeneratorService.getValue(this.subject, 'baseCost').mul(GeneratorService.getValue(this.subject, 'increase').pow(GeneratorService.getValue(this.subject, this.variable), false), false).sub(new Num(1, 0), false))
     }
   }
 

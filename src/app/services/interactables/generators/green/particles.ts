@@ -33,9 +33,21 @@ export const greenParticleGenerators = [
   },
 
   {
-    name: 'nuclear-decay-generator', displayName: 'Nuclear Decay Generator', auto: false, style: 'green-style',
+    name: 'nuclear-decay-generator-1', displayName: 'Nuclear Decay Generator 1', auto: false, style: 'green-style', noMax: true,
     baseCost: new Num(1, 0), cost: new Num(1, 0), increase: new Num(2, 0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenSouls',
     generates: 'nuclearDecay', baseMultiplier: new Num(2, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'nuclear-decay', resetId: 'nuclearDecay', unlocked: false,
+    requirement: ['holding', 'greenParticles', new Num(1, 30)]
+  },
+  {
+    name: 'nuclear-decay-generator-2', displayName: 'Nuclear Decay Generator 2', auto: false, style: 'green-style', noMax: true,
+    baseCost: new Num(1, 1), cost: new Num(1, 1), increase: new Num(2, 0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenSouls',
+    generates: 'nuclear-decay-generator-1', baseMultiplier: new Num(2, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'nuclear-decay', resetId: 'nuclearDecay', unlocked: false,
+    requirement: ['holding', 'greenParticles', new Num(1, 30)]
+  },
+  {
+    name: 'nuclear-decay-generator-3', displayName: 'Nuclear Decay Generator 3', auto: false, style: 'green-style', noMax: true,
+    baseCost: new Num(1, 2), cost: new Num(1, 2), increase: new Num(2, 0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenSouls',
+    generates: 'nuclear-decay-generator-2', baseMultiplier: new Num(2, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'nuclear-decay', resetId: 'nuclearDecay', unlocked: false,
     requirement: ['holding', 'greenParticles', new Num(1, 30)]
   },
 ]

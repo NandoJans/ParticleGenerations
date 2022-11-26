@@ -7,6 +7,7 @@ import {DataManagerService} from "../data-manager.service";
 import {ChallengeService} from "./challenge.service";
 import {AutomatorService} from "./automator.service";
 import {MilestoneService} from "./milestone.service";
+import {PrestigeLayersService} from "../prestige-layers.service";
 
 @Injectable({
   providedIn: 'root'
@@ -95,8 +96,33 @@ export class ResetService {
     this.resetGenerators('greenParticleGenerators', 'amount')
     this.resetUpgrades('yellow-fusion')
     this.resetChallenges('yellow-challenges')
+    PrestigeLayersService.lock('yellow')
     DataManagerService.save()
     if (!HoldingsService.get('greens').greq(new Num(5, 1))) window.location.reload();
     if (resets === 'green') return;
+    HoldingsService.set('greenParticles', new Num(0, 0));
+    HoldingsService.set('greenSouls', new Num(1, 0));
+    HoldingsService.set('darkEnergy', new Num(0, 0));
+    HoldingsService.set('darkEnergySubtract', new Num(0, 0));
+    HoldingsService.set('darkPower', new Num(0, 0));
+    HoldingsService.set('nuclearDecay', new Num(0, 0));
+    HoldingsService.set('greenEnergy', new Num(1, 0));
+    HoldingsService.set('yellowFusion', new Num(1, 0));
+    this.resetGenerators('greenParticleGenerators')
+    this.resetGenerators('nuclearDecay')
+    this.resetUpgrades('nuclear-decay')
+    this.resetUpgrades('dark-compressor')
+    this.resetUpgrades('green-upgrades')
+    this.resetUpgrades('dark-upgrade')
+    this.resetUpgrades('green-sacrifices')
+    this.resetUpgrades('green-limited-upgrades')
+    this.resetUpgrades('dark-upgrades')
+    this.resetChallenges('dark-age')
+    this.resetAutomators('red-automators')
+    this.resetAutomators('yellow-automators')
+    PrestigeLayersService.lock('green')
+    DataManagerService.save()
+    if (!HoldingsService.get('blues').greq(new Num(5, 1))) window.location.reload();
+    if (resets === 'blue') return;
   }
 }

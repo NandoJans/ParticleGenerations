@@ -9,6 +9,7 @@ import {PrestigeLayersService} from "../prestige-layers.service";
 import {HoldingsService} from "../holdings.service";
 import {Action} from "../../action";
 import {yellowAutomators} from "./upgrades/automators/yellow";
+import {ChallengeService} from "./challenge.service";
 
 @Injectable({
   providedIn: 'root'
@@ -150,7 +151,7 @@ export class AutomatorService {
 
   static prestigeAutomators() {
     this.automators.forEach((autoPrestige) => {
-      if (autoPrestige.type === 'prestige-automators') {
+      if (autoPrestige.type === 'prestige-automators' && ChallengeService.activeChallenge === undefined) {
         // @ts-ignore
         if (autoPrestige.unlocked && autoPrestige.active && PrestigeLayersService.getValue(autoPrestige.layer, 'gain').greq(autoPrestige.waitFor)) {
           PrestigeLayersService.prestige(autoPrestige.layer);

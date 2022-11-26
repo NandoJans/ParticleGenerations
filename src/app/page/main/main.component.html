@@ -1,5 +1,8 @@
 <div class="holding-section">
   <div class="holding-line">
+    <p class="holding-prefix" *ngIf="unlockedBlue">You have </p><app-number-display *ngIf="unlockedBlue" [name]="'blueParticles'" [style]="'blue-text holding-amount'" [type]="'currency'"></app-number-display><p *ngIf="unlockedBlue" class="holding-prefix">Blue Particles</p>
+  </div>
+  <div class="holding-line">
     <p class="holding-prefix" *ngIf="unlockedGreen">You have </p><app-number-display *ngIf="unlockedGreen" [name]="'greenParticles'" [style]="'green-text holding-amount'" [type]="'currency'"></app-number-display><p *ngIf="unlockedGreen" class="holding-prefix">Green Particles</p>
   </div>
   <div class="holding-line">

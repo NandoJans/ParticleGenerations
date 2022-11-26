@@ -20,6 +20,8 @@ import {DarkEnergyComponent} from "./pages/green/dark-energy/dark-energy.compone
 import {YellowAutomatorsComponent} from "./pages/automators/yellow-automators/yellow-automators.component";
 import {DarkAgeComponent} from "./pages/green/dark-age/dark-age.component";
 import {NuclearDecayComponent} from "./pages/green/nuclear-decay/nuclear-decay.component";
+import {BlueTimelineComponent} from "./pages/timeline/blue-timeline/blue-timeline.component";
+import {BlueNeutronsComponent} from "./pages/blue/blue-neutrons/blue-neutrons.component";
 
 const routes: Routes = [
   { path: '', component: RedComponent },
@@ -37,12 +39,14 @@ const routes: Routes = [
   { path: '?/green/darkenergy', component: DarkEnergyComponent },
   { path: '?/green/darkage', component: DarkAgeComponent },
   { path: '?/green/nucleardecay', component: NuclearDecayComponent },
+  { path: '?/blue/neutrons', component: BlueNeutronsComponent },
   { path: '?/automators/red', component: RedAutomatorsComponent },
   { path: '?/automators/yellow', component: YellowAutomatorsComponent },
   { path: '?/automators/prestige', component: PrestigeAutomatorsComponent },
   { path: '?/timeline/red', component: RedTimelineComponent },
   { path: '?/timeline/yellow', component: YellowTimelineComponent },
   { path: '?/timeline/green', component: GreenTimelineComponent },
+  { path: '?/timeline/blue', component: BlueTimelineComponent },
 ];
 
 @NgModule({

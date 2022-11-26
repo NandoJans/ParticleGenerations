@@ -34,6 +34,14 @@ export class PrestigeLayersService {
     })
   }
 
+  static lock(name: string) {
+    this.prestiges.forEach((prestige) => {
+      if (prestige.name === name) {
+        prestige.unlocked = false;
+      }
+    })
+  }
+
   static getValue(name: string, value: string) {
     let retValue = undefined;
     this.prestiges.forEach((prestige) => {

@@ -5,7 +5,7 @@ import {Action} from "../../../../action";
 export const darkenergyUpgrades: Upgrade[] = [
   {
     name: 'dark-energy-compressor', displayName: 'Compressor', description: 'Compresses Green Energy into Dark Energy', auto: false,
-    baseCost: new Num(1,0), cost: new Num(1, 0), increase: new Num(1,1), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenEnergy',
+    baseCost: new Num(1,1), cost: new Num(1, 1), increase: new Num(1,1), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenEnergy',
     baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'dark-compressor', resetId: 'dark-compressor', style: 'sacrifice-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['greens', new Num(1, 1)],
     action: [
       new Action('increaseHolding', 'darkEnergy', new Num(1, 0), 'bought', 'dark-energy-compressor'),
@@ -17,7 +17,7 @@ export const darkenergyUpgrades: Upgrade[] = [
     baseBuffer: new Num(1, 100), buffer: new Num(1, 100), amount: new Num(0, 0), type: 'dark-upgrade', resetId: 'dark-upgrade', style: 'sacrifice-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['greens', new Num(1, 1)],
     action: [
       new Action('basedOnUpgrade', 'redParticleGenerators', new Num(1, 0), 'bought', 'dark-red-generators'),
-      new Action('decreaseHoldingIncremental', 'darkEnergy', new Num(2, 0), 'bought', 'dark-red-generators'),
+      new Action('decreaseHoldingIncremental', 'darkEnergy', new Num(1, 0), 'bought', 'dark-red-generators'),
     ]
   },
   {
@@ -26,7 +26,7 @@ export const darkenergyUpgrades: Upgrade[] = [
     baseBuffer: new Num(1, 40), buffer: new Num(1, 40), amount: new Num(0, 0), type: 'dark-upgrade', resetId: 'dark-upgrade', style: 'sacrifice-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['greens', new Num(1, 1)],
     action: [
       new Action('basedOnUpgrade', 'redAcceleratorGenerators', new Num(1, 0), 'bought', 'dark-red-accelerators'),
-      new Action('decreaseHoldingIncremental', 'darkEnergy', new Num(2, 0), 'bought', 'dark-red-accelerators'),
+      new Action('decreaseHoldingIncremental', 'darkEnergy', new Num(1, 0), 'bought', 'dark-red-accelerators'),
     ]
   },
   {
@@ -35,7 +35,7 @@ export const darkenergyUpgrades: Upgrade[] = [
     baseBuffer: new Num(1, 10), buffer: new Num(1, 10), amount: new Num(0, 0), type: 'dark-upgrade', resetId: 'dark-upgrade', style: 'sacrifice-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['greens', new Num(1, 1)],
     action: [
       new Action('basedOnUpgrade', 'yellowParticleGenerators', new Num(1, 0), 'bought', 'dark-yellow-generators'),
-      new Action('decreaseHoldingIncremental', 'darkEnergy', new Num(2, 0), 'bought', 'dark-yellow-generators'),
+      new Action('decreaseHoldingIncremental', 'darkEnergy', new Num(1, 0), 'bought', 'dark-yellow-generators'),
     ]
   },
   {
@@ -44,7 +44,7 @@ export const darkenergyUpgrades: Upgrade[] = [
     baseBuffer: new Num(1, 5), buffer: new Num(1, 5), amount: new Num(0, 0), type: 'dark-upgrade', resetId: 'dark-upgrade', style: 'sacrifice-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['greens', new Num(1, 1)],
     action: [
       new Action('increaseHoldingIncremental', 'yellowFusionMax', new Num(1, 5), 'bought', 'dark-yellow-fusion'),
-      new Action('decreaseHoldingIncremental', 'darkEnergy', new Num(2, 0), 'bought', 'dark-yellow-fusion'),
+      new Action('decreaseHoldingIncremental', 'darkEnergy', new Num(1, 0), 'bought', 'dark-yellow-fusion'),
     ]
   },
   {
@@ -53,7 +53,7 @@ export const darkenergyUpgrades: Upgrade[] = [
     baseBuffer: new Num(3, 0), buffer: new Num(3, 0), amount: new Num(0, 0), type: 'dark-upgrade', resetId: 'dark-upgrade', style: 'sacrifice-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['greens', new Num(1, 1)],
     action: [
       new Action('basedOnUpgrade', 'greenParticleGenerators', new Num(1, 0), 'bought', 'dark-green-generators'),
-      new Action('decreaseHoldingIncremental', 'darkEnergy', new Num(2, 0), 'bought', 'dark-green-generators'),
+      new Action('decreaseHoldingIncremental', 'darkEnergy', new Num(1, 0), 'bought', 'dark-green-generators'),
     ]
   },
 ]

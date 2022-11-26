@@ -66,6 +66,11 @@ export class TimelineService {
       name: 'blue-phase', displayName: 'When a star dies', description: 'What is this blue substance produced when stars die.', hasProgress: true,
       unlocked: false, requirement: ['greenParticles', new Num(1, 30)], type: 'green-timeline', reached: false, unlock: ['greenParticles', new Num(1, 110)]
     },
+
+    {
+      name: 'blue-phase-start', displayName: 'Why a universe is so neutral', description: 'Blue neutrons are coming fast to boost all are needs.', hasProgress: false,
+      unlocked: true, requirement: ['none'], type: 'blue-timeline', reached: false, unlock: ['blues', new Num(1, 0)]
+    },
   ]
 
   static save() {

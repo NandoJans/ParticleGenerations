@@ -40,6 +40,8 @@ import { DarkEnergyComponent } from './pages/green/dark-energy/dark-energy.compo
 import { YellowAutomatorsComponent } from './pages/automators/yellow-automators/yellow-automators.component';
 import { DarkAgeComponent } from './pages/green/dark-age/dark-age.component';
 import { NuclearDecayComponent } from './pages/green/nuclear-decay/nuclear-decay.component';
+import { BlueTimelineComponent } from './pages/timeline/blue-timeline/blue-timeline.component';
+import { BlueNeutronsComponent } from './pages/blue/blue-neutrons/blue-neutrons.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +79,9 @@ import { NuclearDecayComponent } from './pages/green/nuclear-decay/nuclear-decay
     DarkEnergyComponent,
     YellowAutomatorsComponent,
     DarkAgeComponent,
-    NuclearDecayComponent
+    NuclearDecayComponent,
+    BlueTimelineComponent,
+    BlueNeutronsComponent
   ],
     imports: [
         BrowserModule,

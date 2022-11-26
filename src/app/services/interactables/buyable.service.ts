@@ -56,12 +56,16 @@ export class BuyableService {
   buy(name: string | undefined) {
     GeneratorService.generators.forEach((buyable) => {
       if (buyable.name === name) {
-        const result = this.calculateBulk(buyable)
+        if (buyable.noMax !== undefined && buyable.noMax) {
+          this.buyAction(buyable);
+        } else {
+          const result = this.calculateBulk(buyable)
 
-        // @ts-ignore
-        if (result[0].greq(new Num(1, 0)) && HoldingsService.get(buyable.currency).greq(result[1])) {
           // @ts-ignore
-          this.bulkBuyAction(buyable, result[1], result[0]);
+          if (result[0].greq(new Num(1, 0)) && HoldingsService.get(buyable.currency).greq(result[1])) {
+            // @ts-ignore
+            this.bulkBuyAction(buyable, result[1], result[0]);
+          }
         }
       }
     })

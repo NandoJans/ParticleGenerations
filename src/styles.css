@@ -6,15 +6,18 @@
   --text-color-red: rgb(226, 78, 78);
   --text-color-yellow: rgb(229, 237, 36);
   --text-color-green: rgb(93, 231, 77);
+  --text-color-blue: rgb(21, 177, 224);
   --red-button-color: rgb(170, 45, 45);
   --yellow-button-color: rgb(231, 237, 50);
   --fusion-red-color: rgb(229, 91, 47);
   --green-button-color: rgb(100, 210, 74);
+  --blue-button-color: rgb(48, 151, 217);
   --dark-button-color: rgb(67, 67, 67);
   --transparent-background-red: rgba(199, 77, 77, 0.3);
   --transparent-background-yellow: rgba(220, 213, 44, 0.3);
   --fusion-red-background-color: rgb(229, 91, 47, 0.3);
   --transparent-background-green: rgba(79, 219, 56, 0.3);
+  --transparent-background-blue: rgba(42, 160, 224, 0.3);
   --transparent-background-dark: rgba(89, 89, 89, 0.3);
   --transparent-background-light: rgba(229, 229, 229, 0.3);
 }
@@ -203,6 +206,11 @@ footer {
   background-color: var(--transparent-background-green);
 }
 
+.blue-style {
+  border: solid 1px var(--blue-button-color);
+  background-color: var(--transparent-background-blue);
+}
+
 .sacrifice-style {
   background-color: var(--background-color-1);
   color: var(--green-button-color);
@@ -232,6 +240,10 @@ footer {
 
 .green-style .maxed {
   background-color: var(--green-button-color) !important;
+}
+
+.blue-style .maxed {
+  background-color: var(--blue-button-color) !important;
 }
 
 .automator .maxed {
@@ -372,11 +384,19 @@ button {
   border-color: var(--green-button-color);
 }
 
+.blue-prestige {
+  background-color: var(--transparent-background-blue);
+  border-color: var(--blue-button-color);
+}
+
 .yellow-prestige:hover {
   background-color: var(--yellow-button-color);
 }
 .green-prestige:hover {
   background-color: var(--green-button-color);
+}
+.blue-prestige:hover {
+  background-color: var(--blue-button-color);
 }
 
 .timeline {
@@ -433,6 +453,10 @@ button {
 
 .green-text {
   color: var(--text-color-green)
+}
+
+.blue-text {
+  color: var(--text-color-blue)
 }
 
 .dark-text {

@@ -15,6 +15,7 @@ export class NavigationsService {
     { name: 'red', displayName: 'R', location: 'red', unlocked: true, requirement: 'none', wasOn: 'particles' },
     { name: 'yellow', displayName: 'Y', location: 'yellow', unlocked: false, requirement: ['yellows', new Num(1, 0)], wasOn: 'upgrades' },
     { name: 'green', displayName: 'G', location: 'green', unlocked: false, requirement: ['greens', new Num(1, 0)], wasOn: 'generators' },
+    { name: 'blue', displayName: 'B', location: 'blue', unlocked: false, requirement: ['blues', new Num(1, 0)], wasOn: 'neutrons' },
     { name: 'automators', displayName: 'A', location: 'automators', unlocked: false, requirement: ['yellows', new Num(1, 0)], wasOn: 'red' },
     { name: 'timeline', displayName: 'T', location: 'timeline', unlocked: true, requirement: 'none', wasOn: 'red' },
   ]
@@ -36,6 +37,8 @@ export class NavigationsService {
     { name: 'darkAge', displayName: 'DA', location: 'darkage', parent: 'green', unlocked: false, requirement: ['greenParticles', new Num(1, 10)]  },
     { name: 'nuclearDecay', displayName: 'ND', location: 'nucleardecay', parent: 'green', unlocked: false, requirement: ['greenParticles', new Num(1, 30)]  },
     { name: 'greenMilestones', displayName: 'Mile', location: 'milestones', parent: 'green', unlocked: false, requirement: ['greens', new Num(1, 0)]  },
+
+    { name: 'blueNeutrons', displayName: 'Neutrons', location: 'neutrons', parent: 'blue', unlocked: false, requirement: ['blues', new Num(1, 0)]  },
 
     { name: 'redAutomators', displayName: 'Red', location: 'red', parent: 'automators', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
     { name: 'yellowAutomators', displayName: 'Yellow', location: 'yellow', parent: 'automators', unlocked: false, requirement: ['greens', new Num(1, 0)]  },

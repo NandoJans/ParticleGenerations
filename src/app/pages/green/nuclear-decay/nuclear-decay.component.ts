@@ -14,6 +14,16 @@ export class NuclearDecayComponent implements OnInit {
   upgrades: Upgrade[] = [];
   effect: any[] = ['powerWithBase', 'nuclearDecay', new Num(1, -1), 'nuclear-decay-base-increaser']
 
+  respecSouls() {
+    UpgradeService.getUpgrades('nuclear-decay').forEach((upgrade) => {
+      upgrade.bought.mul(new Num(0, 0))
+    })
+    GeneratorService.getGenerators('nuclear-decay').forEach((upgrade) => {
+      upgrade.bought.mul(new Num(0, 0))
+      upgrade.amount.mul(new Num(0, 0))
+    })
+  }
+
   constructor() { }
 
   ngOnInit(): void {

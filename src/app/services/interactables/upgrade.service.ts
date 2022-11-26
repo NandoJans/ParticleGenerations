@@ -15,6 +15,7 @@ import {greenUpgrades} from "./upgrades/green/upgrade";
 import {Searcher} from "../../Searcher";
 import {Sorter} from "../../Sorter";
 import {nuclearDecayUpgrades} from "./upgrades/green/nucleardecay";
+import {blueNeutronUpgrades} from "./upgrades/blue/neutrons";
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,7 @@ import {nuclearDecayUpgrades} from "./upgrades/green/nucleardecay";
 export class UpgradeService {
   static upgrades: Upgrade[] =
     redUpgrades.concat(
+      blueNeutronUpgrades,
       nuclearDecayUpgrades,
       greenSacrifice,
       greenUpgrades,
@@ -34,6 +36,7 @@ export class UpgradeService {
   )
   static sortedUpgrades: Upgrade[] =
     Sorter.sort(redUpgrades.concat(
+      blueNeutronUpgrades,
       nuclearDecayUpgrades,
       greenSacrifice,
       greenUpgrades,
@@ -140,6 +143,12 @@ export class UpgradeService {
 
         // @ts-ignore
         upgrade.amount = upgrade.amount.add(HoldingsService.get('greenEnergy').log(new Num(0.8, 0), false), false);
+        UpgradeService.setValue('red-generator-booster', 'buffer', UpgradeService.getValue('red-generator-booster', 'buffer')
+          .mul(HoldingsService.get('nuclearDecay')
+            .pow(new Num(1, -1)
+              .mul(UpgradeService.getValue('better-nuclear-decay', 'buffer')
+                .pow(UpgradeService.getValue('better-nuclear-decay', 'bought'), false), false), false)
+            .add(new Num(1, 0), false), false).add(UpgradeService.getValue('nuclear-decay-base-increaser', 'bought'), false))
       }
       if ((upgrade.action !== undefined && upgrade.bought.greq(new Num(1, 0))) || upgrade.name === 'red-generator-booster') {
         if (upgrade.action instanceof Action) {
@@ -152,8 +161,6 @@ export class UpgradeService {
       }
       if (upgrade.name === 'dark-energy-compressor') {
         HoldingsService.get('darkEnergy').mul(new Num(5, 0).pow(HoldingsService.get('darkPower'), false))
-      } else if (upgrade.name === 'red-generator-booster') {
-        UpgradeService.setValue('red-generator-booster', 'buffer', UpgradeService.getValue('red-generator-booster', 'buffer').mul(HoldingsService.get('nuclearDecay').pow(new Num(1, -1), false).add(new Num(1, 0), false), false).add(UpgradeService.getValue('nuclear-decay-base-increaser', 'bought'), false))
       }
     })
   }

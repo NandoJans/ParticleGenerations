@@ -1,0 +1,19 @@
+<div class="holding-line">
+  <p class="holding-prefix">You have</p>
+  <app-number-display [name]="'blueNeutrons'" [style]="'blue-text holding-amount'" [type]="'currency'"></app-number-display>
+  <p class="holding-prefix">Blue Neutrons</p>
+</div>
+<div class="holding-line">
+  <p class="holding-prefix">They increase the buy multiplier of red generators by</p>
+  <app-number-display [name]="'blueRedNeutronRedEffect'" [style]="'red-text holding-amount'" [type]="'effect'" [effect]="redEffect"></app-number-display>
+</div>
+<div class="generators-row">
+  <div *ngFor="let generator of generators">
+    <app-generator *ngIf="generator.unlocked" [generator]="generator"></app-generator>
+  </div>
+</div>
+<div class="generators-row">
+  <div *ngFor="let upgrade of upgrades">
+    <app-upgrade *ngIf="upgrade.unlocked" [upgrade]="upgrade"></app-upgrade>
+  </div>
+</div>

@@ -14,6 +14,8 @@ import {ChallengeService} from "./interactables/challenge.service";
 import {AutomatorService} from "./interactables/automator.service";
 import {TimelineService} from "./timeline.service";
 import {mainActions} from "./interactables/action/mainActions";
+import {ResetService} from "./interactables/reset.service";
+import {Action} from "../action";
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +31,18 @@ export class TickService {
     })
     HoldingsService.remove('darkEnergy', HoldingsService.get('darkEnergySubtract'))
     HoldingsService.set('yellowFusionMax', new Num(1, 110))
+    if (!HoldingsService.get('yellowFusion').greq(new Num(1, 0))) {
+      HoldingsService.set('yellowFusion', new Num(1, 0))
+    }
+    if (GeneratorService.getValue('nuclear-decay-generator-1', 'bought').greq(new Num(1, 0))) {
+      new Action('decreaseHoldingIncremental', 'greenSouls', new Num(2, 0), 'bought', 'nuclear-decay-generator-1').execute()
+    }
+    if (GeneratorService.getValue('nuclear-decay-generator-2', 'bought').greq(new Num(1, 0))) {
+      new Action('decreaseHoldingIncremental', 'greenSouls', new Num(2, 0), 'bought', 'nuclear-decay-generator-2').execute()
+    }
+    if (GeneratorService.getValue('nuclear-decay-generator-3', 'bought').greq(new Num(1, 0))) {
+      new Action('decreaseHoldingIncremental', 'greenSouls', new Num(2, 0), 'bought', 'nuclear-decay-generator-3').execute()
+    }
   }
 
   gameTick(speed: Num = new Num(1, 0)) {
@@ -49,12 +63,15 @@ export class TickService {
 
     //HoldingsService.set('redParticles', new Num(1, 2000000))
     //HoldingsService.set('yellowParticles', new Num(3, 12100))
-    //HoldingsService.set('greenParticles', new Num(5, 30))
+    //HoldingsService.set('greenParticles', new Num(5, 110))
+    //HoldingsService.set('blueParticles', new Num(1, 0))
     //HoldingsService.set('yellows', new Num(5, 3))
     //HoldingsService.set('greens', new Num(1, 3))
+    //HoldingsService.set('greenSouls', new Num(2, 0))
     //HoldingsService.set('yellowFusion', new Num(1, 110))
     //HoldingsService.set('greenEnergy', new Num(1, 0))
     //console.log(HoldingsService.get('darkEnergy').toString())
+
 
     AutomatorService.setAutos();
     ChallengeService.applyNerfs();

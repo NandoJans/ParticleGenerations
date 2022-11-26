@@ -1,7 +1,7 @@
 import {Num} from "./num";
 import {Action} from "./action";
 
-export interface Generator {name: string, displayName: string, baseCost: Num, cost: Num, increase: Num, scaling: Num, bought: Num, currency: string, generates: string, baseMultiplier: Num, multiplier: Num, amount: Num, type: string, resetId: string, unlocked: boolean, requirement: any[], auto?: boolean, style: string}
+export interface Generator {name: string, displayName: string, baseCost: Num, cost: Num, increase: Num, scaling: Num, bought: Num, currency: string, generates: string, baseMultiplier: Num, multiplier: Num, amount: Num, type: string, resetId: string, unlocked: boolean, requirement: any[], auto?: boolean, style: string, noMax?: boolean}
 export interface Upgrade {name: string, displayName: string, description: string, baseCost: Num, cost: Num, increase: Num, scaling: Num, bought: Num, currency: string, baseBuffer: Num, buffer: Num, amount: Num, type: string, resetId: string, style: string, unlocked: boolean, oneTime: boolean, resets: string, requirement: any[], action?: Action | Action[], auto?: boolean, limit?: Num, noMax?: boolean}
 export interface Automator {name: string, displayName: string, cost: Num, currency: string, unlocked: boolean, active: boolean, requirement: any[], bought: Num, type: string, resetId: string, style: string, target: string, targetType: string, waitFor?: Num, layer?: string}
 export interface Milestone {name: string, displayName: string, description: string, style: string, type: string, unlocked: boolean, requirement: any[], cost: Num, currency: string, buffer: Num, action: Action}

@@ -11,12 +11,14 @@ import {yellowParticleGenerators} from "./generators/yellow/particles";
 import {greenParticleGenerators} from "./generators/green/particles";
 import {Sorter} from "../../Sorter";
 import {Searcher} from "../../Searcher";
+import {blueParticleGenerators} from "./generators/blue/particles";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GeneratorService {
   static generators: Generator[] = redParticleGenerators.concat(
+    blueParticleGenerators,
     redAcceleratorGenerators,
     yellowParticleGenerators,
     greenParticleGenerators
@@ -24,6 +26,7 @@ export class GeneratorService {
 
   static sortedGenerators: Generator[] =
     Sorter.sort(redParticleGenerators.concat(
+      blueParticleGenerators,
       redAcceleratorGenerators,
       yellowParticleGenerators,
       greenParticleGenerators
@@ -127,7 +130,12 @@ export class GeneratorService {
   static correctMultipliers() {
     this.generators.forEach((generator) => {
       if (generator.unlocked) {
-        let base = generator.baseMultiplier;
+        let base = generator.baseMultiplier.copy();
+
+        if (generator.type === 'red-particles' && HoldingsService.get('blueNeutrons').greq(new Num(1, 0))) {
+          base.mul(HoldingsService.get('blueNeutrons').pow(new Num(1.5, 0), false))
+        }
+
         // @ts-ignore
         generator.multiplier = base.pow(generator.bought, false)
 
