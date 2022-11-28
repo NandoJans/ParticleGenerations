@@ -105,11 +105,11 @@ export class Action {
     if (UpgradeService.getValue(this.subject, this.variable) !== 0) {
       const baseCost = UpgradeService.getValue(this.subject, 'baseCost');
       // @ts-ignore
-      HoldingsService.remove(this.target, baseCost.mul(UpgradeService.getValue(this.subject, 'increase').pow(UpgradeService.getValue(this.subject, this.variable), false), false).add(baseCost, false))
+      HoldingsService.remove(this.target, baseCost.mul(UpgradeService.getValue(this.subject, 'increase').pow(UpgradeService.getValue(this.subject, this.variable), false), false).sub(baseCost, false))
     } else if (GeneratorService.getValue(this.subject, this.variable) !== 0) {
       const baseCost = GeneratorService.getValue(this.subject, 'baseCost');
       // @ts-ignore
-      HoldingsService.remove(this.target, baseCost.mul(GeneratorService.getValue(this.subject, 'increase').pow(GeneratorService.getValue(this.subject, this.variable), false), false).add(baseCost, false))
+      HoldingsService.remove(this.target, baseCost.mul(GeneratorService.getValue(this.subject, 'increase').pow(GeneratorService.getValue(this.subject, this.variable), false), false).sub(baseCost, false))
     }
   }
 
