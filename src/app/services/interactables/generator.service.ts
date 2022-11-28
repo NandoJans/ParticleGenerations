@@ -133,7 +133,13 @@ export class GeneratorService {
         let base = generator.baseMultiplier.copy();
 
         if (generator.type === 'red-particles' && HoldingsService.get('blueNeutrons').greq(new Num(1, 0))) {
-          base.mul(HoldingsService.get('blueNeutrons').pow(new Num(1.5, 0), false))
+          base.mul(HoldingsService.get('blueNeutrons').pow(new Num(1.5, 0).mul(UpgradeService.getValue('blue-neutron-amplifier', 'buffer'), false), false))
+        }
+        if (generator.type === 'yellow-particles' && HoldingsService.get('blueNeutrons').greq(new Num(1, 0)) && UpgradeService.getValue('unlock-yellow-neutron-effect', 'bought').greq(new Num(1, 0))) {
+          base.mul(HoldingsService.get('blueNeutrons').pow(new Num(2, -2).mul(UpgradeService.getValue('blue-neutron-amplifier', 'buffer'), false), false))
+        }
+        if (generator.type === 'green-particles' && HoldingsService.get('blueNeutrons').greq(new Num(1, 0)) && UpgradeService.getValue('unlock-green-neutron-effect', 'bought').greq(new Num(1, 0))) {
+          base.mul(HoldingsService.get('blueNeutrons').pow(new Num(1, -2).mul(UpgradeService.getValue('blue-neutron-amplifier', 'buffer'), false), false))
         }
 
         // @ts-ignore
@@ -193,6 +199,10 @@ export class GeneratorService {
 
         if (generator.type === 'nuclear-decay') {
           generator.multiplier.mul(GlobalMultipliersService.get('nuclearDecayGenerators'))
+        }
+
+        if (generator.type === 'blue-neutrons') {
+          generator.multiplier.mul(GlobalMultipliersService.get('blueNeutronGenerators'))
         }
 
         if (ChallengeService.activeChallenge?.name === 'dark-age' && generator.name !== 'yellow-fusion-generator') {

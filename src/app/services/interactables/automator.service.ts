@@ -7,9 +7,9 @@ import {Num} from "../../num";
 import {UpgradeService} from "./upgrade.service";
 import {PrestigeLayersService} from "../prestige-layers.service";
 import {HoldingsService} from "../holdings.service";
-import {Action} from "../../action";
 import {yellowAutomators} from "./upgrades/automators/yellow";
 import {ChallengeService} from "./challenge.service";
+import {greenAutomators} from "./upgrades/automators/green";
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,7 @@ export class AutomatorService {
   static automators: Automator[] = prestigeAutomators.concat(
     redAutomators,
     yellowAutomators,
+    greenAutomators,
   )
 
   static save() {

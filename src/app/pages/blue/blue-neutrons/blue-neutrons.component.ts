@@ -12,13 +12,19 @@ import {UpgradeService} from "../../../services/interactables/upgrade.service";
 export class BlueNeutronsComponent implements OnInit {
   generators: Generator[] = [];
   upgrades: Upgrade[] = [];
-  redEffect: any[] = ['power', 'blueNeutrons', new Num(1.5, 0)]
+  redEffect: any[] = ['powerWithUpgrade', 'blueNeutrons', new Num(1.5, 0), 'blue-neutron-amplifier']
+  yellowEffect: any[] = ['powerWithUpgrade', 'blueNeutrons', new Num(2, -2), 'blue-neutron-amplifier']
+  unlockedYellowEffect: boolean = false;
+  greenEffect: any[] = ['powerWithUpgrade', 'blueNeutrons', new Num(1, -2), 'blue-neutron-amplifier']
+  unlockedGreenEffect: boolean = false;
 
   constructor() { }
 
   ngOnInit(): void {
     this.generators = GeneratorService.getGenerators('blue-neutrons');
     this.upgrades = UpgradeService.getUpgrades('blue-neutron-upgrade');
+    this.unlockedYellowEffect = UpgradeService.getValue('unlock-yellow-neutron-effect', 'bought').greq(new Num(1, 0))
+    this.unlockedGreenEffect = UpgradeService.getValue('unlock-green-neutron-effect', 'bought').greq(new Num(1, 0))
   }
 
 }

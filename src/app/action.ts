@@ -103,16 +103,22 @@ export class Action {
 
   decreaseHoldingIncremental() {
     if (UpgradeService.getValue(this.subject, this.variable) !== 0) {
+      const baseCost = UpgradeService.getValue(this.subject, 'baseCost');
       // @ts-ignore
-      HoldingsService.remove(this.target, UpgradeService.getValue(this.subject, 'baseCost').mul(UpgradeService.getValue(this.subject, 'increase').pow(UpgradeService.getValue(this.subject, this.variable), false), false).sub(new Num(1, 0), false))
+      HoldingsService.remove(this.target, baseCost.mul(UpgradeService.getValue(this.subject, 'increase').pow(UpgradeService.getValue(this.subject, this.variable), false), false).add(baseCost, false))
     } else if (GeneratorService.getValue(this.subject, this.variable) !== 0) {
+      const baseCost = GeneratorService.getValue(this.subject, 'baseCost');
       // @ts-ignore
-      HoldingsService.remove(this.target, GeneratorService.getValue(this.subject, 'baseCost').mul(GeneratorService.getValue(this.subject, 'increase').pow(GeneratorService.getValue(this.subject, this.variable), false), false).sub(new Num(1, 0), false))
+      HoldingsService.remove(this.target, baseCost.mul(GeneratorService.getValue(this.subject, 'increase').pow(GeneratorService.getValue(this.subject, this.variable), false), false).add(baseCost, false))
     }
   }
 
   amplifyUpgrade() {
     UpgradeService.setValue(this.target, this.variable, this.amount);
+  }
+
+  amplifyUpgradeIncremental() {
+    UpgradeService.setValue(this.target, this.variable, UpgradeService.getValue(this.subject, 'baseBuffer').pow(UpgradeService.getValue(this.subject, 'bought'), false))
   }
 
   amplifyUpgrades() {
@@ -126,7 +132,6 @@ export class Action {
   amplifyGenerators() {
     GeneratorService.setValues(this.target, this.variable, this.amount);
   }
-
 
   hasRequirement() {
     if (this.requirement === undefined) return true;
@@ -154,6 +159,7 @@ export class Action {
         case 'decreaseHolding': this.decreaseHolding(); break;
         case 'decreaseHoldingIncremental': this.decreaseHoldingIncremental(); break;
         case 'amplifyUpgrade': this.amplifyUpgrade(); break;
+        case 'amplifyUpgradeIncremental': this.amplifyUpgradeIncremental(); break;
         case 'amplifyUpgrades': this.amplifyUpgrades(); break;
         case 'amplifyGenerator': this.amplifyGenerator(); break;
         case 'amplifyGenerators': this.amplifyGenerators(); break;

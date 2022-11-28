@@ -88,6 +88,7 @@ export class ResetService {
     HoldingsService.set('yellowPower', new Num(1, 0));
     HoldingsService.set('yellowFusionPower', new Num(2, -1));
     HoldingsService.set('greenEnergy', new Num(1, 0));
+    HoldingsService.set('nuclearDecay', new Num(0, 0));
     if (!MilestoneService.isReached('autobuyers-no-reset')) {this.resetAutomators('red-automators')}
     this.resetAutomators('go-yellow-automator')
     this.resetUpgrades('yellow-upgrades')
@@ -96,7 +97,6 @@ export class ResetService {
     this.resetGenerators('greenParticleGenerators', 'amount')
     this.resetUpgrades('yellow-fusion')
     this.resetChallenges('yellow-challenges')
-    PrestigeLayersService.lock('yellow')
     DataManagerService.save()
     if (!HoldingsService.get('greens').greq(new Num(5, 1))) window.location.reload();
     if (resets === 'green') return;
@@ -108,6 +108,7 @@ export class ResetService {
     HoldingsService.set('nuclearDecay', new Num(0, 0));
     HoldingsService.set('greenEnergy', new Num(1, 0));
     HoldingsService.set('yellowFusion', new Num(1, 0));
+    HoldingsService.set('blueNeutrons', new Num(1, 0));
     this.resetGenerators('greenParticleGenerators')
     this.resetGenerators('nuclearDecay')
     this.resetUpgrades('nuclear-decay')
@@ -120,7 +121,6 @@ export class ResetService {
     this.resetChallenges('dark-age')
     this.resetAutomators('red-automators')
     this.resetAutomators('yellow-automators')
-    PrestigeLayersService.lock('green')
     DataManagerService.save()
     if (!HoldingsService.get('blues').greq(new Num(5, 1))) window.location.reload();
     if (resets === 'blue') return;

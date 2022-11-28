@@ -3,13 +3,14 @@ import {Milestone} from "../../globals";
 import {HoldingsService} from "../holdings.service";
 import {yellowMilestones} from "./milestones/yellow";
 import {greenMilestones} from "./milestones/green";
+import {blueMilestones} from "./milestones/blue";
 
 @Injectable({
   providedIn: 'root'
 })
 export class MilestoneService {
   static milestones: Milestone[] =
-    yellowMilestones.concat(greenMilestones)
+    yellowMilestones.concat(greenMilestones, blueMilestones)
 
   static save() {
     const save = {};

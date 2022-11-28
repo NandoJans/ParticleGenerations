@@ -39,9 +39,11 @@ export class NavigationsService {
     { name: 'greenMilestones', displayName: 'Mile', location: 'milestones', parent: 'green', unlocked: false, requirement: ['greens', new Num(1, 0)]  },
 
     { name: 'blueNeutrons', displayName: 'Neutrons', location: 'neutrons', parent: 'blue', unlocked: false, requirement: ['blues', new Num(1, 0)]  },
+    { name: 'blueMilestones', displayName: 'Milestones', location: 'milestones', parent: 'blue', unlocked: false, requirement: ['blues', new Num(1, 0)]  },
 
     { name: 'redAutomators', displayName: 'Red', location: 'red', parent: 'automators', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
     { name: 'yellowAutomators', displayName: 'Yellow', location: 'yellow', parent: 'automators', unlocked: false, requirement: ['greens', new Num(1, 0)]  },
+    { name: 'greenAutomators', displayName: 'Green', location: 'green', parent: 'automators', unlocked: false, requirement: ['blues', new Num(1, 0)]  },
     { name: 'prestigeAutomators', displayName: 'Prestige', location: 'prestige', parent: 'automators', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
 
     { name: 'redTimeline', displayName: 'Red', location: 'red', parent: 'timeline', unlocked: true, requirement: 'none'},

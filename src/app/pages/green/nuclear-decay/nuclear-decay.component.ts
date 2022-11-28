@@ -3,6 +3,7 @@ import {Generator, Upgrade} from "../../../globals";
 import {GeneratorService} from "../../../services/interactables/generator.service";
 import {Num} from "../../../num";
 import {UpgradeService} from "../../../services/interactables/upgrade.service";
+import {HoldingsService} from "../../../services/holdings.service";
 
 @Component({
   selector: 'app-nuclear-decay',
@@ -15,6 +16,7 @@ export class NuclearDecayComponent implements OnInit {
   effect: any[] = ['powerWithBase', 'nuclearDecay', new Num(1, -1), 'nuclear-decay-base-increaser']
 
   respecSouls() {
+    HoldingsService.set('nuclearDecay', new Num(1, 0))
     UpgradeService.getUpgrades('nuclear-decay').forEach((upgrade) => {
       upgrade.bought.mul(new Num(0, 0))
     })

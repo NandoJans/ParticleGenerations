@@ -57,6 +57,8 @@ export class NumberDisplayService {
                   } else {
                     element.innerHTML = 'x' + HoldingsService.get(entry.effect[1]).pow(entry.effect[2], false).toString(true)
                   }
+                } else if (effectType === 'powerWithUpgrade') {
+                  element.innerHTML = 'x' + HoldingsService.get(entry.effect[1]).mul(UpgradeService.getValue(entry.effect[3], 'buffer'), false).pow(entry.effect[2], false).toString(true)
                 } else if (effectType === 'powerWithBase') {
                   element.innerHTML = 'x' + HoldingsService.get(entry.effect[1]).pow(entry.effect[2].mul(UpgradeService.getValue('better-nuclear-decay', 'buffer').pow(UpgradeService.getValue('better-nuclear-decay', 'bought'), false), false), false).add(UpgradeService.getValue('nuclear-decay-base-increaser', 'bought'), false).toString(true)
                 } else if (effectType === 'log') {
