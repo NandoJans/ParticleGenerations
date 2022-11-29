@@ -5,7 +5,7 @@ import {Num} from "../../num";
 import {ResetService} from "./reset.service";
 import {UpgradeService} from "./upgrade.service";
 import {AutomatorService} from "./automator.service";
-import {Generator, Upgrade, Automator} from "../../globals";
+import {Generator, Upgrade} from "../../globals";
 
 @Injectable({
   providedIn: 'root'
@@ -32,24 +32,47 @@ export class BuyableService {
   calculateBulk(buyable: Upgrade | Generator, split: Num = new Num(1, 0)) {
     const a = buyable.increase
     const b = buyable.scaling
-    const x = HoldingsService.get(buyable.currency).div(split, false)
+    const c = buyable.bought
+    let x = HoldingsService.get(buyable.currency).div(split, false)
     const y = buyable.baseCost
     const two = new Num(2, 0)
     const four = new Num(4, 0)
     let futureBuying: Num;
+    let futureCost: Num;
 
-    if (b.greq(new Num(2, 0))) {
-      // @ts-ignore
-      futureBuying = a.ln(false).sub(a.ln(false).pow(two, false).add(four.mul(b.ln(false), false).mul(x.div(y, false).ln(false), false), false).sqrt(false), false).div(two.mul(b.ln(false), false), false)
-      // @ts-ignore
-      futureBuying = futureBuying.negate(false).floor(false)
-    } else {
+    if (buyable.scalingStart !== undefined) {
       futureBuying = x.div(y, false).ln(false).div(a.ln(false), false).floor(false)
+      // @ts-ignore
+      futureCost = y.mul(a.pow(futureBuying, false), false)
+      if (futureCost.greq(buyable.scalingStart)) {
+        x = buyable.scalingStart
+        let buyUntilScaling = x.div(y, false).ln(false).div(a.ln(false), false).floor(false)
+        // @ts-ignore
+        futureCost = y.mul(buyable.increase.pow(buyUntilScaling, false), false)
+        let leftOverCurrency = HoldingsService.get(buyable.currency).div(futureCost, false)
+        // @ts-ignore
+        let postScalingBuying = a.ln(false).sub(a.ln(false).pow(two, false).add(four.mul(b.ln(false), false).mul(leftOverCurrency.div(y, false).ln(false), false), false).sqrt(false), false).div(two.mul(b.ln(false), false), false)
+        // @ts-ignore
+        postScalingBuying = postScalingBuying.negate(false).floor(false)
+        // @ts-ignore
+        futureBuying = buyUntilScaling.add(postScalingBuying, false)
+        // @ts-ignore
+        futureCost = futureCost.mul(a.mul(b.pow(postScalingBuying, false), false).pow(postScalingBuying, false), false)
+      }
+    } else {
+      if (b.greq(new Num(1.1, 0))) {
+        // @ts-ignore
+        futureBuying = a.ln(false).sub(a.ln(false).pow(two, false).add(four.mul(b.ln(false), false).mul(x.div(y, false).ln(false), false), false).sqrt(false), false).div(two.mul(b.ln(false), false), false)
+        // @ts-ignore
+        futureBuying = futureBuying.negate(false).floor(false)
+      } else {
+        futureBuying = x.div(y, false).ln(false).div(a.ln(false), false).floor(false)
+      }
+      // @ts-ignore
+      futureCost = y.mul(a.mul(b.pow(futureBuying, false), false).pow(futureBuying, false), false)
     }
     // @ts-ignore
-    let futureCost = buyable.baseCost.mul(buyable.increase.mul(buyable.scaling.pow(futureBuying, false), false).pow(futureBuying, false), false)
-    // @ts-ignore
-    futureBuying = futureBuying.sub(buyable.bought, false).add(new Num(1, 0), false)
+    futureBuying = futureBuying.sub(c, false).add(new Num(1, 0), false)
     return [futureBuying, futureCost]
   }
 
@@ -59,12 +82,11 @@ export class BuyableService {
         if (buyable.noMax !== undefined && buyable.noMax) {
           this.buyAction(buyable);
         } else {
-          const result = this.calculateBulk(buyable)
-
+          const result1 = this.calculateBulk(buyable)
           // @ts-ignore
-          if (result[0].greq(new Num(1, 0)) && HoldingsService.get(buyable.currency).greq(result[1])) {
+          if (result1[0].greq(new Num(1, 0)) && HoldingsService.get(buyable.currency).greq(result1[1])) {
             // @ts-ignore
-            this.bulkBuyAction(buyable, result[1], result[0]);
+            this.bulkBuyAction(buyable, result1[1], result1[0]);
           }
         }
       }
@@ -96,11 +118,11 @@ export class BuyableService {
     GeneratorService.generators.forEach((buyable) => {
       if (HoldingsService.get(buyable.currency).greq(buyable.cost) && buyable['unlocked']
         && buyable['auto']) {
-        const result = this.calculateBulk(buyable)
+        const result1 = this.calculateBulk(buyable)
         // @ts-ignore
-        if (result[0].greq(new Num(1, 0)) && HoldingsService.get(buyable.currency).greq(result[1])) {
+        if (result1[0].greq(new Num(1, 0)) && HoldingsService.get(buyable.currency).greq(result1[1])) {
           // @ts-ignore
-          this.bulkBuyAction(buyable, result[1], result[0]);
+          this.bulkBuyAction(buyable, result1[1], result1[0]);
         }
       }
 
@@ -177,8 +199,29 @@ export class BuyableService {
       if (!buyable.bought.greq(new Num(1, 0))) {
         buyable.cost = buyable.baseCost
       } else {
-        // @ts-ignore
-        buyable.cost = buyable.baseCost.mul(buyable.increase.mul(buyable.scaling.pow(buyable.bought, false), false).pow(buyable.bought, false), false)
+        if (buyable.scalingStart === undefined) {
+          // @ts-ignore
+          buyable.cost = buyable.baseCost.mul(buyable.increase.mul(buyable.scaling.pow(buyable.bought, false), false).pow(buyable.bought, false), false)
+        } else {
+          // @ts-ignore
+          buyable.cost = buyable.baseCost.mul(buyable.increase.pow(buyable.bought, false), false)
+          if (buyable.cost.greq(buyable.scalingStart)) {
+            // @ts-ignore
+            let buyableAmount = buyable.scalingStart.div(buyable.baseCost, false).ln(false).div(buyable.increase.ln(false), false).floor(false)
+            // @ts-ignore
+            buyable.cost = buyable.baseCost.mul(buyable.increase.pow(buyableAmount, false), false)
+            let leftOverCurrency = HoldingsService.get(buyable.currency).div(buyable.cost, false)
+            const two = new Num(2, 0)
+            const four = new Num(4, 0)
+
+            // @ts-ignore
+            let postScalingAmount = buyable.increase.ln(false).sub(buyable.increase.ln(false).pow(two, false).add(four.mul(buyable.scaling.ln(false), false).mul(leftOverCurrency.div(buyable.baseCost, false).ln(false), false), false).sqrt(false), false).div(two.mul(buyable.scaling.ln(false), false), false)
+            // @ts-ignore
+            postScalingAmount = postScalingAmount.negate(false).floor(false).add(new Num(1, 0), false)
+            // @ts-ignore
+            buyable.cost.mul(buyable.baseCost.mul(buyable.increase.mul(buyable.scaling.pow(postScalingAmount, false), false).pow(postScalingAmount, false), false))
+          }
+        }
       }
     })
     UpgradeService.upgrades.forEach((buyable) => {
