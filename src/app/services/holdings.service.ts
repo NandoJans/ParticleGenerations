@@ -62,6 +62,8 @@ export class HoldingsService {
       case 'darkEnergy': return 'DE';
       case 'greenSouls': return 'GS';
       case 'greens': return 'g';
+      case 'blueParticles': return 'BP';
+      case 'blues': return 'b';
       default: return '';
     }
   }

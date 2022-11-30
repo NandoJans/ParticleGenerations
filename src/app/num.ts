@@ -210,6 +210,18 @@ export class Num {
     let ret_num = (this.exp * 10 + this.num - 1) / (x.num * 10 ** x.exp);
     let ret_exp = 0;
 
+    if (ret_num >= 10) {
+      let arr = ret_num.toString().split('e');
+      if (arr[1] !== undefined) {
+        ret_num = parseFloat(arr[0])
+        ret_exp = parseInt(arr[1].slice(1))
+      } else {
+        let buff = Math.floor(ret_num).toString().length-1
+        ret_exp += buff
+        ret_num *= 10 ** -buff
+      }
+    }
+
     if (overwrite) {
       this.exp = ret_exp
       this.num = ret_num

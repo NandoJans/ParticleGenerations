@@ -100,6 +100,14 @@ export class ResetService {
     DataManagerService.save()
     if (!HoldingsService.get('greens').greq(new Num(5, 1))) window.location.reload();
     if (resets === 'green') return;
+
+    if (!HoldingsService.get('blues').greq(new Num(2, 0))) {
+      HoldingsService.set('yellowFusion', new Num(1, 0));
+      this.resetAutomators('red-automators')
+      this.resetAutomators('yellow-automators')
+      this.resetUpgrades('green-fusion')
+      this.resetUpgrades('green-upgrades')
+    }
     HoldingsService.set('greenParticles', new Num(0, 0));
     HoldingsService.set('greenSouls', new Num(1, 0));
     HoldingsService.set('darkEnergy', new Num(0, 0));
@@ -107,20 +115,17 @@ export class ResetService {
     HoldingsService.set('darkPower', new Num(0, 0));
     HoldingsService.set('nuclearDecay', new Num(0, 0));
     HoldingsService.set('greenEnergy', new Num(1, 0));
-    HoldingsService.set('yellowFusion', new Num(1, 0));
     HoldingsService.set('blueNeutrons', new Num(1, 0));
     this.resetGenerators('greenParticleGenerators')
     this.resetGenerators('nuclearDecay')
     this.resetUpgrades('nuclear-decay')
     this.resetUpgrades('dark-compressor')
-    this.resetUpgrades('green-upgrades')
+    this.resetUpgrades('green-upgrades-repeatable')
     this.resetUpgrades('dark-upgrade')
     this.resetUpgrades('green-sacrifices')
     this.resetUpgrades('green-limited-upgrades')
     this.resetUpgrades('dark-upgrades')
     this.resetChallenges('dark-age')
-    this.resetAutomators('red-automators')
-    this.resetAutomators('yellow-automators')
     DataManagerService.save()
     if (!HoldingsService.get('blues').greq(new Num(5, 1))) window.location.reload();
     if (resets === 'blue') return;
