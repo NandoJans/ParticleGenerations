@@ -10,11 +10,13 @@ export class GlobalMultipliersService {
     redParticleGenerators: new Num(1, 0),
     redAcceleratorGenerators: new Num(1, 0),
     yellowParticlesGain: new Num(1, 0),
+    yellowsGain: new Num(1, 0),
     yellowParticleGenerators: new Num(1, 0),
     yellowFusion: new Num(1, 0),
     yellowFusionPower: new Num(2, -1),
     greenParticleGenerators: new Num(1, 0),
     greenParticlesGain: new Num(1, 0),
+    greensGain: new Num(1, 0),
     nuclearDecayGenerators: new Num(1, 0),
     blueNeutronGenerators: new Num(1, 0)
   };
@@ -26,11 +28,13 @@ export class GlobalMultipliersService {
       redParticleGenerators: new Num(1, 0),
       redAcceleratorGenerators: new Num(1, 0),
       yellowParticlesGain: new Num(1, 0),
+      yellowsGain: new Num(1, 0),
       yellowParticleGenerators: new Num(1, 0),
       yellowFusion: new Num(1, 0),
       yellowFusionPower: new Num(2, -1),
       greenParticleGenerators: new Num(1, 0),
       greenParticlesGain: new Num(1, 0),
+      greensGain: new Num(1, 0),
       nuclearDecayGenerators: new Num(1, 0),
       blueNeutronGenerators: new Num(1, 0)
     }

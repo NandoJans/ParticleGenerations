@@ -7,7 +7,11 @@ export const redUpgrades: Upgrade[] = [
     name: 'red-generator-extension-upgrade', displayName: 'Extension Upgrade', description: 'Red generator extensions multiply the red generators by 2.',
     baseCost: new Num(1,45), cost: new Num(1, 45), increase: new Num(1,0), scaling: new Num(0, 0), bought: new Num(0, 0), currency: 'redParticles',
     baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'red-upgrades', resetId: 'red-upgrades', style: 'red-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['redParticles', new Num(1, 40)],
-    action: new Action('setAction', 'red-generator-extension', new Num(2, 0), 'action')
+    action: [
+      new Action('setAction', 'red-generator-extension', new Num(2, 0), 'action'),
+      new Action('amplifyUpgrade', 'red-generator-extension', 'Multiply all red generators', 'description'),
+      new Action('amplifyUpgrade', 'red-generator-extension', undefined, 'limit'),
+    ]
   },
   {
     name: 'unlock-red-generators-booster', displayName: 'Unlock Generator Booster', description: 'Adds a booster upgrade for red particle generators.', auto: false,

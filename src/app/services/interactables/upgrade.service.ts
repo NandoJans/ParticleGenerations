@@ -16,6 +16,7 @@ import {Searcher} from "../../Searcher";
 import {Sorter} from "../../Sorter";
 import {nuclearDecayUpgrades} from "./upgrades/green/nucleardecay";
 import {blueNeutronUpgrades} from "./upgrades/blue/neutrons";
+import {blueNeutronStars} from "./upgrades/blue/neutronStars";
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ import {blueNeutronUpgrades} from "./upgrades/blue/neutrons";
 export class UpgradeService {
   static upgrades: Upgrade[] =
     redUpgrades.concat(
+      blueNeutronStars,
       blueNeutronUpgrades,
       nuclearDecayUpgrades,
       greenSacrifice,
@@ -36,6 +38,7 @@ export class UpgradeService {
   )
   static sortedUpgrades: Upgrade[] =
     Sorter.sort(redUpgrades.concat(
+      blueNeutronStars,
       blueNeutronUpgrades,
       nuclearDecayUpgrades,
       greenSacrifice,

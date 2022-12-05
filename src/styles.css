@@ -399,6 +399,72 @@ button {
   background-color: var(--blue-button-color);
 }
 
+
+.red-star {
+  color: var(--red-button-color);
+  background-color: var(--background-color-1);
+  border: solid 1px var(--red-button-color);
+  width: 150px;
+  height: 150px;
+  padding: 15px;
+  margin: 25px;
+  border-radius: 125px;
+  box-shadow: 0 0 40px var(--red-button-color);
+}
+
+.red-star .maxed {
+  background-color: rgba(1, 1, 1, 0) !important;
+  color: rgba(1, 1, 1, 0) !important;
+}
+.blue-star .maxed {
+  background-color: rgba(1, 1, 1, 0) !important;
+  color: rgba(1, 1, 1, 0) !important;
+}
+.green-star .maxed {
+  background-color: rgba(1, 1, 1, 0) !important;
+  color: rgba(1, 1, 1, 0) !important;
+}
+.blue-star .maxed {
+  background-color: rgba(1, 1, 1, 0) !important;
+  color: rgba(1, 1, 1, 0) !important;
+}
+
+.yellow-star {
+  color: var(--yellow-button-color);
+  background-color: var(--background-color-1);
+  border: solid 1px var(--yellow-button-color);
+  width: 150px;
+  height: 150px;
+  padding: 15px;
+  margin: 25px;
+  border-radius: 125px;
+  box-shadow: 0 0 40px var(--yellow-button-color);
+}
+
+.green-star {
+  color: var(--green-button-color);
+  background-color: var(--background-color-1);
+  border: solid 1px var(--green-button-color);
+  width: 150px;
+  height: 150px;
+  padding: 15px;
+  margin: 25px;
+  border-radius: 125px;
+  box-shadow: 0 0 40px var(--green-button-color);
+}
+
+.blue-star {
+  color: var(--blue-button-color);
+  background-color: var(--background-color-1);
+  border: solid 1px var(--blue-button-color);
+  width: 150px;
+  height: 150px;
+  padding: 15px;
+  margin: 25px;
+  border-radius: 125px;
+  box-shadow: 0 0 40px var(--blue-button-color);
+}
+
 .timeline {
   display: flex;
   flex-direction: column;

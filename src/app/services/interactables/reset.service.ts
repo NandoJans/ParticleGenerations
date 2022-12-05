@@ -127,7 +127,22 @@ export class ResetService {
     this.resetUpgrades('dark-upgrades')
     this.resetChallenges('dark-age')
     DataManagerService.save()
-    if (!HoldingsService.get('blues').greq(new Num(5, 1))) window.location.reload();
+    if (!HoldingsService.get('blues').greq(new Num(5, 1)) && resets === 'blue') window.location.reload();
     if (resets === 'blue') return;
+
+    HoldingsService.set('yellowFusion', new Num(1, 0));
+    HoldingsService.set('yellows', new Num(0, 0));
+    HoldingsService.set('greens', new Num(0, 0));
+    HoldingsService.set('blueParticles', new Num(0, 0));
+    this.resetAutomators('red-automators')
+    this.resetAutomators('yellow-automators')
+    this.resetUpgrades('green-fusion')
+    this.resetUpgrades('green-upgrades')
+    this.resetUpgrades('blue-neutron-upgrade')
+    this.resetGenerators('blue-neutrons')
+
+    DataManagerService.save()
+    if (!HoldingsService.get('blues').greq(new Num(5, 1))) window.location.reload();
+    if (resets === 'neutron-star') return;
   }
 }

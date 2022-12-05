@@ -39,6 +39,7 @@ export class NavigationsService {
     { name: 'greenMilestones', displayName: 'Mile', location: 'milestones', parent: 'green', unlocked: false, requirement: ['greens', new Num(1, 0)]  },
 
     { name: 'blueNeutrons', displayName: 'Neutrons', location: 'neutrons', parent: 'blue', unlocked: false, requirement: ['blues', new Num(1, 0)]  },
+    { name: 'neutronStars', displayName: 'Neutron Stars', location: 'neutronstars', parent: 'blue', unlocked: false, requirement: ['blues', new Num(5, 0)]  },
     { name: 'blueMilestones', displayName: 'Milestones', location: 'milestones', parent: 'blue', unlocked: false, requirement: ['blues', new Num(1, 0)]  },
 
     { name: 'redAutomators', displayName: 'Red', location: 'red', parent: 'automators', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
@@ -49,6 +50,7 @@ export class NavigationsService {
     { name: 'redTimeline', displayName: 'Red', location: 'red', parent: 'timeline', unlocked: true, requirement: 'none'},
     { name: 'yellowTimeline', displayName: 'Yellow', location: 'yellow', parent: 'timeline', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
     { name: 'greenTimeline', displayName: 'Green', location: 'green', parent: 'timeline', unlocked: false, requirement: ['greens', new Num(1, 0)]  },
+    { name: 'blueTimeline', displayName: 'Blue', location: 'blue', parent: 'timeline', unlocked: false, requirement: ['blues', new Num(1, 0)]  },
   ]
 
   static selectedNavigation: string = 'red';

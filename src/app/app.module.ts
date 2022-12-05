@@ -45,6 +45,7 @@ import { BlueNeutronsComponent } from './pages/blue/blue-neutrons/blue-neutrons.
 import { BlueMilestonesComponent } from './pages/blue/blue-milestones/blue-milestones.component';
 import { BlueAutomatorsComponent } from './pages/automators/blue-automators/blue-automators.component';
 import { GreenAutomatorsComponent } from './pages/automators/green-automators/green-automators.component';
+import { NeutronStarsComponent } from './pages/blue/neutron-stars/neutron-stars.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { GreenAutomatorsComponent } from './pages/automators/green-automators/gr
     BlueNeutronsComponent,
     BlueMilestonesComponent,
     BlueAutomatorsComponent,
-    GreenAutomatorsComponent
+    GreenAutomatorsComponent,
+    NeutronStarsComponent
   ],
     imports: [
         BrowserModule,

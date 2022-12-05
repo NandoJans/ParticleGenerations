@@ -87,7 +87,15 @@ export class PrestigeLayersService {
         this.setValue(name, 'unlocked', true)
         // @ts-ignore
         HoldingsService.add(name+'Particles', this.getValue(name, 'gain'))
-        HoldingsService.add(name+'s', new Num(1, 0))
+        if (name === 'yellow') {
+          // @ts-ignore
+          HoldingsService.add(name+'s', new Num(1, 0).mul(GlobalMultipliersService.multipliers['yellowsGain'], false))
+        } else if (name === 'green') {
+          // @ts-ignore
+          HoldingsService.add(name+'s', new Num(1, 0).mul(GlobalMultipliersService.multipliers['greensGain'], false))
+        } else {
+          HoldingsService.add(name+'s', new Num(1, 0))
+        }
         // @ts-ignore
         if (ChallengeService.activeChallenge?.name === 'dark-age' && name === 'green' && new Num(Math.floor(HoldingsService.get('yellowParticles').exp / 110), 0).add(new Num(0, 0), false).greq(HoldingsService.get('darkPower'))) {
 
