@@ -22,4 +22,9 @@ export const greenAutomators: Automator[] = [
     type: 'green-automators', resetId: 'green-automators', style: 'automator', unlocked: false, active: false, requirement: ['blues', new Num(1, 0)],
     target: 'dark-energy-compressor', targetType: 'upgrade'
   },
+  {
+    name: 'dark-upgrades-automator', displayName: 'Dark Upgrades Automator', cost: new Num(1, 1), bought: new Num(0, 0), currency: 'blueParticles',
+    type: 'green-automators', resetId: 'green-automators', style: 'automator', unlocked: false, active: false, requirement: ['blues', new Num(1, 0)],
+    target: 'dark-upgrade', targetType: 'upgrades'
+  },
 ]

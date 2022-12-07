@@ -72,7 +72,7 @@ export class TimelineService {
       unlocked: true, requirement: ['none'], type: 'blue-timeline', reached: false, unlock: ['blues', new Num(1, 0)]
     },
     {
-      name: 'blue-phase-start', displayName: 'Why a universe is so neutral', description: 'Blue neutrons are coming fast to boost all are needs.', hasProgress: true,
+      name: 'neutron-stars-start', displayName: 'A good deal, don\'t you think?', description: 'Neutron stars are here to resolve our scaling problems.', hasProgress: true,
       unlocked: true, requirement: ['blues', new Num(1, 0)], type: 'blue-timeline', reached: false, unlock: ['blues', new Num(5, 0)]
     },
   ]

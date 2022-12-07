@@ -226,6 +226,13 @@ footer {
   height: 100px;
 }
 
+.light-style {
+  background: radial-gradient(var(--transparent-background-light), var(--transparent-background-blue), var(--background-color-1));;
+  color: var(--blue-button-color);
+  border: solid 1px var(--blue-button-color);
+  border-radius: 3px;
+}
+
 .limited-style .maxed {
   background-color: var(--green-button-color) !important;
 }
@@ -528,5 +535,17 @@ button {
 .dark-text {
   font-weight: bold;
   color: var(--background-color-3);
-  text-shadow: 0 0 10px var(--green-button-color), 0 1px 0 var(--green-button-color), 0 -1px 0 var(--green-button-color), 1px 0 0 var(--green-button-color), -1px 0 0 var(--green-button-color) ;
+  text-shadow: 0 0 10px var(--green-button-color), 1px 1px 0 var(--green-button-color), 1px -1px 0 var(--green-button-color),
+  -1px 1px 0 var(--green-button-color), -1px -1px 0 var(--green-button-color),
+  0 1px 0 var(--green-button-color), 0 -1px 0 var(--green-button-color),
+  1px 0 0 var(--green-button-color), -1px 0 0 var(--green-button-color);
+}
+
+.light-text {
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 0 15px var(--blue-button-color), 1px 1px 0 var(--blue-button-color), 1px -1px 0 var(--blue-button-color),
+  -1px 1px 0 var(--blue-button-color), -1px -1px 0 var(--blue-button-color),
+  0 1px 0 var(--blue-button-color), 0 -1px 0 var(--blue-button-color),
+  1px 0 0 var(--blue-button-color), -1px 0 0 var(--blue-button-color);
 }

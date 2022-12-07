@@ -11,7 +11,7 @@ export class Sorter {
         return 'lower'
       }
     }
-    return 'higher';
+    return 'lower';
   }
 
   static sort(list: any[], value: string): any[] {

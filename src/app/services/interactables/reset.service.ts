@@ -134,11 +134,11 @@ export class ResetService {
     HoldingsService.set('yellows', new Num(0, 0));
     HoldingsService.set('greens', new Num(0, 0));
     HoldingsService.set('blueParticles', new Num(0, 0));
-    this.resetAutomators('red-automators')
-    this.resetAutomators('yellow-automators')
+    this.resetAutomators('green-automators')
     this.resetUpgrades('green-fusion')
     this.resetUpgrades('green-upgrades')
     this.resetUpgrades('blue-neutron-upgrade')
+    this.resetUpgrades('blue-limited-upgrades')
     this.resetGenerators('blue-neutrons')
 
     DataManagerService.save()

@@ -1,5 +1,25 @@
 <div class="generators-row">
+  <div *ngFor="let upgrade of neutronStar">
+    <app-upgrade *ngIf="upgrade.unlocked" [upgrade]="upgrade"></app-upgrade>
+  </div>
+</div>
+<div class="holding-line">
+  <p class="holding-prefix">You have</p>
+  <app-number-display [name]="'blueLight'" [style]="'light-text holding-amount'" [type]="'currency'"></app-number-display>
+  <p class="holding-prefix">Blue Light</p>
+</div>
+<div class="holding-line">
+  <p class="holding-prefix">They multiply your Green Generators by </p>
+  <app-number-display [name]="'blueLightEffect'" [style]="'light-text holding-amount'" [type]="'effect'" [effect]="effect"></app-number-display>
+</div>
+<div class="generators-row">
   <div *ngFor="let upgrade of upgrades">
     <app-upgrade *ngIf="upgrade.unlocked" [upgrade]="upgrade"></app-upgrade>
   </div>
+</div>
+<div class="holding-line">
+  <p class="holding-prefix">Blue light generation is also based on the amount of fusion you have.</p>
+</div>
+<div class="holding-line">
+  <app-number-display [name]="'fusionEffect'" [style]="'light-text holding-amount'" [type]="'effect'" [effect]="fusionEffect"></app-number-display>
 </div>

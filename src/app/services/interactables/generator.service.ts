@@ -12,16 +12,19 @@ import {greenParticleGenerators} from "./generators/green/particles";
 import {Sorter} from "../../Sorter";
 import {Searcher} from "../../Searcher";
 import {blueParticleGenerators} from "./generators/blue/particles";
+import {blueLightGenerators} from "./generators/blue/light";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GeneratorService {
+
   static generators: Generator[] = redParticleGenerators.concat(
     blueParticleGenerators,
     redAcceleratorGenerators,
     yellowParticleGenerators,
-    greenParticleGenerators
+    greenParticleGenerators,
+    blueLightGenerators
   )
 
   static sortedGenerators: Generator[] =
@@ -29,7 +32,8 @@ export class GeneratorService {
       blueParticleGenerators,
       redAcceleratorGenerators,
       yellowParticleGenerators,
-      greenParticleGenerators
+      greenParticleGenerators,
+      blueLightGenerators
     ), 'name')
 
   static get(name: string) {
@@ -136,10 +140,10 @@ export class GeneratorService {
           base.mul(HoldingsService.get('blueNeutrons').pow(new Num(1.5, 0).mul(UpgradeService.getValue('blue-neutron-amplifier', 'buffer'), false), false))
         }
         if (generator.type === 'yellow-particles' && HoldingsService.get('blueNeutrons').greq(new Num(1, 0)) && UpgradeService.getValue('unlock-yellow-neutron-effect', 'bought').greq(new Num(1, 0))) {
-          base.mul(HoldingsService.get('blueNeutrons').pow(new Num(2, -2).mul(UpgradeService.getValue('blue-neutron-amplifier', 'buffer'), false), false))
+          base.mul(HoldingsService.get('blueNeutrons').pow(new Num(4, -2).mul(UpgradeService.getValue('blue-neutron-amplifier', 'buffer'), false), false))
         }
         if (generator.type === 'green-particles' && HoldingsService.get('blueNeutrons').greq(new Num(1, 0)) && UpgradeService.getValue('unlock-green-neutron-effect', 'bought').greq(new Num(1, 0))) {
-          base.mul(HoldingsService.get('blueNeutrons').pow(new Num(1, -2).mul(UpgradeService.getValue('blue-neutron-amplifier', 'buffer'), false), false))
+          base.mul(HoldingsService.get('blueNeutrons').pow(new Num(3, -2).mul(UpgradeService.getValue('blue-neutron-amplifier', 'buffer'), false), false))
         }
 
         // @ts-ignore
@@ -195,6 +199,7 @@ export class GeneratorService {
 
         if (generator.type === 'green-particles') {
           generator.multiplier.mul(GlobalMultipliersService.get('greenParticleGenerators'))
+          generator.multiplier.mul(HoldingsService.get('blueLight').pow(GlobalMultipliersService.get('blueLightPower'), false).add(new Num(1, 0), false))
         }
 
         if (generator.type === 'nuclear-decay') {
@@ -203,6 +208,11 @@ export class GeneratorService {
 
         if (generator.type === 'blue-neutrons') {
           generator.multiplier.mul(GlobalMultipliersService.get('blueNeutronGenerators'))
+        }
+
+        if (generator.type === 'blue-light') {
+          generator.multiplier.mul(GlobalMultipliersService.get('blueLightGenerators'))
+          generator.multiplier.mul(new Num(HoldingsService.get('yellowFusion').exp+1, 0))
         }
 
         if (ChallengeService.activeChallenge?.name === 'dark-age' && generator.name !== 'yellow-fusion-generator') {

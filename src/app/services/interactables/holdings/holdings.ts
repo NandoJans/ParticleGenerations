@@ -23,4 +23,5 @@ export const holdings = {
   blueParticles: {amount: new Num(0, 0)},
   blues: {amount: new Num(0, 0)},
   blueNeutrons: {amount: new Num(0, 0)},
+  blueLight: {amount: new Num(0, 0)},
 }

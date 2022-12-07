@@ -7,6 +7,7 @@ import {Num} from "../num";
 import {MilestoneService} from "./interactables/milestone.service";
 import {AutomatorService} from "./interactables/automator.service";
 import {ChallengeService} from "./interactables/challenge.service";
+import {GlobalMultipliersService} from "./globals/global-multipliers.service";
 
 @Injectable({
   providedIn: 'root'
@@ -61,6 +62,8 @@ export class NumberDisplayService {
                   element.innerHTML = 'x' + HoldingsService.get(entry.effect[1]).mul(UpgradeService.getValue(entry.effect[3], 'buffer'), false).pow(entry.effect[2], false).toString(true)
                 } else if (effectType === 'powerWithBase') {
                   element.innerHTML = 'x' + HoldingsService.get(entry.effect[1]).pow(entry.effect[2].mul(UpgradeService.getValue('better-nuclear-decay', 'buffer').pow(UpgradeService.getValue('better-nuclear-decay', 'bought'), false), false), false).add(UpgradeService.getValue('nuclear-decay-base-increaser', 'bought'), false).toString(true)
+                } else if (effectType === 'powerOfGlobalMultiplier') {
+                  element.innerHTML = 'x' + HoldingsService.get(entry.effect[1]).pow(GlobalMultipliersService.get(entry.effect[2]), false).toString(true)
                 } else if (effectType === 'log') {
 
                   element.innerHTML = HoldingsService.get(entry.effect[1]).log(entry.effect[2], false).toString()

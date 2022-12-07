@@ -18,7 +18,9 @@ export class GlobalMultipliersService {
     greenParticlesGain: new Num(1, 0),
     greensGain: new Num(1, 0),
     nuclearDecayGenerators: new Num(1, 0),
-    blueNeutronGenerators: new Num(1, 0)
+    blueNeutronGenerators: new Num(1, 0),
+    blueLightGenerators: new Num(1, 0),
+    blueLightPower: new Num(5, 0)
   };
 
   constructor() { }
@@ -36,7 +38,9 @@ export class GlobalMultipliersService {
       greenParticlesGain: new Num(1, 0),
       greensGain: new Num(1, 0),
       nuclearDecayGenerators: new Num(1, 0),
-      blueNeutronGenerators: new Num(1, 0)
+      blueNeutronGenerators: new Num(1, 0),
+      blueLightGenerators: new Num(1, 0),
+      blueLightPower: new Num(5, 0)
     }
   }
 

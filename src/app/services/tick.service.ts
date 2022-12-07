@@ -60,8 +60,8 @@ export class TickService {
     ChallengeService.applyNerfs();
     GeneratorService.generate(speed);
 
-    //HoldingsService.set('redParticles', new Num(1, 2000000))
-    //HoldingsService.set('yellowParticles', new Num(3, 60000))
+    //HoldingsService.set('redParticles', new Num(1, 110))
+    //HoldingsService.set('yellowParticles', new Num(3, 100))
     //HoldingsService.set('greenParticles', new Num(5, 1))
     //HoldingsService.set('blueParticles', new Num(1, 1))
     //HoldingsService.set('yellows', new Num(5, 3))
