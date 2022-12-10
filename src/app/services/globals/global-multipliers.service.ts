@@ -17,10 +17,12 @@ export class GlobalMultipliersService {
     greenParticleGenerators: new Num(1, 0),
     greenParticlesGain: new Num(1, 0),
     greensGain: new Num(1, 0),
+    darkPowerPower: new Num(5, 0),
     nuclearDecayGenerators: new Num(1, 0),
     blueNeutronGenerators: new Num(1, 0),
     blueLightGenerators: new Num(1, 0),
-    blueLightPower: new Num(5, 0)
+    blueLightPower: new Num(5, 0),
+    yellowFusionBlueLightEffect: new Num(1, 0)
   };
 
   constructor() { }
@@ -37,10 +39,12 @@ export class GlobalMultipliersService {
       greenParticleGenerators: new Num(1, 0),
       greenParticlesGain: new Num(1, 0),
       greensGain: new Num(1, 0),
+      darkPowerPower: new Num(5, 0),
       nuclearDecayGenerators: new Num(1, 0),
       blueNeutronGenerators: new Num(1, 0),
       blueLightGenerators: new Num(1, 0),
-      blueLightPower: new Num(5, 0)
+      blueLightPower: new Num(5, 0),
+      yellowFusionBlueLightEffect: new Num(1, 0)
     }
   }
 

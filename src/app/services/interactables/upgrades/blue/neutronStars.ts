@@ -32,4 +32,10 @@ export const blueNeutronStars: Upgrade[] = [
     baseBuffer: new Num(5, 0), buffer: new Num(5, 0), amount: new Num(0, 0), type: 'blue-light-upgrade', resetId: 'blue-light-upgrade', style: 'light-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['blues', new Num(5, 0)],
     action: new Action('basedOnUpgrade', 'yellowFusion', new Num(1, 0), 'bought', 'yellow-fusion-accelerator')
   },
+  {
+    name: 'yellow-fusion-effect-increaser', displayName: 'Increase Fusion Effect', description: 'Increases the power of the yellow fusion effect.', auto: false,
+    baseCost: new Num(1,3), cost: new Num(1, 3), increase: new Num(1,3), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'blueLight',
+    baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'blue-light-upgrade', resetId: 'blue-light-upgrade', style: 'light-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['blues', new Num(5, 0)],
+    action: new Action('basedOnUpgradeMul', 'yellowFusionBlueLightEffect', new Num(0.2, 0), 'bought', 'yellow-fusion-effect-increaser')
+  },
 ]

@@ -22,4 +22,9 @@ export const blueMilestones = [
     unlocked: false, requirement: ['blues', new Num(1, 0)], cost: new Num(1, 1), currency: 'blues', buffer: new Num(1, 0),
     action: new Action('amplifyUpgrades', 'green-limited-upgrades', 'blue-limited-upgrades', 'resetId'),
   },
+  {
+    name: 'gain-dark-power-idle', displayName: 'Idle Dark Power', description: 'Gain dark power without having to go dark aging.', type: 'blue-milestone', style: 'blue-style',
+    unlocked: false, requirement: ['blues', new Num(1, 0)], cost: new Num(1, 2), currency: 'blues', buffer: new Num(1, 0),
+    action: new Action('', ''),
+  },
 ]

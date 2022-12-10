@@ -42,6 +42,11 @@ export class TickService {
     if (GeneratorService.getValue('nuclear-decay-generator-3', 'bought').greq(new Num(1, 0))) {
       new Action('decreaseHoldingIncremental', 'greenSouls', new Num(2, 0), 'bought', 'nuclear-decay-generator-3').execute()
     }
+    // @ts-ignore
+    if (HoldingsService.get('blues').greq(new Num(1, 2)) && new Num(Math.floor(HoldingsService.get('yellowParticles').pow(new Num(0.12, 0), false).exp/110) , 0).add(new Num(0, 0), false).greq(HoldingsService.get('darkPower'))) {
+      // @ts-ignore
+      HoldingsService.set('darkPower', new Num(Math.floor(HoldingsService.get('yellowParticles').pow(new Num(0.12, 0), false).exp/110) , 0).add(new Num(0, 0), false))
+    }
   }
 
   gameTick(speed: Num = new Num(1, 0)) {
@@ -66,7 +71,7 @@ export class TickService {
     //HoldingsService.set('blueParticles', new Num(1, 1))
     //HoldingsService.set('yellows', new Num(5, 3))
     //HoldingsService.set('greens', new Num(1, 3))
-    //HoldingsService.set('blues', new Num(1, 1))
+    //HoldingsService.set('blues', new Num(2, 2))
     //HoldingsService.set('greenSouls', new Num(2, 0))
     //HoldingsService.set('yellowFusion', new Num(1, 110))
     //HoldingsService.set('greenEnergy', new Num(1, 0))

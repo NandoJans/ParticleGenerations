@@ -58,6 +58,9 @@ export class NumberDisplayService {
                   } else {
                     element.innerHTML = 'x' + HoldingsService.get(entry.effect[1]).pow(entry.effect[2], false).toString(true)
                   }
+                } else if (effectType === 'yellowBlueLightEffect') {
+                  // @ts-ignore
+                  element.innerHTML = 'x' + new Num(HoldingsService.get('yellowFusion').exp+1, 0).pow(GlobalMultipliersService.get('yellowFusionBlueLightEffect'), false).toString(true)
                 } else if (effectType === 'powerWithUpgrade') {
                   element.innerHTML = 'x' + HoldingsService.get(entry.effect[1]).mul(UpgradeService.getValue(entry.effect[3], 'buffer'), false).pow(entry.effect[2], false).toString(true)
                 } else if (effectType === 'powerWithBase') {

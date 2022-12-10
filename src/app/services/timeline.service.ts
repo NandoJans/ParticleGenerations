@@ -75,6 +75,10 @@ export class TimelineService {
       name: 'neutron-stars-start', displayName: 'A good deal, don\'t you think?', description: 'Neutron stars are here to resolve our scaling problems.', hasProgress: true,
       unlocked: true, requirement: ['blues', new Num(1, 0)], type: 'blue-timeline', reached: false, unlock: ['blues', new Num(5, 0)]
     },
+    {
+      name: 'blue-upgrades', displayName: 'Upgrading again?', description: 'Aren\'t you tired of upgrades?', hasProgress: true,
+      unlocked: true, requirement: ['blues', new Num(5, 0)], type: 'blue-timeline', reached: false, unlock: ['blueParticles', new Num(1, 1)]
+    },
   ]
 
   static save() {

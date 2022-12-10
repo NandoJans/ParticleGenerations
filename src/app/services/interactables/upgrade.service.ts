@@ -17,6 +17,8 @@ import {Sorter} from "../../Sorter";
 import {nuclearDecayUpgrades} from "./upgrades/green/nucleardecay";
 import {blueNeutronUpgrades} from "./upgrades/blue/neutrons";
 import {blueNeutronStars} from "./upgrades/blue/neutronStars";
+import {GlobalMultipliersService} from "../globals/global-multipliers.service";
+import {blueUpgrades} from "./upgrades/blue/upgrades";
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +26,7 @@ import {blueNeutronStars} from "./upgrades/blue/neutronStars";
 export class UpgradeService {
   static upgrades: Upgrade[] =
     redUpgrades.concat(
+      blueUpgrades,
       blueNeutronStars,
       blueNeutronUpgrades,
       nuclearDecayUpgrades,
@@ -38,6 +41,7 @@ export class UpgradeService {
   )
   static sortedUpgrades: Upgrade[] =
     Sorter.sort(redUpgrades.concat(
+      blueUpgrades,
       blueNeutronStars,
       blueNeutronUpgrades,
       nuclearDecayUpgrades,
@@ -163,7 +167,7 @@ export class UpgradeService {
         }
       }
       if (upgrade.name === 'dark-energy-compressor') {
-        HoldingsService.get('darkEnergy').mul(new Num(5, 0).pow(HoldingsService.get('darkPower'), false))
+        HoldingsService.get('darkEnergy').mul(GlobalMultipliersService.get('darkPowerPower').pow(HoldingsService.get('darkPower'), false))
       }
     })
   }
