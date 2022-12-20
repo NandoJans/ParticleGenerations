@@ -6,6 +6,7 @@ import {ResetService} from "./reset.service";
 import {UpgradeService} from "./upgrade.service";
 import {AutomatorService} from "./automator.service";
 import {Generator, Upgrade} from "../../globals";
+import {CombinerService} from "./combiner.service";
 
 @Injectable({
   providedIn: 'root'
@@ -112,6 +113,11 @@ export class BuyableService {
         this.buyAction(buyable)
       }
     })
+    CombinerService.combiners.forEach((buyable) => {
+      if (buyable.name === name) {
+        this.buyAction(buyable)
+      }
+    })
   }
 
   compare() {
@@ -189,6 +195,22 @@ export class BuyableService {
             button.setAttribute('disabled', '');
             button.className = '';
           }
+        }
+      }
+    })
+    CombinerService.combiners.forEach((buyable) => {
+      const button = (<HTMLButtonElement> document.getElementById('buyable-'+buyable.name))
+      if (button !== null) {
+        if (buyable.bought.greq(new Num(1, 0))) {
+          button.setAttribute('disabled', '');
+          button.className = 'maxed';
+          button.innerHTML = 'Bought';
+        } else if (HoldingsService.get(buyable.currency).greq(buyable.cost)) {
+          button.removeAttribute('disabled');
+          button.className = 'buyable';
+        } else {
+          button.setAttribute('disabled', '');
+          button.className = '';
         }
       }
     })

@@ -7,6 +7,7 @@ import {PrestigeLayersService} from "./prestige-layers.service";
 import {MilestoneService} from "./interactables/milestone.service";
 import {ChallengeService} from "./interactables/challenge.service";
 import {AutomatorService} from "./interactables/automator.service";
+import {CombinerService} from "./interactables/combiner.service";
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class DataManagerService {
     PrestigeLayersService.save();
     ChallengeService.save();
     AutomatorService.save();
+    CombinerService.save();
   }
 
   static load() {
@@ -32,6 +34,7 @@ export class DataManagerService {
     if (localStorage['prestiges'] !== undefined) PrestigeLayersService.load();
     if (localStorage['navigations'] !== undefined) NavigationsService.load();
     if (localStorage['challenges'] !== undefined) ChallengeService.load();
-    if (localStorage['automators'] !== undefined)  AutomatorService.load();
+    if (localStorage['automators'] !== undefined) AutomatorService.load();
+    if (localStorage['combiners'] !== undefined && localStorage['combinations'] !== undefined) CombinerService.load();
   }
 }

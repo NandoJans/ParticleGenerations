@@ -8,6 +8,7 @@ import {MilestoneService} from "./interactables/milestone.service";
 import {AutomatorService} from "./interactables/automator.service";
 import {ChallengeService} from "./interactables/challenge.service";
 import {GlobalMultipliersService} from "./globals/global-multipliers.service";
+import {CombinerService} from "./interactables/combiner.service";
 
 @Injectable({
   providedIn: 'root'
@@ -127,10 +128,13 @@ export class NumberDisplayService {
             } else if (MilestoneService.getValue(entry.name, entry.type) !== 0) {
               element.innerHTML = MilestoneService.getValue(entry.name, entry.type).toString();
               if (entry.currency !== undefined || entry.type === 'cost') element.innerHTML += ' '+ HoldingsService.getAbbreviation(entry.currency)
-            } else {
+            } else if (AutomatorService.getValue(entry.name, entry.type) !== 0) {
               element.innerHTML = AutomatorService.getValue(entry.name, entry.type).toString();
               if (entry.currency !== undefined || entry.type === 'cost') element.innerHTML += ' '+ HoldingsService.getAbbreviation(entry.currency)
-            }
+            } else {
+            element.innerHTML = CombinerService.getValue(entry.name, entry.type).toString();
+            if (entry.currency !== undefined || entry.type === 'cost') element.innerHTML += ' '+ HoldingsService.getAbbreviation(entry.currency)
+          }
             break;
         }
       }

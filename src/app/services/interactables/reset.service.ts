@@ -95,6 +95,7 @@ export class ResetService {
     this.resetGenerators('yellowParticleGenerators')
     this.resetGenerators('yellowFusionGenerators')
     this.resetGenerators('greenParticleGenerators', 'amount')
+    this.resetGenerators('nuclearDecay', 'amount')
     this.resetUpgrades('yellow-fusion')
     this.resetChallenges('yellow-challenges')
     DataManagerService.save()
@@ -116,9 +117,17 @@ export class ResetService {
     HoldingsService.set('nuclearDecay', new Num(0, 0));
     HoldingsService.set('greenEnergy', new Num(1, 0));
     HoldingsService.set('blueNeutrons', new Num(1, 0));
+    if (HoldingsService.get('blues').greq(new Num(3, 2))) {
+      HoldingsService.set('yellowFusion', new Num(1, 50000));
+    } else {
+      HoldingsService.set('yellowFusion', new Num(1, 0));
+    }
+    HoldingsService.set('blueLight', new Num(0, 0));
     this.resetGenerators('greenParticleGenerators')
-    this.resetGenerators('nuclearDecay')
-    this.resetUpgrades('nuclear-decay')
+    if (!HoldingsService.get('blues').greq(new Num(2, 2))) {
+      this.resetGenerators('nuclearDecay')
+      this.resetUpgrades('nuclear-decay')
+    }
     this.resetUpgrades('dark-compressor')
     this.resetUpgrades('green-upgrades-repeatable')
     this.resetUpgrades('dark-upgrade')
@@ -140,6 +149,8 @@ export class ResetService {
     this.resetUpgrades('blue-neutron-upgrade')
     this.resetUpgrades('blue-limited-upgrades')
     this.resetGenerators('blue-neutrons')
+    this.resetGenerators('nuclearDecay')
+    this.resetUpgrades('nuclear-decay')
 
     DataManagerService.save()
     if (!HoldingsService.get('blues').greq(new Num(5, 1))) window.location.reload();

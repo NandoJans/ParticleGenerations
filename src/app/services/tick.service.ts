@@ -15,6 +15,7 @@ import {AutomatorService} from "./interactables/automator.service";
 import {TimelineService} from "./timeline.service";
 import {mainActions} from "./interactables/action/mainActions";
 import {Action} from "../action";
+import {CombinerService} from "./interactables/combiner.service";
 
 @Injectable({
   providedIn: 'root'
@@ -60,6 +61,7 @@ export class TickService {
     UpgradeService.action();
     MilestoneService.action();
     ChallengeService.action();
+    CombinerService.execute();
 
     GeneratorService.correctMultipliers();
     ChallengeService.applyNerfs();
@@ -68,7 +70,7 @@ export class TickService {
     //HoldingsService.set('redParticles', new Num(1, 110))
     //HoldingsService.set('yellowParticles', new Num(3, 100))
     //HoldingsService.set('greenParticles', new Num(5, 1))
-    //HoldingsService.set('blueParticles', new Num(1, 1))
+    //HoldingsService.set('blueParticles', new Num(1, 3))
     //HoldingsService.set('yellows', new Num(5, 3))
     //HoldingsService.set('greens', new Num(1, 3))
     //HoldingsService.set('blues', new Num(2, 2))

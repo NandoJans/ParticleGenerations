@@ -1,0 +1,6 @@
+<div class="holding-line">
+  <app-button [style]="'info-button'" [text]="'info'" (function)="show()"></app-button>
+</div>
+<div class="no-display" [id]="name">
+  <p class="info" *ngFor="let textPiece of text">{{textPiece}}</p>
+</div>

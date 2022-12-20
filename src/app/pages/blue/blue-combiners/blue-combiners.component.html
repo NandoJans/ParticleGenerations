@@ -1,0 +1,29 @@
+<div class="holding-line">
+  <h2>Subjects</h2>
+</div>
+<div class="upgrade-row">
+  <div *ngFor="let combiner of subjects">
+    <app-combiner *ngIf="!combiner.active"  [combiner]="combiner"></app-combiner>
+  </div>
+</div>
+<div class="holding-line">
+  <h2>Targets</h2>
+</div>
+<div class="upgrade-row">
+  <div *ngFor="let combiner of targets">
+    <app-combiner *ngIf="!combiner.active"  [combiner]="combiner"></app-combiner>
+  </div>
+</div>
+<div class="upgrade-row">
+  <app-combiner-box></app-combiner-box>
+</div>
+<div class="info">
+  <p>
+    Blue combiners are very powerfull and can accelerate the game a lot. There are two different items to be bought here: Subjects and Targets.
+    Subjects are mostly currencies you have and Targets are things like upgrades and generators. Beneath the subjects and targets are the combining boxes containing two sides: the Subject side and the Target side.
+    With the 'Assign' button, a subject and target can be assigned to the box. When a combiner box is assigned a subject and target, the target will gain a multiplier based on the subject
+  </p>
+  <p>
+    Hint: you can play around with combinations to see which one works the best.
+  </p>
+</div>

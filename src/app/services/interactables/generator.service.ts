@@ -182,6 +182,10 @@ export class GeneratorService {
           const hasLimit = UpgradeService.getValue('remove-fusion-limit', 'bought').greq(new Num(1, 0))
           if (hasLimit) {
             const division = new Num(HoldingsService.get('yellowFusion').exp / HoldingsService.get('yellowFusionMax').exp, 0)
+            if (HoldingsService.get('yellowFusion').greq(new Num(1, 50000))) {
+              // @ts-ignore
+              generator.multiplier.div(new Num(1, 1).pow(division.sub(new Num(1, 0), false), false))
+            }
             if (division.greq(new Num(1, 0))) {
               // @ts-ignore
               generator.multiplier.div(new Num(1.5, 0).pow(division.sub(new Num(1, 0), false), false))
@@ -208,7 +212,6 @@ export class GeneratorService {
           generator.multiplier.mul(GlobalMultipliersService.get('blueLightGenerators'))
           // @ts-ignore
           generator.multiplier.mul(new Num(HoldingsService.get('yellowFusion').exp+1, 0).pow(GlobalMultipliersService.get('yellowFusionBlueLightEffect'), false))
-          console.log(GlobalMultipliersService.get('yellowFusionBlueLightEffect').toString())
         }
 
         if (ChallengeService.activeChallenge?.name === 'dark-age' && generator.name !== 'yellow-fusion-generator') {

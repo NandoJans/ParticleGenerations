@@ -1,0 +1,22 @@
+<div class="holding-line">
+  <h2>Combiners</h2>
+</div>
+<div style="width: 100%;" *ngFor="let combiner of combinations">
+  <h3>Combination {{combiner[2]}}</h3>
+  <div [class]="'upgrade-row combiner=box'+combiner[2]">
+    <div class="filled-combiner-box" *ngIf="combiner[0] !== 'empty'">
+      <h3>{{combiner[0].displayName}}</h3>
+    </div>
+    <div class="empty-combiner-box" *ngIf="combiner[0] === 'empty'">
+      <app-button [style]="'normal-button'" (function)="assignSubjectSession($event)" [text]="'Assign Subject'" [object]="combiner[2]"></app-button>
+    </div>
+    <div class="filled-combiner-box" *ngIf="combiner[1] !== 'empty'">
+      <h3>{{combiner[1].displayName}}</h3>
+    </div>
+    <div class="empty-combiner-box" *ngIf="combiner[1] === 'empty'">
+      <app-button [style]="'normal-button'" (function)="assignTargetSession($event)" [text]="'Assign Target'" [object]="combiner[2]"></app-button>
+    </div>
+  </div>
+  <p [id]="'effect-display-'+combiner[2]">Effect: None</p>
+</div>
+<app-button [style]="'normal-button'" (function)="clearCombinations()" [text]="'Clear Combinations'"></app-button>

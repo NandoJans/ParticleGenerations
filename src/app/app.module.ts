@@ -47,6 +47,10 @@ import { BlueAutomatorsComponent } from './pages/automators/blue-automators/blue
 import { GreenAutomatorsComponent } from './pages/automators/green-automators/green-automators.component';
 import { NeutronStarsComponent } from './pages/blue/neutron-stars/neutron-stars.component';
 import { BlueUpgradesComponent } from './pages/blue/blue-upgrades/blue-upgrades.component';
+import { BlueCombinersComponent } from './pages/blue/blue-combiners/blue-combiners.component';
+import { CombinerComponent } from './components/particles/combiner/combiner.component';
+import {CombinerBoxComponent} from "./components/particles/combiner-box/combiner-box.component";
+import { InfoComponent } from './components/medium/info/info.component';
 
 @NgModule({
   declarations: [
@@ -91,7 +95,11 @@ import { BlueUpgradesComponent } from './pages/blue/blue-upgrades/blue-upgrades.
     BlueAutomatorsComponent,
     GreenAutomatorsComponent,
     NeutronStarsComponent,
-    BlueUpgradesComponent
+    BlueUpgradesComponent,
+    BlueCombinersComponent,
+    CombinerComponent,
+    CombinerBoxComponent,
+    InfoComponent
   ],
     imports: [
         BrowserModule,
