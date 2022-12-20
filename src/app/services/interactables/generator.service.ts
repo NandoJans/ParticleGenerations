@@ -184,7 +184,7 @@ export class GeneratorService {
             const division = new Num(HoldingsService.get('yellowFusion').exp / HoldingsService.get('yellowFusionMax').exp, 0)
             if (HoldingsService.get('yellowFusion').greq(new Num(1, 50000))) {
               // @ts-ignore
-              generator.multiplier.div(new Num(1, 1).pow(division.sub(new Num(1, 0), false), false))
+              generator.multiplier.div(new Num(5, 0).pow(division.sub(new Num(1, 0), false), false))
             }
             if (division.greq(new Num(1, 0))) {
               // @ts-ignore

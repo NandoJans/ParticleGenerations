@@ -12,9 +12,9 @@ export class RedComponent implements OnInit {
   generators: Generator[] = [];
   upgrades: Upgrade[] = [];
   infoText: string[] = [
-    'Red Particle Generators',
-    'Red Particle Generators eventually generate red particles. The reason the word \'eventually\' is used here, is because the only generator that actually generates red particles is the first one. ' +
-    'All the other generators generate the generator that comes before itself. Two generates one, three generates two, and so on.'
+    'Red Generators are the base of this game. The first generator generates red particles while the other generators generate generators a level below themself. For example: two generates one, three generates two, and so on.',
+    'These generators are the main focus of the game, with every upgrade eventually boosting the red generators. As the game goes on, you will understand what is meant by that.',
+    'Red extensions add up to five extra red generators. When having five generators, red extensions do not do anything. It is recommended that you wait until you are able to buy something new that boosts it effect.'
   ]
   constructor() { }
 
