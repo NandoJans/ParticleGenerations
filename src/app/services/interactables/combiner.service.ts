@@ -88,7 +88,7 @@ export class CombinerService {
     })
     const combiners = JSON.parse(localStorage['combiners'])
     this.combiners.forEach((combiner) => {
-      if (combiners[combiner.name] !== undefined) {
+      if (combiners[combiner.name] !== undefined && combiners[combiner.name]['bought'] !== undefined && combiners[combiner.name]['active'] !== undefined) {
         combiner['bought'] = new Num(combiners[combiner.name]['bought']['num'], combiners[combiner.name]['bought']['exp'])
         combiner['active'] = combiners[combiner.name]['active']
       }
