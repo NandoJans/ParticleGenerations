@@ -10,7 +10,7 @@ import {Num} from "../../../num";
 })
 export class YellowGeneratorsComponent implements OnInit {
   generators: Generator[] = [];
-  effect: any[] = ['power', 'yellowPower', new Num(5, 0)]
+  effect: any[] = ['powerOfGlobalMultiplier', 'yellowPower', 'yellowPowerPower']
 
   constructor() { }
 

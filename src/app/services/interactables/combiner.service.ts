@@ -11,7 +11,14 @@ import {Num} from "../../num";
 })
 export class CombinerService {
   static combiners: Combiner[] = combinerTarget.concat(combinerSubject)
-  static combinations: any[] = [['empty', 'empty', 1]];
+  static combinations: any[] = [
+    ['empty', 'empty', 1],
+    ['empty', 'empty', 2],
+    ['empty', 'empty', 3],
+    ['empty', 'empty', 4],
+    ['empty', 'empty', 5],
+    ['empty', 'empty', 6],
+  ];
   static currentCombinationSession: number | undefined;
 
   static getCombiner(name: string) {
@@ -53,7 +60,7 @@ export class CombinerService {
     const save_2 = {}
     this.combiners.forEach(combiner => {
       // @ts-ignore
-      save_2[combiner.name] = combiner['bought']
+      save_2[combiner.name] = {bought: combiner['bought'], active: combiner['active']}
     })
     localStorage['combiners'] = JSON.stringify(save_2)
   }
@@ -82,7 +89,8 @@ export class CombinerService {
     const combiners = JSON.parse(localStorage['combiners'])
     this.combiners.forEach((combiner) => {
       if (combiners[combiner.name] !== undefined) {
-        combiner['bought'] = new Num(combiners[combiner.name]['num'], combiners[combiner.name]['exp'])
+        combiner['bought'] = new Num(combiners[combiner.name]['bought']['num'], combiners[combiner.name]['bought']['exp'])
+        combiner['active'] = combiners[combiner.name]['active']
       }
     })
   }
@@ -125,20 +133,23 @@ export class CombinerService {
     if (combiner.type === 'blue-subject') {
       this.combinations[this.currentCombinationSession-1][0] = combiner;
       const subjects = this.getCombiners('blue-subject')
+      combiner.active = true;
       subjects.forEach((subject) => {
         const doc = <HTMLElement> document.getElementById('assign-button-'+subject.name)
         console.log(doc)
         doc.style.display = 'none';
       })
-
+      this.save()
     } else if (combiner.type === 'blue-target') {
       this.combinations[this.currentCombinationSession-1][1] = combiner;
       const subjects = this.getCombiners('blue-target')
+      combiner.active = true;
       subjects.forEach((subject) => {
         const doc = <HTMLElement> document.getElementById('assign-button-'+subject.name)
         console.log(doc)
         doc.style.display = 'none';
       })
+      this.save()
     }
   }
 
@@ -158,6 +169,14 @@ export class CombinerService {
   static clearCombinations() {
     this.combinations = [
       ['empty', 'empty', 1],
-    ]
+      ['empty', 'empty', 2],
+      ['empty', 'empty', 3],
+      ['empty', 'empty', 4],
+      ['empty', 'empty', 5],
+      ['empty', 'empty', 6],
+    ];
+    this.combiners.forEach(combiner => {
+      combiner.active = false;
+    })
   }
 }

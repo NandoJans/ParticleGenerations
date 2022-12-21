@@ -79,6 +79,10 @@ export class TimelineService {
       name: 'blue-upgrades', displayName: 'Upgrading again?', description: 'Aren\'t you tired of upgrades?', hasProgress: true,
       unlocked: true, requirement: ['blues', new Num(5, 0)], type: 'blue-timeline', reached: false, unlock: ['blueParticles', new Num(1, 1)]
     },
+    {
+      name: 'blue-combiners', displayName: 'Combining all my power', description: 'Combining my power might be the solution to my lack of blue particles.', hasProgress: true,
+      unlocked: true, requirement: ['blueParticles', new Num(1, 1)], type: 'blue-timeline', reached: false, unlock: ['blueParticles', new Num(1, 3)]
+    },
   ]
 
   static save() {

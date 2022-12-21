@@ -16,6 +16,12 @@ export class InfoComponent implements OnInit {
     }
   }
 
+  hide() {
+    if (this.name !== undefined && this.text !== undefined) {
+      (<HTMLElement> document.getElementById(this.name)).style.display = 'none';
+    }
+  }
+
   ngOnInit(): void {
   }
 

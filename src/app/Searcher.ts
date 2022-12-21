@@ -11,7 +11,7 @@ export class Searcher {
         return 'lower'
       }
     }
-    return 'higher';
+    return 'lower';
   }
 
   static search(list: any[], value: string, search: string, limit: number = 50): any {

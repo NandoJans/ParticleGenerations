@@ -12,6 +12,7 @@ export class GlobalMultipliersService {
     yellowParticlesGain: new Num(1, 0),
     yellowsGain: new Num(1, 0),
     yellowParticleGenerators: new Num(1, 0),
+    yellowPowerPower: new Num(5, 0),
     yellowFusion: new Num(1, 0),
     yellowFusionPower: new Num(2, -1),
     greenParticleGenerators: new Num(1, 0),
@@ -20,6 +21,7 @@ export class GlobalMultipliersService {
     darkPowerPower: new Num(5, 0),
     nuclearDecayGenerators: new Num(1, 0),
     blueNeutronGenerators: new Num(1, 0),
+    blueParticlesGain: new Num(1, 0),
     blueLightGenerators: new Num(1, 0),
     blueLightPower: new Num(5, 0),
     yellowFusionBlueLightEffect: new Num(1, 0)
@@ -34,6 +36,7 @@ export class GlobalMultipliersService {
       yellowParticlesGain: new Num(1, 0),
       yellowsGain: new Num(1, 0),
       yellowParticleGenerators: new Num(1, 0),
+      yellowPowerPower: new Num(5, 0),
       yellowFusion: new Num(1, 0),
       yellowFusionPower: new Num(2, -1),
       greenParticleGenerators: new Num(1, 0),
@@ -42,6 +45,7 @@ export class GlobalMultipliersService {
       darkPowerPower: new Num(5, 0),
       nuclearDecayGenerators: new Num(1, 0),
       blueNeutronGenerators: new Num(1, 0),
+      blueParticlesGain: new Num(1, 0),
       blueLightGenerators: new Num(1, 0),
       blueLightPower: new Num(5, 0),
       yellowFusionBlueLightEffect: new Num(1, 0)

@@ -4,6 +4,10 @@
   <p class="holding-prefix">Dark Power</p>
 </div>
 <div class="holding-line">
+  <p class="holding-prefix">Dark Power is capped at </p>
+  <app-number-display [name]="'maxDarkPower'" [style]="'dark-text holding-amount'" [type]="'currency'"></app-number-display>
+</div>
+<div class="holding-line">
   <p class="holding-prefix">They multiply your Dark Energy gain by </p>
   <app-number-display [name]="'darkPowerEffect'" [style]="'dark-text holding-amount'" [type]="'effect'" [effect]="darkPowerEffect"></app-number-display>
 </div>

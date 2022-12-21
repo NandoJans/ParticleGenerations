@@ -347,6 +347,21 @@ button {
   cursor: pointer;
 }
 
+.exit-button {
+  font-size: 20px;
+  margin: 0;
+  position: fixed;
+  bottom: 17.8%;
+  width: 90%;
+  height: auto;
+  background-color: var(--red-button-color);
+}
+
+.exit-button:hover {
+  box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
 .buyable {
   background-color: var(--green-button-color);
 }
@@ -429,6 +444,14 @@ button {
   align-items: center;
   border-radius: 1px;
   box-shadow: 3px 3px 0 var(--background-color-1);
+}
+
+.combination {
+  width: 30%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .empty-combiner-box {
@@ -604,9 +627,39 @@ button {
   display: none;
 }
 
+.pop-up-window {
+  overflow: scroll;
+  overflow-x: hidden;
+  position: fixed;
+  font-size: 20px;
+  width: 90%;
+  height: 70%;
+  left: 5%;
+  top: 12%;
+  background-color: var(--background-color-2);
+  border: solid 2px var(--background-color-1)
+}
+
+.pop-up-bottom {
+  height: 100px;
+}
+
 @media screen and (orientation: landscape) {
   .info {
+    width: 90%;
+    margin: 12px 5%;
+  }
+
+  .pop-up-window {
     width: 60%;
-    margin: 12px 20%;
+    height: 70%;
+    left: 20%;
+    top: 12.5%;
+  }
+
+  .exit-button {
+    position: fixed;
+    bottom: 17.2%;
+    width: 60%;
   }
 }

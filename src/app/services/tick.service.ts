@@ -31,6 +31,7 @@ export class TickService {
     })
     HoldingsService.remove('darkEnergy', HoldingsService.get('darkEnergySubtract'))
     HoldingsService.set('yellowFusionMax', new Num(1, 110))
+    HoldingsService.set('maxDarkPower', new Num(6.66, 2))
     if (!HoldingsService.get('yellowFusion').greq(new Num(1, 0))) {
       HoldingsService.set('yellowFusion', new Num(1, 0))
     }
@@ -46,7 +47,10 @@ export class TickService {
     // @ts-ignore
     if (HoldingsService.get('blues').greq(new Num(1, 2)) && new Num(Math.floor(HoldingsService.get('yellowParticles').pow(new Num(0.12, 0), false).exp/110) , 0).add(new Num(0, 0), false).greq(HoldingsService.get('darkPower'))) {
       // @ts-ignore
-      HoldingsService.set('darkPower', new Num(Math.floor(HoldingsService.get('yellowParticles').pow(new Num(0.12, 0), false).exp/110) , 0).add(new Num(0, 0), false))
+      HoldingsService.set('darkPower', new Num(Math.floor(HoldingsService.get('yellowParticles').pow(new Num(0.1, 0), false).exp/110) , 0).add(new Num(0, 0), false))
+    }
+    if (HoldingsService.get('darkPower').greq(HoldingsService.get('maxDarkPower'))) {
+      HoldingsService.set('darkPower', HoldingsService.get('maxDarkPower').copy())
     }
   }
 
@@ -73,7 +77,7 @@ export class TickService {
     //HoldingsService.set('blueParticles', new Num(1, 3))
     //HoldingsService.set('yellows', new Num(5, 3))
     //HoldingsService.set('greens', new Num(1, 3))
-    //HoldingsService.set('blues', new Num(2, 2))
+    //HoldingsService.set('blues', new Num(3, 2))
     //HoldingsService.set('greenSouls', new Num(2, 0))
     //HoldingsService.set('yellowFusion', new Num(1, 110))
     //HoldingsService.set('greenEnergy', new Num(1, 0))
@@ -106,24 +110,33 @@ export class TickService {
   }
 
   tick() {
-    let lastCalled = Date.now();
+    let lastCalled: number;
+    if (localStorage['lastCalled'] === undefined) {
+      localStorage['lastCalled'] = JSON.stringify(Date.now())
+      lastCalled = Date.now()
+    } else {
+      lastCalled = JSON.parse(localStorage['lastCalled']);
+    }
     setInterval(() => {
       if (!HoldingsService.get('greenEnergy').greq(new Num(1, 0))) {HoldingsService.set('greenEnergy', new Num(1, 0))}
       if (!HoldingsService.get('redParticles').greq(new Num(2, 1))) {HoldingsService.set('redParticles', new Num(2, 1))}
       if (!HoldingsService.get('yellowParticles').greq(new Num(1, 0))) {HoldingsService.set('yellowParticles', new Num(0, 0))}
       if (!HoldingsService.get('greenParticles').greq(new Num(1, 0))) {HoldingsService.set('greenParticles', new Num(0, 0))}
-      while (lastCalled+5000 < Date.now()) {
-        this.gameTick(new Num(1, 2))
+      /*while (lastCalled+1000 < Date.now()) {
+        const difference = Date.now() - lastCalled;
+        this.gameTick(new Num(0.5*(difference / 2)/25, 0))
 
-        lastCalled += 5000;
-      }
+        lastCalled -= difference / 2;
+        localStorage['lastCalled'] = JSON.stringify(lastCalled)
+      }*/
       this.gameTick(new Num(0.5, 0))
 
       lastCalled = Date.now();
+      localStorage['lastCalled'] = JSON.stringify(lastCalled)
     }, 25)
 
     setInterval(() => {
       DataManagerService.save()
-    }, 5000)
+    }, 1000)
   }
 }

@@ -83,7 +83,6 @@ export class ResetService {
     DataManagerService.save()
     if (!HoldingsService.get('yellows').greq(new Num(5, 1))) window.location.reload();
     if (resets === 'yellow') return;
-
     HoldingsService.set('yellowParticles', new Num(0, 0));
     HoldingsService.set('yellowPower', new Num(1, 0));
     HoldingsService.set('yellowFusionPower', new Num(2, -1));
