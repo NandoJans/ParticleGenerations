@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Challenge} from "../../../globals";
 import {ChallengeService} from "../../../services/interactables/challenge.service";
+import {BackgroundService} from "../../../services/visuals/background.service";
 
 @Component({
   selector: 'app-yellow-challenges',
@@ -25,5 +26,6 @@ export class YellowChallengesComponent implements OnInit {
   ngOnInit(): void {
     this.challenges = ChallengeService.getChallenges('yellow-challenges')
     this.activeChallenge = ChallengeService.getActiveChallenge();
+    BackgroundService.setBackground('yellow')
   }
 }

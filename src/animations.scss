@@ -1,0 +1,167 @@
+.red-particle-emitter, .accelerator-particle-emitter {
+  position: fixed;
+  animation: shoot 3s ease-out infinite;
+  animation-name: shoot, fade;
+  border-radius: 50%;
+
+  @for $i from 0 to 110 {
+    $t: (1 + .01 * random(100)) * 1s;
+
+    &:nth-child(#{ $i + 1 }) {
+      width: 10px; height: 10px;
+      transform: translate(random(100)*1vw,
+        random(100)*1vh);
+      background-color: var(--red-button-color);
+      animation-duration: $t;
+      animation-delay: -.01 * random(100) * $t;
+    }
+  }
+}
+
+.yellow-particle-emitter {
+  position: fixed;
+  animation: shoot 3s ease-out infinite;
+  animation-name: shoot, fade;
+  border-radius: 50%;
+
+  @for $i from 0 to 110 {
+    $t: (1 + .01 * random(100)) * 1s;
+
+    &:nth-child(#{ $i + 1 }) {
+      width: 10px; height: 10px;
+      transform: translate(random(100)*1vw,
+        random(100)*1vh);
+      background-color: var(--yellow-button-color);
+      animation-duration: $t;
+      animation-delay: -.01 * random(100) * $t;
+    }
+  }
+}
+
+.fusion-particle-emitter {
+  position: fixed;
+  animation: shoot 3s ease-out infinite;
+  animation-name: shoot, fade;
+  border-radius: 50%;
+
+  @for $i from 0 to 110 {
+    $t: (1 + .01 * random(100)) * 1s;
+
+    &:nth-child(#{ $i + 1 }) {
+      width: 10px; height: 10px;
+      transform: translate(random(100)*1vw,
+        random(100)*1vh);
+      background: radial-gradient(white, var(--yellow-button-color), var(--fusion-red-color), var(--background-color-2));
+      animation-duration: $t;
+      animation-delay: -.01 * random(100) * $t;
+    }
+  }
+}
+
+.green-particle-emitter, .decay-particle-emitter {
+  position: fixed;
+  animation: shoot 3s ease-out infinite;
+  animation-name: shoot, fade;
+  border-radius: 50%;
+
+  @for $i from 0 to 110 {
+    $t: (1 + .01 * random(100)) * 1s;
+
+    &:nth-child(#{ $i + 1 }) {
+      width: 10px; height: 10px;
+      transform: translate(random(100)*1vw,
+        random(100)*1vh);
+      background-color: var(--green-button-color);
+      animation-duration: $t;
+      animation-delay: -.01 * random(100) * $t;
+    }
+  }
+}
+
+.dark-particle-emitter {
+  position: fixed;
+  animation: shoot 3s ease-out infinite;
+  animation-name: shoot, fade;
+  border-radius: 50%;
+
+  @for $i from 0 to 110 {
+    $t: (1 + .01 * random(100)) * 1s;
+
+    &:nth-child(#{ $i + 1 }) {
+      width: 10px; height: 10px;
+      transform: translate(random(100)*1vw,
+        random(100)*1vh);
+      background: radial-gradient(var(--background-color-3), var(--green-button-color), var(--background-color-2));
+      animation-duration: $t;
+      animation-delay: -.01 * random(100) * $t;
+    }
+  }
+}
+
+.blue-particle-emitter, .neutron-particle-emitter {
+  position: fixed;
+  animation: shoot 3s ease-out infinite;
+  animation-name: shoot, fade;
+  border-radius: 50%;
+
+  @for $i from 0 to 110 {
+    $t: (1 + .01 * random(100)) * 1s;
+
+    &:nth-child(#{ $i + 1 }) {
+      width: 10px; height: 10px;
+      transform: translate(random(100)*1vw,
+        random(100)*1vh);
+      background-color: var(--blue-button-color);
+      animation-duration: $t;
+      animation-delay: -.01 * random(100) * $t;
+    }
+  }
+}
+
+.light-particle-emitter {
+  position: fixed;
+  animation: shoot 3s ease-out infinite;
+  animation-name: shoot, fade;
+  border-radius: 50%;
+
+  @for $i from 0 to 110 {
+    $t: (1 + .01 * random(100)) * 1s;
+
+    &:nth-child(#{ $i + 1 }) {
+      width: 10px; height: 10px;
+      transform: translate(random(100)*1vw,
+        random(100)*1vh);
+      background: radial-gradient(white, var(--blue-button-color), var(--background-color-2));
+      animation-duration: $t;
+      animation-delay: -.01 * random(100) * $t;
+    }
+  }
+}
+
+.purple-particle-emitter {
+  position: fixed;
+  animation: shoot 3s ease-out infinite;
+  animation-name: shoot, fade;
+  border-radius: 50%;
+
+  @for $i from 0 to 110 {
+    $t: (1 + .01 * random(100)) * 1s;
+
+    &:nth-child(#{ $i + 1 }) {
+      width: 10px; height: 10px;
+      transform: translate(random(100)*1vw,
+        random(100)*1vh);
+      background-color: var(--red-button-color);
+      animation-duration: $t;
+      animation-delay: -.01 * random(100) * $t;
+    }
+  }
+}
+
+@keyframes shoot {
+  0% { transform: translate(50vw, 90vh); }
+}
+
+@keyframes fade {
+  to { opacity: 0 }
+}

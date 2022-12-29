@@ -3,6 +3,7 @@ import {Upgrade} from "../../../globals";
 import {UpgradeService} from "../../../services/interactables/upgrade.service";
 import {Num} from "../../../num";
 import {HoldingsService} from "../../../services/holdings.service";
+import {BackgroundService} from "../../../services/visuals/background.service";
 
 @Component({
   selector: 'app-green-sacrifice',
@@ -28,5 +29,6 @@ export class GreenSacrificeComponent implements OnInit {
   ngOnInit(): void {
     this.sacrifices = UpgradeService.getUpgrades('green-sacrifices');
     this.upgrades = UpgradeService.getUpgrades('green-limited-upgrades');
+    BackgroundService.setBackground('green')
   }
 }

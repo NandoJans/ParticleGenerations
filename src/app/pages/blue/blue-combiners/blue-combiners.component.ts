@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CombinerService} from "../../../services/interactables/combiner.service";
+import {BackgroundService} from "../../../services/visuals/background.service";
 
 @Component({
   selector: 'app-blue-combiners',
@@ -14,5 +15,6 @@ export class BlueCombinersComponent implements OnInit {
   ngOnInit(): void {
     this.targets = CombinerService.getCombiners('blue-target')
     this.subjects = CombinerService.getCombiners('blue-subject')
+    BackgroundService.setBackground('blue')
   }
 }

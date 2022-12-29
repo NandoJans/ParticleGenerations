@@ -10,3 +10,4 @@ export interface Combiner {name: string, displayName: string, element: string, c
 export interface Navigation {name: string, displayName: string, location: string, unlocked: boolean, requirement: [string, Num] | string, wasOn: string}
 export interface SubNavigation {name: string, displayName: string, location: string, parent: string, unlocked: boolean, requirement: [string, Num] | string}
 export interface TimelineEvent {name: string, displayName: string, description: string, hasProgress: boolean, unlocked: boolean, requirement: any[], type: string, reached: boolean, unlock: any[]}
+export interface Particle {name: string, type: string, size: number, life: number}

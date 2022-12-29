@@ -4,6 +4,7 @@ import {Generator, Upgrade} from "../../../globals";
 import {UpgradeService} from "../../../services/interactables/upgrade.service";
 import {GeneratorService} from "../../../services/interactables/generator.service";
 import {Num} from "../../../num";
+import {BackgroundService} from "../../../services/visuals/background.service";
 
 @Component({
   selector: 'app-accelerators',
@@ -26,6 +27,7 @@ export class AcceleratorsComponent implements OnInit {
     if (UpgradeService.getValue('red-accelerator-buffer', 'bought').greq(new Num(1, 0))) {
       this.effect = ['power', 'redAccelerators', new Num(1.5, 0)]
     }
+    BackgroundService.setBackground('red')
   }
 
 }

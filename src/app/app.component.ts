@@ -3,6 +3,7 @@ import {TickService} from "./services/tick.service";
 import {DataManagerService} from "./services/data-manager.service";
 import {UpgradeService} from "./services/interactables/upgrade.service";
 import {Searcher} from "./Searcher";
+import {ParticleEmitterService} from "./services/visuals/particle-emitter.service";
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
     DataManagerService.load();
+    ParticleEmitterService.tick();
     this.tick.tick();
   }
 }

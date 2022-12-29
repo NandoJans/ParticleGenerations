@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Upgrade} from "../../../globals";
 import {UpgradeService} from "../../../services/interactables/upgrade.service";
 import {Num} from "../../../num";
+import {BackgroundService} from "../../../services/visuals/background.service";
 
 @Component({
   selector: 'app-yellow-fusion',
@@ -18,5 +19,6 @@ export class YellowFusionComponent implements OnInit {
   ngOnInit(): void {
     this.upgrades = UpgradeService.getUpgrades('yellow-fusion')
     this.hasUpgrade = UpgradeService.getValue('fusion-boost-red-generators', 'bought').greq(new Num(1, 0));
+    BackgroundService.setBackground('yellow')
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ChallengeService} from "../../../services/interactables/challenge.service";
 import {Challenge} from "../../../globals";
+import {BackgroundService} from "../../../services/visuals/background.service";
 
 @Component({
   selector: 'app-dark-age',
@@ -20,6 +21,7 @@ export class DarkAgeComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    BackgroundService.setBackground('green')
   }
 
 }

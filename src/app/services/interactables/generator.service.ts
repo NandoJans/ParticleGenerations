@@ -150,8 +150,8 @@ export class GeneratorService {
 
           if (UpgradeService.getValue('red-accelerator-buffer', 'bought').greq(new Num(1, 0))) {
             generator.multiplier.mul(redAccelerators.pow(new Num(1.5, 0), false))
-          } else if (redAccelerators.div(new Num(1, 3), false).greq(new Num(1, 0))) {
-            generator.multiplier.mul(redAccelerators.div(new Num(1, 3), false));
+          } else {
+            generator.multiplier.mul(redAccelerators.div(new Num(1, 3), false).add(new Num(1, 0), false));
           }
 
           const yellowPower = HoldingsService.get('yellowPower')

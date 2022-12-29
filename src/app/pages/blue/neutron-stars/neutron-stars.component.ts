@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {UpgradeService} from "../../../services/interactables/upgrade.service";
 import {Upgrade} from "../../../globals";
 import {Num} from "../../../num";
+import {BackgroundService} from "../../../services/visuals/background.service";
 
 @Component({
   selector: 'app-neutron-stars',
@@ -21,6 +22,7 @@ export class NeutronStarsComponent implements OnInit {
     this.neutronStar = UpgradeService.getUpgrades('neutron-star-upgrade');
     this.upgrades = UpgradeService.getUpgrades('blue-light-upgrade');
     this.displayBlueLight = UpgradeService.getValue('neutron-star', 'bought').greq(new Num(1, 0));
+    BackgroundService.setBackground('blue')
   }
 
 }

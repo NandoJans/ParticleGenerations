@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Upgrade} from "../../../globals";
 import {UpgradeService} from "../../../services/interactables/upgrade.service";
+import {BackgroundService} from "../../../services/visuals/background.service";
 
 @Component({
   selector: 'app-red-upgrades',
@@ -19,6 +20,7 @@ export class RedUpgradesComponent implements OnInit {
 
   ngOnInit(): void {
     this.upgrades = UpgradeService.getUpgrades('red-upgrades')
+    BackgroundService.setBackground('red')
   }
 
 }

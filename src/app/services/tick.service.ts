@@ -16,6 +16,8 @@ import {TimelineService} from "./timeline.service";
 import {mainActions} from "./interactables/action/mainActions";
 import {Action} from "../action";
 import {CombinerService} from "./interactables/combiner.service";
+import {ParticleEmitterService} from "./visuals/particle-emitter.service";
+import {BackgroundService} from "./visuals/background.service";
 
 @Injectable({
   providedIn: 'root'
@@ -107,6 +109,7 @@ export class TickService {
     TimelineService.setProgress();
 
     AutomatorService.prestigeAutomators();
+    BackgroundService.tick();
   }
 
   tick() {
@@ -136,7 +139,8 @@ export class TickService {
     }, 25)
 
     setInterval(() => {
+      ParticleEmitterService.tick();
       DataManagerService.save()
-    }, 1000)
+    }, 5000)
   }
 }

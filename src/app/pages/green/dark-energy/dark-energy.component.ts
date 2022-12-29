@@ -4,6 +4,7 @@ import {UpgradeService} from "../../../services/interactables/upgrade.service";
 import {Num} from "../../../num";
 import {BuyableService} from "../../../services/interactables/buyable.service";
 import {HoldingsService} from "../../../services/holdings.service";
+import {BackgroundService} from "../../../services/visuals/background.service";
 
 @Component({
   selector: 'app-dark-energy',
@@ -36,5 +37,6 @@ export class DarkEnergyComponent implements OnInit {
   ngOnInit(): void {
     this.sacrifices = UpgradeService.getUpgrades('dark-compressor');
     this.upgrades = UpgradeService.getUpgrades('dark-upgrade');
+    BackgroundService.setBackground('green')
   }
 }

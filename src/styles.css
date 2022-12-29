@@ -13,13 +13,13 @@
   --green-button-color: rgb(100, 210, 74);
   --blue-button-color: rgb(48, 151, 217);
   --dark-button-color: rgb(67, 67, 67);
-  --transparent-background-red: rgba(199, 77, 77, 0.3);
-  --transparent-background-yellow: rgba(220, 213, 44, 0.3);
-  --fusion-red-background-color: rgb(229, 91, 47, 0.3);
-  --transparent-background-green: rgba(79, 219, 56, 0.3);
-  --transparent-background-blue: rgba(42, 160, 224, 0.3);
-  --transparent-background-dark: rgba(89, 89, 89, 0.3);
-  --transparent-background-light: rgba(229, 229, 229, 0.3);
+  --transparent-background-red: rgb(82, 54, 54);
+  --transparent-background-yellow: rgb(100, 100, 52);
+  --fusion-red-background-color: rgb(125, 82, 67);
+  --transparent-background-green: rgb(62, 81, 53);
+  --transparent-background-blue: rgb(48, 72, 88);
+  --transparent-background-dark: rgb(36, 36, 36);
+  --transparent-background-light: rgb(155, 155, 155);
 }
 
 html, body {
@@ -30,8 +30,10 @@ html, body {
   font-size: 12px;
   height: 100%;
   width: 100%;
-  background-color: var(--background-color-2);
+  background: none;
 }
+
+
 
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
@@ -56,6 +58,28 @@ main {
   justify-content: space-around;
   align-items: center;
   flex-direction: column;
+}
+
+#main-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("./assets/redSpace.png");
+  background-position: center;
+  background-size: cover;
+  z-index: -100;
+}
+
+#transparent-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(36, 36, 36, 0.8);
+  z-index: -90;
 }
 
 .page {
@@ -644,6 +668,15 @@ button {
   height: 100px;
 }
 
+.particle-emitter {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  z-index: -10;
+}
+
 @media screen and (orientation: landscape) {
   .info {
     width: 90%;
@@ -661,5 +694,9 @@ button {
     position: fixed;
     bottom: 17.2%;
     width: 60%;
+  }
+
+  #main-background {
+    background-size: 100%;
   }
 }
