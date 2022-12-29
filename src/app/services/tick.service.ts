@@ -125,13 +125,13 @@ export class TickService {
       if (!HoldingsService.get('redParticles').greq(new Num(2, 1))) {HoldingsService.set('redParticles', new Num(2, 1))}
       if (!HoldingsService.get('yellowParticles').greq(new Num(1, 0))) {HoldingsService.set('yellowParticles', new Num(0, 0))}
       if (!HoldingsService.get('greenParticles').greq(new Num(1, 0))) {HoldingsService.set('greenParticles', new Num(0, 0))}
-      /*while (lastCalled+1000 < Date.now()) {
+      while (lastCalled+1000 < Date.now()) {
         const difference = Date.now() - lastCalled;
         this.gameTick(new Num(0.5*(difference / 2)/25, 0))
 
-        lastCalled -= difference / 2;
+        lastCalled += difference / 2;
         localStorage['lastCalled'] = JSON.stringify(lastCalled)
-      }*/
+      }
       this.gameTick(new Num(0.5, 0))
 
       lastCalled = Date.now();

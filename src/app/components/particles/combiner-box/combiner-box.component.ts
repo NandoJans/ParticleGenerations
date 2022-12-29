@@ -12,7 +12,7 @@ export class CombinerBoxComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.combinations = CombinerService.combinations;
+    this.combinations = [CombinerService.combinations[0]];
   }
 
   assignSubjectSession(event: any) {

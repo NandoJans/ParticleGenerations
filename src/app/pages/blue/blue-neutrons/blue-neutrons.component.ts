@@ -22,11 +22,9 @@ export class BlueNeutronsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    BackgroundService.setBackground('blue')
     this.generators = GeneratorService.getGenerators('blue-neutrons');
     this.upgrades = UpgradeService.getUpgrades('blue-neutron-upgrade');
-    this.unlockedYellowEffect = UpgradeService.getValue('unlock-yellow-neutron-effect', 'bought').greq(new Num(1, 0))
-    this.unlockedGreenEffect = UpgradeService.getValue('unlock-green-neutron-effect', 'bought').greq(new Num(1, 0))
-    BackgroundService.setBackground('blue')
   }
 
 }
