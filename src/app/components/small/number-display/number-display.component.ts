@@ -12,10 +12,11 @@ export class NumberDisplayComponent implements OnInit {
   @Input() type: string | undefined;
   @Input() currency: string | undefined;
   @Input() effect: any[] | undefined;
+  @Input() permanent: boolean | undefined;
 
-  constructor(private numberDisplays: NumberDisplayService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.numberDisplays.add(this.name, this.type, this.currency, this.effect);
+    NumberDisplayService.add(this.name, this.type, this.currency, this.effect, this.permanent);
   }
 }

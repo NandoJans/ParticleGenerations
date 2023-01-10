@@ -6,7 +6,6 @@ import {PrestigeLayersService} from "./prestige-layers.service";
 import {Num} from "../num";
 import {MilestoneService} from "./interactables/milestone.service";
 import {AutomatorService} from "./interactables/automator.service";
-import {ChallengeService} from "./interactables/challenge.service";
 import {GlobalMultipliersService} from "./globals/global-multipliers.service";
 import {CombinerService} from "./interactables/combiner.service";
 
@@ -14,16 +13,28 @@ import {CombinerService} from "./interactables/combiner.service";
   providedIn: 'root'
 })
 export class NumberDisplayService {
-  numberDisplays: {name: string, type: string, currency: string | undefined, effect?: any[] | undefined}[] = []
+  static numberDisplays: {name: string, type: string, currency: string | undefined, effect?: any[] | undefined, permanent?: boolean | undefined}[] = []
 
   constructor() { }
 
-  add(name: string | undefined, type: string | undefined, currency: string | undefined, effect?: any[] | undefined) {
-    // @ts-ignore
-    this.numberDisplays.push({name: name, type: type, currency: currency, effect: effect})
+  static reset() {
+    for (let i = 0; i < this.numberDisplays.length; i++) {
+      let nd = this.numberDisplays[i];
+      if (nd.permanent === undefined && !nd.permanent) {
+        let perm1 = this.numberDisplays.slice(0, i)
+        let perm2 = this.numberDisplays.slice(i+1)
+        this.numberDisplays = perm1.concat(perm2);
+        i--;
+      }
+    }
   }
 
-  reload() {
+  static add(name: string | undefined, type: string | undefined, currency: string | undefined, effect?: any[] | undefined, permanent?: boolean | undefined) {
+    // @ts-ignore
+    this.numberDisplays.push({name: name, type: type, currency: currency, effect: effect, permanent: permanent})
+  }
+
+  static reload() {
     this.numberDisplays.forEach((entry) => {
       const element = <HTMLElement> document.getElementById(entry.name+'-'+entry.type);
       // @ts-ignore

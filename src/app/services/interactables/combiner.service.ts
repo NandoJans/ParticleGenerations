@@ -68,10 +68,7 @@ export class CombinerService {
   static load() {
     const combinations = JSON.parse(localStorage['combinations'])
     let index = 1;
-    console.log(this.combinations)
-    console.log(combinations)
     combinations.forEach((combination: any[]) => {
-      console.log(combination)
       if (combination[0] === 'empty') {
         this.combinations[index-1][0] = 'empty'
       } else {
@@ -84,7 +81,6 @@ export class CombinerService {
       }
       this.combinations[index-1][2] = index
       index += 1;
-      console.log(this.combinations)
     })
     const combiners = JSON.parse(localStorage['combiners'])
     this.combiners.forEach((combiner) => {

@@ -18,5 +18,4 @@ export class MainComponent implements OnInit {
     this.unlockedGreen = PrestigeLayersService.getValue('green', 'unlocked');
     this.unlockedBlue = PrestigeLayersService.getValue('blue', 'unlocked');
   }
-
 }

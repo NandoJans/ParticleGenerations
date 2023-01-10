@@ -13,6 +13,7 @@ export class Action {
   requirement: any[] | undefined;
   action: Action | undefined;
 
+
   constructor(type: string, target: string, amount?: any, variable?: string, subject?: string, requirement?: any[] | undefined, action?: Action | undefined) {
     this.type = type;
     this.target = target;

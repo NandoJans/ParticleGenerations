@@ -11,9 +11,16 @@ export class Num {
     let ret_num = this.num
     let ret_exp = this.exp
 
-    while (ret_num >= 10 && ret_num !== 0) {
-      ret_num /= 10
-      ret_exp += 1
+    if (ret_num >= 10) {
+      let arr = ret_num.toString().split('e');
+      if (arr[1] !== undefined) {
+        ret_num = parseFloat(arr[0])
+        ret_exp = parseInt(arr[1].slice(1))
+      } else {
+        let buff = Math.floor(ret_num).toString().length
+        ret_exp += buff
+        ret_num *= 10 ** -buff
+      }
     }
     while (ret_num < 1 && ret_num !== 0 || ret_num === 0 && ret_exp > 0) {
       ret_num *= 10
@@ -29,6 +36,21 @@ export class Num {
   }
 
   toString = (x=false) => {
+    if (this.exp >= 1000000) {
+      let expNum = this.exp;
+      let expExp = 0;
+      let arr = this.exp.toString().split('e');
+      if (arr[1] !== undefined) {
+        expNum = parseFloat(arr[0])
+        expExp = parseInt(arr[1].slice(1))
+      } else {
+        let buff = Math.floor(this.exp).toString().length-1
+        expExp += buff
+        expNum *= 10 ** -buff
+      }
+
+      return String(this.num.toFixed(2)) + 'e' + String((expNum.toFixed(2)+'e'+expExp).replace(/\B(?=(\d{3})+(?!\d))/g, ","))
+    }
     if (this.exp >= 6) {
       return String(this.num.toFixed(2)) + 'e' + String(Math.round(this.exp).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
     } else if (this.exp == 0) {

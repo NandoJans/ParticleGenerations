@@ -24,7 +24,7 @@ import {BackgroundService} from "./visuals/background.service";
 })
 export class TickService {
 
-  constructor(private holdings: HoldingsService, private numberDisplay: NumberDisplayService, private generators: GeneratorService,
+  constructor(private holdings: HoldingsService, private generators: GeneratorService,
               private upgrades: UpgradeService, private buyables: BuyableService) { }
 
   mainAction() {
@@ -105,7 +105,7 @@ export class TickService {
     ChallengeService.checkGoal();
     PrestigeLayersService.calculateGain();
 
-    this.numberDisplay.reload();
+    NumberDisplayService.reload();
     TimelineService.setProgress();
 
     AutomatorService.prestigeAutomators();
@@ -139,7 +139,7 @@ export class TickService {
     }, 25)
 
     setInterval(() => {
-      ParticleEmitterService.tick();
+      //ParticleEmitterService.tick();
       DataManagerService.save()
     }, 5000)
   }

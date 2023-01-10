@@ -6,6 +6,7 @@ import {FooterComponent} from "../page/footer/footer.component";
 import {Router} from "@angular/router";
 import {TickService} from "./tick.service";
 import {DataManagerService} from "./data-manager.service";
+import {NumberDisplayService} from "./number-display.service";
 
 @Injectable({
   providedIn: 'root'
@@ -126,6 +127,13 @@ export class NavigationsService {
       if (subNavigation.parent === navigation && subNavigation.unlocked) ret_arr.push(subNavigation);
     })
     return ret_arr;
+  }
+
+  static getSubNavigation(navigation: string) {
+    for (let i = 0; i < this.subNavigations.length; i++) {
+      if (this.subNavigations[i].name === navigation) return this.subNavigations[i];
+    }
+    return 0;
   }
 
   static unlock() {

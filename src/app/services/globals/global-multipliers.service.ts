@@ -27,6 +27,8 @@ export class GlobalMultipliersService {
     yellowFusionBlueLightEffect: new Num(1, 0)
   };
 
+  static sortedMultipliers = {}
+
   constructor() { }
 
   static reset() {

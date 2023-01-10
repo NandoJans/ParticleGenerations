@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {NavigationsService} from "../../services/navigations.service";
 import {Navigation, SubNavigation} from "../../globals";
 import {Router} from "@angular/router";
+import {NumberDisplayService} from "../../services/number-display.service";
 
 @Component({
   selector: 'app-footer',
@@ -20,9 +21,13 @@ export class FooterComponent implements OnInit {
   }
 
   navigate(event: any) {
-    let navigation = NavigationsService.getLocation(event);
-    NavigationsService.save();
-    this.router.navigate([navigation])
+    let currentUrl: string[] = this.router.url.split('/')
+    if (currentUrl[2] !== event.parent || currentUrl[3] !== event.location) {
+      NumberDisplayService.reset();
+      let navigation = NavigationsService.getLocation(event);
+      NavigationsService.save();
+      this.router.navigate([navigation])
+    }
   }
 
   ngOnInit(): void {
