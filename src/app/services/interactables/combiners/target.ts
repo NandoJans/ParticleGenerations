@@ -11,18 +11,18 @@ export const combinerTarget = [
   },
   {
     name: 'boost-red-accelerators', displayName: 'Red Accerelator Generators', cost: new Num(1, 17), currency: 'blueParticles', type: 'blue-target', resetId: 'blue-combiners', style: 'blue-style',
-    unlocked: false, requirement: ['blueParticles', new Num(1, 4)], active: false, element: 'redAcceleratorGenerators', buffer: new Num(1, 1), bought: new Num(0, 0)
+    unlocked: false, requirement: ['blueParticles', new Num(1, 4)], active: false, element: 'redAcceleratorGenerators', buffer: new Num(6, 1), bought: new Num(0, 0)
   },
   {
     name: 'boost-green-generators', displayName: 'Green Generators', cost: new Num(1, 25), currency: 'blueParticles', type: 'blue-target', resetId: 'blue-combiners', style: 'blue-style',
-    unlocked: false, requirement: ['blueParticles', new Num(1, 4)], active: false, element: 'redAcceleratorGenerators', buffer: new Num(1, 0), bought: new Num(0, 0)
+    unlocked: false, requirement: ['blueParticles', new Num(1, 4)], active: false, element: 'greenParticleGenerators', buffer: new Num(4, -2), bought: new Num(0, 0)
   },
   {
     name: 'boost-yellow-fusion', displayName: 'Yellow Fusion Generation', cost: new Num(1, 35), currency: 'blueParticles', type: 'blue-target', resetId: 'blue-combiners', style: 'blue-style',
-    unlocked: false, requirement: ['blueParticles', new Num(1, 4)], active: false, element: 'redAcceleratorGenerators', buffer: new Num(1, 1), bought: new Num(0, 0)
+    unlocked: false, requirement: ['blueParticles', new Num(1, 4)], active: false, element: 'yellowFusion', buffer: new Num(1, -5), bought: new Num(0, 0)
   },
   {
     name: 'boost-nuclear-decay', displayName: 'Nuclear Decay Generators', cost: new Num(1, 60), currency: 'blueParticles', type: 'blue-target', resetId: 'blue-combiners', style: 'blue-style',
-    unlocked: false, requirement: ['blueParticles', new Num(1, 4)], active: false, element: 'redAcceleratorGenerators', buffer: new Num(1, -1), bought: new Num(0, 0)
+    unlocked: false, requirement: ['blueParticles', new Num(1, 4)], active: false, element: 'nuclearDecayGenerators', buffer: new Num(1, -5), bought: new Num(0, 0)
   },
 ]

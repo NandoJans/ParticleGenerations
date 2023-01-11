@@ -36,7 +36,21 @@ export class Num {
   }
 
   toString = (x=false) => {
-    if (this.exp >= 1000000) {
+    if (this.exp >= 1e9) {
+      let expNum = this.exp;
+      let expExp = 0;
+      let arr = this.exp.toString().split('e');
+      if (arr[1] !== undefined) {
+        expNum = parseFloat(arr[0])
+        expExp = parseInt(arr[1].slice(1))
+      } else {
+        let buff = Math.floor(this.exp).toString().length-1
+        expExp += buff
+        expNum *= 10 ** -buff
+      }
+
+      return 'e' + String((expNum.toFixed(2)+'e'+expExp).replace(/\B(?=(\d{3})+(?!\d))/g, ","))
+    } else if (this.exp >= 1e6) {
       let expNum = this.exp;
       let expExp = 0;
       let arr = this.exp.toString().split('e');
@@ -211,8 +225,6 @@ export class Num {
         ret_num *= 10 ** -buff
       }
     }
-
-    if (ret_num < 0.001) ret_num = 0.001
 
     while (ret_num < 1 && ret_num !== 0 && ret_num > 0) {
       ret_exp -= 1

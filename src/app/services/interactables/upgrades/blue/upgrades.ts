@@ -31,5 +31,11 @@ export const blueUpgrades = [
     baseCost: new Num(1,8), cost: new Num(1, 8), increase: new Num(1,0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'blueParticles',
     baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'blue-upgrades', resetId: 'blue-upgrade', style: 'blue-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['blueParticles', new Num(1, 1)],
     action: new Action('globalMultiplier', 'yellowPowerPower', new Num(1.5, 0))
+  },
+  {
+    name: 'yellow-fusion-boosts-green', displayName: 'Green Yellow Fusion', description: 'Yellow fusion boosts green generators.', auto: false,
+    baseCost: new Num(1,11), cost: new Num(1, 11), increase: new Num(1,0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'blueParticles',
+    baseBuffer: new Num(1, -5), buffer: new Num(1, -5), amount: new Num(0, 0), type: 'blue-upgrades', resetId: 'blue-upgrade', style: 'blue-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['blueParticles', new Num(1, 1)],
+    action: new Action('basedOnHolding', 'greenParticleGenerators', new Num(2.5, -3), 'power', 'yellowFusion')
   }
 ]
