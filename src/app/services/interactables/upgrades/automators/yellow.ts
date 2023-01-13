@@ -5,16 +5,16 @@ export const yellowAutomators: Automator[] = [
   {
     name: '2x-yellow-upgrade-automator', displayName: '2x Yellow Upgrade Automator', cost: new Num(5, 0), bought: new Num(0, 0), currency: 'greenParticles',
     type: 'yellow-automators', resetId: 'yellow-automators', style: 'automator', unlocked: false, active: false, requirement: ['greens', new Num(1, 0)],
-    target: 'yellow-particle-multiplier', targetType: 'upgrade'
+    target: 'yellow-particle-multiplier', targetType: 'upgrade', nav: 'automators', subNav: 'yellowAutomators'
   },
   {
     name: '2x-redgen-upgrade-automator', displayName: '2x Red Generators Automator', cost: new Num(5, 0), bought: new Num(0, 0), currency: 'greenParticles',
     type: 'yellow-automators', resetId: 'yellow-automators', style: 'automator', unlocked: false, active: false, requirement: ['greens', new Num(1, 0)],
-    target: 'yellow-repeatable-multiplier', targetType: 'upgrade'
+    target: 'yellow-repeatable-multiplier', targetType: 'upgrade', nav: 'automators', subNav: 'yellowAutomators'
   },
   {
     name: 'yellow-generators-automator', displayName: 'Yellow Generators Automator', cost: new Num(2, 1), bought: new Num(0, 0), currency: 'greenParticles',
     type: 'yellow-automators', resetId: 'yellow-automators', style: 'automator', unlocked: false, active: false, requirement: ['greens', new Num(1, 0)],
-    target: 'yellow-particles', targetType: 'generators'
+    target: 'yellow-particles', targetType: 'generators', nav: 'automators', subNav: 'yellowAutomators'
   }
 ]

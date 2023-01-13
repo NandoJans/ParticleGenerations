@@ -1,0 +1,15 @@
+<div class="holding-line">
+  <p class="holding-prefix">You have</p>
+  <app-number-display [name]="'blueHydrogen'" [style]="'light-text holding-amount'" [type]="'currency'"></app-number-display>
+  <p class="holding-prefix">Blue Hydrogen</p>
+</div>
+<div class="holding-line">
+  <p class="holding-prefix">They fuse and boost blue light by</p>
+  <app-number-display [name]="''" [style]="'light-text holding-amount'" [type]="'effect'" [effect]="effect"></app-number-display>
+</div>
+<div class="generators-row">
+  <div *ngFor="let generator of generators">
+    <app-generator *ngIf="generator.unlocked" [generator]="generator"></app-generator>
+  </div>
+</div>
+<app-particle-emitter style="width: 100%; height: 100%;" [type]="'green-particle-emitter'"></app-particle-emitter>

@@ -134,6 +134,11 @@ footer {
   padding: unset;
 }
 
+.buyable-nav {
+  color: var(--green-button-color);
+  font-weight: bold;
+}
+
 .navigation-button:hover {
   box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
   cursor: pointer;
@@ -251,7 +256,7 @@ footer {
 }
 
 .light-style {
-  background: radial-gradient(var(--transparent-background-light), var(--transparent-background-blue), var(--background-color-1));;
+  background: radial-gradient(var(--transparent-background-blue), var(--background-color-1));;
   color: var(--blue-button-color);
   border: solid 1px var(--blue-button-color);
   border-radius: 3px;
@@ -607,19 +612,23 @@ button {
 
 /* Colored Text */
 .red-text {
-  color: var(--text-color-red)
+  color: var(--text-color-red);
+  font-weight: bold;
 }
 
 .yellow-text {
-  color: var(--text-color-yellow)
+  color: var(--text-color-yellow);
+  font-weight: bold;
 }
 
 .green-text {
-  color: var(--text-color-green)
+  color: var(--text-color-green);
+  font-weight: bold;
 }
 
 .blue-text {
-  color: var(--text-color-blue)
+  color: var(--text-color-blue);
+  font-weight: bold;
 }
 
 .dark-text {
@@ -684,6 +693,28 @@ button {
   z-index: -10;
 }
 
+#drop-down-message {
+  z-index: 100;
+  width: 90%;
+  background-color: var(--blue-button-color);
+  border: solid 2px var(--transparent-background-blue);
+  border-radius: 3px;
+  position: fixed;
+  top: -100px;
+  display: flex;
+  animation: linear 2s;
+  flex-direction: column;
+  padding: 10px;
+}
+
+#ddm-title {
+  font-weight: bold;
+}
+
+#ddm-content {
+  margin: 0;
+}
+
 @media screen and (orientation: landscape) {
   .info {
     width: 90%;
@@ -705,5 +736,9 @@ button {
 
   #main-background {
     background-size: 100%;
+  }
+
+  #drop-down-message {
+    width: 60%;
   }
 }

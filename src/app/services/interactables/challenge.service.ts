@@ -7,6 +7,7 @@ import {PrestigeLayersService} from "../prestige-layers.service";
 import {DataManagerService} from "../data-manager.service";
 import {MilestoneService} from "./milestone.service";
 import {darkAge} from "./challenges/green";
+import {DropDownMessageService} from "../visuals/drop-down-message.service";
 
 @Injectable({
   providedIn: 'root'
@@ -112,6 +113,7 @@ export class ChallengeService {
   static unlock() {
     this.challenges.forEach(challenge => {
       if (HoldingsService.get(challenge.requirement[0]).greq(challenge.requirement[1])) {
+        if (!challenge.unlocked) DropDownMessageService.dropDown('Challenge Unlocked!', 'You have unlocked '+challenge.displayName);
         challenge.unlocked = true;
         if (MilestoneService.isReached('auto-complete-'+challenge.prestige+'-challenges') && challenge.type === 'yellow-challenges') {
           challenge.completed = true;

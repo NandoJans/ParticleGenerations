@@ -178,12 +178,19 @@ export class GeneratorService {
           generator.multiplier.mul(GlobalMultipliersService.get('yellowFusion'));
           let yellowFusion = HoldingsService.get('yellowFusion');
           generator.multiplier.mul(yellowFusion.add(new Num(1, 0), false).div(new Num(2, 3), false));
-
           const hasLimit = UpgradeService.getValue('remove-fusion-limit', 'bought').greq(new Num(1, 0))
           if (hasLimit) {
-            const division = new Num(HoldingsService.get('yellowFusion').exp / HoldingsService.get('yellowFusionMax').exp, 0)
-            if (HoldingsService.get('yellowFusion').greq(new Num(1, 50000))) {
-              division.sub(new Num(50000 / HoldingsService.get('yellowFusionMax').exp, 0))
+            const yellowFusion = HoldingsService.get('yellowFusion')
+            const yellowFusionMax = HoldingsService.get('yellowFusionMax')
+            const division = new Num(yellowFusion.exp / yellowFusionMax.exp, 0)
+            if (yellowFusion.greq(new Num(1, 5e5))) {
+              division.sub(new Num(5e5 / yellowFusionMax.exp, 0))
+              const mulVar = new Num(yellowFusion.exp / 5e5, 0)
+              // @ts-ignore
+              generator.multiplier.div(division.pow(division.mul(mulVar, false), false))
+            }
+            if (yellowFusion.greq(new Num(1, 50000))) {
+              division.sub(new Num(50000 / yellowFusionMax.exp, 0))
               // @ts-ignore
               generator.multiplier.div(division.pow(division, false))
             }
@@ -210,6 +217,7 @@ export class GeneratorService {
         }
 
         if (generator.type === 'blue-light') {
+          generator.multiplier.mul(HoldingsService.get('blueHydrogen').pow(new Num(1.5, 0), false))
           generator.multiplier.mul(GlobalMultipliersService.get('blueLightGenerators'))
           // @ts-ignore
           generator.multiplier.mul(new Num(HoldingsService.get('yellowFusion').exp+1, 0).pow(GlobalMultipliersService.get('yellowFusionBlueLightEffect'), false))

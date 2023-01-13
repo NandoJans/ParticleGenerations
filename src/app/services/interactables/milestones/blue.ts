@@ -36,5 +36,5 @@ export const blueMilestones = [
     name: 'yellow-fusion-start-boost', displayName: '1e50000 Yellow Fusion?', description: 'Start blues with 1e50000 yellow fusion.', type: 'blue-milestone', style: 'blue-style',
     unlocked: false, requirement: ['blues', new Num(1, 0)], cost: new Num(3, 2), currency: 'blues', buffer: new Num(1, 0),
     action: new Action('', ''),
-  },
+  }
 ]

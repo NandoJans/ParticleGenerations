@@ -134,6 +134,8 @@ export class ResetService {
     this.resetUpgrades('green-limited-upgrades')
     this.resetUpgrades('dark-upgrades')
     this.resetChallenges('dark-age')
+    HoldingsService.set('blueHydrogen', new Num(1, 0))
+    this.resetGenerators('blueParticleGenerators', 'amount')
     DataManagerService.save()
     if (!HoldingsService.get('blues').greq(new Num(5, 1)) && resets === 'blue') window.location.reload();
     if (resets === 'blue') return;

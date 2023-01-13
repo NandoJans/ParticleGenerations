@@ -52,6 +52,7 @@ import { CombinerComponent } from './components/particles/combiner/combiner.comp
 import {CombinerBoxComponent} from "./components/particles/combiner-box/combiner-box.component";
 import { InfoComponent } from './components/medium/info/info.component';
 import { ParticleEmitterComponent } from './components/medium/particle-emitter/particle-emitter.component';
+import { BlueGeneratorsComponent } from './pages/blue/blue-generators/blue-generators.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +102,8 @@ import { ParticleEmitterComponent } from './components/medium/particle-emitter/p
     CombinerComponent,
     CombinerBoxComponent,
     InfoComponent,
-    ParticleEmitterComponent
+    ParticleEmitterComponent,
+    BlueGeneratorsComponent
   ],
     imports: [
         BrowserModule,

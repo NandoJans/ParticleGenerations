@@ -18,6 +18,7 @@ import {Action} from "../action";
 import {CombinerService} from "./interactables/combiner.service";
 import {ParticleEmitterService} from "./visuals/particle-emitter.service";
 import {BackgroundService} from "./visuals/background.service";
+import {DropDownMessageService} from "./visuals/drop-down-message.service";
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +60,8 @@ export class TickService {
   gameTick(speed: Num = new Num(1, 0)) {
     this.mainAction();
 
+    NavigationsService.resetTracker();
+
     UpgradeService.correctBuffer();
     GlobalMultipliersService.reset();
 
@@ -76,13 +79,14 @@ export class TickService {
     //HoldingsService.set('redParticles', new Num(1, 110))
     //HoldingsService.set('yellowParticles', new Num(3, 100))
     //HoldingsService.set('greenParticles', new Num(5, 1))
-    //HoldingsService.set('blueParticles', new Num(2, 25))
+    //HoldingsService.set('blueParticles', new Num(2, 40))
     //HoldingsService.set('yellows', new Num(5, 3))
     //HoldingsService.set('greens', new Num(1, 3))
-    //HoldingsService.set('blues', new Num(3, 2))
+    //HoldingsService.set('blues', new Num(1.2, 3))
     //HoldingsService.set('greenSouls', new Num(2, 0))
-    //HoldingsService.set('yellowFusion', new Num(1, 110))
+    //HoldingsService.set('yellowFusion', new Num(1, 1e6))
     //HoldingsService.set('greenEnergy', new Num(1, 0))
+    //HoldingsService.set('blueHydrogen', new Num(1, 0))
     //console.log(HoldingsService.get('darkEnergy').toString())
 
 
@@ -113,6 +117,7 @@ export class TickService {
   }
 
   tick() {
+    //localStorage.clear();
     let lastCalled: number;
     if (localStorage['lastCalled'] === undefined) {
       localStorage['lastCalled'] = JSON.stringify(Date.now())

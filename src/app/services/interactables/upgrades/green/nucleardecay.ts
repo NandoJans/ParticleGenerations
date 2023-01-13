@@ -11,7 +11,7 @@ export const nuclearDecayUpgrades: Upgrade[] = [
     action: [
       new Action('basedOnUpgrade', 'nuclearDecayGenerators', new Num(1, 0), 'bought', 'nuclear-decay-increaser'),
       new Action('decreaseHoldingIncremental', 'greenSouls', new Num(1, 1), 'bought', 'nuclear-decay-increaser'),
-    ],
+    ], nav: 'green', subNav: 'nuclearDecay'
   },
   {
     name: 'better-nuclear-decay', displayName: 'Better Nuclear Decay', description: 'Increase the nuclear decay effect.', auto: false, noMax: true,
@@ -19,6 +19,6 @@ export const nuclearDecayUpgrades: Upgrade[] = [
     baseBuffer: new Num(1.2, 0), buffer: new Num(1.2, 0), amount: new Num(0, 0), type: 'nuclear-decay', resetId: 'nuclear-decay', style: 'green-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['greenParticles', new Num(1, 30)],
     action: [
       new Action('decreaseHoldingIncremental', 'greenSouls', new Num(5, 1), 'bought', 'better-nuclear-decay'),
-    ], limit: new Num(5, 0)
+    ], limit: new Num(5, 0), nav: 'green', subNav: 'nuclearDecay'
   },
 ]

@@ -39,11 +39,12 @@ export class NavigationsService {
     { name: 'nuclearDecay', displayName: 'ND', location: 'nucleardecay', parent: 'green', unlocked: false, requirement: ['greenParticles', new Num(1, 30)]  },
     { name: 'greenMilestones', displayName: 'Mile', location: 'milestones', parent: 'green', unlocked: false, requirement: ['greens', new Num(1, 0)]  },
 
-    { name: 'blueNeutrons', displayName: 'Neutrons', location: 'neutrons', parent: 'blue', unlocked: false, requirement: ['blues', new Num(1, 0)]  },
-    { name: 'neutronStars', displayName: 'Neutron Stars', location: 'neutronstars', parent: 'blue', unlocked: false, requirement: ['blues', new Num(5, 0)]  },
-    { name: 'blueUpgrades', displayName: 'Upgrades', location: 'upgrades', parent: 'blue', unlocked: false, requirement: ['blueParticles', new Num(1, 1)]  },
-    { name: 'blueCombiners', displayName: 'Combiners', location: 'combiners', parent: 'blue', unlocked: false, requirement: ['blueParticles', new Num(1, 3)]  },
-    { name: 'blueMilestones', displayName: 'Milestones', location: 'milestones', parent: 'blue', unlocked: false, requirement: ['blues', new Num(1, 0)]  },
+    { name: 'blueNeutrons', displayName: 'Neu', location: 'neutrons', parent: 'blue', unlocked: false, requirement: ['blues', new Num(1, 0)]  },
+    { name: 'neutronStars', displayName: 'NS', location: 'neutronstars', parent: 'blue', unlocked: false, requirement: ['blues', new Num(5, 0)]  },
+    { name: 'blueUpgrades', displayName: 'Up', location: 'upgrades', parent: 'blue', unlocked: false, requirement: ['blueParticles', new Num(1, 1)]  },
+    { name: 'blueCombiners', displayName: 'Co', location: 'combiners', parent: 'blue', unlocked: false, requirement: ['blueParticles', new Num(1, 3)]  },
+    { name: 'blueGenerators', displayName: 'Gen', location: 'generators', parent: 'blue', unlocked: false, requirement: ['blueParticles', new Num(1, 40)]  },
+    { name: 'blueMilestones', displayName: 'Milestones', location: 'milestones', parent: 'blue', unlocked: false, requirement: ['blueParticles', new Num(1, 0)]  },
 
     { name: 'redAutomators', displayName: 'Red', location: 'red', parent: 'automators', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
     { name: 'yellowAutomators', displayName: 'Yellow', location: 'yellow', parent: 'automators', unlocked: false, requirement: ['greens', new Num(1, 0)]  },
@@ -149,5 +150,35 @@ export class NavigationsService {
         navigation.unlocked = true;
       }
     })
+  }
+
+  static markBuyable(navigation: string, parent: string) {
+    const navigationDoc = <HTMLElement> document.getElementById(navigation);
+    if (navigationDoc !== null) navigationDoc.classList.add('buyable-nav');
+    const parentDoc = <HTMLElement> document.getElementById(parent);
+    if (parentDoc !== null) parentDoc.classList.add('buyable-nav');
+    this.trackMakeBuyable[navigation] = false;
+    this.trackMakeBuyable[parent] = false;
+  }
+
+  static trackMakeBuyable: any = {};
+
+  static resetTracker() {
+    this.trackMakeBuyable = {};
+  }
+
+  static removeBuyable(navigation: string, parent: string) {
+    if (this.trackMakeBuyable[navigation] === undefined) {
+      const navigationDoc = <HTMLElement>document.getElementById(navigation);
+      if (navigationDoc !== null) {
+        navigationDoc.classList.remove('buyable-nav');
+      }
+    }
+    if (this.trackMakeBuyable[parent] === undefined) {
+      const parentDoc = <HTMLElement> document.getElementById(parent);
+      if (parentDoc !== null) {
+        parentDoc.classList.remove('buyable-nav');
+      }
+    }
   }
 }

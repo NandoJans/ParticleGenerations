@@ -25,4 +25,5 @@ export const holdings = {
   blues: {amount: new Num(0, 0)},
   blueNeutrons: {amount: new Num(0, 0)},
   blueLight: {amount: new Num(0, 0)},
+  blueHydrogen: {amount: new Num(1, 0)}
 }

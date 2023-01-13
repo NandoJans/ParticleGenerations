@@ -60,7 +60,7 @@ export class TimelineService {
     },
     {
       name: 'nuclear-decay', displayName: 'Overwhelmed by green souls?', description: 'There is another use for green souls you know.', hasProgress: true,
-      unlocked: false, requirement: ['greenParticles', new Num(1, 0)], type: 'green-timeline', reached: false, unlock: ['greenParticles', new Num(1, 30)]
+      unlocked: false, requirement: ['greenParticles', new Num(1, 10)], type: 'green-timeline', reached: false, unlock: ['greenParticles', new Num(1, 30)]
     },
     {
       name: 'blue-phase', displayName: 'When a star dies', description: 'What is this blue substance produced when stars die.', hasProgress: true,
@@ -82,6 +82,10 @@ export class TimelineService {
     {
       name: 'blue-combiners', displayName: 'Combining all my power', description: 'Combining my power might be the solution to my lack of blue particles.', hasProgress: true,
       unlocked: true, requirement: ['blueParticles', new Num(1, 1)], type: 'blue-timeline', reached: false, unlock: ['blueParticles', new Num(1, 3)]
+    },
+    {
+      name: 'blue-generators', displayName: 'We forgot to generate', description: 'Blue generators, i don\'t think i need to explain.', hasProgress: true,
+      unlocked: true, requirement: ['blueParticles', new Num(1, 3)], type: 'blue-timeline', reached: false, unlock: ['blueParticles', new Num(1, 40)]
     },
   ]
 

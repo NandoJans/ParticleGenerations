@@ -3,8 +3,8 @@
   <app-number-display [name]="'yellowFusion'" [style]="'yellow-text holding-amount'" [type]="'currency'"></app-number-display>
   <p class="holding-prefix">Yellow Fusion</p>
 </div>
-<div class="holding-line">
-  <p *ngIf="hasUpgrade1" class="holding-prefix">They boost green generators by </p>
+<div *ngIf="hasUpgrade1" class="holding-line">
+  <p class="holding-prefix">They boost green generators by </p>
   <app-number-display [name]="'greenFusion'" [style]="'green-text holding-amount'" [type]="'effect'" [effect]="greenEffect"></app-number-display>
 </div>
 <div class="holding-line">

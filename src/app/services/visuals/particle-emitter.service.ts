@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import {Particle} from "../../globals";
 import {HoldingsService} from "../holdings.service";
 
 @Injectable({

@@ -71,8 +71,8 @@ export class PrestigeLayersService {
       if (gain !== undefined) {
         prestige['gain'] = prestige['gain'].mul(gain, false)
       }
-
-      if (UpgradeService.getValue(prestige.name+'-idle-gain', 'bought') !== 0 && UpgradeService.getValue(prestige.name+'-idle-gain', 'bought').greq(new Num(1, 0))) {
+      const idleUpgrade = UpgradeService.getValue(prestige.name+'-idle-gain', 'bought')
+      if (idleUpgrade !== 0 && idleUpgrade.greq(new Num(1, 0))) {
         HoldingsService.add(prestige.name+'Particles', prestige.gain.div(new Num(1, 2), false))
       }
     })

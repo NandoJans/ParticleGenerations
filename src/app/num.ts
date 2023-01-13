@@ -226,7 +226,12 @@ export class Num {
       }
     }
 
-    while (ret_num < 1 && ret_num !== 0 && ret_num > 0) {
+    if (ret_num === 0) {
+      ret_num = 1;
+      ret_exp += 10;
+    }
+
+    while (ret_num < 1 && ret_num !== 0) {
       ret_exp -= 1
       ret_num *= 10
     }

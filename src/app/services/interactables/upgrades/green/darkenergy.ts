@@ -9,7 +9,7 @@ export const darkenergyUpgrades: Upgrade[] = [
     baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'dark-compressor', resetId: 'dark-compressor', style: 'sacrifice-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['greens', new Num(1, 1)],
     action: [
       new Action('increaseHolding', 'darkEnergy', new Num(1, 0), 'bought', 'dark-energy-compressor'),
-    ]
+    ], nav: 'green', subNav: 'darkEnergy'
   },
   {
     name: 'dark-red-generators', displayName: 'Dark red generators', description: '', auto: false, noMax: true,
@@ -18,7 +18,7 @@ export const darkenergyUpgrades: Upgrade[] = [
     action: [
       new Action('basedOnUpgrade', 'redParticleGenerators', new Num(1, 0), 'bought', 'dark-red-generators'),
       new Action('decreaseHoldingIncremental', 'darkEnergy', new Num(1, 0), 'bought', 'dark-red-generators'),
-    ]
+    ], nav: 'green', subNav: 'darkEnergy'
   },
   {
     name: 'dark-red-accelerators', displayName: 'Dark red accelerators', description: '', auto: false, noMax: true,
@@ -27,7 +27,7 @@ export const darkenergyUpgrades: Upgrade[] = [
     action: [
       new Action('basedOnUpgrade', 'redAcceleratorGenerators', new Num(1, 0), 'bought', 'dark-red-accelerators'),
       new Action('decreaseHoldingIncremental', 'darkEnergy', new Num(1, 0), 'bought', 'dark-red-accelerators'),
-    ]
+    ], nav: 'green', subNav: 'darkEnergy'
   },
   {
     name: 'dark-yellow-generators', displayName: 'Dark yellow generators', description: '', auto: false, noMax: true,
@@ -36,7 +36,7 @@ export const darkenergyUpgrades: Upgrade[] = [
     action: [
       new Action('basedOnUpgrade', 'yellowParticleGenerators', new Num(1, 0), 'bought', 'dark-yellow-generators'),
       new Action('decreaseHoldingIncremental', 'darkEnergy', new Num(1, 0), 'bought', 'dark-yellow-generators'),
-    ]
+    ], nav: 'green', subNav: 'darkEnergy'
   },
   {
     name: 'dark-yellow-fusion', displayName: 'Dark yellow fusion', description: '', auto: false, noMax: true,
@@ -45,7 +45,7 @@ export const darkenergyUpgrades: Upgrade[] = [
     action: [
       new Action('increaseHoldingIncremental', 'yellowFusionMax', new Num(1, 5), 'bought', 'dark-yellow-fusion'),
       new Action('decreaseHoldingIncremental', 'darkEnergy', new Num(1, 0), 'bought', 'dark-yellow-fusion'),
-    ]
+    ], nav: 'green', subNav: 'darkEnergy'
   },
   {
     name: 'dark-green-generators', displayName: 'Dark green generators', description: '', auto: false, noMax: true,
@@ -54,6 +54,6 @@ export const darkenergyUpgrades: Upgrade[] = [
     action: [
       new Action('basedOnUpgrade', 'greenParticleGenerators', new Num(1, 0), 'bought', 'dark-green-generators'),
       new Action('decreaseHoldingIncremental', 'darkEnergy', new Num(1, 0), 'bought', 'dark-green-generators'),
-    ]
+    ], nav: 'green', subNav: 'darkEnergy'
   },
 ]

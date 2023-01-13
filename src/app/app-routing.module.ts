@@ -28,6 +28,7 @@ import {GreenAutomatorsComponent} from "./pages/automators/green-automators/gree
 import {NeutronStarsComponent} from "./pages/blue/neutron-stars/neutron-stars.component";
 import {BlueUpgradesComponent} from "./pages/blue/blue-upgrades/blue-upgrades.component";
 import {BlueCombinersComponent} from "./pages/blue/blue-combiners/blue-combiners.component";
+import {BlueGeneratorsComponent} from "./pages/blue/blue-generators/blue-generators.component";
 
 const routes: Routes = [
   { path: '', component: RedComponent },
@@ -49,6 +50,7 @@ const routes: Routes = [
   { path: '?/blue/neutronstars', component: NeutronStarsComponent },
   { path: '?/blue/upgrades', component: BlueUpgradesComponent },
   { path: '?/blue/combiners', component: BlueCombinersComponent },
+  { path: '?/blue/generators', component: BlueGeneratorsComponent },
   { path: '?/blue/milestones', component: BlueMilestonesComponent },
   { path: '?/automators/red', component: RedAutomatorsComponent },
   { path: '?/automators/yellow', component: YellowAutomatorsComponent },
