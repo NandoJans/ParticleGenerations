@@ -89,7 +89,6 @@ export class ResetService {
     HoldingsService.set('greenEnergy', new Num(1, 0));
     HoldingsService.set('nuclearDecay', new Num(0, 0));
     if (!MilestoneService.isReached('autobuyers-no-reset')) {this.resetAutomators('red-automators')}
-    this.resetAutomators('go-yellow-automator')
     this.resetUpgrades('yellow-upgrades')
     this.resetGenerators('yellowParticleGenerators')
     this.resetGenerators('yellowFusionGenerators')
