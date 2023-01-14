@@ -27,9 +27,9 @@ export const blueNeutronStars: Upgrade[] = [
     action: new Action('basedOnUpgrade', 'blueLightGenerators', new Num(1, 0), 'bought', 'blue-light-increaser'), nav: 'blue', subNav: 'neutronStars'
   },
   {
-    name: 'yellow-fusion-accelerator', displayName: 'Yellow Fusion Accelerator', description: 'Makes yellow fusion 5x faster.', auto: false, scalingStart: new Num(1, 100),
+    name: 'yellow-fusion-accelerator', displayName: 'Yellow Fusion Accelerator', description: 'Makes yellow fusion 1e10x faster.', auto: false, scalingStart: new Num(1, 100),
     baseCost: new Num(1,2), cost: new Num(1, 2), increase: new Num(1,2), scaling: new Num(1, 1), bought: new Num(0, 0), currency: 'blueLight',
-    baseBuffer: new Num(5, 0), buffer: new Num(5, 0), amount: new Num(0, 0), type: 'blue-light-upgrade', resetId: 'blue-light-upgrade', style: 'light-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['blues', new Num(5, 0)],
+    baseBuffer: new Num(1, 10), buffer: new Num(1, 10), amount: new Num(0, 0), type: 'blue-light-upgrade', resetId: 'blue-light-upgrade', style: 'light-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['blues', new Num(5, 0)],
     action: new Action('basedOnUpgrade', 'yellowFusion', new Num(1, 0), 'bought', 'yellow-fusion-accelerator'), nav: 'blue', subNav: 'neutronStars'
   },
   {
