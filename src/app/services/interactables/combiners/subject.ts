@@ -28,7 +28,7 @@ export const combinerSubject = [
   },
   {
     name: 'based-on-nuclear-decay', displayName: 'Nuclear Decay', cost: new Num(1, 50), currency: 'blueParticles', type: 'blue-subject', resetId: 'blue-combiners', style: 'blue-style',
-    unlocked: false, requirement: ['blueParticles', new Num(1, 4)], active: false, element: 'nuclearDecay', buffer: new Num(2, 3), bought: new Num(0, 0),
+    unlocked: false, requirement: ['blueParticles', new Num(1, 4)], active: false, element: 'nuclearDecay', buffer: new Num(5, 3), bought: new Num(0, 0),
     nav: 'blue', subNav: 'blueCombiners'
   },
 ]

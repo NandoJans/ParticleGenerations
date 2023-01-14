@@ -28,7 +28,7 @@ export const combinerTarget = [
   },
   {
     name: 'boost-nuclear-decay', displayName: 'Nuclear Decay Generators', cost: new Num(1, 60), currency: 'blueParticles', type: 'blue-target', resetId: 'blue-combiners', style: 'blue-style',
-    unlocked: false, requirement: ['blueParticles', new Num(1, 4)], active: false, element: 'nuclearDecayGenerators', buffer: new Num(1, -4), bought: new Num(0, 0),
+    unlocked: false, requirement: ['blueParticles', new Num(1, 4)], active: false, element: 'nuclearDecayGenerators', buffer: new Num(5, -5), bought: new Num(0, 0),
     nav: 'blue', subNav: 'blueCombiners'
   },
 ]
