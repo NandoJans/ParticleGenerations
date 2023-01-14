@@ -205,8 +205,15 @@ export class Num {
 
   // @ts-ignore
   pow = (x: Num, overwrite: boolean = true) => {
-    let ret_exp = this.exp * (x.num * 10 ** x.exp);
-    let ret_num = this.num ** (x.num * 10 ** x.exp)
+    let ret_exp: number;
+    let ret_num: number;
+    if (this.num === 0 && this.exp === 0) {
+      ret_exp = 0;
+      ret_num = 1;
+    } else {
+      ret_exp = this.exp * (x.num * 10 ** x.exp);
+      ret_num = this.num ** (x.num * 10 ** x.exp)
+    }
 
     if (ret_num > 1e10) {
       ret_num = Math.log10(this.num) * (x.num * 10 ** x.exp)
