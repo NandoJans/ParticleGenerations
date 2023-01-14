@@ -11,7 +11,7 @@ import {BackgroundService} from "../../../services/visuals/background.service";
 })
 export class BlueGeneratorsComponent implements OnInit {
   generators: Generator[] = [];
-  effect: any[] = ['power', 'blueHydrogen', new Num(1.5, 0)]
+  effect: any[] = ['power', 'blueHydrogen', new Num(1.1, 0)]
 
   constructor() { }
 

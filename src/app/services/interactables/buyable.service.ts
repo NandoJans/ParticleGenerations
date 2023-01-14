@@ -286,11 +286,29 @@ export class BuyableService {
           buyableDoc.classList.add('bought');
         }
       } else {
-        if (buyable.name === 'red-generator-booster') {
+        if (buyable.scalingStart === undefined) {
+          // @ts-ignore
+          buyable.cost = buyable.baseCost.mul(buyable.increase.mul(buyable.scaling.pow(buyable.bought, false), false).pow(buyable.bought, false), false)
+        } else {
+          // @ts-ignore
+          buyable.cost = buyable.baseCost.mul(buyable.increase.pow(buyable.bought, false), false)
+          if (buyable.cost.greq(buyable.scalingStart)) {
+            // @ts-ignore
+            let buyableAmount = buyable.scalingStart.div(buyable.baseCost, false).ln(false).div(buyable.increase.ln(false), false).floor(false)
+            // @ts-ignore
+            buyable.cost = buyable.baseCost.mul(buyable.increase.pow(buyableAmount, false), false)
+            let leftOverCurrency = HoldingsService.get(buyable.currency).div(buyable.cost, false)
+            const two = new Num(2, 0)
+            const four = new Num(4, 0)
 
+            // @ts-ignore
+            let postScalingAmount = buyable.increase.ln(false).sub(buyable.increase.ln(false).pow(two, false).add(four.mul(buyable.scaling.ln(false), false).mul(leftOverCurrency.div(buyable.baseCost, false).ln(false), false), false).sqrt(false), false).div(two.mul(buyable.scaling.ln(false), false), false)
+            // @ts-ignore
+            postScalingAmount = postScalingAmount.negate(false).floor(false).add(new Num(1, 0), false)
+            // @ts-ignore
+            buyable.cost.mul(buyable.baseCost.mul(buyable.increase.mul(buyable.scaling.pow(postScalingAmount, false), false).pow(postScalingAmount, false), false))
+          }
         }
-        // @ts-ignore
-        buyable.cost = buyable.baseCost.mul(buyable.increase.mul(buyable.scaling.pow(buyable.bought, false), false).pow(buyable.bought, false), false)
       }
     })
   }

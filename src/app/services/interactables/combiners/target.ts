@@ -23,7 +23,7 @@ export const combinerTarget = [
   },
   {
     name: 'boost-yellow-fusion', displayName: 'Yellow Fusion Generation', cost: new Num(1, 35), currency: 'blueParticles', type: 'blue-target', resetId: 'blue-combiners', style: 'blue-style',
-    unlocked: false, requirement: ['blueParticles', new Num(1, 4)], active: false, element: 'yellowFusion', buffer: new Num(2.5, -4), bought: new Num(0, 0),
+    unlocked: false, requirement: ['blueParticles', new Num(1, 4)], active: false, element: 'yellowFusion', buffer: new Num(3.5, -3), bought: new Num(0, 0),
     nav: 'blue', subNav: 'blueCombiners'
   },
   {
