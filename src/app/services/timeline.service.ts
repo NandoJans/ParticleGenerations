@@ -85,7 +85,7 @@ export class TimelineService {
     },
     {
       name: 'blue-generators', displayName: 'We forgot to generate', description: 'Blue generators, i don\'t think i need to explain.', hasProgress: true,
-      unlocked: true, requirement: ['blueParticles', new Num(1, 3)], type: 'blue-timeline', reached: false, unlock: ['blueParticles', new Num(1, 40)]
+      unlocked: true, requirement: ['blueParticles', new Num(1, 3)], type: 'blue-timeline', reached: false, unlock: ['blueParticles', new Num(1, 50)]
     },
   ]
 

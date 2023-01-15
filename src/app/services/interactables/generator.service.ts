@@ -212,7 +212,7 @@ export class GeneratorService {
         }
 
         if (generator.type === 'blue-light') {
-          generator.multiplier.mul(HoldingsService.get('blueHydrogen').pow(new Num(1.1, 0), false))
+          generator.multiplier.mul(HoldingsService.get('blueHydrogen').pow(new Num(2, 0), false))
           generator.multiplier.mul(GlobalMultipliersService.get('blueLightGenerators'))
           // @ts-ignore
           generator.multiplier.mul(new Num(HoldingsService.get('yellowFusion').exp+1, 0).pow(GlobalMultipliersService.get('yellowFusionBlueLightEffect'), false))
