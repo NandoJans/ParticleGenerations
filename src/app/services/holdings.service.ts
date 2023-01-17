@@ -65,6 +65,7 @@ export class HoldingsService {
       case 'blueParticles': return 'BP';
       case 'blues': return 'b';
       case 'blueLight': return 'BL';
+      case 'purpleParticles': return 'P';
       default: return '';
     }
   }

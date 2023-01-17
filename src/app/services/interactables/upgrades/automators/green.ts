@@ -27,4 +27,24 @@ export const greenAutomators: Automator[] = [
     type: 'green-automators', resetId: 'green-automators', style: 'automator', unlocked: false, active: false, requirement: ['blues', new Num(1, 0)],
     target: 'dark-upgrade', targetType: 'upgrades', nav: 'automators', subNav: 'greenAutomators'
   },
+  {
+    name: 'nuclear-decay-generator-automator', displayName: 'Nuclear Decay Generator Automator', cost: new Num(1, 10), bought: new Num(0, 0), currency: 'blueParticles',
+    type: 'green-automators', resetId: 'green-automators', style: 'automator', unlocked: false, active: false, requirement: ['blues', new Num(1, 0)],
+    target: 'nuclear-decay', targetType: 'generators', nav: 'automators', subNav: 'greenAutomators'
+  },
+  {
+    name: 'nuclear-decay-upgrade-automator', displayName: 'Nuclear Decay Upgrade Automator', cost: new Num(1, 20), bought: new Num(0, 0), currency: 'blueParticles',
+    type: 'green-automators', resetId: 'green-automators', style: 'automator', unlocked: false, active: false, requirement: ['blues', new Num(1, 0)],
+    target: 'nuclear-decay-increaser', targetType: 'upgrade', nav: 'automators', subNav: 'greenAutomators'
+  },
+  {
+    name: 'green-purple-generator-automator', displayName: 'Green Purple Generator Automator', cost: new Num(1, 110), bought: new Num(0, 0), currency: 'greenParticles',
+    type: 'green-automators', resetId: 'green-automators', style: 'automator', unlocked: false, active: false, requirement: ['purples', new Num(1, 0)],
+    target: 'green-purple-generator', targetType: 'generators', nav: 'automators', subNav: 'greenAutomators'
+  },
+  {
+    name: 'green-purple-upgrade-automator', displayName: 'Green Purple Upgrade Automator', cost: new Num(1, 1100), bought: new Num(0, 0), currency: 'greenParticles',
+    type: 'green-automators', resetId: 'green-automators', style: 'automator', unlocked: false, active: false, requirement: ['purples', new Num(1, 0)],
+    target: 'green-purple-upgrade', targetType: 'upgrades', nav: 'automators', subNav: 'greenAutomators'
+  }
 ]

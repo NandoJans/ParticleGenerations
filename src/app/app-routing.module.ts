@@ -29,29 +29,39 @@ import {NeutronStarsComponent} from "./pages/blue/neutron-stars/neutron-stars.co
 import {BlueUpgradesComponent} from "./pages/blue/blue-upgrades/blue-upgrades.component";
 import {BlueCombinersComponent} from "./pages/blue/blue-combiners/blue-combiners.component";
 import {BlueGeneratorsComponent} from "./pages/blue/blue-generators/blue-generators.component";
+import {RedPurpleComponent} from "./pages/purple/red-purple/red-purple.component";
+import {YellowPurpleComponent} from "./pages/purple/yellow-purple/yellow-purple.component";
+import {GreenPurpleComponent} from "./pages/purple/green-purple/green-purple.component";
+import {BluePurpleComponent} from "./pages/purple/blue-purple/blue-purple.component";
+import {PurpleGeneratorsComponent} from "./pages/purple/purple-generators/purple-generators.component";
 
 const routes: Routes = [
   { path: '', component: RedComponent },
   { path: '?/red/particles', component: RedComponent },
   { path: '?/red/accelerators', component: AcceleratorsComponent },
   { path: '?/red/upgrades', component: RedUpgradesComponent },
+  { path: '?/red/purple', component: RedPurpleComponent },
   { path: '?/yellow/upgrades', component: YellowUpgradesComponent },
   { path: '?/yellow/generators', component: YellowGeneratorsComponent },
   { path: '?/yellow/challenges', component: YellowChallengesComponent },
   { path: '?/yellow/fusion', component: YellowFusionComponent },
   { path: '?/yellow/milestones', component: YellowMilestonesComponent },
+  { path: '?/yellow/purple', component: YellowPurpleComponent },
   { path: '?/green/generators', component: GreenGeneratorsComponent },
   { path: '?/green/sacrifice', component: GreenSacrificeComponent },
   { path: '?/green/milestones', component: GreenMilestonesComponent },
   { path: '?/green/darkenergy', component: DarkEnergyComponent },
   { path: '?/green/darkage', component: DarkAgeComponent },
   { path: '?/green/nucleardecay', component: NuclearDecayComponent },
+  { path: '?/green/purple', component: GreenPurpleComponent },
   { path: '?/blue/neutrons', component: BlueNeutronsComponent },
   { path: '?/blue/neutronstars', component: NeutronStarsComponent },
   { path: '?/blue/upgrades', component: BlueUpgradesComponent },
   { path: '?/blue/combiners', component: BlueCombinersComponent },
   { path: '?/blue/generators', component: BlueGeneratorsComponent },
   { path: '?/blue/milestones', component: BlueMilestonesComponent },
+  { path: '?/blue/purple', component: BluePurpleComponent },
+  { path: '?/purple/generators', component: PurpleGeneratorsComponent },
   { path: '?/automators/red', component: RedAutomatorsComponent },
   { path: '?/automators/yellow', component: YellowAutomatorsComponent },
   { path: '?/automators/green', component: GreenAutomatorsComponent },

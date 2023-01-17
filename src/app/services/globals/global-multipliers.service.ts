@@ -24,7 +24,12 @@ export class GlobalMultipliersService {
     blueParticlesGain: new Num(1, 0),
     blueLightGenerators: new Num(1, 0),
     blueLightPower: new Num(5, 0),
-    yellowFusionBlueLightEffect: new Num(1, 0)
+    yellowFusionBlueLightEffect: new Num(1, 0),
+    redPurpleGenerators: new Num(1, 0),
+    yellowPurpleGenerators: new Num(1, 0),
+    greenPurpleGenerators: new Num(1, 0),
+    bluePurpleGenerators: new Num(1, 0),
+    greenSoulsGain: new Num(1, 0),
   };
 
   static sortedMultipliers = {}
@@ -50,7 +55,12 @@ export class GlobalMultipliersService {
       blueParticlesGain: new Num(1, 0),
       blueLightGenerators: new Num(1, 0),
       blueLightPower: new Num(5, 0),
-      yellowFusionBlueLightEffect: new Num(1, 0)
+      yellowFusionBlueLightEffect: new Num(1, 0),
+      redPurpleGenerators: new Num(1, 0),
+      yellowPurpleGenerators: new Num(1, 0),
+      greenPurpleGenerators: new Num(1, 0),
+      bluePurpleGenerators: new Num(1, 0),
+      greenSoulsGain: new Num(1, 0),
     }
   }
 

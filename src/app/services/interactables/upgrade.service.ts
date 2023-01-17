@@ -19,6 +19,7 @@ import {blueNeutronUpgrades} from "./upgrades/blue/neutrons";
 import {blueNeutronStars} from "./upgrades/blue/neutronStars";
 import {GlobalMultipliersService} from "../globals/global-multipliers.service";
 import {blueUpgrades} from "./upgrades/blue/upgrades";
+import {prePurpleUpgrades} from "./upgrades/purple/prePurple";
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,7 @@ export class UpgradeService {
       yellowUpgrades,
       redGeneratorUpgrades,
       redAccelerators,
+      prePurpleUpgrades
   )
   static sortedUpgrades: Upgrade[] =
     Sorter.sort(redUpgrades.concat(
@@ -53,6 +55,7 @@ export class UpgradeService {
       yellowUpgrades,
       redGeneratorUpgrades,
       redAccelerators,
+      prePurpleUpgrades
     ), 'name');
 
   static save() {

@@ -53,6 +53,11 @@ import {CombinerBoxComponent} from "./components/particles/combiner-box/combiner
 import { InfoComponent } from './components/medium/info/info.component';
 import { ParticleEmitterComponent } from './components/medium/particle-emitter/particle-emitter.component';
 import { BlueGeneratorsComponent } from './pages/blue/blue-generators/blue-generators.component';
+import { RedPurpleComponent } from './pages/purple/red-purple/red-purple.component';
+import { YellowPurpleComponent } from './pages/purple/yellow-purple/yellow-purple.component';
+import { GreenPurpleComponent } from './pages/purple/green-purple/green-purple.component';
+import { BluePurpleComponent } from './pages/purple/blue-purple/blue-purple.component';
+import { PurpleGeneratorsComponent } from './pages/purple/purple-generators/purple-generators.component';
 
 @NgModule({
   declarations: [
@@ -103,7 +108,12 @@ import { BlueGeneratorsComponent } from './pages/blue/blue-generators/blue-gener
     CombinerBoxComponent,
     InfoComponent,
     ParticleEmitterComponent,
-    BlueGeneratorsComponent
+    BlueGeneratorsComponent,
+    RedPurpleComponent,
+    YellowPurpleComponent,
+    GreenPurpleComponent,
+    BluePurpleComponent,
+    PurpleGeneratorsComponent
   ],
     imports: [
         BrowserModule,

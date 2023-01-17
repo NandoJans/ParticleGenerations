@@ -92,6 +92,11 @@ export class Action {
     HoldingsService.add(this.target, this.amount.mul(UpgradeService.getValue(this.subject, this.variable), false))
   }
 
+  increaseGreenSouls() {
+    // @ts-ignore
+    HoldingsService.add(this.target, this.amount.mul(UpgradeService.getValue(this.subject, this.variable), false).mul(GlobalMultipliersService.get('greenSoulsGain'), false))
+  }
+
   increaseHoldingIncremental() {
     // @ts-ignore
     HoldingsService.get(this.target).mul(this.amount.pow(UpgradeService.getValue(this.subject, this.variable), false))
@@ -130,6 +135,10 @@ export class Action {
     GeneratorService.setValue(this.target, this.variable, this.amount);
   }
 
+  amplifyGeneratorIncremental() {
+    UpgradeService.setValue(this.target, this.variable, UpgradeService.getValue(this.subject, 'baseBuffer').mul(UpgradeService.getValue(this.subject, 'bought'), false))
+  }
+
   amplifyGenerators() {
     GeneratorService.setValues(this.target, this.variable, this.amount);
   }
@@ -156,6 +165,7 @@ export class Action {
         case 'setHolding': this.setHolding(); break;
         case 'mulHolding': this.mulHolding(); break;
         case 'increaseHolding': this.increaseHolding(); break;
+        case 'increaseGreenSouls': this.increaseGreenSouls(); break;
         case 'increaseHoldingIncremental': this.increaseHoldingIncremental(); break;
         case 'decreaseHolding': this.decreaseHolding(); break;
         case 'decreaseHoldingIncremental': this.decreaseHoldingIncremental(); break;
@@ -163,6 +173,7 @@ export class Action {
         case 'amplifyUpgradeIncremental': this.amplifyUpgradeIncremental(); break;
         case 'amplifyUpgrades': this.amplifyUpgrades(); break;
         case 'amplifyGenerator': this.amplifyGenerator(); break;
+        case 'amplifyGeneratorIncremental': this.amplifyGeneratorIncremental(); break;
         case 'amplifyGenerators': this.amplifyGenerators(); break;
       }
     }

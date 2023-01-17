@@ -26,5 +26,15 @@ export const redAutomators: Automator[] = [
     name: 'red-accelerator-upgrades-automator', displayName: 'Red Accelerator Upgrades Automator', cost: new Num(1, 2), bought: new Num(0, 0), currency: 'yellowParticles',
     type: 'red-automators', resetId: 'red-automators', style: 'automator', unlocked: false, active: false, requirement: ['yellows', new Num(1, 0)],
     target: 'red-accelerators', targetType: 'upgrades', nav: 'automators', subNav: 'redAutomators'
+  },
+  {
+    name: 'red-purple-generator-automator', displayName: 'Red Purple Generator Automator', cost: new Num(1, 110), bought: new Num(0, 0), currency: 'redParticles',
+    type: 'red-automators', resetId: 'purple-automators', style: 'automator', unlocked: false, active: false, requirement: ['purples', new Num(1, 0)],
+    target: 'red-purple-generator', targetType: 'generators', nav: 'automators', subNav: 'redAutomators'
+  },
+  {
+    name: 'red-purple-upgrade-automator', displayName: 'Red Purple Upgrade Automator', cost: new Num(1, 1100), bought: new Num(0, 0), currency: 'redParticles',
+    type: 'red-automators', resetId: 'purple-automators', style: 'automator', unlocked: false, active: false, requirement: ['purples', new Num(1, 0)],
+    target: 'red-purple-upgrade', targetType: 'upgrades', nav: 'automators', subNav: 'redAutomators'
   }
 ]

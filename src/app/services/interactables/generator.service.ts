@@ -13,6 +13,8 @@ import {Sorter} from "../../Sorter";
 import {Searcher} from "../../Searcher";
 import {blueParticleGenerators} from "./generators/blue/particles";
 import {blueLightGenerators} from "./generators/blue/light";
+import {prePurpleGenerators} from "./generators/purple/preGenerators";
+import {purpleParticleGenerators} from "./generators/purple/particles";
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +26,9 @@ export class GeneratorService {
     redAcceleratorGenerators,
     yellowParticleGenerators,
     greenParticleGenerators,
-    blueLightGenerators
+    blueLightGenerators,
+    prePurpleGenerators,
+    purpleParticleGenerators
   )
 
   static sortedGenerators: Generator[] =
@@ -33,7 +37,9 @@ export class GeneratorService {
       redAcceleratorGenerators,
       yellowParticleGenerators,
       greenParticleGenerators,
-      blueLightGenerators
+      blueLightGenerators,
+      prePurpleGenerators,
+      purpleParticleGenerators
     ), 'name')
 
   static get(name: string) {
@@ -140,6 +146,26 @@ export class GeneratorService {
           base.mul(HoldingsService.get('blueNeutrons').pow(new Num(1.5, 0).mul(UpgradeService.getValue('blue-neutron-amplifier', 'buffer'), false), false))
         }
 
+        if (generator.type === 'red-purple-generator') {
+          // @ts-ignore
+          base.mul(new Num(2, 0).add(UpgradeService.getValue('red-purple-buffer-increaser', 'bought'), false))
+        }
+
+        if (generator.type === 'yellow-purple-generator') {
+          // @ts-ignore
+          base.mul(new Num(2, 0).add(UpgradeService.getValue('yellow-purple-buffer-increaser', 'bought'), false))
+        }
+
+        if (generator.type === 'green-purple-generator') {
+          // @ts-ignore
+          base.mul(new Num(2, 0).add(UpgradeService.getValue('green-purple-buffer-increaser', 'bought'), false))
+        }
+
+        if (generator.type === 'blue-purple-generator') {
+          // @ts-ignore
+          base.mul(new Num(2, 0).add(UpgradeService.getValue('blue-purple-buffer-increaser', 'bought'), false))
+        }
+
         // @ts-ignore
         generator.multiplier = base.pow(generator.bought, false)
 
@@ -220,6 +246,22 @@ export class GeneratorService {
 
         if (ChallengeService.activeChallenge?.name === 'dark-age' && generator.name !== 'yellow-fusion-generator') {
           generator.multiplier.pow(new Num(0.46, 0))
+        }
+
+        if (generator.type === 'red-purple-generator') {
+          generator.multiplier.mul(GlobalMultipliersService.get('redPurpleGenerators'))
+        }
+
+        if (generator.type === 'yellow-purple-generator') {
+          generator.multiplier.mul(GlobalMultipliersService.get('yellowPurpleGenerators'))
+        }
+
+        if (generator.type === 'green-purple-generator') {
+          generator.multiplier.mul(GlobalMultipliersService.get('greenPurpleGenerators'))
+        }
+
+        if (generator.type === 'blue-purple-generator') {
+          generator.multiplier.mul(GlobalMultipliersService.get('bluePurpleGenerators'))
         }
       }
     })

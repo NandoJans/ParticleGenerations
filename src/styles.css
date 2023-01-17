@@ -7,17 +7,20 @@
   --text-color-yellow: rgb(229, 237, 36);
   --text-color-green: rgb(93, 231, 77);
   --text-color-blue: rgb(21, 177, 224);
+  --text-color-purple: rgb(139, 73, 222);
   --red-button-color: rgb(170, 45, 45);
   --yellow-button-color: rgb(231, 237, 50);
   --fusion-red-color: rgb(229, 91, 47);
   --green-button-color: rgb(100, 210, 74);
   --blue-button-color: rgb(48, 151, 217);
+  --purple-button-color: rgb(135, 51, 208);
   --dark-button-color: rgb(67, 67, 67);
   --transparent-background-red: rgb(103, 46, 46);
   --transparent-background-yellow: rgb(103, 103, 42);
   --fusion-red-background-color: rgb(114, 60, 43);
   --transparent-background-green: rgb(54, 99, 35);
   --transparent-background-blue: rgb(36, 74, 100);
+  --transparent-background-purple: rgb(68, 48, 103);
   --transparent-background-dark: rgb(36, 36, 36);
   --transparent-background-light: rgb(155, 155, 155);
 }
@@ -240,6 +243,31 @@ footer {
   background-color: var(--transparent-background-blue);
 }
 
+.purple-style {
+  border: solid 1px var(--purple-button-color);
+  background-color: var(--transparent-background-purple);
+}
+
+.red-purple-style {
+  border: solid 1px var(--purple-button-color);
+  background: linear-gradient(45deg, var(--transparent-background-red), var(--transparent-background-purple));
+}
+
+.yellow-purple-style {
+  border: solid 1px var(--purple-button-color);
+  background: linear-gradient(45deg, var(--transparent-background-yellow), var(--transparent-background-purple));
+}
+
+.green-purple-style {
+  border: solid 1px var(--purple-button-color);
+  background: linear-gradient(45deg, var(--transparent-background-green), var(--transparent-background-purple));
+}
+
+.blue-purple-style {
+  border: solid 1px var(--purple-button-color);
+  background: linear-gradient(45deg, var(--transparent-background-blue), var(--transparent-background-purple));
+}
+
 .sacrifice-style {
   background-color: var(--background-color-1);
   color: var(--green-button-color);
@@ -406,6 +434,11 @@ button {
   cursor: pointer;
 }
 
+.prestige-button:hover {
+  box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
 .sacrifice-button {
   margin: 10px 0;
   background-color: var(--background-color-3);
@@ -453,14 +486,9 @@ button {
   border-color: var(--blue-button-color);
 }
 
-.yellow-prestige:hover {
-  background-color: var(--yellow-button-color);
-}
-.green-prestige:hover {
-  background-color: var(--green-button-color);
-}
-.blue-prestige:hover {
-  background-color: var(--blue-button-color);
+.purple-prestige {
+  background-color: var(--transparent-background-purple);
+  border-color: var(--purple-button-color);
 }
 
 .combiner {
@@ -629,6 +657,35 @@ button {
 .blue-text {
   color: var(--text-color-blue);
   font-weight: bold;
+}
+
+.purple-text {
+  color: var(--text-color-purple);
+  font-weight: bold;
+}
+
+.pre-purple-text {
+  text-shadow: 0 0 10px var(--text-color-purple), 1px 1px 0 var(--text-color-purple), 1px -1px 0 var(--text-color-purple),
+  -1px 1px 0 var(--text-color-purple), -1px -1px 0 var(--text-color-purple),
+  0 1px 0 var(--text-color-purple), 0 -1px 0 var(--text-color-purple),
+  1px 0 0 var(--text-color-purple), -1px 0 0 var(--text-color-purple);
+  font-weight: bold;
+}
+
+.red-purple-text {
+  color: var(--text-color-red);
+}
+
+.yellow-purple-text {
+  color: var(--text-color-yellow);
+}
+
+.green-purple-text {
+  color: var(--text-color-green);
+}
+
+.blue-purple-text {
+  color: var(--text-color-blue);
 }
 
 .dark-text {

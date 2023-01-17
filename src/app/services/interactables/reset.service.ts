@@ -8,6 +8,7 @@ import {ChallengeService} from "./challenge.service";
 import {AutomatorService} from "./automator.service";
 import {MilestoneService} from "./milestone.service";
 import {PrestigeLayersService} from "../prestige-layers.service";
+import {CombinerService} from "./combiner.service";
 
 @Injectable({
   providedIn: 'root'
@@ -60,6 +61,20 @@ export class ResetService {
     })
   }
 
+  static resetCombiners() {
+    CombinerService.combiners.forEach((combiner) => {
+      combiner.bought = new Num(0, 0);
+    })
+    CombinerService.combinations = [
+      ['empty', 'empty', 1],
+      ['empty', 'empty', 2],
+      ['empty', 'empty', 3],
+      ['empty', 'empty', 4],
+      ['empty', 'empty', 5],
+      ['empty', 'empty', 6],
+    ];
+  }
+
   static reset(resets: string) {
     HoldingsService.set('redParticles', HoldingsService.get('redParticlesStart').copy());
     HoldingsService.set('redAccelerators', HoldingsService.get('redAcceleratorsStart').copy());
@@ -67,6 +82,8 @@ export class ResetService {
     if (resets === 'redParticleGenerators') return;
 
     HoldingsService.set('yellowPower', new Num(0, 0));
+    HoldingsService.set('redPurple', new Num(1, 0));
+    HoldingsService.set('yellowPurple', new Num(1, 0));
 
     const requirement = MilestoneService.getValue('divide-yellow-fusion', 'requirement')
     if (HoldingsService.get(requirement[0]).greq(requirement[1])) {
@@ -88,6 +105,7 @@ export class ResetService {
     HoldingsService.set('yellowFusionPower', new Num(2, -1));
     HoldingsService.set('greenEnergy', new Num(1, 0));
     HoldingsService.set('nuclearDecay', new Num(0, 0));
+    HoldingsService.set('greenPurple', new Num(1, 0));
     if (!MilestoneService.isReached('autobuyers-no-reset')) {this.resetAutomators('red-automators')}
     this.resetUpgrades('yellow-upgrades')
     this.resetGenerators('yellowParticleGenerators')
@@ -115,6 +133,7 @@ export class ResetService {
     HoldingsService.set('nuclearDecay', new Num(0, 0));
     HoldingsService.set('greenEnergy', new Num(1, 0));
     HoldingsService.set('blueNeutrons', new Num(1, 0));
+    HoldingsService.set('bluePurple', new Num(1, 0));
     if (HoldingsService.get('blues').greq(new Num(3, 2))) {
       HoldingsService.set('yellowFusion', new Num(1, 50000));
     } else {
@@ -140,10 +159,10 @@ export class ResetService {
     if (resets === 'blue') return;
 
     HoldingsService.set('yellowFusion', new Num(1, 0));
-    HoldingsService.set('yellows', new Num(0, 0));
-    HoldingsService.set('greens', new Num(0, 0));
+    if (resets === 'neutron-star') HoldingsService.set('yellows', new Num(0, 0));
+    if (resets === 'neutron-star') HoldingsService.set('greens', new Num(0, 0));
     HoldingsService.set('blueParticles', new Num(0, 0));
-    this.resetAutomators('green-automators')
+    if (resets === 'neutron-star') this.resetAutomators('green-automators')
     this.resetUpgrades('green-fusion')
     this.resetUpgrades('green-upgrades')
     this.resetUpgrades('blue-neutron-upgrade')
@@ -155,5 +174,38 @@ export class ResetService {
     DataManagerService.save()
     if (!HoldingsService.get('blues').greq(new Num(5, 1))) window.location.reload();
     if (resets === 'neutron-star') return;
+
+    HoldingsService.set('blueHydrogen', new Num(0, 0))
+    HoldingsService.set('blueLight', new Num(0, 0))
+    HoldingsService.set('redAccelerators', new Num(1, 0))
+    HoldingsService.set('redParticles', new Num(1, 2))
+    HoldingsService.set('purpleVoid', new Num(1, 0))
+    this.resetUpgrades('blueUpgrades')
+    this.resetGenerators('nuclearDecay')
+    this.resetUpgrades('nuclear-decay')
+    this.resetUpgrades('red-upgrades')
+    this.resetUpgrades('yellow-upgrades')
+    this.resetUpgrades('blue-upgrade')
+    this.resetUpgrades('blue-light-upgrade')
+    this.resetUpgrades('neutron-star-upgrade')
+    this.resetGenerators('blueParticleGenerators')
+    this.resetGenerators('blue-light')
+    this.resetCombiners()
+
+    this.resetUpgrades('red-purple-upgrade')
+    this.resetUpgrades('yellow-purple-upgrade')
+    this.resetUpgrades('green-purple-upgrade')
+    this.resetUpgrades('blue-purple-upgrade')
+
+    this.resetGenerators('red-purple-generator')
+    this.resetGenerators('yellow-purple-generator')
+    this.resetGenerators('green-purple-generator')
+    this.resetGenerators('blue-purple-generator')
+    this.resetGenerators('purple-particles', 'amount')
+
+    UpgradeService.setValue('red-generator-extension-upgrade', 'bought', new Num(1, 0));
+
+    DataManagerService.save()
+    if (resets === 'purple') return;
   }
 }

@@ -10,6 +10,7 @@ export class MainComponent implements OnInit {
   unlockedYellow: boolean | undefined;
   unlockedGreen: boolean | undefined;
   unlockedBlue: boolean | undefined;
+  unlockedPurple: boolean | undefined;
 
   constructor() {}
 
@@ -17,5 +18,6 @@ export class MainComponent implements OnInit {
     this.unlockedYellow = PrestigeLayersService.getValue('yellow', 'unlocked');
     this.unlockedGreen = PrestigeLayersService.getValue('green', 'unlocked');
     this.unlockedBlue = PrestigeLayersService.getValue('blue', 'unlocked');
+    this.unlockedPurple = PrestigeLayersService.getValue('purple', 'unlocked');
   }
 }
