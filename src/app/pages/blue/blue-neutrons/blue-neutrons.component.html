@@ -5,15 +5,7 @@
 </div>
 <div class="holding-line">
   <p class="holding-prefix">They increase the buy multiplier of red generators by</p>
-  <app-number-display [name]="'blueRedNeutronRedEffect'" [style]="'blue-text holding-amount'" [type]="'effect'" [effect]="redEffect"></app-number-display>
-</div>
-<div *ngIf="unlockedYellowEffect" class="holding-line">
-  <p class="holding-prefix">They increase the buy multiplier of yellow generators by</p>
-  <app-number-display [name]="'blueRedNeutronYellowEffect'" [style]="'blue-text holding-amount'" [type]="'effect'" [effect]="yellowEffect"></app-number-display>
-</div>
-<div *ngIf="unlockedGreenEffect" class="holding-line">
-  <p class="holding-prefix">They increase the buy multiplier of green generators by</p>
-  <app-number-display [name]="'blueRedNeutronGreenEffect'" [style]="'blue-text holding-amount'" [type]="'effect'" [effect]="greenEffect"></app-number-display>
+  <app-number-display [name]="'blueNeutrons'" [style]="'blue-text holding-amount'" [type]="'holdingEffect'"></app-number-display>
 </div>
 <div class="generators-row">
   <div *ngFor="let generator of generators">

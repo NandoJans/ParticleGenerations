@@ -8,6 +8,9 @@ import {DataManagerService} from "../data-manager.service";
 import {MilestoneService} from "./milestone.service";
 import {darkAge} from "./challenges/green";
 import {DropDownMessageService} from "../visuals/drop-down-message.service";
+import {Action} from "../../action";
+import {NewAction} from "../../NewAction";
+import {App} from "../../App";
 
 @Injectable({
   providedIn: 'root'
@@ -60,7 +63,6 @@ export class ChallengeService {
       if (challenge.name === name) {
         this.activeChallenge = challenge;
         ResetService.reset(challenge.prestige);
-        window.location.reload();
       }
     })
   }
@@ -70,7 +72,7 @@ export class ChallengeService {
     this.activeChallenge.completed = true;
     this.activeChallenge = undefined;
     DataManagerService.save();
-    window.location.reload();
+    App.next();
   }
 
   static leaveChallenge() {
@@ -78,7 +80,7 @@ export class ChallengeService {
       this.activeChallenge = undefined;
       ResetService.reset('yellow')
       DataManagerService.load();
-      window.location.reload();
+      App.next();
     }
   }
 
@@ -129,7 +131,8 @@ export class ChallengeService {
   static action() {
     this.challenges.forEach(challenge => {
       if (challenge.completed && !challenge.disabled) {
-        challenge.reward.execute();
+        if (challenge.reward instanceof Action) challenge.reward.execute();
+        if (challenge.reward instanceof NewAction) challenge.reward.execute(challenge);
       }
     })
   }
@@ -142,5 +145,15 @@ export class ChallengeService {
         challenge[value] = set
       }
     })
+  }
+
+  static getValue(name: string, value: string) {
+    let retValue: any;
+    this.challenges.forEach((challenge) => {
+      if (challenge.name === name) { // @ts-ignore
+        retValue = challenge[value];
+      }
+    })
+    return retValue;
   }
 }

@@ -1,5 +1,6 @@
 import {Num} from "../../../num";
 import {Action} from "../../../action";
+import {NewAction} from "../../../NewAction";
 
 export const blueMilestones = [
   {
@@ -28,7 +29,12 @@ export const blueMilestones = [
     action: new Action('', ''),
   },
   {
-    name: 'keep-nuclear-decay', displayName: 'Nuclear Decay Keeper', description: 'Keep nuclear decay on going blue.', type: 'blue-milestone', style: 'blue-style',
+    name: 'free-green-souls', displayName: 'Free green souls', description: 'Gain 4000 free green souls.', type: 'blue-milestone', style: 'blue-style',
+    unlocked: false, requirement: ['blues', new Num(1, 0)], cost: new Num(1.5, 2), currency: 'blues', buffer: new Num(1, 0),
+    action: new NewAction('increase holding greenSouls by', new Num(4, 3)),
+  },
+  {
+    name: 'keep-nuclear-decay', displayName: 'Nuclear Decay Keeper', description: 'Keep nuclear decay upgrades on going blue.', type: 'blue-milestone', style: 'blue-style',
     unlocked: false, requirement: ['blues', new Num(1, 0)], cost: new Num(2, 2), currency: 'blues', buffer: new Num(1, 0),
     action: new Action('', ''),
   },

@@ -4,6 +4,7 @@ import {UpgradeService} from "../../../services/interactables/upgrade.service";
 import {Num} from "../../../num";
 import {HoldingsService} from "../../../services/holdings.service";
 import {BackgroundService} from "../../../services/visuals/background.service";
+import {ResetService} from "../../../services/interactables/reset.service";
 
 @Component({
   selector: 'app-green-sacrifice',
@@ -24,6 +25,7 @@ export class GreenSacrificeComponent implements OnInit {
         doc.classList.remove('maxed');
       }
     })
+    ResetService.reset('green');
   }
 
   ngOnInit(): void {

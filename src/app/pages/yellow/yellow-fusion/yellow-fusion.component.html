@@ -3,17 +3,9 @@
   <app-number-display [name]="'yellowFusion'" [style]="'yellow-text holding-amount'" [type]="'currency'"></app-number-display>
   <p class="holding-prefix">Yellow Fusion</p>
 </div>
-<div *ngIf="hasUpgrade1" class="holding-line">
-  <p class="holding-prefix">They boost green generators by </p>
-  <app-number-display [name]="'greenFusion'" [style]="'green-text holding-amount'" [type]="'effect'" [effect]="greenEffect"></app-number-display>
-</div>
 <div class="holding-line">
   <p class="holding-prefix">They boost yellow generators by </p>
-  <app-number-display [name]="'yellowFusion'" [style]="'yellow-text holding-amount'" [type]="'effect'" [effect]="effect"></app-number-display>
-</div>
-<div *ngIf="hasUpgrade" class="holding-line">
-  <p class="holding-prefix">They boost red generators by </p>
-  <app-number-display [name]="'redFusion'" [style]="'red-text holding-amount'" [type]="'effect'" [effect]="redEffect"></app-number-display>
+  <app-number-display [name]="'yellowFusion'" [style]="'yellow-text holding-amount'" [type]="'holdingEffect'"></app-number-display>
 </div>
 <div class="generators-row">
   <div *ngFor="let upgrade of upgrades">

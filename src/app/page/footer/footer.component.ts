@@ -3,6 +3,7 @@ import {NavigationsService} from "../../services/navigations.service";
 import {Navigation, SubNavigation} from "../../globals";
 import {Router} from "@angular/router";
 import {NumberDisplayService} from "../../services/number-display.service";
+import {App} from "../../App";
 
 @Component({
   selector: 'app-footer',
@@ -13,7 +14,15 @@ export class FooterComponent implements OnInit {
   navigations: Navigation[] = [];
   subNavigations: SubNavigation[] = [];
 
-  constructor(private navigation: NavigationsService, private router: Router) { }
+  constructor(private navigation: NavigationsService, private router: Router) {
+    App.subscribe().subscribe(
+      (data) => {
+        if (!data) {
+          this.setNavigation(NavigationsService.getNavigation(NavigationsService.selectedNavigation));
+        }
+      }
+    )
+  }
 
   setNavigation(event: any) {
     NavigationsService.selectedNavigation = event['name']
@@ -21,18 +30,12 @@ export class FooterComponent implements OnInit {
   }
 
   navigate(event: any) {
-    let currentUrl: string[] = this.router.url.split('/')
-    if (currentUrl[2] !== event.parent || currentUrl[3] !== event.location) {
-      NumberDisplayService.reset();
-      let navigation = NavigationsService.getLocation(event);
-      NavigationsService.save();
-      this.router.navigate([navigation])
-    }
+    NavigationsService.navigate(event);
   }
 
   ngOnInit(): void {
     this.navigations = NavigationsService.getNavigations();
     this.subNavigations = NavigationsService.getSubNavigations(NavigationsService.selectedNavigation);
-    this.router.navigate(['?/'+NavigationsService.selectedNavigation+'/'+NavigationsService.getNavigationValue(NavigationsService.selectedNavigation, 'wasOn')])
+    this.router.navigate([NavigationsService.selectedNavigation+'/'+NavigationsService.getNavigationValue(NavigationsService.selectedNavigation, 'wasOn')])
   }
 }

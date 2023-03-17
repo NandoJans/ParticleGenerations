@@ -1,6 +1,8 @@
 import {Component, Injectable, Input, OnInit} from '@angular/core';
 import {Challenge} from "../../../globals";
 import {ChallengeService} from "../../../services/interactables/challenge.service";
+import {Action} from "../../../action";
+import {NewAction} from "../../../NewAction";
 
 @Component({
   selector: 'app-challenge',
@@ -31,6 +33,10 @@ export class ChallengeComponent implements OnInit {
     this.rewardDescription = this.challenge?.rewardDescription;
     this.style = this.challenge?.style;
     const reward = this.challenge?.reward
-    if (reward !== undefined) this.effect = [reward['type'], reward['amount'], reward['subject'], reward['variable'], reward['amount']];
+    if (reward !== undefined && reward instanceof Action) {
+      this.effect = [reward['type'], reward['amount'], reward['subject'], reward['variable']]
+    } else if (reward !== undefined && reward instanceof NewAction) {
+      this.effect = ['challenge', this.name]
+    }
   }
 }

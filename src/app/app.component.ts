@@ -4,6 +4,9 @@ import {DataManagerService} from "./services/data-manager.service";
 import {UpgradeService} from "./services/interactables/upgrade.service";
 import {Searcher} from "./Searcher";
 import {ParticleEmitterService} from "./services/visuals/particle-emitter.service";
+import {App} from "./App";
+import {Router} from "@angular/router";
+import {NavigationsService} from "./services/navigations.service";
 
 @Component({
   selector: 'app-root',
@@ -13,7 +16,15 @@ import {ParticleEmitterService} from "./services/visuals/particle-emitter.servic
 export class AppComponent implements OnInit{
   title = 'ParticleGenerations';
 
-  constructor(private tick: TickService) {
+  constructor(private tick: TickService, private router: Router) {
+    NavigationsService.setRouter(router);
+    App.subscribe().subscribe(
+      (data) => {
+        if (data) {
+          this.ngOnInit();
+        }
+      }
+    )
   }
 
 

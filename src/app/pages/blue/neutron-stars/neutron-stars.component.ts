@@ -12,16 +12,16 @@ import {BackgroundService} from "../../../services/visuals/background.service";
 export class NeutronStarsComponent implements OnInit {
   neutronStar: Upgrade[] | undefined;
   upgrades: Upgrade[] | undefined;
-  effect: any[] = ['powerOfGlobalMultiplier', 'blueLight', 'blueLightPower'];
+  onetimeUpgrades: Upgrade[] | undefined;
   fusionEffect: any[] = ['yellowBlueLightEffect'];
-  displayBlueLight: boolean = false;
+  displayBlueLight: boolean = UpgradeService.getValue('neutron-star', 'bought').greq(new Num(1, 0));
 
   constructor() { }
 
   ngOnInit(): void {
     this.neutronStar = UpgradeService.getUpgrades('neutron-star-upgrade');
     this.upgrades = UpgradeService.getUpgrades('blue-light-upgrade');
-    this.displayBlueLight = UpgradeService.getValue('neutron-star', 'bought').greq(new Num(1, 0));
+    this.onetimeUpgrades = UpgradeService.getUpgrades('blue-light-upgrade-onetime');
     BackgroundService.setBackground('blue')
   }
 

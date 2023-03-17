@@ -1,1 +1,10 @@
-<p>blue-automators works!</p>
+<div class="upgrade-row">
+  <div *ngFor="let automator of automators">
+    <app-automator *ngIf="automator.unlocked"  [automator]="automator"></app-automator>
+  </div>
+</div>
+<div class="upgrade-row">
+  <div *ngFor="let automator of upgradeAutomators">
+    <app-automator *ngIf="automator.unlocked"  [automator]="automator"></app-automator>
+  </div>
+</div>

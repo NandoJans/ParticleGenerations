@@ -4,6 +4,8 @@ import {Upgrade} from "../../../globals";
 import {UpgradeService} from "../../../services/interactables/upgrade.service";
 import {Form, FormControl, FormGroup} from "@angular/forms";
 import {Action} from "../../../action";
+import {NewAction} from "../../../NewAction";
+import {ArrayType} from "@angular/compiler";
 
 @Component({
   selector: 'app-upgrade',
@@ -36,9 +38,10 @@ export class UpgradeComponent implements OnInit {
     const action = this.upgrade?.action
     if (action !== undefined && action instanceof Action) {
       this.effect = [action['type'], action['amount'], action['subject'], action['variable'], this.upgrade?.buffer]
-    } else if (action !== undefined) {
-      this.effect = [action[0]['type'], action[0]['amount'], action[0]['subject'], action[0]['variable'], this.upgrade?.buffer]
+    } else if (action !== undefined && action instanceof NewAction) {
+      this.effect = ['upgrade', this.name]
+    } else if (action !== undefined && Array.isArray(action) && action[0] instanceof NewAction) {
+      this.effect = ['upgrade', this.name]
     }
   }
-
 }

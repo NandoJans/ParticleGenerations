@@ -5,6 +5,7 @@ import {Num} from "../../../num";
 import {BuyableService} from "../../../services/interactables/buyable.service";
 import {HoldingsService} from "../../../services/holdings.service";
 import {BackgroundService} from "../../../services/visuals/background.service";
+import {ResetService} from "../../../services/interactables/reset.service";
 
 @Component({
   selector: 'app-dark-energy',
@@ -19,7 +20,9 @@ export class DarkEnergyComponent implements OnInit {
   respecDark() {
     UpgradeService.getUpgrades('dark-upgrade').forEach((upgrade) => {
       upgrade.bought.mul(new Num(0, 0))
+      upgrade.amount.mul(new Num(0, 0))
     })
+    ResetService.reset('green');
   }
 
   splitEqual() {

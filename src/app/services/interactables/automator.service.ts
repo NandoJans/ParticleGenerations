@@ -10,6 +10,7 @@ import {HoldingsService} from "../holdings.service";
 import {yellowAutomators} from "./upgrades/automators/yellow";
 import {ChallengeService} from "./challenge.service";
 import {greenAutomators} from "./upgrades/automators/green";
+import {blueAutomators} from "./upgrades/automators/blue";
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class AutomatorService {
     redAutomators,
     yellowAutomators,
     greenAutomators,
+    blueAutomators,
   )
 
   static save() {
@@ -52,29 +54,40 @@ export class AutomatorService {
     })
   }
 
+  static setAuto(targetType: string, target: string, set: boolean) {
+    switch (targetType) {
+      case 'generators':
+        GeneratorService.setValues(target, 'auto', set);
+        break;
+      case 'generator':
+        GeneratorService.setValue(target, 'auto', set);
+        break;
+      case 'upgrades':
+        UpgradeService.setValues(target, 'auto', set);
+        break;
+      case 'upgrade':
+        UpgradeService.setValue(target, 'auto', set);
+        break;
+    }
+  }
+
   static setAutos() {
     this.automators.forEach((automator) => {
       if (automator.unlocked && automator.bought.greq(new Num(1, 0)) && automator.active) {
-        switch (automator.targetType) {
-          case 'generators':
-            GeneratorService.setValues(automator.target, 'auto', true);
-            break;
-          case 'generator':
-            GeneratorService.setValue(automator.target, 'auto', true);
-            break;
-          case 'upgrades':
-            UpgradeService.setValues(automator.target, 'auto', true);
-            break;
-          case 'upgrade':
-            UpgradeService.setValue(automator.target, 'auto', true);
-            break;
+        if (typeof automator.target === "string") {
+          this.setAuto(automator.targetType, automator.target, true);
+        } else {
+          automator.target.forEach((target) => {
+            this.setAuto(automator.targetType, target, true);
+          })
         }
       }  else {
-        switch (automator.targetType) {
-          case 'generators': GeneratorService.setValues(automator.target, 'auto', false); break;
-          case 'generator': GeneratorService.setValue(automator.target, 'auto', false); break;
-          case 'upgrades': UpgradeService.setValues(automator.target, 'auto', false); break;
-          case 'upgrade': UpgradeService.setValue(automator.target, 'auto', false); break;
+        if (typeof automator.target === "string") {
+          this.setAuto(automator.targetType, automator.target, false);
+        } else {
+          automator.target.forEach((target) => {
+            this.setAuto(automator.targetType, target, false);
+          })
         }
       }
     })

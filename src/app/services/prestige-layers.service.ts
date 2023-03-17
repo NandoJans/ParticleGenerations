@@ -12,10 +12,10 @@ import {UpgradeService} from "./interactables/upgrade.service";
 })
 export class PrestigeLayersService {
   static prestiges: any[] = [
-    { name: 'yellow', requirement: ['redParticles', new Num(1, 110)], prestigeButton: 'prestige-yellow', unlocked: false, gain: new Num(1, 0), multiplier: 'yellowParticlesGain'},
-    { name: 'green', requirement: ['yellowParticles', new Num(1, 110)], prestigeButton: 'prestige-green', unlocked: false, gain: new Num(1, 0), multiplier: 'greenParticlesGain'},
-    { name: 'blue', requirement: ['greenParticles', new Num(1, 110)], prestigeButton: 'prestige-blue', unlocked: false, gain: new Num(1, 0), multiplier: 'blueParticlesGain'},
-    { name: 'purple', requirement: ['blueParticles', new Num(1, 110)], prestigeButton: 'prestige-purple', unlocked: false, gain: new Num(1, 0), multiplier: 'purpleParticlesGain'},
+    { name: 'yellow', requirement: ['redParticles', new Num(1, 110)], prestigeButton: 'prestige-yellow', unlocked: false, gain: new Num(1, 0), multiplier: 'yellowParticlesGain', hidden: false},
+    { name: 'green', requirement: ['yellowParticles', new Num(1, 110)], prestigeButton: 'prestige-green', unlocked: false, gain: new Num(1, 0), multiplier: 'greenParticlesGain', hidden: false},
+    { name: 'blue', requirement: ['greenParticles', new Num(1, 110)], prestigeButton: 'prestige-blue', unlocked: false, gain: new Num(1, 0), multiplier: 'blueParticlesGain', hidden: false},
+    { name: 'purple', requirement: ['blueParticles', new Num(1, 110)], prestigeButton: 'prestige-purple', unlocked: false, gain: new Num(1, 0), multiplier: 'purpleParticlesGain', hidden: false},
   ]
 
   static save() {
@@ -66,7 +66,7 @@ export class PrestigeLayersService {
   static calculateGain() {
     this.prestiges.forEach((prestige) => {
       const holding = HoldingsService.get(prestige['requirement'][0])
-      prestige['gain'] = new Num(2, 0).pow(new Num((holding['exp'] + holding['num'] / 10) / prestige['requirement'][1]['exp']  - 0.75, 0), false)
+      prestige['gain'] = new Num(2, 0).pow(new Num((holding['exp'] + Math.log10(holding['num'])) / prestige['requirement'][1]['exp']  - 0.75, 0), false)
       const gain = GlobalMultipliersService.get(prestige['multiplier'])
       if (gain !== undefined) {
         prestige['gain'] = prestige['gain'].mul(gain, false)
@@ -111,8 +111,10 @@ export class PrestigeLayersService {
 
   static showPrestigeButton(prestigeName: string) {
     this.prestiges.forEach(prestige => {
-      if (prestige['name'] === prestigeName) {
-        (document.getElementById(prestige['prestigeButton']) as HTMLElement).style.display = 'unset';
+      if (!prestige.hidden) {
+        if (prestige['name'] === prestigeName) {
+          (document.getElementById(prestige['prestigeButton']) as HTMLElement).style.display = 'unset';
+        }
       }
     })
   }
@@ -120,21 +122,29 @@ export class PrestigeLayersService {
   static unlock() {
     this.prestiges.forEach(prestige => {
       const requirement = prestige['requirement']
-      if (ChallengeService.activeChallenge?.name === 'dark-age'  ) {
+      if (!prestige.hidden) {
+        if (ChallengeService.activeChallenge?.name === 'dark-age'  ) {
 
-        (document.getElementById(prestige['prestigeButton']) as HTMLElement).style.display = 'none';
+          (document.getElementById(prestige['prestigeButton']) as HTMLElement).style.display = 'none';
 
-        if (HoldingsService.get(requirement[0]).greq(requirement[1]) && prestige.name === 'yellow') {
+          if (HoldingsService.get(requirement[0]).greq(requirement[1]) && prestige.name === 'yellow') {
+            // @ts-ignore
+            (document.getElementById(prestige['prestigeButton']) as HTMLElement).style.display = 'unset';
+          }
+        } else if (HoldingsService.get(requirement[0]).greq(requirement[1]) && ChallengeService.shouldHidePrestigeButton()) {
           // @ts-ignore
           (document.getElementById(prestige['prestigeButton']) as HTMLElement).style.display = 'unset';
+        } else {
+          // @ts-ignore
+          (document.getElementById(prestige['prestigeButton']) as HTMLElement).style.display = 'none';
         }
-      } else if (HoldingsService.get(requirement[0]).greq(requirement[1]) && ChallengeService.shouldHidePrestigeButton()) {
-        // @ts-ignore
-        (document.getElementById(prestige['prestigeButton']) as HTMLElement).style.display = 'unset';
-      } else {
-        // @ts-ignore
-        (document.getElementById(prestige['prestigeButton']) as HTMLElement).style.display = 'none';
       }
     })
+  }
+
+  static hide(layer: string) {
+    for (let i = 0; i < this.prestiges.length; i++) {
+      if (this.prestiges[i].name === layer) this.prestiges[i].hidden = true;
+    }
   }
 }

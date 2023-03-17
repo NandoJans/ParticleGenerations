@@ -29,6 +29,7 @@ html, body {
   margin: 0;
   padding: 0;
   font-family: Calibri, sans-serif;
+  text-align: center;
   color: var(--text-color-main);
   font-size: 12px;
   height: 100%;
@@ -273,7 +274,7 @@ footer {
   color: var(--green-button-color);
   border: solid 1px var(--green-button-color);
   border-radius: 3px;
-  height: 80px;
+  height: 100px;
 }
 
 .limited-style {
@@ -290,10 +291,6 @@ footer {
   border-radius: 3px;
 }
 
-.limited-style .maxed {
-  background-color: var(--green-button-color) !important;
-}
-
 .red-style .maxed {
   background-color: var(--red-button-color) !important;
 }
@@ -302,11 +299,11 @@ footer {
   background-color: var(--yellow-button-color) !important;
 }
 
-.green-style .maxed {
+.green-style .maxed, .limited-style .maxed {
   background-color: var(--green-button-color) !important;
 }
 
-.blue-style .maxed {
+.blue-style .maxed, .light-style .maxed {
   background-color: var(--blue-button-color) !important;
 }
 
@@ -318,6 +315,30 @@ footer {
   border: solid 2px var(--dark-button-color);
   border-radius: 3px;
   background-color: var(--transparent-background-dark);
+}
+
+.red-automator {
+  border: solid 2px var(--dark-button-color);
+  border-radius: 3px;
+  background: linear-gradient(135deg, var(--transparent-background-red), var(--transparent-background-dark));
+}
+
+.yellow-automator {
+  border: solid 2px var(--dark-button-color);
+  border-radius: 3px;
+  background: linear-gradient(135deg, var(--transparent-background-yellow), var(--transparent-background-dark));
+}
+
+.green-automator {
+  border: solid 2px var(--dark-button-color);
+  border-radius: 3px;
+  background: linear-gradient(135deg, var(--transparent-background-green), var(--transparent-background-dark));
+}
+
+.blue-automator {
+  border: solid 2px var(--dark-button-color);
+  border-radius: 3px;
+  background: linear-gradient(135deg, var(--transparent-background-blue), var(--transparent-background-dark));
 }
 
 .automator-form {
@@ -762,6 +783,11 @@ button {
   animation: linear 2s;
   flex-direction: column;
   padding: 10px;
+  -webkit-transition: all 0.7s ease-out;
+  -moz-transition: all 0.7s ease-out;
+  -ms-transition: all 0.7s ease-out;
+  -o-transition: all 0.7s ease-out;
+  transition: all 0.7s ease-out;
 }
 
 #ddm-title {

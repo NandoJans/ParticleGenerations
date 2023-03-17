@@ -103,6 +103,7 @@ export class BuyableService {
 
           // @ts-ignore
           if (result[0].greq(new Num(1, 0)) && HoldingsService.get(buyable.currency).greq(result[1])) {
+            if (buyable.limit !== undefined && result[0].greq(buyable.limit)) result[0] = buyable.limit;
             // @ts-ignore
             this.bulkBuyAction(buyable, result[1], result[0]);
           }
@@ -151,13 +152,15 @@ export class BuyableService {
       }
     })
     UpgradeService.upgrades.forEach((buyable) => {
-      if (HoldingsService.get(buyable.currency).greq(buyable.cost) && buyable['unlocked'] &&
-        buyable['auto'] && (buyable.limit === undefined || !buyable.cost.greq(buyable.limit))) {
+      if (HoldingsService.get(buyable.currency).greq(buyable.cost) && buyable['unlocked'] && buyable['auto'] &&
+        // @ts-ignore
+        (buyable.limit === undefined || !buyable.bought.greq(buyable.limit.sub(new Num(1, 0), false)))) {
         if (buyable.resets !== 'none') {
           this.buyAction(buyable);
           ResetService.reset(buyable.resets);
         } else {
           const result = this.calculateBulk(buyable)
+          if (buyable.type === 'dark-upgrade') result[0].sub(new Num(1, 0));
 
           // @ts-ignore
           if (result[0].greq(new Num(1, 0)) && HoldingsService.get(buyable.currency).greq(result[1])) {

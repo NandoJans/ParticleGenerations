@@ -8,14 +8,14 @@ import {MilestoneService} from "./interactables/milestone.service";
 import {AutomatorService} from "./interactables/automator.service";
 import {GlobalMultipliersService} from "./globals/global-multipliers.service";
 import {CombinerService} from "./interactables/combiner.service";
+import {ChallengeService} from "./interactables/challenge.service";
+import {UpgradeComponent} from "../components/particles/upgrade/upgrade.component";
 
 @Injectable({
   providedIn: 'root'
 })
 export class NumberDisplayService {
   static numberDisplays: {name: string, type: string, currency: string | undefined, effect?: any[] | undefined, permanent?: boolean | undefined}[] = []
-
-  constructor() { }
 
   static reset() {
     for (let i = 0; i < this.numberDisplays.length; i++) {
@@ -29,7 +29,7 @@ export class NumberDisplayService {
     }
   }
 
-  static add(name: string | undefined, type: string | undefined, currency: string | undefined, effect?: any[] | undefined, permanent?: boolean | undefined) {
+  static add(name: string | undefined, type: string | undefined, currency: string | undefined, effect?: string[] | undefined, permanent?: boolean | undefined) {
     // @ts-ignore
     this.numberDisplays.push({name: name, type: type, currency: currency, effect: effect, permanent: permanent})
   }
@@ -60,71 +60,50 @@ export class NumberDisplayService {
             }
             break;
           case 'effect':
-              if (entry.effect !== undefined) {
-                const effectType = entry.effect[0];
-                if (effectType === 'power') {
-
-                  if (entry.effect[3] === 'holdingPower') {
-                    console.log()
-                    element.innerHTML = 'x' + HoldingsService.get(entry.effect[1]).pow(HoldingsService.get(entry.effect[2]), false).toString(true)
-                  } else {
-                    element.innerHTML = 'x' + HoldingsService.get(entry.effect[1]).pow(entry.effect[2], false).toString(true)
-                  }
-                } else if (effectType === 'yellowBlueLightEffect') {
-                  // @ts-ignore
-                  element.innerHTML = 'x' + new Num(HoldingsService.get('yellowFusion').exp+1, 0).pow(GlobalMultipliersService.get('yellowFusionBlueLightEffect'), false).toString(true)
-                } else if (effectType === 'powerWithUpgrade') {
-                  element.innerHTML = 'x' + HoldingsService.get(entry.effect[1]).mul(UpgradeService.getValue(entry.effect[3], 'buffer'), false).pow(entry.effect[2], false).toString(true)
-                } else if (effectType === 'powerWithBase') {
-                  element.innerHTML = 'x' + HoldingsService.get(entry.effect[1]).pow(entry.effect[2].mul(UpgradeService.getValue('better-nuclear-decay', 'buffer').pow(UpgradeService.getValue('better-nuclear-decay', 'bought'), false), false), false).add(UpgradeService.getValue('nuclear-decay-base-increaser', 'bought'), false).toString(true)
-                } else if (effectType === 'powerOfGlobalMultiplier') {
-                  element.innerHTML = 'x' + HoldingsService.get(entry.effect[1]).pow(GlobalMultipliersService.get(entry.effect[2]), false).toString(true)
-                } else if (effectType === 'prePurple') {
-
-                  element.innerHTML = HoldingsService.get(entry.effect[1]).mul(HoldingsService.get('purpleVoid'), false).log(entry.effect[2], false).toString(true)
-                } else if (effectType === 'log') {
-
-                  element.innerHTML = HoldingsService.get(entry.effect[1]).log(entry.effect[2], false).toString()
-                } else if (effectType === 'multiply') {
-
-                  element.innerHTML = 'x' + HoldingsService.get(entry.effect[1]).mul(entry.effect[2], false).add(new Num(1, 0), false).toString(true)
-                } else if (effectType === 'multiplier') {
-
-                  element.innerHTML = 'Current: x'
-                } else if (effectType === 'globalMultiplier') {
-
-                  //element.innerHTML = 'Current: x' + entry.effect[3].mul(UpgradeService.getValue(entry.name, 'bought'), false)
-                } else if (effectType === 'basedOnHolding') {
-                  if (entry.effect[3] === 'exponent') {
-                    element.innerHTML = 'Current: x' + new Num(HoldingsService.get(entry.effect[2]).exp, 0).pow(entry.effect[4], false);
-                  } else if (entry.effect[3] === 'power') {
-                    element.innerHTML = 'Current: x' + HoldingsService.get(entry.effect[2]).pow(entry.effect[1], false).toString(true)
-                  } else {
-                    element.innerHTML = 'Current: x' + HoldingsService.get(entry.effect[2]).mul(entry.effect[1], false).add(new Num(1, 0), false).toString(true)
-                  }
-                } else if (effectType === 'basedOnUpgrade') {
-
-                  element.innerHTML = 'Current: x' + UpgradeService.getValue(entry.effect[2], 'buffer').pow(UpgradeService.getValue(entry.effect[2], entry.effect[3]), false).toString(true)
-                } else if (effectType === 'basedOnUpgradeMul') {
-
-                  element.innerHTML = 'Current: x' + UpgradeService.getValue(entry.effect[2], 'buffer').mul(UpgradeService.getValue(entry.effect[2], entry.effect[3]), false).pow(entry.effect[4], false).toString(true)
-                } else if (effectType === 'basedOnGenerator') {
-
-                  element.innerHTML = 'Current: x' + GeneratorService.getValue(entry.effect[2], entry.effect[3]).pow(entry.effect[4], false).add(new Num(1, 0), false).toString(true)
-                } else if (effectType === 'increaseBuffer') {
-
-                } else if (effectType === 'increaseHoldingIncremental') {
-                  element.innerHTML = 'Current: x' + entry.effect[1].pow(UpgradeService.getValue(entry.effect[2], entry.effect[3]), false)
-                }  else if (effectType === 'amplifyUpgrade') {
-
-                } else if (effectType === 'darkPowerGain') {
-                  // @ts-ignore
-                  element.innerHTML = ''+new Num(Math.floor(HoldingsService.get('yellowParticles').exp / 110), 0).sub(HoldingsService.get('darkPower'), false).toString()
-                } else if (effectType === 'darkPowerEffect') {
-                  // @ts-ignore
-                  element.innerHTML = 'x' + new Num(5, 0).pow(HoldingsService.get('darkPower'), false).toString()
-                }
+            if (entry.effect !== undefined) {
+              switch (entry.effect[0]) {
+                case 'upgrade':
+                  const effect = UpgradeService.getValue(entry.effect[1], 'effect');
+                  if (effect !== undefined) element.innerHTML = 'Effect: x'+effect.pow(new Num(1, 0), false).toString(true); break;
+                case 'challenge':
+                  const effect1 = ChallengeService.getValue(entry.effect[1], 'effect');
+                  if (effect1 !== undefined) element.innerHTML = 'Effect: x'+effect1.pow(new Num(1, 0), false).toString(true); break;
+                case 'holding':
+                  const effect2 = HoldingsService.getEffect(entry.effect[1]);
+                  if (effect2 !== undefined) element.innerHTML = 'Effect: x'+effect2.pow(new Num(1, 0), false).toString(true); break;
+                case 'prePurple':
+                  element.innerHTML = HoldingsService.get(entry.effect[1]).pow(HoldingsService.get('purpleVoid').log10(false), false).log(entry.effect[2], false).toString(true); break;
+                case 'globalMultiplierPower':
+                  element.innerHTML = 'x'+HoldingsService.get(entry.effect[1]).pow(GlobalMultipliersService.get(entry.effect[2]), false).toString(true)
+                  break;
+                case 'holdingPower':
+                  element.innerHTML = 'x'+HoldingsService.get(entry.effect[1]).pow(HoldingsService.get(entry.effect[2]), false).toString(true)
+                  break;
+                case 'log':
+                  element.innerHTML = HoldingsService.get(entry.effect[1])[entry.effect[0]](entry.effect[2], false).toString()
+                  break;
+                case 'powerWithBase':
+                  element.innerHTML = 'x'+HoldingsService.get(entry.effect[1]).pow(entry.effect[2].mul(UpgradeService.getValue(entry.effect[3], 'buffer').pow(UpgradeService.getValue(entry.effect[3], 'bought'), false), false), false).toString(true)
+                  break;
+                default:
+                  //element.innerHTML = 'x'+HoldingsService.get(entry.effect[1])[entry.effect[0]](entry.effect[2], false).toString(true)
+                  break;
               }
+            }
+            break;
+          case 'holdingEffect':
+            element.innerHTML = 'x'+HoldingsService.getEffect(entry.name).toString(true)
+            break;
+          case 'holdingEffectNoProduct':
+            element.innerHTML = HoldingsService.getEffect(entry.name).toString()
+            break;
+          case 'darkPowerGain':
+            // @ts-ignore
+            element.innerHTML = new Num(Math.floor(HoldingsService.get('yellowParticles').exp / 110), 0).add(new Num(0, 0), false).toString();
+            break;
+          case 'fusionBlueLight':
+            // @ts-ignore
+            element.innerHTML = 'x'+new Num(HoldingsService.get('yellowFusion').exp+1, 0).pow(GlobalMultipliersService.get('yellowFusionBlueLightEffect'), false).toString(true)
             break;
           case 'prestige':
             //console.log(this.prestige.getValue(entry.name, 'gain'))

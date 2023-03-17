@@ -4,6 +4,8 @@ import {HoldingsService} from "../holdings.service";
 import {yellowMilestones} from "./milestones/yellow";
 import {greenMilestones} from "./milestones/green";
 import {blueMilestones} from "./milestones/blue";
+import {Action} from "../../action";
+import {NewAction} from "../../NewAction";
 
 @Injectable({
   providedIn: 'root'
@@ -80,7 +82,7 @@ export class MilestoneService {
     this.milestones.forEach((milestone) => {
       if (milestone.name === name) {
         // @ts-ignore
-        upgrade[value] = set;
+        milestone[value] = set;
       }
     })
   }
@@ -99,7 +101,8 @@ export class MilestoneService {
     this.milestones.forEach((milestone) => {
       if (milestone.action !== undefined && HoldingsService.get(milestone.currency).greq(milestone.cost)) {
         // @ts-ignore
-        milestone.action.execute();
+        if (milestone.action instanceof Action) milestone.action.execute();
+        if (milestone.action instanceof NewAction) milestone.action.execute(milestone);
         const button = (<HTMLButtonElement> document.getElementById('buyable-'+milestone.name))
         if (button !== null) {
           button.className = 'maxed';

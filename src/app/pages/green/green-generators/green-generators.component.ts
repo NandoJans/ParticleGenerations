@@ -13,7 +13,6 @@ import {BackgroundService} from "../../../services/visuals/background.service";
 export class GreenGeneratorsComponent implements OnInit {
   generators: Generator[] = [];
   upgrades: Upgrade[] = [];
-  effect: any[] = ['log', 'greenEnergy', new Num(0.8, 0)]
 
   constructor() { }
 

@@ -20,6 +20,8 @@ import {blueNeutronStars} from "./upgrades/blue/neutronStars";
 import {GlobalMultipliersService} from "../globals/global-multipliers.service";
 import {blueUpgrades} from "./upgrades/blue/upgrades";
 import {prePurpleUpgrades} from "./upgrades/purple/prePurple";
+import {NewAction} from "../../NewAction";
+import {ArrayType} from "@angular/compiler";
 
 @Injectable({
   providedIn: 'root'
@@ -97,6 +99,10 @@ export class UpgradeService {
     else return retValue[value]
   }
 
+  static getUpgrade(name: string) {
+    return Searcher.search(this.sortedUpgrades, 'name', name);
+  }
+
   static setValues(type: string, value: string, set: any) {
     this.upgrades.forEach((upgrade) => {
       if (upgrade.type === type) {
@@ -148,29 +154,17 @@ export class UpgradeService {
 
   static action() {
     this.upgrades.forEach((upgrade) => {
-      if (upgrade.name === 'red-generator-booster') {
-        upgrade.amount = upgrade.bought.copy()
-
-        // @ts-ignore
-        upgrade.amount = upgrade.amount.add(HoldingsService.get('greenEnergy').log(new Num(0.8, 0), false), false);
-        UpgradeService.setValue('red-generator-booster', 'buffer', UpgradeService.getValue('red-generator-booster', 'buffer')
-          .mul(HoldingsService.get('nuclearDecay')
-            .pow(new Num(1, -1)
-              .mul(UpgradeService.getValue('better-nuclear-decay', 'buffer')
-                .pow(UpgradeService.getValue('better-nuclear-decay', 'bought'), false), false), false)
-            .add(new Num(1, 0), false), false).add(UpgradeService.getValue('nuclear-decay-base-increaser', 'bought'), false))
-      }
       if ((upgrade.action !== undefined && upgrade.bought.greq(new Num(1, 0))) || upgrade.name === 'red-generator-booster') {
         if (upgrade.action instanceof Action) {
           upgrade.action.execute()
-        } else {
-          upgrade.action?.forEach(action => {
-            action.execute();
+        } else if (upgrade.action instanceof NewAction) {
+          upgrade.action.execute(upgrade);
+        } else if (upgrade.action instanceof Array){
+          upgrade.action.forEach(action => {
+            if (action instanceof Action) action.execute();
+            else if (action instanceof NewAction) action.execute(upgrade);
           })
         }
-      }
-      if (upgrade.name === 'dark-energy-compressor') {
-        HoldingsService.get('darkEnergy').mul(GlobalMultipliersService.get('darkPowerPower').pow(HoldingsService.get('darkPower'), false))
       }
     })
   }

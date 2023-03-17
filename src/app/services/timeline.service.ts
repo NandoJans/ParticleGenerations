@@ -60,11 +60,11 @@ export class TimelineService {
     },
     {
       name: 'nuclear-decay', displayName: 'Overwhelmed by green souls?', description: 'There is another use for green souls you know.', hasProgress: true,
-      unlocked: false, requirement: ['greenParticles', new Num(1, 10)], type: 'green-timeline', reached: false, unlock: ['greenParticles', new Num(1, 30)]
+      unlocked: false, requirement: ['greenParticles', new Num(1, 10)], type: 'green-timeline', reached: false, unlock: ['greenParticles', new Num(1, 35)]
     },
     {
       name: 'blue-phase', displayName: 'When a star dies', description: 'What is this blue substance produced when stars die.', hasProgress: true,
-      unlocked: false, requirement: ['greenParticles', new Num(1, 30)], type: 'green-timeline', reached: false, unlock: ['greenParticles', new Num(1, 110)]
+      unlocked: false, requirement: ['greenParticles', new Num(1, 35)], type: 'green-timeline', reached: false, unlock: ['greenParticles', new Num(1, 110)]
     },
 
     {
@@ -73,19 +73,23 @@ export class TimelineService {
     },
     {
       name: 'neutron-stars-start', displayName: 'A good deal, don\'t you think?', description: 'Neutron stars are here to resolve our scaling problems.', hasProgress: true,
-      unlocked: true, requirement: ['blues', new Num(1, 0)], type: 'blue-timeline', reached: false, unlock: ['blues', new Num(5, 0)]
+      unlocked: false, requirement: ['blues', new Num(1, 0)], type: 'blue-timeline', reached: false, unlock: ['blues', new Num(3, 0)]
     },
     {
       name: 'blue-upgrades', displayName: 'Upgrading again?', description: 'Aren\'t you tired of upgrades?', hasProgress: true,
-      unlocked: true, requirement: ['blues', new Num(5, 0)], type: 'blue-timeline', reached: false, unlock: ['blueParticles', new Num(1, 1)]
+      unlocked: false, requirement: ['blues', new Num(3, 0)], type: 'blue-timeline', reached: false, unlock: ['blues', new Num(5, 0)]
     },
     {
       name: 'blue-combiners', displayName: 'Combining all my power', description: 'Combining my power might be the solution to my lack of blue particles.', hasProgress: true,
-      unlocked: true, requirement: ['blueParticles', new Num(1, 1)], type: 'blue-timeline', reached: false, unlock: ['blueParticles', new Num(1, 3)]
+      unlocked: false, requirement: ['blues', new Num(5, 0)], type: 'blue-timeline', reached: false, unlock: ['blueParticles', new Num(1, 4)]
     },
     {
       name: 'blue-generators', displayName: 'We forgot to generate', description: 'Blue generators, i don\'t think i need to explain.', hasProgress: true,
-      unlocked: true, requirement: ['blueParticles', new Num(1, 3)], type: 'blue-timeline', reached: false, unlock: ['blueParticles', new Num(1, 50)]
+      unlocked: false, requirement: ['blueParticles', new Num(1, 4)], type: 'blue-timeline', reached: false, unlock: ['blueParticles', new Num(1, 35)]
+    },
+    {
+      name: 'purple-phase', displayName: 'Why are my particles gone?', description: 'The purple phase voids all particles.', hasProgress: true,
+      unlocked: false, requirement: ['blueParticles', new Num(1, 35)], type: 'blue-timeline', reached: false, unlock: ['blueParticles', new Num(1, 110)]
     },
   ]
 

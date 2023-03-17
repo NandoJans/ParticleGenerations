@@ -11,7 +11,6 @@ import {BackgroundService} from "../../../services/visuals/background.service";
 })
 export class YellowGeneratorsComponent implements OnInit {
   generators: Generator[] = [];
-  effect: any[] = ['powerOfGlobalMultiplier', 'yellowPower', 'yellowPowerPower']
 
   constructor() { }
 

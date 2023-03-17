@@ -14,7 +14,6 @@ import {BackgroundService} from "../../../services/visuals/background.service";
 export class AcceleratorsComponent implements OnInit {
   generators: Generator[] = [];
   upgrades: Upgrade[] = [];
-  effect: any[] = ['multiply', 'redAccelerators', new Num(1, -3)];
   infoText: string[] = [
     'Red accelerators is a new type of currency used for accelerating red generators. The multiplier to red generators is equal to some factor of the red accelerators.' +
     ' They are able to be boosted by three different companions which all give a multiplier to the "single" red accelerator generator.'
@@ -24,9 +23,6 @@ export class AcceleratorsComponent implements OnInit {
   ngOnInit(): void {
     this.generators = GeneratorService.getGenerators('red-accelerators');
     this.upgrades = UpgradeService.getUpgrades('red-accelerators');
-    if (UpgradeService.getValue('red-accelerator-buffer', 'bought').greq(new Num(1, 0))) {
-      this.effect = ['power', 'redAccelerators', new Num(1.5, 0)]
-    }
     BackgroundService.setBackground('red')
   }
 

@@ -11,7 +11,7 @@ export class NumberDisplayComponent implements OnInit {
   @Input() style: string | undefined;
   @Input() type: string | undefined;
   @Input() currency: string | undefined;
-  @Input() effect: any[] | undefined;
+  @Input() effect: string[] | undefined;
   @Input() permanent: boolean | undefined;
 
   constructor() { }

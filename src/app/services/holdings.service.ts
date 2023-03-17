@@ -1,12 +1,22 @@
 import {Injectable} from '@angular/core';
 import {Num} from "../num";
-import {holdings} from "./interactables/holdings/holdings";
+import {redHoldings} from "./interactables/holdings/redHoldings";
+import {yellowHoldings} from "./interactables/holdings/yellowHoldings";
+import {greenHoldings} from "./interactables/holdings/greenHoldings";
+import {blueHoldings} from "./interactables/holdings/blueHoldings";
+import {purpleHoldings} from "./interactables/holdings/purpleHoldings";
 
 @Injectable({
   providedIn: 'root'
 })
 export class HoldingsService {
-  static holdings = holdings;
+  static holdings: object = {
+    ...redHoldings,
+    ...yellowHoldings,
+    ...greenHoldings,
+    ...blueHoldings,
+    ...purpleHoldings
+  }
 
   static add(key: string, addition: Num) {
     // @ts-ignore
@@ -68,5 +78,33 @@ export class HoldingsService {
       case 'purpleParticles': return 'P';
       default: return '';
     }
+  }
+
+  static setEffect(key: string, effect: Num) {
+    // @ts-ignore
+    this.holdings[key]['effect'] = effect
+  }
+
+  static getEffect(key: string) {
+    // @ts-ignore
+    if (this.holdings[key]['effect'] !== undefined) {
+      // @ts-ignore
+      return this.holdings[key]['effect']
+    }
+    return undefined
+  }
+
+  static action() {
+    Object.entries(this.holdings).forEach((holding) => {
+      let effect = (holding[1].action !== undefined) ? holding[1].action(holding[1].amount.copy()) : undefined;
+      if (effect !== undefined) holding[1].effect = effect;
+    })
+  }
+
+  static beforeAction() {
+    Object.entries(this.holdings).forEach((holding) => {
+      let effect = (holding[1].beforeAction !== undefined) ? holding[1].beforeAction(holding[1].amount.copy()) : undefined;
+      if (effect !== undefined) holding[1].effect = effect;
+    })
   }
 }

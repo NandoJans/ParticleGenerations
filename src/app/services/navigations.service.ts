@@ -7,6 +7,8 @@ import {Router} from "@angular/router";
 import {TickService} from "./tick.service";
 import {DataManagerService} from "./data-manager.service";
 import {NumberDisplayService} from "./number-display.service";
+import {App} from "../App";
+import {DropDownMessageService} from "./visuals/drop-down-message.service";
 
 @Injectable({
   providedIn: 'root'
@@ -44,16 +46,17 @@ export class NavigationsService {
     { name: 'greenPurple', displayName: 'P', location: 'purple', parent: 'green', unlocked: false, requirement: ['purples', new Num(1, 0)]  },
 
     { name: 'blueNeutrons', displayName: 'Neu', location: 'neutrons', parent: 'blue', unlocked: false, requirement: ['blues', new Num(1, 0)]  },
-    { name: 'neutronStars', displayName: 'NS', location: 'neutronstars', parent: 'blue', unlocked: false, requirement: ['blues', new Num(5, 0)]  },
-    { name: 'blueUpgrades', displayName: 'Up', location: 'upgrades', parent: 'blue', unlocked: false, requirement: ['blueParticles', new Num(1, 1)]  },
-    { name: 'blueCombiners', displayName: 'Co', location: 'combiners', parent: 'blue', unlocked: false, requirement: ['blueParticles', new Num(1, 3)]  },
-    { name: 'blueGenerators', displayName: 'Gen', location: 'generators', parent: 'blue', unlocked: false, requirement: ['blueParticles', new Num(1, 50)]  },
+    { name: 'neutronStars', displayName: 'NS', location: 'neutronstars', parent: 'blue', unlocked: false, requirement: ['blues', new Num(3, 0)]  },
+    { name: 'blueUpgrades', displayName: 'Up', location: 'upgrades', parent: 'blue', unlocked: false, requirement: ['blues', new Num(5, 0)]  },
+    { name: 'blueCombiners', displayName: 'Co', location: 'combiners', parent: 'blue', unlocked: false, requirement: ['blueParticles', new Num(1, 4)]  },
+    { name: 'blueGenerators', displayName: 'Gen', location: 'generators', parent: 'blue', unlocked: false, requirement: ['blueParticles', new Num(1, 35)]  },
     { name: 'blueMilestones', displayName: 'Mile', location: 'milestones', parent: 'blue', unlocked: false, requirement: ['blueParticles', new Num(1, 0)]  },
     { name: 'bluePurple', displayName: 'P', location: 'purple', parent: 'blue', unlocked: false, requirement: ['purples', new Num(1, 0)]  },
 
     { name: 'redAutomators', displayName: 'Red', location: 'red', parent: 'automators', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
     { name: 'yellowAutomators', displayName: 'Yellow', location: 'yellow', parent: 'automators', unlocked: false, requirement: ['greens', new Num(1, 0)]  },
     { name: 'greenAutomators', displayName: 'Green', location: 'green', parent: 'automators', unlocked: false, requirement: ['blues', new Num(1, 0)]  },
+    { name: 'blueAutomators', displayName: 'Blue', location: 'blue', parent: 'automators', unlocked: false, requirement: ['purples', new Num(1, 0)]  },
     { name: 'prestigeAutomators', displayName: 'Prestige', location: 'prestige', parent: 'automators', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
 
     { name: 'purpleGenerators', displayName: 'Gen', location: 'generators', parent: 'purple', unlocked: false, requirement: ['purples', new Num(1, 0)]  },
@@ -66,6 +69,8 @@ export class NavigationsService {
 
   static selectedNavigation: string = 'red';
   static selectedSubNavigation: string = 'particles';
+
+  static router: Router;
 
   static save() {
     const save: any = {}
@@ -116,7 +121,7 @@ export class NavigationsService {
         nav.wasOn = subNavigation.location
       }
     })
-    return '?/' + parentLocation + '/' + subNavigation.location;
+    return parentLocation + '/' + subNavigation.location;
   }
 
   constructor() { }
@@ -144,6 +149,17 @@ export class NavigationsService {
     return 0;
   }
 
+  static getNavigation(navigation: string) {
+    for (let i = 0; i < this.navigations.length; i++) {
+      if (this.navigations[i].name === navigation) return this.navigations[i];
+    }
+    return 0;
+  }
+
+  static capString(text: string) {
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  }
+
   static unlock() {
     const perm: any[] = [];
     perm.concat(this.subNavigations, this.navigations).forEach((navigation) => {
@@ -151,10 +167,22 @@ export class NavigationsService {
         if (HoldingsService.get(navigation.requirement[0]).greq(navigation.requirement[1])) {
           navigation.unlocked = true;
           DataManagerService.save()
-          window.location.reload();
+
+          const displayTitle = this.capString(navigation.parent) + ' ' + this.capString(navigation.location)
+          DropDownMessageService.dropDown( displayTitle + ' Unlocked', 'You have unlocked the '+navigation.name+' tab.')
+
+          App.next();
         }
       } else if (navigation.requirement === 'none') {
         navigation.unlocked = true;
+      }
+      let doc = document.getElementById(navigation.name)
+      if (navigation.unlocked) {
+        if (doc !== null) doc.style.display = 'unset';
+      } else {
+        if (doc !== null) {
+          doc.style.display = 'none'
+        }
       }
     })
   }
@@ -187,5 +215,33 @@ export class NavigationsService {
         parentDoc.classList.remove('buyable-nav');
       }
     }
+  }
+
+  static setRouter(router: Router) {
+    this.router = router;
+  }
+
+  static navigate(event: any = this.subNavigations[0]) {
+    let currentUrl: string[] = this.router.url.split('/')
+    if (currentUrl[1] !== event.parent || currentUrl[2] !== event.location) {
+      NumberDisplayService.reset();
+      let navigation = this.getLocation(event);
+      this.save();
+      this.router.navigate([navigation])
+    }
+  }
+
+  static lockNavigation(nav: string) {
+    for (let i = 0; i < this.navigations.length; i++) {
+      if (this.navigations[i].name === nav) this.navigations[i].unlocked = false;
+    }
+  }
+
+  static setValue(nav: string, key: string, value: any) {
+    this.navigations.forEach((navigation) => {
+      if (navigation.name === nav) { // @ts-ignore
+        navigation[key] = value;
+      }
+    })
   }
 }

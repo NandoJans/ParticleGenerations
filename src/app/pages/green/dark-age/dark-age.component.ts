@@ -10,8 +10,6 @@ import {BackgroundService} from "../../../services/visuals/background.service";
 })
 export class DarkAgeComponent implements OnInit {
   darkAgeActive: boolean = ChallengeService.activeChallenge?.name === 'dark-age';
-  darkPowerEffect: any[] = ['darkPowerEffect']
-  darkPowerGain: any[] = ['darkPowerGain']
   darkAge: Challenge = ChallengeService.getChallenges('dark-age')[0];
 
   leaveChallenge() {

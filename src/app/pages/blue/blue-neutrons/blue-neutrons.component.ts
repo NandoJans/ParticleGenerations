@@ -13,11 +13,6 @@ import {BackgroundService} from "../../../services/visuals/background.service";
 export class BlueNeutronsComponent implements OnInit {
   generators: Generator[] = [];
   upgrades: Upgrade[] = [];
-  redEffect: any[] = ['powerWithUpgrade', 'blueNeutrons', new Num(1.5, 0), 'blue-neutron-amplifier']
-  yellowEffect: any[] = ['powerWithUpgrade', 'blueNeutrons', new Num(4, -2), 'blue-neutron-amplifier']
-  unlockedYellowEffect: boolean = false;
-  greenEffect: any[] = ['powerWithUpgrade', 'blueNeutrons', new Num(3, -2), 'blue-neutron-amplifier']
-  unlockedGreenEffect: boolean = false;
 
   constructor() { }
 

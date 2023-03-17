@@ -1,0 +1,12 @@
+<h2>Combiners</h2>
+<div style="width: 100%;" *ngFor="let combiner of combinations">
+  <h2>Combination {{combiner[2]}}</h2>
+  <div [class]="'upgrade-row combiner=box'+combiner[2]">
+    <app-combiner *ngIf="combiner[0] !== 'empty'" [combiner]="combiner"></app-combiner>
+    <div class="empty-combiner-box" *ngIf="combiner[0] === 'empty'">
+      <app-button (function)="assignSubject(combiner[2])" [text]="" [style]="'challenge'"></app-button>
+    </div>
+    <app-combiner *ngIf="combiner[1] !== 'empty'" [combiner]="combiner"></app-combiner>
+    <div class="empty-combiner-box" *ngIf="combiner[1] === 'empty'"></div>
+  </div>
+</div>
