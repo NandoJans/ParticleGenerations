@@ -307,7 +307,7 @@ footer {
   background-color: var(--blue-button-color) !important;
 }
 
-.automator .maxed {
+.automator .maxed, .red-automator .maxed, .yellow-automator .maxed, .green-automator .maxed, .blue-automator .maxed {
   background-color: var(--dark-button-color) !important;
 }
 

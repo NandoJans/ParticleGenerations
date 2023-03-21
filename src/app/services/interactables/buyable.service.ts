@@ -155,9 +155,9 @@ export class BuyableService {
       if (HoldingsService.get(buyable.currency).greq(buyable.cost) && buyable['unlocked'] && buyable['auto'] &&
         // @ts-ignore
         (buyable.limit === undefined || !buyable.bought.greq(buyable.limit.sub(new Num(1, 0), false)))) {
-        if (buyable.resets !== 'none') {
-          this.buyAction(buyable);
-          ResetService.reset(buyable.resets);
+        if (buyable.resets !== 'none' || buyable.oneTime) {
+          if ((buyable.oneTime && !buyable.bought.greq(new Num(1, 0))) || !buyable.oneTime) this.buyAction(buyable);
+          if (buyable.resets !== 'none') ResetService.reset(buyable.resets);
         } else {
           const result = this.calculateBulk(buyable)
           if (buyable.type === 'dark-upgrade') result[0].sub(new Num(1, 0));
