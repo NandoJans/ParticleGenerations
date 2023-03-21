@@ -171,7 +171,7 @@ export class BuyableService {
       }
 
 
-      if (buyable.unlocked && !buyable['auto']) {
+      if (buyable.unlocked) {
         const button = (<HTMLButtonElement> document.getElementById('buyable-'+buyable.name))
         if (buyable.oneTime && buyable.bought.greq(new Num(1, 0))) {
           if (button !== null) {

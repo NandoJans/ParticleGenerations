@@ -20,7 +20,7 @@ export const blueNeutronStars: Upgrade[] = [
     action: new NewAction('multiply multiplier blueLightPower basedon upgrade this pow', new Num(1, 0)), nav: 'blue', subNav: 'neutronStars',
   },
   {
-    name: 'blue-light-increaser', displayName: 'Increase Blue Light', description: 'Generates 2x more blue light.', auto: false, scalingStart: new Num(1, 50),
+    name: 'blue-light-increaser', displayName: 'Increase Blue Light', description: 'Generates 2x more blue light.', auto: false, scalingStart: new Num(1, 50), limit: new Num(3.5, 1),
     baseCost: new Num(1,4), cost: new Num(1, 4), increase: new Num(2.5,2), scaling: new Num(1, 1), bought: new Num(0, 0), currency: 'blueLight',
     baseBuffer: new Num(2, 0), buffer: new Num(2, 0), amount: new Num(0, 0), type: 'blue-light-upgrade', resetId: 'blue-light-upgrade', style: 'light-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['blues', new Num(3, 0)],
     action: new NewAction('multiply multiplier blueLightGenerators basedon upgrade this pow', new Num(1, 0)), nav: 'blue', subNav: 'neutronStars'

@@ -7,13 +7,12 @@ export const prePurpleUpgrades: Upgrade[] = [
   {
     name: 'red-purple-buffer-increaser', displayName: 'Buy Multiplier Increaser', description: 'Increase all red purple buy multipliers by 0.02', auto: false,
     baseCost: new Num(1,20), cost: new Num(1, 20), increase: new Num(1,110000), scaling: new Num(1, 220000), bought: new Num(0, 0), currency: 'redParticles',
-    baseBuffer: new Num(0.02, 0), buffer: new Num(0.02, 0), amount: new Num(0, 0), type: 'red-purple-upgrade', resetId: 'red-purple-upgrade', style: 'red-purple-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['purples', new Num(2, 0)],
+    baseBuffer: new Num(1.02, 0), buffer: new Num(1.02, 0), amount: new Num(0, 0), type: 'red-purple-upgrade', resetId: 'red-purple-upgrade', style: 'red-purple-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['purples', new Num(2, 0)],
     action: [
-      new NewAction('increase upgrade red-purple-buffer-increaser buffer by', new Num(1, 0)),
-      new NewAction('multiply generator red-purple-generator-1 baseMulMod basedon upgrade this mul', new Num(1, 0)),
-      new NewAction('multiply generator red-purple-generator-2 baseMulMod basedon upgrade this mul', new Num(1, 0)),
-      new NewAction('multiply generator red-purple-generator-3 baseMulMod basedon upgrade this mul', new Num(1, 0)),
-      new NewAction('multiply upgrade red-purple-booster buffer basedon upgrade this mul', new Num(1, 0)),
+      new NewAction('multiply generator red-purple-generator-1 baseMulMod basedon upgrade this pow', new Num(1, 0)),
+      new NewAction('multiply generator red-purple-generator-2 baseMulMod basedon upgrade this pow', new Num(1, 0)),
+      new NewAction('multiply generator red-purple-generator-3 baseMulMod basedon upgrade this pow', new Num(1, 0)),
+      new NewAction('multiply upgrade red-purple-booster buffer basedon upgrade this pow', new Num(1, 0)),
     ], nav: 'red', subNav: 'redPurple'
   },
 
@@ -29,13 +28,12 @@ export const prePurpleUpgrades: Upgrade[] = [
   {
     name: 'yellow-purple-buffer-increaser', displayName: 'Buy Multiplier Increaser', description: 'Increase all yellow purple buy multipliers by 0.03', auto: false,
     baseCost: new Num(1,20), cost: new Num(1, 20), increase: new Num(1,800), scaling: new Num(1, 1600), bought: new Num(0, 0), currency: 'yellowParticles',
-    baseBuffer: new Num(0.03, 0), buffer: new Num(0.03, 0), amount: new Num(0, 0), type: 'yellow-purple-upgrade', resetId: 'yellow-purple-upgrade', style: 'yellow-purple-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['purples', new Num(2, 0)],
+    baseBuffer: new Num(1.03, 0), buffer: new Num(1.03, 0), amount: new Num(0, 0), type: 'yellow-purple-upgrade', resetId: 'yellow-purple-upgrade', style: 'yellow-purple-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['purples', new Num(2, 0)],
     action: [
-      new NewAction('increase upgrade yellow-purple-buffer-increaser buffer by', new Num(1, 0)),
-      new NewAction('multiply generator yellow-purple-generator-1 baseMulMod basedon upgrade this mul', new Num(1, 0)),
-      new NewAction('multiply generator yellow-purple-generator-2 baseMulMod basedon upgrade this mul', new Num(1, 0)),
-      new NewAction('multiply generator yellow-purple-generator-3 baseMulMod basedon upgrade this mul', new Num(1, 0)),
-      new NewAction('multiply upgrade yellow-purple-booster buffer basedon upgrade this mul', new Num(1, 0)),
+      new NewAction('multiply generator yellow-purple-generator-1 baseMulMod basedon upgrade this pow', new Num(1, 0)),
+      new NewAction('multiply generator yellow-purple-generator-2 baseMulMod basedon upgrade this pow', new Num(1, 0)),
+      new NewAction('multiply generator yellow-purple-generator-3 baseMulMod basedon upgrade this pow', new Num(1, 0)),
+      new NewAction('multiply upgrade yellow-purple-booster buffer basedon upgrade this pow', new Num(1, 0)),
     ], nav: 'yellow', subNav: 'yellowPurple'
   },
 
@@ -51,13 +49,12 @@ export const prePurpleUpgrades: Upgrade[] = [
   {
     name: 'green-purple-buffer-increaser', displayName: 'Buy Multiplier Increaser', description: 'Increase all green purple buy multipliers by 0.05', auto: false,
     baseCost: new Num(1,20), cost: new Num(1, 20), increase: new Num(1,50), scaling: new Num(1, 100), bought: new Num(0, 0), currency: 'greenParticles',
-    baseBuffer: new Num(0.05, 0), buffer: new Num(0.05, 0), amount: new Num(0, 0), type: 'green-purple-upgrade', resetId: 'green-purple-upgrade', style: 'green-purple-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['purples', new Num(2, 0)],
+    baseBuffer: new Num(1.05, 0), buffer: new Num(1.05, 0), amount: new Num(0, 0), type: 'green-purple-upgrade', resetId: 'green-purple-upgrade', style: 'green-purple-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['purples', new Num(2, 0)],
     action: [
-      new NewAction('increase upgrade green-purple-buffer-increaser buffer by', new Num(1, 0)),
-      new NewAction('multiply generator green-purple-generator-1 baseMulMod basedon upgrade this mul', new Num(1, 0)),
-      new NewAction('multiply generator green-purple-generator-2 baseMulMod basedon upgrade this mul', new Num(1, 0)),
-      new NewAction('multiply generator green-purple-generator-3 baseMulMod basedon upgrade this mul', new Num(1, 0)),
-      new NewAction('multiply upgrade green-purple-booster buffer basedon upgrade this mul', new Num(1, 0)),
+      new NewAction('multiply generator green-purple-generator-1 baseMulMod basedon upgrade this pow', new Num(1, 0)),
+      new NewAction('multiply generator green-purple-generator-2 baseMulMod basedon upgrade this pow', new Num(1, 0)),
+      new NewAction('multiply generator green-purple-generator-3 baseMulMod basedon upgrade this pow', new Num(1, 0)),
+      new NewAction('multiply upgrade green-purple-booster buffer basedon upgrade this pow', new Num(1, 0)),
     ], nav: 'green', subNav: 'greenPurple'
   },
 
@@ -73,13 +70,12 @@ export const prePurpleUpgrades: Upgrade[] = [
   {
     name: 'blue-purple-buffer-increaser', displayName: 'Buy Multiplier Increaser', description: 'Increase all blue purple buy multipliers by 0.1', auto: false,
     baseCost: new Num(1,20), cost: new Num(1, 20), increase: new Num(1,20), scaling: new Num(1, 40), bought: new Num(0, 0), currency: 'blueParticles',
-    baseBuffer: new Num(0.1, 0), buffer: new Num(0.1, 0), amount: new Num(0, 0), type: 'blue-purple-upgrade', resetId: 'blue-purple-upgrade', style: 'blue-purple-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['purples', new Num(2, 0)],
+    baseBuffer: new Num(1.1, 0), buffer: new Num(1.1, 0), amount: new Num(0, 0), type: 'blue-purple-upgrade', resetId: 'blue-purple-upgrade', style: 'blue-purple-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['purples', new Num(2, 0)],
     action: [
-      new NewAction('increase upgrade blue-purple-buffer-increaser buffer by', new Num(1, 0)),
-      new NewAction('multiply generator blue-purple-generator-1 baseMulMod basedon upgrade this mul', new Num(1, 0)),
-      new NewAction('multiply generator blue-purple-generator-2 baseMulMod basedon upgrade this mul', new Num(1, 0)),
-      new NewAction('multiply generator blue-purple-generator-3 baseMulMod basedon upgrade this mul', new Num(1, 0)),
-      new NewAction('multiply upgrade blue-purple-booster buffer basedon upgrade this mul', new Num(1, 0)),
+      new NewAction('multiply generator blue-purple-generator-1 baseMulMod basedon upgrade this pow', new Num(1, 0)),
+      new NewAction('multiply generator blue-purple-generator-2 baseMulMod basedon upgrade this pow', new Num(1, 0)),
+      new NewAction('multiply generator blue-purple-generator-3 baseMulMod basedon upgrade this pow', new Num(1, 0)),
+      new NewAction('multiply upgrade blue-purple-booster buffer basedon upgrade this pow', new Num(1, 0)),
     ], nav: 'blue', subNav: 'bluePurple'
   },
 

@@ -154,7 +154,8 @@ export class CombinerService {
       if (combination[0] !== 'empty' && combination[1] !== 'empty') {
         const subject = HoldingsService.get(combination[0]['element'])
         const target = combination[1]['element']
-        const effect: Num = subject.pow(combination[0]['buffer'], false).pow(combination[1]['buffer'], false)
+        let effect: Num = subject.pow(combination[0]['buffer'], false).pow(combination[1]['buffer'], false)
+        if (effect.greq(combination[1]['maxBuffer'])) effect = combination[1]['maxBuffer'].copy();
         GlobalMultipliersService.correct(target, effect);
         const effectDoc = <HTMLElement> document.getElementById('effect-display-'+combination[2]);
         if (effectDoc !== null) {effectDoc.innerHTML = 'Effect: ' + effect.toString(true);}
