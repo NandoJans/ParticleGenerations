@@ -22,6 +22,7 @@ import {ResetService} from "./interactables/reset.service";
 import {Router} from "@angular/router";
 import {App} from "../App";
 import {NewAction} from "../NewAction";
+import {BlackHoleService} from "./black-hole.service";
 
 @Injectable({
   providedIn: 'root'
@@ -101,14 +102,14 @@ export class TickService {
     ChallengeService.applyNerfs();
     GeneratorService.generate(speed);
     //HoldingsService.set('redParticles', new Num(1, 110))
-    //HoldingsService.set('yellowParticles', new Num(1, 5))
+    //HoldingsService.set('yellowParticles', new Num(1, 110))
     //HoldingsService.set('greenParticles', new Num(1, 10))
     //HoldingsService.set('blueParticles', new Num(1.1, 110))
     //HoldingsService.set('purpleParticles', new Num(1, 3))
     //HoldingsService.set('yellows', new Num(5, 3))
     //HoldingsService.set('greens', new Num(1, 3))
     //HoldingsService.set('blues', new Num(3, 2))
-    //HoldingsService.set('purples', new Num(3, 0))
+    //HoldingsService.set('purples', new Num(5, 0))
     //HoldingsService.set('greenSouls', new Num(2, 0))
     //HoldingsService.set('yellowFusion', new Num(1, 1))
     //HoldingsService.set('greenEnergy', new Num(1, 0))
@@ -118,7 +119,6 @@ export class TickService {
 
     //GeneratorService.setValue('blue-light-generator', 'bought', new Num(0, 0))
     //UpgradeService.setValue('neutron-star', 'amount', new Num(0, 0));
-    console.log(UpgradeService.getValue('blue-light-increaser', 'bought').toString());
 
     AutomatorService.setAutos();
     ChallengeService.applyNerfs();

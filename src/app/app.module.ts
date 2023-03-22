@@ -58,6 +58,8 @@ import { YellowPurpleComponent } from './pages/purple/yellow-purple/yellow-purpl
 import { GreenPurpleComponent } from './pages/purple/green-purple/green-purple.component';
 import { BluePurpleComponent } from './pages/purple/blue-purple/blue-purple.component';
 import { PurpleGeneratorsComponent } from './pages/purple/purple-generators/purple-generators.component';
+import { BlackComponent } from './pages/purple/black/black.component';
+import { PurpleTimelineComponent } from './pages/timeline/purple-timeline/purple-timeline.component';
 
 @NgModule({
   declarations: [
@@ -113,7 +115,9 @@ import { PurpleGeneratorsComponent } from './pages/purple/purple-generators/purp
     YellowPurpleComponent,
     GreenPurpleComponent,
     BluePurpleComponent,
-    PurpleGeneratorsComponent
+    PurpleGeneratorsComponent,
+    BlackComponent,
+    PurpleTimelineComponent
   ],
     imports: [
         BrowserModule,

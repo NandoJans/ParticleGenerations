@@ -60,11 +60,13 @@ export class NavigationsService {
     { name: 'prestigeAutomators', displayName: 'Prestige', location: 'prestige', parent: 'automators', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
 
     { name: 'purpleGenerators', displayName: 'Gen', location: 'generators', parent: 'purple', unlocked: false, requirement: ['purples', new Num(1, 0)]  },
+    { name: 'blackHole', displayName: 'Black Hole', location: 'blackhole', parent: 'purple', unlocked: false, requirement: ['purples', new Num(5, 0)]  },
 
     { name: 'redTimeline', displayName: 'Red', location: 'red', parent: 'timeline', unlocked: true, requirement: 'none'},
     { name: 'yellowTimeline', displayName: 'Yellow', location: 'yellow', parent: 'timeline', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },
     { name: 'greenTimeline', displayName: 'Green', location: 'green', parent: 'timeline', unlocked: false, requirement: ['greens', new Num(1, 0)]  },
     { name: 'blueTimeline', displayName: 'Blue', location: 'blue', parent: 'timeline', unlocked: false, requirement: ['blues', new Num(1, 0)]  },
+    { name: 'purpleTimeline', displayName: 'Purple', location: 'purple', parent: 'timeline', unlocked: false, requirement: ['purples', new Num(1, 0)]  },
   ]
 
   static selectedNavigation: string = 'red';

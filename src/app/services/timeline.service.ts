@@ -91,6 +91,11 @@ export class TimelineService {
       name: 'purple-phase', displayName: 'Why are my particles gone?', description: 'The purple phase voids all particles.', hasProgress: true,
       unlocked: false, requirement: ['blueParticles', new Num(1, 35)], type: 'blue-timeline', reached: false, unlock: ['blueParticles', new Num(1, 110)]
     },
+
+    {
+      name: 'purple-phase-start', displayName: 'The void is coming', description: '', hasProgress: false,
+      unlocked: true, requirement: ['none'], type: 'purple-timeline', reached: false, unlock: ['purples', new Num(1, 0)]
+    },
   ]
 
   static save() {

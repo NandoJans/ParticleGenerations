@@ -1,0 +1,18 @@
+<div class="holding-line">
+  <p class="holding-prefix">You have </p>
+  <app-number-display [name]="'blackHoleMass'" [style]="'black-hole-text holding-amount'" [type]="'currency'"></app-number-display>
+  <p class="holding-prefix">Black Hole Mass</p>
+</div>
+<div class="holding-line">
+  <p class="holding-prefix">They boost purple generators by</p>
+  <app-number-display [name]="'blackHoleMass'" [style]="'black-hole-text holding-amount'" [type]="'holdingEffect'"></app-number-display>
+</div>
+<div class="upgrade-row">
+  <div *ngFor="let upgrade of unlockBlackHole">
+    <app-upgrade *ngIf="upgrade.unlocked" [upgrade]="upgrade"></app-upgrade>
+  </div>
+</div>
+<div class="holding-line">
+  <app-button *ngIf="hideStartButton" [text]="'Start Black Hole'" (click)="startBlackHole()" [style]="'black-hole-button'"></app-button>
+  <app-button *ngIf="hideStopButton" [text]="'Stop Black Hole'" (click)="stopBlackHole()" [style]="'black-hole-button'"></app-button>
+</div>

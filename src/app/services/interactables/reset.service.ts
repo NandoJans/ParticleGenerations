@@ -179,6 +179,7 @@ export class ResetService {
     HoldingsService.set('redAccelerators', new Num(1, 0))
     HoldingsService.set('redParticles', new Num(1, 2))
     HoldingsService.set('purpleVoid', new Num(1, 0))
+    HoldingsService.set('blackHoleMass', new Num(1, 0))
     HoldingsService.set('yellows', new Num(0, 0))
     HoldingsService.set('greens', new Num(0, 0))
     HoldingsService.set('blues', new Num(0, 0))

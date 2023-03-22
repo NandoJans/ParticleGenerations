@@ -171,7 +171,7 @@ export class BuyableService {
       }
 
 
-      if (buyable.unlocked) {
+      if (buyable.unlocked && !buyable['auto']) {
         const button = (<HTMLButtonElement> document.getElementById('buyable-'+buyable.name))
         if (buyable.oneTime && buyable.bought.greq(new Num(1, 0))) {
           if (button !== null) {
@@ -197,6 +197,15 @@ export class BuyableService {
 
         }
 
+      }
+
+      if ((buyable['auto'] && buyable.limit !== undefined && buyable.bought.greq(buyable.limit)) || (buyable['auto'] && buyable.oneTime)) {
+        const button = (<HTMLButtonElement> document.getElementById('buyable-'+buyable.name))
+        if (button !== null) {
+          button.setAttribute('disabled', '');
+          button.className = 'maxed';
+          button.innerHTML = 'Bought';
+        }
       }
     })
     AutomatorService.automators.forEach((buyable) => {

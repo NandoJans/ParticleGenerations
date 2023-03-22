@@ -473,6 +473,19 @@ button {
   cursor: pointer;
 }
 
+.black-hole-button {
+  margin: 10px 0;
+  background-color: var(--background-color-3);
+  border: 1px solid var(--purple-button-color);
+  border-radius: 3px;
+  color: var(--purple-button-color);
+}
+
+.black-hole-button:hover {
+  box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
 .challenge {
   border: 2px solid var(--dark-button-color);
   margin: 5px;
@@ -725,6 +738,15 @@ button {
   -1px 1px 0 var(--blue-button-color), -1px -1px 0 var(--blue-button-color),
   0 1px 0 var(--blue-button-color), 0 -1px 0 var(--blue-button-color),
   1px 0 0 var(--blue-button-color), -1px 0 0 var(--blue-button-color);
+}
+
+.black-hole-text {
+  font-weight: bold;
+  color: var(--background-color-3);
+  text-shadow: 0 0 15px var(--purple-button-color), 1px 1px 0 var(--purple-button-color), 1px -1px 0 var(--purple-button-color),
+  -1px 1px 0 var(--purple-button-color), -1px -1px 0 var(--purple-button-color),
+  0 1px 0 var(--purple-button-color), 0 -1px 0 var(--purple-button-color),
+  1px 0 0 var(--purple-button-color), -1px 0 0 var(--purple-button-color);
 }
 
 .subject-target-row {

@@ -34,6 +34,8 @@ import {YellowPurpleComponent} from "./pages/purple/yellow-purple/yellow-purple.
 import {GreenPurpleComponent} from "./pages/purple/green-purple/green-purple.component";
 import {BluePurpleComponent} from "./pages/purple/blue-purple/blue-purple.component";
 import {PurpleGeneratorsComponent} from "./pages/purple/purple-generators/purple-generators.component";
+import {PurpleTimelineComponent} from "./pages/timeline/purple-timeline/purple-timeline.component";
+import {BlackComponent} from "./pages/purple/black/black.component";
 
 const routes: Routes = [
   { path: '', component: RedComponent },
@@ -62,6 +64,7 @@ const routes: Routes = [
   { path: 'blue/milestones', component: BlueMilestonesComponent },
   { path: 'blue/purple', component: BluePurpleComponent },
   { path: 'purple/generators', component: PurpleGeneratorsComponent },
+  { path: 'purple/blackhole', component: BlackComponent },
   { path: 'automators/red', component: RedAutomatorsComponent },
   { path: 'automators/yellow', component: YellowAutomatorsComponent },
   { path: 'automators/green', component: GreenAutomatorsComponent },
@@ -71,6 +74,7 @@ const routes: Routes = [
   { path: 'timeline/yellow', component: YellowTimelineComponent },
   { path: 'timeline/green', component: GreenTimelineComponent },
   { path: 'timeline/blue', component: BlueTimelineComponent },
+  { path: 'timeline/purple', component: PurpleTimelineComponent },
 ];
 
 @NgModule({

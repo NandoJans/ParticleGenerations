@@ -22,6 +22,7 @@ import {blueUpgrades} from "./upgrades/blue/upgrades";
 import {prePurpleUpgrades} from "./upgrades/purple/prePurple";
 import {NewAction} from "../../NewAction";
 import {ArrayType} from "@angular/compiler";
+import {blackHoleUpgrades} from "./upgrades/purple/blackHole";
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +42,8 @@ export class UpgradeService {
       yellowUpgrades,
       redGeneratorUpgrades,
       redAccelerators,
-      prePurpleUpgrades
+      prePurpleUpgrades,
+      blackHoleUpgrades
   )
   static sortedUpgrades: Upgrade[] =
     Sorter.sort(redUpgrades.concat(
@@ -57,7 +59,8 @@ export class UpgradeService {
       yellowUpgrades,
       redGeneratorUpgrades,
       redAccelerators,
-      prePurpleUpgrades
+      prePurpleUpgrades,
+      blackHoleUpgrades
     ), 'name');
 
   static save() {
