@@ -122,21 +122,22 @@ export class PrestigeLayersService {
   static unlock() {
     this.prestiges.forEach(prestige => {
       const requirement = prestige['requirement']
-      if (!prestige.hidden) {
+      const doc = document.getElementById(prestige['prestigeButton']);
+      if (!prestige.hidden && doc !== null) {
         if (ChallengeService.activeChallenge?.name === 'dark-age'  ) {
 
-          (document.getElementById(prestige['prestigeButton']) as HTMLElement).style.display = 'none';
+          doc.style.display = 'none';
 
           if (HoldingsService.get(requirement[0]).greq(requirement[1]) && prestige.name === 'yellow') {
             // @ts-ignore
-            (document.getElementById(prestige['prestigeButton']) as HTMLElement).style.display = 'unset';
+            doc.style.display = 'unset';
           }
         } else if (HoldingsService.get(requirement[0]).greq(requirement[1]) && ChallengeService.shouldHidePrestigeButton()) {
           // @ts-ignore
-          (document.getElementById(prestige['prestigeButton']) as HTMLElement).style.display = 'unset';
+          doc.style.display = 'unset';
         } else {
           // @ts-ignore
-          (document.getElementById(prestige['prestigeButton']) as HTMLElement).style.display = 'none';
+          doc.style.display = 'none';
         }
       }
     })

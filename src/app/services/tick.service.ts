@@ -173,11 +173,11 @@ export class TickService {
         if (!App.isIdling) {
           const idleGain = setInterval(() => {
             App.isIdling = true;
-            this.gameTick(new Num(1, 1))
+            this.gameTick(new Num(1, 2))
 
-            lastCalled += 10000;
+            lastCalled += 100000;
             localStorage['lastCalled'] = JSON.stringify(lastCalled)
-            if (lastCalled >= Date.now()-10000) clearInterval(idleGain); App.isIdling = false;
+            if (lastCalled >= Date.now()-100000) clearInterval(idleGain); App.isIdling = false;
             console.log('Idling')
           }, 3)
         }
