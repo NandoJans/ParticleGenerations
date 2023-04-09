@@ -20,13 +20,13 @@ export const yellowUpgrades: Upgrade[] = [
     name: 'yellow-based-multiplier', displayName: 'Yellows based multiplier', description: 'Your red generators are multiplied by the amount of yellows you have', auto: false,
     baseCost: new Num(1,0), cost: new Num(1, 0), increase: new Num(1,1), scaling: new Num(0, 0), bought: new Num(0, 0), currency: 'yellowParticles',
     baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'yellow-upgrades', resetId: 'yellow-upgrades', style: 'yellow-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['yellows', new Num(1, 0)],
-    action: new NewAction('multiply multiplier redParticleGenerators basedon holding yellows', new Num(0.2, 0)), nav: 'yellow', subNav: 'yellowUpgrades'
+    action: new NewAction('multiply multiplier redParticleGenerators basedon holding yellows mul', new Num(0.2, 0)), nav: 'yellow', subNav: 'yellowUpgrades'
   },
   {
     name: 'yellow-based-accelerator-multiplier', displayName: 'Yellows based accelerator multiplier', description: 'Your red accelator generators are multiplied by the amount of yellows you have', auto: false,
     baseCost: new Num(2,0), cost: new Num(2, 0), increase: new Num(1,1), scaling: new Num(0, 0), bought: new Num(0, 0), currency: 'yellowParticles',
     baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'yellow-upgrades', resetId: 'yellow-upgrades', style: 'yellow-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['yellows', new Num(1, 0)],
-    action: new NewAction('multiply multiplier redAcceleratorGenerators basedon holding yellows', new Num(0.2, 0)), nav: 'yellow', subNav: 'yellowUpgrades'
+    action: new NewAction('multiply multiplier redAcceleratorGenerators basedon holding yellows mul', new Num(0.2, 0)), nav: 'yellow', subNav: 'yellowUpgrades'
   },
   {
     name: 'increase-red-generator-multiplier', displayName: 'Multiplier increaser', description: 'Sets the multiplier of red generators to 3', auto: false,

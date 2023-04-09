@@ -97,6 +97,7 @@ export class NewAction {
         if (this.buffer instanceof Num && query[this.ADDITION] === undefined) buffer.mul(this.buffer);
         break;
     }
+    if (query[this.ADDITION] === 'mul') buffer.add(new Num(1, 0))
     //console.log('Buff from '+this.parent.displayName+': '+ buffer.toString())
     if (query[this.TARGET_TYPE] === 'multiplier') this.setMethod(query[this.TARGET], buffer, query[this.TARGET_VALUE]);
     else {
