@@ -32,7 +32,9 @@ export const yellowUpgrades: Upgrade[] = [
     name: 'increase-red-generator-multiplier', displayName: 'Multiplier increaser', description: 'Sets the multiplier of red generators to 3', auto: false,
     baseCost: new Num(3,0), cost: new Num(3, 0), increase: new Num(1,1), scaling: new Num(0, 0), bought: new Num(0, 0), currency: 'yellowParticles',
     baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'yellow-upgrades', resetId: 'yellow-upgrades', style: 'yellow-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['yellows', new Num(1, 0)],
-    action: new NewAction('multiply generators red-particles baseMulMod by', new Num(1.5, 0)), nav: 'yellow', subNav: 'yellowUpgrades'
+    action: [
+      new NewAction('set generators red-particles baseMultiplier to', new Num(3, 0)),
+    ], nav: 'yellow', subNav: 'yellowUpgrades'
   },
   {
     name: 'increase-red-accelerator-upgrade-1', displayName: 'Red accelerator buffer 1', description: 'Increases the multiplier of the first red accelerator upgrade.', auto: false,
