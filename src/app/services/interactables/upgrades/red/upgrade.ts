@@ -30,7 +30,7 @@ export const redUpgrades: Upgrade[] = [
     name: 'red-booster-multiplier-upgrade', displayName: 'Booster Multiplier Amplifier', description: 'Increase the multiplier of the red generator booster.', auto: false,
     baseCost: new Num(1,80), cost: new Num(1, 80), increase: new Num(1,0), scaling: new Num(0, 0), bought: new Num(0, 0), currency: 'redParticles',
     baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'red-upgrades', resetId: 'red-upgrades', style: 'red-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['redParticles', new Num(1, 40)],
-    action: new NewAction('increase upgrade red-generator-booster buffer by', new Num(0, 0)), nav: 'red', subNav: 'redUpgrades'
+    action: new NewAction('increase upgrade red-generator-booster buffer by', new Num(0.1, 0)), nav: 'red', subNav: 'redUpgrades'
   },
   {
     name: 'red-booster-scaling-upgrade', displayName: 'Booster Cost Decreaser', description: 'Decrease the cost scaling of the red generator booster.', auto: false,
