@@ -3,6 +3,11 @@
   <app-number-display [name]="'greens'" [style]="'green-text holding-amount'" [type]="'currency'"></app-number-display>
   <p class="holding-prefix">Greens</p>
 </div>
+<div class="holding-line">
+  <p class="holding-prefix">Your best Green Particles is </p>
+  <app-number-display [name]="'green'" [style]="'green-text holding-amount'" [type]="'gainPS'"></app-number-display>
+  <p class="holding-prefix">/ Second</p>
+</div>
 <div class="upgrade-row">
   <div *ngFor="let milestone of milestones">
     <app-milestone *ngIf="milestone.unlocked" [milestone]="milestone"></app-milestone>

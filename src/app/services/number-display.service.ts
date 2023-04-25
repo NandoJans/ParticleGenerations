@@ -105,8 +105,11 @@ export class NumberDisplayService {
             // @ts-ignore
             element.innerHTML = 'x'+new Num(HoldingsService.get('yellowFusion').exp+1, 0).pow(GlobalMultipliersService.get('yellowFusionBlueLightEffect'), false).toString(true)
             break;
+          case 'gainPS':
+            // @ts-ignore
+            element.innerHTML = PrestigeLayersService.getValue(entry.name, 'fastestGainPS').toString(true)
+            break;
           case 'prestige':
-            //console.log(this.prestige.getValue(entry.name, 'gain'))
             // @ts-ignore
             element.innerHTML = PrestigeLayersService.getValue(entry.name, 'gain')
             break;

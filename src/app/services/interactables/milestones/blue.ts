@@ -24,6 +24,11 @@ export const blueMilestones = [
     action: new Action('amplifyUpgrades', 'green-limited-upgrades', 'blue-limited-upgrades', 'resetId'),
   },
   {
+    name: 'idle-blue-particles-gain', displayName: 'Idle blue Particles', description: 'You generate 50% of your best blue particles / second.', type: 'blue-milestone', style: 'blue-style',
+    unlocked: false, requirement: ['blues', new Num(1, 0)], cost: new Num(2.5, 1), currency: 'blues', buffer: new Num(1, 0),
+    action: new Action('', ''),
+  },
+  {
     name: 'gain-dark-power-idle', displayName: 'Idle Dark Power', description: 'Gain dark power without having to go dark aging.', type: 'blue-milestone', style: 'blue-style',
     unlocked: false, requirement: ['blues', new Num(1, 0)], cost: new Num(1, 2), currency: 'blues', buffer: new Num(1, 0),
     action: new Action('', ''),

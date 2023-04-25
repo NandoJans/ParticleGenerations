@@ -19,6 +19,11 @@ export const yellowMilestones: Milestone[] = [
     action: new Action('amplifyUpgrade', 'unlock-red-generators-booster', 'yellow-upgrades', 'resetId'),
   },
   {
+    name: 'idle-yellow-particles-gain', displayName: 'Idle Yellow Particles', description: 'You generate 50% of your best yellow particles / second.', type: 'yellow-milestone', style: 'yellow-style',
+    unlocked: false, requirement: ['yellows', new Num(1, 0)], cost: new Num(2.5, 1), currency: 'yellows', buffer: new Num(1, 0),
+    action: new Action('', ''),
+  },
+  {
     name: 'red-upgrades-no-reset', displayName: 'Red upgrades keeper', description: 'You keep your red upgrades on going yellow.', type: 'yellow-milestone', style: 'yellow-style',
     unlocked: false, requirement: ['yellows', new Num(1, 0)], cost: new Num(5, 1), currency: 'yellows', buffer: new Num(1, 0),
     action: new Action('amplifyUpgrades', 'red-upgrades', 'yellow-upgrades', 'resetId'),
