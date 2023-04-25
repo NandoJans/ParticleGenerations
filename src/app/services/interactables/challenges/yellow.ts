@@ -27,7 +27,7 @@ export const yellowChallenges: Challenge[] = [
     name: 'yellow-challenge-3', displayName: 'Yellow Challenge 3', description: 'while only having red and yellow generators.', goal: new Num(1, 1350), currency: 'redParticles', completed: false, disabled: false,
     rewardDescription: 'Yellow generators are multiplied by the amount of fifth red generators.', style: 'yellow-challenge', resetId: 'yellow-challenges', type: 'yellow-challenges', prestige: 'yellow', unlocked: false, instantComplete: false,
     requirement: ['yellowParticles', new Num(1, 11)],
-    reward: new NewAction('multiply multiplier yellowParticleGenerators basedon generator red-generator-5 amount add', new Num(1, 0)),
+    reward: new NewAction('multiply multiplier yellowParticleGenerators basedon generator red-generator-5 amount pow', new Num(2, 0)),
     nerfs: [
       new Action('setHolding', 'redAccelerators', new Num(1, 0)),
       new Action('amplifyGenerators', 'red-accelerators', new Num(0, 0), 'multiplier'),
