@@ -65,7 +65,7 @@ export const limitedGreenUpgrades: Upgrade[] = [
     baseCost: new Num(2.5,1), cost: new Num(2.5, 1), increase: new Num(1,0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenSouls',
     baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'green-limited-upgrades', resetId: 'green-limited-upgrades', style: 'limited-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['greens', new Num(1, 0)],
     action: [
-      new NewAction('multiply multiplier redParticleGenerators basedon holding yellowFusion pow', new Num(1, 1)),
+      new NewAction('multiply multiplier redParticleGenerators basedon holding yellowFusion pow', new Num(1, 0)),
       new NewAction('decrease holding greenSouls by', new Num(2.5, 1)),
       new NewAction('increase holding limitedUpgradeCount by', new Num(1, 0))
     ], nav: 'green', subNav: 'greenSacrifice'
