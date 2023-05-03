@@ -99,7 +99,6 @@ export class ResetService {
     this.resetUpgrades('red-accelerators')
     this.resetUpgrades('red-particles')
     this.resetUpgrades('red-upgrades')
-    PrestigeLayersService.setValue('yellow', 'fastestGainPS', new Num(0, 0))
     DataManagerService.save()
     if (!HoldingsService.get('yellows').greq(new Num(5, 1))) App.next();
     if (resets === 'yellow') return;
@@ -117,7 +116,7 @@ export class ResetService {
     this.resetGenerators('nuclearDecay', 'amount')
     this.resetUpgrades('yellow-fusion')
     this.resetChallenges('yellow-challenges')
-    PrestigeLayersService.setValue('green', 'fastestGainPS', new Num(0, 0))
+    PrestigeLayersService.setValue('yellow', 'fastestGainPS', new Num(0, 0))
     DataManagerService.save()
     if (!HoldingsService.get('greens').greq(new Num(5, 1))) App.next();
     if (resets === 'green') return;
@@ -159,7 +158,8 @@ export class ResetService {
     HoldingsService.set('blueHydrogen', new Num(1, 0))
     this.resetGenerators('blueParticleGenerators', 'amount')
     this.resetGenerators('blue-neutrons', 'amount')
-    PrestigeLayersService.setValue('blue', 'fastestGainPS', new Num(0, 0))
+
+    PrestigeLayersService.setValue('green', 'fastestGainPS', new Num(0, 0))
     DataManagerService.save()
     if (!HoldingsService.get('blues').greq(new Num(5, 1)) && resets === 'blue') App.next();
     if (resets === 'blue') return;
@@ -218,7 +218,7 @@ export class ResetService {
     this.resetGenerators('purple-particles', 'amount')
 
     UpgradeService.setValue('red-generator-extension-upgrade', 'bought', new Num(1, 0));
-
+    PrestigeLayersService.setValue('blue', 'fastestGainPS', new Num(0, 0))
     DataManagerService.save()
     if (resets === 'purple') return;
   }
