@@ -80,8 +80,8 @@ export class PrestigeLayersService {
 
   static addIdleGain(extra: Num) {
     this.prestiges.forEach((prestige) => {
-      if (HoldingsService.get(prestige['name']+'s').greq(new Num(2.5, 0))) {
-        HoldingsService.add(prestige['name']+'Particles', prestige['fastestGainPS'].mul(extra, false).mul(new Num(1, -2), false))
+      if (HoldingsService.get(prestige['name']+'s').greq(new Num(2.5, 1))) {
+        HoldingsService.add(prestige['name']+'Particles', prestige['fastestGainPS'].mul(extra, false).mul(new Num(2, -2), false))
       }
     })
   }

@@ -44,7 +44,7 @@ export const darkenergyUpgrades: Upgrade[] = [
   {
     name: 'dark-red-generators', displayName: 'Dark red generators', description: '', auto: false, noMax: true,
     baseCost: new Num(1,0), cost: new Num(1, 0), increase: new Num(2,0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'darkEnergy',
-    baseBuffer: new Num(1, 300), buffer: new Num(1, 300), amount: new Num(0, 0), type: 'dark-upgrade', resetId: 'dark-upgrade', style: 'sacrifice-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['greens', new Num(1, 1)],
+    baseBuffer: new Num(1, 150), buffer: new Num(1, 150), amount: new Num(0, 0), type: 'dark-upgrade', resetId: 'dark-upgrade', style: 'sacrifice-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['greens', new Num(1, 1)],
     action: [
       new NewAction('multiply multiplier redParticleGenerators basedon upgrade this pow', new Num(1, 0)),
       new NewAction('decrease holding darkEnergy basedon upgrade dark-red-generators bought incremental', new Num(2, 0))
@@ -53,7 +53,7 @@ export const darkenergyUpgrades: Upgrade[] = [
   {
     name: 'dark-red-accelerators', displayName: 'Dark red accelerators', description: '', auto: false, noMax: true,
     baseCost: new Num(1,0), cost: new Num(1, 0), increase: new Num(2,0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'darkEnergy',
-    baseBuffer: new Num(1, 130), buffer: new Num(1, 130), amount: new Num(0, 0), type: 'dark-upgrade', resetId: 'dark-upgrade', style: 'sacrifice-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['greens', new Num(1, 1)],
+    baseBuffer: new Num(1, 40), buffer: new Num(1, 40), amount: new Num(0, 0), type: 'dark-upgrade', resetId: 'dark-upgrade', style: 'sacrifice-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['greens', new Num(1, 1)],
     action: [
       new NewAction('multiply multiplier redAcceleratorGenerators basedon upgrade this pow', new Num(1, 0)),
       new NewAction('decrease holding darkEnergy basedon upgrade dark-red-accelerators bought incremental', new Num(2, 0))
