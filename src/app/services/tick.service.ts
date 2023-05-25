@@ -15,14 +15,8 @@ import {AutomatorService} from "./interactables/automator.service";
 import {TimelineService} from "./timeline.service";
 import {Action} from "../action";
 import {CombinerService} from "./interactables/combiner.service";
-import {ParticleEmitterService} from "./visuals/particle-emitter.service";
-import {BackgroundService} from "./visuals/background.service";
-import {DropDownMessageService} from "./visuals/drop-down-message.service";
-import {ResetService} from "./interactables/reset.service";
 import {Router} from "@angular/router";
 import {App} from "../App";
-import {NewAction} from "../NewAction";
-import {BlackHoleService} from "./black-hole.service";
 
 @Injectable({
   providedIn: 'root'
@@ -82,7 +76,10 @@ export class TickService {
     }
   }
 
+  upgradeActionDelay: number = 10;
+
   gameTick(speed: Num = new Num(1, 0)) {
+
     App.purplePhase = HoldingsService.get('purples').greq(new Num(1, 0));
     NavigationsService.resetTracker();
     UpgradeService.correctBuffer();
@@ -92,6 +89,7 @@ export class TickService {
 
     HoldingsService.beforeAction();
     GlobalMultipliersService.resetAfter();
+
     UpgradeService.action();
     MilestoneService.action();
     ChallengeService.action();
@@ -104,10 +102,10 @@ export class TickService {
     //HoldingsService.set('redParticles', new Num(1, 110))
     //HoldingsService.set('yellowParticles', new Num(1, 110))
     //HoldingsService.set('greenParticles', new Num(1, 2))
-    //HoldingsService.set('blueParticles', new Num(1.1, 110))
+    //HoldingsService.set('blueParticles', new Num(1, 5))
     //HoldingsService.set('purpleParticles', new Num(1, 3))
     //HoldingsService.set('yellows', new Num(1, 5))
-    //HoldingsService.set('greens', new Num(3, 1))
+    //HoldingsService.set('greens', new Num(1, 10))
     //HoldingsService.set('blues', new Num(3, 2))
     //HoldingsService.set('purples', new Num(5, 0))
     //HoldingsService.set('greenSouls', new Num(2, 0))
@@ -119,7 +117,6 @@ export class TickService {
 
     //GeneratorService.setValue('blue-light-generator', 'bought', new Num(0, 0))
     //UpgradeService.setValue('neutron-star', 'amount', new Num(0, 0));
-
     AutomatorService.setAutos();
     ChallengeService.applyNerfs();
     this.buyables.compare();
@@ -143,8 +140,9 @@ export class TickService {
     TimelineService.setProgress();
 
     AutomatorService.prestigeAutomators();
-    BackgroundService.tick();
   }
+
+  iterations: number = 0;
 
   tick() {
     //ResetService.reset('purple')
@@ -165,7 +163,8 @@ export class TickService {
     }, 500)
     GlobalMultipliersService.resetAfter();
     App.purplePhase = HoldingsService.get('purples').greq(new Num(1, 0));
-    setInterval(() => {
+
+    const mainInterval = setInterval(() => {
       if (!HoldingsService.get('greenEnergy').greq(new Num(1, 0))) {HoldingsService.set('greenEnergy', new Num(1, 0))}
       if (!HoldingsService.get('redParticles').greq(new Num(2, 1))) {HoldingsService.set('redParticles', new Num(2, 1))}
       if (!HoldingsService.get('yellowParticles').greq(new Num(1, 0)) && !App.purplePhase) {HoldingsService.set('yellowParticles', new Num(0, 0))}
@@ -183,12 +182,24 @@ export class TickService {
           }, 3)
         }
       } else {
-        this.gameTick(new Num(6.6, -1))
+        this.iterations++;
+        this.gameTick(new Num(1, 2))
 
         lastCalled = Date.now();
         localStorage['lastCalled'] = JSON.stringify(lastCalled)
       }
-    }, 33)
+    }, 50)
+
+    setInterval(() => {
+      console.log('Iterations: '+this.iterations+'/s')
+      this.iterations = 0
+    }, 1000)
+
+    App.subscribe().subscribe((data) => {
+      if (data) {
+        clearInterval(mainInterval)
+      }
+    })
 
     setInterval(() => {
       //ParticleEmitterService.tick();

@@ -10,11 +10,8 @@ export const greenHoldings = {
   greens: {amount: new Num(0, 0), effect: new Num(1, 0)},
   greenEnergy: {amount: new Num(0, 0), effect: new Num(1, 0),
     action: (amount: Num) => {
-      const redGeneratorBooster = UpgradeService.getUpgrade('red-generator-booster');
       // @ts-ignore
       let buffer: Num = amount.log(new Num(0.8, 0), false).floor(false);
-      // @ts-ignore
-      redGeneratorBooster.amount = redGeneratorBooster.bought.add(buffer, false);
       return buffer.copy();
     }},
   greenSouls: {amount: new Num(0, 0), effect: new Num(1, 0),

@@ -2,11 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {TickService} from "./services/tick.service";
 import {DataManagerService} from "./services/data-manager.service";
 import {UpgradeService} from "./services/interactables/upgrade.service";
-import {Searcher} from "./Searcher";
-import {ParticleEmitterService} from "./services/visuals/particle-emitter.service";
 import {App} from "./App";
 import {Router} from "@angular/router";
 import {NavigationsService} from "./services/navigations.service";
+import {GeneratorService} from "./services/interactables/generator.service";
 
 @Component({
   selector: 'app-root',
@@ -18,19 +17,20 @@ export class AppComponent implements OnInit{
 
   constructor(private tick: TickService, private router: Router) {
     NavigationsService.setRouter(router);
-    App.subscribe().subscribe(
-      (data) => {
-        if (data) {
+    App.subscribe().subscribe((data) => {
+      if (data) {
+        setTimeout(() => {
           this.ngOnInit();
-        }
+        }, 50)
       }
-    )
+    })
   }
 
 
   ngOnInit(): void {
+    UpgradeService.resetUpgrades();
+    GeneratorService.resetGenerators();
     DataManagerService.load();
-    ParticleEmitterService.tick();
     this.tick.tick();
   }
 }

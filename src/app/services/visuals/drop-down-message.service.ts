@@ -12,13 +12,13 @@ export class DropDownMessageService {
     const dropDownContent: HTMLElement = <HTMLElement> document.getElementById('ddm-content')
     if (dropDownElement !== null && dropDownTitle !== null && dropDownContent !== null) {
 
-      dropDownElement.style.top = '10px';
+      dropDownElement.style.top = '100px';
       dropDownTitle.innerHTML = title;
       dropDownContent.innerHTML = message;
 
       setTimeout(() => {
         dropDownElement.style.top = '-100px';
-      }, 5000)
+      }, 3000)
     }
   }
 }

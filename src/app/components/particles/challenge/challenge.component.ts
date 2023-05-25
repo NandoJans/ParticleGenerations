@@ -35,7 +35,7 @@ export class ChallengeComponent implements OnInit {
     const reward = this.challenge?.reward
     if (reward !== undefined && reward instanceof Action) {
       this.effect = [reward['type'], reward['amount'], reward['subject'], reward['variable']]
-    } else if (reward !== undefined && reward instanceof NewAction) {
+    } else if (reward !== undefined && (reward instanceof NewAction || typeof reward === 'function')) {
       this.effect = ['challenge', this.name]
     }
   }

@@ -100,7 +100,7 @@ export class MilestoneService {
   static action() {
     this.milestones.forEach((milestone) => {
       if (milestone.action !== undefined && HoldingsService.get(milestone.currency).greq(milestone.cost)) {
-        // @ts-ignore
+        if (typeof milestone.action === 'function') milestone.action(milestone);
         if (milestone.action instanceof Action) milestone.action.execute();
         if (milestone.action instanceof NewAction) milestone.action.execute(milestone);
         const button = (<HTMLButtonElement> document.getElementById('buyable-'+milestone.name))

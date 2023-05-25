@@ -64,13 +64,13 @@ export class NumberDisplayService {
               switch (entry.effect[0]) {
                 case 'upgrade':
                   const effect = UpgradeService.getValue(entry.effect[1], 'effect');
-                  if (effect !== undefined) element.innerHTML = 'Effect: x'+effect.pow(new Num(1, 0), false).toString(true); break;
+                  if (effect !== undefined) element.innerHTML = 'Effect: x'+effect.add(new Num(0, 0), false).toString(true); break;
                 case 'challenge':
                   const effect1 = ChallengeService.getValue(entry.effect[1], 'effect');
-                  if (effect1 !== undefined) element.innerHTML = 'Effect: x'+effect1.pow(new Num(1, 0), false).toString(true); break;
+                  if (effect1 !== undefined) element.innerHTML = 'Effect: x'+effect1.add(new Num(0, 0), false).toString(true); break;
                 case 'holding':
                   const effect2 = HoldingsService.getEffect(entry.effect[1]);
-                  if (effect2 !== undefined) element.innerHTML = 'Effect: x'+effect2.pow(new Num(1, 0), false).toString(true); break;
+                  if (effect2 !== undefined) element.innerHTML = 'Effect: x'+effect2.add(new Num(0, 0), false).toString(true); break;
                 case 'prePurple':
                   element.innerHTML = HoldingsService.get(entry.effect[1]).pow(HoldingsService.get('purpleVoid').log10(false), false).log(entry.effect[2], false).toString(true); break;
                 case 'globalMultiplierPower':

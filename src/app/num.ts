@@ -215,7 +215,7 @@ export class Num {
       ret_num = this.num ** (x.num * 10 ** x.exp)
     }
 
-    if (ret_num > 1e10) {
+    if (ret_num > 1) {
       ret_num = Math.log10(this.num) * (x.num * 10 ** x.exp)
       ret_exp += Math.floor(ret_num)
       ret_num = Math.pow(10, Number('0.'+ret_num.toString().split('.')[1]))

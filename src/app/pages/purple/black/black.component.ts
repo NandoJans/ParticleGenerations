@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {UpgradeService} from "../../../services/interactables/upgrade.service";
 import {Upgrade} from "../../../globals";
-import {BackgroundService} from "../../../services/visuals/background.service";
 import {BlackHoleService} from "../../../services/black-hole.service";
-import {DropDownMessageService} from "../../../services/visuals/drop-down-message.service";
 
 @Component({
   selector: 'app-black',
@@ -21,7 +19,6 @@ export class BlackComponent implements OnInit {
     this.unlockBlackHole = UpgradeService.getUpgrades('unlock-black-hole');
     this.hideStartButton = !BlackHoleService.on;
     this.hideStopButton = BlackHoleService.on;
-    BackgroundService.setBackground('purple')
   }
 
   startBlackHole() {

@@ -10,7 +10,7 @@ export class App {
     setInterval(() => {
       subscriber.next(this.shouldReload)
       this.shouldReload = false;
-    }, 33);
+    }, 50);
   });
 
 

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {GeneratorService} from "../../../services/interactables/generator.service";
 import {Generator} from "../../../globals";
-import {Num} from "../../../num";
-import {BackgroundService} from "../../../services/visuals/background.service";
 
 @Component({
   selector: 'app-yellow-generators',
@@ -16,7 +14,6 @@ export class YellowGeneratorsComponent implements OnInit {
 
   ngOnInit(): void {
     this.generators = GeneratorService.getGenerators('yellow-particles');
-    BackgroundService.setBackground('yellow')
   }
 
 }

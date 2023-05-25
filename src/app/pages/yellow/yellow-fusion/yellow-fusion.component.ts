@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Upgrade} from "../../../globals";
 import {UpgradeService} from "../../../services/interactables/upgrade.service";
-import {Num} from "../../../num";
-import {BackgroundService} from "../../../services/visuals/background.service";
 
 @Component({
   selector: 'app-yellow-fusion',
@@ -15,6 +13,5 @@ export class YellowFusionComponent implements OnInit {
 
   ngOnInit(): void {
     this.upgrades = UpgradeService.getUpgrades('yellow-fusion')
-    BackgroundService.setBackground('yellow')
   }
 }

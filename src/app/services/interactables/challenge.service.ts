@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {yellowChallenges} from "./challenges/yellow";
-import {Challenge} from "../../globals";
+import {Challenge, Upgrade} from "../../globals";
 import {ResetService} from "./reset.service";
 import {HoldingsService} from "../holdings.service";
 import {PrestigeLayersService} from "../prestige-layers.service";
@@ -11,6 +11,9 @@ import {DropDownMessageService} from "../visuals/drop-down-message.service";
 import {Action} from "../../action";
 import {NewAction} from "../../NewAction";
 import {App} from "../../App";
+import {Num} from "../../num";
+import {UpgradeService} from "./upgrade.service";
+import {GeneratorService} from "./generator.service";
 
 @Injectable({
   providedIn: 'root'
@@ -72,15 +75,19 @@ export class ChallengeService {
     this.activeChallenge.completed = true;
     this.activeChallenge = undefined;
     DataManagerService.save();
-    App.next();
+    UpgradeService.resetUpgrades();
+    GeneratorService.resetGenerators();
+    DataManagerService.load();
   }
 
   static leaveChallenge() {
     if (this.activeChallenge !== undefined) {
+      const prestige = this.activeChallenge.prestige
       this.activeChallenge = undefined;
-      ResetService.reset('yellow')
+      ResetService.reset(prestige)
+      UpgradeService.resetUpgrades();
+      GeneratorService.resetGenerators();
       DataManagerService.load();
-      App.next();
     }
   }
 
@@ -92,10 +99,16 @@ export class ChallengeService {
   }
 
   static applyNerfs() {
-    if (this.activeChallenge)
-    this.activeChallenge.nerfs.forEach((action) => {
-      action.execute();
-    })
+    if (this.activeChallenge) {
+      if (typeof this.activeChallenge.nerfs === "function") {
+        const buff: Num | undefined = this.activeChallenge.nerfs(this.activeChallenge)
+        if (buff instanceof Num) this.activeChallenge.effect = buff;
+      } else {
+        this.activeChallenge.nerfs.forEach((action) => {
+          action.execute();
+        })
+      }
+    }
   }
 
   static getChallenges(type: string) {
@@ -131,6 +144,12 @@ export class ChallengeService {
   static action() {
     this.challenges.forEach(challenge => {
       if (challenge.completed && !challenge.disabled) {
+        if (typeof challenge.reward === "function") {
+          const buff: Num | undefined = challenge.reward(challenge)
+          if (buff !== undefined) {
+            challenge.effect = buff.copy();
+          }
+        }
         if (challenge.reward instanceof Action) challenge.reward.execute();
         if (challenge.reward instanceof NewAction) challenge.reward.execute(challenge);
       }

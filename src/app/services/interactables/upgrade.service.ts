@@ -17,51 +17,42 @@ import {Sorter} from "../../Sorter";
 import {nuclearDecayUpgrades} from "./upgrades/green/nucleardecay";
 import {blueNeutronUpgrades} from "./upgrades/blue/neutrons";
 import {blueNeutronStars} from "./upgrades/blue/neutronStars";
-import {GlobalMultipliersService} from "../globals/global-multipliers.service";
 import {blueUpgrades} from "./upgrades/blue/upgrades";
 import {prePurpleUpgrades} from "./upgrades/purple/prePurple";
 import {NewAction} from "../../NewAction";
-import {ArrayType} from "@angular/compiler";
 import {blackHoleUpgrades} from "./upgrades/purple/blackHole";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UpgradeService {
-  static upgrades: Upgrade[] =
-    redUpgrades.concat(
-      blueUpgrades,
-      blueNeutronStars,
-      blueNeutronUpgrades,
-      nuclearDecayUpgrades,
-      greenSacrifice,
-      greenUpgrades,
-      darkenergyUpgrades,
-      limitedGreenUpgrades,
-      yellowFusionUpgrades,
-      yellowUpgrades,
-      redGeneratorUpgrades,
-      redAccelerators,
-      prePurpleUpgrades,
-      blackHoleUpgrades
-  )
-  static sortedUpgrades: Upgrade[] =
-    Sorter.sort(redUpgrades.concat(
-      blueUpgrades,
-      blueNeutronStars,
-      blueNeutronUpgrades,
-      nuclearDecayUpgrades,
-      greenSacrifice,
-      greenUpgrades,
-      darkenergyUpgrades,
-      limitedGreenUpgrades,
-      yellowFusionUpgrades,
-      yellowUpgrades,
-      redGeneratorUpgrades,
-      redAccelerators,
-      prePurpleUpgrades,
-      blackHoleUpgrades
-    ), 'name');
+  static upgrades: Upgrade[] = []
+  static sortedUpgrades: Upgrade[] = []
+
+  static resetUpgrades() {
+    this.upgrades = [];
+    const upgrades = redUpgrades.concat(
+        blueUpgrades,
+        blueNeutronStars,
+        blueNeutronUpgrades,
+        nuclearDecayUpgrades,
+        greenSacrifice,
+        greenUpgrades,
+        darkenergyUpgrades,
+        limitedGreenUpgrades,
+        yellowFusionUpgrades,
+        yellowUpgrades,
+        redGeneratorUpgrades,
+        redAccelerators,
+        prePurpleUpgrades,
+        blackHoleUpgrades
+      )
+
+    upgrades.forEach(upgrade => {
+      this.upgrades.push(this.copy(upgrade));
+    })
+    this.sortedUpgrades = Sorter.sort(this.upgrades, 'name');
+  }
 
   static save() {
     const save = {};
@@ -140,13 +131,8 @@ export class UpgradeService {
       if (upgrade.limit !== undefined) {
         upgrade.oneTime = upgrade.bought.greq(upgrade.limit);
       }
-
       if (upgrade.requirement[0] !== 'none' && upgrade.requirement[0] !== 'never') {
-        if (HoldingsService.get(upgrade.requirement[0]).greq(upgrade.requirement[1])) {
-          upgrade.unlocked = true;
-        } else {
-          upgrade.unlocked = false;
-        }
+        upgrade.unlocked = HoldingsService.get(upgrade.requirement[0]).greq(upgrade.requirement[1]);
       } else if (upgrade.requirement[0] === 'never') {
         upgrade.unlocked = false;
       } else if (upgrade.requirement[0] === 'none') {
@@ -158,7 +144,12 @@ export class UpgradeService {
   static action() {
     this.upgrades.forEach((upgrade) => {
       if ((upgrade.action !== undefined && upgrade.bought.greq(new Num(1, 0))) || upgrade.name === 'red-generator-booster') {
-        if (upgrade.action instanceof Action) {
+        if (typeof upgrade.action === "function") {
+          const buff = upgrade.action(upgrade)
+          if (buff instanceof Num) {
+            upgrade.effect = buff.copy();
+          }
+        } else if (upgrade.action instanceof Action) {
           upgrade.action.execute()
         } else if (upgrade.action instanceof NewAction) {
           upgrade.action.execute(upgrade);
@@ -170,5 +161,74 @@ export class UpgradeService {
         }
       }
     })
+  }
+
+  static bought(upgrade: string) {
+    return this.getValue(upgrade, 'bought').greq(new Num(1, 0));
+  }
+
+  static disableUpgrade(name: string) {
+    const upgrade = this.getUpgrade(name)
+    upgrade.amount = new Num(0, 0);
+    upgrade.buffer = new Num(0, 0);
+    upgrade.action = () => {};
+    const doc = <HTMLElement> document.getElementById(upgrade.name)?.childNodes.item(4);
+    if (doc !== null && doc !== undefined) {
+      doc.style.display = 'flex';
+    }
+  }
+
+  static disableUpgrades(type: string) {
+    const upgrades = this.getUpgrades(type)
+    upgrades.forEach((upgrade) => {
+      upgrade.amount = new Num(0, 0);
+      upgrade.buffer = new Num(0, 0);
+      upgrade.action = () => {};
+      const doc = <HTMLElement> document.getElementById(upgrade.name)?.childNodes.item(4);
+      if (doc !== null && doc !== undefined) {
+        doc.style.display = 'flex';
+      }
+    })
+  }
+
+  static copy(upgrade: Upgrade) {
+    const save: Upgrade = {
+      amount: new Num(1, 0),
+      baseBuffer: new Num(1, 0),
+      baseCost: new Num(1, 0),
+      bought: new Num(1, 0),
+      buffer: new Num(1, 0),
+      cost: new Num(1, 0),
+      currency: "",
+      description: "",
+      displayName: "",
+      increase: new Num(1, 0),
+      name: "",
+      oneTime: false,
+      requirement: [],
+      resetId: "",
+      resets: "",
+      scaling: new Num(1, 0),
+      style: "",
+      type: "",
+      unlocked: false
+    };
+    Object.entries(upgrade).forEach((entry) => {
+      if (entry[1] instanceof Num) {
+        // @ts-ignore
+        save[entry[0]] = new Num(entry[1]['num'], entry[1]['exp'])
+      } else if (entry[1] instanceof Array) {
+        const arr: any[] = [];
+        entry[1].forEach((arrEntry) => {
+          arr.push(arrEntry);
+        })
+        // @ts-ignore
+        save[entry[0]] = arr;
+      } else {
+        // @ts-ignore
+        save[entry[0]] = entry[1];
+      }
+    })
+    return save;
   }
 }

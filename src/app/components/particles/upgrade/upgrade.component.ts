@@ -38,7 +38,7 @@ export class UpgradeComponent implements OnInit {
     const action = this.upgrade?.action
     if (action !== undefined && action instanceof Action) {
       this.effect = [action['type'], action['amount'], action['subject'], action['variable'], this.upgrade?.buffer]
-    } else if (action !== undefined && action instanceof NewAction) {
+    } else if (action !== undefined && (action instanceof NewAction || typeof action === 'function')) {
       this.effect = ['upgrade', this.name]
     } else if (action !== undefined && Array.isArray(action) && action[0] instanceof NewAction) {
       this.effect = ['upgrade', this.name]

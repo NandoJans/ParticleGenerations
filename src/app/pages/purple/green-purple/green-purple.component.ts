@@ -3,7 +3,6 @@ import {Generator, Upgrade} from "../../../globals";
 import {Num} from "../../../num";
 import {GeneratorService} from "../../../services/interactables/generator.service";
 import {UpgradeService} from "../../../services/interactables/upgrade.service";
-import {BackgroundService} from "../../../services/visuals/background.service";
 
 @Component({
   selector: 'app-green-purple',
@@ -19,7 +18,6 @@ export class GreenPurpleComponent implements OnInit {
   ngOnInit(): void {
     this.generators = GeneratorService.getGenerators('green-purple-generator');
     this.upgrades = UpgradeService.getUpgrades('green-purple-upgrade');
-    BackgroundService.setBackground('purple')
   }
 
 }

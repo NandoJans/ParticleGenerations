@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Milestone} from "../../../globals";
 import {MilestoneService} from "../../../services/interactables/milestone.service";
-import {BackgroundService} from "../../../services/visuals/background.service";
 
 @Component({
   selector: 'app-blue-milestones',
@@ -14,7 +13,6 @@ export class BlueMilestonesComponent implements OnInit {
 
   ngOnInit(): void {
     this.milestones = MilestoneService.getMilestones('blue-milestone')
-    BackgroundService.setBackground('blue')
   }
 
 }

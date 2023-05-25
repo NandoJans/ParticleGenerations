@@ -21,19 +21,12 @@ import {App} from "../../App";
   providedIn: 'root'
 })
 export class GeneratorService {
+  static generators: Generator[] = [];
+  static sortedGenerators: Generator[] = []
 
-  static generators: Generator[] = redParticleGenerators.concat(
-    blueParticleGenerators,
-    redAcceleratorGenerators,
-    yellowParticleGenerators,
-    greenParticleGenerators,
-    blueLightGenerators,
-    prePurpleGenerators,
-    purpleParticleGenerators
-  )
-
-  static sortedGenerators: Generator[] =
-    Sorter.sort(redParticleGenerators.concat(
+  static resetGenerators() {
+    this.generators = [];
+    const generators = redParticleGenerators.concat(
       blueParticleGenerators,
       redAcceleratorGenerators,
       yellowParticleGenerators,
@@ -41,7 +34,14 @@ export class GeneratorService {
       blueLightGenerators,
       prePurpleGenerators,
       purpleParticleGenerators
-    ), 'name')
+    )
+
+    generators.forEach(generator => {
+      this.generators.push(this.copy(generator));
+    })
+
+    this.sortedGenerators = Sorter.sort(this.generators, 'name')
+  }
 
   static get(name: string) {
     for (let i = 0; i < this.generators.length; i++) {
@@ -201,6 +201,10 @@ export class GeneratorService {
     })
   }
 
+  static getGenerator(name: string) {
+    return Searcher.search(this.sortedGenerators, 'name', name)
+  }
+
   static getGenerators(type: string) {
     const ret_arr: Generator[] = [];
 
@@ -225,4 +229,65 @@ export class GeneratorService {
     })
   }
 
+  static disableGenerator(name: string) {
+    const generator = this.getGenerator(name)
+    generator.amount = new Num(0, 0);
+    generator.multiplier = new Num(0, 0);
+    const doc = <HTMLElement> document.getElementById(generator.name)?.children.item(4);
+    if (doc !== null && doc !== undefined) {
+      doc.style.display = 'flex';
+    }
+  }
+
+  static disableGenerators(type: string) {
+    const upgrades = this.getGenerators(type)
+    upgrades.forEach((generator) => {
+      generator.amount = new Num(0, 0);
+      generator.multiplier = new Num(0, 0);
+      const doc = <HTMLElement> document.getElementById(generator.name)?.children.item(4);
+      if (doc !== null && doc !== undefined) {
+        doc.style.display = 'flex';
+      }
+    })
+  }
+
+  static copy(generator: Generator) {
+    const save: Generator = {
+      amount: new Num(0, 0),
+      baseCost: new Num(0, 0),
+      baseMulMod: new Num(0, 0),
+      baseMultiplier: new Num(0, 0),
+      bought: new Num(0, 0),
+      cost: new Num(0, 0),
+      currency: "",
+      displayName: "",
+      generates: "",
+      increase: new Num(0, 0),
+      multiplier: new Num(0, 0),
+      name: "",
+      requirement: [],
+      resetId: "",
+      scaling: new Num(0, 0),
+      style: "",
+      type: "",
+      unlocked: false
+    };
+    Object.entries(generator).forEach((entry) => {
+      if (entry[1] instanceof Num) {
+        // @ts-ignore
+        save[entry[0]] = new Num(entry[1]['num'], entry[1]['exp'])
+      } else if (entry[1] instanceof Array) {
+        const arr: any[] = [];
+        entry[1].forEach((arrEntry) => {
+          arr.push(arrEntry);
+        })
+        // @ts-ignore
+        save[entry[0]] = arr;
+      } else {
+        // @ts-ignore
+        save[entry[0]] = entry[1];
+      }
+    })
+    return save;
+  }
 }

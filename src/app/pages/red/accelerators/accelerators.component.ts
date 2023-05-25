@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {HoldingsService} from "../../../services/holdings.service";
 import {Generator, Upgrade} from "../../../globals";
 import {UpgradeService} from "../../../services/interactables/upgrade.service";
 import {GeneratorService} from "../../../services/interactables/generator.service";
-import {Num} from "../../../num";
-import {BackgroundService} from "../../../services/visuals/background.service";
 
 @Component({
   selector: 'app-accelerators',
@@ -23,7 +20,6 @@ export class AcceleratorsComponent implements OnInit {
   ngOnInit(): void {
     this.generators = GeneratorService.getGenerators('red-accelerators');
     this.upgrades = UpgradeService.getUpgrades('red-accelerators');
-    BackgroundService.setBackground('red')
   }
 
 }

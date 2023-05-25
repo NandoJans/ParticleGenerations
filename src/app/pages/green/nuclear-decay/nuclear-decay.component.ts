@@ -4,7 +4,6 @@ import {GeneratorService} from "../../../services/interactables/generator.servic
 import {Num} from "../../../num";
 import {UpgradeService} from "../../../services/interactables/upgrade.service";
 import {HoldingsService} from "../../../services/holdings.service";
-import {BackgroundService} from "../../../services/visuals/background.service";
 import {ResetService} from "../../../services/interactables/reset.service";
 
 @Component({
@@ -35,7 +34,6 @@ export class NuclearDecayComponent implements OnInit {
   ngOnInit(): void {
     this.generators = GeneratorService.getGenerators('nuclear-decay');
     this.upgrades = UpgradeService.getUpgrades('nuclear-decay');
-    BackgroundService.setBackground('green')
   }
 
 }
