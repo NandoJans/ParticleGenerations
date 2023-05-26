@@ -78,6 +78,7 @@ export class ResetService {
   }
 
   static reset(resets: string) {
+    App.startHaltNuclearDecay();
     HoldingsService.set('redParticles', HoldingsService.get('redParticlesStart').copy());
     HoldingsService.set('redAccelerators', HoldingsService.get('redAcceleratorsStart').copy());
     this.resetGenerators('redParticleGenerators')
@@ -140,21 +141,12 @@ export class ResetService {
       HoldingsService.set('yellowFusion', new Num(1, 0));
     }
     HoldingsService.set('blueLight', new Num(0, 0));
-    this.resetGenerators('greenParticleGenerators')
-    this.resetGenerators('nuclearDecay')
-    if (!HoldingsService.get('blues').greq(new Num(2, 2))) {
-      this.resetUpgrades('nuclear-decay')
-    } else GeneratorService.setValues('nuclearDecay', 'amount', new Num(1, 0));
-    this.resetUpgrades('dark-compressor')
-    this.resetUpgrades('green-upgrades-repeatable')
-    this.resetUpgrades('dark-upgrade')
-    this.resetUpgrades('green-sacrifices')
-    this.resetUpgrades('green-limited-upgrades')
-    this.resetUpgrades('dark-upgrades')
-    this.resetChallenges('dark-age')
+    this.resetGenerators('green')
+    GeneratorService.setValues('nuclearDecay', 'amount', new Num(1, 0));
+    this.resetUpgrades('green')
+    this.resetChallenges('green')
     HoldingsService.set('blueHydrogen', new Num(1, 0))
-    this.resetGenerators('blueParticleGenerators', 'amount')
-    this.resetGenerators('blue-neutrons', 'amount')
+    this.resetGenerators('blue', 'amount')
 
     PrestigeLayersService.setValue('green', 'fastestGainPS', new Num(0, 0))
     DataManagerService.save()

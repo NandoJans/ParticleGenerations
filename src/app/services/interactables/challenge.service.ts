@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {yellowChallenges} from "./challenges/yellow";
-import {Challenge, Upgrade} from "../../globals";
+import {Challenge} from "../../globals";
 import {ResetService} from "./reset.service";
 import {HoldingsService} from "../holdings.service";
 import {PrestigeLayersService} from "../prestige-layers.service";
@@ -8,9 +8,6 @@ import {DataManagerService} from "../data-manager.service";
 import {MilestoneService} from "./milestone.service";
 import {darkAge} from "./challenges/green";
 import {DropDownMessageService} from "../visuals/drop-down-message.service";
-import {Action} from "../../action";
-import {NewAction} from "../../NewAction";
-import {App} from "../../App";
 import {Num} from "../../num";
 import {UpgradeService} from "./upgrade.service";
 import {GeneratorService} from "./generator.service";
@@ -103,10 +100,6 @@ export class ChallengeService {
       if (typeof this.activeChallenge.nerfs === "function") {
         const buff: Num | undefined = this.activeChallenge.nerfs(this.activeChallenge)
         if (buff instanceof Num) this.activeChallenge.effect = buff;
-      } else {
-        this.activeChallenge.nerfs.forEach((action) => {
-          action.execute();
-        })
       }
     }
   }
@@ -150,8 +143,6 @@ export class ChallengeService {
             challenge.effect = buff.copy();
           }
         }
-        if (challenge.reward instanceof Action) challenge.reward.execute();
-        if (challenge.reward instanceof NewAction) challenge.reward.execute(challenge);
       }
     })
   }

@@ -70,7 +70,6 @@ main {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("./assets/redSpace.png");
   background-position: center;
   background-size: cover;
   z-index: -100;
@@ -461,7 +460,7 @@ app-prestige-button {
   border-radius: 3px;
   border: 2px solid;
   cursor: pointer;
-  background-color: var(--background-color-2) !important;
+  background-color: var(--background-color-1) !important;
 }
 
 .prestige-button.yellow-style {

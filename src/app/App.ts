@@ -13,6 +13,12 @@ export class App {
     }, 50);
   });
 
+  static startHaltNuclearDecay() {
+    this.haltNuclearDecay = true;
+    setTimeout(() => {
+      this.haltNuclearDecay = false;
+    }, 250)
+  }
 
   static subscribe() {
     return this.observable;

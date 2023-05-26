@@ -9,7 +9,6 @@ import {yellowUpgrades} from "./upgrades/yellow/upgrade";
 import {yellowFusionUpgrades} from "./upgrades/yellow/fusion";
 import {greenSacrifice} from "./upgrades/green/sacrifice";
 import {limitedGreenUpgrades} from "./upgrades/green/limited";
-import {Action} from "../../action";
 import {darkenergyUpgrades} from "./upgrades/green/darkenergy";
 import {greenUpgrades} from "./upgrades/green/upgrade";
 import {Searcher} from "../../Searcher";
@@ -19,7 +18,6 @@ import {blueNeutronUpgrades} from "./upgrades/blue/neutrons";
 import {blueNeutronStars} from "./upgrades/blue/neutronStars";
 import {blueUpgrades} from "./upgrades/blue/upgrades";
 import {prePurpleUpgrades} from "./upgrades/purple/prePurple";
-import {NewAction} from "../../NewAction";
 import {blackHoleUpgrades} from "./upgrades/purple/blackHole";
 
 @Injectable({
@@ -149,15 +147,6 @@ export class UpgradeService {
           if (buff instanceof Num) {
             upgrade.effect = buff.copy();
           }
-        } else if (upgrade.action instanceof Action) {
-          upgrade.action.execute()
-        } else if (upgrade.action instanceof NewAction) {
-          upgrade.action.execute(upgrade);
-        } else if (upgrade.action instanceof Array){
-          upgrade.action.forEach(action => {
-            if (action instanceof Action) action.execute();
-            else if (action instanceof NewAction) action.execute(upgrade);
-          })
         }
       }
     })

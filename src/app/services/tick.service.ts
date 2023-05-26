@@ -13,7 +13,6 @@ import {MilestoneService} from "./interactables/milestone.service";
 import {ChallengeService} from "./interactables/challenge.service";
 import {AutomatorService} from "./interactables/automator.service";
 import {TimelineService} from "./timeline.service";
-import {Action} from "../action";
 import {CombinerService} from "./interactables/combiner.service";
 import {Router} from "@angular/router";
 import {App} from "../App";
@@ -24,8 +23,7 @@ import {App} from "../App";
 export class TickService {
 
   constructor(private holdings: HoldingsService, private generators: GeneratorService,
-              private upgrades: UpgradeService, private buyables: BuyableService,
-              private router: Router
+              private upgrades: UpgradeService, private buyables: BuyableService
   ) { }
 
   mainAction(speed: Num) {
@@ -36,13 +34,25 @@ export class TickService {
       HoldingsService.set('yellowFusion', new Num(1, 0))
     }
     if (GeneratorService.getValue('nuclear-decay-generator-1', 'bought').greq(new Num(1, 0))) {
-      new Action('decreaseHoldingIncremental', 'greenSouls', new Num(2, 0), 'bought', 'nuclear-decay-generator-1').execute()
+      const generator: {} = GeneratorService.get('nuclear-decay-generator-1')
+      // @ts-ignore
+      const cost: Num | undefined = generator['baseCost'].mul(new Num(2, 0).pow(generator['bought'], false).sub(new Num(1, 0), false), false)
+      // @ts-ignore
+      HoldingsService.remove('greenSouls', cost);
     }
     if (GeneratorService.getValue('nuclear-decay-generator-2', 'bought').greq(new Num(1, 0))) {
-      new Action('decreaseHoldingIncremental', 'greenSouls', new Num(2, 0), 'bought', 'nuclear-decay-generator-2').execute()
+      const generator: {} = GeneratorService.get('nuclear-decay-generator-2')
+      // @ts-ignore
+      const cost: Num | undefined = generator['baseCost'].mul(new Num(2, 0).pow(generator['bought'], false).sub(new Num(1, 0), false), false)
+      // @ts-ignore
+      HoldingsService.remove('greenSouls', cost);
     }
     if (GeneratorService.getValue('nuclear-decay-generator-3', 'bought').greq(new Num(1, 0))) {
-      new Action('decreaseHoldingIncremental', 'greenSouls', new Num(2, 0), 'bought', 'nuclear-decay-generator-3').execute()
+      const generator: {} = GeneratorService.get('nuclear-decay-generator-3')
+      // @ts-ignore
+      const cost: Num | undefined = generator['baseCost'].mul(new Num(2, 0).pow(generator['bought'], false).sub(new Num(1, 0), false), false)
+      // @ts-ignore
+      HoldingsService.remove('greenSouls', cost);
     }
     if (App.purplePhase) {
       if (HoldingsService.get('redParticles').greq(new Num(1, 110))) {
@@ -75,8 +85,6 @@ export class TickService {
       MilestoneService.setValue('auto-complete-yellow-challenges', 'cost', new Num(0, 0));
     }
   }
-
-  upgradeActionDelay: number = 10;
 
   gameTick(speed: Num = new Num(1, 0)) {
 
@@ -157,10 +165,7 @@ export class TickService {
         localStorage['lastCalled'] = Date.now() - 86400000
       }
     }
-    App.haltNuclearDecay = true;
-    setTimeout(() => {
-      App.haltNuclearDecay = false;
-    }, 500)
+    App.startHaltNuclearDecay();
     GlobalMultipliersService.resetAfter();
     App.purplePhase = HoldingsService.get('purples').greq(new Num(1, 0));
 

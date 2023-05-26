@@ -7,7 +7,7 @@ export const combinerSubject = [
     nav: 'blue', subNav: 'blueCombiners', maxBuffer: new Num(1, 0)
   },
   {
-    name: 'based-on-yellow-particles', displayName: 'Yellow Particles', cost: new Num(1, 10), currency: 'blueParticles', type: 'blue-subject', resetId: 'blue-combiners', style: 'blue-style',
+    name: 'based-on-yellow-particles', displayName: 'Yellow Particles', cost: new Num(1, 9), currency: 'blueParticles', type: 'blue-subject', resetId: 'blue-combiners', style: 'blue-style',
     unlocked: false, requirement: ['blueParticles', new Num(1, 4)], active: false, element: 'yellowParticles', buffer: new Num(9, -4), bought: new Num(0, 0),
     nav: 'blue', subNav: 'blueCombiners', maxBuffer: new Num(1, 0)
   },

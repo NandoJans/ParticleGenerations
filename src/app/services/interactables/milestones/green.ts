@@ -1,6 +1,5 @@
 import {Milestone} from "../../../globals";
 import {Num} from "../../../num";
-import {Action} from "../../../action";
 import {AutomatorService} from "../automator.service";
 import {UpgradeService} from "../upgrade.service";
 import {GlobalMultipliersService} from "../../globals/global-multipliers.service";

@@ -1,9 +1,7 @@
 import {Num} from "../../../../num";
-import {NewAction} from "../../../../NewAction";
 import {Upgrade} from "../../../../globals";
 import {GeneratorService} from "../../generator.service";
 import {GlobalMultipliersService} from "../../../globals/global-multipliers.service";
-import {HoldingsService} from "../../../holdings.service";
 
 export const yellowFusionUpgrades = [
   {

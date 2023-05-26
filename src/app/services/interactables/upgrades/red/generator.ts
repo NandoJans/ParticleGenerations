@@ -1,7 +1,5 @@
 import {Upgrade} from "../../../../globals";
 import {Num} from "../../../../num";
-import {Action} from "../../../../action";
-import {NewAction} from "../../../../NewAction";
 import {GlobalMultipliersService} from "../../../globals/global-multipliers.service";
 import {UpgradeService} from "../../upgrade.service";
 import {HoldingsService} from "../../../holdings.service";
