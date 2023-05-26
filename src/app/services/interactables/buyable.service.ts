@@ -123,12 +123,20 @@ export class BuyableService {
   }
 
   compare() {
+    //console.clear();
     GeneratorService.generators.forEach((buyable) => {
+
+      if (buyable.name === 'nuclear-decay-generator-1') {
+        //console.log(buyable)
+      }
       if (HoldingsService.get(buyable.currency).greq(buyable.cost) && buyable['unlocked']
         && buyable['auto']) {
+        //console.log(1)
         const result1 = this.calculateBulk(buyable)
+        //console.log(2)
         // @ts-ignore
         if (result1[0].greq(new Num(1, 0)) && HoldingsService.get(buyable.currency).greq(result1[1])) {
+          //console.log(3)
           // @ts-ignore
           this.bulkBuyAction(buyable, result1[1], result1[0]);
         }
@@ -274,17 +282,6 @@ export class BuyableService {
             let buyableAmount = buyable.scalingStart.div(buyable.baseCost, false).ln(false).div(buyable.increase.ln(false), false).floor(false)
             // @ts-ignore
             buyable.cost = buyable.baseCost.mul(buyable.increase.pow(buyableAmount, false), false)
-            /*
-            let leftOverCurrency = HoldingsService.get(buyable.currency).div(buyable.cost, false)
-            const two = new Num(2, 0)
-            const four = new Num(4, 0)
-
-            // @ts-ignore
-            let postScalingAmount = buyable.increase.ln(false).sub(buyable.increase.ln(false).pow(two, false).add(four.mul(buyable.scaling.ln(false), false).mul(leftOverCurrency.div(buyable.baseCost, false).ln(false), false), false).sqrt(false), false).div(two.mul(buyable.scaling.ln(false), false), false)
-            // @ts-ignore
-            postScalingAmount = postScalingAmount.negate(false).floor(false).add(new Num(1, 0), false)
-
-             */
 
             let postBought = buyable.bought.sub(buyableAmount, false);
             // @ts-ignore
@@ -314,17 +311,6 @@ export class BuyableService {
             let buyableAmount = buyable.scalingStart.div(buyable.baseCost, false).ln(false).div(buyable.increase.ln(false), false).floor(false)
             // @ts-ignore
             buyable.cost = buyable.baseCost.mul(buyable.increase.pow(buyableAmount, false), false)
-            /*
-            let leftOverCurrency = HoldingsService.get(buyable.currency).div(buyable.cost, false)
-            const two = new Num(2, 0)
-            const four = new Num(4, 0)
-
-            // @ts-ignore
-            let postScalingAmount = buyable.increase.ln(false).sub(buyable.increase.ln(false).pow(two, false).add(four.mul(buyable.scaling.ln(false), false).mul(leftOverCurrency.div(buyable.baseCost, false).ln(false), false), false).sqrt(false), false).div(two.mul(buyable.scaling.ln(false), false), false)
-            // @ts-ignore
-            postScalingAmount = postScalingAmount.negate(false).floor(false).add(new Num(1, 0), false)
-
-             */
 
             let postBought = buyable.bought.sub(buyableAmount, false);
             // @ts-ignore

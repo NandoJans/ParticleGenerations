@@ -169,21 +169,25 @@ export class TickService {
       if (!HoldingsService.get('redParticles').greq(new Num(2, 1))) {HoldingsService.set('redParticles', new Num(2, 1))}
       if (!HoldingsService.get('yellowParticles').greq(new Num(1, 0)) && !App.purplePhase) {HoldingsService.set('yellowParticles', new Num(0, 0))}
       if (!HoldingsService.get('greenParticles').greq(new Num(1, 0)) && !App.purplePhase) {HoldingsService.set('greenParticles', new Num(0, 0))}
+
       if (lastCalled+10000 < Date.now()) {
         if (!App.isIdling) {
           const idleGain = setInterval(() => {
             App.isIdling = true;
-            this.gameTick(new Num(1, 2))
+            this.gameTick(new Num(2, 3))
 
             lastCalled += 100000;
             localStorage['lastCalled'] = JSON.stringify(lastCalled)
-            if (lastCalled >= Date.now()-100000) clearInterval(idleGain); App.isIdling = false;
+            if (lastCalled >= Date.now()-100000) {
+              clearInterval(idleGain);
+              App.isIdling = false;
+            }
             console.log('Idling')
-          }, 3)
+          }, 5)
         }
       } else {
         this.iterations++;
-        this.gameTick(new Num(1, 2))
+        this.gameTick(new Num(1, 0))
 
         lastCalled = Date.now();
         localStorage['lastCalled'] = JSON.stringify(lastCalled)
@@ -194,12 +198,6 @@ export class TickService {
       console.log('Iterations: '+this.iterations+'/s')
       this.iterations = 0
     }, 1000)
-
-    App.subscribe().subscribe((data) => {
-      if (data) {
-        clearInterval(mainInterval)
-      }
-    })
 
     setInterval(() => {
       //ParticleEmitterService.tick();

@@ -26,11 +26,15 @@ export class AppComponent implements OnInit{
     })
   }
 
+  isTicking = false;
 
   ngOnInit(): void {
     UpgradeService.resetUpgrades();
     GeneratorService.resetGenerators();
     DataManagerService.load();
-    this.tick.tick();
+    if (!this.isTicking) {
+      this.tick.tick();
+      this.isTicking = true;
+    }
   }
 }

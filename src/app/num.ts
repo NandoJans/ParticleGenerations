@@ -49,20 +49,6 @@ export class Num {
         expNum *= 10 ** -buff
       }
 
-      return 'e' + String((expNum.toFixed(2)+'e'+expExp).replace(/\B(?=(\d{3})+(?!\d))/g, ","))
-    } else if (this.exp >= 1e6) {
-      let expNum = this.exp;
-      let expExp = 0;
-      let arr = this.exp.toString().split('e');
-      if (arr[1] !== undefined) {
-        expNum = parseFloat(arr[0])
-        expExp = parseInt(arr[1].slice(1))
-      } else {
-        let buff = Math.floor(this.exp).toString().length-1
-        expExp += buff
-        expNum *= 10 ** -buff
-      }
-
       return String(this.num.toFixed(2)) + 'e' + String((expNum.toFixed(2)+'e'+expExp).replace(/\B(?=(\d{3})+(?!\d))/g, ","))
     }
     if (this.exp >= 6) {
