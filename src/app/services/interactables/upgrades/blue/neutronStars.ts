@@ -81,11 +81,11 @@ export const blueNeutronStars: Upgrade[] = [
     }, nav: 'blue', subNav: 'neutronStars'
   },
   {
-    name: 'more-dark-power', displayName: 'More Dark Power', description: 'Increase the limit of dark power to 666, but make dark age harder again.', auto: false,
+    name: 'more-dark-power', displayName: 'More Dark Power', description: 'Increase the limit of dark power by 66, but make dark age harder again.', auto: false,
     baseCost: new Num(1,50), cost: new Num(1, 50), increase: new Num(1,3), scaling: new Num(1, 1), bought: new Num(0, 0), currency: 'blueLight',
     baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'blue-light-upgrade-onetime', resetId: 'blue', style: 'light-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['blues', new Num(3, 0)],
     action: (self: Upgrade) => {
-      HoldingsService.set('maxDarkPower', new Num(6.66, 2));
+      HoldingsService.set('maxDarkPower', new Num(2.66, 2));
     }, nav: 'blue', subNav: 'neutronStars'
   },
 ]

@@ -12,7 +12,7 @@ export class DropDownMessageService {
     const dropDownContent: HTMLElement = <HTMLElement> document.getElementById('ddm-content')
     if (dropDownElement !== null && dropDownTitle !== null && dropDownContent !== null) {
 
-      dropDownElement.style.top = '100px';
+      dropDownElement.style.top = '80px';
       dropDownTitle.innerHTML = title;
       dropDownContent.innerHTML = message;
 

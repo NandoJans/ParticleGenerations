@@ -123,8 +123,7 @@ export class ResetService {
       HoldingsService.set('yellowFusion', new Num(1, 0));
       this.resetAutomators('red-automators')
       this.resetAutomators('yellow-automators')
-      this.resetUpgrades('green-fusion')
-      this.resetUpgrades('green-upgrades')
+      this.resetUpgrades('green')
     }
     HoldingsService.set('greenParticles', new Num(0, 0));
     HoldingsService.set('greenSouls', new Num(1, 0));
@@ -136,13 +135,17 @@ export class ResetService {
     HoldingsService.set('blueNeutrons', new Num(1, 0));
     HoldingsService.set('bluePurple', new Num(1, 0));
     if (HoldingsService.get('blues').greq(new Num(3, 2))) {
-      HoldingsService.set('yellowFusion', new Num(1, 50000));
+      HoldingsService.set('yellowFusion', HoldingsService.get('yellowFusion').pow(new Num(7.5, -1), false));
     } else {
       HoldingsService.set('yellowFusion', new Num(1, 0));
     }
     HoldingsService.set('blueLight', new Num(0, 0));
     this.resetGenerators('green')
-    GeneratorService.setValues('nuclearDecay', 'amount', new Num(1, 0));
+    if (HoldingsService.get('blues').greq(new Num(2, 2,))) {
+      this.resetGenerators('nuclear', 'amount')
+    } else {
+      this.resetGenerators('nuclear')
+    }
     this.resetUpgrades('green')
     this.resetChallenges('green')
     HoldingsService.set('blueHydrogen', new Num(1, 0))
@@ -158,13 +161,11 @@ export class ResetService {
     if (resets === 'neutron-star') HoldingsService.set('greens', new Num(0, 0));
     HoldingsService.set('blueParticles', new Num(0, 0));
     if (resets === 'neutron-star') this.resetAutomators('green-automators')
-    this.resetUpgrades('green-fusion')
-    this.resetUpgrades('green-upgrades')
-    this.resetUpgrades('blue-neutron-upgrade')
-    this.resetUpgrades('blue-limited-upgrades')
-    this.resetGenerators('blue-neutrons')
-    this.resetGenerators('nuclearDecay')
-    this.resetUpgrades('nuclear-decay')
+    this.resetUpgrades('green')
+    this.resetUpgrades('blue')
+    this.resetGenerators('blue')
+    this.resetGenerators('nuclear')
+    this.resetUpgrades('nuclear')
 
     HoldingsService.set('blueHydrogen', new Num(1, 0))
     HoldingsService.set('blueLight', new Num(0, 0))

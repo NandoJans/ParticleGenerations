@@ -27,13 +27,16 @@ export const limitedGreenUpgrades: Upgrade[] = [
     }, nav: 'green', subNav: 'greenSacrifice'
   },
   {
-    name: 'accelerators-yellow-power-based', displayName: 'Give Accelerators a multiplier based on fifth yellow generators', description: '', auto: false,
+    name: 'accelerators-yellow-power-based', displayName: 'Give Accelerators a multiplier based on fifth yellow generators', description: '', auto: false, maxEffect: new Num(1, 100),
     baseCost: new Num(5,0), cost: new Num(5, 0), increase: new Num(1,0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenSouls',
     baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'green-limited-upgrades', resetId: 'green', style: 'limited-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['greens', new Num(1, 0)],
     action: (self: Upgrade) => {
       HoldingsService.remove('greenSouls', self.cost);
       HoldingsService.add('limitedUpgradeCount', new Num(1, 0));
-      const buff = GeneratorService.getValue('yellow-generator-5', 'amount').pow(new Num(2, 1), false)
+      let buff = GeneratorService.getValue('yellow-generator-5', 'amount').pow(new Num(2, 1), false)
+      if (self.maxEffect instanceof Num && buff.greq(self.maxEffect)) {
+        buff = self.maxEffect.copy();
+      }
       GlobalMultipliersService.correct('redAcceleratorGenerators', buff)
       return buff;
     }, nav: 'green', subNav: 'greenSacrifice'

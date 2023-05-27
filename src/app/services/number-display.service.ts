@@ -113,6 +113,11 @@ export class NumberDisplayService {
             // @ts-ignore
             element.innerHTML = PrestigeLayersService.getValue(entry.name, 'gain')
             break;
+          case 'challengeCompletions':
+            if (entry.effect !== undefined && entry.effect[0] instanceof Num && entry.effect[1] instanceof Num) {
+              element.innerHTML = 'Completions: '+entry.effect[0]+' / '+entry.effect[1]
+            }
+            break;
           default:
             // @ts-ignore
             if (GeneratorService.getValue(entry.name, entry.type) !== 0) {

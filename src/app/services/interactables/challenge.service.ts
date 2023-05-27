@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {yellowChallenges} from "./challenges/yellow";
-import {Challenge} from "../../globals";
+import {Challenge, Upgrade} from "../../globals";
 import {ResetService} from "./reset.service";
 import {HoldingsService} from "../holdings.service";
 import {PrestigeLayersService} from "../prestige-layers.service";
@@ -11,12 +11,25 @@ import {DropDownMessageService} from "../visuals/drop-down-message.service";
 import {Num} from "../../num";
 import {UpgradeService} from "./upgrade.service";
 import {GeneratorService} from "./generator.service";
+import {blueChallenges} from "./challenges/blue";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChallengeService {
-  static challenges: Challenge[] = yellowChallenges.concat(darkAge);
+  static challenges: Challenge[] = [];
+
+  static resetChallenges() {
+    this.challenges = []
+    const challenges = yellowChallenges.concat(
+      darkAge,
+      blueChallenges
+    )
+
+    challenges.forEach(challenge => {
+      this.challenges.push(this.copy(challenge));
+    })
+  }
   static activeChallenge: Challenge | undefined = undefined;
 
   static save() {
@@ -39,7 +52,13 @@ export class ChallengeService {
       if (challenges[challenge.name] !== undefined) {
         Object.entries(challenges[challenge.name]).forEach((value) => {
           // @ts-ignore
-          challenge[value[0]] = value[1];
+          if (challenge[value[0]] instanceof Num) {
+            // @ts-ignore
+            challenge[value[0]] = new Num(value[1]['num'], value[1]['exp'])
+          } else {
+            // @ts-ignore
+            challenge[value[0]] = value[1];
+          }
         })
       }
       if (challenge.name === JSON.parse(localStorage['activeChallenge'])) {
@@ -53,15 +72,21 @@ export class ChallengeService {
     return this.activeChallenge.displayName
   }
 
-  static shouldHidePrestigeButton() {
-    if (this.activeChallenge === undefined) return true;
-    return HoldingsService.get(this.activeChallenge.currency).greq(this.activeChallenge.goal)
+  static shouldHidePrestigeButton(prestige: string) {
+    if (this.activeChallenge === undefined) {
+      return true;
+    } else if (this.activeChallenge.prestige === prestige) {
+      return HoldingsService.get(this.activeChallenge.currency).greq(this.activeChallenge.goal)
+    } else {
+      return true;
+    }
   }
 
   static startChallenge(name: string) {
     this.challenges.forEach((challenge) => {
       if (challenge.name === name) {
         this.activeChallenge = challenge;
+        HoldingsService.set('yellowFusion', new Num(0, 0));
         ResetService.reset(challenge.prestige);
       }
     })
@@ -69,11 +94,16 @@ export class ChallengeService {
 
   static prestige(prestige: string) {
     if (this.activeChallenge === undefined || this.activeChallenge.prestige !== prestige) return
-    this.activeChallenge.completed = true;
+    if (typeof this.activeChallenge.completed === 'boolean') {
+      this.activeChallenge.completed = true;
+    } else {
+      this.activeChallenge.completed.add(new Num(1, 0));
+    }
     this.activeChallenge = undefined;
     DataManagerService.save();
     UpgradeService.resetUpgrades();
     GeneratorService.resetGenerators();
+    ChallengeService.resetChallenges();
     DataManagerService.load();
   }
 
@@ -84,6 +114,7 @@ export class ChallengeService {
       ResetService.reset(prestige)
       UpgradeService.resetUpgrades();
       GeneratorService.resetGenerators();
+      ChallengeService.resetChallenges();
       DataManagerService.load();
     }
   }
@@ -114,6 +145,16 @@ export class ChallengeService {
     return retArr;
   }
 
+  static getChallenge(name: string) {
+    for (let i = 0; i < this.challenges.length; i++) {
+      const challenge = this.challenges[i];
+      if (challenge.name === name) {
+        return challenge
+      }
+    }
+    return this.challenges[0];
+  }
+
   static disable() {
     this.challenges.forEach((challenge) => {challenge.disabled = true})
   }
@@ -127,16 +168,38 @@ export class ChallengeService {
           challenge.completed = true;
         }
       }
-      if (challenge.completed && (<HTMLElement> document.getElementById(challenge.name+'-button')) !== null) {
+      if (
+        (!challenge.dynamic && challenge.completed && (<HTMLElement> document.getElementById(challenge.name+'-button')) !== null) ||
+        (challenge.dynamic && challenge.completed instanceof Num && challenge.maxCompletions instanceof Num && challenge.completed.greq(challenge.maxCompletions) &&
+        (<HTMLElement> document.getElementById(challenge.name+'-button')) !== null)
+      ) {
         (<HTMLElement> document.getElementById(challenge.name+'-button')).innerHTML = 'Completed';
         (<HTMLElement> document.getElementById(challenge.name)).classList.add('reached');
       }
     })
   }
 
+  static dynamicChallenges() {
+    this.challenges.forEach((challenge) => {
+      if (challenge.dynamic) {
+        // @ts-ignore
+        challenge.goal = challenge.baseGoal.mul(challenge.goalIncrease.pow(challenge.completed, false), false)
+      }
+    })
+  }
+
   static action() {
     this.challenges.forEach(challenge => {
-      if (challenge.completed && !challenge.disabled) {
+      if (typeof challenge.completed === 'boolean' && challenge.completed && !challenge.disabled) {
+        if (typeof challenge.reward === "function") {
+          const buff: Num | undefined = challenge.reward(challenge)
+          if (buff !== undefined) {
+            challenge.effect = buff.copy();
+          }
+        }
+      } else if (
+        challenge.completed instanceof Num && challenge.completed.greq(new Num(1, 0)) && !challenge.disabled
+      ) {
         if (typeof challenge.reward === "function") {
           const buff: Num | undefined = challenge.reward(challenge)
           if (buff !== undefined) {
@@ -165,5 +228,66 @@ export class ChallengeService {
       }
     })
     return retValue;
+  }
+
+  static disableChallenge(name: string) {
+    const challenge: Challenge = this.getChallenge(name)
+    challenge.reward = () => {};
+    const doc = <HTMLElement> document.getElementById(challenge.name)?.childNodes.item(0);
+    if (doc !== null && doc !== undefined) {
+      doc.style.display = 'flex';
+    }
+  }
+
+  static disableChallenges(type: string) {
+    const challenges = this.getChallenges(type)
+    challenges.forEach((challenge) => {
+      challenge.reward = () => {};
+      const doc = <HTMLElement> document.getElementById(challenge.name)?.childNodes.item(0);
+      if (doc !== null && doc !== undefined) {
+        doc.style.display = 'flex';
+      }
+    })
+  }
+
+  private static copy(challenge: Challenge) {
+    const save: Challenge = {
+      baseGoal: new Num(1, 0),
+      completed: new Num(1, 0),
+      currency: "",
+      description: "",
+      disabled: false,
+      displayName: "",
+      goal: new Num(1, 0),
+      instantComplete: false,
+      name: "",
+      nerfs: () => {},
+      prestige: "",
+      requirement: [],
+      resetId: "",
+      reward: () => {},
+      rewardDescription: "",
+      style: "",
+      type: "",
+      unlocked: false
+    };
+
+    Object.entries(challenge).forEach((entry) => {
+      if (entry[1] instanceof Num) {
+        // @ts-ignore
+        save[entry[0]] = new Num(entry[1]['num'], entry[1]['exp'])
+      } else if (entry[1] instanceof Array) {
+        const arr: any[] = [];
+        entry[1].forEach((arrEntry) => {
+          arr.push(arrEntry);
+        })
+        // @ts-ignore
+        save[entry[0]] = arr;
+      } else {
+        // @ts-ignore
+        save[entry[0]] = entry[1];
+      }
+    })
+    return save;
   }
 }

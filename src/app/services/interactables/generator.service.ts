@@ -231,7 +231,7 @@ export class GeneratorService {
 
   static disableGenerator(name: string) {
     const generator = this.getGenerator(name)
-    generator.amount = new Num(0, 0);
+    generator.amount = generator.bought.copy();
     generator.multiplier = new Num(0, 0);
     const doc = <HTMLElement> document.getElementById(generator.name)?.children.item(4);
     if (doc !== null && doc !== undefined) {
@@ -242,7 +242,7 @@ export class GeneratorService {
   static disableGenerators(type: string) {
     const upgrades = this.getGenerators(type)
     upgrades.forEach((generator) => {
-      generator.amount = new Num(0, 0);
+      generator.amount = generator.bought.copy();
       generator.multiplier = new Num(0, 0);
       const doc = <HTMLElement> document.getElementById(generator.name)?.children.item(4);
       if (doc !== null && doc !== undefined) {

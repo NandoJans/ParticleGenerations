@@ -32,7 +32,6 @@ export class GlobalMultipliersService {
       yellowFusionPower: new Num(2, -1),
       greenParticlesGain: new Num(1, 0),
       greensGain: new Num(1, 0),
-      darkPowerPower: new Num(3, 0),
       blueParticlesGain: new Num(1, 0),
       blueNeutronPower: new Num(1, 0),
       blueLightPower: new Num(5, 0),
@@ -44,6 +43,7 @@ export class GlobalMultipliersService {
   static resetAfter() {
     this.afterMultipliers = {
       nuclearDecayPower: new Num(1, 0),
+      darkPowerPower: new Num(3, 0),
     }
   }
 

@@ -44,6 +44,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 header {
+  z-index: 10;
   height: 10%;
   background-color: var(--background-color-1);
   width: 100%;
@@ -91,6 +92,7 @@ main {
 }
 
 footer {
+  z-index: 10;
   height: 15%;
   width: 100%;
   display: flex;
@@ -392,6 +394,7 @@ button {
 }
 
 .challenge-button {
+  height: 25px;
   background-color: var(--dark-button-color);
 }
 
@@ -500,10 +503,19 @@ app-prestige-button {
 
 .challenge {
   border: 2px solid var(--dark-button-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   margin: 5px;
   border-radius: 3px;
   width: 300px;
+  height: 150px;
   box-shadow: 3px 3px 0 var(--background-color-1);
+}
+
+.challenge p {
+  padding: 0;
+  margin: 0;
 }
 
 .red-challenge {
@@ -516,6 +528,10 @@ app-prestige-button {
 
 .green-challenge {
   background: linear-gradient(var(--transparent-background-dark), var(--transparent-background-green));
+}
+
+.blue-challenge {
+  background: linear-gradient(var(--transparent-background-dark), var(--transparent-background-blue));
 }
 
 .yellow-prestige {
@@ -806,7 +822,8 @@ app-prestige-button {
 }
 
 .challenge-disabled {
-  position: fixed;
+  z-index: 5;
+  position: absolute;
   justify-content: center;
   align-items: center;
   background-color: rgba(29, 29, 29, 0.5);
@@ -817,9 +834,21 @@ app-prestige-button {
   height: 125px;
 }
 
+.upgrade.limited-style .challenge-disabled {
+  width: 150px;
+  height: 100px;
+  border-radius: 3px;
+}
+
 .generator .challenge-disabled {
   width: 150px;
   height: 85px;
+  border-radius: 3px;
+}
+
+.challenge .challenge-disabled {
+  width: 300px;
+  height: 150px;
   border-radius: 3px;
 }
 

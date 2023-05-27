@@ -105,7 +105,7 @@ export class PrestigeLayersService {
       name = name.toLowerCase();
       const requirement = this.getValue(name, 'requirement')
       // @ts-ignore
-      if (HoldingsService.get(requirement[0]).greq(requirement[1])) {
+      if (HoldingsService.get(requirement[0]).greq(requirement[1]) || ChallengeService.activeChallenge !== undefined) {
         this.setValue(name, 'unlocked', true)
         this.calculateFastestGain(name);
         this.setValue(name, 'time', Date.now())
@@ -128,7 +128,9 @@ export class PrestigeLayersService {
         }
         ResetService.reset(name);
         DataManagerService.load();
-        ChallengeService.prestige(name);
+        if (name === ChallengeService.activeChallenge?.prestige) {
+          ChallengeService.prestige(name);
+        }
       }
     }
   }
@@ -148,7 +150,7 @@ export class PrestigeLayersService {
       const requirement = prestige['requirement']
       const doc = document.getElementById(prestige['prestigeButton']);
       if (!prestige.hidden && doc !== null) {
-        if (ChallengeService.activeChallenge?.name === 'dark-age'  ) {
+        if (ChallengeService.activeChallenge?.name === 'dark-age') {
 
           doc.style.display = 'none';
 
@@ -156,7 +158,7 @@ export class PrestigeLayersService {
             // @ts-ignore
             doc.style.display = 'unset';
           }
-        } else if (HoldingsService.get(requirement[0]).greq(requirement[1]) && ChallengeService.shouldHidePrestigeButton()) {
+        } else if (HoldingsService.get(requirement[0]).greq(requirement[1]) && ChallengeService.shouldHidePrestigeButton(prestige['name'])) {
           // @ts-ignore
           doc.style.display = 'unset';
         } else {

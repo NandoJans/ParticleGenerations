@@ -1,6 +1,7 @@
 import {Component, Injectable, Input, OnInit} from '@angular/core';
 import {Challenge} from "../../../globals";
 import {ChallengeService} from "../../../services/interactables/challenge.service";
+import {Num} from "../../../num";
 
 @Component({
   selector: 'app-challenge',
@@ -15,6 +16,8 @@ export class ChallengeComponent implements OnInit {
   goal: string | undefined;
   rewardDescription: string | undefined;
   style: string | undefined;
+  dynamic: boolean | undefined;
+  completions: any[] | undefined;
   effect: any[] | undefined;
   constructor() { }
 
@@ -30,6 +33,8 @@ export class ChallengeComponent implements OnInit {
     this.goal = this.challenge?.goal.toString();
     this.rewardDescription = this.challenge?.rewardDescription;
     this.style = this.challenge?.style;
+    this.dynamic = this.challenge?.dynamic;
+    this.completions = [this.challenge?.completed, this.challenge?.maxCompletions];
     const reward = this.challenge?.reward
     if (reward !== undefined && typeof reward === 'function') {
       this.effect = ['challenge', this.name]

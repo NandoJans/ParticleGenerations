@@ -10,7 +10,7 @@ import {BuyableService} from "../buyable.service";
 
 export const yellowChallenges: Challenge[] = [
   {
-    name: 'yellow-challenge-1', displayName: 'Yellow Challenge 1', description: 'without the red generator booster.', goal: new Num(1, 1100), currency: 'redParticles', completed: false, disabled: false,
+    name: 'yellow-challenge-1', displayName: 'Yellow Challenge 1', description: 'Red Particles without the red generator booster.', baseGoal: new Num(1, 1100), goal: new Num(1, 1100), currency: 'redParticles', completed: false, disabled: false,
     rewardDescription: 'Gain a multiplier to red accelerators based on red generator boosts.', style: 'yellow-challenge', resetId: 'yellow', type: 'yellow-challenges', prestige: 'yellow', unlocked: false, instantComplete: false,
     requirement: ['yellowParticles', new Num(1, 5)],
     reward: (self: Challenge) => {
@@ -23,7 +23,7 @@ export const yellowChallenges: Challenge[] = [
     }
   },
   {
-    name: 'yellow-challenge-2', displayName: 'Yellow Challenge 2', description: 'without any red accelerators.', goal: new Num(1, 1350), currency: 'redParticles', completed: false, disabled: false,
+    name: 'yellow-challenge-2', displayName: 'Yellow Challenge 2', description: 'Red Particles without any red accelerators.', baseGoal: new Num(1, 1350), goal: new Num(1, 1350), currency: 'redParticles', completed: false, disabled: false,
     rewardDescription: 'Gain an extra red accelerator generator.', style: 'yellow-challenge', resetId: 'yellow', type: 'yellow-challenges', prestige: 'yellow', unlocked: false, instantComplete: false,
     requirement: ['yellowParticles', new Num(1, 8)],
     reward: (self: Challenge) => {
@@ -36,11 +36,14 @@ export const yellowChallenges: Challenge[] = [
     }
   },
   {
-    name: 'yellow-challenge-3', displayName: 'Yellow Challenge 3', description: 'while only having red and yellow generators.', goal: new Num(1, 1350), currency: 'redParticles', completed: false, disabled: false,
+    name: 'yellow-challenge-3', displayName: 'Yellow Challenge 3', description: 'Red Particles while only having red and yellow generators.', baseGoal: new Num(1, 1350), goal: new Num(1, 1350), currency: 'redParticles', completed: false, disabled: false,
     rewardDescription: 'Yellow generators are multiplied by the amount of fifth red generators.', style: 'yellow-challenge', resetId: 'yellow', type: 'yellow-challenges', prestige: 'yellow', unlocked: false, instantComplete: false,
-    requirement: ['yellowParticles', new Num(1, 11)],
+    requirement: ['yellowParticles', new Num(1, 11)], maxEffect: new Num(1, 10),
     reward: (self: Challenge) => {
-      const buff: Num = GeneratorService.getValue('red-generator-5', 'amount').pow(new Num(2, 0), false);
+      let buff: Num = GeneratorService.getValue('red-generator-5', 'amount').pow(new Num(2, 0), false);
+      if (self.maxEffect instanceof Num && buff.greq(self.maxEffect)) {
+        buff = self.maxEffect.copy();
+      }
       GlobalMultipliersService.correct('yellowParticleGenerators', buff)
       return buff;
     },
@@ -54,7 +57,7 @@ export const yellowChallenges: Challenge[] = [
     }
   },
   {
-    name: 'yellow-challenge-4', displayName: 'Yellow Challenge 4', description: 'while only having red generators, but red accelerators are insanely powerfull.', goal: new Num(1, 1750), currency: 'redParticles', completed: false, disabled: false,
+    name: 'yellow-challenge-4', displayName: 'Yellow Challenge 4', description: 'Red Particles while only having red generators, but red accelerators are insanely powerfull.', baseGoal: new Num(1, 1750), goal: new Num(1, 1750), currency: 'redParticles', completed: false, disabled: false,
     rewardDescription: 'Red accelerators gain a multiplier based on yellow power.', style: 'yellow-challenge', resetId: 'yellow', type: 'yellow-challenges', prestige: 'yellow', unlocked: false, instantComplete: false,
     requirement: ['yellowParticles', new Num(1, 15)],
     reward: (self: Challenge) => {
@@ -99,7 +102,7 @@ export const yellowChallenges: Challenge[] = [
     }
   },
   {
-    name: 'yellow-challenge-5', displayName: 'Yellow Challenge 5', description: 'when generators won\'t multiply themselfs.', goal: new Num(1, 2400), currency: 'redParticles', completed: false, disabled: false,
+    name: 'yellow-challenge-5', displayName: 'Yellow Challenge 5', description: 'Red Particles when generators won\'t multiply themselfs.', baseGoal: new Num(1, 2400), goal: new Num(1, 2400), currency: 'redParticles', completed: false, disabled: false,
     rewardDescription: 'First red generators boost the other generators.', style: 'yellow-challenge', resetId: 'yellow', type: 'yellow-challenges', prestige: 'yellow', unlocked: false, instantComplete: false,    requirement: ['yellowParticles', new Num(1, 23)],
     reward: (self: Challenge) => {
       const buff: Num = GeneratorService.getValue('red-generator-1', 'amount').pow(new Num(2, -2), false);
@@ -112,7 +115,7 @@ export const yellowChallenges: Challenge[] = [
     }
   },
   {
-    name: 'yellow-challenge-6', displayName: 'Yellow Challenge 6', description: 'without red generators 2-5.', goal: new Num(1, 925), currency: 'redParticles', completed: false, disabled: false,
+    name: 'yellow-challenge-6', displayName: 'Yellow Challenge 6', description: 'Red Particles without red generators 2-5.', baseGoal: new Num(1, 925), goal: new Num(1, 925), currency: 'redParticles', completed: false, disabled: false,
     rewardDescription: 'The Accelerator Particles upgrade is a lot more powerfull.', style: 'yellow-challenge', resetId: 'yellow', type: 'yellow-challenges', prestige: 'yellow', unlocked: false, instantComplete: false,
     requirement: ['yellowParticles', new Num(1, 29)],
     reward: (self: Challenge) => {
@@ -130,7 +133,7 @@ export const yellowChallenges: Challenge[] = [
     }
   },
   {
-    name: 'yellow-challenge-7', displayName: 'Yellow Challenge 7', description: 'with only generators, accelerators and reduced fusion', goal: new Num(1, 14200), currency: 'redParticles', completed: false, disabled: false,
+    name: 'yellow-challenge-7', displayName: 'Yellow Challenge 7', description: 'Red Particles with only generators, accelerators and reduced fusion', baseGoal: new Num(1, 14200), goal: new Num(1, 14200), currency: 'redParticles', completed: false, disabled: false,
     rewardDescription: 'Gain a multiplier on red generators based on yellow fusion.', style: 'yellow-challenge', resetId: 'yellow', type: 'yellow-challenges', prestige: 'yellow', unlocked: false, instantComplete: false,
     requirement: ['yellowParticles', new Num(1, 70)],
     reward: (self: Challenge) => {
@@ -147,7 +150,7 @@ export const yellowChallenges: Challenge[] = [
     }
   },
   {
-    name: 'yellow-challenge-8', displayName: 'Yellow Challenge 8', description: 'when yellow generators generate second red accelerator generators.', goal: new Num(1, 5500), currency: 'redParticles', completed: false, disabled: false,
+    name: 'yellow-challenge-8', displayName: 'Yellow Challenge 8', description: 'Red Particles when yellow generators generate second red accelerator generators.', baseGoal: new Num(1, 5500), goal: new Num(1, 5500), currency: 'redParticles', completed: false, disabled: false,
     rewardDescription: 'Make yellow fusion much more powerfull.', style: 'yellow-challenge', resetId: 'yellow', type: 'yellow-challenges', prestige: 'yellow', unlocked: false, instantComplete: false,
     requirement: ['yellowParticles', new Num(1, 75)],
     reward: (self: Challenge) => {

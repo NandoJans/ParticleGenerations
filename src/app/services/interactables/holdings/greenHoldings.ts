@@ -24,7 +24,7 @@ export const greenHoldings = {
   darkEnergySubtract: {amount: new Num(0, 0), effect: new Num(1, 0)},
   darkAgeMax: {amount: new Num(1, 110), effect: new Num(1, 0)},
   darkPower: {amount: new Num(0, 0), effect: new Num(1, 0),
-    action: (amount: Num) => {
+    beforeAction: (amount: Num) => {
       // @ts-ignore
       if (HoldingsService.get('blues').greq(new Num(1, 2))) {
         // @ts-ignore

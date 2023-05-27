@@ -94,6 +94,7 @@ export class TickService {
     GlobalMultipliersService.reset();
     this.mainAction(speed);
     ChallengeService.applyNerfs();
+    ChallengeService.dynamicChallenges();
 
     HoldingsService.beforeAction();
     GlobalMultipliersService.resetAfter();
@@ -101,8 +102,9 @@ export class TickService {
     UpgradeService.action();
     MilestoneService.action();
     ChallengeService.action();
-    CombinerService.execute();
+    //CombinerService.execute();
     HoldingsService.action();
+    ChallengeService.applyNerfs();
 
     GeneratorService.correctMultipliers();
     ChallengeService.applyNerfs();

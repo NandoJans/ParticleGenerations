@@ -6,6 +6,7 @@ import {App} from "./App";
 import {Router} from "@angular/router";
 import {NavigationsService} from "./services/navigations.service";
 import {GeneratorService} from "./services/interactables/generator.service";
+import {ChallengeService} from "./services/interactables/challenge.service";
 
 @Component({
   selector: 'app-root',
@@ -31,6 +32,7 @@ export class AppComponent implements OnInit{
   ngOnInit(): void {
     UpgradeService.resetUpgrades();
     GeneratorService.resetGenerators();
+    ChallengeService.resetChallenges();
     DataManagerService.load();
     if (!this.isTicking) {
       this.tick.tick();

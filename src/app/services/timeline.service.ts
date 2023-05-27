@@ -80,7 +80,7 @@ export class TimelineService {
       unlocked: false, requirement: ['blues', new Num(3, 0)], type: 'blue-timeline', reached: false, unlock: ['blues', new Num(5, 0)]
     },
     {
-      name: 'blue-combiners', displayName: 'Combining all my power', description: 'Combining my power might be the solution to my lack of blue particles.', hasProgress: true,
+      name: 'blue-challenges', displayName: 'A Challenging phase', description: 'Unlock new challenges with a lot of extra boosts and buffs.', hasProgress: true,
       unlocked: false, requirement: ['blues', new Num(5, 0)], type: 'blue-timeline', reached: false, unlock: ['blueParticles', new Num(1, 4)]
     },
     {

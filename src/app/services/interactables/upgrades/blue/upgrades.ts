@@ -20,6 +20,7 @@ export const blueUpgrades = [
     baseCost: new Num(5,0), cost: new Num(5, 0), increase: new Num(1,1), scaling: new Num(1, 1), bought: new Num(0, 0), currency: 'blueParticles',
     baseBuffer: new Num(2, 0), buffer: new Num(2, 0), amount: new Num(0, 0), type: 'blue-upgrades', resetId: 'blue', style: 'blue-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['blues', new Num(3, 0)],
     action: (self: Upgrade) => {
+      self.description = 'Multiply blue light by '+self.buffer.toString(true)+'x'
       const buff: Num | undefined = self.buffer.pow(self.bought, false);
       GlobalMultipliersService.correct('blueLightGenerators', buff);
       return buff;
