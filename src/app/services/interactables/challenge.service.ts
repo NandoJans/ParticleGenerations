@@ -121,9 +121,8 @@ export class ChallengeService {
 
   static checkGoal() {
     if (this.activeChallenge === undefined) return
-    if (HoldingsService.get(this.activeChallenge.currency).greq(this.activeChallenge.goal)) {
-      PrestigeLayersService.showPrestigeButton(this.activeChallenge.prestige);
-    }
+    const goalReached = HoldingsService.get(this.activeChallenge.currency).greq(this.activeChallenge.goal);
+    PrestigeLayersService.challengeButton(this.activeChallenge.prestige, this.activeChallenge.goal, goalReached);
   }
 
   static applyNerfs() {

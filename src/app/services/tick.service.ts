@@ -99,9 +99,9 @@ export class TickService {
     HoldingsService.beforeAction();
     GlobalMultipliersService.resetAfter();
 
+    ChallengeService.action();
     UpgradeService.action();
     MilestoneService.action();
-    ChallengeService.action();
     //CombinerService.execute();
     HoldingsService.action();
     ChallengeService.applyNerfs();
@@ -112,7 +112,7 @@ export class TickService {
     //HoldingsService.set('redParticles', new Num(1, 110))
     //HoldingsService.set('yellowParticles', new Num(1, 110))
     //HoldingsService.set('greenParticles', new Num(1, 2))
-    //HoldingsService.set('blueParticles', new Num(1, 5))
+    //HoldingsService.set('blueParticles', new Num(1, 4))
     //HoldingsService.set('purpleParticles', new Num(1, 3))
     //HoldingsService.set('yellows', new Num(1, 5))
     //HoldingsService.set('greens', new Num(1, 10))

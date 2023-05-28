@@ -110,8 +110,18 @@ export class NumberDisplayService {
             element.innerHTML = PrestigeLayersService.getValue(entry.name, 'fastestGainPS').toString(true)
             break;
           case 'prestige':
+            const gain: Num | undefined = PrestigeLayersService.getValue(entry.name, 'gain')
             // @ts-ignore
-            element.innerHTML = PrestigeLayersService.getValue(entry.name, 'gain')
+            if ((ChallengeService.activeChallenge === undefined || ChallengeService.activeChallenge.prestige !== entry.name.toLowerCase()) && !HoldingsService.get(PrestigeLayersService.getValue(entry.name, 'requirement')[0]).greq(PrestigeLayersService.getValue(entry.name, 'requirement')[1])) {
+              // @ts-ignore
+              element.innerHTML = 'Reach: 1e110 '+HoldingsService.getAbbreviation(PrestigeLayersService.getValue(entry.name, 'requirement')[0]);
+            } else if (gain !== undefined && !isNaN(gain['num']) && !isNaN(gain['exp']) &&
+              (ChallengeService.activeChallenge === undefined || ChallengeService.activeChallenge.prestige !== entry.name.toLowerCase())) {
+              // @ts-ignore
+              element.innerHTML = gain.toString();
+            } else {
+              element.innerHTML = ''
+            }
             break;
           case 'challengeCompletions':
             if (entry.effect !== undefined && entry.effect[0] instanceof Num && entry.effect[1] instanceof Num) {

@@ -135,11 +135,24 @@ export class PrestigeLayersService {
     }
   }
 
-  static showPrestigeButton(prestigeName: string) {
+  static challengeButton(prestigeName: string, goal: Num, reachedGoal: boolean) {
     this.prestiges.forEach(prestige => {
-      if (!prestige.hidden) {
-        if (prestige['name'] === prestigeName) {
-          (document.getElementById(prestige['prestigeButton']) as HTMLElement).style.display = 'unset';
+      if (prestige['name'] === prestigeName) {
+        const doc = (document.getElementById(prestige['prestigeButton']) as HTMLButtonElement);
+        if (reachedGoal) {
+          doc.classList.remove('unreached')
+          if (doc.childNodes.item(0) !== null) {
+            (<HTMLElement> doc.childNodes.item(0)).innerHTML = 'You have reached the goal. Click to complete the challenge'
+          }
+          doc.style.display = 'unset';
+          doc.disabled = false;
+        } else {
+          doc.classList.add('unreached')
+          if (doc.childNodes.item(0) !== null) {
+            (<HTMLElement> doc.childNodes.item(0)).innerHTML = 'Currently in challenge. Reach '+goal.toString()+' '+HoldingsService.getAbbreviation(prestige['requirement'][0])
+          }
+          doc.style.display = 'unset';
+          doc.disabled = true;
         }
       }
     })
@@ -148,22 +161,31 @@ export class PrestigeLayersService {
   static unlock() {
     this.prestiges.forEach(prestige => {
       const requirement = prestige['requirement']
-      const doc = document.getElementById(prestige['prestigeButton']);
+      const doc = <HTMLButtonElement> document.getElementById(prestige['prestigeButton']);
       if (!prestige.hidden && doc !== null) {
         if (ChallengeService.activeChallenge?.name === 'dark-age') {
-
           doc.style.display = 'none';
-
+          doc.disabled = true;
           if (HoldingsService.get(requirement[0]).greq(requirement[1]) && prestige.name === 'yellow') {
-            // @ts-ignore
             doc.style.display = 'unset';
+            doc.disabled = false;
           }
         } else if (HoldingsService.get(requirement[0]).greq(requirement[1]) && ChallengeService.shouldHidePrestigeButton(prestige['name'])) {
-          // @ts-ignore
+          if (doc.childNodes.item(0) !== null) {
+            (<HTMLElement> doc.childNodes.item(0)).innerHTML = 'Start '+prestige.name[0].toUpperCase()+prestige.name.slice(1)
+          }
+          doc.classList.remove('unreached')
           doc.style.display = 'unset';
+          doc.disabled = false;
         } else {
-          // @ts-ignore
-          doc.style.display = 'none';
+          if (doc.childNodes.item(0) !== null) {
+            (<HTMLElement> doc.childNodes.item(0)).innerHTML = 'Start '+prestige.name[0].toUpperCase()+prestige.name.slice(1)
+          }
+          doc.classList.add('unreached')
+          doc.disabled = true;
+          if (!prestige.unlocked) {
+            doc.style.display = 'none';
+          }
         }
       }
     })

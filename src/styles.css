@@ -472,7 +472,15 @@ app-prestige-button {
 
 .prestige-button:hover {
   box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
-  cursor: pointer;
+}
+
+.prestige-button.unreached {
+  opacity: 50%;
+  cursor: unset;
+}
+
+.prestige-button.unreached:hover {
+  box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0);
 }
 
 .sacrifice-button {
