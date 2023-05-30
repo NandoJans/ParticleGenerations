@@ -37,7 +37,7 @@ export const blueChallenges:Challenge[] = [
   },
   {
     name: 'blue-challenge-2', displayName: 'Blue Challenge 2', description: 'Green Particles when all generators generate eachother.', baseGoal: new Num(1, 150), goal: new Num(1, 150), currency: 'greenParticles', disabled: false,
-    dynamic: true , completed: new Num(0, 0), maxCompletions: new Num(5, 0), goalIncrease: new Num(1, 150),
+    dynamic: true , completed: new Num(0, 0), maxCompletions: new Num(5, 0), goalIncrease: new Num(1, 50),
     rewardDescription: 'Green generators slightly generate 5th Yellow Generators.', style: 'blue-challenge', resetId: 'blue', type: 'blue-challenges', prestige: 'blue', unlocked: false, instantComplete: false,
     requirement: ['blueParticles', new Num(1, 7)],
     reward: (self: Challenge) => {
