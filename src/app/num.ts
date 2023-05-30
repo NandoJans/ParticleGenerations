@@ -173,12 +173,19 @@ export class Num {
 
   // @ts-ignore
   div = (x: Num, overwrite = true) => {
-    let ret_num = this.num / x.num
-    let ret_exp = this.exp - x.exp
+    let ret_num;
+    let ret_exp;
+    if (x.num === 0 || this.num === 0) {
+      ret_num = this.num;
+      ret_exp = this.exp;
+    } else {
+      ret_num = this.num / x.num;
+      ret_exp = this.exp - x.exp;
 
-    if (ret_num < 1 && ret_exp > 0 && ret_num > 0) {
-      ret_exp -= 1
-      ret_num *= 10
+      if (ret_num < 1 && ret_exp > 0 && ret_num > 0) {
+        ret_exp -= 1
+        ret_num *= 10
+      }
     }
 
     if (overwrite) {
@@ -277,8 +284,12 @@ export class Num {
 
   // @ts-ignore
   ln = (overwrite: boolean = true) => {
-    const ret_exp = 0
-    const ret_num = Math.log(10) * (this.exp + Math.log10(this.num))
+    let ret_exp = 0
+    let ret_num = Math.log(10) * (this.exp + Math.log10(this.num))
+
+    if (ret_num === Infinity || ret_num === -Infinity) {
+      ret_num = 0;
+    }
 
     if (overwrite) {
       this.exp = ret_exp
@@ -305,13 +316,12 @@ export class Num {
   floor = (overwrite: boolean = true) => {
     let ret_exp = this.exp
     let ret_num = this.num
-
-    if (ret_exp <= 10) {
+    if (ret_exp <= 10 ) {
       ret_num = Math.floor(ret_num * 10 ** ret_exp);
       ret_exp = 0;
     }
 
-    while (ret_num >= 10 || ret_num <= -10) {
+    while ((ret_num >= 10 || ret_num <= -10)) {
       ret_exp += 1
       ret_num /= 10
     }

@@ -13,8 +13,6 @@ import {MilestoneService} from "./interactables/milestone.service";
 import {ChallengeService} from "./interactables/challenge.service";
 import {AutomatorService} from "./interactables/automator.service";
 import {TimelineService} from "./timeline.service";
-import {CombinerService} from "./interactables/combiner.service";
-import {Router} from "@angular/router";
 import {App} from "../App";
 
 @Injectable({

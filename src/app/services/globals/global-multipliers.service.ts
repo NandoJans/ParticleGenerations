@@ -35,7 +35,7 @@ export class GlobalMultipliersService {
       blueParticlesGain: new Num(1, 0),
       blueNeutronPower: new Num(1, 0),
       blueLightPower: new Num(5, 0),
-      yellowFusionBlueLightEffect: new Num(1, 0),
+      yellowFusionBlueLightEffect: new Num(1.1, 0),
       greenSoulsGain: new Num(1, 0),
     }
   }

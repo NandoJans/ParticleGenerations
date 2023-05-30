@@ -41,7 +41,6 @@ export class BuyableService {
     const four = new Num(4, 0)
     let futureBuying: Num;
     let futureCost: Num;
-
     if (buyable.scalingStart !== undefined) {
       futureBuying = x.div(y, false).ln(false).div(a.ln(false), false).floor(false)
       // @ts-ignore
@@ -115,28 +114,21 @@ export class BuyableService {
         this.buyAction(buyable)
       }
     })
-    CombinerService.combiners.forEach((buyable) => {
+    /*CombinerService.combiners.forEach((buyable) => {
       if (buyable.name === name) {
         this.buyAction(buyable)
       }
-    })
+    })*/
   }
 
   compare() {
     //console.clear();
     GeneratorService.generators.forEach((buyable) => {
-
-      if (buyable.name === 'nuclear-decay-generator-1') {
-        //console.log(buyable)
-      }
       if (HoldingsService.get(buyable.currency).greq(buyable.cost) && buyable['unlocked']
         && buyable['auto']) {
-        //console.log(1)
         const result1 = this.calculateBulk(buyable)
-        //console.log(2)
         // @ts-ignore
         if (result1[0].greq(new Num(1, 0)) && HoldingsService.get(buyable.currency).greq(result1[1])) {
-          //console.log(3)
           // @ts-ignore
           this.bulkBuyAction(buyable, result1[1], result1[0]);
         }
@@ -241,7 +233,7 @@ export class BuyableService {
         }
       }
     })
-    CombinerService.combiners.forEach((buyable) => {
+    /*CombinerService.combiners.forEach((buyable) => {
       const button = (<HTMLButtonElement> document.getElementById('buyable-'+buyable.name))
       if (buyable.bought.greq(new Num(1, 0))) {
         if (button !== null) {
@@ -263,7 +255,7 @@ export class BuyableService {
         }
         if (buyable.subNav !== undefined && buyable.nav !== undefined) NavigationsService.removeBuyable(buyable.subNav, buyable.nav);
       }
-    })
+    })*/
   }
 
   correctCosts() {
