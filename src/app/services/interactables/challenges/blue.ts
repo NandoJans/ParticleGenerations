@@ -63,7 +63,7 @@ export const blueChallenges:Challenge[] = [
   },
   {
     name: 'blue-challenge-3', displayName: 'Blue Challenge 3', description: 'Green Particles with only the upgrades and generators boosted by Dark Energy. Dark energy is also significantly more powerfull.', baseGoal: new Num(1, 380), goal: new Num(1, 380), currency: 'greenParticles', disabled: false,
-    dynamic: true , completed: new Num(0, 0), maxCompletions: new Num(5, 0), goalIncrease: new Num(1, 120),
+    dynamic: true , completed: new Num(0, 0), maxCompletions: new Num(5, 0), goalIncrease: new Num(1, 380),
     rewardDescription: 'Increase the power of dark power.', style: 'blue-challenge', resetId: 'blue', type: 'blue-challenges', prestige: 'blue', unlocked: false, instantComplete: false,
     requirement: ['blueParticles', new Num(1, 9)],
     reward: (self: Challenge) => {

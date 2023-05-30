@@ -29,9 +29,9 @@ export const blueUpgrades = [
   {
     name: 'more-powerfull-dark-age', displayName: 'Dark age to 5', description: 'Dark power multiplies dark energy to the power of 5.', auto: false,
     baseCost: new Num(1,1), cost: new Num(1, 1), increase: new Num(1,0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'blueParticles',
-    baseBuffer: new Num(5, 0), buffer: new Num(5, 0), amount: new Num(0, 0), type: 'blue-upgrades', resetId: 'blue', style: 'blue-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['blues', new Num(3, 0)],
+    baseBuffer: new Num(1.67, 0), buffer: new Num(1.67, 0), amount: new Num(0, 0), type: 'blue-upgrades', resetId: 'blue', style: 'blue-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['blues', new Num(3, 0)],
     action: (self: Upgrade) => {
-      GlobalMultipliersService.set('darkPowerPower', self.buffer);
+      GlobalMultipliersService.correct('darkPowerPower', self.buffer);
     }, nav: 'blue', subNav: 'blueUpgrades'
   },
   {
