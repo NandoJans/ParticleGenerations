@@ -63,7 +63,7 @@ export const blueChallenges:Challenge[] = [
   },
   {
     name: 'blue-challenge-3', displayName: 'Blue Challenge 3', description: 'Green Particles with only the upgrades and generators boosted by Dark Energy. Dark energy is also significantly more powerfull.', baseGoal: new Num(1, 380), goal: new Num(1, 380), currency: 'greenParticles', disabled: false,
-    dynamic: true , completed: new Num(0, 0), maxCompletions: new Num(5, 0), goalIncrease: new Num(1, 380),
+    dynamic: true , completed: new Num(0, 0), maxCompletions: new Num(5, 0), goalIncrease: new Num(1, 120),
     rewardDescription: 'Increase the power of dark power.', style: 'blue-challenge', resetId: 'blue', type: 'blue-challenges', prestige: 'blue', unlocked: false, instantComplete: false,
     requirement: ['blueParticles', new Num(1, 9)],
     reward: (self: Challenge) => {
@@ -131,7 +131,7 @@ export const blueChallenges:Challenge[] = [
     name: 'blue-challenge-5', displayName: 'Blue Challenge 5', description: 'Green Particles while generator cost scaling is raised to the power of 20.000.', baseGoal: new Num(1, 2200), goal: new Num(1, 2200), currency: 'greenParticles', disabled: false,
     dynamic: true , completed: new Num(0, 0), maxCompletions: new Num(5, 0), goalIncrease: new Num(1, 2200),
     rewardDescription: 'Decrease the red particle generator cost scaling.', style: 'blue-challenge', resetId: 'blue', type: 'blue-challenges', prestige: 'blue', unlocked: false, instantComplete: false,
-    requirement: ['blueParticles', new Num(1, 15)],
+    requirement: ['blueParticles', new Num(1, 13)],
     reward: (self: Challenge) => {
       if (self.completed instanceof Num) {
         // @ts-ignore
@@ -167,7 +167,7 @@ export const blueChallenges:Challenge[] = [
     name: 'blue-challenge-6', displayName: 'Blue Challenge 6', description: 'Green Particles whithout the yellow phase.', baseGoal: new Num(1, 500), goal: new Num(1, 500), currency: 'greenParticles', disabled: false,
     dynamic: true , completed: new Num(0, 0), maxCompletions: new Num(5, 0), goalIncrease: new Num(1, 500),
     rewardDescription: 'Gain a multiplier on yellow generators based on yellow particles.', style: 'blue-challenge', resetId: 'blue', type: 'blue-challenges', prestige: 'blue', unlocked: false, instantComplete: false,
-    requirement: ['blueParticles', new Num(1, 17)],
+    requirement: ['blueParticles', new Num(1, 16)],
     reward: (self: Challenge) => {
       if (self.completed instanceof Num) {
         const buff: Num | undefined = HoldingsService.get('yellowParticles').pow(new Num(1, -2).mul(self.completed, false), false)
