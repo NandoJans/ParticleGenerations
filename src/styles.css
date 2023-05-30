@@ -848,6 +848,12 @@ app-prestige-button {
   border-radius: 3px;
 }
 
+.upgrade.sacrifice-style .challenge-disabled {
+  width: 150px;
+  height: 100px;
+  border-radius: 3px;
+}
+
 .generator .challenge-disabled {
   width: 150px;
   height: 85px;

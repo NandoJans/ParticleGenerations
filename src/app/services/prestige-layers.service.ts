@@ -142,7 +142,7 @@ export class PrestigeLayersService {
         if (reachedGoal) {
           doc.classList.remove('unreached')
           if (doc.childNodes.item(0) !== null) {
-            (<HTMLElement> doc.childNodes.item(0)).innerHTML = 'You have reached the goal. Click to complete the challenge'
+            (<HTMLElement> doc.childNodes.item(0)).innerHTML = 'Goal Reached. Click to complete the challenge'
           }
           doc.style.display = 'unset';
           doc.disabled = false;
