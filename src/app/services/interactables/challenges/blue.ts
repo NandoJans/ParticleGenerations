@@ -102,7 +102,7 @@ export const blueChallenges:Challenge[] = [
     reward: (self: Challenge) => {
       if (self.completed instanceof Num) {
         // @ts-ignore
-        const buff: Num | undefined = new Num(1.2, 0).pow(self.completed, false);
+        const buff: Num | undefined = new Num(1.5, 0).pow(self.completed, false);
         UpgradeService.getValue('blue-light-multiplier-repeatable', 'buffer').mul(buff);
         // @ts-ignore
         return buff;
