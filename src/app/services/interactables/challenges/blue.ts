@@ -95,14 +95,14 @@ export const blueChallenges:Challenge[] = [
     }
   },
   {
-    name: 'blue-challenge-4', displayName: 'Blue Challenge 4', description: 'Green Particles when all generator multipliers are raised to the power of 0.5.', baseGoal: new Num(1, 250), goal: new Num(1, 250), currency: 'greenParticles', disabled: false,
-    dynamic: true , completed: new Num(0, 0), maxCompletions: new Num(5, 0), goalIncrease: new Num(1, 250),
+    name: 'blue-challenge-4', displayName: 'Blue Challenge 4', description: 'Green Particles when all generator multipliers are raised to the power of 0.5.', baseGoal: new Num(1, 150), goal: new Num(1, 150), currency: 'greenParticles', disabled: false,
+    dynamic: true , completed: new Num(0, 0), maxCompletions: new Num(5, 0), goalIncrease: new Num(1, 150),
     rewardDescription: 'Increase the power of the Multiply light by 2 upgrade.', style: 'blue-challenge', resetId: 'blue', type: 'blue-challenges', prestige: 'blue', unlocked: false, instantComplete: false,
     requirement: ['blueParticles', new Num(1, 11)],
     reward: (self: Challenge) => {
       if (self.completed instanceof Num) {
         // @ts-ignore
-        const buff: Num | undefined = new Num(1.1, 0).pow(self.completed, false);
+        const buff: Num | undefined = new Num(1.2, 0).pow(self.completed, false);
         UpgradeService.getValue('blue-light-multiplier-repeatable', 'buffer').mul(buff);
         // @ts-ignore
         return buff;
