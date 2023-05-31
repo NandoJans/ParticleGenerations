@@ -12,10 +12,10 @@ import {UpgradeService} from "./interactables/upgrade.service";
 })
 export class PrestigeLayersService {
   static prestiges: any[] = [
-    { name: 'yellow', requirement: ['redParticles', new Num(1, 110)], prestigeButton: 'prestige-yellow', unlocked: false, gain: new Num(1, 0), multiplier: 'yellowParticlesGain', hidden: false, time: Date.now(), fastestGainPS: new Num(0, 0)},
-    { name: 'green', requirement: ['yellowParticles', new Num(1, 110)], prestigeButton: 'prestige-green', unlocked: false, gain: new Num(1, 0), multiplier: 'greenParticlesGain', hidden: false, time: Date.now(), fastestGainPS: new Num(0, 0)},
-    { name: 'blue', requirement: ['greenParticles', new Num(1, 110)], prestigeButton: 'prestige-blue', unlocked: false, gain: new Num(1, 0), multiplier: 'blueParticlesGain', hidden: false, time: Date.now(), fastestGainPS: new Num(0, 0)},
-    { name: 'purple', requirement: ['blueParticles', new Num(1, 110)], prestigeButton: 'prestige-purple', unlocked: false, gain: new Num(1, 0), multiplier: 'purpleParticlesGain', hidden: false, time: Date.now(), fastestGainPS: new Num(0, 0)},
+    { name: 'yellow', requirement: ['redParticles', new Num(1, 110)], prestigeButton: 'prestige-yellow', unlocked: false, gain: new Num(1, 0), multiplier: 'yellowParticlesGain', hidden: false, time: Date.now(), fastestGainPS: new Num(0, 0), previousGain: new Num(1, 0)},
+    { name: 'green', requirement: ['yellowParticles', new Num(1, 110)], prestigeButton: 'prestige-green', unlocked: false, gain: new Num(1, 0), multiplier: 'greenParticlesGain', hidden: false, time: Date.now(), fastestGainPS: new Num(0, 0), previousGain: new Num(1, 0)},
+    { name: 'blue', requirement: ['greenParticles', new Num(1, 110)], prestigeButton: 'prestige-blue', unlocked: false, gain: new Num(1, 0), multiplier: 'blueParticlesGain', hidden: false, time: Date.now(), fastestGainPS: new Num(0, 0), previousGain: new Num(1, 0)},
+    { name: 'purple', requirement: ['blueParticles', new Num(1, 110)], prestigeButton: 'prestige-purple', unlocked: false, gain: new Num(1, 0), multiplier: 'purpleParticlesGain', hidden: false, time: Date.now(), fastestGainPS: new Num(0, 0), previousGain: new Num(1, 0)},
   ]
 
   static save() {
@@ -71,6 +71,8 @@ export class PrestigeLayersService {
     this.prestiges.forEach((prestige) => {
       if (prestige['name'] === name) {
         const gainPS = prestige['gain'].div(new Num((Date.now() - prestige['time'])/1000, 0), false);
+        console.log('new: '+gainPS.toString())
+        console.log('new: '+prestige['fastestGainPS'].toString())
         if (prestige['fastestGainPS'] === undefined || prestige['fastestGainPS'] === null || gainPS.greq(prestige['fastestGainPS'])) {
           prestige['fastestGainPS'] = gainPS.add(new Num(0, 0), false);
         }
@@ -109,6 +111,7 @@ export class PrestigeLayersService {
         this.setValue(name, 'unlocked', true)
         this.calculateFastestGain(name);
         this.setValue(name, 'time', Date.now())
+        this.setValue(name, 'previousGain', this.getValue(name, 'gain'))
         // @ts-ignore
         HoldingsService.add(name+'Particles', this.getValue(name, 'gain'))
         if (name === 'yellow') {
@@ -142,14 +145,14 @@ export class PrestigeLayersService {
         if (reachedGoal) {
           doc.classList.remove('unreached')
           if (doc.childNodes.item(0) !== null) {
-            (<HTMLElement> doc.childNodes.item(0)).innerHTML = 'Goal Reached. Click to complete the challenge'
+            (<HTMLElement> doc.childNodes.item(0)).innerHTML = 'Goal Reached'
           }
           doc.style.display = 'unset';
           doc.disabled = false;
         } else {
           doc.classList.add('unreached')
           if (doc.childNodes.item(0) !== null) {
-            (<HTMLElement> doc.childNodes.item(0)).innerHTML = 'Currently in challenge. Reach '+goal.toString()+' '+HoldingsService.getAbbreviation(prestige['requirement'][0])
+            (<HTMLElement> doc.childNodes.item(0)).innerHTML = 'Reach '+goal.toString()+' '+HoldingsService.getAbbreviation(prestige['requirement'][0])
           }
           doc.style.display = 'unset';
           doc.disabled = true;

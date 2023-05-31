@@ -115,7 +115,8 @@ export class NumberDisplayService {
             if ((ChallengeService.activeChallenge === undefined || ChallengeService.activeChallenge.prestige !== entry.name.toLowerCase()) && !HoldingsService.get(PrestigeLayersService.getValue(entry.name, 'requirement')[0]).greq(PrestigeLayersService.getValue(entry.name, 'requirement')[1])) {
               // @ts-ignore
               element.innerHTML = 'Reach: 1e110 '+HoldingsService.getAbbreviation(PrestigeLayersService.getValue(entry.name, 'requirement')[0]);
-            } else if (gain !== undefined && !isNaN(gain['num']) && !isNaN(gain['exp']) &&
+              // @ts-ignore
+            } else if (gain !== undefined && !isNaN(gain['num']) && !isNaN(gain['exp']) && !gain.greq(new Num(1, 1e6)) &&
               (ChallengeService.activeChallenge === undefined || ChallengeService.activeChallenge.prestige !== entry.name.toLowerCase())) {
               // @ts-ignore
               element.innerHTML = gain.toString();

@@ -28,9 +28,7 @@ export const greenHoldings = {
       // @ts-ignore
       if (HoldingsService.get('blues').greq(new Num(1, 2))) {
         // @ts-ignore
-        let test = (UpgradeService.getValue('more-dark-power', 'bought').greq(new Num(1, 0))) ?
-          new Num(Math.floor(HoldingsService.get('yellowParticles').pow(new Num(0.058, 0), false).exp/110) , 0).add(new Num(0, 0), false) :
-          new Num(Math.floor(HoldingsService.get('yellowParticles').pow(new Num(0.07, 0), false).exp/110) , 0).add(new Num(0, 0), false);
+        let test = new Num(Math.floor(HoldingsService.get('yellowParticles').pow(new Num(0.07, 0), false).exp/110) , 0).add(new Num(0, 0), false);
         // @ts-ignore
         if (test.greq(amount)) {
           // @ts-ignore

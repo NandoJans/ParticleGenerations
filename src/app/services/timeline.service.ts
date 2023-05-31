@@ -81,15 +81,15 @@ export class TimelineService {
     },
     {
       name: 'blue-challenges', displayName: 'A Challenging phase', description: 'Unlock new challenges with a lot of extra boosts and buffs.', hasProgress: true,
-      unlocked: false, requirement: ['blues', new Num(5, 0)], type: 'blue-timeline', reached: false, unlock: ['blueParticles', new Num(1, 4)]
+      unlocked: false, requirement: ['blues', new Num(5, 0)], type: 'blue-timeline', reached: false, unlock: ['blueParticles', new Num(1, 5)]
     },
     {
       name: 'blue-generators', displayName: 'We forgot to generate', description: 'Blue generators, i don\'t think i need to explain.', hasProgress: true,
-      unlocked: false, requirement: ['blueParticles', new Num(1, 4)], type: 'blue-timeline', reached: false, unlock: ['blueParticles', new Num(1, 35)]
+      unlocked: false, requirement: ['blueParticles', new Num(1, 5)], type: 'blue-timeline', reached: false, unlock: ['blueParticles', new Num(1, 60)]
     },
     {
       name: 'purple-phase', displayName: 'Why are my particles gone?', description: 'The purple phase voids all particles.', hasProgress: true,
-      unlocked: false, requirement: ['blueParticles', new Num(1, 35)], type: 'blue-timeline', reached: false, unlock: ['blueParticles', new Num(1, 110)]
+      unlocked: false, requirement: ['blueParticles', new Num(1, 60)], type: 'blue-timeline', reached: false, unlock: ['blueParticles', new Num(1, 110)]
     },
 
     {

@@ -1,7 +1,9 @@
 <div [class]="'upgrade '+style" [id]="name">
   <h4>{{ displayName }}</h4>
   <form class="automator-form" [formGroup]="formGroup" (change)="onChange()">
-    <label *ngIf="isPrestigeAutomator">Wait For: </label>
+    <app-button *ngIf="isPrestigeAutomator && getAutomationType() === 'waitFor'" [style]="'prestige-automator-button yellow'" [text]="'Wait For x'" (function)="setAutomationType('timesHighest')"></app-button>
+    <app-button *ngIf="isPrestigeAutomator && getAutomationType() === 'timesHighest'" [style]="'prestige-automator-button green'" [text]="'x Times Highest'" (function)="setAutomationType('afterSeconds')"></app-button>
+    <app-button *ngIf="isPrestigeAutomator && getAutomationType() === 'afterSeconds'" [style]="'prestige-automator-button blue'" [text]="'After x seconds'" (function)="setAutomationType('waitFor')"></app-button>
     <input *ngIf="isPrestigeAutomator" formControlName="waitFor" [(ngModel)]="waitForValue">
     <div>
       <label>Active: </label>

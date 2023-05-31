@@ -18,7 +18,7 @@ export const blueNeutronStars: Upgrade[] = [
 
 
   {
-    name: 'blue-light-amplifier', displayName: 'Blue Light Amplifier', description: 'Increases the blue light effect.', auto: false, limit: new Num(5.6, 1), scalingStart: new Num(5  , 50),
+    name: 'blue-light-amplifier', displayName: 'Blue Light Amplifier', description: 'Increases the blue light effect.', auto: false, limit: new Num(5.6, 1), scalingStart: new Num(1  , 49),
     baseCost: new Num(1,6), cost: new Num(1, 6), increase: new Num(1,1), scaling: new Num(1, 1), bought: new Num(0, 0), currency: 'blueLight',
     baseBuffer: new Num(1.05, 0), buffer: new Num(1.02, 0), amount: new Num(0, 0), type: 'blue-light-upgrade', resetId: 'blue', style: 'light-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['blues', new Num(3, 0)],
     action: (self: Upgrade) => {
@@ -48,8 +48,8 @@ export const blueNeutronStars: Upgrade[] = [
     }, nav: 'blue', subNav: 'neutronStars'
   },
   {
-    name: 'yellow-fusion-effect-increaser', displayName: 'Increase Fusion Effect', description: 'Increases the power of the yellow fusion effect.', auto: false, scalingStart: new Num(1, 20), limit: new Num(1.3, 1),
-    baseCost: new Num(1,7), cost: new Num(1, 7), increase: new Num(1,3), scaling: new Num(1, 2), bought: new Num(0, 0), currency: 'blueLight',
+    name: 'yellow-fusion-effect-increaser', displayName: 'Increase Fusion Effect', description: 'Increases the power of the yellow fusion effect.', auto: false, scalingStart: new Num(1, 20), limit: new Num(1, 1),
+    baseCost: new Num(1,7), cost: new Num(1, 7), increase: new Num(1,3), scaling: new Num(4, 1), bought: new Num(0, 0), currency: 'blueLight',
     baseBuffer: new Num(1.25, 0), buffer: new Num(1.25, 0), amount: new Num(0, 0), type: 'blue-light-upgrade', resetId: 'blue', style: 'light-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['blues', new Num(3, 0)],
     action: (self: Upgrade) => {
       const buff: Num | undefined = self.buffer.pow(self.bought, false);
@@ -78,14 +78,6 @@ export const blueNeutronStars: Upgrade[] = [
       UpgradeService.setValue('nuclear-decay-booster', 'limit', new Num(3, 0));
       UpgradeService.setValue('nuclear-decay-increaser', 'limit', new Num(7, 0));
       UpgradeService.setValue('better-nuclear-decay', 'limit', new Num(4, 0));
-    }, nav: 'blue', subNav: 'neutronStars'
-  },
-  {
-    name: 'more-dark-power', displayName: 'More Dark Power', description: 'Increase the limit of dark power by 66, but make dark age harder again.', auto: false,
-    baseCost: new Num(1,50), cost: new Num(1, 50), increase: new Num(1,3), scaling: new Num(1, 1), bought: new Num(0, 0), currency: 'blueLight',
-    baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'blue-light-upgrade-onetime', resetId: 'blue', style: 'light-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['blues', new Num(3, 0)],
-    action: (self: Upgrade) => {
-      HoldingsService.set('maxDarkPower', new Num(2.66, 2));
     }, nav: 'blue', subNav: 'neutronStars'
   },
 ]

@@ -370,6 +370,22 @@ export class Num {
     if (isNaN(x.num)) {
       x.num = 1
     }
+    if (x.num < 1) {
+      x.num *= 10
+      x.exp -= 1
+    }
+    if (this.num < 1) {
+      this.num *= 10
+      this.exp -= 1
+    }
+    if (x.num >= 10) {
+      x.num /= 10
+      x.exp += 1
+    }
+    if (this.num >= 10) {
+      this.num /= 10
+      this.exp += 1
+    }
     this.exp = Math.round(this.exp)
     x.exp = Math.round(x.exp)
     if (x.num < 0 && this.num > 0) {

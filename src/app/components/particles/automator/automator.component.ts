@@ -27,6 +27,18 @@ export class AutomatorComponent implements OnInit {
 
   constructor() { }
 
+  setAutomationType(type: string) {
+    if (typeof this.name === 'string') {
+      AutomatorService.setValue(this.name, 'prestigeType', type)
+    }
+  }
+
+  getAutomationType() {
+    if (typeof this.name === 'string') {
+      return AutomatorService.getValue(this.name, 'prestigeType')
+    }
+  }
+
   onChange() {
     AutomatorService.setActive(this.name, this.formGroup.value.active)
     if (this.isPrestigeAutomator) AutomatorService.setWaitFor(this.name, this.formGroup.value.waitFor)

@@ -320,27 +320,42 @@ footer {
 }
 
 .red-automator {
-  border: solid 2px var(--dark-button-color);
-  border-radius: 3px;
-  background: linear-gradient(135deg, var(--transparent-background-red), var(--transparent-background-dark));
+  color: var(--text-color-red);
 }
 
 .yellow-automator {
-  border: solid 2px var(--dark-button-color);
-  border-radius: 3px;
-  background: linear-gradient(135deg, var(--transparent-background-yellow), var(--transparent-background-dark));
+  color: var(--text-color-yellow)
 }
 
 .green-automator {
-  border: solid 2px var(--dark-button-color);
-  border-radius: 3px;
-  background: linear-gradient(135deg, var(--transparent-background-green), var(--transparent-background-dark));
+  color: var(--text-color-green)
 }
 
 .blue-automator {
-  border: solid 2px var(--dark-button-color);
+  color: var(--text-color-blue);
+}
+
+.purple-automator {
+  color: var(--text-color-purple);
+}
+
+.prestige-automator-button {
+  cursor: pointer;
+  font-size: 12px;
+  background-color: var(--background-color-2);
   border-radius: 3px;
-  background: linear-gradient(135deg, var(--transparent-background-blue), var(--transparent-background-dark));
+}
+
+.prestige-automator-button.yellow {
+  border: 1px solid var(--yellow-button-color);
+}
+
+.prestige-automator-button.green {
+  border: 1px solid var(--green-button-color);
+}
+
+.prestige-automator-button.blue {
+  border: 1px solid var(--blue-button-color);
 }
 
 .automator-form {

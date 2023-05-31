@@ -48,8 +48,8 @@ export class NavigationsService {
     { name: 'blueNeutrons', displayName: 'Neu', location: 'neutrons', parent: 'blue', unlocked: false, requirement: ['blues', new Num(1, 0)]  },
     { name: 'neutronStars', displayName: 'NS', location: 'neutronstars', parent: 'blue', unlocked: false, requirement: ['blues', new Num(3, 0)]  },
     { name: 'blueUpgrades', displayName: 'Up', location: 'upgrades', parent: 'blue', unlocked: false, requirement: ['blues', new Num(5, 0)]  },
-    { name: 'blueChallenges', displayName: 'BC', location: 'challenges', parent: 'blue', unlocked: false, requirement: ['blueParticles', new Num(1, 4)]  },
-    { name: 'blueGenerators', displayName: 'Gen', location: 'generators', parent: 'blue', unlocked: false, requirement: ['blueParticles', new Num(1, 35)]  },
+    { name: 'blueChallenges', displayName: 'BC', location: 'challenges', parent: 'blue', unlocked: false, requirement: ['blueParticles', new Num(1, 5)]  },
+    { name: 'blueGenerators', displayName: 'Gen', location: 'generators', parent: 'blue', unlocked: false, requirement: ['blueParticles', new Num(1, 60)]  },
     { name: 'blueMilestones', displayName: 'Mile', location: 'milestones', parent: 'blue', unlocked: false, requirement: ['blueParticles', new Num(1, 0)]  },
     { name: 'bluePurple', displayName: 'P', location: 'purple', parent: 'blue', unlocked: false, requirement: ['purples', new Num(1, 0)]  },
 

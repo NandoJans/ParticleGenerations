@@ -11,6 +11,7 @@ import {yellowAutomators} from "./upgrades/automators/yellow";
 import {ChallengeService} from "./challenge.service";
 import {greenAutomators} from "./upgrades/automators/green";
 import {blueAutomators} from "./upgrades/automators/blue";
+import {addImports} from "@angular/compiler-cli/src/ngtsc/transform/src/utils";
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,7 @@ export class AutomatorService {
     this.automators.forEach((automator) => {
       if (automator.type === 'prestige-automators') {
         // @ts-ignore
-        save[automator.name] = {bought: automator.bought, unlocked: automator.unlocked, active: automator.active, waitFor: automator.waitFor}
+        save[automator.name] = {bought: automator.bought, unlocked: automator.unlocked, active: automator.active, waitFor: automator.waitFor, prestigeType: automator.prestigeType}
       } else {
         // @ts-ignore
         save[automator.name] = {bought: automator.bought, unlocked: automator.unlocked, active: automator.active}
@@ -104,6 +105,15 @@ export class AutomatorService {
     return 0;
   }
 
+  static setValue(name: string, value: string, set: any) {
+    this.automators.forEach((automator) => {
+      if (automator.name === name) {
+        // @ts-ignore
+        automator[value] = set
+      }
+    })
+  }
+
   static setValues(type: string, value: string, set: any) {
     this.automators.forEach((automator) => {
       if (automator.type === type) {
@@ -129,8 +139,14 @@ export class AutomatorService {
       if (automator.name === name) {
         const num: any[] = amount.split('e')
         if (num[1] === undefined) num[1] = '0';
+        num[0] = parseInt(num[0]);
+        num[1] = parseInt(num[1]);
+        while (num[0] >= 10) {
+          num[0] /= 10;
+          num[1] += 1;
+        }
         console.log(num)
-        automator.waitFor = new Num(parseInt(num[0]), parseInt(num[1]));
+        automator.waitFor = new Num(num[0], num[1]);
       }
     })
   }
@@ -164,11 +180,23 @@ export class AutomatorService {
   }
 
   static prestigeAutomators() {
-    this.automators.forEach((autoPrestige) => {
-      if (autoPrestige.type === 'prestige-automators' && ChallengeService.activeChallenge === undefined) {
-        // @ts-ignore
-        if (autoPrestige.unlocked && autoPrestige.active && PrestigeLayersService.getValue(autoPrestige.layer, 'gain').greq(autoPrestige.waitFor)) {
-          PrestigeLayersService.prestige(autoPrestige.layer);
+    this.automators.forEach((auto) => {
+      if (auto.type === 'prestige-automators' && auto.unlocked && auto.active && auto.waitFor instanceof Num) {
+        if (ChallengeService.activeChallenge !== undefined && ChallengeService.activeChallenge.prestige === auto.layer) {
+          if (HoldingsService.get(auto.layer+'Particles').greq(ChallengeService.activeChallenge.goal)) {
+            PrestigeLayersService.prestige(auto.layer);
+          } else {
+            return;
+          }
+          // @ts-ignore
+        } else if (auto.prestigeType === 'waitFor' && PrestigeLayersService.getValue(auto.layer, 'gain').greq(auto.waitFor)) {
+          PrestigeLayersService.prestige(auto.layer);
+          // @ts-ignore
+        } else if (auto.prestigeType === 'timesHighest' && PrestigeLayersService.getValue(auto.layer, 'gain').greq(PrestigeLayersService.getValue(auto.layer, 'previousGain').mul(auto.waitFor, false))) {
+          PrestigeLayersService.prestige(auto.layer);
+          // @ts-ignore
+        } else if (auto.prestigeType === 'afterSeconds' && PrestigeLayersService.getValue(auto.layer, 'time')+(auto.waitFor.num*10**auto.waitFor.exp*1000) < Date.now()) {
+          PrestigeLayersService.prestige(auto.layer);
         }
       }
     })

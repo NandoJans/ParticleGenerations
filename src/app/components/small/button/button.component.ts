@@ -14,6 +14,8 @@ export class ButtonComponent implements OnInit {
 
   constructor() { }
 
+
+
   onClick() {
     // @ts-ignore
     this.function.emit(this.object);
