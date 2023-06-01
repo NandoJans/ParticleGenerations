@@ -124,13 +124,16 @@ export class BuyableService {
   compare() {
     //console.clear();
     GeneratorService.generators.forEach((buyable) => {
-      if (HoldingsService.get(buyable.currency).greq(buyable.cost) && buyable['unlocked']
-        && buyable['auto']) {
-        const result1 = this.calculateBulk(buyable)
+      if (HoldingsService.get(buyable.currency).greq(buyable.cost) && buyable['unlocked'] && buyable['auto'] &&
         // @ts-ignore
-        if (result1[0].greq(new Num(1, 0)) && HoldingsService.get(buyable.currency).greq(result1[1])) {
+        (buyable.limit === undefined || !buyable.bought.greq(buyable.limit.sub(new Num(1, 0), false)))) {
+        const result = this.calculateBulk(buyable)
+        if (buyable.type === 'dark-upgrade') result[0].sub(new Num(1, 0));
+
+        // @ts-ignore
+        if (result[0].greq(new Num(1, 0)) && HoldingsService.get(buyable.currency).greq(result[1])) {
           // @ts-ignore
-          this.bulkBuyAction(buyable, result1[1], result1[0]);
+          this.bulkBuyAction(buyable, result[1], result[0]);
         }
       }
 

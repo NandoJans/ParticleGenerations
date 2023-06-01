@@ -14,7 +14,8 @@ export const yellowChallenges: Challenge[] = [
     rewardDescription: 'Gain a multiplier to red accelerators based on red generator boosts.', style: 'yellow-challenge', resetId: 'yellow', type: 'yellow-challenges', prestige: 'yellow', unlocked: false, instantComplete: false,
     requirement: ['yellowParticles', new Num(1, 5)],
     reward: (self: Challenge) => {
-      const buff: Num = UpgradeService.getValue('red-generator-booster', 'buffer').add(new Num(1, 0), false);
+      const buff: Num = UpgradeService.getValue('red-generator-booster', 'buffer').pow(UpgradeService.getValue('red-generator-booster', 'amount').add(new Num(1, 0), false), false);
+      buff.pow(new Num(2.5, -1))
       GlobalMultipliersService.correct('redAcceleratorGenerators', buff)
       return buff;
     },

@@ -167,6 +167,8 @@ export class ResetService {
     this.resetGenerators('nuclear')
     this.resetUpgrades('nuclear')
 
+    this.resetChallenges('blue')
+
     HoldingsService.set('blueHydrogen', new Num(1, 0))
     HoldingsService.set('blueLight', new Num(0, 0))
     HoldingsService.set('redAccelerators', new Num(1, 0))

@@ -54,7 +54,7 @@ export const blueUpgrades = [
   },
   {
     name: 'yellow-fusion-boosts-green', displayName: 'Green Yellow Fusion', description: 'Yellow fusion boosts green generators.', auto: false,
-    baseCost: new Num(1,20), cost: new Num(1, 20), increase: new Num(1,0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'blueParticles',
+    baseCost: new Num(1,4), cost: new Num(1, 4), increase: new Num(1,0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'blueParticles',
     baseBuffer: new Num(1, -3), buffer: new Num(1, -3), amount: new Num(0, 0), type: 'blue-upgrades', resetId: 'blue', style: 'blue-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['blues', new Num(3, 0)],
     action: (self: Upgrade) => {
       const buff: Num | undefined = HoldingsService.get('yellowFusion').pow(self.buffer, false);
