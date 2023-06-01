@@ -65,7 +65,7 @@ export class GeneratorService {
   static increaseMultiplier(name: string, amount: Num) {
     const generator = Searcher.search(this.sortedGenerators, 'name', name)
     if (generator !== undefined) {
-      generator['multiplier'] += generator['multiplier'].add(amount, false)
+      generator['baseMulMod'].add(amount)
     }
   }
 

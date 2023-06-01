@@ -11,7 +11,7 @@ export const prePurpleUpgrades: Upgrade[] = [
     baseBuffer: new Num(1.02, 0), buffer: new Num(1.02, 0), amount: new Num(0, 0), type: 'red-purple-upgrade', resetId: 'red-purple-upgrade', style: 'red-purple-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['purples', new Num(2, 0)],
     action: (self: Upgrade) => {
       // @ts-ignore
-      const buff: Num = self.buffer.pow(self.bought, false)
+      const buff: Num = self.buffer.pow(self.bought, false).sub(new Num(1, 0), false)
       GeneratorService.increaseMultiplier('red-purple-generator-1', buff);
       GeneratorService.increaseMultiplier('red-purple-generator-2', buff);
       GeneratorService.increaseMultiplier('red-purple-generator-3', buff);
@@ -37,7 +37,7 @@ export const prePurpleUpgrades: Upgrade[] = [
     baseBuffer: new Num(1.03, 0), buffer: new Num(1.03, 0), amount: new Num(0, 0), type: 'yellow-purple-upgrade', resetId: 'yellow-purple-upgrade', style: 'yellow-purple-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['purples', new Num(2, 0)],
     action: (self: Upgrade) => {
       // @ts-ignore
-      const buff: Num = self.buffer.pow(self.bought, false)
+      const buff: Num = self.buffer.pow(self.bought, false).sub(new Num(1, 0), false)
       GeneratorService.increaseMultiplier('yellow-purple-generator-1', buff);
       GeneratorService.increaseMultiplier('yellow-purple-generator-2', buff);
       GeneratorService.increaseMultiplier('yellow-purple-generator-3', buff);
@@ -63,7 +63,7 @@ export const prePurpleUpgrades: Upgrade[] = [
     baseBuffer: new Num(1.05, 0), buffer: new Num(1.05, 0), amount: new Num(0, 0), type: 'green-purple-upgrade', resetId: 'green-purple-upgrade', style: 'green-purple-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['purples', new Num(2, 0)],
     action: (self: Upgrade) => {
       // @ts-ignore
-      const buff: Num = self.buffer.pow(self.bought, false)
+      const buff: Num = self.buffer.pow(self.bought, false).sub(new Num(1, 0), false)
       GeneratorService.increaseMultiplier('green-purple-generator-1', buff);
       GeneratorService.increaseMultiplier('green-purple-generator-2', buff);
       GeneratorService.increaseMultiplier('green-purple-generator-3', buff);
@@ -89,7 +89,7 @@ export const prePurpleUpgrades: Upgrade[] = [
     baseBuffer: new Num(1.1, 0), buffer: new Num(1.1, 0), amount: new Num(0, 0), type: 'blue-purple-upgrade', resetId: 'blue-purple-upgrade', style: 'blue-purple-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['purples', new Num(2, 0)],
     action: (self: Upgrade) => {
       // @ts-ignore
-      const buff: Num = self.buffer.pow(self.bought, false)
+      const buff: Num = self.buffer.pow(self.bought, false).sub(new Num(1, 0), false)
       GeneratorService.increaseMultiplier('blue-purple-generator-1', buff);
       GeneratorService.increaseMultiplier('blue-purple-generator-2', buff);
       GeneratorService.increaseMultiplier('blue-purple-generator-3', buff);

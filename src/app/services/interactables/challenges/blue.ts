@@ -187,13 +187,13 @@ export const blueChallenges:Challenge[] = [
   },
   {
     name: 'blue-challenge-7', displayName: 'Blue Challenge 7', description: 'Green Particles without the green and yellow phase.', baseGoal: new Num(1, 400), goal: new Num(1, 400), currency: 'greenParticles', disabled: false,
-    dynamic: true , completed: new Num(0, 0), maxCompletions: new Num(5, 0), goalIncrease: new Num(1, 400),
+    dynamic: true , completed: new Num(0, 0), maxCompletions: new Num(5, 0), goalIncrease: new Num(1, 100),
     rewardDescription: 'Increase the cap of dark power.', style: 'blue-challenge', resetId: 'blue', type: 'blue-challenges', prestige: 'blue', unlocked: false, instantComplete: false,
     requirement: ['blueParticles', new Num(1, 25)],
     reward: (self: Challenge) => {
       if (self.completed instanceof Num) {
         // @ts-ignore
-        const buff: Num | undefined = new Num(5, 1).mul(self.completed, false);
+        const buff: Num | undefined = new Num(1, 2).mul(self.completed, false);
         // @ts-ignore
         HoldingsService.set('maxDarkPower', new Num(2, 2).add(buff, false));
         // @ts-ignore
@@ -220,14 +220,14 @@ export const blueChallenges:Challenge[] = [
     }
   },
   {
-    name: 'blue-challenge-8', displayName: 'Blue Challenge 8', description: 'Green Particles while having only the first generator from all generators.', baseGoal: new Num(1, 5), goal: new Num(1, 5), currency: 'greenParticles', disabled: false,
-    dynamic: true , completed: new Num(0, 0), maxCompletions: new Num(5, 0), goalIncrease: new Num(1, 5),
+    name: 'blue-challenge-8', displayName: 'Blue Challenge 8', description: 'Green Particles while having only the first generator from all generators.', baseGoal: new Num(1, 25), goal: new Num(1, 25), currency: 'greenParticles', disabled: false,
+    dynamic: true , completed: new Num(0, 0), maxCompletions: new Num(5, 0), goalIncrease: new Num(1, 25),
     rewardDescription: 'Decrease the red particle generator cost scaling.', style: 'blue-challenge', resetId: 'blue', type: 'blue-challenges', prestige: 'blue', unlocked: false, instantComplete: false,
-    requirement: ['blueParticles', new Num(1, 40)],
+    requirement: ['blueParticles', new Num(1, 30)],
     reward: (self: Challenge) => {
       if (self.completed instanceof Num) {
         // @ts-ignore
-        const buff: Num | undefined = new Num(1, 1).sub(self.completed, false);
+        const buff: Num | undefined = new Num(1, 1).pow(new Num(5, 0).sub(self.completed, false).div(new Num(5, 0), false), false).add(new Num(1, 0), false);
         GeneratorService.setValues('red-particles', 'red-particles', buff);
         // @ts-ignore
         return buff;
@@ -256,13 +256,13 @@ export const blueChallenges:Challenge[] = [
       GeneratorService.disableGenerator('nuclear-decay-generator-2')
       GeneratorService.disableGenerator('nuclear-decay-generator-3')
 
-      GeneratorService.disableGenerator('blue-neutron-generator-2')
-      GeneratorService.disableGenerator('blue-neutron-generator-3')
+      //GeneratorService.disableGenerator('blue-neutron-generator-2')
+      //GeneratorService.disableGenerator('blue-neutron-generator-3')
 
-      GeneratorService.disableGenerator('blue-generator-2')
-      GeneratorService.disableGenerator('blue-generator-3')
-      GeneratorService.disableGenerator('blue-generator-4')
-      GeneratorService.disableGenerator('blue-generator-5')
+      //GeneratorService.disableGenerator('blue-generator-2')
+      //GeneratorService.disableGenerator('blue-generator-3')
+      //GeneratorService.disableGenerator('blue-generator-4')
+      //GeneratorService.disableGenerator('blue-generator-5')
     }
   }
 ]

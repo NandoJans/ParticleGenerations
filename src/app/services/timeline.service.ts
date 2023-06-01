@@ -85,11 +85,11 @@ export class TimelineService {
     },
     {
       name: 'blue-generators', displayName: 'We forgot to generate', description: 'Blue generators, i don\'t think i need to explain.', hasProgress: true,
-      unlocked: false, requirement: ['blueParticles', new Num(1, 5)], type: 'blue-timeline', reached: false, unlock: ['blueParticles', new Num(1, 60)]
+      unlocked: false, requirement: ['blueParticles', new Num(1, 5)], type: 'blue-timeline', reached: false, unlock: ['blueParticles', new Num(1, 35)]
     },
     {
       name: 'purple-phase', displayName: 'Why are my particles gone?', description: 'The purple phase voids all particles.', hasProgress: true,
-      unlocked: false, requirement: ['blueParticles', new Num(1, 60)], type: 'blue-timeline', reached: false, unlock: ['blueParticles', new Num(1, 110)]
+      unlocked: false, requirement: ['blueParticles', new Num(1, 35)], type: 'blue-timeline', reached: false, unlock: ['blueParticles', new Num(1, 110)]
     },
 
     {
