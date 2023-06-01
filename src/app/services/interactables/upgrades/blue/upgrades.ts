@@ -63,17 +63,17 @@ export const blueUpgrades = [
     }, nav: 'blue', subNav: 'blueUpgrades'
   },
   {
+    name: 'extra-blue-light-upgrades', displayName: 'More Fusion Effect', description: 'The upgrade Increase Fusion Effect can be bought once more.', auto: false,
+    baseCost: new Num(1,26), cost: new Num(1, 26), increase: new Num(1,0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'blueParticles',
+    baseBuffer: new Num(1.1, 1), buffer: new Num(1.1, 1), amount: new Num(0, 0), type: 'blue-upgrades', resetId: 'blue', style: 'blue-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['blues', new Num(3, 0)],
+    action: (self: Upgrade) => {
+      UpgradeService.setValue('yellow-fusion-effect-increaser', 'limit', self.buffer)
+    }, nav: 'blue', subNav: 'blueUpgrades'
+  },
+  {
     name: 'green-idle-gain', displayName: 'Green particles generation', description: 'Generate 1% of green particles gained on going green per second.', auto: false,
     baseCost: new Num(1,30), cost: new Num(1, 30), increase: new Num(1,0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'blueParticles',
     baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'blue-upgrades', resetId: 'blue', style: 'blue-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['blues', new Num(3, 0)],
     action: (self: Upgrade) => {}, nav: 'blue', subNav: 'blueUpgrades'
-  },
-  {
-    name: 'extra-blue-light-upgrades', displayName: 'More Fusion Effect', description: 'The upgrade Increase Fusion Effect can be bought once more.', auto: false,
-    baseCost: new Num(1,95), cost: new Num(1, 95), increase: new Num(1,0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'blueParticles',
-    baseBuffer: new Num(1.4, 1), buffer: new Num(1.4, 1), amount: new Num(0, 0), type: 'blue-upgrades', resetId: 'blue', style: 'blue-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['blues', new Num(3, 0)],
-    action: (self: Upgrade) => {
-      UpgradeService.setValue('yellow-fusion-effect-increaser', 'limit', self.buffer)
-    }, nav: 'blue', subNav: 'blueUpgrades'
   }
 ]
