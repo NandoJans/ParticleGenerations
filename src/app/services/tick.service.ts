@@ -108,7 +108,7 @@ export class TickService {
     ChallengeService.applyNerfs();
     GeneratorService.generate(speed);
     //HoldingsService.set('redParticles', new Num(1, 110))
-    //HoldingsService.set('yellowParticles', new Num(1, 110))
+    //HoldingsService.set('yellowParticles', new Num(1, 35))
     //HoldingsService.set('greenParticles', new Num(1, 2))
     //HoldingsService.set('blueParticles', new Num(1, 110))
     //HoldingsService.set('purpleParticles', new Num(2, 0))
@@ -124,7 +124,7 @@ export class TickService {
     //console.log(HoldingsService.get('darkEnergy').toString())
 
     //GeneratorService.setValue('blue-light-generator', 'bought', new Num(0, 0))
-    //UpgradeService.setValue('neutron-star', 'amount', new Num(0, 0));
+    UpgradeService.setValues('yellow-fusion', 'bought', new Num(0, 0));
     AutomatorService.setAutos();
     ChallengeService.applyNerfs();
     this.buyables.compare();

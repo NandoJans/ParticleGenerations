@@ -161,6 +161,7 @@ export class ResetService {
 
     HoldingsService.set('yellowFusion', new Num(1, 0));
     HoldingsService.set('blueParticles', new Num(0, 0));
+    this.resetUpgrades('yellow')
     this.resetUpgrades('green')
     this.resetUpgrades('blue')
     this.resetGenerators('blue')
