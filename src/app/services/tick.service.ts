@@ -124,7 +124,7 @@ export class TickService {
     //console.log(HoldingsService.get('darkEnergy').toString())
 
     //GeneratorService.setValue('blue-light-generator', 'bought', new Num(0, 0))
-    UpgradeService.setValues('yellow-fusion', 'bought', new Num(0, 0));
+    //UpgradeService.setValues('yellow-fusion', 'bought', new Num(0, 0));
     AutomatorService.setAutos();
     ChallengeService.applyNerfs();
     this.buyables.compare();
