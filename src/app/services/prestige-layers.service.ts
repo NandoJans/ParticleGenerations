@@ -191,6 +191,14 @@ export class PrestigeLayersService {
             doc.style.display = 'none';
           }
         }
+      } else if (doc !== null && this.getValue('purple', 'unlocked') && ChallengeService.activeChallenge === undefined) {
+        doc.style.display = 'none';
+        doc.style.width = '0';
+        if (doc.parentElement !== null && doc.parentElement.parentElement !== null) doc.parentElement.parentElement.style.display = 'unset';
+      } else if (doc !== null && this.getValue('purple', 'unlocked') && ChallengeService.activeChallenge !== undefined) {
+        doc.style.display = 'unset';
+        doc.style.width = '100%';
+        if (doc.parentElement !== null && doc.parentElement.parentElement !== null) doc.parentElement.parentElement.style.display = 'flex';
       }
     })
   }
