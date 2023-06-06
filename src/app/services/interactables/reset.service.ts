@@ -40,7 +40,11 @@ export class ResetService {
   static resetChallenges(type: string) {
     ChallengeService.challenges.forEach((challenge) => {
       if (challenge.resetId === type) {
-        challenge.completed = false;
+        if (challenge.completed instanceof Num) {
+          challenge.completed = new Num(0, 0)
+        } else {
+          challenge.completed = false;
+        }
       }
     })
   }
@@ -159,7 +163,7 @@ export class ResetService {
     if (resets === 'blue') return;
     PrestigeLayersService.setValue('blue', 'previousGain', new Num(1, 0))
 
-    HoldingsService.set('yellowFusion', new Num(1, 0));
+    HoldingsService.set('yellowFusion', new Num(1, 110));
     HoldingsService.set('blueParticles', new Num(0, 0));
     this.resetUpgrades('yellow')
     this.resetUpgrades('green')

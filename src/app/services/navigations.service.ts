@@ -61,6 +61,7 @@ export class NavigationsService {
 
     { name: 'purpleGenerators', displayName: 'Gen', location: 'generators', parent: 'purple', unlocked: false, requirement: ['purples', new Num(1, 0)]  },
     { name: 'blackHole', displayName: 'Black Hole', location: 'blackhole', parent: 'purple', unlocked: false, requirement: ['purples', new Num(5, 0)]  },
+    { name: 'purpleMilestones', displayName: 'Milestones', location: 'milestones', parent: 'purple', unlocked: false, requirement: ['purples', new Num(1, 0)]  },
 
     { name: 'redTimeline', displayName: 'Red', location: 'red', parent: 'timeline', unlocked: true, requirement: 'none'},
     { name: 'yellowTimeline', displayName: 'Yellow', location: 'yellow', parent: 'timeline', unlocked: false, requirement: ['yellows', new Num(1, 0)]  },

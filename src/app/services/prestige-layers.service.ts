@@ -142,6 +142,7 @@ export class PrestigeLayersService {
     this.prestiges.forEach(prestige => {
       if (prestige['name'] === prestigeName) {
         const doc = (document.getElementById(prestige['prestigeButton']) as HTMLButtonElement);
+        if (doc === null) return;
         if (reachedGoal) {
           doc.classList.remove('unreached')
           if (doc.childNodes.item(0) !== null) {

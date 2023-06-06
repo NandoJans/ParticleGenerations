@@ -148,6 +148,9 @@ export class UpgradeService {
             upgrade.effect = buff.copy();
           }
         }
+        if (!upgrade.amount.greq(upgrade.bought)) {
+          upgrade.amount = upgrade.bought.copy();
+        }
       }
     })
   }

@@ -37,6 +37,7 @@ import {PurpleGeneratorsComponent} from "./pages/purple/purple-generators/purple
 import {PurpleTimelineComponent} from "./pages/timeline/purple-timeline/purple-timeline.component";
 import {BlackComponent} from "./pages/purple/black/black.component";
 import {BlueChallengesComponent} from "./pages/blue/blue-challenges/blue-challenges.component";
+import {PurpleMilestonesComponent} from "./pages/purple/purple-milestones/purple-milestones.component";
 
 const routes: Routes = [
   { path: '', component: RedComponent },
@@ -66,6 +67,7 @@ const routes: Routes = [
   { path: 'blue/purple', component: BluePurpleComponent },
   { path: 'purple/generators', component: PurpleGeneratorsComponent },
   { path: 'purple/blackhole', component: BlackComponent },
+  { path: 'purple/milestones', component: PurpleMilestonesComponent },
   { path: 'automators/red', component: RedAutomatorsComponent },
   { path: 'automators/yellow', component: YellowAutomatorsComponent },
   { path: 'automators/green', component: GreenAutomatorsComponent },

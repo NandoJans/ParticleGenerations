@@ -12,6 +12,7 @@ import {Num} from "../../num";
 import {UpgradeService} from "./upgrade.service";
 import {GeneratorService} from "./generator.service";
 import {blueChallenges} from "./challenges/blue";
+import {App} from "../../App";
 
 @Injectable({
   providedIn: 'root'
@@ -88,6 +89,11 @@ export class ChallengeService {
         this.activeChallenge = challenge;
         HoldingsService.set('yellowFusion', new Num(0, 0));
         ResetService.reset(challenge.prestige);
+        UpgradeService.resetUpgrades();
+        GeneratorService.resetGenerators();
+        ChallengeService.resetChallenges();
+        App.next();
+        DataManagerService.load();
       }
     })
   }
@@ -104,6 +110,7 @@ export class ChallengeService {
     UpgradeService.resetUpgrades();
     GeneratorService.resetGenerators();
     ChallengeService.resetChallenges();
+    App.next()
     DataManagerService.load();
   }
 
@@ -115,6 +122,7 @@ export class ChallengeService {
       UpgradeService.resetUpgrades();
       GeneratorService.resetGenerators();
       ChallengeService.resetChallenges();
+      App.next()
       DataManagerService.load();
     }
   }

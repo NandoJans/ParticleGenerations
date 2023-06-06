@@ -1,0 +1,5 @@
+<div class="generators-row">
+  <div *ngFor="let milestone of milestones">
+    <app-milestone *ngIf="milestone.unlocked" [milestone]="milestone"></app-milestone>
+  </div>
+</div>
