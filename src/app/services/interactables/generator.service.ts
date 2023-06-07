@@ -187,9 +187,7 @@ export class GeneratorService {
         }
 
         if (ChallengeService.activeChallenge?.name === 'dark-age' && generator.name !== 'yellow-fusion-generator') {
-          if (UpgradeService.getValue('nerf-dark-age', 'bought').greq(new Num(1, 0))
-            && !UpgradeService.getValue('more-dark-power', 'bought').greq(new Num(1, 0))) generator.multiplier.pow(new Num(0.35, 0));
-          else if (UpgradeService.getValue('more-dark-power', 'bought').greq(new Num(1, 0))) generator.multiplier.pow(new Num(0.3, 0));
+          if (UpgradeService.getValue('nerf-dark-age', 'bought').greq(new Num(1, 0))) generator.multiplier.pow(new Num(0.35, 0));
           else generator.multiplier.pow(new Num(0.25, 0));
         }
         if (ChallengeService.activeChallenge?.name === 'dark-age' && generator.name === 'yellow-fusion-generator') {
