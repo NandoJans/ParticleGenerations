@@ -167,11 +167,10 @@ export class GeneratorService {
             const max = 50*(yellowFusionMax.exp-110)
             if (yellowFusion.greq(new Num(1, 1500000))) {
               division.sub(new Num(max / yellowFusionMax.exp, 0))
-              const mulVar = new Num(yellowFusion.exp / max, 0)
+              const mulVar = new Num(yellowFusion.exp / max, 0).pow(new Num(2, 0), false)
               // @ts-ignore
-              generator.multiplier.div(division.pow(division.pow(mulVar, false), false))
-            }
-            if (yellowFusion.greq(new Num(1, max))) {
+              generator.multiplier.div(division.pow(division.mul(mulVar, false), false))
+            } else if (yellowFusion.greq(new Num(1, max))) {
               division.sub(new Num(max / yellowFusionMax.exp, 0))
               const mulVar = new Num(yellowFusion.exp / max, 0)
               // @ts-ignore
