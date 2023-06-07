@@ -54,7 +54,7 @@ export const prePurpleUpgrades: Upgrade[] = [
       const buff: Num | undefined = self.buffer.pow(self.bought, false)
       GlobalMultipliersService.correct('yellowPurpleGenerators', buff);
       return buff;
-    }, nav: 'red', subNav: 'yellowPurple'
+    }, nav: 'yellow', subNav: 'yellowPurple'
   },
 
   {
@@ -80,7 +80,7 @@ export const prePurpleUpgrades: Upgrade[] = [
       const buff: Num | undefined = self.buffer.pow(self.bought, false)
       GlobalMultipliersService.correct('greenPurpleGenerators', buff);
       return buff;
-    }, nav: 'red', subNav: 'greenPurple'
+    }, nav: 'green', subNav: 'greenPurple'
   },
 
   {
@@ -106,6 +106,6 @@ export const prePurpleUpgrades: Upgrade[] = [
       const buff: Num | undefined = self.buffer.pow(self.bought, false)
       GlobalMultipliersService.correct('bluePurpleGenerators', buff);
       return buff;
-    }, nav: 'red', subNav: 'bluePurple'
+    }, nav: 'blue', subNav: 'bluePurple'
   },
 ]

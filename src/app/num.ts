@@ -68,6 +68,10 @@ export class Num {
     }
   }
 
+  toNumber = () => {
+    return this.exp+Math.log10(this.num);
+  }
+
   copy = () => {
     return new Num(this.num, this.exp)
   }

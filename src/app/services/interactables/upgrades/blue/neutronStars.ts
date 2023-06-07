@@ -4,6 +4,7 @@ import {GlobalMultipliersService} from "../../../globals/global-multipliers.serv
 import {GeneratorService} from "../../generator.service";
 import {HoldingsService} from "../../../holdings.service";
 import {UpgradeService} from "../../upgrade.service";
+import {MilestoneService} from "../../milestone.service";
 
 export const blueNeutronStars: Upgrade[] = [
   {
@@ -38,10 +39,14 @@ export const blueNeutronStars: Upgrade[] = [
     }, nav: 'blue', subNav: 'neutronStars'
   },
   {
-    name: 'yellow-fusion-accelerator', displayName: 'Yellow Fusion Accelerator', description: 'Makes yellow fusion 1e5x faster.', auto: false, scalingStart: new Num(1, 50),
+    name: 'yellow-fusion-accelerator', displayName: 'Yellow Fusion Accelerator', description: 'Makes yellow fusion 1.00e5x faster.', auto: false, scalingStart: new Num(1, 50),
     baseCost: new Num(1,5), cost: new Num(1, 5), increase: new Num(1,2), scaling: new Num(1, 1), bought: new Num(0, 0), currency: 'blueLight',
     baseBuffer: new Num(1, 5), buffer: new Num(1, 5), amount: new Num(0, 0), type: 'blue-light-upgrade', resetId: 'blue', style: 'light-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['blues', new Num(3, 0)],
     action: (self: Upgrade) => {
+      if (MilestoneService.isReached('quality-of-life-milestone')) {
+        self.buffer = new Num(1, 50);
+        self.description = 'Makes yellow fusion 1.00e50x faster.';
+      }
       const buff: Num | undefined = self.buffer.pow(self.bought, false);
       GlobalMultipliersService.correct('yellowFusion', buff);
       return buff;

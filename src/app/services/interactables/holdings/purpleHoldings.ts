@@ -52,9 +52,18 @@ export const purpleHoldings = {
         HoldingsService.get('greenParticles').pow(new Num(9, -1))
         HoldingsService.get('blueParticles').pow(new Num(9, -1))
       }
+    }},
+  gravity: {amount: new Num(1, 0), effect: new Num(1, 0),
+    beforeAction: (amount: Num) => {
+      if (amount.greq(new Num(1, 110))) {
+        HoldingsService.set('gravity', new Num(1, 110));
+        amount = new Num(1, 110);
+      }
       // @ts-ignore
-      let buffer: Num = amount.pow(new Num(5, -1), false)
+      let buffer: Num = amount.log10(false)
+      buffer.pow(new Num(2, 0))
       GlobalMultipliersService.correct('purpleParticleGenerators', buffer);
       return buffer
-    }},
+    }
+  }
 }

@@ -56,7 +56,7 @@ export class UpgradeService {
     const save = {};
     this.upgrades.forEach((upgrade) => {
       // @ts-ignore
-      save[upgrade.name] = {amount: upgrade.amount, bought: upgrade.bought, cost: upgrade.cost}
+      save[upgrade.name] = {amount: upgrade.amount, bought: upgrade.bought, cost: upgrade.cost, description: upgrade.description}
     })
     localStorage['upgrades'] = JSON.stringify(save);
   }
@@ -67,7 +67,13 @@ export class UpgradeService {
       if (upgrades[upgrade.name] !== undefined) {
         Object.entries(upgrades[upgrade.name]).forEach((value) => {
           // @ts-ignore
-          upgrade[value[0]] = new Num(value[1]['num'], value[1]['exp']);
+          if (upgrade[value[0]] instanceof Num) {
+            // @ts-ignore
+            upgrade[value[0]] = new Num(value[1]['num'], value[1]['exp']);
+          } else {
+            // @ts-ignore
+            upgrade[value[0]] = value[1];
+          }
         })
       }
     })

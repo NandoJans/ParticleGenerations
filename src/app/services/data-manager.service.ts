@@ -8,6 +8,7 @@ import {MilestoneService} from "./interactables/milestone.service";
 import {ChallengeService} from "./interactables/challenge.service";
 import {AutomatorService} from "./interactables/automator.service";
 import {CombinerService} from "./interactables/combiner.service";
+import {BlackHoleService} from "./black-hole.service";
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,7 @@ export class DataManagerService {
     ChallengeService.save();
     AutomatorService.save();
     CombinerService.save();
+    BlackHoleService.save();
   }
 
   static load() {
@@ -35,6 +37,7 @@ export class DataManagerService {
     if (localStorage['navigations'] !== undefined) NavigationsService.load();
     if (localStorage['challenges'] !== undefined) ChallengeService.load();
     if (localStorage['automators'] !== undefined) AutomatorService.load();
+    if (localStorage['blackHoleStatus'] !== undefined) BlackHoleService.load();
     if (localStorage['combiners'] !== undefined && localStorage['combinations'] !== undefined) CombinerService.load();
   }
 }

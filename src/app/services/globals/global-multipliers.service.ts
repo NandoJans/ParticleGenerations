@@ -25,6 +25,7 @@ export class GlobalMultipliersService {
       greenPurpleGenerators: new Num(1, 0),
       bluePurpleGenerators: new Num(1, 0),
       purpleParticleGenerators: new Num(1, 0),
+      gravityGenerators: new Num(1, 0),
 
       yellowParticlesGain: new Num(1, 0),
       yellowsGain: new Num(1, 0),

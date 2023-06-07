@@ -10,6 +10,7 @@ import {GlobalMultipliersService} from "./globals/global-multipliers.service";
 import {CombinerService} from "./interactables/combiner.service";
 import {ChallengeService} from "./interactables/challenge.service";
 import {UpgradeComponent} from "../components/particles/upgrade/upgrade.component";
+import {min} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -128,6 +129,22 @@ export class NumberDisplayService {
             if (entry.effect !== undefined && entry.effect[0] instanceof Num && entry.effect[1] instanceof Num) {
               element.innerHTML = 'Completions: '+entry.effect[0]+' / '+entry.effect[1]
             }
+            break;
+          case 'gravityUntilMax':
+            let end: Num = new Num(new Num(1,110).toNumber(),0);
+            end.sub(new Num(HoldingsService.get('gravity').toNumber(), 0));
+            let ps: Num = GlobalMultipliersService.get('gravityGenerators').copy()
+            ps.div(new Num(5, 3))
+            ps.mul(new Num(1, 2))
+            end.div(ps)
+            end.mul(new Num(1, 1));
+            let endNumber = Math.floor(end.num*10**end.exp);
+            let hours = Math.floor(endNumber/3600)
+            let minutes = Math.floor(endNumber/60-hours*60)
+            let seconds = endNumber % 60
+            element.innerHTML = '('+hours+
+              ((minutes.toString().length === 1)?':0':':')+minutes+
+              ((seconds.toString().length === 1)?':0':':')+seconds+')';
             break;
           default:
             // @ts-ignore

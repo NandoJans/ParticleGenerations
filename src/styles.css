@@ -183,6 +183,26 @@ footer {
   margin: 4px !important;
 }
 
+#purpleParticles-currency {
+  font-size: 24px;
+}
+
+#blueParticles-currency {
+  font-size: 18px;
+}
+
+#greenParticles-currency {
+  font-size: 20px;
+}
+
+#yellowParticles-currency {
+  font-size: 22px;
+}
+
+#redParticles-currency {
+  font-size: 28px;
+}
+
 .generator {
   width: 150px;
   height: 85px;
@@ -933,5 +953,25 @@ app-prestige-button {
 
   #drop-down-message {
     width: 60%;
+  }
+
+  #purpleParticles-currency {
+    font-size: 20px;
+  }
+
+  #blueParticles-currency {
+    font-size: 16px;
+  }
+
+  #greenParticles-currency {
+    font-size: 18px;
+  }
+
+  #yellowParticles-currency {
+    font-size: 20px;
+  }
+
+  #redParticles-currency {
+    font-size: 22px;
   }
 }

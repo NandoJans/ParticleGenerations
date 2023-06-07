@@ -157,7 +157,6 @@ export class GeneratorService {
         }
 
         if (generator.name == 'yellow-fusion-generator') {
-          generator.multiplier.mul(GlobalMultipliersService.get('yellowFusion'));
           let yellowFusion = HoldingsService.get('yellowFusion');
           generator.multiplier.mul(yellowFusion.add(new Num(1, 0), false).div(new Num(2, 3), false));
           const hasLimit = UpgradeService.getValue('remove-fusion-limit', 'bought').greq(new Num(1, 0))
@@ -166,6 +165,12 @@ export class GeneratorService {
             const yellowFusionMax = HoldingsService.get('yellowFusionMax')
             const division = new Num(yellowFusion.exp / yellowFusionMax.exp, 0)
             const max = 50*(yellowFusionMax.exp-110)
+            if (yellowFusion.greq(new Num(1, 1500000))) {
+              division.sub(new Num(max / yellowFusionMax.exp, 0))
+              const mulVar = new Num(yellowFusion.exp / max, 0)
+              // @ts-ignore
+              generator.multiplier.div(division.pow(division.pow(mulVar, false), false))
+            }
             if (yellowFusion.greq(new Num(1, max))) {
               division.sub(new Num(max / yellowFusionMax.exp, 0))
               const mulVar = new Num(yellowFusion.exp / max, 0)
@@ -178,6 +183,14 @@ export class GeneratorService {
             }
           } else if (yellowFusion.greq(HoldingsService.get('yellowFusionMax'))) {
             HoldingsService.set('yellowFusion', HoldingsService.get('yellowFusionMax').copy())
+          }
+        }
+
+        if (generator.name === 'gravity-generator') {
+          let gravity = HoldingsService.get('gravity');
+          generator.multiplier.mul(gravity.add(new Num(1, 0), false).div(new Num(5, 3), false));
+          if (gravity.greq(new Num(1, 110))) {
+            generator.multiplier.mul(new Num(0, 0));
           }
         }
 
