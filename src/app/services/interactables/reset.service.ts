@@ -212,12 +212,16 @@ export class ResetService {
     this.resetGenerators('yellow-purple-generator')
     this.resetGenerators('green-purple-generator')
     this.resetGenerators('blue-purple-generator')
-    this.resetGenerators('purple-particles', 'amount')
+    this.resetGenerators('purple', 'amount')
+    HoldingsService.set('gravity', new Num(1, 0))
+    HoldingsService.set('blackHoleMass', new Num(1, 0))
+    HoldingsService.set('purpleVoid', new Num(1, 0))
 
     UpgradeService.setValue('red-generator-extension-upgrade', 'bought', new Num(1, 0));
     PrestigeLayersService.setValue('blue', 'fastestGainPS', new Num(0, 0))
     DataManagerService.save()
     if (resets === 'purple') return;
     PrestigeLayersService.setValue('purple', 'previousGain', new Num(1, 0))
+    if (resets === 'purpleGalaxy') return;
   }
 }

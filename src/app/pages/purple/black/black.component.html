@@ -30,3 +30,8 @@
     <app-upgrade *ngIf="upgrade.unlocked" [upgrade]="upgrade"></app-upgrade>
   </div>
 </div>
+<div class="upgrade-row">
+  <div *ngFor="let upgrade of galaxies">
+    <app-upgrade *ngIf="upgrade.unlocked" [upgrade]="upgrade"></app-upgrade>
+  </div>
+</div>

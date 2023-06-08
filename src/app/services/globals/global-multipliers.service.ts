@@ -45,6 +45,7 @@ export class GlobalMultipliersService {
     this.afterMultipliers = {
       nuclearDecayPower: new Num(1, 0),
       darkPowerPower: new Num(3, 0),
+      purpleVoidEffect: new Num(1, 0)
     }
   }
 

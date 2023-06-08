@@ -271,6 +271,13 @@ footer {
   background-color: var(--transparent-background-purple);
 }
 
+.black-hole-style {
+  background-color: var(--background-color-1);
+  color: var(--text-color-purple);
+  border: solid 1px var(--purple-button-color);
+  border-radius: 3px;
+}
+
 .red-purple-style {
   border: solid 1px var(--purple-button-color);
   background: linear-gradient(45deg, var(--transparent-background-red), var(--transparent-background-purple));

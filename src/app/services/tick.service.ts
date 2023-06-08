@@ -14,6 +14,7 @@ import {ChallengeService} from "./interactables/challenge.service";
 import {AutomatorService} from "./interactables/automator.service";
 import {TimelineService} from "./timeline.service";
 import {App} from "../App";
+import {ResetService} from "./interactables/reset.service";
 
 @Injectable({
   providedIn: 'root'

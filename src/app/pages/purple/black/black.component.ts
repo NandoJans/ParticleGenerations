@@ -11,6 +11,7 @@ import {BlackHoleService} from "../../../services/black-hole.service";
 export class BlackComponent implements OnInit {
   unlockBlackHole: Upgrade[] = [];
   blackHoleUpgrades: Upgrade[] = [];
+  galaxies: Upgrade[] = [];
   hideStartButton: boolean = BlackHoleService.on;
   hideStopButton: boolean = !BlackHoleService.on;
 
@@ -19,6 +20,7 @@ export class BlackComponent implements OnInit {
   ngOnInit(): void {
     this.unlockBlackHole = UpgradeService.getUpgrades('unlock-black-hole');
     this.blackHoleUpgrades = UpgradeService.getUpgrades('black-hole-upgrades');
+    this.galaxies = UpgradeService.getUpgrades('galaxies');
     this.hideStartButton = !BlackHoleService.on;
     this.hideStopButton = BlackHoleService.on;
   }

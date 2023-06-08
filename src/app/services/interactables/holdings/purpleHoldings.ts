@@ -13,28 +13,28 @@ export const purpleHoldings = {
   redPurple: {amount: new Num(1, 0), effect: new Num(1, 0),
     beforeAction: (amount: Num) => {
       // @ts-ignore
-      let buffer: Num = new Num(2, 0).add(amount.pow(HoldingsService.get('purpleVoid').log10(false), false).log(new Num(1, 1), false), false);
+      let buffer: Num = new Num(2, 0).add(amount.pow(HoldingsService.get('purpleVoid').pow(GlobalMultipliersService.get('purpleVoidEffect'), false).log10(false), false).log(new Num(1, 1), false), false);
       if (App.purplePhase) UpgradeService.setValue('red-generator-extension', 'buffer', buffer);
       return buffer
     }},
   yellowPurple: {amount: new Num(1, 0), effect: new Num(1, 0),
     beforeAction: (amount: Num) => {
       // @ts-ignore
-      let buffer: Num = new Num(2, 0).add(amount.pow(HoldingsService.get('purpleVoid').log10(false), false).log(new Num(3, 2), false), false)
+      let buffer: Num = new Num(2, 0).add(amount.pow(HoldingsService.get('purpleVoid').pow(GlobalMultipliersService.get('purpleVoidEffect'), false).log10(false), false).log(new Num(3, 2), false), false)
       if (App.purplePhase) UpgradeService.setValue('yellow-repeatable-multiplier', 'buffer', buffer);
       return buffer
     }},
   greenPurple: {amount: new Num(1, 0), effect: new Num(1, 0),
     beforeAction: (amount: Num) => {
       // @ts-ignore
-      let buffer: Num = new Num(1, 0).add(amount.pow(HoldingsService.get('purpleVoid').log10(false), false).log(new Num(2, 2), false), false)
+      let buffer: Num = new Num(1, 0).add(amount.pow(HoldingsService.get('purpleVoid').pow(GlobalMultipliersService.get('purpleVoidEffect'), false).log10(false), false).log(new Num(2, 2), false), false)
       if (App.purplePhase) GlobalMultipliersService.correct('greenSoulsGain', buffer);
       return buffer
     }},
   bluePurple: {amount: new Num(1, 0), effect: new Num(1, 0),
     beforeAction: (amount: Num) => {
       // @ts-ignore
-      let buffer: Num = new Num(1, 0).add(amount.pow(HoldingsService.get('purpleVoid').log10(false), false).log(new Num(1, 1), false), false)
+      let buffer: Num = new Num(1, 0).add(amount.pow(HoldingsService.get('purpleVoid').pow(GlobalMultipliersService.get('purpleVoidEffect'), false).log10(false), false).log(new Num(1, 1), false), false)
       if (App.purplePhase) GlobalMultipliersService.correct('blueNeutronGenerators', buffer);
       return buffer
     }},
@@ -62,7 +62,7 @@ export const purpleHoldings = {
       // @ts-ignore
       let buffer: Num = amount.log10(false)
       buffer.pow(new Num(2, 0))
-      GlobalMultipliersService.correct('purpleParticleGenerators', buffer);
+      GlobalMultipliersService.correct('purpleParticleGenerators', buffer.add(new Num(1, 0), false));
       return buffer
     }
   }
