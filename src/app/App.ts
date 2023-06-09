@@ -1,10 +1,13 @@
 import {Observable} from "rxjs";
+import {Num} from "./num";
 
 export class App {
   static shouldReload: boolean = false;
   static isIdling: boolean = false;
   static haltNuclearDecay: boolean = false;
   static purplePhase: boolean = false;
+
+  static gameSpeed: Num = new Num(1, 0);
 
   static observable: Observable<any> = new Observable<any>(subscriber => {
     setInterval(() => {
@@ -26,5 +29,13 @@ export class App {
 
   static next() {
     this.shouldReload = true;
+  }
+
+  static setSpeed(speed: Num) {
+    this.gameSpeed = speed.copy();
+  }
+
+  static getSpeed() {
+    return this.gameSpeed.copy();
   }
 }

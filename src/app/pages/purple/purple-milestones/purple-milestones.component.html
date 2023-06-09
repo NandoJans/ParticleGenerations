@@ -1,3 +1,13 @@
+<div class="holding-line">
+  <p class="holding-prefix">You have </p>
+  <app-number-display [name]="'purples'" [style]="'purple-text holding-amount'" [type]="'currency'"></app-number-display>
+  <p class="holding-prefix">Purples</p>
+</div>
+<div class="holding-line">
+  <p class="holding-prefix">Your best Purple Particles is </p>
+  <app-number-display [name]="'Purple'" [style]="'purple-text holding-amount'" [type]="'gainPS'"></app-number-display>
+  <p class="holding-prefix">/ Second</p>
+</div>
 <div class="generators-row">
   <div *ngFor="let milestone of milestones">
     <app-milestone *ngIf="milestone.unlocked" [milestone]="milestone"></app-milestone>

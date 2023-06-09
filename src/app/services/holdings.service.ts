@@ -78,6 +78,7 @@ export class HoldingsService {
       case 'purpleParticles': return 'P';
       case 'blackHoleMass': return 'BM';
       case 'gravity': return 'G';
+      case 'purples': return 'p';
       default: return '';
     }
   }

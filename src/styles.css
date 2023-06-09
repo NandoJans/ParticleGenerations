@@ -336,6 +336,10 @@ footer {
   background-color: var(--blue-button-color) !important;
 }
 
+.purple-style .maxed, .black-hole-style .maxed {
+  background-color: var(--purple-button-color) !important;
+}
+
 .automator .maxed, .red-automator .maxed, .yellow-automator .maxed, .green-automator .maxed, .blue-automator .maxed {
   background-color: var(--dark-button-color) !important;
 }

@@ -86,7 +86,7 @@ export class TickService {
   }
 
   gameTick(speed: Num = new Num(1, 0)) {
-
+    App.setSpeed(speed);
     App.purplePhase = HoldingsService.get('purples').greq(new Num(1, 0));
     NavigationsService.resetTracker();
     UpgradeService.correctBuffer();

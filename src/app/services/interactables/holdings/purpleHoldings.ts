@@ -42,10 +42,12 @@ export const purpleHoldings = {
     beforeAction: (amount: Num) => {
       // @ts-ignore
       if (UpgradeService.getValue('unlock-black-hole', 'bought').greq(new Num(1, 0)) && BlackHoleService.on) {
-        let addMass: Num = HoldingsService.get('redParticles').log10(false);
-        addMass.mul(HoldingsService.get('yellowParticles').log10(false), false);
-        addMass.mul(HoldingsService.get('greenParticles').log10(false), false);
-        addMass.mul(HoldingsService.get('blueParticles').log10(false), false);
+        let addMass: Num = HoldingsService.get('redParticles').log10(false).add(new Num(1, 0), false);
+        addMass.mul(HoldingsService.get('yellowParticles').log10(false).add(new Num(1, 0), false));
+        addMass.mul(HoldingsService.get('greenParticles').log10(false).add(new Num(1, 0), false));
+        addMass.mul(HoldingsService.get('blueParticles').log10(false).add(new Num(1, 0), false));
+        addMass.mul(UpgradeService.getValue('purple-galaxy', 'buffer').mul(UpgradeService.getValue('purple-galaxy', 'bought').add(new Num(1, 0), false), false))
+        addMass.mul(App.getSpeed())
         HoldingsService.add('blackHoleMass', addMass)
         HoldingsService.get('redParticles').pow(new Num(9, -1))
         HoldingsService.get('yellowParticles').pow(new Num(9, -1))

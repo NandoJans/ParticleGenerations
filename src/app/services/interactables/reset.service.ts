@@ -207,6 +207,7 @@ export class ResetService {
     this.resetUpgrades('yellow-purple-upgrade')
     this.resetUpgrades('green-purple-upgrade')
     this.resetUpgrades('blue-purple-upgrade')
+    this.resetUpgrades('purple-pre')
 
     this.resetGenerators('red-purple-generator')
     this.resetGenerators('yellow-purple-generator')

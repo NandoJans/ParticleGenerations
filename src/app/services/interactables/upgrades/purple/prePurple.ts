@@ -8,7 +8,7 @@ export const prePurpleUpgrades: Upgrade[] = [
   {
     name: 'red-purple-buffer-increaser', displayName: 'Buy Multiplier Increaser', description: 'Increase all red purple buy multipliers by 0.02', auto: false,
     baseCost: new Num(1,20), cost: new Num(1, 20), increase: new Num(1,110000), scaling: new Num(1, 220000), bought: new Num(0, 0), currency: 'redParticles',
-    baseBuffer: new Num(1.02, 0), buffer: new Num(1.02, 0), amount: new Num(0, 0), type: 'red-purple-upgrade', resetId: 'red-purple-upgrade', style: 'red-purple-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['purples', new Num(2, 0)],
+    baseBuffer: new Num(1.1, 0), buffer: new Num(1.1, 0), amount: new Num(0, 0), type: 'red-purple-upgrade', resetId: 'red-purple-upgrade', style: 'red-purple-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['purples', new Num(2, 0)],
     action: (self: Upgrade) => {
       // @ts-ignore
       const buff: Num = self.buffer.pow(self.bought, false).sub(new Num(1, 0), false)
@@ -34,7 +34,7 @@ export const prePurpleUpgrades: Upgrade[] = [
   {
     name: 'yellow-purple-buffer-increaser', displayName: 'Buy Multiplier Increaser', description: 'Increase all yellow purple buy multipliers by 0.03', auto: false,
     baseCost: new Num(1,20), cost: new Num(1, 20), increase: new Num(1,800), scaling: new Num(1, 1600), bought: new Num(0, 0), currency: 'yellowParticles',
-    baseBuffer: new Num(1.03, 0), buffer: new Num(1.03, 0), amount: new Num(0, 0), type: 'yellow-purple-upgrade', resetId: 'yellow-purple-upgrade', style: 'yellow-purple-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['purples', new Num(2, 0)],
+    baseBuffer: new Num(1.2, 0), buffer: new Num(1.2, 0), amount: new Num(0, 0), type: 'yellow-purple-upgrade', resetId: 'yellow-purple-upgrade', style: 'yellow-purple-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['purples', new Num(2, 0)],
     action: (self: Upgrade) => {
       // @ts-ignore
       const buff: Num = self.buffer.pow(self.bought, false).sub(new Num(1, 0), false)
@@ -60,7 +60,7 @@ export const prePurpleUpgrades: Upgrade[] = [
   {
     name: 'green-purple-buffer-increaser', displayName: 'Buy Multiplier Increaser', description: 'Increase all green purple buy multipliers by 0.05', auto: false,
     baseCost: new Num(1,20), cost: new Num(1, 20), increase: new Num(1,50), scaling: new Num(1, 100), bought: new Num(0, 0), currency: 'greenParticles',
-    baseBuffer: new Num(1.05, 0), buffer: new Num(1.05, 0), amount: new Num(0, 0), type: 'green-purple-upgrade', resetId: 'green-purple-upgrade', style: 'green-purple-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['purples', new Num(2, 0)],
+    baseBuffer: new Num(1.3, 0), buffer: new Num(1.3, 0), amount: new Num(0, 0), type: 'green-purple-upgrade', resetId: 'green-purple-upgrade', style: 'green-purple-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['purples', new Num(2, 0)],
     action: (self: Upgrade) => {
       // @ts-ignore
       const buff: Num = self.buffer.pow(self.bought, false).sub(new Num(1, 0), false)
@@ -86,7 +86,7 @@ export const prePurpleUpgrades: Upgrade[] = [
   {
     name: 'blue-purple-buffer-increaser', displayName: 'Buy Multiplier Increaser', description: 'Increase all blue purple buy multipliers by 0.1', auto: false,
     baseCost: new Num(1,20), cost: new Num(1, 20), increase: new Num(1,20), scaling: new Num(1, 40), bought: new Num(0, 0), currency: 'blueParticles',
-    baseBuffer: new Num(1.1, 0), buffer: new Num(1.1, 0), amount: new Num(0, 0), type: 'blue-purple-upgrade', resetId: 'blue-purple-upgrade', style: 'blue-purple-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['purples', new Num(2, 0)],
+    baseBuffer: new Num(1.5, 0), buffer: new Num(1.5, 0), amount: new Num(0, 0), type: 'blue-purple-upgrade', resetId: 'blue-purple-upgrade', style: 'blue-purple-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['purples', new Num(2, 0)],
     action: (self: Upgrade) => {
       // @ts-ignore
       const buff: Num = self.buffer.pow(self.bought, false).sub(new Num(1, 0), false)

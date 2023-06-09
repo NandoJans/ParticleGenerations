@@ -96,7 +96,7 @@ export const yellowChallenges: Challenge[] = [
       UpgradeService.setValue('red-accelerator-multiplier-2', 'requirement', ['redAccelerators', new Num(1, 70)])
       UpgradeService.setValue('red-accelerator-multiplier-3', 'requirement', ['redAccelerators', new Num(1, 152)])
 
-      if (!HoldingsService.get('greens').greq(new Num(1, 0))) {
+      if (!HoldingsService.get('greens').greq(new Num(1, 0)) && !HoldingsService.get('purples').greq(new Num(2, 0))) {
         AutomatorService.setActive('red-accelerators-automator', false);
         AutomatorService.setActive('red-accelerator-upgrades-automator', false);
       }
