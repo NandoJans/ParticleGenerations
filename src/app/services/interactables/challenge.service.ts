@@ -102,7 +102,7 @@ export class ChallengeService {
     if (this.activeChallenge === undefined || this.activeChallenge.prestige !== prestige) return
     if (typeof this.activeChallenge.completed === 'boolean') {
       this.activeChallenge.completed = true;
-    } else {
+    } else if (this.activeChallenge.maxCompletions instanceof Num && !this.activeChallenge.completed.greq(this.activeChallenge.maxCompletions)) {
       this.activeChallenge.completed.add(new Num(1, 0));
     }
     this.activeChallenge = undefined;

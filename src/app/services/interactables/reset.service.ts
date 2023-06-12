@@ -83,6 +83,10 @@ export class ResetService {
 
   static reset(resets: string) {
     App.startHaltNuclearDecay();
+    if (resets === 'purpleGalaxy') {
+      HoldingsService.set('gravity', new Num(1, 0))
+      return;
+    }
     HoldingsService.set('redParticles', HoldingsService.get('redParticlesStart').copy());
     HoldingsService.set('redAccelerators', HoldingsService.get('redAcceleratorsStart').copy());
     this.resetGenerators('redParticleGenerators')
@@ -168,6 +172,9 @@ export class ResetService {
     this.resetUpgrades('yellow')
     this.resetUpgrades('green')
     this.resetUpgrades('blue')
+    if (!HoldingsService.get('purples').greq(new Num(1, 0))) {
+      this.resetUpgrades('neutron-star')
+    }
     this.resetGenerators('blue')
     this.resetGenerators('nuclear')
     this.resetUpgrades('nuclear')
@@ -214,15 +221,14 @@ export class ResetService {
     this.resetGenerators('green-purple-generator')
     this.resetGenerators('blue-purple-generator')
     this.resetGenerators('purple', 'amount')
-    HoldingsService.set('gravity', new Num(1, 0))
+
     HoldingsService.set('blackHoleMass', new Num(1, 0))
     HoldingsService.set('purpleVoid', new Num(1, 0))
+    HoldingsService.set('gravity', new Num(1, 0))
 
     UpgradeService.setValue('red-generator-extension-upgrade', 'bought', new Num(1, 0));
     PrestigeLayersService.setValue('blue', 'fastestGainPS', new Num(0, 0))
     DataManagerService.save()
     if (resets === 'purple') return;
-    PrestigeLayersService.setValue('purple', 'previousGain', new Num(1, 0))
-    if (resets === 'purpleGalaxy') return;
   }
 }

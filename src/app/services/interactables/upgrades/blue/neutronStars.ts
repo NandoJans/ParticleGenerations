@@ -10,7 +10,7 @@ export const blueNeutronStars: Upgrade[] = [
   {
     name: 'neutron-star', displayName: 'Neutron Star', description: 'Starts the generation of blue light.', auto: false,
     baseCost: new Num(2,0), cost: new Num(2, 0), increase: new Num(1,0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'blueParticles',
-    baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'neutron-star-upgrade', resetId: 'blue', style: 'blue-star', unlocked: false, oneTime: true, resets: 'none', requirement: ['blues', new Num(3, 0)],
+    baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'neutron-star-upgrade', resetId: 'neutron-star', style: 'blue-star', unlocked: false, oneTime: true, resets: 'none', requirement: ['blues', new Num(3, 0)],
     action: (self: Upgrade) => {
       GeneratorService.setValue('blue-light-generator', 'amount', new Num(1, 0))
     },

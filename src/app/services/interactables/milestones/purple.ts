@@ -37,10 +37,15 @@ export const purpleMilestones: Milestone[] = [
     },
   },
   {
+    name: 'idle-purple-particles-gain', displayName: 'Idle purple Particles', description: 'You generate 50% of your best purple particles / second.', type: 'purple-milestone', style: 'purple-style',
+    unlocked: false, requirement: ['blues', new Num(1, 0)], cost: new Num(4, 0), currency: 'purples', buffer: new Num(1, 0),
+    action: (self: Milestone) => {},
+  },
+  {
     name: 'start-with-1-completion', displayName: '1 Completion Start', description: 'Get 1 completion when reaching the requirement of a blue challenge.', type: 'purple-milestone', style: 'purple-style',
     unlocked: false, requirement: ['purples', new Num(1, 0)], cost: new Num(5, 0), currency: 'purples', buffer: new Num(1, 0),
     action: (self: Milestone) => {
-      if (!HoldingsService.get('purples').greq(new Num(1, 1))) return undefined;
+      if (HoldingsService.get('purples').greq(new Num(1, 1))) return undefined;
       const challenges = ChallengeService.getChallenges('blue-challenges')
       challenges.forEach(challenge => {
         if (HoldingsService.get(challenge.requirement[0]).greq(challenge.requirement[1]) && challenge.completed instanceof Num && !challenge.completed.greq(new Num(1, 0))) {
@@ -54,7 +59,7 @@ export const purpleMilestones: Milestone[] = [
     name: 'start-with-2-completion', displayName: '2 Completion Start', description: 'Get 2 completion when reaching the requirement of a blue challenge.', type: 'purple-milestone', style: 'purple-style',
     unlocked: false, requirement: ['purples', new Num(1, 0)], cost: new Num(1, 1), currency: 'purples', buffer: new Num(1, 0),
     action: (self: Milestone) => {
-      if (!HoldingsService.get('purples').greq(new Num(1.5, 1))) return undefined;
+      if (HoldingsService.get('purples').greq(new Num(1.5, 1))) return undefined;
       const challenges = ChallengeService.getChallenges('blue-challenges')
       challenges.forEach(challenge => {
         if (HoldingsService.get(challenge.requirement[0]).greq(challenge.requirement[1]) && challenge.completed instanceof Num && !challenge.completed.greq(new Num(2, 0))) {
@@ -68,7 +73,7 @@ export const purpleMilestones: Milestone[] = [
     name: 'start-with-3-completion', displayName: '3 Completion Start', description: 'Get 3 completion when reaching the requirement of a blue challenge.', type: 'purple-milestone', style: 'purple-style',
     unlocked: false, requirement: ['purples', new Num(1, 0)], cost: new Num(1.5, 1), currency: 'purples', buffer: new Num(1, 0),
     action: (self: Milestone) => {
-      if (!HoldingsService.get('purples').greq(new Num(2, 1))) return undefined;
+      if (HoldingsService.get('purples').greq(new Num(2, 1))) return undefined;
       const challenges = ChallengeService.getChallenges('blue-challenges')
       challenges.forEach(challenge => {
         if (HoldingsService.get(challenge.requirement[0]).greq(challenge.requirement[1]) && challenge.completed instanceof Num && !challenge.completed.greq(new Num(3, 0))) {
@@ -82,7 +87,7 @@ export const purpleMilestones: Milestone[] = [
     name: 'start-with-4-completion', displayName: '4 Completion Start', description: 'Get 4 completion when reaching the requirement of a blue challenge.', type: 'purple-milestone', style: 'purple-style',
     unlocked: false, requirement: ['purples', new Num(1, 0)], cost: new Num(2, 1), currency: 'purples', buffer: new Num(1, 0),
     action: (self: Milestone) => {
-      if (!HoldingsService.get('purples').greq(new Num(2.5, 1))) return undefined;
+      if (HoldingsService.get('purples').greq(new Num(2.5, 1))) return undefined;
       const challenges = ChallengeService.getChallenges('blue-challenges')
       challenges.forEach(challenge => {
         if (HoldingsService.get(challenge.requirement[0]).greq(challenge.requirement[1]) && challenge.completed instanceof Num && !challenge.completed.greq(new Num(4, 0))) {

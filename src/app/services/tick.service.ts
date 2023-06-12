@@ -32,26 +32,28 @@ export class TickService {
     if (!HoldingsService.get('yellowFusion').greq(new Num(1, 0))) {
       HoldingsService.set('yellowFusion', new Num(1, 0))
     }
-    if (GeneratorService.getValue('nuclear-decay-generator-1', 'bought').greq(new Num(1, 0))) {
-      const generator: {} = GeneratorService.get('nuclear-decay-generator-1')
-      // @ts-ignore
-      const cost: Num | undefined = generator['baseCost'].mul(new Num(2, 0).pow(generator['bought'], false).sub(new Num(1, 0), false), false)
-      // @ts-ignore
-      HoldingsService.remove('greenSouls', cost);
-    }
-    if (GeneratorService.getValue('nuclear-decay-generator-2', 'bought').greq(new Num(1, 0))) {
-      const generator: {} = GeneratorService.get('nuclear-decay-generator-2')
-      // @ts-ignore
-      const cost: Num | undefined = generator['baseCost'].mul(new Num(2, 0).pow(generator['bought'], false).sub(new Num(1, 0), false), false)
-      // @ts-ignore
-      HoldingsService.remove('greenSouls', cost);
-    }
-    if (GeneratorService.getValue('nuclear-decay-generator-3', 'bought').greq(new Num(1, 0))) {
-      const generator: {} = GeneratorService.get('nuclear-decay-generator-3')
-      // @ts-ignore
-      const cost: Num | undefined = generator['baseCost'].mul(new Num(2, 0).pow(generator['bought'], false).sub(new Num(1, 0), false), false)
-      // @ts-ignore
-      HoldingsService.remove('greenSouls', cost);
+    if (HoldingsService.get('limitedUpgradeCount').greq(new Num(1, 1))) {
+      if (GeneratorService.getValue('nuclear-decay-generator-1', 'bought').greq(new Num(1, 0))) {
+        const generator: {} = GeneratorService.get('nuclear-decay-generator-1')
+        // @ts-ignore
+        const cost: Num | undefined = generator['baseCost'].mul(new Num(2, 0).pow(generator['bought'], false).sub(new Num(1, 0), false), false)
+        // @ts-ignore
+        HoldingsService.remove('greenSouls', cost);
+      }
+      if (GeneratorService.getValue('nuclear-decay-generator-2', 'bought').greq(new Num(1, 0))) {
+        const generator: {} = GeneratorService.get('nuclear-decay-generator-2')
+        // @ts-ignore
+        const cost: Num | undefined = generator['baseCost'].mul(new Num(2, 0).pow(generator['bought'], false).sub(new Num(1, 0), false), false)
+        // @ts-ignore
+        HoldingsService.remove('greenSouls', cost);
+      }
+      if (GeneratorService.getValue('nuclear-decay-generator-3', 'bought').greq(new Num(1, 0))) {
+        const generator: {} = GeneratorService.get('nuclear-decay-generator-3')
+        // @ts-ignore
+        const cost: Num | undefined = generator['baseCost'].mul(new Num(2, 0).pow(generator['bought'], false).sub(new Num(1, 0), false), false)
+        // @ts-ignore
+        HoldingsService.remove('greenSouls', cost);
+      }
     }
     if (App.purplePhase) {
       if (HoldingsService.get('redParticles').greq(new Num(1, 110))) {
@@ -112,11 +114,13 @@ export class TickService {
     //HoldingsService.set('yellowParticles', new Num(1, 35))
     //HoldingsService.set('greenParticles', new Num(1, 2))
     //HoldingsService.set('blueParticles', new Num(1, 110))
-    //HoldingsService.set('purpleParticles', new Num(1, 0))
+    //HoldingsService.set('purpleParticles', new Num(1, 2))
     //HoldingsService.set('yellows', new Num(5, 0))
     //HoldingsService.set('greens', new Num(1, 4))
     //HoldingsService.set('blues', new Num(3, 2))
-    //HoldingsService.set('purples', new Num(5, 0))
+    HoldingsService.set('purples', new Num(2.5, 1))
+    //HoldingsService.set('blackHoleMass', new Num(1, 1))
+    //HoldingsService.set('gravity', new Num(1, 110))
     //HoldingsService.set('greenSouls', new Num(2, 0))
     //HoldingsService.set('yellowFusion', new Num(1, 1))
     //HoldingsService.set('greenEnergy', new Num(1, 0))

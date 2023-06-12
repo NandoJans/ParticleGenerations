@@ -33,11 +33,12 @@ export class UpgradeService {
         blueUpgrades,
         blueNeutronStars,
         blueNeutronUpgrades,
+        limitedGreenUpgrades,
         nuclearDecayUpgrades,
         greenSacrifice,
         greenUpgrades,
         darkenergyUpgrades,
-        limitedGreenUpgrades,
+
         yellowFusionUpgrades,
         yellowUpgrades,
         redGeneratorUpgrades,
