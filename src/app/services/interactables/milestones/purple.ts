@@ -110,4 +110,19 @@ export const purpleMilestones: Milestone[] = [
       return undefined;
     },
   },
+  {
+    name: 'start-with-5000-yellows', displayName: '5000 Yellow Start', description: 'Start purples with 5000 yellows.', type: 'purple-milestone', style: 'purple-style',
+    unlocked: false, requirement: ['purples', new Num(1, 0)], cost: new Num(3, 1), currency: 'purples', buffer: new Num(1, 0),
+    action: (self: Milestone) => {}
+  },
+  {
+    name: 'start-with-1000-greens', displayName: '1000 Green Start', description: 'Start purples with 1000 greens.', type: 'purple-milestone', style: 'purple-style',
+    unlocked: false, requirement: ['purples', new Num(1, 0)], cost: new Num(3.1, 1), currency: 'purples', buffer: new Num(1, 0),
+    action: (self: Milestone) => {}
+  },
+  {
+    name: 'start-with-500-blues', displayName: '500 Blue Start', description: 'Start purples with 500 blues.', type: 'purple-milestone', style: 'purple-style',
+    unlocked: false, requirement: ['purples', new Num(1, 0)], cost: new Num(3.2, 1), currency: 'purples', buffer: new Num(1, 0),
+    action: (self: Milestone) => {}
+  }
 ]

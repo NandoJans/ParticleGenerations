@@ -85,6 +85,8 @@ export class ResetService {
     App.startHaltNuclearDecay();
     if (resets === 'purpleGalaxy') {
       HoldingsService.set('gravity', new Num(1, 0))
+      HoldingsService.set('purpleVoid', new Num(1, 0))
+      this.resetGenerators('purple', 'amount')
       return;
     }
     HoldingsService.set('redParticles', HoldingsService.get('redParticlesStart').copy());
@@ -225,6 +227,16 @@ export class ResetService {
     HoldingsService.set('blackHoleMass', new Num(1, 0))
     HoldingsService.set('purpleVoid', new Num(1, 0))
     HoldingsService.set('gravity', new Num(1, 0))
+
+    if (MilestoneService.isReached('start-with-5000-yellows')) {
+      HoldingsService.set('yellows', new Num(5, 3))
+    }
+    if (MilestoneService.isReached('start-with-1000-greens')) {
+      HoldingsService.set('greens', new Num(1, 3))
+    }
+    if (MilestoneService.isReached('start-with-500-blues')) {
+      HoldingsService.set('blues', new Num(5, 2))
+    }
 
     UpgradeService.setValue('red-generator-extension-upgrade', 'bought', new Num(1, 0));
     PrestigeLayersService.setValue('blue', 'fastestGainPS', new Num(0, 0))

@@ -171,8 +171,10 @@ export class NavigationsService {
           navigation.unlocked = true;
           DataManagerService.save()
 
-          const displayTitle = this.capString(navigation.parent) + ' ' + this.capString(navigation.location)
-          DropDownMessageService.dropDown( displayTitle + ' Unlocked', 'You have unlocked the '+navigation.name+' tab.')
+          if (navigation.parent !== undefined && navigation.location !== undefined) {
+            const displayTitle = this.capString(navigation.parent) + ' ' + this.capString(navigation.location)
+            DropDownMessageService.dropDown( displayTitle + ' Unlocked', 'You have unlocked the '+navigation.name+' tab.')
+          }
 
           App.next();
         }
