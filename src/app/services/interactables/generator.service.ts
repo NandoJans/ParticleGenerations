@@ -16,6 +16,7 @@ import {blueLightGenerators} from "./generators/blue/light";
 import {prePurpleGenerators} from "./generators/purple/preGenerators";
 import {purpleParticleGenerators} from "./generators/purple/particles";
 import {App} from "../../App";
+import {generate} from "rxjs";
 
 @Injectable({
   providedIn: 'root'

@@ -55,7 +55,7 @@ export const yellowUpgrades: Upgrade[] = [
     baseCost: new Num(3,0), cost: new Num(3, 0), increase: new Num(1,1), scaling: new Num(0, 0), bought: new Num(0, 0), currency: 'yellowParticles',
     baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'yellow-upgrades', resetId: 'yellow', style: 'yellow-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['yellows', new Num(1, 0)],
     action: (self: Upgrade) => {
-      UpgradeService.setValues('red-particles', 'baseMultiplier', new Num(3, 0))
+      GeneratorService.setValues('red-particles', 'baseMultiplier', new Num(3, 0))
     }, nav: 'yellow', subNav: 'yellowUpgrades'
   },
   {
