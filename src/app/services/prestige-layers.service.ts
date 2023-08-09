@@ -6,6 +6,7 @@ import {GlobalMultipliersService} from "./globals/global-multipliers.service";
 import {ChallengeService} from "./interactables/challenge.service";
 import {DataManagerService} from "./data-manager.service";
 import {UpgradeService} from "./interactables/upgrade.service";
+import {App} from "../App";
 
 @Injectable({
   providedIn: 'root'
@@ -68,11 +69,10 @@ export class PrestigeLayersService {
   }
 
   static calculateFastestGain(name: string) {
+    if (App.isIdling) return;
     this.prestiges.forEach((prestige) => {
       if (prestige['name'] === name) {
         const gainPS = prestige['gain'].div(new Num((Date.now() - prestige['time'])/1000, 0), false);
-        console.log('new: '+gainPS.toString())
-        console.log('new: '+prestige['fastestGainPS'].toString())
         if (prestige['fastestGainPS'] === undefined || prestige['fastestGainPS'] === null || gainPS.greq(prestige['fastestGainPS'])) {
           prestige['fastestGainPS'] = gainPS.add(new Num(0, 0), false);
         }

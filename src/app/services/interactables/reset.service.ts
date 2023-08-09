@@ -120,6 +120,10 @@ export class ResetService {
     HoldingsService.set('nuclearDecay', new Num(0, 0));
     HoldingsService.set('greenPurple', new Num(1, 0));
 
+    if (!HoldingsService.get('greens').greq(new Num(1, 1))) {
+      ChallengeService.setValues('yellow-challenges', 'unlocked', false)
+    }
+
     if (!MilestoneService.isReached('autobuyers-no-reset')) {this.resetAutomators('red-automators')}
     this.resetUpgrades('yellow')
     this.resetGenerators('yellow')

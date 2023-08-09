@@ -110,19 +110,19 @@ export class TickService {
     GeneratorService.correctMultipliers();
     ChallengeService.applyNerfs();
     GeneratorService.generate(speed);
-    //HoldingsService.set('redParticles', new Num(1, 110))
-    //HoldingsService.set('yellowParticles', new Num(3, 0))
+    //HoldingsService.set('redParticles', new Num(1, 3000))
+    //HoldingsService.set('yellowParticles', new Num(1, 29))
     //HoldingsService.set('greenParticles', new Num(1, 2))
     //HoldingsService.set('blueParticles', new Num(1, 110))
     //HoldingsService.set('purpleParticles', new Num(1, 2))
-    //HoldingsService.set('yellows', new Num(5, 0))
+    //HoldingsService.set('yellows', new Num(5, 3))
     //HoldingsService.set('greens', new Num(1, 4))
     //HoldingsService.set('blues', new Num(3, 2))
     //HoldingsService.set('purples', new Num(2.5, 1))
     //HoldingsService.set('blackHoleMass', new Num(1, 1))
     //HoldingsService.set('gravity', new Num(1, 110))
     //HoldingsService.set('greenSouls', new Num(2, 0))
-    //HoldingsService.set('yellowFusion', new Num(1, 1))
+    //HoldingsService.set('yellowFusion', new Num(1, 110))
     //HoldingsService.set('greenEnergy', new Num(1, 0))
     //HoldingsService.set('blueLight', new Num(1, 50))
     //HoldingsService.set('darkPower', new Num(3, 0))
