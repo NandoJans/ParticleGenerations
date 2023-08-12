@@ -21,7 +21,9 @@ export const blueHoldings = {
       // @ts-ignore
       let buffer: Num = amount.pow(new Num(1, -1).mul(GlobalMultipliersService.get('blueLightPower'), false), false);
 
-      GlobalMultipliersService.correct('greenParticleGenerators', buffer);
+      if (HoldingsService.get('blues').greq(new Num(1, 0))) {
+        GlobalMultipliersService.correct('greenParticleGenerators', buffer);
+      }
 
       return buffer.copy();
     }},

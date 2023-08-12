@@ -89,12 +89,20 @@ export const yellowChallenges: Challenge[] = [
       UpgradeService.setValue('red-accelerator-multiplier-2', 'baseCost', new Num(1,70))
       UpgradeService.setValue('red-accelerator-multiplier-3', 'baseCost', new Num(1,152))
 
-      GeneratorService.setValue('red-accelerator-generator-1', 'requirement', ['holding', 'redAccelerators', new Num(0, 0)])
+      GeneratorService.setValue('red-accelerator-generator-1', 'requirement', ['holding', 'redAccelerators', new Num(1, 0)])
       GeneratorService.setValue('red-accelerator-generator-2', 'requirement', ['holding', 'redAccelerators', new Num(1, 16)])
 
       UpgradeService.setValue('red-accelerator-multiplier-1', 'requirement', ['redAccelerators', new Num(1, 8)])
       UpgradeService.setValue('red-accelerator-multiplier-2', 'requirement', ['redAccelerators', new Num(1, 70)])
       UpgradeService.setValue('red-accelerator-multiplier-3', 'requirement', ['redAccelerators', new Num(1, 152)])
+
+      if (!HoldingsService.get('redAccelerators').greq(new Num(1, 0))) {
+        HoldingsService.set('redAccelerators', new Num(1, 0));
+      }
+
+      if (HoldingsService.get('greens').greq(new Num(1, 0))) {
+        GlobalMultipliersService.correct('redAcceleratorGenerators', new Num(1, 1));
+      }
 
       if (!HoldingsService.get('greens').greq(new Num(1, 0)) && !HoldingsService.get('purples').greq(new Num(2, 0))) {
         AutomatorService.setActive('red-accelerators-automator', false);
