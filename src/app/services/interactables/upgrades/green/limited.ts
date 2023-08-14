@@ -107,7 +107,7 @@ export const limitedGreenUpgrades: Upgrade[] = [
     }, nav: 'green', subNav: 'greenSacrifice'
   },
   {
-    name: 'nerf-dark-age', displayName: 'Nerf dark age and set power to 0.35.', description: '', auto: false, noMax: true,
+    name: 'nerf-dark-age', displayName: 'Nerf dark age and set power to 0.5.', description: '', auto: false, noMax: true,
     baseCost: new Num(1,2), cost: new Num(1, 2), increase: new Num(1,0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenSouls',
     baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'green-limited-upgrades', resetId: 'green', style: 'limited-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['greens', new Num(1, 0)],
     action: (self: Upgrade) => {
