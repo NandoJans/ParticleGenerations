@@ -52,7 +52,7 @@ export const greenHoldings = {
     beforeAction: (amount: Num) => {
       const redGeneratorBooster = UpgradeService.getUpgrade('red-generator-booster');
       // @ts-ignore
-      let buffer: Num = amount.pow(new Num(1.5, -1).mul(GlobalMultipliersService.get('nuclearDecayPower'), false), false);
+      let buffer: Num = amount.pow(new Num(3, -1).mul(GlobalMultipliersService.get('nuclearDecayPower'), false), false);
       // @ts-ignore
       redGeneratorBooster.buffer = redGeneratorBooster.buffer.mul(buffer, false);
 

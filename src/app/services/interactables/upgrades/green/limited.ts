@@ -37,6 +37,7 @@ export const limitedGreenUpgrades: Upgrade[] = [
       if (self.maxEffect instanceof Num && buff.greq(self.maxEffect)) {
         buff = self.maxEffect.copy();
       }
+      buff.add(new Num(1, 0));
       GlobalMultipliersService.correct('redAcceleratorGenerators', buff)
       return buff;
     }, nav: 'green', subNav: 'greenSacrifice'

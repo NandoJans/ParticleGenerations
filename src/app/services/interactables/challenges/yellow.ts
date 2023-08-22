@@ -14,8 +14,14 @@ export const yellowChallenges: Challenge[] = [
     rewardDescription: 'Gain a multiplier to red accelerators based on red generator boosts.', style: 'yellow-challenge', resetId: 'yellow', type: 'yellow-challenges', prestige: 'yellow', unlocked: false, instantComplete: false,
     requirement: ['yellowParticles', new Num(1, 5)],
     reward: (self: Challenge) => {
-      const buff: Num = UpgradeService.getValue('red-generator-booster', 'buffer').pow(UpgradeService.getValue('red-generator-booster', 'amount').add(new Num(1, 0), false), false);
+      let buff: Num = UpgradeService.getValue('red-generator-booster', 'buffer').pow(UpgradeService.getValue('red-generator-booster', 'amount').add(new Num(1, 0), false), false);
       buff.pow(new Num(2, 0))
+      if (buff.greq(new Num(1, 1000))) {
+        // @ts-ignore
+        const tempBuff: Num = buff.pow(new Num(1, -1), false);
+        tempBuff.mul(new Num(1, 1000));
+        buff = tempBuff;
+      }
       GlobalMultipliersService.correct('redAcceleratorGenerators', buff)
       return buff;
     },
@@ -62,7 +68,13 @@ export const yellowChallenges: Challenge[] = [
     rewardDescription: 'Red accelerators gain a multiplier based on yellow power.', style: 'yellow-challenge', resetId: 'yellow', type: 'yellow-challenges', prestige: 'yellow', unlocked: false, instantComplete: false,
     requirement: ['yellowParticles', new Num(1, 15)],
     reward: (self: Challenge) => {
-      const buff: Num = HoldingsService.get('yellowPower').add(new Num(1, 0), false);
+      let buff: Num = HoldingsService.get('yellowPower').add(new Num(1, 0), false);
+      if (buff.greq(new Num(1, 37500))) {
+        // @ts-ignore
+        const tempBuff: Num = buff.pow(new Num(1, -1), false);
+        tempBuff.mul(new Num(1, 37500));
+        buff = tempBuff;
+      }
       GlobalMultipliersService.correct('redAcceleratorGenerators', buff)
       return buff;
     },
@@ -114,7 +126,13 @@ export const yellowChallenges: Challenge[] = [
     name: 'yellow-challenge-5', displayName: 'Yellow Challenge 5', description: 'Red Particles when generators won\'t multiply themselfs.', baseGoal: new Num(1, 3000), goal: new Num(1, 3000), currency: 'redParticles', completed: false, disabled: false,
     rewardDescription: 'First red generators boost the other generators.', style: 'yellow-challenge', resetId: 'yellow', type: 'yellow-challenges', prestige: 'yellow', unlocked: false, instantComplete: false,    requirement: ['yellowParticles', new Num(1, 23)],
     reward: (self: Challenge) => {
-      const buff: Num = GeneratorService.getValue('red-generator-1', 'amount').pow(new Num(2, -2), false);
+      let buff: Num = GeneratorService.getValue('red-generator-1', 'amount').pow(new Num(2, -2), false);
+      if (buff.greq(new Num(1, 37500))) {
+        // @ts-ignore
+        const tempBuff: Num = buff.pow(new Num(1, -1), false);
+        tempBuff.mul(new Num(1, 37500));
+        buff = tempBuff;
+      }
       GlobalMultipliersService.correct('redParticleGenerators', buff)
       return buff;
     },
