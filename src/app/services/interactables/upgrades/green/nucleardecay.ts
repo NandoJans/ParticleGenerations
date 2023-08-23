@@ -43,10 +43,11 @@ export const nuclearDecayUpgrades: Upgrade[] = [
   {
     name: 'better-nuclear-decay', displayName: 'Better Nuclear Decay', description: 'Increase the nuclear decay effect.', auto: false, noMax: true,
     baseCost: new Num(7.5,1), cost: new Num(1, 2), increase: new Num(2,0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenSouls',
-    baseBuffer: new Num(2, 0), buffer: new Num(2, 0), amount: new Num(0, 0), type: 'nuclear-decay', resetId: 'nuclear', style: 'green-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['greenParticles', new Num(1, 35)],
+    baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'nuclear-decay', resetId: 'nuclear', style: 'green-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['greenParticles', new Num(1, 35)],
     action: (self: Upgrade) => {
       if (HoldingsService.get('limitedUpgradeCount').greq(new Num(1, 1))) {
-        const buff = self.buffer.pow(self.bought, false);
+        // @ts-ignore
+        const buff = self.buffer.mul(self.bought, false).add(new Num(1, 0), false);
         GlobalMultipliersService.correct('nuclearDecayPower', buff)
         // @ts-ignore
         HoldingsService.remove('greenSouls', self.baseCost.mul(self.increase.pow(self.bought, false), false).sub(self.baseCost, false));
