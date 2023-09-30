@@ -15,14 +15,14 @@
   --blue-button-color: rgb(48, 151, 217);
   --purple-button-color: rgb(135, 51, 208);
   --dark-button-color: rgb(67, 67, 67);
-  --transparent-background-red: rgb(103, 46, 46);
-  --transparent-background-yellow: rgb(103, 103, 42);
-  --fusion-red-background-color: rgb(114, 60, 43);
+  --transparent-background-red: rgb(117, 49, 49);
+  --transparent-background-yellow: rgb(125, 125, 48);
+  --fusion-red-background-color: rgb(134, 65, 43);
   --transparent-background-green: rgb(54, 99, 35);
-  --transparent-background-blue: rgb(36, 74, 100);
-  --transparent-background-purple: rgb(68, 48, 103);
+  --transparent-background-blue: rgb(36, 78, 107);
+  --transparent-background-purple: rgb(77, 51, 124);
   --transparent-background-dark: rgb(36, 36, 36);
-  --transparent-background-light: rgb(155, 155, 155);
+  --transparent-background-light: rgb(174, 174, 174);
 }
 
 html, body {
@@ -280,22 +280,31 @@ footer {
 
 .red-purple-style {
   border: solid 1px var(--purple-button-color);
-  background: linear-gradient(45deg, var(--transparent-background-red), var(--transparent-background-purple));
+  background: repeating-linear-gradient(var(--red-button-color), transparent 50%, var(--red-button-color) 100%),
+  repeating-linear-gradient(90deg, transparent, var(--purple-button-color)  50%, transparent 100%), var(--background-color-2);
 }
 
 .yellow-purple-style {
   border: solid 1px var(--purple-button-color);
-  background: linear-gradient(45deg, var(--transparent-background-yellow), var(--transparent-background-purple));
+  background: repeating-linear-gradient(var(--yellow-button-color), transparent 50%, var(--yellow-button-color) 100%),
+  repeating-linear-gradient(90deg, transparent, var(--purple-button-color)  50%, transparent 100%), var(--background-color-2);
 }
 
 .green-purple-style {
   border: solid 1px var(--purple-button-color);
-  background: linear-gradient(45deg, var(--transparent-background-green), var(--transparent-background-purple));
+  background: repeating-linear-gradient(var(--green-button-color), transparent 50%, var(--green-button-color) 100%),
+  repeating-linear-gradient(90deg, transparent, var(--purple-button-color)  50%, transparent 100%), var(--background-color-2);
 }
 
 .blue-purple-style {
   border: solid 1px var(--purple-button-color);
-  background: linear-gradient(45deg, var(--transparent-background-blue), var(--transparent-background-purple));
+  background: repeating-linear-gradient(var(--blue-button-color), transparent 50%, var(--blue-button-color) 100%),
+  repeating-linear-gradient(90deg, transparent, var(--purple-button-color)  50%, transparent 100%), var(--background-color-2);
+}
+
+.red-purple-style, .yellow-purple-style, .green-purple-style, .blue-purple-style {
+  background-size: 200% 200%;
+  animation: gliding 5s linear infinite;
 }
 
 .sacrifice-style {
@@ -408,12 +417,24 @@ footer {
 
 .fusion-style {
   border: solid 1px var(--yellow-button-color);
-  background: linear-gradient(135deg, var(--transparent-background-yellow), var(--fusion-red-background-color));
+  background: repeating-radial-gradient(var(--red-button-color), var(--yellow-button-color));
+  background-size: 200% 200%;
+  animation: gliding 4s linear infinite;
 }
 
 .accelerator-style {
   border: solid 1px var(--red-button-color);
-  background: linear-gradient(45deg, var(--transparent-background-light), var(--transparent-background-red));
+  background: repeating-radial-gradient(var(--transparent-background-red), var(--transparent-background-light));
+  background-size: 200% 200%;
+  animation: gliding 5s linear infinite;
+}
+
+.nuclear-style {
+  border: solid 1px var(--green-button-color);
+  background: repeating-linear-gradient(var(--green-button-color), transparent 50%, var(--green-button-color) 100%),
+  repeating-linear-gradient(90deg, transparent, var(--yellow-button-color)  50%, transparent 100%), var(--background-color-3);
+  background-size: 200% 200%;
+  animation: gliding 10s linear infinite;
 }
 
 .upgrade p {
@@ -701,7 +722,10 @@ app-prestige-button {
 
 .blue-star {
   color: var(--blue-button-color);
-  background-color: var(--background-color-1);
+  background: repeating-linear-gradient(var(--blue-button-color), transparent 50%, var(--blue-button-color) 100%),
+  repeating-linear-gradient(90deg, transparent, var(--blue-button-color)  50%, transparent 100%), white;
+  background-size: 200% 200%;
+  animation: gliding 200ms linear infinite;
   border: solid 1px var(--blue-button-color);
   width: 150px;
   height: 150px;
@@ -984,5 +1008,15 @@ app-prestige-button {
 
   #redParticles-currency {
     font-size: 22px;
+  }
+}
+
+@keyframes gliding {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 200% 200%;
   }
 }

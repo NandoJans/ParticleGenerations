@@ -33,19 +33,19 @@ export const greenParticleGenerators = [
   },
 
   {
-    name: 'nuclear-decay-generator-1', displayName: 'Nuclear Decay Generator 1', auto: false, style: 'green-style', noMax: true,
+    name: 'nuclear-decay-generator-1', displayName: 'Nuclear Decay Generator 1', auto: false, style: 'nuclear-style', noMax: true,
     baseCost: new Num(1, 0), cost: new Num(1, 0), increase: new Num(2, 0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenSouls',
     generates: 'nuclearDecay', baseMulMod: new Num(1, 0), baseMultiplier: new Num(2, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'nuclear-decay', resetId: 'green', unlocked: false,
     requirement: ['holding', 'greenParticles', new Num(1, 35)], nav: 'green', subNav: 'nuclearDecay', globalMultiplier: 'nuclearDecayGenerators',
   },
   {
-    name: 'nuclear-decay-generator-2', displayName: 'Nuclear Decay Generator 2', auto: false, style: 'green-style', noMax: true,
+    name: 'nuclear-decay-generator-2', displayName: 'Nuclear Decay Generator 2', auto: false, style: 'nuclear-style', noMax: true,
     baseCost: new Num(1, 1), cost: new Num(1, 1), increase: new Num(2, 0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenSouls',
     generates: 'nuclear-decay-generator-1', baseMulMod: new Num(1, 0), baseMultiplier: new Num(2, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'nuclear-decay', resetId: 'green', unlocked: false,
     requirement: ['holding', 'greenParticles', new Num(1, 35)], nav: 'green', subNav: 'nuclearDecay', globalMultiplier: 'nuclearDecayGenerators',
   },
   {
-    name: 'nuclear-decay-generator-3', displayName: 'Nuclear Decay Generator 3', auto: false, style: 'green-style', noMax: true,
+    name: 'nuclear-decay-generator-3', displayName: 'Nuclear Decay Generator 3', auto: false, style: 'nuclear-style', noMax: true,
     baseCost: new Num(1, 2), cost: new Num(1, 2), increase: new Num(2, 0), scaling: new Num(1, 0), bought: new Num(0, 0), currency: 'greenSouls',
     generates: 'nuclear-decay-generator-2', baseMulMod: new Num(1, 0), baseMultiplier: new Num(2, 0), multiplier: new Num(1, 0), amount: new Num(0, 0) , type: 'nuclear-decay', resetId: 'green', unlocked: false,
     requirement: ['holding', 'greenParticles', new Num(1, 35)], nav: 'green', subNav: 'nuclearDecay', globalMultiplier: 'nuclearDecayGenerators',
