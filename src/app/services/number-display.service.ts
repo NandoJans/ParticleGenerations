@@ -11,6 +11,7 @@ import {CombinerService} from "./interactables/combiner.service";
 import {ChallengeService} from "./interactables/challenge.service";
 import {UpgradeComponent} from "../components/particles/upgrade/upgrade.component";
 import {min} from "rxjs";
+import {Upgrade} from "../globals";
 
 @Injectable({
   providedIn: 'root'
@@ -147,23 +148,38 @@ export class NumberDisplayService {
               ((seconds.toString().length === 1)?':0':':')+seconds+')';
             break;
           default:
+            let prefix = (entry.type === 'cost') ? 'Cost: ' : '';
             // @ts-ignore
             if (GeneratorService.getValue(entry.name, entry.type) !== 0) {
-              element.innerHTML = GeneratorService.getValue(entry.name, entry.type).toString();
-              if (entry.currency !== undefined || entry.type === 'cost') element.innerHTML += ' '+ HoldingsService.getAbbreviation(entry.currency)
+              prefix += GeneratorService.getValue(entry.name, entry.type).toString();
+              const abbreviation = (entry.currency !== undefined || entry.type === 'cost') ? HoldingsService.getAbbreviation(entry.currency) : '';
+              element.innerHTML = prefix + ' ' + abbreviation;
             } else if (UpgradeService.getValue(entry.name, entry.type) !== 0) {
-              element.innerHTML = UpgradeService.getValue(entry.name, entry.type).toString();
-              if (entry.currency !== undefined || entry.type === 'cost') element.innerHTML += ' '+ HoldingsService.getAbbreviation(entry.currency)
+              const upgrade: Upgrade = UpgradeService.getUpgrade(entry.name)
+              if (upgrade['limit'] !== undefined && upgrade['amount'].greq(upgrade['limit'])) {
+                element.innerHTML = 'Maxed';
+                return;
+              } else if (upgrade['oneTime'] && UpgradeService.bought(upgrade['name'])) {
+                element.innerHTML = 'Bought';
+                return;
+              } else {
+                prefix += UpgradeService.getValue(entry.name, entry.type);
+                const abbreviation = (entry.currency !== undefined || entry.type === 'cost') ? HoldingsService.getAbbreviation(entry.currency) : '';
+                element.innerHTML = prefix + ' '+ abbreviation;
+              }
             } else if (MilestoneService.getValue(entry.name, entry.type) !== 0) {
-              element.innerHTML = MilestoneService.getValue(entry.name, entry.type).toString();
-              if (entry.currency !== undefined || entry.type === 'cost') element.innerHTML += ' '+ HoldingsService.getAbbreviation(entry.currency)
+              prefix += MilestoneService.getValue(entry.name, entry.type).toString();
+              const abbreviation = (entry.currency !== undefined || entry.type === 'cost') ? HoldingsService.getAbbreviation(entry.currency) : '';
+              element.innerHTML = prefix + ' '+ abbreviation;
             } else if (AutomatorService.getValue(entry.name, entry.type) !== 0) {
-              element.innerHTML = AutomatorService.getValue(entry.name, entry.type).toString();
-              if (entry.currency !== undefined || entry.type === 'cost') element.innerHTML += ' '+ HoldingsService.getAbbreviation(entry.currency)
+              prefix += AutomatorService.getValue(entry.name, entry.type).toString();
+              const abbreviation = (entry.currency !== undefined || entry.type === 'cost') ? HoldingsService.getAbbreviation(entry.currency) : '';
+              element.innerHTML = prefix + ' '+ abbreviation;
             } else {
-            element.innerHTML = CombinerService.getValue(entry.name, entry.type).toString();
-            if (entry.currency !== undefined || entry.type === 'cost') element.innerHTML += ' '+ HoldingsService.getAbbreviation(entry.currency)
-          }
+              prefix += CombinerService.getValue(entry.name, entry.type).toString();
+              const abbreviation = (entry.currency !== undefined || entry.type === 'cost') ? HoldingsService.getAbbreviation(entry.currency) : '';
+              element.innerHTML = prefix + ' '+ abbreviation;
+            }
             break;
         }
       }

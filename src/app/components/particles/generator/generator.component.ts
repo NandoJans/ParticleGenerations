@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {Num} from "../../../num";
 import {Generator} from "../../../globals";
+import {BuyableService} from "../../../services/interactables/buyable.service";
 
 @Component({
   selector: 'app-generator',
@@ -17,8 +18,12 @@ export class GeneratorComponent implements OnInit {
   currency: string | undefined;
   style: string | undefined;
 
-  constructor() {
+  constructor(private buyables: BuyableService) {
 
+  }
+
+  buy() {
+    this.buyables.buy(this.name);
   }
 
   ngOnInit(): void {

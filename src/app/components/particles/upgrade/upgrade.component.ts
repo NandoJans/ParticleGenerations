@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Num} from "../../../num";
 import {Upgrade} from "../../../globals";
+import {BuyableService} from "../../../services/interactables/buyable.service";
 
 @Component({
   selector: 'app-upgrade',
@@ -19,7 +20,11 @@ export class UpgradeComponent implements OnInit {
   style: string | undefined;
   effect: any[] | undefined;
 
-  constructor() { }
+  constructor(private buyables: BuyableService) { }
+
+  buy() {
+    this.buyables.buy(this.name);
+  }
 
   ngOnInit(): void {
     this.name = this.upgrade?.name;

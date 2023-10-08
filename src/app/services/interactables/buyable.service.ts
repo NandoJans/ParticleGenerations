@@ -142,13 +142,13 @@ export class BuyableService {
         if (HoldingsService.get(buyable.currency).greq(buyable.cost)) {
           if (button !== null) {
             button.removeAttribute('disabled');
-            button.className = 'buyable';
+            button.classList.add('buyable');
           }
           if (buyable.subNav !== undefined && buyable.nav !== undefined) NavigationsService.markBuyable(buyable.subNav, buyable.nav);
         } else {
           if (button !== null) {
             button.setAttribute('disabled', '');
-            button.className = '';
+            button.classList.remove('buyable');
           }
           if (buyable.subNav !== undefined && buyable.nav !== undefined) NavigationsService.removeBuyable(buyable.subNav, buyable.nav);
         }
@@ -179,22 +179,21 @@ export class BuyableService {
         if (buyable.oneTime && buyable.bought.greq(new Num(1, 0))) {
           if (button !== null) {
             button.setAttribute('disabled', '');
-            button.className = 'maxed';
-            button.innerHTML = 'Bought';
+            button.classList.add('maxed');
           }
           if (buyable.subNav !== undefined && buyable.nav !== undefined) NavigationsService.removeBuyable(buyable.subNav, buyable.nav);
 
         } else if (HoldingsService.get(buyable.currency).greq(buyable.cost)) {
           if (button !== null) {
             button.removeAttribute('disabled');
-            button.className = 'buyable';
+            button.classList.add('buyable');
           }
           if (buyable.subNav !== undefined && buyable.nav !== undefined) NavigationsService.markBuyable(buyable.subNav, buyable.nav);
 
         } else {
           if (button !== null) {
             button.setAttribute('disabled', '');
-            button.className = '';
+            button.classList.remove('buyable');
           }
           if (buyable.subNav !== undefined && buyable.nav !== undefined) NavigationsService.removeBuyable(buyable.subNav, buyable.nav);
 
@@ -206,8 +205,7 @@ export class BuyableService {
         const button = (<HTMLButtonElement> document.getElementById('buyable-'+buyable.name))
         if (button !== null) {
           button.setAttribute('disabled', '');
-          button.className = 'maxed';
-          button.innerHTML = 'Bought';
+          button.classList.add('maxed');
         }
       }
     })
@@ -217,20 +215,19 @@ export class BuyableService {
         if (buyable.bought.greq(new Num(1, 0))) {
           if (button !== null) {
             button.setAttribute('disabled', '');
-            button.className = 'maxed';
-            button.innerHTML = 'Bought';
+            button.classList.add('maxed');
           }
           if (buyable.subNav !== undefined && buyable.nav !== undefined) NavigationsService.removeBuyable(buyable.subNav, buyable.nav);
         } else if (HoldingsService.get(buyable.currency).greq(buyable.cost)) {
           if (button !== null) {
             button.removeAttribute('disabled');
-            button.className = 'buyable';
+            button.classList.add('buyable');
           }
           if (buyable.subNav !== undefined && buyable.nav !== undefined) NavigationsService.markBuyable(buyable.subNav, buyable.nav);
         } else {
           if (button !== null) {
             button.setAttribute('disabled', '');
-            button.className = '';
+            button.classList.remove('buyable');
           }
           if (buyable.subNav !== undefined && buyable.nav !== undefined) NavigationsService.removeBuyable(buyable.subNav, buyable.nav);
         }
