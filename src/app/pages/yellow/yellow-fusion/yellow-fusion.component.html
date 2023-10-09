@@ -7,7 +7,7 @@
   <p class="holding-prefix">They boost yellow generators by </p>
   <app-number-display [name]="'yellowFusion'" [style]="'yellow-text holding-amount'" [type]="'holdingEffect'"></app-number-display>
 </div>
-<div class="generators-row">
+<div class="upgrade-row">
   <div *ngFor="let upgrade of upgrades">
     <app-upgrade *ngIf="upgrade.unlocked" [upgrade]="upgrade"></app-upgrade>
   </div>

@@ -8,7 +8,7 @@
   <app-number-display [name]="'Purple'" [style]="'purple-text holding-amount'" [type]="'gainPS'"></app-number-display>
   <p class="holding-prefix">/ Second</p>
 </div>
-<div class="generators-row">
+<div class="upgrade-row">
   <div *ngFor="let milestone of milestones">
     <app-milestone *ngIf="milestone.unlocked" [milestone]="milestone"></app-milestone>
   </div>

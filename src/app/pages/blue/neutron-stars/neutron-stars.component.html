@@ -7,12 +7,12 @@
   <p class="holding-prefix">They multiply your Green Generators by </p>
   <app-number-display [name]="'blueLight'" [style]="'light-text holding-amount'" [type]="'holdingEffect'"></app-number-display>
 </div>
-<div *ngIf="displayBlueLight" class="generators-row">
+<div *ngIf="displayBlueLight" class="upgrade-row">
   <div *ngFor="let upgrade of upgrades">
     <app-upgrade *ngIf="upgrade.unlocked" [upgrade]="upgrade"></app-upgrade>
   </div>
 </div>
-<div *ngIf="displayBlueLight" class="generators-row">
+<div *ngIf="displayBlueLight" class="upgrade-row">
   <div *ngFor="let upgrade of onetimeUpgrades">
     <app-upgrade *ngIf="upgrade.unlocked" [upgrade]="upgrade"></app-upgrade>
   </div>
@@ -23,7 +23,7 @@
 <div *ngIf="displayBlueLight" class="holding-line">
   <app-number-display [name]="'fusionEffect'" [style]="'light-text holding-amount'" [type]="'fusionBlueLight'"></app-number-display>
 </div>
-<div class="generators-row">
+<div class="upgrade-row">
   <div *ngFor="let upgrade of neutronStar">
     <app-upgrade *ngIf="upgrade.unlocked" [upgrade]="upgrade"></app-upgrade>
   </div>

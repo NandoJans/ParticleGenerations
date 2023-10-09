@@ -100,10 +100,9 @@ export class MilestoneService {
     this.milestones.forEach((milestone) => {
       if (milestone.action !== undefined && HoldingsService.get(milestone.currency).greq(milestone.cost)) {
         if (typeof milestone.action === 'function') milestone.action(milestone);
-        const button = (<HTMLButtonElement> document.getElementById('buyable-'+milestone.name))
+        const button = <HTMLElement> document.getElementById(milestone.name);
         if (button !== null) {
-          button.className = 'maxed';
-          button.innerHTML = 'Reached';
+          button.classList.add('maxed');
         }
       }
     })

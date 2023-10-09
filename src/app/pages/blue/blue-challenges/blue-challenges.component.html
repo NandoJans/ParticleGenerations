@@ -1,7 +1,7 @@
 <div class="holding-line">
   <p>Current Challenge: {{activeChallenge}}</p>
 </div>
-<div class="generators-row">
+<div class="upgrade-row">
   <div *ngFor="let challenge of challenges">
     <app-challenge *ngIf="challenge.unlocked" [challenge]="challenge"></app-challenge>
   </div>

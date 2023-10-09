@@ -1,7 +1,9 @@
 <button [id]="'buyable-'+name" [class]="'generator '+style" (click)="buy()">
   <h4>{{ displayName }}</h4>
-  <app-number-display [name]="name" [style]="''" [type]="'amount'"></app-number-display>
-  <app-number-display [name]="name" [style]="''" [type]="'multiplier'"></app-number-display>
+  <div>
+    <app-number-display [name]="name" [style]="''" [type]="'amount'"></app-number-display>
+    <app-number-display [name]="name" [style]="''" [type]="'multiplier'"></app-number-display>
+  </div>
   <app-number-display [name]="name" [style]="''" [type]="'cost'" [currency]="currency"></app-number-display>
   <div class="challenge-disabled" style="display: none;">
     <h2>Challenge Disabled</h2>

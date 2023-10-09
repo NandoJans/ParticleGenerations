@@ -9,14 +9,14 @@
   --text-color-blue: rgb(21, 177, 224);
   --text-color-purple: rgb(139, 73, 222);
   --red-button-color: rgb(170, 45, 45);
-  --yellow-button-color: rgb(231, 237, 50);
+  --yellow-button-color: rgb(217, 223, 47);
   --fusion-red-color: rgb(229, 91, 47);
   --green-button-color: rgb(100, 210, 74);
   --blue-button-color: rgb(48, 151, 217);
   --purple-button-color: rgb(135, 51, 208);
   --dark-button-color: rgb(67, 67, 67);
   --transparent-background-red: rgb(117, 49, 49);
-  --transparent-background-yellow: rgb(125, 125, 48);
+  --transparent-background-yellow: rgb(153, 153, 65);
   --fusion-red-background-color: rgb(134, 65, 43);
   --transparent-background-green: rgb(54, 99, 35);
   --transparent-background-blue: rgb(36, 78, 107);
@@ -205,14 +205,13 @@ footer {
 }
 
 .generator {
-  width: 200px;
-  height: 85px;
-  border: solid 1px var(--red-button-color);
+  width: 100%;
+  height: 50px;
+  border-bottom: solid 1px var(--red-button-color);
+  border-top: solid 1px var(--red-button-color);
   background: var(--transparent-background-red);
-  border-radius: 3px;
-  margin: 5px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   font-size: 12px;
@@ -221,27 +220,135 @@ footer {
   text-shadow: 0 0 3px var(--background-color-1), 0 0 6px var(--background-color-1);
 }
 
+.generator > * {
+  width: 100%;
+}
+
+.uneven {
+  background-color: rgba(0, 0, 0, 0.25) !important;
+  background-blend-mode: darken;
+}
+
+.generator-red-style {
+  background: repeating-radial-gradient(var(--transparent-background-red), var(--transparent-background-red));
+  border-color: var(--red-button-color);
+}
+
+.generator-accelerator-style {
+  background: repeating-linear-gradient(var(--transparent-background-red), var(--transparent-background-dark), var(--transparent-background-red));
+  border-color: var(--red-button-color);
+}
+
+.generator-red-purple-style {
+  background: repeating-linear-gradient(var(--red-button-color), transparent 50%, var(--red-button-color) 100%),
+  repeating-linear-gradient(90deg, transparent, var(--purple-button-color)  50%, transparent 100%), var(--background-color-2);
+  border-color: var(--red-button-color);
+  background-size: 200% 200%;
+  animation: gliding 10s linear infinite;
+}
+
+.generator-yellow-style {
+  background: repeating-radial-gradient(var(--transparent-background-yellow), var(--transparent-background-yellow));
+  border-color: var(--yellow-button-color);
+}
+
+.generator-yellow-purple-style {
+  background: repeating-linear-gradient(var(--yellow-button-color), transparent 50%, var(--yellow-button-color) 100%),
+  repeating-linear-gradient(90deg, transparent, var(--purple-button-color)  50%, transparent 100%), var(--background-color-2);
+  border-color: var(--yellow-button-color);
+  background-size: 200% 200%;
+  animation: gliding 10s linear infinite;
+}
+
+.generator-green-style {
+  background: repeating-radial-gradient(var(--transparent-background-green), var(--transparent-background-green));
+  border-color: var(--green-button-color);
+}
+
+.generator-nuclear-style {
+  background: repeating-linear-gradient(var(--green-button-color), var(--yellow-button-color), var(--green-button-color));
+  border-color: var(--green-button-color);
+  background-size: 200% 200%;
+  animation: fall 10s linear infinite;
+}
+
+.generator-green-purple-style {
+  background: repeating-linear-gradient(var(--green-button-color), transparent 50%, var(--green-button-color) 100%),
+  repeating-linear-gradient(90deg, transparent, var(--purple-button-color)  50%, transparent 100%), var(--background-color-2);
+  border-color: var(--green-button-color);
+  background-size: 200% 200%;
+  animation: gliding 10s linear infinite;
+}
+
+.generator-blue-style {
+  background: repeating-radial-gradient(var(--transparent-background-blue), var(--transparent-background-blue));
+  border-color: var(--blue-button-color);
+}
+
+.generator-neutron-style {
+  background: repeating-linear-gradient(var(--transparent-background-blue) 0%, var(--transparent-background-blue) 40%, var(--light-blue-color) 50%, var(--transparent-background-blue) 60%, var(--transparent-background-blue) 100%);
+  background-size: 500% 500%;
+  border-color: var(--blue-button-color);
+  animation: fall 10s linear infinite;
+}
+
+.generator-blue-purple-style {
+  background: repeating-linear-gradient(var(--blue-button-color), transparent 50%, var(--blue-button-color) 100%),
+  repeating-linear-gradient(90deg, transparent, var(--purple-button-color)  50%, transparent 100%), var(--background-color-2);
+  border-color: var(--blue-button-color);
+  background-size: 200% 200%;
+  animation: gliding 10s linear infinite;
+}
+
+.generator-purple-style {
+  background: var(--transparent-background-purple);
+  border-color: var(--purple-button-color);
+}
+
 .cost {
   color: var(--transparent-background-light);
 }
 
-.red-style.buyable .cost, .accelerator-style.buyable .cost, .red-purple-style.buyable .cost {
+.red-style.buyable .cost,
+.accelerator-style.buyable .cost,
+.red-purple-style.buyable .cost,
+.generator-red-style.buyable .cost,
+.generator-accelerator-style.buyable .cost,
+.generator-red-purple-style.buyable .cost {
   color: var(--text-color-red);
 }
 
-.yellow-style.buyable .cost, .fusion-style.buyable .cost, .yellow-purple-style.buyable .cost {
+.yellow-style.buyable .cost,
+.fusion-style.buyable .cost,
+.yellow-purple-style.buyable .cost,
+.generator-yellow-style.buyable .cost,
+.generator-yellow-purple-style.buyable .cost {
   color: var(--text-color-yellow);
 }
 
-.green-style.buyable .cost, .sacrifice-style.buyable .cost, .limited-style.buyable .cost, .nuclear-style.buyable .cost, .green-purple-style.buyable .cost {
+.green-style.buyable .cost,
+.sacrifice-style.buyable .cost,
+.limited-style.buyable .cost,
+.nuclear-style.buyable .cost,
+.green-purple-style.buyable .cost,
+.generator-green-style.buyable .cost,
+.generator-nuclear-style.buyable .cost,
+.generator-green-purple-style.buyable .cost {
   color: var(--text-color-green);
 }
 
-.blue-style.buyable .cost, .light-style.buyable .cost, .blue-purple-style.buyable .cost {
+.blue-style.buyable .cost,
+.light-style.buyable .cost,
+.blue-purple-style.buyable .cost,
+.generator-blue-style.buyable .cost,
+.generator-neutron-style.buyable .cost,
+.generator-blue-purple-style.buyable .cost {
   color: var(--text-color-blue);
 }
 
-.purple-style.buyable .cost, .black-hole-style.buyable .cost {
+.purple-style.buyable .cost,
+.black-hole-style.buyable .cost,
+.generator-purple-style.buyable .cost {
   color: var(--text-color-purple);
 }
 
@@ -249,12 +356,12 @@ footer {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
 }
 
 .upgrade-row {
-  width: available;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -277,29 +384,29 @@ footer {
 }
 
 .red-style {
-  border: solid 1px var(--red-button-color);
+  border-color: var(--red-button-color);
   background-color: var(--transparent-background-red);
 }
 
-.red-style.buyable, .accelerator-style.buyable {
+.red-style.buyable, .accelerator-style.buyable, .generator-red-style.buyable, .generator-accelerator-style.buyable, .generator-red-style.buyable, .generator-red-purple-style.buyable {
   box-shadow: inset 0 0 25px 15px var(--red-button-color) ;
 }
 
-.red-style.maxed, .accelerator-style.maxed {
+.red-style.maxed, .accelerator-style.maxed, .generator-accelerator-style.maxed, .generator-red-style.maxed, .generator-red-purple-style.maxed {
   background-color: var(--red-button-color);
   border-color: var(--text-color-red);
 }
 
 .yellow-style {
-  border: solid 1px var(--yellow-button-color);
+  border-color: var(--yellow-button-color);
   background-color: var(--transparent-background-yellow);
 }
 
-.yellow-style.buyable, .fusion-style.buyable, .yellow-purple-style.buyable {
+.yellow-style.buyable, .fusion-style.buyable, .yellow-purple-style.buyable, .generator-yellow-style.buyable, .generator-yellow-purple-style.buyable {
   box-shadow: inset 0 0 25px 15px var(--yellow-button-color) ;
 }
 
-.yellow-style.maxed, .fusion-style.maxed, .yellow-challenge.reached {
+.yellow-style.maxed, .fusion-style.maxed, .yellow-challenge.reached, .generator-yellow-style.maxed, .generator-purple-yellow-style.maxed {
   background-color: var(--yellow-button-color);
   border-color: var(--text-color-yellow);
 }
@@ -309,11 +416,11 @@ footer {
   background-color: var(--transparent-background-green);
 }
 
-.green-style.buyable, .nuclear-style.buyable, .limited-style.buyable, .sacrifice-style.buyable, .green-purple-style.buyable {
+.green-style.buyable, .nuclear-style.buyable, .limited-style.buyable, .sacrifice-style.buyable, .green-purple-style.buyable, .generator-green-style.buyable, .generator-nuclear-style.buyable, .generator-green-purple-style.buyable {
   box-shadow: inset 0 0 25px 15px var(--green-button-color) ;
 }
 
-.green-style.maxed, .green-challenge.reached, .limited-style.maxed {
+.green-style.maxed, .green-challenge.reached, .limited-style.maxed, .generator-green-style.maxed, .generator-nuclear-style.maxed, .generator-green-purple-style.maxed {
   background-color: var(--green-button-color);
   border-color: var(--text-color-green);
 }
@@ -328,13 +435,27 @@ footer {
   background-color: var(--transparent-background-blue);
 }
 
-.blue-style.buyable, .light-style.buyable, .blue-purple-style.buyable {
+.blue-style.buyable, .light-style.buyable, .blue-purple-style.buyable, .generator-blue-style.buyable, .generator-neutron-style.buyable, .generator-blue-purple-style.buyable {
   box-shadow: inset 0 0 25px 5px var(--blue-button-color) ;
 }
 
-.blue-style.maxed, .blue-challenge.reached {
+.blue-style.maxed, .blue-challenge.reached, .generator-blue-style.maxed, .generator-neutron-style.maxed, .generator-blue-purple-style.maxed {
   background-color: var(--blue-button-color);
   border-color: var(--text-color-blue);
+}
+
+.neutron-style {
+  background: repeating-linear-gradient(90deg, var(--transparent-background-blue) 0%, var(--transparent-background-blue) 40%, var(--light-blue-color) 50%, var(--transparent-background-blue) 60%, var(--transparent-background-blue) 100%);
+  background-size: 500% 500%;
+  border-color: var(--blue-button-color);
+  animation: slide 10s linear infinite;
+}
+
+.neutron-style.maxed {
+  background: repeating-linear-gradient(90deg, var(--blue-button-color) 0%, var(--blue-button-color) 40%, var(--light-blue-color) 50%, var(--blue-button-color) 60%, var(--blue-button-color) 100%);
+  background-size: 500% 500%;
+  border-color: var(--blue-button-color);
+  animation: slide 10s linear infinite;
 }
 
 .light-style.maxed {
@@ -543,6 +664,14 @@ button {
   height: 100%;
   padding-top: 4px;
   padding-bottom: 4px;
+}
+
+button.buyable {
+  background-color: var(--green-button-color);
+}
+
+button.buyable p {
+  color: white !important;
 }
 
 .challenge-button {
@@ -1108,5 +1237,25 @@ app-prestige-button {
   }
   100% {
     background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  }
+}
+
+@keyframes fall {
+  0% {
+    background-position: 0 200%;
+  }
+
+  100% {
+    background-position: 0 0;
+  }
+}
+
+@keyframes slide {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: 0 0;
   }
 }
