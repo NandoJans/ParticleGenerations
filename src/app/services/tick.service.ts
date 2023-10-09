@@ -113,7 +113,7 @@ export class TickService {
     //HoldingsService.set('redParticles', new Num(1, 3000))
     //HoldingsService.set('yellowParticles', new Num(1, 15))
     //HoldingsService.set('greenParticles', new Num(1, 35))
-    //HoldingsService.set('blueParticles', new Num(1, 30))
+    //HoldingsService.set('blueParticles', new Num(1, 1000))
     //HoldingsService.set('purpleParticles', new Num(1, 2))
     //HoldingsService.set('yellows', new Num(5, 3))
     //HoldingsService.set('greens', new Num(1, 3))

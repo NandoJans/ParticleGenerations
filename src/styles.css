@@ -301,7 +301,7 @@ footer {
 }
 
 .generator-purple-style {
-  background: var(--transparent-background-purple);
+  background: repeating-radial-gradient(var(--transparent-background-purple), var(--transparent-background-purple));
   border-color: var(--purple-button-color);
 }
 
@@ -666,11 +666,11 @@ button {
   padding-bottom: 4px;
 }
 
-button.buyable {
+.automator button.buyable {
   background-color: var(--green-button-color);
 }
 
-button.buyable p {
+.automator button.buyable p {
   color: white !important;
 }
 
