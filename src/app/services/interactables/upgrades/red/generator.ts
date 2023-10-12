@@ -30,7 +30,6 @@ export const redGeneratorUpgrades: Upgrade[] = [
     baseCost: new Num(1,3), cost: new Num(1, 3), increase: new Num(2,0), scaling: new Num(3, 0), bought: new Num(0, 0), currency: 'redParticles',
     baseBuffer: new Num(1.2, 0), buffer: new Num(1.2, 0), amount: new Num(0, 0), type: 'red-particles', resetId: 'red', style: 'red-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['none', new Num(1, 0)],
     action: (self: Upgrade) => {
-      console.log(1);
       if (!UpgradeService.getValue('unlock-red-generators-booster', 'bought').greq(new Num(1, 0))) {
         self.unlocked = false;
         self.requirement = ['never'];
