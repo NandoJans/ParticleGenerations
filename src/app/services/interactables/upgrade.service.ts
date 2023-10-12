@@ -171,7 +171,7 @@ export class UpgradeService {
     upgrade.amount = new Num(0, 0);
     upgrade.buffer = new Num(0, 0);
     upgrade.action = () => {};
-    const doc = <HTMLElement> document.getElementById(upgrade.name)?.childNodes.item(4);
+    const doc = <HTMLElement> document.getElementById('buyable-'+upgrade.name)?.childNodes.item(4);
     if (doc !== null && doc !== undefined) {
       doc.style.display = 'flex';
     }
@@ -183,7 +183,7 @@ export class UpgradeService {
       upgrade.amount = new Num(0, 0);
       upgrade.buffer = new Num(0, 0);
       upgrade.action = () => {};
-      const doc = <HTMLElement> document.getElementById(upgrade.name)?.childNodes.item(4);
+      const doc = <HTMLElement> document.getElementById('buyable-'+upgrade.name)?.childNodes.item(4);
       if (doc !== null && doc !== undefined) {
         doc.style.display = 'flex';
       }

@@ -369,18 +369,23 @@ footer {
 }
 
 .upgrade {
-  width: 150px;
+  width: 175px;
   height: 125px;
   display: flex;
   margin: 3px;
-  padding: 5px;
+  padding: 0;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   border-radius: 1px;
   font-size: 12px;
+  border: 2px solid;
   box-shadow: 3px 3px 0 var(--background-color-1);
   text-shadow: 0 0 3px var(--background-color-1), 0 0 6px var(--background-color-1);
+}
+
+.upgrade * {
+  padding: 4px;
 }
 
 .red-style {
@@ -662,8 +667,7 @@ button {
   font-size: 14px;
   width: 100%;
   height: 100%;
-  padding-top: 4px;
-  padding-bottom: 4px;
+  padding: 0;
 }
 
 .automator button.buyable {
@@ -1111,12 +1115,13 @@ app-prestige-button {
   position: absolute;
   justify-content: center;
   align-items: center;
+  padding: 0;
   background-color: rgba(29, 29, 29, 0.5);
 }
 
 .upgrade .challenge-disabled {
-  width: 150px;
-  height: 125px;
+  width: 171px;
+  height: 121px;
 }
 
 .upgrade.limited-style .challenge-disabled {
@@ -1132,9 +1137,9 @@ app-prestige-button {
 }
 
 .generator .challenge-disabled {
-  width: 150px;
-  height: 85px;
-  border-radius: 3px;
+  width: 100%;
+  height: 48px;
+  border-radius: 0;
 }
 
 .challenge .challenge-disabled {

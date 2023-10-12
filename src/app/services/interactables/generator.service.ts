@@ -244,7 +244,7 @@ export class GeneratorService {
     const generator = this.getGenerator(name)
     generator.amount = generator.bought.copy();
     generator.multiplier = new Num(0, 0);
-    const doc = <HTMLElement> document.getElementById(generator.name)?.children.item(4);
+    const doc = <HTMLElement> document.getElementById('buyable-'+generator.name)?.children.item(3);
     if (doc !== null && doc !== undefined) {
       doc.style.display = 'flex';
     }
@@ -255,7 +255,7 @@ export class GeneratorService {
     upgrades.forEach((generator) => {
       generator.amount = generator.bought.copy();
       generator.multiplier = new Num(0, 0);
-      const doc = <HTMLElement> document.getElementById(generator.name)?.children.item(4);
+      const doc = <HTMLElement> document.getElementById('buyable-'+generator.name)?.children.item(3);
       if (doc !== null && doc !== undefined) {
         doc.style.display = 'flex';
       }
