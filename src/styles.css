@@ -151,7 +151,7 @@ footer {
 }
 
 .number-display {
-  font-size: 14px;
+  font-size: 13p2;
   margin: 0;
   padding: 0;
 }
@@ -369,7 +369,7 @@ footer {
 }
 
 .upgrade {
-  width: 175px;
+  width: 165px;
   height: 125px;
   display: flex;
   margin: 3px;
@@ -379,7 +379,7 @@ footer {
   align-items: center;
   border-radius: 1px;
   font-size: 12px;
-  border: 2px solid;
+  border: 1px solid;
   box-shadow: 3px 3px 0 var(--background-color-1);
   text-shadow: 0 0 3px var(--background-color-1), 0 0 6px var(--background-color-1);
 }
@@ -541,14 +541,12 @@ footer {
   color: var(--green-button-color);
   border: solid 1px var(--green-button-color);
   border-radius: 3px;
-  height: 100px;
 }
 
 .limited-style {
   border: solid 1px var(--green-button-color);
   background-color: var(--transparent-background-green);
   border-radius: 3px;
-  height: 100px;
 }
 
 .light-style {
@@ -1120,8 +1118,8 @@ app-prestige-button {
 }
 
 .upgrade .challenge-disabled {
-  width: 171px;
-  height: 121px;
+  width: 163px;
+  height: 123px;
 }
 
 .upgrade.limited-style .challenge-disabled {

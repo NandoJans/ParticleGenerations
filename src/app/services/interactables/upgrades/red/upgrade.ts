@@ -19,6 +19,8 @@ export const redUpgrades: Upgrade[] = [
     baseBuffer: new Num(1, 0), buffer: new Num(1, 0), amount: new Num(0, 0), type: 'red-upgrades', resetId: 'red', style: 'red-style', unlocked: false, oneTime: true, resets: 'none', requirement: ['redParticles', new Num(1, 40)],
     action: (self: Upgrade) => {
       UpgradeService.setValue('red-generator-booster', 'limit', new Num(1, 1000000));
+      UpgradeService.setValue('red-generator-booster', 'unlocked', true);
+      UpgradeService.setValue('red-generator-booster', 'requirement', ['none']);
     }, nav: 'red', subNav: 'redUpgrades'
   },
   {
