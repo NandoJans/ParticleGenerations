@@ -151,7 +151,7 @@ footer {
 }
 
 .number-display {
-  font-size: 13p2;
+  font-size: 13px;
   margin: 0;
   padding: 0;
 }
@@ -570,6 +570,17 @@ footer {
   border: solid 2px var(--dark-button-color);
   border-radius: 3px;
   background-color: var(--transparent-background-dark);
+}
+
+.automator button {
+  width: 125px;
+  height: 25px;
+  margin: 5px;
+  border: 2px solid var(--background-color-1)
+}
+
+.automator * {
+  padding: 0;
 }
 
 .red-automator {

@@ -80,6 +80,10 @@ export class GeneratorService {
         if (generator.name !== 'yellow-fusion-generator' || !App.isIdling) add.mul(extra);
 
         if (generator.type === 'yellow-fusion') {
+          if (App.isIdling) {
+            // @ts-ignore
+            generator.multiplier.pow(extra, 0)
+          }
           const hasLimit = UpgradeService.getValue('remove-fusion-limit', 'bought').greq(new Num(1, 0))
           if (HoldingsService.get('yellowFusion').greq(HoldingsService.get('yellowFusionMax')) && !hasLimit) {
             add = new Num(0, 0);
@@ -158,6 +162,7 @@ export class GeneratorService {
         }
 
         if (generator.name == 'yellow-fusion-generator') {
+          //return HoldingsService.set('yellowFusion', new Num(1, 0));
           let yellowFusion = HoldingsService.get('yellowFusion');
           generator.multiplier.mul(yellowFusion.add(new Num(1, 0), false).div(new Num(2, 3), false));
           const hasLimit = UpgradeService.getValue('remove-fusion-limit', 'bought').greq(new Num(1, 0))
