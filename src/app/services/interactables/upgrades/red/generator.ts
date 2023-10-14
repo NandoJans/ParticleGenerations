@@ -33,7 +33,6 @@ export const redGeneratorUpgrades: Upgrade[] = [
       if (!UpgradeService.getValue('unlock-red-generators-booster', 'bought').greq(new Num(1, 0))) {
         self.unlocked = false;
         self.requirement = ['never'];
-        return;
       }
       const freeUpgrades = HoldingsService.get('greenEnergy').log(new Num(0.8, 0), false).floor(false);
       // @ts-ignore

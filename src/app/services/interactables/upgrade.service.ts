@@ -170,7 +170,11 @@ export class UpgradeService {
     const upgrade = this.getUpgrade(name)
     upgrade.amount = new Num(0, 0);
     upgrade.buffer = new Num(0, 0);
-    upgrade.action = () => {};
+    if (upgrade.name !== 'red-generator-booster') {
+      upgrade.action = () => {};
+    } else {
+      upgrade.limit = new Num(0, 0);
+    }
     const doc = <HTMLElement> document.getElementById('buyable-'+upgrade.name)?.childNodes.item(4);
     if (doc !== null && doc !== undefined) {
       doc.style.display = 'flex';
