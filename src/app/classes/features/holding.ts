@@ -7,7 +7,10 @@ export abstract class Holding {
   abstract amount: Num;
   abstract startAmount: Num;
   abstract effect: Num;
-  action: Function | undefined = undefined
+
+  action(): any {
+    return null
+  }
 
   private localStorageHelper: LocalStorageHelper
 
@@ -38,12 +41,32 @@ export abstract class Holding {
 
   run(): any {
     if (this.action !== undefined) {
-      return this.action(this.amount)
+      return this.action()
     }
     return null
   }
 
   reset(): void {
     this.amount = this.startAmount
+  }
+
+  add(amount: Num): void {
+    this.amount.add(amount)
+  }
+
+  sub(amount: Num): void {
+    this.amount.sub(amount)
+  }
+
+  get(): Num {
+    return this.amount
+  }
+
+  set(amount: Num): void {
+    this.amount = amount
+  }
+
+  setEffect(effect: Num): void {
+    this.effect = effect
   }
 }
