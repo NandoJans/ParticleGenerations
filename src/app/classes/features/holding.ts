@@ -13,8 +13,8 @@ export abstract class Holding {
 
   abstract getStyle(): Styles;
 
-  action(): any {
-    return null
+  action(): Num|undefined {
+    return undefined
   }
 
   private localStorageHelper: LocalStorageHelper
@@ -42,7 +42,9 @@ export abstract class Holding {
 
   run(): any {
     if (this.action !== undefined) {
-      return this.action()
+      const effect = this.action()
+      this.effect = effect
+      return effect
     }
     return null
   }
