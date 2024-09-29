@@ -11,10 +11,10 @@
   <div class="holding-line">
     <p class="holding-prefix" *ngIf="unlockedYellow || purplePhase">You have </p><app-number-display *ngIf="unlockedYellow || purplePhase" [name]="'yellowParticles'" [style]="'yellow-text holding-amount'" [type]="'currency'" [permanent]="true"></app-number-display><p *ngIf="unlockedYellow || purplePhase" class="holding-prefix">Yellow Particles</p>
   </div>
-  <div class="holding-line">
-    <p class="holding-prefix">You have </p><app-number-display [name]="'redParticles'" [style]="'red-text holding-amount'" [type]="'currency'" [permanent]="true"></app-number-display><p class="holding-prefix">Red Particles</p>
-  </div>
+  <app-number-display
+    [holding]="HoldingRecord.redParticles"
+  />
 </div>
 <div class="page">
-  <router-outlet></router-outlet>
+<!--  <router-outlet></router-outlet>-->
 </div>
