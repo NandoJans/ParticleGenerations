@@ -1,22 +1,29 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {NumberDisplayService} from "../../../services/number-display.service";
+import {Holding} from "../../../classes/features/holding";
+import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
+import {Num} from "../../../num";
+import {HoldingDisplay} from "../../../classes/displays/holding-display";
 
 @Component({
   selector: 'app-number-display',
   templateUrl: './number-display.component.html',
   styleUrls: ['./number-display.component.css']
 })
-export class NumberDisplayComponent implements OnInit {
-  @Input() name: string | undefined;
-  @Input() style: string | undefined;
-  @Input() type: string | undefined;
-  @Input() currency: string | undefined;
-  @Input() effect: string[] | undefined;
-  @Input() permanent: boolean | undefined;
+export class NumberDisplayComponent  {
+  @Input() holding: Holding = HoldingRecord['redParticles'];
+  holdingDisplay: HoldingDisplay = this.holding.getHoldingDisplay();
 
   constructor() { }
 
-  ngOnInit(): void {
-    NumberDisplayService.add(this.name, this.type, this.currency, this.effect, this.permanent);
+  getHoldingAmount(): string {
+    return this.holding.getAmountDisplay()
+  }
+
+  getHoldingEffect() {
+    return this.holding.getEffectDisplay()
+  }
+
+  hasHoldingEffect() {
+    return this.holding.hasEffect()
   }
 }
