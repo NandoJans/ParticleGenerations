@@ -1,1 +1,12 @@
-<p id="{{ name+'-'+type }}" [class]="'number-display '+style+' '+type"></p>
+<div>
+  <span>
+    <p>{{ holdingDisplay.getAmountPrefix() }}</p>
+    <p [class]="holding.getStyle()">{{ getHoldingAmount() }}</p>
+    <p>{{ holdingDisplay.getAmountSuffix() }}</p>
+  </span>
+  <span *ngIf="hasHoldingEffect()">
+    <p>{{ holdingDisplay.getEffectPrefix() }}</p>
+    <p>{{ getHoldingEffect() }}</p>
+    <p>{{ holdingDisplay.getEffectSuffix() }}</p>
+  </span>
+</div>
