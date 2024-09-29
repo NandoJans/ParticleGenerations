@@ -1,12 +1,17 @@
 import {Num} from "../../num";
 import {LocalStorageHelper} from "../helpers/local-storage-helper";
+import {Styles} from "../enums/styles";
+import {HoldingDisplay} from "../displays/holding-display";
 
 export abstract class Holding {
   abstract name: string;
   abstract abbreviation: string;
   abstract amount: Num;
   abstract startAmount: Num;
-  abstract effect: Num;
+  effect: Num|undefined = undefined;
+  abstract holdingDisplay: HoldingDisplay;
+
+  abstract getStyle(): Styles;
 
   action(): any {
     return null
@@ -33,10 +38,6 @@ export abstract class Holding {
     this.localStorageHelper.save('amount', this.amount)
     this.localStorageHelper.save('startAmount', this.startAmount)
     this.localStorageHelper.save('effect', this.effect)
-  }
-
-  printEffect(): string {
-    return this.effect.toString()
   }
 
   run(): any {
@@ -68,5 +69,25 @@ export abstract class Holding {
 
   setEffect(effect: Num): void {
     this.effect = effect
+  }
+
+  getAmountDisplay() {
+    return this.amount.toString();
+  }
+
+  getEffectDisplay() {
+    if (this.effect) {
+      return this.effect.toString();
+    } else {
+      return '';
+    }
+  }
+
+  hasEffect(): boolean {
+    return this.effect !== undefined
+  }
+
+  getHoldingDisplay() {
+    return this.holdingDisplay
   }
 }
