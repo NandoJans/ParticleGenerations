@@ -3,6 +3,7 @@ import {LocalStorageHelper} from "../helpers/local-storage-helper";
 
 export abstract class Holding {
   abstract name: string;
+  abstract abbreviation: string;
   abstract amount: Num;
   abstract startAmount: Num;
   abstract effect: Num;
@@ -33,5 +34,16 @@ export abstract class Holding {
 
   printEffect(): string {
     return this.effect.toString()
+  }
+
+  run(): any {
+    if (this.action !== undefined) {
+      return this.action(this.amount)
+    }
+    return null
+  }
+
+  reset(): void {
+    this.amount = this.startAmount
   }
 }
