@@ -1,11 +1,7 @@
-<div class="holding-line">
-  <p class="holding-prefix">You have </p>
-  <app-number-display [name]="'yellows'" [style]="'yellow-text holding-amount'" [type]="'currency'"></app-number-display>
-  <p class="holding-prefix">Yellows</p>
-</div>
+<app-number-display [holding]="holdingRecord.yellows"></app-number-display>
 <div class="holding-line">
   <p class="holding-prefix">Your best Yellow Particles is </p>
-  <app-number-display [name]="'yellow'" [style]="'yellow-text holding-amount'" [type]="'gainPS'"></app-number-display>
+  <p [style]="'yellow-text holding-amount'">{{ getMaxYellowParticleGainSpeed() }}</p>
   <p class="holding-prefix">/ Second</p>
 </div>
 <div class="upgrade-row">
@@ -13,4 +9,3 @@
     <app-milestone *ngIf="milestone.unlocked" [milestone]="milestone"></app-milestone>
   </div>
 </div>
-<app-particle-emitter style="width: 100%; height: 100%;" [type]="'yellow-particle-emitter'"></app-particle-emitter>
