@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Upgrade} from "../../../globals";
 import {UpgradeService} from "../../../services/interactables/upgrade.service";
+import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 
 @Component({
   selector: 'app-yellow-fusion',
@@ -9,7 +10,9 @@ import {UpgradeService} from "../../../services/interactables/upgrade.service";
 })
 export class YellowFusionComponent implements OnInit {
   upgrades: Upgrade[] = [];
-  constructor() { }
+  constructor(
+    public holdingRecord: HoldingRecord
+  ) { }
 
   ngOnInit(): void {
     this.upgrades = UpgradeService.getUpgrades('yellow-fusion')
