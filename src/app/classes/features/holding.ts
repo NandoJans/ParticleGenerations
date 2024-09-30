@@ -42,7 +42,7 @@ export abstract class Holding {
 
   run(): any {
     if (this.action !== undefined) {
-      const effect = this.action()
+      const effect = this.action()?.copy()
       this.effect = effect
       return effect
     }
@@ -50,7 +50,7 @@ export abstract class Holding {
   }
 
   reset(): void {
-    this.amount = this.startAmount
+    this.amount = this.startAmount.copy()
   }
 
   add(amount: Num): void {
@@ -77,9 +77,13 @@ export abstract class Holding {
     return this.amount.toString();
   }
 
+  effectString(effect: Num): string {
+    return effect.toString()
+  }
+
   getEffectDisplay() {
     if (this.effect) {
-      return this.effect.toString();
+      return this.effectString(this.effect);
     } else {
       return '';
     }
