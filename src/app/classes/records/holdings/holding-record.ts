@@ -12,6 +12,11 @@ import {DarkEnergyHolding} from "../../features/holdings/dark-energy-holding";
 import {DarkPowerHolding} from "../../features/holdings/dark-power-holding";
 import {NuclearDecayHolding} from "../../features/holdings/nuclear-decay-holding";
 import {Holding} from "../../features/holding";
+import {BlueParticleHolding} from "../../features/holdings/blue-particle-holding";
+import {BlueHolding} from "../../features/holdings/blue-holding";
+import {BlueNeutronHolding} from "../../features/holdings/blue-neutron-holding";
+import {BlueLightHolding} from "../../features/holdings/blue-light-holding";
+import {BlueHydrogenHolding} from "../../features/holdings/blue-hydrogen-holding";
 
 export class HoldingRecord {
 
@@ -34,6 +39,13 @@ export class HoldingRecord {
   darkPower        = new DarkPowerHolding()
   nuclearDecay     = new NuclearDecayHolding()
 
+  // Blue Phase
+  blueParticles    = new BlueParticleHolding()
+  blues            = new BlueHolding()
+  blueNeutrons     = new BlueNeutronHolding()
+  blueLight        = new BlueLightHolding()
+  blueHydrogen     = new BlueHydrogenHolding()
+
   getArray(): Holding[] {
     return [
       this.redParticles,
@@ -48,7 +60,12 @@ export class HoldingRecord {
       this.greenSouls,
       this.darkEnergy,
       this.darkPower,
-      this.nuclearDecay
+      this.nuclearDecay,
+      this.blueParticles,
+      this.blues,
+      this.blueNeutrons,
+      this.blueLight,
+      this.blueHydrogen
     ]
   }
 
