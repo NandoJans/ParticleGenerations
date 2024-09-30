@@ -16,25 +16,25 @@ import {Holding} from "../../features/holding";
 export class HoldingRecord {
 
   // Red Phase
-  static redParticles     = new RedParticleHolding()
-  static redAccelerators  = new RedAcceleratorHolding()
+  redParticles     = new RedParticleHolding()
+  redAccelerators  = new RedAcceleratorHolding()
 
   // Yellow Phase
-  static yellowParticles  = new YellowParticleHolding()
-  static yellows          = new YellowHolding()
-  static yellowPower      = new YellowPowerHolding()
-  static yellowFusion     = new YellowFusionHolding()
+  yellowParticles  = new YellowParticleHolding()
+  yellows          = new YellowHolding()
+  yellowPower      = new YellowPowerHolding()
+  yellowFusion     = new YellowFusionHolding()
 
   // Green Phase
-  static greenParticles   = new GreenParticleHolding()
-  static greens           = new GreenHolding()
-  static greenEnergy      = new GreenEnergyHolding()
-  static greenSouls       = new GreenSoulsHolding()
-  static darkEnergy       = new DarkEnergyHolding()
-  static darkPower        = new DarkPowerHolding()
-  static nuclearDecay     = new NuclearDecayHolding()
+  greenParticles   = new GreenParticleHolding()
+  greens           = new GreenHolding()
+  greenEnergy      = new GreenEnergyHolding()
+  greenSouls       = new GreenSoulsHolding()
+  darkEnergy       = new DarkEnergyHolding()
+  darkPower        = new DarkPowerHolding()
+  nuclearDecay     = new NuclearDecayHolding()
 
-  static getArray(): Holding[] {
+  getArray(): Holding[] {
     return [
       this.redParticles,
       this.redAccelerators,
@@ -52,13 +52,13 @@ export class HoldingRecord {
     ]
   }
 
-  static load() {
+  load() {
     this.getArray().forEach((holding: Holding) => {
       holding.tryLoad()
     })
   }
 
-  static save() {
+  save() {
     this.getArray().forEach((holding: Holding) => {
       holding.save()
     })
