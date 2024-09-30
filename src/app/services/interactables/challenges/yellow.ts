@@ -4,9 +4,7 @@ import {UpgradeService} from "../upgrade.service";
 import {GlobalMultipliersService} from "../../globals/global-multipliers.service";
 import {HoldingsService} from "../../holdings.service";
 import {GeneratorService} from "../generator.service";
-import {greenHoldings} from "../holdings/greenHoldings";
 import {AutomatorService} from "../automator.service";
-import {BuyableService} from "../buyable.service";
 
 export const yellowChallenges: Challenge[] = [
   {

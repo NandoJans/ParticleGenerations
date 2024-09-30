@@ -11,6 +11,7 @@ import {GreenSoulsHolding} from "../../features/holdings/green-souls-holding";
 import {DarkEnergyHolding} from "../../features/holdings/dark-energy-holding";
 import {DarkPowerHolding} from "../../features/holdings/dark-power-holding";
 import {NuclearDecayHolding} from "../../features/holdings/nuclear-decay-holding";
+import {Holding} from "../../features/holding";
 
 export class HoldingRecord {
 
@@ -32,4 +33,34 @@ export class HoldingRecord {
   static darkEnergy       = new DarkEnergyHolding()
   static darkPower        = new DarkPowerHolding()
   static nuclearDecay     = new NuclearDecayHolding()
+
+  static getArray(): Holding[] {
+    return [
+      this.redParticles,
+      this.redAccelerators,
+      this.yellowParticles,
+      this.yellows,
+      this.yellowPower,
+      this.yellowFusion,
+      this.greenParticles,
+      this.greens,
+      this.greenEnergy,
+      this.greenSouls,
+      this.darkEnergy,
+      this.darkPower,
+      this.nuclearDecay
+    ]
+  }
+
+  static load() {
+    this.getArray().forEach((holding: Holding) => {
+      holding.tryLoad()
+    })
+  }
+
+  static save() {
+    this.getArray().forEach((holding: Holding) => {
+      holding.save()
+    })
+  }
 }
