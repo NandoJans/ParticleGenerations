@@ -10,6 +10,8 @@ export abstract class Holding {
   abstract startAmount: Num;
   effect: Num|undefined = undefined;
   abstract holdingDisplay: HoldingDisplay;
+  protected gainSpeed: Num = new Num(1, 0);
+  protected maxGainSpeed: Num = new Num(1, 0);
 
   abstract getStyle(): Styles;
 
@@ -95,5 +97,13 @@ export abstract class Holding {
 
   getHoldingDisplay() {
     return this.holdingDisplay
+  }
+
+  getGainSpeed() {
+    return this.gainSpeed
+  }
+
+  getMaxGainSpeed() {
+    return this.maxGainSpeed
   }
 }
