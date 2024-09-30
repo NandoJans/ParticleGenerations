@@ -73,9 +73,9 @@ export class ChallengeService {
     return this.activeChallenge.displayName
   }
 
-  static getActiveChallengeStyle(): string {
-    if (this.activeChallenge === undefined) return ''
-    return this.activeChallenge.style
+  getActiveChallengeStyle(): string {
+    if (ChallengeService.activeChallenge === undefined) return ''
+    return ChallengeService.activeChallenge.style
   }
 
   static shouldHidePrestigeButton(prestige: string) {
@@ -301,5 +301,16 @@ export class ChallengeService {
       }
     })
     return save;
+  }
+
+  isCompleted(name: string): boolean {
+    const completed = ChallengeService.getChallenge(name).completed
+    const maxCompletions = ChallengeService.getChallenge(name).maxCompletions
+    if (completed instanceof Num && maxCompletions !== undefined) {
+      return completed.greq(maxCompletions)
+    } else if (typeof completed === 'boolean') {
+      return completed
+    }
+    return false
   }
 }
