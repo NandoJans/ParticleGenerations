@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {GeneratorService} from "../../../services/interactables/generator.service";
 import {Generator} from "../../../globals";
+import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 
 @Component({
   selector: 'app-yellow-generators',
@@ -10,7 +11,9 @@ import {Generator} from "../../../globals";
 export class YellowGeneratorsComponent implements OnInit {
   generators: Generator[] = [];
 
-  constructor() { }
+  constructor(
+    public holdingRecord: HoldingRecord
+  ) { }
 
   ngOnInit(): void {
     this.generators = GeneratorService.getGenerators('yellow-particles');
