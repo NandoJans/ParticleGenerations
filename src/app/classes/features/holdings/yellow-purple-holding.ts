@@ -16,8 +16,8 @@ export class YellowPurpleHolding extends Holding {
   holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
     .withAmountPrefix('You have')
     .withAmountSuffix('Yellow Purple')
-    .withEffectPrefix('')
-    .withEffectSuffix('Purple Particles')
+    .addLine('They are boosted by ', () => HoldingRecord.purpleVoid.amount, 'Purple Void')
+    .addLine('The multiply red generators upgrade is multiplied by ', this.getEffectDisplay, '')
     .build();
 
   override action(): Num | undefined {
@@ -30,5 +30,9 @@ export class YellowPurpleHolding extends Holding {
 
   getStyle(): Styles {
     return Styles.PURPLE;
+  }
+
+  override effectString(effect: Num): string {
+    return super.effectString(effect) + 'x';
   }
 }

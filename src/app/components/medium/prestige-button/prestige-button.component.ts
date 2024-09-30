@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {PrestigeLayersService} from "../../../services/prestige-layers.service";
+import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 
 @Component({
   selector: 'app-prestige-button',
@@ -10,7 +11,10 @@ export class PrestigeButtonComponent implements OnInit {
   @Input() name: string | undefined;
   @Input() buttonId: string | undefined;
   @Input() style: string | undefined;
-  constructor(private prestigeLayers: PrestigeLayersService) { }
+  constructor(
+    private prestigeLayers: PrestigeLayersService,
+    public holdingRecord: HoldingRecord
+  ) { }
 
   prestige() {
     PrestigeLayersService.prestige(this.name);

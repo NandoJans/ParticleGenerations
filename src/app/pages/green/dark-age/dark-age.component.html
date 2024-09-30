@@ -1,22 +1,10 @@
-<div class="holding-line">
-  <p class="holding-prefix">You have </p>
-  <app-number-display [name]="'darkPower'" [style]="'dark-text holding-amount'" [type]="'currency'"></app-number-display>
-  <p class="holding-prefix">Dark Power</p>
-</div>
-<div class="holding-line">
-  <p class="holding-prefix">Dark Power is capped at </p>
-  <app-number-display [name]="'maxDarkPower'" [style]="'dark-text holding-amount'" [type]="'currency'"></app-number-display>
-</div>
-<div class="holding-line">
-  <p class="holding-prefix">They multiply your Dark Energy gain by </p>
-  <app-number-display [name]="'darkPower'" [style]="'dark-text holding-amount'" [type]="'holdingEffect'"></app-number-display>
-</div>
+<app-number-display [holding]="holdingRecord.getDarkPower()"></app-number-display>
 <div class="upgrade-row">
   <app-challenge *ngIf="darkAge.unlocked" [challenge]="darkAge"></app-challenge>
 </div>
 <div class="holding-line">
   <p class="holding-prefix">You will gain </p>
-  <app-number-display [name]="'darkPowerGain'" [style]="'dark-text holding-amount'" [type]="'darkPowerGain'"></app-number-display>
+  <p [class]="'dark-text holding-amount'">{{ getUpcomingDarkPower() }}</p>
   <p class="holding-prefix">Dark Power on going green</p>
 </div>
 <div class="holding-line" style="padding-top: 50px">

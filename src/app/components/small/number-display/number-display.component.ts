@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import {Holding} from "../../../classes/features/holding";
 import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 import {HoldingDisplay} from "../../../classes/displays/holding-display";
+import {HoldingDisplayLine} from "../../../interfaces/holding-display-line";
 
 @Component({
   selector: 'app-number-display',
@@ -9,12 +10,14 @@ import {HoldingDisplay} from "../../../classes/displays/holding-display";
   styleUrls: ['./number-display.component.css']
 })
 export class NumberDisplayComponent  {
-  @Input() holding!: Holding;
-  holdingDisplay: HoldingDisplay = this.holding.holdingDisplay;
+  @Input() holding: Holding = HoldingRecord.redParticles;
+  holdingDisplay: HoldingDisplay;
 
   constructor(
     protected holdingRecord: HoldingRecord
-  ) { }
+  ) {
+    this.holdingDisplay = this.holding.holdingDisplay;
+  }
 
   getHoldingAmount(): string {
     return this.holding.getAmountDisplay()
@@ -26,5 +29,9 @@ export class NumberDisplayComponent  {
 
   hasHoldingEffect() {
     return this.holding.hasEffect()
+  }
+
+  getLines(): HoldingDisplayLine[] {
+    return this.holdingDisplay.getLines()
   }
 }

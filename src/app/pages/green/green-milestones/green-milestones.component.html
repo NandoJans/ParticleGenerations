@@ -1,11 +1,7 @@
-<div class="holding-line">
-  <p class="holding-prefix">You have </p>
-  <app-number-display [name]="'greens'" [style]="'green-text holding-amount'" [type]="'currency'"></app-number-display>
-  <p class="holding-prefix">Greens</p>
-</div>
+<app-number-display [holding]="holdingRecord.getGreens()"></app-number-display>
 <div class="holding-line">
   <p class="holding-prefix">Your best Green Particles is </p>
-  <app-number-display [name]="'green'" [style]="'green-text holding-amount'" [type]="'gainPS'"></app-number-display>
+  <p [class]="'green-text holding-amount'">{{ getMaxGreenParticleGainSpeed() }}</p>
   <p class="holding-prefix">/ Second</p>
 </div>
 <div class="upgrade-row">

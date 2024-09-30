@@ -1,4 +1,7 @@
+import {HoldingDisplayLine} from "../../interfaces/holding-display-line";
+
 export class HoldingDisplay {
+  lines: any[] = [];
   private readonly amountPrefix: string = '';
   private readonly amountSuffix: string = '';
   private readonly effectPrefix: string = '';
@@ -26,5 +29,13 @@ export class HoldingDisplay {
 
   getEffectSuffix(): string {
     return this.effectSuffix;
+  }
+
+  setLines(lines: any[]): void {
+    this.lines = lines;
+  }
+
+  getLines(): HoldingDisplayLine[] {
+    return this.lines;
   }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {UpgradeService} from "../../../services/interactables/upgrade.service";
 import {Upgrade} from "../../../globals";
 import {BlackHoleService} from "../../../services/black-hole.service";
+import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 
 @Component({
   selector: 'app-black',
@@ -15,7 +16,9 @@ export class BlackComponent implements OnInit {
   hideStartButton: boolean = BlackHoleService.on;
   hideStopButton: boolean = !BlackHoleService.on;
 
-  constructor() { }
+  constructor(
+    public holdingRecord: HoldingRecord
+  ) { }
 
   ngOnInit(): void {
     this.unlockBlackHole = UpgradeService.getUpgrades('unlock-black-hole');

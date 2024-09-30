@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {BuyableService} from "../../../services/interactables/buyable.service";
 import {Num} from "../../../num";
+import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 
 @Component({
   selector: 'app-buyable',
@@ -13,7 +14,10 @@ export class BuyableComponent implements OnInit {
   @Input() currency: string | undefined;
   displayCost: string | undefined;
 
-  constructor(private buyables: BuyableService) { }
+  constructor(
+    private buyables: BuyableService,
+    public holdingRecord: HoldingRecord
+  ) { }
 
   buy() {
     this.buyables.buy(this.name);

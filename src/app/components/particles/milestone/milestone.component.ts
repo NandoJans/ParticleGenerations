@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Milestone} from "../../../globals";
 import {Num} from "../../../num";
+import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 
 @Component({
   selector: 'app-milestone',
@@ -16,7 +17,9 @@ export class MilestoneComponent implements OnInit {
   currency: string | undefined;
   style: string | undefined;
 
-  constructor() { }
+  constructor(
+    public holdingRecord: HoldingRecord
+  ) { }
 
   ngOnInit(): void {
     this.name = this.milestone?.name;

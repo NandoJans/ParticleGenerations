@@ -1,14 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Num} from "../num";
-import {purpleHoldings} from "./interactables/holdings/purpleHoldings";
 
 @Injectable({
   providedIn: 'root'
 })
 export class HoldingsService {
-  static holdings: object = {
-    ...purpleHoldings
-  }
+  static holdings: object = {}
 
   static add(key: string, addition: Num) {
     // @ts-ignore

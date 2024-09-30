@@ -1,17 +1,4 @@
-<div class="holding-line">
-  <p class="holding-prefix">You have </p>
-  <app-number-display [name]="'bluePurple'" [style]="'blue-purple-text pre-purple-text holding-amount'" [type]="'currency'"></app-number-display>
-  <p class="holding-prefix"> Blue Purple</p>
-</div>
-<div class="holding-line">
-  <p class="holding-prefix">Which is boosted by </p>
-  <app-number-display [name]="'purpleVoid'" [style]="'purple-text holding-amount'" [type]="'currency'"></app-number-display>
-  <p class="holding-prefix"> Purple Void</p>
-</div>
-<div class="holding-line">
-  <p class="holding-prefix">They increase the buy multiplier of the blue neutron generator by</p>
-  <app-number-display [name]="'bluePurple'" [style]="'blue-purple-text pre-purple-text holding-amount'" [type]="'holdingEffect'"></app-number-display>
-</div>
+<app-number-display [holding]="holdingRecord.getBluePurple()"></app-number-display>
 <div class="generators-row">
   <div *ngFor="let generator of generators">
     <app-generator *ngIf="generator.unlocked" [generator]="generator"></app-generator>

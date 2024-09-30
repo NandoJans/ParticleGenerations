@@ -16,9 +16,9 @@ export class BluePurpleHolding extends Holding {
   startAmount: Num = new Num(0, 0);
   holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
     .withAmountPrefix('You have')
-    .withAmountSuffix('Blue Purple')
-    .withEffectPrefix('')
-    .withEffectSuffix('Blue Particles')
+    .withAmountSuffix('Red Purple')
+    .addLine('They are boosted by ', () => HoldingRecord.purpleVoid.amount, 'Purple Void')
+    .addLine('and increase the buy multiplier of the blue neutron generator by', this.getEffectDisplay, '')
     .build();
 
   override action(): Num | undefined {
@@ -31,5 +31,9 @@ export class BluePurpleHolding extends Holding {
 
   getStyle(): Styles {
     return Styles.PURPLE;
+  }
+
+  override effectString(effect: Num): string {
+    return super.effectString(effect) + 'x';
   }
 }

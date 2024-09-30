@@ -1,4 +1,4 @@
-<app-number-display [holding]="holdingRecord.yellows"></app-number-display>
+<app-number-display [holding]="holdingRecord.getYellows()"></app-number-display>
 <div class="holding-line">
   <p class="holding-prefix">Your best Yellow Particles is </p>
   <p [style]="'yellow-text holding-amount'">{{ getMaxYellowParticleGainSpeed() }}</p>

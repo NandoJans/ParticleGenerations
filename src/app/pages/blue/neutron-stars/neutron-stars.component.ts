@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {UpgradeService} from "../../../services/interactables/upgrade.service";
 import {Upgrade} from "../../../globals";
 import {Num} from "../../../num";
+import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 
 @Component({
   selector: 'app-neutron-stars',
@@ -15,7 +16,9 @@ export class NeutronStarsComponent implements OnInit {
   fusionEffect: any[] = ['yellowBlueLightEffect'];
   displayBlueLight: boolean = UpgradeService.getValue('neutron-star', 'bought').greq(new Num(1, 0));
 
-  constructor() { }
+  constructor(
+    public holdingRecord: HoldingRecord
+  ) { }
 
   ngOnInit(): void {
     this.neutronStar = UpgradeService.getUpgrades('neutron-star-upgrade');
@@ -23,4 +26,8 @@ export class NeutronStarsComponent implements OnInit {
     this.onetimeUpgrades = UpgradeService.getUpgrades('blue-light-upgrade-onetime');
   }
 
+  getYellowFusionToBlueLightEffect() {
+    // TODO: Implement this function
+    return new Num(1, 0).toString()
+  }
 }

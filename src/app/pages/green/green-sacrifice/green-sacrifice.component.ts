@@ -4,6 +4,7 @@ import {UpgradeService} from "../../../services/interactables/upgrade.service";
 import {Num} from "../../../num";
 import {HoldingsService} from "../../../services/holdings.service";
 import {ResetService} from "../../../services/interactables/reset.service";
+import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 
 @Component({
   selector: 'app-green-sacrifice',
@@ -13,7 +14,9 @@ import {ResetService} from "../../../services/interactables/reset.service";
 export class GreenSacrificeComponent implements OnInit {
   sacrifices: Upgrade[] = [];
   upgrades: Upgrade[] = [];
-  constructor() { }
+  constructor(
+    public holdingRecord: HoldingRecord
+  ) { }
 
   respecSouls() {
     UpgradeService.getUpgrades('green-limited-upgrades').forEach((upgrade) => {

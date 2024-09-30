@@ -1,11 +1,9 @@
-<div class="holding-line">
-  <p class="holding-prefix">You have </p>
-  <app-number-display [name]="'purples'" [style]="'purple-text holding-amount'" [type]="'currency'"></app-number-display>
-  <p class="holding-prefix">Purples</p>
-</div>
+<app-number-display
+  [holding]="holdingRecord.getPurples()"
+></app-number-display>
 <div class="holding-line">
   <p class="holding-prefix">Your best Purple Particles is </p>
-  <app-number-display [name]="'Purple'" [style]="'purple-text holding-amount'" [type]="'gainPS'"></app-number-display>
+  <p [style]="'purple-text holding-amount'">{{ getMaxPurpleParticleGainSpeed() }}</p>
   <p class="holding-prefix">/ Second</p>
 </div>
 <div class="upgrade-row">

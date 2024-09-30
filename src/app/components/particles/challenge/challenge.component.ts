@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Challenge} from "../../../globals";
 import {ChallengeService} from "../../../services/interactables/challenge.service";
+import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 
 @Component({
   selector: 'app-challenge',
@@ -19,7 +20,8 @@ export class ChallengeComponent implements OnInit {
   completions: any[] | undefined;
   effect: any[] | undefined;
   constructor(
-    private challengeService: ChallengeService
+    private challengeService: ChallengeService,
+    public holdingRecord: HoldingRecord
   ) { }
 
   start() {

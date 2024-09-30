@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import {Num} from "../../../num";
 import {Generator} from "../../../globals";
 import {BuyableService} from "../../../services/interactables/buyable.service";
+import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 
 @Component({
   selector: 'app-generator',
@@ -18,7 +19,10 @@ export class GeneratorComponent implements OnInit {
   currency: string | undefined;
   style: string | undefined;
 
-  constructor(private buyables: BuyableService) {
+  constructor(
+    private buyables: BuyableService,
+    public holdingRecord: HoldingRecord
+  ) {
 
   }
 

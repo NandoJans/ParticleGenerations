@@ -26,7 +26,11 @@ import {GreenPurpleHolding} from "../../features/holdings/green-purple-holding";
 import {BluePurpleHolding} from "../../features/holdings/blue-purple-holding";
 import {BlackHoleMassHolding} from "../../features/holdings/black-hole-mass-holding";
 import {GravityHolding} from "../../features/holdings/gravity-holding";
+import {Injectable} from "@angular/core";
 
+@Injectable({
+  providedIn: 'root'
+})
 export class HoldingRecord {
 
   // Red Phase
@@ -113,4 +117,32 @@ export class HoldingRecord {
       holding.save()
     })
   }
+
+  getRedParticles() { return HoldingRecord.redParticles }
+  getRedAccelerators() { return HoldingRecord.redAccelerators }
+  getYellowParticles() { return HoldingRecord.yellowParticles }
+  getYellows() { return HoldingRecord.yellows }
+  getYellowPower() { return HoldingRecord.yellowPower }
+  getYellowFusion() { return HoldingRecord.yellowFusion }
+  getGreenParticles() { return HoldingRecord.greenParticles }
+  getGreens() { return HoldingRecord.greens }
+  getGreenEnergy() { return HoldingRecord.greenEnergy }
+  getGreenSouls() { return HoldingRecord.greenSouls }
+  getDarkEnergy() { return HoldingRecord.darkEnergy }
+  getDarkPower() { return HoldingRecord.darkPower }
+  getNuclearDecay() { return HoldingRecord.nuclearDecay }
+  getBlueParticles() { return HoldingRecord.blueParticles }
+  getBlues() { return HoldingRecord.blues }
+  getBlueNeutrons() { return HoldingRecord.blueNeutrons }
+  getBlueLight() { return HoldingRecord.blueLight }
+  getBlueHydrogen() { return HoldingRecord.blueHydrogen }
+  getPurpleParticles() { return HoldingRecord.purpleParticles }
+  getPurples() { return HoldingRecord.purples }
+  getPurpleVoid() { return HoldingRecord.purpleVoid }
+  getRedPurple() { return HoldingRecord.redPurple }
+  getYellowPurple() { return HoldingRecord.yellowPurple }
+  getGreenPurple() { return HoldingRecord.greenPurple }
+  getBluePurple() { return HoldingRecord.bluePurple }
+  getBlackHoleMass() { return HoldingRecord.blackHoleMass }
+  getGravity() { return HoldingRecord.gravity }
 }

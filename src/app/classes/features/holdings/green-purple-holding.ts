@@ -15,8 +15,8 @@ export class GreenPurpleHolding extends Holding {
   holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
     .withAmountPrefix('You have')
     .withAmountSuffix('Green Purple')
-    .withEffectPrefix('')
-    .withEffectSuffix('Green Particles')
+    .addLine('They are boosted by ', () => HoldingRecord.purpleVoid.amount, 'Purple Void')
+    .addLine('and increase the amount of green souls by', this.getEffectDisplay, '')
     .build();
 
   override action(): Num | undefined {

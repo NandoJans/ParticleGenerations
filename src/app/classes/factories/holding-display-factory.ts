@@ -1,7 +1,9 @@
 import {Holding} from "../features/holding";
 import {HoldingDisplay} from "../displays/holding-display";
+import {HoldingDisplayLine} from "../../interfaces/holding-display-line";
 
 export class HoldingDisplayFactory {
+  lines: HoldingDisplayLine[] = [];
   amountPrefix: string = '';
   amountSuffix: string = '';
   effectPrefix: string = '';
@@ -36,7 +38,14 @@ export class HoldingDisplayFactory {
     return this;
   }
 
+  addLine(prefix: string, valueFunction: Function, suffix: string): HoldingDisplayFactory {
+    this.lines.push({prefix, valueFunction, suffix});
+    return this;
+  }
+
   build(): HoldingDisplay {
-    return new HoldingDisplay(this.amountPrefix, this.amountSuffix, this.effectPrefix, this.effectSuffix);
+    const holdingDisplay = new HoldingDisplay(this.amountPrefix, this.amountSuffix, this.effectPrefix, this.effectSuffix);
+    holdingDisplay.setLines(this.lines);
+    return holdingDisplay;
   }
 }

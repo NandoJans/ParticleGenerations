@@ -3,6 +3,7 @@ import {Generator, Upgrade} from "../../../globals";
 import {Num} from "../../../num";
 import {GeneratorService} from "../../../services/interactables/generator.service";
 import {UpgradeService} from "../../../services/interactables/upgrade.service";
+import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 
 @Component({
   selector: 'app-blue-purple',
@@ -13,7 +14,9 @@ export class BluePurpleComponent implements OnInit {
   generators: Generator[] = [];
   upgrades: Upgrade[] = [];
   effect: any[] = ['prePurple', 'bluePurple', new Num(3, 0)];
-  constructor() { }
+  constructor(
+    public holdingRecord: HoldingRecord
+  ) { }
 
   ngOnInit(): void {
     this.generators = GeneratorService.getGenerators('blue-purple-generator');

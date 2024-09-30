@@ -9,4 +9,9 @@
     <p>{{ getHoldingEffect() }}</p>
     <p>{{ holdingDisplay.getEffectSuffix() }}</p>
   </span>
+  <span *ngFor="let line of getLines()">
+    <p>{{ line.prefix }}</p>
+    <p>{{ line.valueFunction() }}</p>
+    <p>{{ line.suffix }}</p>
+  </span>
 </div>

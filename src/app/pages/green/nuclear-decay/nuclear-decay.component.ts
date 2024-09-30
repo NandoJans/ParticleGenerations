@@ -5,6 +5,7 @@ import {Num} from "../../../num";
 import {UpgradeService} from "../../../services/interactables/upgrade.service";
 import {HoldingsService} from "../../../services/holdings.service";
 import {ResetService} from "../../../services/interactables/reset.service";
+import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 
 @Component({
   selector: 'app-nuclear-decay',
@@ -15,6 +16,10 @@ export class NuclearDecayComponent implements OnInit {
   generators: Generator[] = [];
   upgrades: Upgrade[] = [];
   enoughSacrificeUpgrades = !HoldingsService.get('limitedUpgradeCount').greq(new Num(1, 1));
+
+  constructor(
+    public holdingRecord: HoldingRecord
+  ) { }
 
   respecSouls() {
     HoldingsService.set('nuclearDecay', new Num(1, 0))
@@ -28,8 +33,6 @@ export class NuclearDecayComponent implements OnInit {
     })
     ResetService.reset('green');
   }
-
-  constructor() { }
 
   ngOnInit(): void {
     this.generators = GeneratorService.getGenerators('nuclear-decay');

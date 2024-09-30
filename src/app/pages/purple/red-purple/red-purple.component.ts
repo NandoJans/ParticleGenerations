@@ -3,6 +3,7 @@ import {GeneratorService} from "../../../services/interactables/generator.servic
 import {UpgradeService} from "../../../services/interactables/upgrade.service";
 import {Num} from "../../../num";
 import {Generator, Upgrade} from "../../../globals";
+import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 
 @Component({
   selector: 'app-red-purple',
@@ -13,7 +14,9 @@ export class RedPurpleComponent implements OnInit {
   generators: Generator[] = [];
   upgrades: Upgrade[] = [];
   effect: any[] = ['prePurple', 'redPurple', new Num(1, 2)];
-  constructor() { }
+  constructor(
+    public holdingRecord: HoldingRecord
+  ) { }
 
   ngOnInit(): void {
     this.generators = GeneratorService.getGenerators('red-purple-generator');

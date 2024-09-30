@@ -1,4 +1,4 @@
-<app-number-display [holding]="holdingRecord.redAccelerators"></app-number-display>
+<app-number-display [holding]="holdingRecord.getRedAccelerators()"></app-number-display>
 <div class="generators-row">
   <div *ngFor="let generator of generators">
     <app-generator *ngIf="generator.unlocked" [generator]="generator"></app-generator>

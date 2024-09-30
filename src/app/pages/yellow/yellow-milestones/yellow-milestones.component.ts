@@ -20,6 +20,6 @@ export class YellowMilestonesComponent implements OnInit {
   }
 
   getMaxYellowParticleGainSpeed() {
-    return this.holdingRecord.redParticles.getMaxGainSpeed();
+    return this.holdingRecord.getRedParticles().getMaxGainSpeed();
   }
 }

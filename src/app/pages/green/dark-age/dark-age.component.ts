@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ChallengeService} from "../../../services/interactables/challenge.service";
 import {Challenge} from "../../../globals";
+import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
+import {Num} from "../../../num";
 
 @Component({
   selector: 'app-dark-age',
@@ -15,9 +17,15 @@ export class DarkAgeComponent implements OnInit {
     ChallengeService.leaveChallenge();
   }
 
-  constructor() { }
+  constructor(
+    public holdingRecord: HoldingRecord
+  ) { }
 
   ngOnInit(): void {
   }
 
+  getUpcomingDarkPower() {
+    // TODO: Implement this function
+    return new Num(0, 0).toString()
+  }
 }

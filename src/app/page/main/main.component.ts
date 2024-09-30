@@ -15,9 +15,10 @@ export class MainComponent implements OnInit {
   unlockedPurple: boolean | undefined;
 
   purplePhase: boolean = App.purplePhase;
-  HoldingRecord: typeof HoldingRecord = HoldingRecord;
 
-  constructor() {}
+  constructor(
+    public holdingRecord: HoldingRecord
+  ) {}
 
   ngOnInit(): void {
     this.purplePhase = App.purplePhase;

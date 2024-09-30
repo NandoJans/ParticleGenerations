@@ -16,8 +16,8 @@ export class RedPurpleHolding extends Holding {
   holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
     .withAmountPrefix('You have')
     .withAmountSuffix('Red Purple')
-    .withEffectPrefix('')
-    .withEffectSuffix('Red Particles')
+    .addLine('They are boosted by ', () => HoldingRecord.purpleVoid.amount, 'Purple Void')
+    .addLine('and multiply the red extension upgrade by', this.getEffectDisplay, '')
     .build();
 
   override action(): Num | undefined {

@@ -1,4 +1,4 @@
-<app-number-display [holding]="holdingRecord.yellowFusion"></app-number-display>
+<app-number-display [holding]="holdingRecord.getYellowFusion()"></app-number-display>
 <div class="upgrade-row">
   <div *ngFor="let upgrade of upgrades">
     <app-upgrade *ngIf="upgrade.unlocked" [upgrade]="upgrade"></app-upgrade>

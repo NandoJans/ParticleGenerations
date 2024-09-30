@@ -1,20 +1,8 @@
-<div class="holding-line">
-  <p class="holding-prefix">You have </p>
-  <app-number-display [name]="'greenSouls'" [style]="'green-text holding-amount'" [type]="'currency'"></app-number-display>
-  <p class="holding-prefix">Green Souls</p>
-</div>
+<app-number-display [holding]="holdingRecord.getGreenSouls()"></app-number-display>
 <div class="holding-line">
   <h1 *ngIf="enoughSacrificeUpgrades">Nuclear Decay is halted because not all sacrifice upgrades are bought.</h1>
 </div>
-<div class="holding-line">
-  <p class="holding-prefix">You have </p>
-  <app-number-display [name]="'nuclearDecay'" [style]="'green-text holding-amount'" [type]="'currency'"></app-number-display>
-  <p class="holding-prefix">Nuclear Decay</p>
-</div>
-<div class="holding-line">
-  <p class="holding-prefix">They increase the power of red generator boosters by</p>
-  <app-number-display [name]="'nuclearDecay'" [style]="'green-text holding-amount'" [type]="'holdingEffect'"></app-number-display>
-</div>
+<app-number-display [holding]="holdingRecord.getNuclearDecay()"></app-number-display>
 <div class="generators-row">
   <div *ngFor="let generator of generators">
     <app-generator *ngIf="generator.unlocked" [generator]="generator"></app-generator>

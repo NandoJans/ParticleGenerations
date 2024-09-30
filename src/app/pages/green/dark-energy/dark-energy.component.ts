@@ -5,6 +5,7 @@ import {Num} from "../../../num";
 import {BuyableService} from "../../../services/interactables/buyable.service";
 import {HoldingsService} from "../../../services/holdings.service";
 import {ResetService} from "../../../services/interactables/reset.service";
+import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 
 @Component({
   selector: 'app-dark-energy',
@@ -14,7 +15,10 @@ import {ResetService} from "../../../services/interactables/reset.service";
 export class DarkEnergyComponent implements OnInit {
   sacrifices: Upgrade[] = [];
   upgrades: Upgrade[] = [];
-  constructor(private buyables: BuyableService) { }
+  constructor(
+    private buyables: BuyableService,
+    public holdingRecord: HoldingRecord
+  ) { }
 
   respecDark() {
     UpgradeService.getUpgrades('dark-upgrade').forEach((upgrade) => {

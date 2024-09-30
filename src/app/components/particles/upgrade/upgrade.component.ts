@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Num} from "../../../num";
 import {Upgrade} from "../../../globals";
 import {BuyableService} from "../../../services/interactables/buyable.service";
+import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 
 @Component({
   selector: 'app-upgrade',
@@ -20,7 +21,10 @@ export class UpgradeComponent implements OnInit {
   style: string | undefined;
   effect: any[] | undefined;
 
-  constructor(private buyables: BuyableService) { }
+  constructor(
+    private buyables: BuyableService,
+    public holdingRecord: HoldingRecord
+  ) { }
 
   buy() {
     this.buyables.buy(this.name);

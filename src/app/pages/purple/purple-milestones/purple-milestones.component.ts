@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Milestone} from "../../../globals";
 import {MilestoneService} from "../../../services/interactables/milestone.service";
+import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 
 @Component({
   selector: 'app-purple-milestones',
@@ -10,9 +11,15 @@ import {MilestoneService} from "../../../services/interactables/milestone.servic
 export class PurpleMilestonesComponent implements OnInit {
   milestones: Milestone[] = [];
 
-  constructor() { }
+  constructor(
+    public holdingRecord: HoldingRecord
+  ) { }
 
   ngOnInit(): void {
     this.milestones = MilestoneService.getMilestones('purple-milestone');
+  }
+
+  getMaxPurpleParticleGainSpeed() {
+    return this.holdingRecord.getPurpleParticles().getMaxGainSpeed();
   }
 }

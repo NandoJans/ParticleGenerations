@@ -1,17 +1,4 @@
-<div class="holding-line">
-  <p class="holding-prefix">You have </p>
-  <app-number-display [name]="'greenPurple'" [style]="'green-purple-text pre-purple-text holding-amount'" [type]="'currency'"></app-number-display>
-  <p class="holding-prefix"> Green Purple</p>
-</div>
-<div class="holding-line">
-  <p class="holding-prefix">Which is boosted by </p>
-  <app-number-display [name]="'purpleVoid'" [style]="'purple-text holding-amount'" [type]="'currency'"></app-number-display>
-  <p class="holding-prefix"> Purple Void</p>
-</div>
-<div class="holding-line">
-  <p class="holding-prefix">They increase the amount of green souls gained by</p>
-  <app-number-display [name]="'greenPurple'" [style]="'green-purple-text pre-purple-text holding-amount'" [type]="'holdingEffect'"></app-number-display>
-</div>
+<app-number-display [holding]="holdingRecord.getGreenPurple()"></app-number-display>
 <div class="generators-row">
   <div *ngFor="let generator of generators">
     <app-generator *ngIf="generator.unlocked" [generator]="generator"></app-generator>

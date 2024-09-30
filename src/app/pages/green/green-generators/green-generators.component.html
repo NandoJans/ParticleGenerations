@@ -1,13 +1,4 @@
-<div class="holding-line">
-  <p class="holding-prefix">You have</p>
-  <app-number-display [name]="'greenEnergy'" [style]="'green-text holding-amount'" [type]="'currency'"></app-number-display>
-  <p class="holding-prefix">Green energy</p>
-</div>
-<div class="holding-line">
-  <p class="holding-prefix">They are equal to</p>
-  <app-number-display [name]="'greenEnergy'" [style]="'green-text holding-amount'" [type]="'holdingEffectNoProduct'"></app-number-display>
-  <p class="holding-prefix">free boosters</p>
-</div>
+<app-number-display [holding]="holdingRecord.getGreenEnergy()"></app-number-display>
 <div class="generators-row">
   <div *ngFor="let generator of generators">
     <app-generator *ngIf="generator.unlocked" [generator]="generator"></app-generator>

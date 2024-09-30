@@ -1,8 +1,4 @@
-<div class="holding-line">
-  <p class="holding-prefix">You have</p>
-  <app-number-display [name]="'purpleVoid'" [style]="'purple-text holding-amount'" [type]="'currency'"></app-number-display>
-  <p class="holding-prefix">Purple Void</p>
-</div>
+<app-number-display [holding]="holdingRecord.getPurpleVoid()"></app-number-display>
 <div class="generators-row">
   <div *ngFor="let generator of generators">
     <app-generator *ngIf="generator.unlocked" [generator]="generator"></app-generator>
