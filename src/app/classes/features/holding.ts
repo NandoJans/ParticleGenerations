@@ -2,6 +2,7 @@ import {Num} from "../../num";
 import {LocalStorageHelper} from "../helpers/local-storage-helper";
 import {Styles} from "../enums/styles";
 import {HoldingDisplay} from "../displays/holding-display";
+import {HoldingRecord} from "../records/holdings/holding-record";
 
 export abstract class Holding {
   abstract name: string;

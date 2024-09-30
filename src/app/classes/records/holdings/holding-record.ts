@@ -17,36 +17,56 @@ import {BlueHolding} from "../../features/holdings/blue-holding";
 import {BlueNeutronHolding} from "../../features/holdings/blue-neutron-holding";
 import {BlueLightHolding} from "../../features/holdings/blue-light-holding";
 import {BlueHydrogenHolding} from "../../features/holdings/blue-hydrogen-holding";
+import {PurpleParticleHolding} from "../../features/holdings/purple-particle-holding";
+import {PurpleHolding} from "../../features/holdings/purple-holding";
+import {PurpleVoidHolding} from "../../features/holdings/purple-void-holding";
+import {RedPurpleHolding} from "../../features/holdings/red-purple-holding";
+import {YellowPurpleHolding} from "../../features/holdings/yellow-purple-holding";
+import {GreenPurpleHolding} from "../../features/holdings/green-purple-holding";
+import {BluePurpleHolding} from "../../features/holdings/blue-purple-holding";
+import {BlackHoleMassHolding} from "../../features/holdings/black-hole-mass-holding";
+import {GravityHolding} from "../../features/holdings/gravity-holding";
 
 export class HoldingRecord {
 
   // Red Phase
-  redParticles     = new RedParticleHolding()
-  redAccelerators  = new RedAcceleratorHolding()
+  static redParticles     = new RedParticleHolding()
+  static redAccelerators  = new RedAcceleratorHolding()
 
   // Yellow Phase
-  yellowParticles  = new YellowParticleHolding()
-  yellows          = new YellowHolding()
-  yellowPower      = new YellowPowerHolding()
-  yellowFusion     = new YellowFusionHolding()
+  static yellowParticles  = new YellowParticleHolding()
+  static yellows          = new YellowHolding()
+  static yellowPower      = new YellowPowerHolding()
+  static yellowFusion     = new YellowFusionHolding()
 
   // Green Phase
-  greenParticles   = new GreenParticleHolding()
-  greens           = new GreenHolding()
-  greenEnergy      = new GreenEnergyHolding()
-  greenSouls       = new GreenSoulsHolding()
-  darkEnergy       = new DarkEnergyHolding()
-  darkPower        = new DarkPowerHolding()
-  nuclearDecay     = new NuclearDecayHolding()
+  static greenParticles   = new GreenParticleHolding()
+  static greens           = new GreenHolding()
+  static greenEnergy      = new GreenEnergyHolding()
+  static greenSouls       = new GreenSoulsHolding()
+  static darkEnergy       = new DarkEnergyHolding()
+  static darkPower        = new DarkPowerHolding()
+  static nuclearDecay     = new NuclearDecayHolding()
 
   // Blue Phase
-  blueParticles    = new BlueParticleHolding()
-  blues            = new BlueHolding()
-  blueNeutrons     = new BlueNeutronHolding()
-  blueLight        = new BlueLightHolding()
-  blueHydrogen     = new BlueHydrogenHolding()
+  static blueParticles    = new BlueParticleHolding()
+  static blues            = new BlueHolding()
+  static blueNeutrons     = new BlueNeutronHolding()
+  static blueLight        = new BlueLightHolding()
+  static blueHydrogen     = new BlueHydrogenHolding()
 
-  getArray(): Holding[] {
+  // Purple Phase
+  static purpleParticles  = new PurpleParticleHolding()
+  static purples          = new PurpleHolding()
+  static purpleVoid       = new PurpleVoidHolding()
+  static redPurple        = new RedPurpleHolding()
+  static yellowPurple     = new YellowPurpleHolding()
+  static greenPurple      = new GreenPurpleHolding()
+  static bluePurple       = new BluePurpleHolding()
+  static blackHoleMass    = new BlackHoleMassHolding()
+  static gravity          = new GravityHolding()
+
+  static getArray(): Holding[] {
     return [
       this.redParticles,
       this.redAccelerators,
@@ -65,8 +85,21 @@ export class HoldingRecord {
       this.blues,
       this.blueNeutrons,
       this.blueLight,
-      this.blueHydrogen
+      this.blueHydrogen,
+      this.purpleParticles,
+      this.purples,
+      this.purpleVoid,
+      this.redPurple,
+      this.yellowPurple,
+      this.greenPurple,
+      this.bluePurple,
+      this.blackHoleMass,
+      this.gravity
     ]
+  }
+
+  getArray(): Holding[] {
+    return HoldingRecord.getArray()
   }
 
   load() {
