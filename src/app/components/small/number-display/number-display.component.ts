@@ -9,10 +9,12 @@ import {HoldingDisplay} from "../../../classes/displays/holding-display";
   styleUrls: ['./number-display.component.css']
 })
 export class NumberDisplayComponent  {
-  @Input() holding: Holding = HoldingRecord['redParticles'];
-  holdingDisplay: HoldingDisplay = this.holding.getHoldingDisplay();
+  @Input() holding!: Holding;
+  holdingDisplay: HoldingDisplay = this.holding.holdingDisplay;
 
-  constructor() { }
+  constructor(
+    protected holdingRecord: HoldingRecord
+  ) { }
 
   getHoldingAmount(): string {
     return this.holding.getAmountDisplay()
