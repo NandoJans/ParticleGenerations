@@ -41,8 +41,6 @@ export class AppComponent implements OnInit{
     ChallengeService.resetChallenges();
     DataManagerService.load();
 
-    HoldingsService.set('blues', new Num(1, 3));
-    HoldingsService.set('blueParticles', new Num(1, 10));
     if (!this.isTicking) {
       this.tick.tick();
       this.isTicking = true;
