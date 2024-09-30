@@ -1,7 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Num} from "../num";
-import {redHoldings} from "./interactables/holdings/redHoldings";
-import {yellowHoldings} from "./interactables/holdings/yellowHoldings";
 import {greenHoldings} from "./interactables/holdings/greenHoldings";
 import {blueHoldings} from "./interactables/holdings/blueHoldings";
 import {purpleHoldings} from "./interactables/holdings/purpleHoldings";
@@ -11,8 +9,6 @@ import {purpleHoldings} from "./interactables/holdings/purpleHoldings";
 })
 export class HoldingsService {
   static holdings: object = {
-    ...redHoldings,
-    ...yellowHoldings,
     ...greenHoldings,
     ...blueHoldings,
     ...purpleHoldings
