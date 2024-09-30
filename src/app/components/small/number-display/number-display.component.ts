@@ -1,7 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {Holding} from "../../../classes/features/holding";
 import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
-import {Num} from "../../../num";
 import {HoldingDisplay} from "../../../classes/displays/holding-display";
 
 @Component({
