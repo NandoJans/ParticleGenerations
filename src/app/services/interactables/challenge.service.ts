@@ -73,6 +73,11 @@ export class ChallengeService {
     return this.activeChallenge.displayName
   }
 
+  static getActiveChallengeStyle(): string {
+    if (this.activeChallenge === undefined) return ''
+    return this.activeChallenge.style
+  }
+
   static shouldHidePrestigeButton(prestige: string) {
     if (this.activeChallenge === undefined) {
       return true;
