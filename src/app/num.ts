@@ -72,6 +72,10 @@ export class Num {
     return this.exp+Math.log10(this.num);
   }
 
+  convertToNumber = () => {
+    return this.num * 10 ** this.exp;
+  }
+
   copy = () => {
     return new Num(this.num, this.exp)
   }
