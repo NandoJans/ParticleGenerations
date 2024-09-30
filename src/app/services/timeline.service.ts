@@ -162,10 +162,10 @@ export class TimelineService {
           doc.style.height = '100%';
           doc.innerHTML = '<p>100%</p>';
         } else if (event.unlocked && event.hasProgress) {
-          const num1 = event.requirement[1].exp + event.requirement[1].num / 10;
-          const num2 = event.unlock[1].exp + event.unlock[1].num / 10
-          const holding = HoldingsService.get(event.unlock[0])
-          const holdingNum = holding.exp + holding.num / 10 - num1
+          const num1 = event.requirement[1].log10(false).convertToNumber();
+          const num2 = event.unlock[1].log10(false).convertToNumber();
+          const holding = HoldingsService.get(event.unlock[0]).log10(false).convertToNumber();
+          const holdingNum = holding - num1
           let value = holdingNum / (num2 - num1) * 100
           if (value < 0) value = 0;
           doc.style.height = value.toString()+'%';

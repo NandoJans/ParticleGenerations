@@ -1,0 +1,24 @@
+main {
+  min-height: 75%;
+}
+
+main.yellow-challenge {
+  background:
+    radial-gradient(var(--transparent-background-yellow), transparent 80%, var(--background-color-2) 10%) center,
+    radial-gradient(var(--light-blue-color), transparent 30%, var(--background-color-2) 10%) center;
+  animation: pulse 10s infinite ease-in-out;
+}
+
+main.green-challenge {
+  background:
+    radial-gradient(var(--transparent-background-green), transparent 80%, var(--background-color-2) 10%) center,
+    radial-gradient(var(--light-blue-color), transparent 30%, var(--background-color-2) 10%) center;
+  animation: pulse 10s infinite ease-in-out;
+}
+
+main.blue-challenge {
+  background:
+    radial-gradient(var(--transparent-background-blue), transparent 80%, var(--background-color-2) 10%) center,
+    radial-gradient(var(--light-blue-color), transparent 30%, var(--background-color-2) 10%) center;
+  animation: pulse 10s infinite ease-in-out;
+}

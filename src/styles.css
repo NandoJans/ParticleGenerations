@@ -538,6 +538,7 @@ footer {
 
 .sacrifice-style {
   background-color: var(--background-color-1);
+  min-height: 100px;
   color: var(--green-button-color);
   border: solid 1px var(--green-button-color);
   border-radius: 3px;
@@ -626,6 +627,7 @@ footer {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  align-items: center;
   height: 70px;
 }
 
@@ -697,9 +699,30 @@ button {
   cursor: pointer;
 }
 
+.challenge-button.red-challenge.completed {
+  background: var(--red-button-color);
+}
+
+.challenge-button.yellow-challenge.completed {
+  background: var(--yellow-button-color);
+}
+
+.challenge-button.green-challenge.completed {
+  background: var(--green-button-color);
+}
+
+.challenge-button.blue-challenge.completed {
+  background: var(--blue-button-color);
+}
+
+.challenge-button.purple-challenge.completed {
+  background: var(--purple-button-color);
+}
+
 .normal-button {
   width: auto;
   height: auto;
+  padding: 5px;
   background-color: var(--dark-button-color);
   border-radius: 3px;
 }
@@ -713,6 +736,7 @@ button {
   margin: 25px 0;
   width: auto;
   height: auto;
+  padding: 5px;
   background-color: var(--transparent-background-blue);
   border-radius: 3px;
 }
@@ -726,9 +750,11 @@ button {
   font-size: 20px;
   margin: 0;
   position: fixed;
+  left: 20%;
   bottom: 17.8%;
   width: 90%;
   height: auto;
+  padding: 5px;
   background-color: var(--red-button-color);
 }
 
@@ -775,6 +801,7 @@ app-prestige-button {
 
 .sacrifice-button {
   margin: 10px 0;
+  padding: 5px;
   background-color: var(--background-color-3);
   border: 1px solid var(--green-button-color);
   border-radius: 3px;
@@ -818,19 +845,19 @@ app-prestige-button {
   margin: 0;
 }
 
-.red-challenge {
+.challenge.red-challenge {
   background: linear-gradient(var(--transparent-background-dark), var(--transparent-background-red));
 }
 
-.yellow-challenge {
+.challenge.yellow-challenge {
   background: linear-gradient(var(--transparent-background-dark), var(--transparent-background-yellow));
 }
 
-.green-challenge {
+.challenge.green-challenge {
   background: linear-gradient(var(--transparent-background-dark), var(--transparent-background-green));
 }
 
-.blue-challenge {
+.challenge.blue-challenge {
   background: linear-gradient(var(--transparent-background-dark), var(--transparent-background-blue));
 }
 
@@ -990,11 +1017,50 @@ app-prestige-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--green-button-color);
 }
 
 .progress-bar p {
   text-align: center;
+}
+
+.progress-bar.red-timeline {
+  background-color: var(--red-button-color);
+}
+
+.timeline-event.red-timeline.reached {
+  border-color: var(--red-button-color);
+}
+
+.progress-bar.yellow-timeline {
+  background-color: var(--yellow-button-color);
+}
+
+.timeline-event.yellow-timeline.reached {
+  border-color: var(--yellow-button-color);
+}
+
+.progress-bar.green-timeline {
+  background-color: var(--green-button-color);
+}
+
+.timeline-event.green-timeline.reached {
+  border-color: var(--green-button-color);
+}
+
+.progress-bar.blue-timeline {
+  background-color: var(--blue-button-color);
+}
+
+.timeline-event.blue-timeline.reached {
+  border-color: var(--blue-button-color);
+}
+
+.progress-bar.purple-timeline {
+  background-color: var(--purple-button-color);
+}
+
+.timeline-event.purple-timeline.reached {
+  border-color: var(--purple-button-color);
 }
 
 
@@ -1134,14 +1200,10 @@ app-prestige-button {
 }
 
 .upgrade.limited-style .challenge-disabled {
-  width: 150px;
-  height: 100px;
   border-radius: 3px;
 }
 
 .upgrade.sacrifice-style .challenge-disabled {
-  width: 150px;
-  height: 100px;
   border-radius: 3px;
 }
 

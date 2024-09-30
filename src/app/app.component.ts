@@ -7,6 +7,8 @@ import {Router} from "@angular/router";
 import {NavigationsService} from "./services/navigations.service";
 import {GeneratorService} from "./services/interactables/generator.service";
 import {ChallengeService} from "./services/interactables/challenge.service";
+import {HoldingsService} from "./services/holdings.service";
+import {Num} from "./num";
 
 @Component({
   selector: 'app-root',
@@ -16,7 +18,11 @@ import {ChallengeService} from "./services/interactables/challenge.service";
 export class AppComponent implements OnInit{
   title = 'ParticleGenerations';
 
-  constructor(private tick: TickService, private router: Router) {
+  constructor(
+    private tick: TickService,
+    private router: Router,
+    private challengeService: ChallengeService
+  ) {
     NavigationsService.setRouter(router);
     App.subscribe().subscribe((data) => {
       if (data) {
@@ -34,9 +40,14 @@ export class AppComponent implements OnInit{
     GeneratorService.resetGenerators();
     ChallengeService.resetChallenges();
     DataManagerService.load();
+
     if (!this.isTicking) {
       this.tick.tick();
       this.isTicking = true;
     }
+  }
+
+  getActiveChallengeStyle() {
+    return this.challengeService.getActiveChallengeStyle() || '';
   }
 }

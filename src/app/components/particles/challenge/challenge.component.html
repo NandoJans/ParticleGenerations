@@ -7,5 +7,5 @@
   <p>Reward: {{rewardDescription}}</p>
   <app-number-display *ngIf="dynamic" [name]="name+'-completions'" [style]="''" [effect]="completions" [type]="'challengeCompletions'"></app-number-display>
   <app-number-display [name]="name" [style]="''" [effect]="effect" [type]="'effect'"></app-number-display>
-  <app-button [text]="'Start Challenge'" [style]="'challenge-button'" [identifier]="name+'-button'" (click)="start()"></app-button>
+  <app-button [text]="'Start Challenge'" [style]="'challenge-button ' + style + ' ' + (isCompleted() ? 'completed' : '')" [identifier]="name+'-button'" (click)="start()"></app-button>
 </div>
