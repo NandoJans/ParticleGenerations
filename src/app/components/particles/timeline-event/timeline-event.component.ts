@@ -16,6 +16,7 @@ export class TimelineEventComponent implements OnInit {
   abbreviation: string | undefined;
   unlocked: boolean | undefined;
   hasProgress: boolean | undefined;
+  type: string | undefined;
   constructor() { }
 
   ngOnInit(): void {
@@ -24,6 +25,7 @@ export class TimelineEventComponent implements OnInit {
     this.description = this.timelineEvent?.description
     this.unlocked = this.timelineEvent?.unlocked
     this.hasProgress = this.timelineEvent?.hasProgress
+    this.type = this.timelineEvent?.type
     this.requirement = this.timelineEvent?.unlock[1].toString()
     this.abbreviation = HoldingsService.getAbbreviation(this.timelineEvent?.unlock[0])
   }
