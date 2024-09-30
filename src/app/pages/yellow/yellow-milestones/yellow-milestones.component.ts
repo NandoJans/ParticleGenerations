@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MilestoneService} from "../../../services/interactables/milestone.service";
 import {Milestone} from "../../../globals";
+import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 
 @Component({
   selector: 'app-yellow-milestones',
@@ -9,9 +10,16 @@ import {Milestone} from "../../../globals";
 })
 export class YellowMilestonesComponent implements OnInit {
   milestones: Milestone[] = [];
-  constructor() { }
+  HoldingRecord: typeof HoldingRecord = HoldingRecord;
+  constructor(
+    public holdingRecord: HoldingRecord
+  ) { }
 
   ngOnInit(): void {
     this.milestones = MilestoneService.getMilestones('yellow-milestone')
+  }
+
+  getMaxYellowParticleGainSpeed() {
+    return this.holdingRecord.redParticles.getMaxGainSpeed();
   }
 }
