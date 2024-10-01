@@ -1,17 +1,10 @@
 import {Num} from "../../num";
 import {Buyable} from "./buyable";
 
-export abstract class Upgrade implements Buyable {
+export abstract class Upgrade extends Buyable {
   abstract name: string
   abstract displayName: string
   abstract description: string
-  abstract baseCost: Num
-  abstract cost: Num
-  abstract increase: Num
-  abstract scaling: Num
-  abstract scalingStart?: Num
-  abstract bought: Num
-  abstract currency: string
   abstract baseBuffer: Num
   abstract buffer: Num
   abstract amount: Num

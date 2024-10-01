@@ -2,7 +2,7 @@ import {RedGeneratorExtensionUpgrade} from "../../features/upgrades/red-generato
 
 export class UpgradeRecord {
   // Red Upgrades
-  static redGeneratorExtension = new RedGeneratorExtensionUpgrade();
+  static redGeneratorExtension: RedGeneratorExtensionUpgrade = new RedGeneratorExtensionUpgrade();
 
   getRedGeneratorExtension(): RedGeneratorExtensionUpgrade {
     return UpgradeRecord.redGeneratorExtension;

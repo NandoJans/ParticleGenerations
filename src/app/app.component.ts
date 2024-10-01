@@ -9,6 +9,7 @@ import {GeneratorService} from "./services/interactables/generator.service";
 import {ChallengeService} from "./services/interactables/challenge.service";
 import {HoldingsService} from "./services/holdings.service";
 import {Num} from "./num";
+import {HoldingRecord} from "./classes/records/holdings/holding-record";
 
 @Component({
   selector: 'app-root',
@@ -21,7 +22,8 @@ export class AppComponent implements OnInit{
   constructor(
     private tick: TickService,
     private router: Router,
-    private challengeService: ChallengeService
+    private challengeService: ChallengeService,
+    private holdingsRecord: HoldingRecord
   ) {
     NavigationsService.setRouter(router);
     App.subscribe().subscribe((data) => {
@@ -36,10 +38,13 @@ export class AppComponent implements OnInit{
   isTicking = false;
 
   ngOnInit(): void {
+    this.holdingsRecord.load();
     UpgradeService.resetUpgrades();
     GeneratorService.resetGenerators();
     ChallengeService.resetChallenges();
     DataManagerService.load();
+
+    console.log(this.holdingsRecord.getRedParticles())
 
     if (!this.isTicking) {
       this.tick.tick();

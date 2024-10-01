@@ -1,4 +1,5 @@
 import {Num} from "../../num";
+import {Holding} from "./holding";
 
 export abstract class Buyable {
   abstract baseCost: Num
@@ -7,6 +8,6 @@ export abstract class Buyable {
   abstract scalingStart: Num
   scaling?: Num
   abstract bought: Num
-  abstract currency: string
+  abstract currency: Holding
   // TODO: add the methods from buyable service
 }

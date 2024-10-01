@@ -2,8 +2,10 @@ import {Num} from "../../num";
 import {LocalStorageHelper} from "../helpers/local-storage-helper";
 import {Styles} from "../enums/styles";
 import {HoldingDisplay} from "../displays/holding-display";
+import {Generatable} from "./interfaces/generatable";
+import {Require} from "./interfaces/require";
 
-export abstract class Holding {
+export abstract class Holding implements Generatable, Require {
   abstract name: string;
   abstract abbreviation: string;
   abstract amount: Num;
@@ -97,5 +99,13 @@ export abstract class Holding {
 
   getMaxGainSpeed() {
     return this.maxGainSpeed
+  }
+
+  generate(amount: Num): any {
+    this.amount.add(amount)
+  }
+
+  requirementSatisfied(amount: Num): boolean {
+    return this.amount.greq(amount)
   }
 }

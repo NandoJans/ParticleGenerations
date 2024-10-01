@@ -1,8 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {Num} from "../../../num";
-import {Generator} from "../../../globals";
-import {BuyableService} from "../../../services/interactables/buyable.service";
-import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
+import {Generator} from "../../../classes/features/generator";
+import {GeneratorRecord} from "../../../classes/records/generators/generator-record";
 
 @Component({
   selector: 'app-generator',
@@ -10,33 +9,25 @@ import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
   styleUrls: ['./generator.component.css']
 })
 export class GeneratorComponent implements OnInit {
-  @Input() generator: Generator | undefined;
-  generates: string | undefined;
-  name: string | undefined;
-  displayName: string | undefined;
-  cost: Num | undefined;
-  amount: Num | undefined;
-  currency: string | undefined;
-  style: string | undefined;
-
-  constructor(
-    private buyables: BuyableService,
-    public holdingRecord: HoldingRecord
-  ) {
-
-  }
-
-  buy() {
-    this.buyables.buy(this.name);
-  }
+  @Input() generator: Generator = GeneratorRecord.firstRedGenerator;
 
   ngOnInit(): void {
-    this.generates = this.generator?.generates;
-    this.name = this.generator?.name;
-    this.displayName = this.generator?.displayName;
-    this.cost = this.generator?.cost;
-    this.amount = this.generator?.amount;
-    this.currency = this.generator?.currency;
-    this.style = this.generator?.style;
+
+  }
+
+  getAmount(): Num {
+    return this.generator.amount;
+  }
+
+  getDisplayName(): string {
+    return this.generator.displayName;
+  }
+
+  getCost(): Num {
+    return this.generator.cost;
+  }
+
+  getMultiplier(): Num {
+    return this.generator.multiplier;
   }
 }
