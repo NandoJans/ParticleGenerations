@@ -81,7 +81,7 @@ export class Num {
   }
 
   // @ts-ignore
-  add = (x: Num, overwrite = true, depth: number = 0) => {
+  add = (x: Num, overwrite = true, depth: number = 0): Num => {
     let ret_num = this.num
     let ret_exp = this.exp
 
@@ -111,13 +111,14 @@ export class Num {
     if (overwrite) {
       this.num = ret_num
       this.exp = ret_exp
+      return this
     } else {
       return new Num(ret_num, ret_exp)
     }
   }
 
   // @ts-ignore
-  sub = (x, overwrite = true) => {
+  sub = (x, overwrite = true): Num => {
     let ret_exp;
     let ret_num;
     let div;
@@ -148,13 +149,14 @@ export class Num {
     if (overwrite) {
       this.num = Number(ret_num.toFixed(10))
       this.exp = ret_exp
+      return this
     } else {
       return new Num(Number(ret_num.toFixed(10)), ret_exp)
     }
   }
 
   // @ts-ignore
-  mul = (x: Num, overwrite = true) => {
+  mul = (x: Num, overwrite = true): Num => {
     let ret_num = this.num * x.num
     let ret_exp = this.exp + x.exp
 
@@ -174,13 +176,14 @@ export class Num {
     if (overwrite) {
       this.num = Number(ret_num.toFixed(10))
       this.exp = ret_exp
+      return this
     } else {
       return new Num(Number(ret_num.toFixed(10)), ret_exp)
     }
   }
 
   // @ts-ignore
-  div = (x: Num, overwrite = true) => {
+  div = (x: Num, overwrite = true): Num => {
     let ret_num;
     let ret_exp;
     if (x.num === 0 || this.num === 0) {
@@ -199,13 +202,14 @@ export class Num {
     if (overwrite) {
       this.num = Number(ret_num.toFixed(10))
       this.exp = ret_exp
+      return this
     } else {
       return new Num(Number(ret_num.toFixed(10)), ret_exp)
     }
   }
 
   // @ts-ignore
-  pow = (x: Num, overwrite: boolean = true) => {
+  pow = (x: Num, overwrite: boolean = true): Num => {
     let ret_exp: number;
     let ret_num: number;
     if (this.num === 0 && this.exp === 0) {
@@ -247,13 +251,14 @@ export class Num {
     if (overwrite) {
       this.exp = ret_exp
       this.num = ret_num
+      return this
     } else {
       return new Num(ret_num, ret_exp)
     }
   }
 
   // @ts-ignore
-  log = (x: Num, overwrite: boolean = true) => {
+  log = (x: Num, overwrite: boolean = true): Num => {
     let ret_num = (this.exp * 10 + Math.log10(this.num) * 10) / (x.num * 10 ** x.exp);
     let ret_exp = 0;
 
@@ -272,26 +277,28 @@ export class Num {
     if (overwrite) {
       this.exp = ret_exp
       this.num = ret_num
+      return this
     } else {
       return new Num(ret_num, ret_exp)
     }
   }
 
   // @ts-ignore
-  log10 = (overwrite: boolean = true) => {
+  log10 = (overwrite: boolean = true): Num => {
     let ret_num = this.exp + Math.log10(this.num);
     let ret_exp = 0
 
     if (overwrite) {
       this.exp = ret_exp
       this.num = ret_num
+      return this
     } else {
       return new Num(ret_num, ret_exp)
     }
   }
 
   // @ts-ignore
-  ln = (overwrite: boolean = true) => {
+  ln = (overwrite: boolean = true): Num => {
     let ret_exp = 0
     let ret_num = Math.log(10) * (this.exp + Math.log10(this.num))
 
@@ -302,26 +309,28 @@ export class Num {
     if (overwrite) {
       this.exp = ret_exp
       this.num = ret_num
+      return this
     } else {
       return new Num(ret_num, ret_exp)
     }
   }
 
   // @ts-ignore
-  negate = (overwrite: boolean = true) => {
+  negate = (overwrite: boolean = true): Num => {
     const ret_exp = this.exp
     const ret_num = -this.num
 
     if (overwrite) {
       this.exp = ret_exp
       this.num = ret_num
+      return this
     } else {
       return new Num(ret_num, ret_exp)
     }
   }
 
   // @ts-ignore
-  floor = (overwrite: boolean = true) => {
+  floor = (overwrite: boolean = true): Num => {
     let ret_exp = this.exp
     let ret_num = this.num
     if (ret_exp <= 10 ) {
@@ -337,13 +346,14 @@ export class Num {
     if (overwrite) {
       this.exp = ret_exp
       this.num = ret_num
+      return this
     } else {
       return new Num(ret_num, ret_exp)
     }
   }
 
   // @ts-ignore
-  sqrt = (overwrite: boolean = true) => {
+  sqrt = (overwrite: boolean = true): Num => {
     let ret_num = this.num;
     let ret_exp = this.exp;
 
@@ -363,6 +373,7 @@ export class Num {
     if (overwrite) {
       this.exp = Math.floor(ret_exp)
       this.num = ret_num
+      return this
     } else {
       return new Num(ret_num, Math.floor(ret_exp))
     }

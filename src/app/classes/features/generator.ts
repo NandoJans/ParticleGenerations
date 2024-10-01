@@ -4,24 +4,25 @@ import {Generatable} from "./interfaces/generatable";
 import {Styles} from "../enums/styles";
 import {Storable} from "./interfaces/storable";
 import {LocalStorageHelper} from "../helpers/local-storage-helper";
+import {ResetKey} from "../enums/reset-key";
+import {Multiplier} from "../interfaces/multiplier";
 
 export abstract class Generator extends Buyable implements Generatable, Storable {
   abstract name: string
   abstract displayName: string
   abstract generates: Generatable
-  abstract baseMulMod: Num
-  abstract baseMultiplier: Num
-  multiplier: Num = new Num(1, 0)
+  baseMulMod: Num = new Num(1, 0);
+  abstract baseMultiplier: Num;
+  multiplier: Num = new Num(1, 0);
   amount: Num = new Num(0, 0)
   bought: Num = new Num(0, 0)
   abstract type: string
-  abstract resetId: string
+  abstract resetId: ResetKey
   abstract unlocked: boolean
-  abstract requirement: any[]
   abstract style: Styles
   abstract nav: string
   abstract subNav: string
-  abstract globalMultiplier: string
+  abstract globalMultiplier: Multiplier
   auto: boolean = false
   noMax: boolean = false
 
