@@ -425,4 +425,8 @@ export class Num {
   saveData = () => {
     return [this.exp, this.num];
   }
+
+  static fromStorage(storageValue: { num: number, exp: number }) {
+    return new Num(storageValue.num, storageValue.exp)
+  }
 }

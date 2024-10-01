@@ -1,18 +1,35 @@
+import {Num} from "../../num";
+
 export class LocalStorageHelper {
   category: string;
   key: string;
+  storage: { [key: string]: any };
 
   constructor(category: string, key: string) {
     this.category = category;
     this.key = key;
+    this.storage = JSON.parse(localStorage[this.category]);
   }
 
-  exists(key: string): boolean {
-    return localStorage.getItem(`${this.category}-${this.key}-${key}`) !== null;
+  protected store(): void {
+    localStorage[this.category] = JSON.stringify(this.storage);
   }
 
-  save(key: string, value: any): void {
-    localStorage.setItem(`${this.category}-${this.key}-${key}`, JSON.stringify(value))
+  exists(key: string = ''): boolean {
+    if (key) {
+      return this.storage[this.key][key] !== null;
+    } else {
+      return this.storage[this.key] !== null;
+    }
+  }
+
+  save(value: any, key: string = ''): void {
+    if (key) {
+      this.storage[this.key][key] = value
+    } else {
+      this.storage[this.key] = value
+    }
+    this.store()
   }
 
   saveMultiple(values: {[key: string]: any}): void {
@@ -21,7 +38,28 @@ export class LocalStorageHelper {
     }
   }
 
-  load(key: string, ifNotSet: any): any {
-    return JSON.parse(localStorage.getItem(`${this.category}-${this.key}-${key}`) || 'null') || ifNotSet;
+  load(ifNotSet: any, key: string = ''): any {
+    if (key) {
+      return this.storage[this.key][key] || ifNotSet
+    } else {
+      return this.storage[this.key] || ifNotSet
+    }
+  }
+
+  saveNum(num: Num, key: string = ''): void {
+    if (key) {
+      this.storage[this.key][key] = num
+    } else {
+      this.storage[this.key] = num
+    }
+    this.store()
+  }
+
+  loadNum(ifNotSet: Num, key: string = ''): Num {
+    if (key) {
+      return Num.fromStorage(this.storage[this.key][key]) || ifNotSet
+    } else {
+      return Num.fromStorage(this.storage[this.key]) || ifNotSet
+    }
   }
 }

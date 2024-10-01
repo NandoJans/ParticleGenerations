@@ -2,7 +2,6 @@ import {Num} from "../../num";
 import {LocalStorageHelper} from "../helpers/local-storage-helper";
 import {Styles} from "../enums/styles";
 import {HoldingDisplay} from "../displays/holding-display";
-import {HoldingRecord} from "../records/holdings/holding-record";
 
 export abstract class Holding {
   abstract name: string;
@@ -20,27 +19,19 @@ export abstract class Holding {
     return undefined
   }
 
-  private localStorageHelper: LocalStorageHelper
+  protected localStorageHelper: LocalStorageHelper = new LocalStorageHelper('holdings', this.getSaveKey())
 
   getSaveKey(): string {
     return this.name;
   }
 
-  constructor() {
-    this.localStorageHelper = new LocalStorageHelper('holding', this.getSaveKey())
-    this.tryLoad()
-  }
-
   tryLoad(): void {
-    this.amount = this.localStorageHelper.load('amount', this.amount)
-    this.startAmount = this.localStorageHelper.load('startAmount', this.startAmount)
-    this.effect = this.localStorageHelper.load('effect', this.effect)
+    this.localStorageHelper = new LocalStorageHelper('holdings', this.getSaveKey())
+    this.amount = this.localStorageHelper.loadNum(this.startAmount, 'amount')
   }
 
   save(): void {
-    this.localStorageHelper.save('amount', this.amount)
-    this.localStorageHelper.save('startAmount', this.startAmount)
-    this.localStorageHelper.save('effect', this.effect)
+    this.localStorageHelper.saveNum(this.amount)
   }
 
   run(): any {
