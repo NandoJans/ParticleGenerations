@@ -3,27 +3,19 @@ import {Num} from "../../../num";
 import {Requirement} from "../interfaces/requirement";
 import {HoldingRecord} from "../../records/holdings/holding-record";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
-import {RedGeneratorUpgradeRecord} from "../../records/upgrades/red-generator-upgrade-record";
-import {RedUpgradeRecord} from "../../records/upgrades/red-upgrade-record";
-import {YellowUpgradeRecord} from "../../records/upgrades/yellow-upgrade-record";
 import {YellowGeneratorRecord} from "../../records/generators/yellow-generator-record";
 import {GeneratorRecord} from "../../records/generators/generator-record";
-import {AcceleratorGeneratorRecord} from "../../records/generators/accelerator-generator-record";
-import {AcceleratorUpgradeRecord} from "../../records/upgrades/accelerator-upgrade-record";
-import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
-import {GeneratorService} from "../../../services/interactables/generator.service";
-import {GlobalMultipliersService} from "../../../services/globals/global-multipliers.service";
 import {RedGeneratorRecord} from "../../records/generators/red-generator-record";
 
 export class FifthYellowChallenge extends YellowChallenge {
-  name: string = 'yellow-challenge-4';
-  displayName: string = 'Yellow Challenge 4';
+  name: string = 'yellow-challenge-5';
+  displayName: string = 'Yellow Challenge 5';
 
-  baseGoal: Num = new Num(1, 1750);
-  goal: Num = new Num(1, 1750);
+  baseGoal: Num = new Num(1, 3000);
+  goal: Num = new Num(1, 3000);
 
   requirement: Requirement[] = [
-    new Requirement(HoldingRecord.yellowParticles, new Num(1, 15))
+    new Requirement(HoldingRecord.yellowParticles, new Num(1, 23))
   ];
 
   reward(): Num {
@@ -48,11 +40,11 @@ export class FifthYellowChallenge extends YellowChallenge {
   }
 
   getRewardDescription(): string {
-    return "Red accelerators gain a multiplier based on yellow power.";
+    return "First red generators boost the other generators.";
   }
 
   getDescription(): string {
-    return "Red Particles while only having red generators, but red accelerators are insanely powerful.";
+    return "Red Particles when generators won't multiply themselves.";
   }
 
   override effectString(): string {
