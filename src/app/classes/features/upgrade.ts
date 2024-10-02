@@ -3,8 +3,9 @@ import {Buyable} from "./buyable";
 import {Requirement} from "./interfaces/requirement";
 import {ResetKey} from "../enums/reset-key";
 import {Styles} from "../enums/styles";
+import {Require} from "./interfaces/require";
 
-export abstract class Upgrade extends Buyable {
+export abstract class Upgrade extends Buyable implements Require {
   abstract name: string
   abstract displayName: string
   abstract getDescription(): string
@@ -34,5 +35,9 @@ export abstract class Upgrade extends Buyable {
 
   getEffectDisplay(): string {
     return this.effectString();
+  }
+
+  requirementSatisfied(amount: Num): boolean {
+    return this.amount.greq(amount);
   }
 }

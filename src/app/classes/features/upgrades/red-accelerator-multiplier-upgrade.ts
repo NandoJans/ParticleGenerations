@@ -9,6 +9,7 @@ export abstract class RedAcceleratorMultiplierUpgrade extends RedUpgrade {
   increase = new Num(1, 1);
   override scaling = new Num(1, 1);
   bought = new Num(0, 0);
+  override currency = HoldingRecord.redAccelerators;
 
   override baseBuffer: Num = new Num(3, 0);
   override buffer: Num = new Num(3, 0);

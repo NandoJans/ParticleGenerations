@@ -13,5 +13,6 @@ export class FirstRedGenerator extends RedGenerator {
   cost: Num = new Num(1, 1);
   displayName: string = 'Red Generator 1';
   generates: Generatable = HoldingRecord.redParticles;
-  name: string = 'redGenerator1';
+  name: string = 'red-generator-1';
+  increase: Num = new Num(1, 1);
 }

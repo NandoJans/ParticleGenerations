@@ -7,8 +7,6 @@ import {Router} from "@angular/router";
 import {NavigationsService} from "./services/navigations.service";
 import {GeneratorService} from "./services/interactables/generator.service";
 import {ChallengeService} from "./services/interactables/challenge.service";
-import {HoldingsService} from "./services/holdings.service";
-import {Num} from "./num";
 import {HoldingRecord} from "./classes/records/holdings/holding-record";
 
 @Component({

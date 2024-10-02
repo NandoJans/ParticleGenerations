@@ -14,7 +14,6 @@ export abstract class RedGenerator extends Generator {
   unlocked: boolean = false;
   requirement: Requirement[] = [];
   currency: Holding = HoldingRecord.redParticles;
-  increase: Num = new Num(1, 0);
   override scaling: Num = new Num(1, 1);
   baseMultiplier: Num = new Num(2, 0);
   globalMultiplier: Multiplier = MultiplierRecord.redParticleGenerators;
