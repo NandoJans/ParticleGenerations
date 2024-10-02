@@ -3,6 +3,7 @@ import {Num} from "../../../../num";
 import {GlobalMultipliersService} from "../../../globals/global-multipliers.service";
 import {UpgradeService} from "../../upgrade.service";
 import {HoldingsService} from "../../../holdings.service";
+import {MultiplierRecord} from "../../../../classes/records/multipliers/multiplier-record";
 
 export const redGeneratorUpgrades: Upgrade[] = [
   {
@@ -35,10 +36,8 @@ export const redGeneratorUpgrades: Upgrade[] = [
         self.requirement = ['never'];
       }
       const freeUpgrades = HoldingsService.get('greenEnergy').log(new Num(0.8, 0), false).floor(false);
-      // @ts-ignore
-      const buff: Num | undefined = self.buffer.pow(self.bought.add(freeUpgrades, false), false);
-      GlobalMultipliersService.correct('redParticleGenerators', buff);
-      self.description = 'Boost generators by '+self.buffer.toString(true)+'x.'
+      const buff: Num = self.buffer.pow(self.bought.add(freeUpgrades, false), false);
+      MultiplierRecord.redParticleGenerators.correct(buff);
       return buff;
     }, nav: 'red', subNav: 'redParticles'
   },

@@ -5,7 +5,7 @@ import {Styles} from "../enums/styles";
 import {Storable} from "./interfaces/storable";
 import {LocalStorageHelper} from "../helpers/local-storage-helper";
 import {ResetKey} from "../enums/reset-key";
-import {Multiplier} from "../interfaces/multiplier";
+import {Multiplier} from "./multiplier";
 
 export abstract class Generator extends Buyable implements Generatable, Storable {
   abstract name: string

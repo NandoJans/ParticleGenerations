@@ -7,7 +7,7 @@ import {Styles} from "../enums/styles";
 export abstract class Upgrade extends Buyable {
   abstract name: string
   abstract displayName: string
-  abstract description: string
+  abstract getDescription(): string
   baseBuffer: Num = new Num(1, 0)
   buffer: Num = new Num(1, 0)
   amount: Num = new Num(0, 0)

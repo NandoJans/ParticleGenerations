@@ -5,7 +5,7 @@ import {ResetKey} from "../../enums/reset-key";
 import {Requirement} from "../interfaces/requirement";
 import {Holding} from "../holding";
 import {Styles} from "../../enums/styles";
-import {Multiplier} from "../../interfaces/multiplier";
+import {Multiplier} from "../multiplier";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 
 export abstract class RedGenerator extends Generator {
