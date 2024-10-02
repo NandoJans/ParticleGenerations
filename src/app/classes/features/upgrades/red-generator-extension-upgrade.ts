@@ -21,6 +21,7 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
   override subNav: string = 'redParticles';
   override requirement: Requirement[] = [];
   override resets: ResetKey = ResetKey.RED_EXTENSION;
+  override unlocked: boolean = true;
 
   action(): Num {
     const buff: Num = this.buffer.pow(this.bought, false);

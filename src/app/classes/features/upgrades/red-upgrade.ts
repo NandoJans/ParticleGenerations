@@ -11,9 +11,9 @@ export abstract class RedUpgrade extends Upgrade {
   nav: string = 'red';
   subNav: string = 'redUpgrades';
   requirement: Requirement[] = [
-    new Requirement(HoldingRecord.redParticles, false, new Num(1, 40))
+    new Requirement(HoldingRecord.redParticles, new Num(1, 40), false)
   ];
   resetId: ResetKey = ResetKey.RED;
   style: Styles = Styles.RED;
-  type: string = 'red-particles';
+  type: string = 'red-upgrades';
 }
