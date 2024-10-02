@@ -1,36 +1,30 @@
-import {Upgrade} from "../upgrade";
 import {Num} from "../../../num";
-import {Holding} from "../holding";
 import {Requirement} from "../interfaces/requirement";
 import {ResetKey} from "../../enums/reset-key";
-import {HoldingRecord} from "../../records/holdings/holding-record";
-import {GlobalMultipliersService} from "../../../services/globals/global-multipliers.service";
 import {UpgradeService} from "../../../services/interactables/upgrade.service";
-import {Styles} from "../../enums/styles";
+import {RedUpgrade} from "./red-upgrade";
+import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 
-export class RedGeneratorExtensionUpgrade extends Upgrade {
+export class RedGeneratorExtensionUpgrade extends RedUpgrade {
   baseCost: Num = new Num(1, 3)
   cost: Num = new Num(1, 3)
   bought: Num = new Num(0, 0);
   override scaling: Num = new Num(1, 1);
   override limit: Num = new Num(4, 0);
 
-  currency: Holding = HoldingRecord.redParticles;
+  override baseBuffer: Num = new Num(2, 0);
+
   description: string = this.getDescription();
   displayName: string = "Red Generator Extension";
-  increase: Num = new Num(1, 0);
+  increase: Num = new Num(1, 2);
   name: string = "red-generator-extension";
-  nav: string = 'red';
-  subNav: string = 'redParticles';
-  requirement: Requirement[] = [];
-  resetId: ResetKey = ResetKey.RED;
+  override subNav: string = 'redParticles';
+  override requirement: Requirement[] = [];
   override resets: ResetKey = ResetKey.RED_EXTENSION;
-  style: Styles = Styles.RED;
-  type: string = 'red-particles';
 
-  action(): Num | undefined {
-    const buff: Num | undefined = this.buffer.pow(this.bought, false);
-    GlobalMultipliersService.correct('redParticleGenerators', buff);
+  action(): Num {
+    const buff: Num = this.buffer.pow(this.bought, false);
+    MultiplierRecord.redParticleGenerators.correct(buff)
     const boughtUpgrade: boolean = UpgradeService.bought('red-generator-extension-upgrade');
     if (this.bought.greq(new Num(4, 0)) && !boughtUpgrade) {
       this.limit = new Num(4, 0)
