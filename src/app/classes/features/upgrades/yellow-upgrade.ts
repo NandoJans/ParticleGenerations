@@ -1,10 +1,11 @@
-import { Upgrade } from "../upgrade";
+import {Upgrade} from "../upgrade";
 import {Holding} from "../holding";
 import {HoldingRecord} from "../../records/holdings/holding-record";
 import {Requirement} from "../interfaces/requirement";
 import {Num} from "../../../num";
 import {ResetKey} from "../../enums/reset-key";
 import {Styles} from "../../enums/styles";
+import {ResetHelper} from "../../helpers/reset-helper";
 
 export abstract class YellowUpgrade extends Upgrade {
   currency: Holding = HoldingRecord.yellowParticles;
@@ -13,7 +14,7 @@ export abstract class YellowUpgrade extends Upgrade {
   requirement: Requirement[] = [
     new Requirement(HoldingRecord.yellows, new Num(1, 0), false)
   ];
-  resetId: ResetKey = ResetKey.YELLOW;
+  resetId: ResetKey = ResetHelper.registerReset(ResetKey.GREEN, this);
   style: Styles = Styles.YELLOW;
   type: string = 'yellow-upgrades';
   bought: Num = new Num(0, 0);

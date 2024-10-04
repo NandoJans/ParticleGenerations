@@ -7,11 +7,12 @@ import {Num} from "../../../num";
 import {Multiplier} from "../multiplier";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 import {Styles} from "../../enums/styles";
+import {ResetHelper} from "../../helpers/reset-helper";
 
 export abstract class YellowGenerator extends Generator {
   type: string = 'yellow-particles';
-  resetId: ResetKey = ResetKey.YELLOW;
-  unlocked: boolean = false;
+  resetId: ResetKey = ResetHelper.registerReset(ResetKey.GREEN, this);
+  softResetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
   requirement: Requirement[] = [
     new Requirement(HoldingRecord.yellowParticles, new Num(1, 2))
   ];

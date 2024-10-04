@@ -1,11 +1,11 @@
 import {Num} from "../../num";
 import {Buyable} from "./buyable";
-import {Requirement} from "./interfaces/requirement";
 import {ResetKey} from "../enums/reset-key";
 import {Styles} from "../enums/styles";
 import {Require} from "./interfaces/require";
+import {Resetable} from "./interfaces/resetable";
 
-export abstract class Upgrade extends Buyable implements Require {
+export abstract class Upgrade extends Buyable implements Require, Resetable {
   abstract name: string
   abstract displayName: string
   abstract getDescription(): string
@@ -13,7 +13,8 @@ export abstract class Upgrade extends Buyable implements Require {
   buffer: Num = new Num(1, 0)
   amount: Num = new Num(0, 0)
   abstract type: string
-  abstract resetId: string
+  abstract resetId: ResetKey
+  softResetId: ResetKey = ResetKey.NONE;
   abstract style: Styles
   abstract action(): Num | undefined;
   abstract nav: string
@@ -40,4 +41,11 @@ export abstract class Upgrade extends Buyable implements Require {
   requirementSatisfied(amount: Num): boolean {
     return this.amount.greq(amount);
   }
+
+  reset() {
+    this.amount = new Num(0, 0);
+    this.bought = new Num(0, 0);
+  }
+
+  softReset() {}
 }

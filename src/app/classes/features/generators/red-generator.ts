@@ -7,11 +7,12 @@ import {Holding} from "../holding";
 import {Styles} from "../../enums/styles";
 import {Multiplier} from "../multiplier";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {ResetHelper} from "../../helpers/reset-helper";
 
 export abstract class RedGenerator extends Generator {
   type: string = 'red-particles';
-  resetId: ResetKey = ResetKey.RED_EXTENSION;
-  unlocked: boolean = false;
+  resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED_EXTENSION, this);
+  override unlocked: boolean = false;
   requirement: Requirement[] = [];
   currency: Holding = HoldingRecord.redParticles;
   override scaling: Num = new Num(1, 1);

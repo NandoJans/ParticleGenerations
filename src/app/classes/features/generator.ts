@@ -6,8 +6,9 @@ import {Storable} from "./interfaces/storable";
 import {LocalStorageHelper} from "../helpers/local-storage-helper";
 import {ResetKey} from "../enums/reset-key";
 import {Multiplier} from "./multiplier";
+import {Resetable} from "./interfaces/resetable";
 
-export abstract class Generator extends Buyable implements Generatable, Storable {
+export abstract class Generator extends Buyable implements Generatable, Storable, Resetable {
   abstract name: string
   abstract displayName: string
   abstract generates: Generatable
@@ -17,14 +18,12 @@ export abstract class Generator extends Buyable implements Generatable, Storable
   amount: Num = new Num(0, 0)
   bought: Num = new Num(0, 0)
   abstract type: string
-  abstract resetId: ResetKey
-  abstract unlocked: boolean
+  abstract resetId: ResetKey;
+  abstract softResetId: ResetKey;
   abstract style: Styles
   abstract nav: string
   abstract subNav: string
   abstract globalMultiplier: Multiplier
-  auto: boolean = false
-  noMax: boolean = false
 
   localStorageHelper: LocalStorageHelper = new LocalStorageHelper('generators', this.getSaveKey())
 
@@ -61,5 +60,12 @@ export abstract class Generator extends Buyable implements Generatable, Storable
     this.cost = this.localStorageHelper.loadNum(this.cost, 'cost')
   }
 
+  softReset(): void {
+    this.amount = this.bought.copy()
+  }
 
+  reset(): void {
+    this.bought = new Num(0, 0)
+    this.amount = new Num(0, 0)
+  }
 }

@@ -7,11 +7,13 @@ import {Num} from "../../../num";
 import {Multiplier} from "../multiplier";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 import {Styles} from "../../enums/styles";
+import {ResetHelper} from "../../helpers/reset-helper";
 
 export abstract class AcceleratorGenerator extends Generator {
   type: string = 'red-accelerators';
-  resetId: ResetKey = ResetKey.RED;
-  unlocked: boolean = false;
+  resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED, this);
+  softResetId: ResetKey = ResetHelper.registerSoftReset(ResetKey.RED_EXTENSION, this);
+  override unlocked: boolean = false;
   requirement: Requirement[] = [];
   currency: Holding = HoldingRecord.redAccelerators;
   increase: Num = new Num(1, 1);

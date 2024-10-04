@@ -5,6 +5,7 @@ import {Requirement} from "../interfaces/requirement";
 import {Num} from "../../../num";
 import {ResetKey} from "../../enums/reset-key";
 import {Styles} from "../../enums/styles";
+import {ResetHelper} from "../../helpers/reset-helper";
 
 export abstract class RedUpgrade extends Upgrade {
   currency: Holding = HoldingRecord.redParticles;
@@ -13,7 +14,7 @@ export abstract class RedUpgrade extends Upgrade {
   requirement: Requirement[] = [
     new Requirement(HoldingRecord.redParticles, new Num(1, 40), false)
   ];
-  resetId: ResetKey = ResetKey.RED;
+  resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED, this);
   style: Styles = Styles.RED;
   type: string = 'red-upgrades';
 }
