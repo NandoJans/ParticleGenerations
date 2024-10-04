@@ -3,27 +3,40 @@ import {ResetService} from "../../services/interactables/reset.service";
 import {NavigationsService} from "../../services/navigations.service";
 import {Buyable} from "../features/buyable";
 import {ResetKey} from "../enums/reset-key";
+import {Transaction} from "../features/interfaces/transaction";
 
 export class BuyableHelper {
   constructor(private buyable: Buyable) {
   }
 
-  buyAction () {
+  buyAction (): Transaction {
     const buyable = this.buyable
     buyable.currency.amount.greq(buyable.cost)
     if (buyable.amount !== undefined) buyable.amount.add(new Num(1, 0));
     // @ts-ignore
     buyable.bought.add(new Num(1, 0));
     this.correct();
+
+    return {
+      amount: new Num(1, 0),
+      cost: buyable.cost,
+      currency: buyable.currency
+    }
   }
 
-  bulkBuyAction (cost: Num, bulk: Num) {
+  bulkBuyAction (cost: Num, bulk: Num): Transaction {
     const buyable = this.buyable
     buyable.currency.amount.sub(cost);
     buyable.amount.add(bulk);
     // @ts-ignore
     buyable.bought.add(bulk);
     this.correct();
+
+    return {
+      amount: bulk,
+      cost: cost,
+      currency: buyable.currency
+    }
   }
 
   calculateBulk(buyable: Buyable, split: Num = new Num(1, 0)) {
@@ -74,8 +87,9 @@ export class BuyableHelper {
     const buyable = this.buyable
     if (buyable.currency.amount.greq(buyable.cost)) {
       if (buyable.resets !== 'none' || (buyable.noMax !== undefined && buyable.noMax) || buyable.oneTime) {
-        this.buyAction();
+        const transaction = this.buyAction();
         if (buyable.resets !== 'none') ResetService.reset(buyable.resets || ResetKey.NONE);
+        return transaction;
       } else {
         const result = this.calculateBulk(buyable)
 
@@ -83,19 +97,26 @@ export class BuyableHelper {
         if (result[0].greq(new Num(1, 0)) && buyable.currency.amount.greq(result[1])) {
           if (buyable.limit !== undefined && result[0].greq(buyable.limit)) result[0] = buyable.limit;
           // @ts-ignore
-          this.bulkBuyAction(result[1], result[0]);
+          return this.bulkBuyAction(result[1], result[0]);
         }
       }
     }
+
+    return {
+      amount: new Num(0, 0),
+      cost: new Num(0, 0),
+      currency: buyable.currency
+    }
   }
 
-  compare() {
+  compare(): Transaction {
     const buyable = this.buyable
+
     if (buyable.currency.amount.greq(buyable.cost) && buyable.unlocked && buyable.auto &&
       // @ts-ignore
       (buyable.limit === undefined || !buyable.bought.greq(buyable.limit.sub(new Num(1, 0), false)))) {
       if (buyable.resets !== 'none' || buyable.oneTime) {
-        if ((buyable.oneTime && !buyable.bought.greq(new Num(1, 0))) || !buyable.oneTime) this.buyAction();
+        if ((buyable.oneTime && !buyable.bought.greq(new Num(1, 0))) || !buyable.oneTime) return this.buyAction();
         if (buyable.resets !== 'none') ResetService.reset(buyable.resets || ResetKey.NONE);
       } else {
         const result = this.calculateBulk(buyable)
@@ -103,9 +124,15 @@ export class BuyableHelper {
         // @ts-ignore
         if (result[0].greq(new Num(1, 0)) && buyable.currency.amount.greq(result[1])) {
           // @ts-ignore
-          this.bulkBuyAction(buyable, result[1], result[0]);
+          return this.bulkBuyAction(buyable, result[1], result[0]);
         }
       }
+    }
+
+    return {
+      amount: new Num(0, 0),
+      cost: new Num(0, 0),
+      currency: buyable.currency
     }
   }
 

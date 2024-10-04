@@ -5,5 +5,5 @@ export enum Styles {
   YELLOW = 'yellow',
   PURPLE = 'purple',
   RED_ACCELERATOR = 'red-accelerator',
-
+  LIMITED = 'limited-style',
 }

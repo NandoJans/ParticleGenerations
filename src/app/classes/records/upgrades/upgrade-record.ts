@@ -29,6 +29,23 @@ import {IncreaseYellowFusionUpgrade} from "../../features/upgrades/increase-yell
 import {AccelerateYellowFusionUpgrade} from "../../features/upgrades/accelerate-yellow-fusion-upgrade";
 import {Record} from "../record";
 import {Upgrade} from "../../features/upgrade";
+import {RedParticleSacrificeUpgrade} from "../../features/upgrades/red-particle-sacrifice-upgrade";
+import {YellowParticleSacrificeUpgrade} from "../../features/upgrades/yellow-particle-sacrifice-upgrade";
+import {GreenParticleSacrificeUpgrade} from "../../features/upgrades/green-particle-sacrifice-upgrade";
+import {RedAcceleratorBufferUpgrade} from "../../features/upgrades/red-accelerator-buffer-upgrade";
+import {GreenGeneratorsEnergyBasedUpgrade} from "../../features/upgrades/green-generators-energy-based-upgrade";
+import {AcceleratorYellowPowerBasedUpgrade} from "../../features/upgrades/accelerator-yellow-power-based-upgrade";
+import {GreenGeneratorsGreenBasedUpgrade} from "../../features/upgrades/green-generators-green-based-upgrade";
+import {RedGeneratorsBoosterIncreaseUpgrade} from "../../features/upgrades/red-generators-booster-increase-upgrade";
+import {GreenBuffsYellowGeneratorsUpgrade} from "../../features/upgrades/green-buffs-yellow-generators-upgrade";
+import {FusionBoostRedGeneratorsUpgrade} from "../../features/upgrades/fusion-boost-red-generators-upgrade";
+import {RemoveFusionLimitUpgrade} from "../../features/upgrades/remove-fusion-limit-upgrade";
+import {SuperIncreaseFusionUpgrade} from "../../features/upgrades/super-increase-fusion-upgrade";
+import {NerfDarkAgeUpgrade} from "../../features/upgrades/nerf-dark-age-upgrade";
+import {YellowIdleGainUpgrade} from "../../features/upgrades/yellow-idle-gain-upgrade";
+import {NuclearDecayBoosterUpgrade} from "../../features/upgrades/nuclear-decay-booster-upgrade";
+import {NuclearDecayIncreaserUpgrade} from "../../features/upgrades/nuclear-decay-increaser-upgrade";
+import {BetterNuclearDecayUpgrade} from "../../features/upgrades/better-nuclear-decay-upgrade";
 
 export class UpgradeRecord extends Record {
   // Red Upgrades
@@ -66,14 +83,26 @@ export class UpgradeRecord extends Record {
   static accelerateYellowFusion: AccelerateYellowFusionUpgrade = new AccelerateYellowFusionUpgrade();
   static increaseYellowFusion: IncreaseYellowFusionUpgrade = new IncreaseYellowFusionUpgrade();
 
+  // Green Phase
+  static redParticleSacrifice: RedParticleSacrificeUpgrade = new RedParticleSacrificeUpgrade();
+  static yellowParticleSacrifice: YellowParticleSacrificeUpgrade = new YellowParticleSacrificeUpgrade();
+  static greenParticleSacrifice: GreenParticleSacrificeUpgrade = new GreenParticleSacrificeUpgrade();
 
-  getRedGeneratorExtension(): RedGeneratorExtensionUpgrade {
-    return UpgradeRecord.redGeneratorExtension;
-  }
+  static redAcceleratorBuffer: RedAcceleratorBufferUpgrade = new RedAcceleratorBufferUpgrade();
+  static greenGeneratorsEnergyBased: GreenGeneratorsEnergyBasedUpgrade = new GreenGeneratorsEnergyBasedUpgrade();
+  static acceleratorYellowPowerBased: AcceleratorYellowPowerBasedUpgrade = new AcceleratorYellowPowerBasedUpgrade();
+  static greenGeneratorsBased: GreenGeneratorsGreenBasedUpgrade = new GreenGeneratorsGreenBasedUpgrade();
+  static redGeneratorsBoosterIncrease: RedGeneratorsBoosterIncreaseUpgrade = new RedGeneratorsBoosterIncreaseUpgrade();
+  static greenBuffsYellowGenerators: GreenBuffsYellowGeneratorsUpgrade = new GreenBuffsYellowGeneratorsUpgrade();
+  static fusionBoostRedGenerators: FusionBoostRedGeneratorsUpgrade = new FusionBoostRedGeneratorsUpgrade();
+  static removeFusionLimit: RemoveFusionLimitUpgrade = new RemoveFusionLimitUpgrade();
+  static superIncreaseFusion: SuperIncreaseFusionUpgrade = new SuperIncreaseFusionUpgrade();
+  static nerfDarkAge: NerfDarkAgeUpgrade = new NerfDarkAgeUpgrade();
+  static yellowIdleGain: YellowIdleGainUpgrade = new YellowIdleGainUpgrade();
 
-  getRedGeneratorBooster(): RedGeneratorBoosterUpgrade {
-    return UpgradeRecord.redGeneratorBooster;
-  }
+  static nuclearDecayBooster: NuclearDecayBoosterUpgrade = new NuclearDecayBoosterUpgrade();
+  static nuclearDecayIncreaser: NuclearDecayIncreaserUpgrade = new NuclearDecayIncreaserUpgrade();
+  static betterNuclearDecay: BetterNuclearDecayUpgrade = new BetterNuclearDecayUpgrade();
 
   static override list: Upgrade[] = [
     UpgradeRecord.redGeneratorExtension,
@@ -106,8 +135,33 @@ export class UpgradeRecord extends Record {
 
     UpgradeRecord.unlockYellowFusion,
     UpgradeRecord.accelerateYellowFusion,
-    UpgradeRecord.increaseYellowFusion
+    UpgradeRecord.increaseYellowFusion,
+
+    UpgradeRecord.redParticleSacrifice,
+    UpgradeRecord.yellowParticleSacrifice,
+    UpgradeRecord.greenParticleSacrifice,
+
+    UpgradeRecord.redAcceleratorBuffer,
+    UpgradeRecord.greenGeneratorsEnergyBased,
+    UpgradeRecord.acceleratorYellowPowerBased,
+    UpgradeRecord.greenGeneratorsBased,
+    UpgradeRecord.redGeneratorsBoosterIncrease,
+    UpgradeRecord.greenBuffsYellowGenerators,
+    UpgradeRecord.fusionBoostRedGenerators,
+    UpgradeRecord.removeFusionLimit,
+    UpgradeRecord.superIncreaseFusion,
+    UpgradeRecord.nerfDarkAge,
+    UpgradeRecord.yellowIdleGain,
+
   ]
+
+  getRedGeneratorExtension(): RedGeneratorExtensionUpgrade {
+    return UpgradeRecord.redGeneratorExtension;
+  }
+
+  getRedGeneratorBooster(): RedGeneratorBoosterUpgrade {
+    return UpgradeRecord.redGeneratorBooster;
+  }
 
   getList(): Upgrade[] {
     return UpgradeRecord.list;

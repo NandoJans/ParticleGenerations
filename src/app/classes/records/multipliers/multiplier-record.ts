@@ -13,6 +13,8 @@ export class MultiplierRecord {
   static yellowFusion: Multiplier = new Multiplier('yellowFusion', new Num(1, 0))
   static greenParticleGenerators: Multiplier = new Multiplier('greenParticleGenerators', new Num(1, 0))
 
+  static greenSoulsGain: Multiplier = new Multiplier('greenSoulsGain', new Num(1, 0))
+
   getRedParticleGenerators(): Multiplier {
     return MultiplierRecord.redParticleGenerators
   }

@@ -17,6 +17,9 @@ import {FifthGreenGenerator} from "../../features/generators/fifth-green-generat
 import {FourthGreenGenerator} from "../../features/generators/fourth-green-generator";
 import {ThirdGreenGenerator} from "../../features/generators/third-green-generator";
 import {SecondGreenGenerator} from "../../features/generators/second-green-generator";
+import {FirstNuclearDecayGenerator} from "../../features/generators/first-nuclear-decay-generator";
+import {SecondNuclearDecayGenerator} from "../../features/generators/second-nuclear-decay-generator";
+import {ThirdNuclearDecayGenerator} from "../../features/generators/third-nuclear-decay-generator";
 
 export class GeneratorRecord extends Record {
   // Red Generators
@@ -43,6 +46,11 @@ export class GeneratorRecord extends Record {
   static thirdGreenGenerator: ThirdGreenGenerator = new ThirdGreenGenerator();
   static fourthGreenGenerator: FourthGreenGenerator = new FourthGreenGenerator();
   static fifthGreenGenerator: FifthGreenGenerator = new FifthGreenGenerator();
+
+  // Nuclear Decay Generators
+  static firstNuclearDecayGenerator: FirstNuclearDecayGenerator = new FirstNuclearDecayGenerator();
+  static secondNuclearDecayGenerator: SecondNuclearDecayGenerator = new SecondNuclearDecayGenerator();
+  static thirdNuclearDecayGenerator: ThirdNuclearDecayGenerator = new ThirdNuclearDecayGenerator();
 
   static override list: Generator[] = [
     GeneratorRecord.firstRedGenerator,

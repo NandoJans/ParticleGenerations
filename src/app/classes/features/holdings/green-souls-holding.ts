@@ -3,8 +3,9 @@ import {Num} from "../../../num";
 import {HoldingDisplay} from "../../displays/holding-display";
 import { Styles } from "../../enums/styles";
 import {HoldingDisplayFactory} from "../../factories/holding-display-factory";
+import {SettableHolding} from "./settable-holding";
 
-export class GreenSoulsHolding extends Holding {
+export class GreenSoulsHolding extends SettableHolding {
   name: string = 'greenSouls';
   abbreviation: string = 'GS';
   amount: Num = new Num(0, 0);
@@ -13,10 +14,6 @@ export class GreenSoulsHolding extends Holding {
     .withAmountPrefix('You have')
     .withAmountSuffix('Green Souls')
     .build();
-
-  override action(): Num | undefined {
-    return undefined;
-  }
 
   getStyle(): Styles {
     return Styles.GREEN;

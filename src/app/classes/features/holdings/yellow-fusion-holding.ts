@@ -4,6 +4,7 @@ import {HoldingDisplayFactory} from "../../factories/holding-display-factory";
 import {GlobalMultipliersService} from "../../../services/globals/global-multipliers.service";
 import {Styles} from "../../enums/styles";
 import {Holding} from "../holding";
+import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 
 export class YellowFusionHolding extends Holding {
   name: string = 'yellowFusion';
@@ -15,14 +16,26 @@ export class YellowFusionHolding extends Holding {
     .withAmountSuffix('Yellow Fusion')
     .withEffectPrefix('They multiply yellow generators by')
     .build()
-  maxAmount: Num = new Num(1, 110);
+  maxAmount: Num | undefined = new Num(1, 110);
   startMaxAmount: Num = new Num(1, 110);
+  buffer: Num = new Num(1, 0);
+  baseBuffer: Num = new Num(1, 0);
 
   override action(): Num | undefined {
-    // @ts-ignore
-    let buffer: Num = this.amount.pow(this.maxAmount, false).add(new Num(1, 0), false);
+
+    if (this.maxAmount && this.amount.greq(this.maxAmount)) {
+      this.amount = this.maxAmount.copy();
+    }
+
+    let buffer: Num = this.amount.pow(this.buffer, false).add(new Num(1, 0), false);
+
+    this.buffer = this.baseBuffer.copy();
+
     if (this.amount.num < 1) this.amount.num = 1;
-    GlobalMultipliersService.correct('yellowParticleGenerators', buffer);
+
+    MultiplierRecord.yellowPowerGenerators.correct(buffer);
+    MultiplierRecord.yellowFusion.correct(this.amount.pow(new Num(0.0001, 0), false));
+
     return buffer;
   }
 

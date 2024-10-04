@@ -3,6 +3,7 @@ import {Holding} from "./holding";
 import {GameElement} from "./game-element";
 import {BuyableHelper} from "../helpers/buyable-helper";
 import {ResetKey} from "../enums/reset-key";
+import {Transaction} from "./interfaces/transaction";
 
 export abstract class Buyable extends GameElement {
   abstract amount: Num
@@ -24,8 +25,8 @@ export abstract class Buyable extends GameElement {
     return new BuyableHelper(this)
   }
 
-  buy(amount: Num): void {
-    this.getBuyableHelper().buy()
+  buy(amount: Num): Transaction {
+    return this.getBuyableHelper().buy()
   }
 
   correctCost(): void {
