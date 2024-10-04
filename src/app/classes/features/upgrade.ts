@@ -31,7 +31,7 @@ export abstract class Upgrade extends Buyable implements Require, Resetable {
   }
 
   effectString(): string {
-    return "";
+    return this.effect ? this.effect.toString() : '';
   }
 
   getEffectDisplay(): string {

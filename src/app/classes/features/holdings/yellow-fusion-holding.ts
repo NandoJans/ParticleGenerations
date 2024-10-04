@@ -16,14 +16,15 @@ export class YellowFusionHolding extends Holding {
     .withAmountSuffix('Yellow Fusion')
     .withEffectPrefix('They multiply yellow generators by')
     .build()
-  maxAmount: Num | undefined = new Num(1, 110);
+  unlimited: boolean = false;
+  maxAmount: Num = new Num(1, 110);
   startMaxAmount: Num = new Num(1, 110);
   buffer: Num = new Num(1, 0);
   baseBuffer: Num = new Num(1, 0);
 
   override action(): Num | undefined {
 
-    if (this.maxAmount && this.amount.greq(this.maxAmount)) {
+    if (!this.unlimited && this.amount.greq(this.maxAmount)) {
       this.amount = this.maxAmount.copy();
     }
 

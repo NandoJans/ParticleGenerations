@@ -39,7 +39,7 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   }
 
   effectString(): string {
-    return '';
+    return this.effect ? this.effect.toString() : "";
   }
 
   getEffectDisplay(): string {

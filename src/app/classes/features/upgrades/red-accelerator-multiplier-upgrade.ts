@@ -15,7 +15,7 @@ export abstract class RedAcceleratorMultiplierUpgrade extends RedUpgrade {
   override buffer: Num = new Num(3, 0);
 
   override subNav: string = 'redAccelerators';
-  override style: Styles = Styles.RED_ACCELERATOR;
+  override style: Styles = Styles.ACCELERATOR;
   override requirement: Requirement[] = [
     new Requirement(HoldingRecord.redParticles, new Num(1, 20), false)
   ];

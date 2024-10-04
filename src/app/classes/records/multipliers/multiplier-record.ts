@@ -14,6 +14,7 @@ export class MultiplierRecord {
   static greenParticleGenerators: Multiplier = new Multiplier('greenParticleGenerators', new Num(1, 0))
 
   static greenSoulsGain: Multiplier = new Multiplier('greenSoulsGain', new Num(1, 0))
+  static darkEnergyGain: Multiplier = new Multiplier('darkEnergyGain', new Num(1, 0));
 
   getRedParticleGenerators(): Multiplier {
     return MultiplierRecord.redParticleGenerators

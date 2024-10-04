@@ -3,8 +3,9 @@ import {HoldingDisplay} from "../../displays/holding-display";
 import {HoldingDisplayFactory} from "../../factories/holding-display-factory";
 import {Num} from "../../../num";
 import {Holding} from "../holding";
+import {SettableHolding} from "./settable-holding";
 
-export class DarkEnergyHolding extends Holding {
+export class DarkEnergyHolding extends SettableHolding {
   name: string = 'darkEnergy';
   abbreviation: string = 'DE';
   amount: Num = new Num(0, 0);

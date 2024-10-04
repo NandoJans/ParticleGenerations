@@ -8,7 +8,7 @@ import {ResetHelper} from "../../helpers/reset-helper";
 export abstract class YellowChallenge extends Challenge {
   currency: Holding = HoldingRecord.redParticles;
 
-  prestige: ResetKey = ResetKey.YELLOW;
+  prestige: ResetKey = ResetKey.RED;
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
 
   style: Styles = Styles.YELLOW;

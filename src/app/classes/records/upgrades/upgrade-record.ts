@@ -43,6 +43,12 @@ import {RemoveFusionLimitUpgrade} from "../../features/upgrades/remove-fusion-li
 import {SuperIncreaseFusionUpgrade} from "../../features/upgrades/super-increase-fusion-upgrade";
 import {NerfDarkAgeUpgrade} from "../../features/upgrades/nerf-dark-age-upgrade";
 import {YellowIdleGainUpgrade} from "../../features/upgrades/yellow-idle-gain-upgrade";
+import {DarkCompressorUpgrade} from "../../features/upgrades/dark-compressor-upgrade";
+import {DarkYellowFusionUpgrade} from "../../features/upgrades/dark-yellow-fusion-upgrade";
+import {DarkGreenGeneratorsUpgrade} from "../../features/upgrades/dark-green-generators-upgrade";
+import {DarkYellowGeneratorsUpgrade} from "../../features/upgrades/dark-yellow-generators-upgrade";
+import {DarkRedGeneratorsUpgrade} from "../../features/upgrades/dark-red-generators-upgrade";
+import {DarkRedAcceleratorsUpgrade} from "../../features/upgrades/dark-red-accelerators-upgrade";
 import {NuclearDecayBoosterUpgrade} from "../../features/upgrades/nuclear-decay-booster-upgrade";
 import {NuclearDecayIncreaserUpgrade} from "../../features/upgrades/nuclear-decay-increaser-upgrade";
 import {BetterNuclearDecayUpgrade} from "../../features/upgrades/better-nuclear-decay-upgrade";
@@ -100,6 +106,14 @@ export class UpgradeRecord extends Record {
   static nerfDarkAge: NerfDarkAgeUpgrade = new NerfDarkAgeUpgrade();
   static yellowIdleGain: YellowIdleGainUpgrade = new YellowIdleGainUpgrade();
 
+  static darkCompressor: DarkCompressorUpgrade = new DarkCompressorUpgrade();
+
+  static darkYellowFusion: DarkYellowFusionUpgrade = new DarkYellowFusionUpgrade();
+  static darkGreenGenerators: DarkGreenGeneratorsUpgrade = new DarkGreenGeneratorsUpgrade();
+  static darkYellowGenerators: DarkYellowGeneratorsUpgrade = new DarkYellowGeneratorsUpgrade();
+  static darkRedGenerators: DarkRedGeneratorsUpgrade = new DarkRedGeneratorsUpgrade();
+  static darkRedAccelerators: DarkRedAcceleratorsUpgrade = new DarkRedAcceleratorsUpgrade();
+
   static nuclearDecayBooster: NuclearDecayBoosterUpgrade = new NuclearDecayBoosterUpgrade();
   static nuclearDecayIncreaser: NuclearDecayIncreaserUpgrade = new NuclearDecayIncreaserUpgrade();
   static betterNuclearDecay: BetterNuclearDecayUpgrade = new BetterNuclearDecayUpgrade();
@@ -153,6 +167,17 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.nerfDarkAge,
     UpgradeRecord.yellowIdleGain,
 
+    UpgradeRecord.darkCompressor,
+
+    UpgradeRecord.darkYellowFusion,
+    UpgradeRecord.darkGreenGenerators,
+    UpgradeRecord.darkYellowGenerators,
+    UpgradeRecord.darkRedGenerators,
+    UpgradeRecord.darkRedAccelerators,
+
+    UpgradeRecord.nuclearDecayBooster,
+    UpgradeRecord.nuclearDecayIncreaser,
+    UpgradeRecord.betterNuclearDecay,
   ]
 
   getRedGeneratorExtension(): RedGeneratorExtensionUpgrade {

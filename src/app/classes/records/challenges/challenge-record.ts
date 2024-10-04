@@ -8,6 +8,7 @@ import {SeventhYellowChallenge} from "../../features/challenges/seventh-yellow-c
 import {EighthYellowChallenge} from "../../features/challenges/eighth-yellow-challenge";
 import {Record} from "../record";
 import {Challenge} from "../../features/challenge";
+import {DarkAgeChallenge} from "../../features/challenges/dark-age-challenge";
 
 export class ChallengeRecord extends Record {
   // Yellow phase 1
@@ -20,6 +21,8 @@ export class ChallengeRecord extends Record {
   static seventhYellowChallenge: SeventhYellowChallenge = new SeventhYellowChallenge();
   static eighthYellowChallenge: EighthYellowChallenge = new EighthYellowChallenge();
 
+  static darkAgeChallenge: DarkAgeChallenge = new DarkAgeChallenge();
+
   static override list: Challenge[] = [
     ChallengeRecord.firstYellowChallenge,
     ChallengeRecord.secondYellowChallenge,
@@ -28,7 +31,9 @@ export class ChallengeRecord extends Record {
     ChallengeRecord.fifthYellowChallenge,
     ChallengeRecord.sixthYellowChallenge,
     ChallengeRecord.seventhYellowChallenge,
-    ChallengeRecord.eighthYellowChallenge
+    ChallengeRecord.eighthYellowChallenge,
+
+    ChallengeRecord.darkAgeChallenge
   ];
 
   override getList(): Challenge[] {
