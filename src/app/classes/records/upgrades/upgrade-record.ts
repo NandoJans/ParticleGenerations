@@ -28,7 +28,6 @@ import {UnlockYellowFusionUpgrade} from "../../features/upgrades/unlock-yellow-f
 import {IncreaseYellowFusionUpgrade} from "../../features/upgrades/increase-yellow-fusion-upgrade";
 import {AccelerateYellowFusionUpgrade} from "../../features/upgrades/accelerate-yellow-fusion-upgrade";
 import {Record} from "../record";
-import {GameElement} from "../../features/game-element";
 import {Upgrade} from "../../features/upgrade";
 
 export class UpgradeRecord extends Record {
@@ -79,9 +78,11 @@ export class UpgradeRecord extends Record {
   static override list: Upgrade[] = [
     UpgradeRecord.redGeneratorExtension,
     UpgradeRecord.redGeneratorBooster,
+
     UpgradeRecord.firstRedAcceleratorMultiplier,
     UpgradeRecord.secondRedAcceleratorMultiplier,
     UpgradeRecord.thirdRedAcceleratorMultiplier,
+
     UpgradeRecord.improveRedGeneratorExtension,
     UpgradeRecord.unlockRedGeneratorBooster,
     UpgradeRecord.redAcceleratorParticleBased,
@@ -90,6 +91,7 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.firstRedAcceleratorBooster,
     UpgradeRecord.secondRedAcceleratorBooster,
     UpgradeRecord.thirdRedAcceleratorBooster,
+
     UpgradeRecord.yellowRepeatableMultiplier,
     UpgradeRecord.yellowParticleMultiplier,
     UpgradeRecord.yellowBasedMultiplier,
@@ -101,6 +103,7 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.increaseRedGeneratorExtension,
     UpgradeRecord.increaseRedGeneratorBooster,
     UpgradeRecord.startWithRedAccelerators,
+
     UpgradeRecord.unlockYellowFusion,
     UpgradeRecord.accelerateYellowFusion,
     UpgradeRecord.increaseYellowFusion
