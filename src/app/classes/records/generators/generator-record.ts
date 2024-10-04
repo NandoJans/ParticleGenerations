@@ -12,6 +12,11 @@ import {SecondYellowGenerator} from "../../features/generators/second-yellow-gen
 import {FifthYellowGenerator} from "../../features/generators/fifth-yellow-generator";
 import { Generator } from "../../features/generator";
 import {Record} from "../record";
+import {FirstGreenGenerator} from "../../features/generators/first-green-generator";
+import {FifthGreenGenerator} from "../../features/generators/fifth-green-generator";
+import {FourthGreenGenerator} from "../../features/generators/fourth-green-generator";
+import {ThirdGreenGenerator} from "../../features/generators/third-green-generator";
+import {SecondGreenGenerator} from "../../features/generators/second-green-generator";
 
 export class GeneratorRecord extends Record {
   // Red Generators
@@ -32,19 +37,34 @@ export class GeneratorRecord extends Record {
   static fourthYellowGenerator: FourthYellowGenerator = new FourthYellowGenerator();
   static fifthYellowGenerator: FifthYellowGenerator = new FifthYellowGenerator();
 
+  // Green energy generators
+  static firstGreenGenerator: FirstGreenGenerator = new FirstGreenGenerator();
+  static secondGreenGenerator: SecondGreenGenerator = new SecondGreenGenerator();
+  static thirdGreenGenerator: ThirdGreenGenerator = new ThirdGreenGenerator();
+  static fourthGreenGenerator: FourthGreenGenerator = new FourthGreenGenerator();
+  static fifthGreenGenerator: FifthGreenGenerator = new FifthGreenGenerator();
+
   static override list: Generator[] = [
     GeneratorRecord.firstRedGenerator,
     GeneratorRecord.secondRedGenerator,
     GeneratorRecord.thirdRedGenerator,
     GeneratorRecord.fourthRedGenerator,
     GeneratorRecord.fifthRedGenerator,
+
     GeneratorRecord.firstAcceleratorGenerator,
     GeneratorRecord.secondAcceleratorGenerator,
+
     GeneratorRecord.firstYellowGenerator,
     GeneratorRecord.secondYellowGenerator,
     GeneratorRecord.thirdYellowGenerator,
     GeneratorRecord.fourthYellowGenerator,
-    GeneratorRecord.fifthYellowGenerator
+    GeneratorRecord.fifthYellowGenerator,
+
+    GeneratorRecord.firstGreenGenerator,
+    GeneratorRecord.secondGreenGenerator,
+    GeneratorRecord.thirdGreenGenerator,
+    GeneratorRecord.fourthGreenGenerator,
+    GeneratorRecord.fifthGreenGenerator,
   ]
 
   getList(): Generator[] {
@@ -69,5 +89,53 @@ export class GeneratorRecord extends Record {
 
   getFifthRedGenerator(): FifthRedGenerator {
     return GeneratorRecord.fifthRedGenerator;
+  }
+
+  getFirstAcceleratorGenerator(): FirstAcceleratorGenerator {
+    return GeneratorRecord.firstAcceleratorGenerator;
+  }
+
+  getSecondAcceleratorGenerator(): SecondAcceleratorGenerator {
+    return GeneratorRecord.secondAcceleratorGenerator;
+  }
+
+  getFirstYellowGenerator(): FirstYellowGenerator {
+    return GeneratorRecord.firstYellowGenerator;
+  }
+
+  getSecondYellowGenerator(): SecondYellowGenerator {
+    return GeneratorRecord.secondYellowGenerator;
+  }
+
+  getThirdYellowGenerator(): ThirdYellowGenerator {
+    return GeneratorRecord.thirdYellowGenerator;
+  }
+
+  getFourthYellowGenerator(): FourthYellowGenerator {
+    return GeneratorRecord.fourthYellowGenerator;
+  }
+
+  getFifthYellowGenerator(): FifthYellowGenerator {
+    return GeneratorRecord.fifthYellowGenerator;
+  }
+
+  getFirstGreenGenerator(): FirstGreenGenerator {
+    return GeneratorRecord.firstGreenGenerator;
+  }
+
+  getSecondGreenGenerator(): SecondGreenGenerator {
+    return GeneratorRecord.secondGreenGenerator;
+  }
+
+  getThirdGreenGenerator(): ThirdGreenGenerator {
+    return GeneratorRecord.thirdGreenGenerator;
+  }
+
+  getFourthGreenGenerator(): FourthGreenGenerator {
+    return GeneratorRecord.fourthGreenGenerator;
+  }
+
+  getFifthGreenGenerator(): FifthGreenGenerator {
+    return GeneratorRecord.fifthGreenGenerator;
   }
 }
