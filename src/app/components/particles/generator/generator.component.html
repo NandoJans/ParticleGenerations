@@ -1,5 +1,5 @@
-<button [id]="'buyable-'+name" [class]="'generator '+style" (click)="buy()">
-  <h4>{{ displayName }}</h4>
+<button [id]="'buyable-'+generator.name" [class]="'generator '+generator.style" (click)="buy()">
+  <h4>{{ getDisplayName() }}</h4>
   <div>
     <!--  TODO: implement-->
 <!--    <app-number-display [name]="name" [style]="''" [type]="'amount'"></app-number-display>-->

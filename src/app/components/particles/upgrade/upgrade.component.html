@@ -1,6 +1,6 @@
-<button [class]="'upgrade '+style" [id]="'buyable-'+name" (click)="buy()">
-  <h4>{{ displayName }}</h4>
-  <p>{{ description }}</p>
+<button [class]="'upgrade '+upgrade.style" [id]="'buyable-'+upgrade.name" (click)="buy()">
+  <h4>{{ upgrade.displayName }}</h4>
+  <p>{{ upgrade.getDescription() }}</p>
 <!--  TODO: implement this-->
 <!--  <app-number-display [name]="name" [style]="''" [type]="'effect'" [effect]="effect"></app-number-display>-->
 <!--  <app-number-display [name]="name" [style]="''" [type]="'cost'" [currency]="currency"></app-number-display>-->

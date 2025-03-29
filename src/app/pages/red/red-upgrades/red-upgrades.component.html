@@ -1,7 +1,6 @@
 <div class="upgrade-row">
-  <div *ngFor="let upgrade of upgrades">
+  <div *ngFor="let upgrade of redUpgradeRecord.getList()">
     <app-upgrade *ngIf="upgrade.unlocked"  [upgrade]="upgrade"></app-upgrade>
   </div>
 </div>
 <app-info style="width: 60%" [name]="'red-generators-info'" [text]="infoText"></app-info>
-<app-particle-emitter style="width: 100%; height: 100%;" [type]="'red-particle-emitter'"></app-particle-emitter>

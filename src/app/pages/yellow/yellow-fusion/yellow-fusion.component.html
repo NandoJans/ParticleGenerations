@@ -1,7 +1,6 @@
 <app-number-display [holding]="holdingRecord.getYellowFusion()"></app-number-display>
 <div class="upgrade-row">
-  <div *ngFor="let upgrade of upgrades">
+  <div *ngFor="let upgrade of fusionUpgradeRecord.getList()">
     <app-upgrade *ngIf="upgrade.unlocked" [upgrade]="upgrade"></app-upgrade>
   </div>
 </div>
-<app-particle-emitter style="width: 100%; height: 100%;" [type]="'fusion-particle-emitter'"></app-particle-emitter>

@@ -7,4 +7,7 @@ export enum Styles {
   ACCELERATOR = 'accelerator-style',
   LIMITED = 'limited-style',
   DARK = 'dark-style',
+  NUCLEAR = 'nuclear-style',
+  GENERATOR_YELLOW_PURPLE = 'generator-yellow-purple-style',
+  YELLOW_PURPLE = 'yellow-purple-style',
 }

@@ -1,20 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import {Upgrade} from "../../../globals";
-import {UpgradeService} from "../../../services/interactables/upgrade.service";
+import { Component } from '@angular/core';
 import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
+import {FusionUpgradeRecord} from "../../../records/upgrades/fusion-upgrade-record";
 
 @Component({
   selector: 'app-yellow-fusion',
   templateUrl: './yellow-fusion.component.html',
   styleUrls: ['./yellow-fusion.component.css']
 })
-export class YellowFusionComponent implements OnInit {
-  upgrades: Upgrade[] = [];
+export class YellowFusionComponent {
   constructor(
-    public holdingRecord: HoldingRecord
+    public holdingRecord: HoldingRecord,
+    public fusionUpgradeRecord: FusionUpgradeRecord
   ) { }
-
-  ngOnInit(): void {
-    this.upgrades = UpgradeService.getUpgrades('yellow-fusion')
-  }
 }

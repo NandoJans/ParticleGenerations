@@ -52,6 +52,8 @@ import {DarkRedAcceleratorsUpgrade} from "../../features/upgrades/dark-red-accel
 import {NuclearDecayBoosterUpgrade} from "../../features/upgrades/nuclear-decay-booster-upgrade";
 import {NuclearDecayIncreaserUpgrade} from "../../features/upgrades/nuclear-decay-increaser-upgrade";
 import {BetterNuclearDecayUpgrade} from "../../features/upgrades/better-nuclear-decay-upgrade";
+import {YellowPurpleBufferUpgrade} from "../../../features/upgrades/yellow-purple-buffer-upgrade";
+import {YellowPurpleBoosterUpgrade} from "../../../features/upgrades/yellow-purple-booster-upgrade";
 
 export class UpgradeRecord extends Record {
   // Red Upgrades
@@ -88,6 +90,9 @@ export class UpgradeRecord extends Record {
   static unlockYellowFusion: UnlockYellowFusionUpgrade = new UnlockYellowFusionUpgrade();
   static accelerateYellowFusion: AccelerateYellowFusionUpgrade = new AccelerateYellowFusionUpgrade();
   static increaseYellowFusion: IncreaseYellowFusionUpgrade = new IncreaseYellowFusionUpgrade();
+
+  static yellowPurpleBufferUpgrade: YellowPurpleBufferUpgrade = new YellowPurpleBufferUpgrade();
+  static yellowPurpleBoosterUpgrade: YellowPurpleBoosterUpgrade = new YellowPurpleBoosterUpgrade();
 
   // Green Phase
   static redParticleSacrifice: RedParticleSacrificeUpgrade = new RedParticleSacrificeUpgrade();
@@ -179,14 +184,6 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.nuclearDecayIncreaser,
     UpgradeRecord.betterNuclearDecay,
   ]
-
-  getRedGeneratorExtension(): RedGeneratorExtensionUpgrade {
-    return UpgradeRecord.redGeneratorExtension;
-  }
-
-  getRedGeneratorBooster(): RedGeneratorBoosterUpgrade {
-    return UpgradeRecord.redGeneratorBooster;
-  }
 
   getList(): Upgrade[] {
     return UpgradeRecord.list;

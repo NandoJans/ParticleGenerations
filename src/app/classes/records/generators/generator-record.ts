@@ -20,6 +20,9 @@ import {SecondGreenGenerator} from "../../features/generators/second-green-gener
 import {FirstNuclearDecayGenerator} from "../../features/generators/first-nuclear-decay-generator";
 import {SecondNuclearDecayGenerator} from "../../features/generators/second-nuclear-decay-generator";
 import {ThirdNuclearDecayGenerator} from "../../features/generators/third-nuclear-decay-generator";
+import {FirstYellowPurpleGenerator} from "../../../features/generators/first-yellow-purple-generator";
+import {SecondYellowPurpleGenerator} from "../../../features/generators/second-yellow-purple-generator";
+import {ThirdYellowPurpleGenerator} from "../../../features/generators/third-yellow-purple-generator";
 
 export class GeneratorRecord extends Record {
   // Red Generators
@@ -52,6 +55,11 @@ export class GeneratorRecord extends Record {
   static secondNuclearDecayGenerator: SecondNuclearDecayGenerator = new SecondNuclearDecayGenerator();
   static thirdNuclearDecayGenerator: ThirdNuclearDecayGenerator = new ThirdNuclearDecayGenerator();
 
+  // Yellow Purple Generators
+  static firstYellowPurpleGenerator: FirstYellowPurpleGenerator = new FirstYellowPurpleGenerator();
+  static secondYellowPurpleGenerator: SecondYellowPurpleGenerator = new SecondYellowPurpleGenerator();
+  static thirdYellowPurpleGenerator: ThirdYellowPurpleGenerator = new ThirdYellowPurpleGenerator();
+
   static override list: Generator[] = [
     GeneratorRecord.firstRedGenerator,
     GeneratorRecord.secondRedGenerator,
@@ -73,6 +81,14 @@ export class GeneratorRecord extends Record {
     GeneratorRecord.thirdGreenGenerator,
     GeneratorRecord.fourthGreenGenerator,
     GeneratorRecord.fifthGreenGenerator,
+
+    GeneratorRecord.firstNuclearDecayGenerator,
+    GeneratorRecord.secondNuclearDecayGenerator,
+    GeneratorRecord.thirdNuclearDecayGenerator,
+
+    GeneratorRecord.firstYellowPurpleGenerator,
+    GeneratorRecord.secondYellowPurpleGenerator,
+    GeneratorRecord.thirdYellowPurpleGenerator,
   ]
 
   getList(): Generator[] {
