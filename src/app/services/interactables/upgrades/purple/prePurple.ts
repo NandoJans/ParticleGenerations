@@ -32,32 +32,6 @@ export const prePurpleUpgrades: Upgrade[] = [
   },
 
   {
-    name: 'yellow-purple-buffer-increaser', displayName: 'Buy Multiplier Increaser', description: 'Increase all yellow purple buy multipliers by 0.03', auto: false,
-    baseCost: new Num(1,20), cost: new Num(1, 20), increase: new Num(1,800), scaling: new Num(1, 1600), bought: new Num(0, 0), currency: 'yellowParticles',
-    baseBuffer: new Num(1.2, 0), buffer: new Num(1.2, 0), amount: new Num(0, 0), type: 'yellow-purple-upgrade', resetId: 'yellow-purple-upgrade', style: 'yellow-purple-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['purples', new Num(2, 0)],
-    action: (self: Upgrade) => {
-      // @ts-ignore
-      const buff: Num = self.buffer.pow(self.bought, false).sub(new Num(1, 0), false)
-      GeneratorService.increaseMultiplier('yellow-purple-generator-1', buff);
-      GeneratorService.increaseMultiplier('yellow-purple-generator-2', buff);
-      GeneratorService.increaseMultiplier('yellow-purple-generator-3', buff);
-      UpgradeService.increaseBuffer('yellow-purple-booster', buff);
-      return buff;
-    }, nav: 'yellow', subNav: 'yellowPurple'
-  },
-
-  {
-    name: 'yellow-purple-booster', displayName: 'Yellow Purple Booster', description: 'Multiply the yellow purple generators by 2', auto: false,
-    baseCost: new Num(1,40), cost: new Num(1, 40), increase: new Num(1,1600), scaling: new Num(1, 3200), bought: new Num(0, 0), currency: 'yellowParticles',
-    baseBuffer: new Num(2, 0), buffer: new Num(2, 0), amount: new Num(0, 0), type: 'yellow-purple-upgrade', resetId: 'yellow-purple-upgrade', style: 'yellow-purple-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['purples', new Num(4, 0)],
-    action: (self: Upgrade) => {
-      const buff: Num | undefined = self.buffer.pow(self.bought, false)
-      GlobalMultipliersService.correct('yellowPurpleGenerators', buff);
-      return buff;
-    }, nav: 'yellow', subNav: 'yellowPurple'
-  },
-
-  {
     name: 'green-purple-buffer-increaser', displayName: 'Buy Multiplier Increaser', description: 'Increase all green purple buy multipliers by 0.05', auto: false,
     baseCost: new Num(1,20), cost: new Num(1, 20), increase: new Num(1,50), scaling: new Num(1, 100), bought: new Num(0, 0), currency: 'greenParticles',
     baseBuffer: new Num(1.3, 0), buffer: new Num(1.3, 0), amount: new Num(0, 0), type: 'green-purple-upgrade', resetId: 'green-purple-upgrade', style: 'green-purple-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['purples', new Num(2, 0)],
