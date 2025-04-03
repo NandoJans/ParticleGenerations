@@ -1,8 +1,8 @@
 import {YellowPurpleGenerator} from "./yellow-purple-generator";
-import {Requirement} from "../../classes/features/interfaces/requirement";
-import {HoldingRecord} from "../../classes/records/holdings/holding-record";
-import {Num} from "../../num";
-import {Generatable} from "../../classes/features/interfaces/generatable";
+import {Requirement} from "../interfaces/requirement";
+import {HoldingRecord} from "../../records/holdings/holding-record";
+import {Num} from "../../../num";
+import {Generatable} from "../interfaces/generatable";
 
 export class FirstYellowPurpleGenerator extends YellowPurpleGenerator {
   requirement: Requirement[] = [

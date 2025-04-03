@@ -1,11 +1,11 @@
-import {RespecializableUpgrade} from "../../classes/features/upgrades/respecializable-upgrade";
-import {Num} from "../../num";
-import {Holding} from "../../classes/features/holding";
-import {Requirement} from "../../classes/features/interfaces/requirement";
-import {ResetKey} from "../../classes/enums/reset-key";
-import {Styles} from "../../classes/enums/styles";
-import {HoldingRecord} from "../../classes/records/holdings/holding-record";
-import {ResetHelper} from "../../classes/helpers/reset-helper";
+import {RespecializableUpgrade} from "./respecializable-upgrade";
+import {Num} from "../../../num";
+import {Holding} from "../holding";
+import {Requirement} from "../interfaces/requirement";
+import {ResetKey} from "../../enums/reset-key";
+import {Styles} from "../../enums/styles";
+import {HoldingRecord} from "../../records/holdings/holding-record";
+import {ResetHelper} from "../../helpers/reset-helper";
 
 export abstract class NuclearDecayUpgrade extends RespecializableUpgrade {
   bought: Num = new Num(0, 0);

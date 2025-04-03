@@ -1,6 +1,6 @@
-import {Record} from "../../classes/records/record";
-import {Generator} from "../../classes/features/generator";
-import {GeneratorRecord} from "../../classes/records/generators/generator-record";
+import {Record} from "../record";
+import {Generator} from "../../features/generator";
+import {GeneratorRecord} from "./generator-record";
 
 export class YellowPurpleGeneratorRecord extends Record {
   static override list: Generator[] = [

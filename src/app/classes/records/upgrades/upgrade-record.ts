@@ -52,8 +52,10 @@ import {DarkRedAcceleratorsUpgrade} from "../../features/upgrades/dark-red-accel
 import {NuclearDecayBoosterUpgrade} from "../../features/upgrades/nuclear-decay-booster-upgrade";
 import {NuclearDecayIncreaserUpgrade} from "../../features/upgrades/nuclear-decay-increaser-upgrade";
 import {BetterNuclearDecayUpgrade} from "../../features/upgrades/better-nuclear-decay-upgrade";
-import {YellowPurpleBufferUpgrade} from "../../../features/upgrades/yellow-purple-buffer-upgrade";
-import {YellowPurpleBoosterUpgrade} from "../../../features/upgrades/yellow-purple-booster-upgrade";
+import {YellowPurpleBufferUpgrade} from "../../features/upgrades/yellow-purple-buffer-upgrade";
+import {YellowPurpleBoosterUpgrade} from "../../features/upgrades/yellow-purple-booster-upgrade";
+import {RedPurpleBufferUpgrade} from "../../features/upgrades/red-purple-buffer-upgrade";
+import {RedPurpleBoosterUpgrade} from "../../features/upgrades/red-purple-booster-upgrade";
 
 export class UpgradeRecord extends Record {
   // Red Upgrades
@@ -63,6 +65,9 @@ export class UpgradeRecord extends Record {
   static firstRedAcceleratorMultiplier: FirstRedAcceleratorMultiplierUpgrade = new FirstRedAcceleratorMultiplierUpgrade();
   static secondRedAcceleratorMultiplier: SecondRedAcceleratorMultiplierUpgrade = new SecondRedAcceleratorMultiplierUpgrade();
   static thirdRedAcceleratorMultiplier: ThirdRedAcceleratorMultiplierUpgrade = new ThirdRedAcceleratorMultiplierUpgrade();
+
+  static redPurpleBufferUpgrade: RedPurpleBufferUpgrade = new RedPurpleBufferUpgrade();
+  static redPurpleBoosterUpgrade: RedPurpleBoosterUpgrade = new RedPurpleBoosterUpgrade();
 
   static improveRedGeneratorExtension: ImproveRedGeneratorExtensionUpgrade = new ImproveRedGeneratorExtensionUpgrade();
   static unlockRedGeneratorBooster: UnlockRedGeneratorBoosterUpgrade = new UnlockRedGeneratorBoosterUpgrade();
@@ -130,6 +135,9 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.firstRedAcceleratorMultiplier,
     UpgradeRecord.secondRedAcceleratorMultiplier,
     UpgradeRecord.thirdRedAcceleratorMultiplier,
+
+    UpgradeRecord.redPurpleBufferUpgrade,
+    UpgradeRecord.redPurpleBoosterUpgrade,
 
     UpgradeRecord.improveRedGeneratorExtension,
     UpgradeRecord.unlockRedGeneratorBooster,

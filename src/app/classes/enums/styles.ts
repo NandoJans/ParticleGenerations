@@ -10,4 +10,6 @@ export enum Styles {
   NUCLEAR = 'nuclear-style',
   GENERATOR_YELLOW_PURPLE = 'generator-yellow-purple-style',
   YELLOW_PURPLE = 'yellow-purple-style',
+  RED_PURPLE = 'red-purple-style',
+  RED_PURPLE_GENERATOR = 'red-purple-generator-style',
 }

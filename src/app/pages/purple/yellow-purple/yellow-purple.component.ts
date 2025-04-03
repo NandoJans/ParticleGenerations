@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import {Num} from "../../../num";
 import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
-import {YellowPurpleGeneratorRecord} from "../../../records/upgrades/yellow-purple-generator-record";
-import {YellowPurpleUpgradeRecord} from "../../../records/upgrades/yellow-purple-upgrade-record";
+import {YellowPurpleGeneratorRecord} from "../../../classes/records/generators/yellow-purple-generator-record";
+import {YellowPurpleUpgradeRecord} from "../../../classes/records/upgrades/yellow-purple-upgrade-record";
 
 @Component({
   selector: 'app-yellow-purple',

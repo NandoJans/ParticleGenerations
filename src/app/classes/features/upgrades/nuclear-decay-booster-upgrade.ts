@@ -1,4 +1,4 @@
-import {NuclearDecayUpgrade} from "../../../features/upgrades/nuclear-decay-upgrade";
+import {NuclearDecayUpgrade} from "./nuclear-decay-upgrade";
 import {Num} from "../../../num";
 import {LimitedUpgrade} from "../generators/limited-upgrade";
 import {GeneratorRecord} from "../../records/generators/generator-record";

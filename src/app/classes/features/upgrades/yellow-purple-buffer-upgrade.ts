@@ -1,9 +1,9 @@
 import {YellowPurpleUpgrade} from "./yellow-purple-upgrade";
-import {Num} from "../../num";
-import {Requirement} from "../../classes/features/interfaces/requirement";
-import {HoldingRecord} from "../../classes/records/holdings/holding-record";
-import {GeneratorRecord} from "../../classes/records/generators/generator-record";
-import {UpgradeRecord} from "../../classes/records/upgrades/upgrade-record";
+import {Num} from "../../../num";
+import {Requirement} from "../interfaces/requirement";
+import {HoldingRecord} from "../../records/holdings/holding-record";
+import {GeneratorRecord} from "../../records/generators/generator-record";
+import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 
 export class YellowPurpleBufferUpgrade extends YellowPurpleUpgrade {
   name: string = 'yellow-purple-buffer-increaser';
@@ -22,7 +22,7 @@ export class YellowPurpleBufferUpgrade extends YellowPurpleUpgrade {
 
   action(): Num {
     const buff: Num = this.buffer.pow(this.bought, false).sub(new Num(1, 0), false)
-    GeneratorRecord.firstYellowGenerator.baseMulMod.add(buff);
+    GeneratorRecord.firstYellowPurpleGenerator.baseMulMod.add(buff);
     GeneratorRecord.secondYellowPurpleGenerator.baseMulMod.add(buff);
     GeneratorRecord.thirdYellowPurpleGenerator.baseMulMod.add(buff);
     UpgradeRecord.yellowPurpleBoosterUpgrade.buffer.add(buff);

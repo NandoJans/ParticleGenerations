@@ -20,9 +20,12 @@ import {SecondGreenGenerator} from "../../features/generators/second-green-gener
 import {FirstNuclearDecayGenerator} from "../../features/generators/first-nuclear-decay-generator";
 import {SecondNuclearDecayGenerator} from "../../features/generators/second-nuclear-decay-generator";
 import {ThirdNuclearDecayGenerator} from "../../features/generators/third-nuclear-decay-generator";
-import {FirstYellowPurpleGenerator} from "../../../features/generators/first-yellow-purple-generator";
-import {SecondYellowPurpleGenerator} from "../../../features/generators/second-yellow-purple-generator";
-import {ThirdYellowPurpleGenerator} from "../../../features/generators/third-yellow-purple-generator";
+import {FirstYellowPurpleGenerator} from "../../features/generators/first-yellow-purple-generator";
+import {SecondYellowPurpleGenerator} from "../../features/generators/second-yellow-purple-generator";
+import {ThirdYellowPurpleGenerator} from "../../features/generators/third-yellow-purple-generator";
+import {FirstRedPurpleGenerator} from "../../features/generators/first-red-purple-generator";
+import {SecondRedPurpleGenerator} from "../../features/generators/second-red-purple-generator";
+import {ThirdRedPurpleGenerator} from "../../features/generators/third-red-purple-generator";
 
 export class GeneratorRecord extends Record {
   // Red Generators
@@ -35,6 +38,12 @@ export class GeneratorRecord extends Record {
 
   static firstAcceleratorGenerator: FirstAcceleratorGenerator = new FirstAcceleratorGenerator();
   static secondAcceleratorGenerator: SecondAcceleratorGenerator = new SecondAcceleratorGenerator();
+
+  // Red Purple Generators
+  static firstRedPurpleGenerator: FirstRedPurpleGenerator = new FirstRedPurpleGenerator();
+  static secondRedPurpleGenerator: SecondRedPurpleGenerator = new SecondRedPurpleGenerator();
+  static thirdRedPurpleGenerator: ThirdRedPurpleGenerator = new ThirdRedPurpleGenerator();
+
   // Yellow power Generators
 
   static firstYellowGenerator: FirstYellowGenerator = new FirstYellowGenerator();
@@ -70,6 +79,10 @@ export class GeneratorRecord extends Record {
     GeneratorRecord.firstAcceleratorGenerator,
     GeneratorRecord.secondAcceleratorGenerator,
 
+    GeneratorRecord.firstRedPurpleGenerator,
+    GeneratorRecord.secondRedPurpleGenerator,
+    GeneratorRecord.thirdRedPurpleGenerator,
+
     GeneratorRecord.firstYellowGenerator,
     GeneratorRecord.secondYellowGenerator,
     GeneratorRecord.thirdYellowGenerator,
@@ -89,6 +102,8 @@ export class GeneratorRecord extends Record {
     GeneratorRecord.firstYellowPurpleGenerator,
     GeneratorRecord.secondYellowPurpleGenerator,
     GeneratorRecord.thirdYellowPurpleGenerator,
+
+
   ]
 
   getList(): Generator[] {

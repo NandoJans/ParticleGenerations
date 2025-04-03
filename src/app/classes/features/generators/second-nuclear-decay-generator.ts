@@ -1,4 +1,4 @@
-import {NuclearGenerator} from "../../../features/generators/nuclear-generator";
+import {NuclearGenerator} from "./nuclear-generator";
 import {Num} from "../../../num";
 import {Generatable} from "../interfaces/generatable";
 import {ResetHelper} from "../../helpers/reset-helper";

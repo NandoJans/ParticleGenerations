@@ -1,6 +1,6 @@
-import {Record} from "../../classes/records/record";
-import {Upgrade} from "../../classes/features/upgrade";
-import {UpgradeRecord} from "../../classes/records/upgrades/upgrade-record";
+import {Record} from "../record";
+import {Upgrade} from "../../features/upgrade";
+import {UpgradeRecord} from "./upgrade-record";
 
 export class FusionUpgradeRecord extends Record {
   static override list: Upgrade[] = [

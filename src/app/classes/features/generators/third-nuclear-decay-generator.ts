@@ -1,4 +1,4 @@
-import {NuclearGenerator} from "../../../features/generators/nuclear-generator";
+import {NuclearGenerator} from "./nuclear-generator";
 import {Num} from "../../../num";
 import {GeneratorRecord} from "../../records/generators/generator-record";
 import {ResetHelper} from "../../helpers/reset-helper";

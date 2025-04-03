@@ -1,8 +1,8 @@
 import {YellowPurpleUpgrade} from "./yellow-purple-upgrade";
-import {Num} from "../../num";
-import {Requirement} from "../../classes/features/interfaces/requirement";
-import {HoldingRecord} from "../../classes/records/holdings/holding-record";
-import {MultiplierRecord} from "../../classes/records/multipliers/multiplier-record";
+import {Num} from "../../../num";
+import {Requirement} from "../interfaces/requirement";
+import {HoldingRecord} from "../../records/holdings/holding-record";
+import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 
 export class YellowPurpleBoosterUpgrade extends YellowPurpleUpgrade {
   name: string = 'yellow-purple-booster-increaser';

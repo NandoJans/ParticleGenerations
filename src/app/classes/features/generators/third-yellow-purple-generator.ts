@@ -1,8 +1,9 @@
 import {YellowPurpleGenerator} from "./yellow-purple-generator";
-import {Requirement} from "../../classes/features/interfaces/requirement";
-import {Num} from "../../num";
-import {HoldingRecord} from "../../classes/records/holdings/holding-record";
-import {Generatable} from "../../classes/features/interfaces/generatable";
+import {Requirement} from "../interfaces/requirement";
+import {Num} from "../../../num";
+import {HoldingRecord} from "../../records/holdings/holding-record";
+import {Generatable} from "../interfaces/generatable";
+import {GeneratorRecord} from "../../records/generators/generator-record";
 
 export class ThirdYellowPurpleGenerator extends YellowPurpleGenerator {
   requirement: Requirement[] = [
@@ -11,6 +12,6 @@ export class ThirdYellowPurpleGenerator extends YellowPurpleGenerator {
   baseCost: Num = new Num(1, 110);
   cost: Num = new Num(1, 110);
   displayName: string = 'Yellow Purple Generator 3'
-  generates: Generatable = HoldingRecord.yellowPurple;
+  generates: Generatable = GeneratorRecord.secondYellowPurpleGenerator;
   name: string = 'yellow-purple-generator-3';
 }
