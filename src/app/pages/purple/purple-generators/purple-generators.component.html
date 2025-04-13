@@ -1,6 +1,6 @@
 <app-number-display [holding]="holdingRecord.getPurpleVoid()"></app-number-display>
 <div class="generators-row">
-  <div *ngFor="let generator of generators">
+  <div *ngFor="let generator of purpleGeneratorRecord.getList()">
     <app-generator *ngIf="generator.unlocked" [generator]="generator"></app-generator>
   </div>
 </div>

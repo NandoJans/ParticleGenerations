@@ -1,7 +1,7 @@
 <app-number-display [holding]="holdingRecord.getBlackHoleMass()"></app-number-display>
 <div class="upgrade-row">
-  <div *ngFor="let upgrade of unlockBlackHole">
-    <app-upgrade *ngIf="upgrade.unlocked" [upgrade]="upgrade"></app-upgrade>
+  <div>
+    <app-upgrade *ngIf="unlockBlackHoleUpgrade.unlocked" [upgrade]="unlockBlackHoleUpgrade"></app-upgrade>
   </div>
 </div>
 <div class="holding-line">
@@ -10,12 +10,7 @@
 </div>
 <app-number-display [holding]="holdingRecord.getGravity()"></app-number-display>
 <div class="upgrade-row">
-  <div *ngFor="let upgrade of blackHoleUpgrades">
-    <app-upgrade *ngIf="upgrade.unlocked" [upgrade]="upgrade"></app-upgrade>
-  </div>
-</div>
-<div class="upgrade-row">
-  <div *ngFor="let upgrade of galaxies">
+  <div *ngFor="let upgrade of blackHoleUpgradeRecord.getList()">
     <app-upgrade *ngIf="upgrade.unlocked" [upgrade]="upgrade"></app-upgrade>
   </div>
 </div>

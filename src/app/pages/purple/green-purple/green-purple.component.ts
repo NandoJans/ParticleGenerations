@@ -1,26 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import {Generator, Upgrade} from "../../../globals";
-import {Num} from "../../../num";
-import {GeneratorService} from "../../../services/interactables/generator.service";
-import {UpgradeService} from "../../../services/interactables/upgrade.service";
+import { Component } from '@angular/core';
 import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
+import {GreenPurpleGeneratorRecord} from "../../../classes/records/generators/green-purple-generator-record";
+import {GreenPurpleUpgradeRecord} from "../../../classes/records/upgrades/green-purple-upgrade-record";
 
 @Component({
   selector: 'app-green-purple',
   templateUrl: './green-purple.component.html',
   styleUrls: ['./green-purple.component.css']
 })
-export class GreenPurpleComponent implements OnInit {
-  generators: Generator[] = [];
-  upgrades: Upgrade[] = [];
-  effect: any[] = ['prePurple', 'greenPurple', new Num(1, 2)];
+export class GreenPurpleComponent {
   constructor(
-    public holdingRecord: HoldingRecord
+    public holdingRecord: HoldingRecord,
+    public greenPurpleGeneratorRecord: GreenPurpleGeneratorRecord,
+    public greenPurpleUpgradeRecord: GreenPurpleUpgradeRecord,
   ) { }
-
-  ngOnInit(): void {
-    this.generators = GeneratorService.getGenerators('green-purple-generator');
-    this.upgrades = UpgradeService.getUpgrades('green-purple-upgrade');
-  }
-
 }

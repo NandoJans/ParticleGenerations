@@ -56,6 +56,14 @@ import {YellowPurpleBufferUpgrade} from "../../features/upgrades/yellow-purple-b
 import {YellowPurpleBoosterUpgrade} from "../../features/upgrades/yellow-purple-booster-upgrade";
 import {RedPurpleBufferUpgrade} from "../../features/upgrades/red-purple-buffer-upgrade";
 import {RedPurpleBoosterUpgrade} from "../../features/upgrades/red-purple-booster-upgrade";
+import {GreenPurpleBufferUpgrade} from "../../features/upgrades/green-purple-buffer-upgrade";
+import {GreenPurpleBoosterUpgrade} from "../../features/upgrades/green-purple-booster-upgrade";
+import {BluePurpleBufferUpgrade} from "../../features/upgrades/blue-purple-buffer-upgrade";
+import {BluePurpleBoosterUpgrade} from "../../features/upgrades/blue-purple-booster-upgrade";
+import {UnlockBlackHoleUpgrade} from "../../features/upgrades/unlock-black-hole-upgrade";
+import {IncreaseBlackHoleSizeUpgrade} from "../../features/upgrades/increase-black-hole-size-upgrade";
+import {IncreaseBlackHoleMassUpgrade} from "../../features/upgrades/increase-black-hole-mass-upgrade";
+import {IncreaseBlackHoleGravityUpgrade} from "../../features/upgrades/increase-black-hole-gravity-upgrade";
 
 export class UpgradeRecord extends Record {
   // Red Upgrades
@@ -128,6 +136,18 @@ export class UpgradeRecord extends Record {
   static nuclearDecayIncreaser: NuclearDecayIncreaserUpgrade = new NuclearDecayIncreaserUpgrade();
   static betterNuclearDecay: BetterNuclearDecayUpgrade = new BetterNuclearDecayUpgrade();
 
+  static greenPurpleBufferUpgrade: GreenPurpleBufferUpgrade = new GreenPurpleBufferUpgrade();
+  static greenPurpleBoosterUpgrade: GreenPurpleBoosterUpgrade = new GreenPurpleBoosterUpgrade();
+
+  static bluePurpleBufferUpgrade: BluePurpleBufferUpgrade = new BluePurpleBufferUpgrade();
+  static bluePurpleBoosterUpgrade: BluePurpleBoosterUpgrade = new BluePurpleBoosterUpgrade();
+
+  static unlockBlackHoleUpgrade: UnlockBlackHoleUpgrade = new UnlockBlackHoleUpgrade();
+  static increaseBlackHoleSize: IncreaseBlackHoleSizeUpgrade = new IncreaseBlackHoleSizeUpgrade();
+  static increaseBlackHoleMass: IncreaseBlackHoleMassUpgrade = new IncreaseBlackHoleMassUpgrade();
+  static increaseBlackHoleGravity: IncreaseBlackHoleGravityUpgrade = new IncreaseBlackHoleGravityUpgrade();
+
+
   static override list: Upgrade[] = [
     UpgradeRecord.redGeneratorExtension,
     UpgradeRecord.redGeneratorBooster,
@@ -191,6 +211,9 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.nuclearDecayBooster,
     UpgradeRecord.nuclearDecayIncreaser,
     UpgradeRecord.betterNuclearDecay,
+
+    UpgradeRecord.greenPurpleBufferUpgrade,
+    UpgradeRecord.greenPurpleBoosterUpgrade,
   ]
 
   getList(): Upgrade[] {

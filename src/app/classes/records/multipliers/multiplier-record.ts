@@ -20,4 +20,11 @@ export class MultiplierRecord {
   static darkEnergyGain: Multiplier = new Multiplier('darkEnergyGain', new Num(1, 0));
   static nuclearDecayGenerators: Multiplier = new Multiplier('nuclearDecayGenerators', new Num(1, 0))
   static greenPurpleGenerators: Multiplier = new Multiplier('greenPurpleGenerators', new Num(1, 0))
+
+  // Blue Phase
+  static bluePurpleGenerators: Multiplier = new Multiplier('bluePurpleGenerators', new Num(1, 0));
+
+  // Purple Phase
+  static purpleParticleGenerators: Multiplier = new Multiplier('purpleParticleGenerators', new Num(1, 0))
+  static gravityGenerators: Multiplier = new Multiplier('gravityGenerators', new Num(1, 0));
 }

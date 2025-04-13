@@ -12,4 +12,8 @@ export enum Styles {
   YELLOW_PURPLE = 'yellow-purple-style',
   RED_PURPLE = 'red-purple-style',
   RED_PURPLE_GENERATOR = 'red-purple-generator-style',
+  GREEN_PURPLE_GENERATOR = 'green-purple-generator-style',
+  GREEN_PURPLE = 'green-purple-style',
+  BLUE_PURPLE_GENERATOR = 'blue-purple-generator-style',
+  BLUE_PURPLE = 'blue-purple-style',
 }

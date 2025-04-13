@@ -26,6 +26,17 @@ import {ThirdYellowPurpleGenerator} from "../../features/generators/third-yellow
 import {FirstRedPurpleGenerator} from "../../features/generators/first-red-purple-generator";
 import {SecondRedPurpleGenerator} from "../../features/generators/second-red-purple-generator";
 import {ThirdRedPurpleGenerator} from "../../features/generators/third-red-purple-generator";
+import {FirstGreenPurpleGenerator} from "../../features/generators/first-green-purple-generator";
+import {SecondGreenPurpleGenerator} from "../../features/generators/second-green-purple-generator";
+import {ThirdGreenPurpleGenerator} from "../../features/generators/third-green-purple-generator";
+import {FirstPurpleGenerator} from "../../features/generators/first-purple-generator";
+import {SecondPurpleGenerator} from "../../features/generators/second-purple-generator";
+import {ThirdPurpleGenerator} from "../../features/generators/third-purple-generator";
+import {FourthPurpleGenerator} from "../../features/generators/fourth-purple-generator";
+import {FifthPurpleGenerator} from "../../features/generators/fifth-purple-generator";
+import {FirstBluePurpleGenerator} from "../../features/generators/first-blue-purple-generator";
+import {SecondBluePurpleGenerator} from "../../features/generators/second-blue-purple-generator";
+import {ThirdBluePurpleGenerator} from "../../features/generators/third-blue-purple-generator";
 
 export class GeneratorRecord extends Record {
   // Red Generators
@@ -69,6 +80,23 @@ export class GeneratorRecord extends Record {
   static secondYellowPurpleGenerator: SecondYellowPurpleGenerator = new SecondYellowPurpleGenerator();
   static thirdYellowPurpleGenerator: ThirdYellowPurpleGenerator = new ThirdYellowPurpleGenerator();
 
+  // Green Purple Generators
+  static firstGreenPurpleGenerator: FirstGreenPurpleGenerator = new FirstGreenPurpleGenerator();
+  static secondGreenPurpleGenerator: SecondGreenPurpleGenerator = new SecondGreenPurpleGenerator();
+  static thirdGreenPurpleGenerator: ThirdGreenPurpleGenerator = new ThirdGreenPurpleGenerator();
+
+  // Purple Generators
+  static firstPurpleGenerator: FirstPurpleGenerator = new FirstPurpleGenerator();
+  static secondPurpleGenerator: SecondPurpleGenerator = new SecondPurpleGenerator();
+  static thirdPurpleGenerator: ThirdPurpleGenerator = new ThirdPurpleGenerator();
+  static fourthPurpleGenerator: FourthPurpleGenerator = new FourthPurpleGenerator();
+  static fifthPurpleGenerator: FifthPurpleGenerator = new FifthPurpleGenerator();
+
+  static firstBluePurpleGenerator: FirstBluePurpleGenerator = new FirstBluePurpleGenerator();
+  static secondBluePurpleGenerator: SecondBluePurpleGenerator = new SecondBluePurpleGenerator();
+  static thirdBluePurpleGenerator: ThirdBluePurpleGenerator = new ThirdBluePurpleGenerator();
+
+
   static override list: Generator[] = [
     GeneratorRecord.firstRedGenerator,
     GeneratorRecord.secondRedGenerator,
@@ -103,7 +131,19 @@ export class GeneratorRecord extends Record {
     GeneratorRecord.secondYellowPurpleGenerator,
     GeneratorRecord.thirdYellowPurpleGenerator,
 
+    GeneratorRecord.firstGreenPurpleGenerator,
+    GeneratorRecord.secondGreenPurpleGenerator,
+    GeneratorRecord.thirdGreenPurpleGenerator,
 
+    GeneratorRecord.firstPurpleGenerator,
+    GeneratorRecord.secondPurpleGenerator,
+    GeneratorRecord.thirdPurpleGenerator,
+    GeneratorRecord.fourthPurpleGenerator,
+    GeneratorRecord.fifthPurpleGenerator,
+
+    GeneratorRecord.firstBluePurpleGenerator,
+    GeneratorRecord.secondBluePurpleGenerator,
+    GeneratorRecord.thirdBluePurpleGenerator,
   ]
 
   getList(): Generator[] {
@@ -176,5 +216,61 @@ export class GeneratorRecord extends Record {
 
   getFifthGreenGenerator(): FifthGreenGenerator {
     return GeneratorRecord.fifthGreenGenerator;
+  }
+
+  getFirstNuclearDecayGenerator(): FirstNuclearDecayGenerator {
+    return GeneratorRecord.firstNuclearDecayGenerator;
+  }
+
+  getSecondNuclearDecayGenerator(): SecondNuclearDecayGenerator {
+    return GeneratorRecord.secondNuclearDecayGenerator;
+  }
+
+  getThirdNuclearDecayGenerator(): ThirdNuclearDecayGenerator {
+    return GeneratorRecord.thirdNuclearDecayGenerator;
+  }
+
+  getFirstYellowPurpleGenerator(): FirstYellowPurpleGenerator {
+    return GeneratorRecord.firstYellowPurpleGenerator;
+  }
+
+  getSecondYellowPurpleGenerator(): SecondYellowPurpleGenerator {
+    return GeneratorRecord.secondYellowPurpleGenerator;
+  }
+
+  getThirdYellowPurpleGenerator(): ThirdYellowPurpleGenerator {
+    return GeneratorRecord.thirdYellowPurpleGenerator;
+  }
+
+  getFirstGreenPurpleGenerator(): FirstGreenPurpleGenerator {
+    return GeneratorRecord.firstGreenPurpleGenerator;
+  }
+
+  getSecondGreenPurpleGenerator(): SecondGreenPurpleGenerator {
+    return GeneratorRecord.secondGreenPurpleGenerator;
+  }
+
+  getThirdGreenPurpleGenerator(): ThirdGreenPurpleGenerator {
+    return GeneratorRecord.thirdGreenPurpleGenerator;
+  }
+
+  getFirstPurpleGenerator(): FirstPurpleGenerator {
+    return GeneratorRecord.firstPurpleGenerator;
+  }
+
+  getSecondPurpleGenerator(): SecondPurpleGenerator {
+    return GeneratorRecord.secondPurpleGenerator;
+  }
+
+  getThirdPurpleGenerator(): ThirdPurpleGenerator {
+    return GeneratorRecord.thirdPurpleGenerator;
+  }
+
+  getFourthPurpleGenerator(): FourthPurpleGenerator {
+    return GeneratorRecord.fourthPurpleGenerator;
+  }
+
+  getFifthPurpleGenerator(): FifthPurpleGenerator {
+    return GeneratorRecord.fifthPurpleGenerator;
   }
 }

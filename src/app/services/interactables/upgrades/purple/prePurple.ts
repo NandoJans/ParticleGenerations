@@ -47,7 +47,7 @@ export const prePurpleUpgrades: Upgrade[] = [
   },
 
   {
-    name: 'greeb-purple-booster', displayName: 'Green Purple Booster', description: 'Multiply the green purple generators by 2', auto: false,
+    name: 'green-purple-booster', displayName: 'Green Purple Booster', description: 'Multiply the green purple generators by 2', auto: false,
     baseCost: new Num(1,40), cost: new Num(1, 40), increase: new Num(1,100), scaling: new Num(1, 200), bought: new Num(0, 0), currency: 'greenParticles',
     baseBuffer: new Num(2, 0), buffer: new Num(2, 0), amount: new Num(0, 0), type: 'green-purple-upgrade', resetId: 'green-purple-upgrade', style: 'green-purple-style', unlocked: false, oneTime: false, resets: 'none', requirement: ['purples', new Num(4, 0)],
     action: (self: Upgrade) => {
