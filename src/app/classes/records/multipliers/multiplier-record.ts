@@ -27,4 +27,8 @@ export class MultiplierRecord {
   // Purple Phase
   static purpleParticleGenerators: Multiplier = new Multiplier('purpleParticleGenerators', new Num(1, 0))
   static gravityGenerators: Multiplier = new Multiplier('gravityGenerators', new Num(1, 0));
+  static greenParticlesGain: Multiplier = new Multiplier('greenParticlesGain', new Num(1, 0));
+  static blueLightGenerators: Multiplier = new Multiplier('blueLightGenerators', new Num(1, 0));
+  static blueLightPower: Multiplier = new Multiplier('blueLightPower', new Num(1, 0));
+  static yellowFusionBlueLightEffect: Multiplier = new Multiplier('yellowFusionBlueLightEffect', new Num(1, 0));
 }

@@ -14,8 +14,8 @@
   <p class="holding-prefix">The effect is {{ getYellowFusionToBlueLightEffect() }}.</p>
 </div>
 <div class="upgrade-row">
-  <div *ngFor="let upgrade of neutronStar">
-    <app-upgrade *ngIf="upgrade.unlocked" [upgrade]="upgrade"></app-upgrade>
+  <div>
+    <app-upgrade *ngIf="neutronStar.unlocked" [upgrade]="neutronStar"></app-upgrade>
   </div>
 </div>
 <app-particle-emitter style="width: 100%; height: 100%;" [type]="'light-particle-emitter'"></app-particle-emitter>

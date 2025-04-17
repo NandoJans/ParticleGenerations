@@ -8,7 +8,7 @@
   <app-button [text]="'Respec Green Souls'" (click)="respecSouls()" [style]="'sacrifice-button'"></app-button>
 </div>
 <div class="upgrade-row">
-  <div *ngFor="let upgrade of upgrades">
+  <div *ngFor="let upgrade of limitedUpgradeRecord.getList()">
     <app-upgrade *ngIf="upgrade.unlocked"  [upgrade]="upgrade"></app-upgrade>
   </div>
 </div>

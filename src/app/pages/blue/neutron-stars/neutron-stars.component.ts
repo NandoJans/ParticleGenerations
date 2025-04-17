@@ -1,30 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {UpgradeService} from "../../../services/interactables/upgrade.service";
-import {Upgrade} from "../../../globals";
 import {Num} from "../../../num";
 import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
+import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
+import {Upgrade} from "../../../classes/features/upgrade";
 
 @Component({
   selector: 'app-neutron-stars',
   templateUrl: './neutron-stars.component.html',
   styleUrls: ['./neutron-stars.component.css']
 })
-export class NeutronStarsComponent implements OnInit {
-  neutronStar: Upgrade[] | undefined;
-  upgrades: Upgrade[] | undefined;
-  onetimeUpgrades: Upgrade[] | undefined;
+export class NeutronStarsComponent {
+  neutronStar: Upgrade = UpgradeRecord.neutronStar;
+  upgrades: Upgrade[] = [
+    UpgradeRecord.blueLightAmplifier,
+    UpgradeRecord.blueLightIncreaser,
+    UpgradeRecord.yellowFusionAccelerator,
+    UpgradeRecord.yellowFusionEffectIncreaser
+  ];
+  onetimeUpgrades: Upgrade[] = [
+    UpgradeRecord.lightNeutronMultiplier,
+    UpgradeRecord.buffNuclearDecay
+  ];
   fusionEffect: any[] = ['yellowBlueLightEffect'];
   displayBlueLight: boolean = UpgradeService.getValue('neutron-star', 'bought').greq(new Num(1, 0));
 
   constructor(
     public holdingRecord: HoldingRecord
   ) { }
-
-  ngOnInit(): void {
-    this.neutronStar = UpgradeService.getUpgrades('neutron-star-upgrade');
-    this.upgrades = UpgradeService.getUpgrades('blue-light-upgrade');
-    this.onetimeUpgrades = UpgradeService.getUpgrades('blue-light-upgrade-onetime');
-  }
 
   getYellowFusionToBlueLightEffect() {
     // TODO: Implement this function

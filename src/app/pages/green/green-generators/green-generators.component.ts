@@ -1,25 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import {GeneratorService} from "../../../services/interactables/generator.service";
-import {Generator, Upgrade} from "../../../globals";
-import {UpgradeService} from "../../../services/interactables/upgrade.service";
 import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
+import {Generator} from "../../../classes/features/generator";
+import {Upgrade} from "../../../classes/features/upgrade";
+import {GeneratorRecord} from "../../../classes/records/generators/generator-record";
+import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
 
 @Component({
   selector: 'app-green-generators',
   templateUrl: './green-generators.component.html',
   styleUrls: ['./green-generators.component.css']
 })
-export class GreenGeneratorsComponent implements OnInit {
-  generators: Generator[] = [];
-  upgrades: Upgrade[] = [];
+export class GreenGeneratorsComponent {
+  generators: Generator[] = [
+    GeneratorRecord.firstGreenGenerator,
+    GeneratorRecord.secondGreenGenerator,
+    GeneratorRecord.thirdGreenGenerator,
+    GeneratorRecord.fourthGreenGenerator,
+    GeneratorRecord.fifthGreenGenerator,
+  ];
+  upgrades: Upgrade[] = [
+    UpgradeRecord.greenParticleMultiplier
+  ];
 
   constructor(
     public holdingRecord: HoldingRecord
   ) { }
-
-  ngOnInit(): void {
-    this.generators = GeneratorService.getGenerators('green-particles');
-    this.upgrades = UpgradeService.getUpgrades('green-upgrade');
-  }
 
 }

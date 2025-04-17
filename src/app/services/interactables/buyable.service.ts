@@ -5,9 +5,11 @@ import {Num} from "../../num";
 import {ResetService} from "./reset.service";
 import {UpgradeService} from "./upgrade.service";
 import {AutomatorService} from "./automator.service";
-import {Generator, Upgrade} from "../../globals";
-import {CombinerService} from "./combiner.service";
 import {NavigationsService} from "../navigations.service";
+import {Upgrade} from "../../classes/features/upgrade";
+import {Generator} from "../../classes/features/generator";
+import {GeneratorRecord} from "../../classes/records/generators/generator-record";
+import {UpgradeRecord} from "../../classes/records/upgrades/upgrade-record";
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +37,7 @@ export class BuyableService {
     const a = buyable.increase
     const b = buyable.scaling
     const c = buyable.bought
-    let x = HoldingsService.get(buyable.currency).div(split, false)
+    let x = buyable.currency.amount.div(split, false)
     const y = buyable.baseCost
     const two = new Num(2, 0)
     const four = new Num(4, 0)
@@ -50,7 +52,7 @@ export class BuyableService {
         let buyUntilScaling = x.div(y, false).ln(false).div(a.ln(false), false).floor(false)
         // @ts-ignore
         futureCost = y.mul(buyable.increase.pow(buyUntilScaling, false), false)
-        let leftOverCurrency = HoldingsService.get(buyable.currency).div(futureCost, false)
+        let leftOverCurrency = buyable.currency.amount.div(futureCost, false)
         // @ts-ignore
         let postScalingBuying = a.ln(false).sub(a.ln(false).pow(two, false).add(four.mul(b.ln(false), false).mul(leftOverCurrency.div(y, false).ln(false), false), false).sqrt(false), false).div(two.mul(b.ln(false), false), false)
         // @ts-ignore
@@ -78,7 +80,7 @@ export class BuyableService {
   }
 
   buy(name: string | undefined) {
-    GeneratorService.generators.forEach((buyable) => {
+    GeneratorRecord.list.forEach((buyable) => {
       if (buyable.name === name) {
         if (buyable.noMax !== undefined && buyable.noMax) {
           this.buyAction(buyable);
@@ -92,11 +94,11 @@ export class BuyableService {
         }
       }
     })
-    UpgradeService.upgrades.forEach((buyable) => {
-      if (buyable.name === name && HoldingsService.get(buyable.currency).greq(buyable.cost)) {
+    UpgradeRecord.list.forEach((buyable) => {
+      if (buyable.name === name && buyable.currency.amount.greq(buyable.cost)) {
         if (buyable.resets !== 'none' || (buyable.noMax !== undefined && buyable.noMax) || buyable.oneTime) {
           this.buyAction(buyable);
-          if (buyable.resets !== 'none') ResetService.reset(buyable.resets);
+          if (buyable.resets !== 'none') ResetService.reset(buyable.resetId);
         } else {
           const result = this.calculateBulk(buyable)
 
@@ -123,8 +125,8 @@ export class BuyableService {
 
   compare() {
     //console.clear();
-    GeneratorService.generators.forEach((buyable) => {
-      if (HoldingsService.get(buyable.currency).greq(buyable.cost) && buyable['unlocked'] && buyable['auto'] &&
+    GeneratorRecord.list.forEach((buyable) => {
+      if (buyable.currency.amount.greq(buyable.cost) && buyable['unlocked'] && buyable['auto'] &&
         // @ts-ignore
         (buyable.limit === undefined || !buyable.bought.greq(buyable.limit.sub(new Num(1, 0), false)))) {
         const result = this.calculateBulk(buyable)
@@ -139,7 +141,7 @@ export class BuyableService {
 
       if (buyable.unlocked && !buyable['auto']) {
         const button = (<HTMLButtonElement> document.getElementById('buyable-'+buyable.name))
-        if (HoldingsService.get(buyable.currency).greq(buyable.cost)) {
+        if (buyable.currency.amount.greq(buyable.cost)) {
           if (button !== null) {
             button.removeAttribute('disabled');
             button.classList.add('buyable');
@@ -154,19 +156,19 @@ export class BuyableService {
         }
       }
     })
-    UpgradeService.upgrades.forEach((buyable) => {
-      if (HoldingsService.get(buyable.currency).greq(buyable.cost) && buyable['unlocked'] && buyable['auto'] &&
+    UpgradeRecord.list.forEach((buyable) => {
+      if (buyable.currency.amount.greq(buyable.cost) && buyable['unlocked'] && buyable['auto'] &&
         // @ts-ignore
         (buyable.limit === undefined || !buyable.bought.greq(buyable.limit.sub(new Num(1, 0), false)))) {
         if (buyable.resets !== 'none' || buyable.oneTime) {
           if ((buyable.oneTime && !buyable.bought.greq(new Num(1, 0))) || !buyable.oneTime) this.buyAction(buyable);
-          if (buyable.resets !== 'none') ResetService.reset(buyable.resets);
+          if (buyable.resets !== 'none') ResetService.reset(buyable.resetId);
         } else {
           const result = this.calculateBulk(buyable)
           if (buyable.type === 'dark-upgrade') result[0].sub(new Num(1, 0));
 
           // @ts-ignore
-          if (result[0].greq(new Num(1, 0)) && HoldingsService.get(buyable.currency).greq(result[1])) {
+          if (result[0].greq(new Num(1, 0)) && buyable.currency.amount.greq(result[1])) {
             // @ts-ignore
             this.bulkBuyAction(buyable, result[1], result[0]);
           }
@@ -183,7 +185,7 @@ export class BuyableService {
           }
           if (buyable.subNav !== undefined && buyable.nav !== undefined) NavigationsService.removeBuyable(buyable.subNav, buyable.nav);
 
-        } else if (HoldingsService.get(buyable.currency).greq(buyable.cost)) {
+        } else if (buyable.currency.amount.greq(buyable.cost)) {
           if (button !== null) {
             button.removeAttribute('disabled');
             button.classList.add('buyable');
@@ -259,7 +261,7 @@ export class BuyableService {
   }
 
   correctCosts() {
-    GeneratorService.generators.forEach((buyable) => {
+    GeneratorRecord.list.forEach((buyable) => {
       if (!buyable.bought.greq(new Num(1, 0))) {
         buyable.cost = buyable.baseCost
       } else {
@@ -282,7 +284,7 @@ export class BuyableService {
         }
       }
     })
-    UpgradeService.upgrades.forEach((buyable) => {
+    UpgradeRecord.list.forEach((buyable) => {
       if (!buyable.bought.greq(new Num(1, 0))) {
         buyable.cost = buyable.baseCost
 

@@ -64,6 +64,14 @@ import {UnlockBlackHoleUpgrade} from "../../features/upgrades/unlock-black-hole-
 import {IncreaseBlackHoleSizeUpgrade} from "../../features/upgrades/increase-black-hole-size-upgrade";
 import {IncreaseBlackHoleMassUpgrade} from "../../features/upgrades/increase-black-hole-mass-upgrade";
 import {IncreaseBlackHoleGravityUpgrade} from "../../features/upgrades/increase-black-hole-gravity-upgrade";
+import {GreenParticleMultiplierUpgrade} from "../../features/upgrades/green-particle-multiplier-upgrade";
+import {NeutronStarUpgrade} from "../../features/upgrades/neutron-star-upgrade";
+import {BlueLightAmplifierUpgrade} from "../../features/upgrades/blue-light-amplifier-upgrade";
+import {BlueLightIncreaserUpgrade} from "../../features/upgrades/blue-light-increaser-upgrade";
+import {YellowFusionAcceleratorUpgrade} from "../../features/upgrades/yellow-fusion-accelerator-upgrade";
+import {YellowFusionEffectIncreaserUpgrade} from "../../features/upgrades/yellow-fusion-effect-increaser-upgrade";
+import {LightNeutronMultiplierUpgrade} from "../../features/upgrades/light-neutron-multiplier-upgrade";
+import {BuffNuclearDecayUpgrade} from "../../features/upgrades/buff-nuclear-decay-upgrade";
 
 export class UpgradeRecord extends Record {
   // Red Upgrades
@@ -108,6 +116,8 @@ export class UpgradeRecord extends Record {
   static yellowPurpleBoosterUpgrade: YellowPurpleBoosterUpgrade = new YellowPurpleBoosterUpgrade();
 
   // Green Phase
+  static greenParticleMultiplier: GreenParticleMultiplierUpgrade = new GreenParticleMultiplierUpgrade();
+
   static redParticleSacrifice: RedParticleSacrificeUpgrade = new RedParticleSacrificeUpgrade();
   static yellowParticleSacrifice: YellowParticleSacrificeUpgrade = new YellowParticleSacrificeUpgrade();
   static greenParticleSacrifice: GreenParticleSacrificeUpgrade = new GreenParticleSacrificeUpgrade();
@@ -139,12 +149,22 @@ export class UpgradeRecord extends Record {
   static greenPurpleBufferUpgrade: GreenPurpleBufferUpgrade = new GreenPurpleBufferUpgrade();
   static greenPurpleBoosterUpgrade: GreenPurpleBoosterUpgrade = new GreenPurpleBoosterUpgrade();
 
-  static bluePurpleBufferUpgrade: BluePurpleBufferUpgrade = new BluePurpleBufferUpgrade();
-  static bluePurpleBoosterUpgrade: BluePurpleBoosterUpgrade = new BluePurpleBoosterUpgrade();
+  // Blue Phase
+  static neutronStar: NeutronStarUpgrade = new NeutronStarUpgrade();
+  static blueLightAmplifier: BlueLightAmplifierUpgrade = new BlueLightAmplifierUpgrade();
+  static blueLightIncreaser: BlueLightIncreaserUpgrade = new BlueLightIncreaserUpgrade();
+  static yellowFusionAccelerator: YellowFusionAcceleratorUpgrade = new YellowFusionAcceleratorUpgrade();
+  static yellowFusionEffectIncreaser: YellowFusionEffectIncreaserUpgrade = new YellowFusionEffectIncreaserUpgrade();
+  static lightNeutronMultiplier: LightNeutronMultiplierUpgrade = new LightNeutronMultiplierUpgrade();
+  static buffNuclearDecay: BuffNuclearDecayUpgrade = new BuffNuclearDecayUpgrade();
 
+  static bluePurpleBufferUpgrade: BluePurpleBufferUpgrade = new BluePurpleBufferUpgrade();
+
+  static bluePurpleBoosterUpgrade: BluePurpleBoosterUpgrade = new BluePurpleBoosterUpgrade();
   static unlockBlackHoleUpgrade: UnlockBlackHoleUpgrade = new UnlockBlackHoleUpgrade();
   static increaseBlackHoleSize: IncreaseBlackHoleSizeUpgrade = new IncreaseBlackHoleSizeUpgrade();
   static increaseBlackHoleMass: IncreaseBlackHoleMassUpgrade = new IncreaseBlackHoleMassUpgrade();
+
   static increaseBlackHoleGravity: IncreaseBlackHoleGravityUpgrade = new IncreaseBlackHoleGravityUpgrade();
 
 
@@ -184,6 +204,11 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.accelerateYellowFusion,
     UpgradeRecord.increaseYellowFusion,
 
+    UpgradeRecord.yellowPurpleBufferUpgrade,
+    UpgradeRecord.yellowPurpleBoosterUpgrade,
+
+    UpgradeRecord.greenParticleMultiplier,
+
     UpgradeRecord.redParticleSacrifice,
     UpgradeRecord.yellowParticleSacrifice,
     UpgradeRecord.greenParticleSacrifice,
@@ -212,8 +237,25 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.nuclearDecayIncreaser,
     UpgradeRecord.betterNuclearDecay,
 
+    UpgradeRecord.neutronStar,
+
+    UpgradeRecord.blueLightAmplifier,
+    UpgradeRecord.blueLightIncreaser,
+    UpgradeRecord.yellowFusionAccelerator,
+    UpgradeRecord.yellowFusionEffectIncreaser,
+    UpgradeRecord.lightNeutronMultiplier,
+    UpgradeRecord.buffNuclearDecay,
+
     UpgradeRecord.greenPurpleBufferUpgrade,
+
     UpgradeRecord.greenPurpleBoosterUpgrade,
+    UpgradeRecord.bluePurpleBufferUpgrade,
+
+    UpgradeRecord.bluePurpleBoosterUpgrade,
+    UpgradeRecord.unlockBlackHoleUpgrade,
+    UpgradeRecord.increaseBlackHoleSize,
+    UpgradeRecord.increaseBlackHoleMass,
+    UpgradeRecord.increaseBlackHoleGravity,
   ]
 
   getList(): Upgrade[] {

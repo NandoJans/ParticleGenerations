@@ -37,6 +37,7 @@ import {FifthPurpleGenerator} from "../../features/generators/fifth-purple-gener
 import {FirstBluePurpleGenerator} from "../../features/generators/first-blue-purple-generator";
 import {SecondBluePurpleGenerator} from "../../features/generators/second-blue-purple-generator";
 import {ThirdBluePurpleGenerator} from "../../features/generators/third-blue-purple-generator";
+import {BlueLightGenerator} from "../../features/generators/blue-light-generator";
 
 export class GeneratorRecord extends Record {
   // Red Generators
@@ -75,6 +76,9 @@ export class GeneratorRecord extends Record {
   static secondNuclearDecayGenerator: SecondNuclearDecayGenerator = new SecondNuclearDecayGenerator();
   static thirdNuclearDecayGenerator: ThirdNuclearDecayGenerator = new ThirdNuclearDecayGenerator();
 
+  // Neutron Star Generator
+  static blueLightGenerator: BlueLightGenerator = new BlueLightGenerator();
+
   // Yellow Purple Generators
   static firstYellowPurpleGenerator: FirstYellowPurpleGenerator = new FirstYellowPurpleGenerator();
   static secondYellowPurpleGenerator: SecondYellowPurpleGenerator = new SecondYellowPurpleGenerator();
@@ -85,16 +89,17 @@ export class GeneratorRecord extends Record {
   static secondGreenPurpleGenerator: SecondGreenPurpleGenerator = new SecondGreenPurpleGenerator();
   static thirdGreenPurpleGenerator: ThirdGreenPurpleGenerator = new ThirdGreenPurpleGenerator();
 
+  // Blue Purple Generators
+  static firstBluePurpleGenerator: FirstBluePurpleGenerator = new FirstBluePurpleGenerator();
+  static secondBluePurpleGenerator: SecondBluePurpleGenerator = new SecondBluePurpleGenerator();
+  static thirdBluePurpleGenerator: ThirdBluePurpleGenerator = new ThirdBluePurpleGenerator();
+
   // Purple Generators
   static firstPurpleGenerator: FirstPurpleGenerator = new FirstPurpleGenerator();
   static secondPurpleGenerator: SecondPurpleGenerator = new SecondPurpleGenerator();
   static thirdPurpleGenerator: ThirdPurpleGenerator = new ThirdPurpleGenerator();
   static fourthPurpleGenerator: FourthPurpleGenerator = new FourthPurpleGenerator();
   static fifthPurpleGenerator: FifthPurpleGenerator = new FifthPurpleGenerator();
-
-  static firstBluePurpleGenerator: FirstBluePurpleGenerator = new FirstBluePurpleGenerator();
-  static secondBluePurpleGenerator: SecondBluePurpleGenerator = new SecondBluePurpleGenerator();
-  static thirdBluePurpleGenerator: ThirdBluePurpleGenerator = new ThirdBluePurpleGenerator();
 
 
   static override list: Generator[] = [
