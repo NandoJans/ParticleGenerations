@@ -12,5 +12,4 @@ export class FirstRedGenerator extends RedGenerator {
   generates: Generatable = HoldingRecord.redParticles;
   name: string = 'red-generator-1';
   increase: Num = new Num(1, 1);
-  softResetId: ResetKey = ResetHelper.registerReset(ResetKey.RED_EXTENSION, this);
 }

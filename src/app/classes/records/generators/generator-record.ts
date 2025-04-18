@@ -38,6 +38,14 @@ import {FirstBluePurpleGenerator} from "../../features/generators/first-blue-pur
 import {SecondBluePurpleGenerator} from "../../features/generators/second-blue-purple-generator";
 import {ThirdBluePurpleGenerator} from "../../features/generators/third-blue-purple-generator";
 import {BlueLightGenerator} from "../../features/generators/blue-light-generator";
+import {FirstBlueNeutronGenerator} from "../../features/generators/first-blue-neutron-generator";
+import {SecondBlueNeutronGenerator} from "../../features/generators/second-blue-neutron-generator";
+import {ThirdBlueNeutronGenerator} from "../../features/generators/third-blue-neutron-generator";
+import {FirstBlueGenerator} from "../../features/generators/first-blue-generator";
+import {SecondBlueGenerator} from "../../features/generators/second-blue-generator";
+import {ThirdBlueGenerator} from "../../features/generators/third-blue-generator";
+import {FourthBlueGenerator} from "../../features/generators/fourth-blue-generator";
+import {FifthBlueGenerator} from "../../features/generators/fifth-blue-generator";
 
 export class GeneratorRecord extends Record {
   // Red Generators
@@ -76,8 +84,20 @@ export class GeneratorRecord extends Record {
   static secondNuclearDecayGenerator: SecondNuclearDecayGenerator = new SecondNuclearDecayGenerator();
   static thirdNuclearDecayGenerator: ThirdNuclearDecayGenerator = new ThirdNuclearDecayGenerator();
 
+  // Neutron generators
+  static firstBlueNeutronGenerator: FirstBlueNeutronGenerator = new FirstBlueNeutronGenerator();
+  static secondBlueNeutronGenerator: SecondBlueNeutronGenerator = new SecondBlueNeutronGenerator();
+  static thirdBlueNeutronGenerator: ThirdBlueNeutronGenerator = new ThirdBlueNeutronGenerator();
+
   // Neutron Star Generator
   static blueLightGenerator: BlueLightGenerator = new BlueLightGenerator();
+
+  // Blue Generators
+  static firstBlueGenerator: FirstBlueGenerator = new FirstBlueGenerator();
+  static secondBlueGenerator: SecondBlueGenerator = new SecondBlueGenerator();
+  static thirdBlueGenerator: ThirdBlueGenerator = new ThirdBlueGenerator();
+  static fourthBlueGenerator: FourthBlueGenerator = new FourthBlueGenerator();
+  static fifthBlueGenerator: FifthBlueGenerator = new FifthBlueGenerator();
 
   // Yellow Purple Generators
   static firstYellowPurpleGenerator: FirstYellowPurpleGenerator = new FirstYellowPurpleGenerator();
@@ -140,15 +160,27 @@ export class GeneratorRecord extends Record {
     GeneratorRecord.secondGreenPurpleGenerator,
     GeneratorRecord.thirdGreenPurpleGenerator,
 
+    GeneratorRecord.firstBlueNeutronGenerator,
+    GeneratorRecord.secondBlueNeutronGenerator,
+    GeneratorRecord.thirdBlueNeutronGenerator,
+
+    GeneratorRecord.blueLightGenerator,
+
+    GeneratorRecord.firstBlueGenerator,
+    GeneratorRecord.secondBlueGenerator,
+    GeneratorRecord.thirdBlueGenerator,
+    GeneratorRecord.fourthBlueGenerator,
+    GeneratorRecord.fifthBlueGenerator,
+
+    GeneratorRecord.firstBluePurpleGenerator,
+    GeneratorRecord.secondBluePurpleGenerator,
+    GeneratorRecord.thirdBluePurpleGenerator,
+
     GeneratorRecord.firstPurpleGenerator,
     GeneratorRecord.secondPurpleGenerator,
     GeneratorRecord.thirdPurpleGenerator,
     GeneratorRecord.fourthPurpleGenerator,
     GeneratorRecord.fifthPurpleGenerator,
-
-    GeneratorRecord.firstBluePurpleGenerator,
-    GeneratorRecord.secondBluePurpleGenerator,
-    GeneratorRecord.thirdBluePurpleGenerator,
   ]
 
   getList(): Generator[] {
@@ -277,5 +309,17 @@ export class GeneratorRecord extends Record {
 
   getFifthPurpleGenerator(): FifthPurpleGenerator {
     return GeneratorRecord.fifthPurpleGenerator;
+  }
+
+  load() {
+    this.getList().forEach((generator) => {
+      generator.tryLoad();
+    });
+  }
+
+  save() {
+    this.getList().forEach((generator) => {
+      generator.save();
+    });
   }
 }

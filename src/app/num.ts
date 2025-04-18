@@ -424,9 +424,9 @@ export class Num {
     return this.exp == x.exp && this.num == x.num;
   }
 
-  setValue = (json: Num) => {
-    this.num = json.num;
-    this.exp = json.exp;
+  setValue = (num: Num) => {
+    this.num = num.num;
+    this.exp = num.exp;
   }
 
   getExponent = () => {

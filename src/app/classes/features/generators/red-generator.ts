@@ -12,6 +12,7 @@ import {ResetHelper} from "../../helpers/reset-helper";
 export abstract class RedGenerator extends Generator {
   type: string = 'red-particles';
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED_EXTENSION, this);
+  softResetId: ResetKey = ResetHelper.registerSoftReset(ResetKey.RED_EXTENSION, this);
   override unlocked: boolean = false;
   requirement: Requirement[] = [];
   currency: Holding = HoldingRecord.redParticles;

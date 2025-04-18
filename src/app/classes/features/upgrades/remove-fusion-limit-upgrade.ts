@@ -12,7 +12,7 @@ export class RemoveFusionLimitUpgrade extends LimitedUpgrade {
 
   override action(): Num {
     super.action();
-    HoldingRecord.yellowFusion.maxAmount = undefined;
+    HoldingRecord.yellowFusion.maxAmount = new Num(1, Infinity);
     return new Num(0, 0);
   }
 

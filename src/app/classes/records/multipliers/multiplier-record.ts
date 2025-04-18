@@ -31,4 +31,10 @@ export class MultiplierRecord {
   static blueLightGenerators: Multiplier = new Multiplier('blueLightGenerators', new Num(1, 0));
   static blueLightPower: Multiplier = new Multiplier('blueLightPower', new Num(1, 0));
   static yellowFusionBlueLightEffect: Multiplier = new Multiplier('yellowFusionBlueLightEffect', new Num(1, 0));
+  static blueParticlesGain: Multiplier = new Multiplier('blueParticlesGain', new Num(1, 0));
+  static darkPowerPower: Multiplier = new Multiplier('darkPowerPower', new Num(1, 0));
+  static blueNeutronGenerators: Multiplier = new Multiplier('blueNeutronGenerators', new Num(1, 0));
+  static yellowPowerPower: Multiplier = new Multiplier('yellowPowerPower', new Num(1, 0));
+  static blueNeutronPower: Multiplier = new Multiplier('blueNeutronPower', new Num(1, 0));
+  static blueParticleGenerators: Multiplier = new Multiplier('blueParticleGenerators', new Num(1, 0));
 }

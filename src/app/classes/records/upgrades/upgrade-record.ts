@@ -72,6 +72,23 @@ import {YellowFusionAcceleratorUpgrade} from "../../features/upgrades/yellow-fus
 import {YellowFusionEffectIncreaserUpgrade} from "../../features/upgrades/yellow-fusion-effect-increaser-upgrade";
 import {LightNeutronMultiplierUpgrade} from "../../features/upgrades/light-neutron-multiplier-upgrade";
 import {BuffNuclearDecayUpgrade} from "../../features/upgrades/buff-nuclear-decay-upgrade";
+import {BlueParticleMultiplierUpgrade} from "../../features/upgrades/blue-particle-multiplier-upgrade";
+import {BlueLightUpgrade} from "../../features/upgrades/blue-light-upgrade";
+import {BlueLightMultiplierRepeatableUpgrade} from "../../features/upgrades/blue-light-multiplier-repeatable-upgrade";
+import {MorePowerfulDarkAgeUpgrade} from "../../features/upgrades/more-powerful-dark-age-upgrade";
+import {LightBoostsNeutronsUpgrade} from "../../features/upgrades/light-boosts-neutrons-upgrade";
+import {IncreasedYellowPowerUpgrade} from "../../features/upgrades/increased-yellow-power-upgrade";
+import {YellowFusionBoostsGreenUpgrade} from "../../features/upgrades/yellow-fusion-boosts-green-upgrade";
+import {ExtraBlueLightUpgradesUpgrade} from "../../features/upgrades/extra-blue-light-upgrades-upgrade";
+import {GreenIdleGainUpgrade} from "../../features/upgrades/green-idle-gain-upgrade";
+import {BlueNeutronAmplifierUpgrade} from "../../features/upgrades/blue-neutron-amplifier-upgrade";
+import {
+  FirstBlueNeutronGeneratorBoostUpgrade
+} from "../../features/upgrades/first-blue-neutron-generator-boost-upgrade";
+import {SecondBlueNeutronGenerator} from "../../features/generators/second-blue-neutron-generator";
+import {
+  SecondBlueNeutronGeneratorBoostUpgrade
+} from "../../features/upgrades/second-blue-neutron-generator-boost-upgrade";
 
 export class UpgradeRecord extends Record {
   // Red Upgrades
@@ -150,6 +167,10 @@ export class UpgradeRecord extends Record {
   static greenPurpleBoosterUpgrade: GreenPurpleBoosterUpgrade = new GreenPurpleBoosterUpgrade();
 
   // Blue Phase
+  static blueNeutronAmplifier: BlueNeutronAmplifierUpgrade = new BlueNeutronAmplifierUpgrade();
+  static firstBlueNeutronGeneratorBoost: FirstBlueNeutronGeneratorBoostUpgrade = new FirstBlueNeutronGeneratorBoostUpgrade();
+  static secondBlueNeutronGeneratorBoost: SecondBlueNeutronGeneratorBoostUpgrade = new SecondBlueNeutronGeneratorBoostUpgrade();
+
   static neutronStar: NeutronStarUpgrade = new NeutronStarUpgrade();
   static blueLightAmplifier: BlueLightAmplifierUpgrade = new BlueLightAmplifierUpgrade();
   static blueLightIncreaser: BlueLightIncreaserUpgrade = new BlueLightIncreaserUpgrade();
@@ -157,6 +178,15 @@ export class UpgradeRecord extends Record {
   static yellowFusionEffectIncreaser: YellowFusionEffectIncreaserUpgrade = new YellowFusionEffectIncreaserUpgrade();
   static lightNeutronMultiplier: LightNeutronMultiplierUpgrade = new LightNeutronMultiplierUpgrade();
   static buffNuclearDecay: BuffNuclearDecayUpgrade = new BuffNuclearDecayUpgrade();
+
+  static blueParticleMultiplier: BlueParticleMultiplierUpgrade = new BlueParticleMultiplierUpgrade();
+  static blueLightMultiplierRepeatable: BlueLightMultiplierRepeatableUpgrade = new BlueLightMultiplierRepeatableUpgrade();
+  static morePowerfulDarkAge: MorePowerfulDarkAgeUpgrade = new MorePowerfulDarkAgeUpgrade();
+  static lightBoostsNeutrons: LightBoostsNeutronsUpgrade = new LightBoostsNeutronsUpgrade();
+  static increasedYellowPower: IncreasedYellowPowerUpgrade = new IncreasedYellowPowerUpgrade();
+  static yellowFusionBoostsGreen: YellowFusionBoostsGreenUpgrade = new YellowFusionBoostsGreenUpgrade();
+  static extraBlueLightUpgrades: ExtraBlueLightUpgradesUpgrade = new ExtraBlueLightUpgradesUpgrade();
+  static greenIdleGain: GreenIdleGainUpgrade = new GreenIdleGainUpgrade();
 
   static bluePurpleBufferUpgrade: BluePurpleBufferUpgrade = new BluePurpleBufferUpgrade();
 
@@ -237,6 +267,19 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.nuclearDecayIncreaser,
     UpgradeRecord.betterNuclearDecay,
 
+    UpgradeRecord.blueNeutronAmplifier,
+    UpgradeRecord.firstBlueNeutronGeneratorBoost,
+    UpgradeRecord.secondBlueNeutronGeneratorBoost,
+
+    UpgradeRecord.blueParticleMultiplier,
+    UpgradeRecord.blueLightMultiplierRepeatable,
+    UpgradeRecord.morePowerfulDarkAge,
+    UpgradeRecord.lightBoostsNeutrons,
+    UpgradeRecord.increasedYellowPower,
+    UpgradeRecord.yellowFusionBoostsGreen,
+    UpgradeRecord.extraBlueLightUpgrades,
+    UpgradeRecord.greenIdleGain,
+
     UpgradeRecord.neutronStar,
 
     UpgradeRecord.blueLightAmplifier,
@@ -260,5 +303,19 @@ export class UpgradeRecord extends Record {
 
   getList(): Upgrade[] {
     return UpgradeRecord.list;
+  }
+
+  save() {
+    this.getList().forEach(upgrade => {
+      if (upgrade.isUnlocked()) {
+        upgrade.save();
+      }
+    });
+  }
+
+  load() {
+    this.getList().forEach(upgrade => {
+      upgrade.tryLoad();
+    });
   }
 }

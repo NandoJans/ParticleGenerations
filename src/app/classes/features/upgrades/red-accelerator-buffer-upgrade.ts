@@ -8,7 +8,7 @@ export class RedAcceleratorBufferUpgrade extends LimitedUpgrade {
   baseCost: Num = new Num(1, 0);
   cost: Num = new Num(1, 0);
 
-  override action(): undefined {
+  override action(): Num {
     HoldingRecord.redAccelerators.buffed = true;
     return super.action();
   }
