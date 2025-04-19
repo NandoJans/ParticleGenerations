@@ -1,7 +1,6 @@
 import {Num} from "../../../num";
 import {Requirement} from "../interfaces/requirement";
 import {ResetKey} from "../../enums/reset-key";
-import {UpgradeService} from "../../../services/interactables/upgrade.service";
 import {RedUpgrade} from "./red-upgrade";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";

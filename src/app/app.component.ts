@@ -19,9 +19,8 @@ export class AppComponent implements OnInit{
     private tick: TickService,
     private router: Router,
     private challengeService: ChallengeService,
-    private dataManagerService: DataManagerService,
+    private dataManagerService: DataManagerService
   ) {
-    NavigationsService.setRouter(router);
     App.subscribe().subscribe((data) => {
       if (data) {
         setTimeout(() => {

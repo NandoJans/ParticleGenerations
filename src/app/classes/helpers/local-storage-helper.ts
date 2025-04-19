@@ -56,6 +56,9 @@ export class LocalStorageHelper {
   }
 
   loadNum(ifNotSet: Num, key: string = ''): Num {
+    if (this.storage[this.key] === undefined) {
+      this.storage[this.key] = ifNotSet
+    }
     if (key) {
       return Num.fromStorage(this.storage[this.key][key]) || ifNotSet
     } else {

@@ -4,70 +4,34 @@ import {GlobalMultipliersService} from "./globals/global-multipliers.service";
 import {Num} from "../num";
 import {DataManagerService} from "./data-manager.service";
 import {App} from "../App";
+import {GeneratorService} from "./interactables/generator.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TickService {
+  mainInterval: any;
 
-  constructor() { }
+  constructor(
+    private dataManagerService: DataManagerService,
+    private generatorService: GeneratorService,
+  ) { }
 
-  mainAction(speed: Num) {
-
-
-  }
-
+  /**
+   * Game tick function for running the game logic. The game tick is called every 50ms.
+   * @param speed The speed of the game tick. This is used to slow down the game tick for testing purposes.
+   */
   gameTick(speed: Num = new Num(1, 0)) {
-
+    this.generatorService.tick(speed);
   }
 
   iterations: number = 0;
 
   tick() {
-    //ResetService.reset('purple')
-    //localStorage.clear();
-    let lastCalled: number;
-    if (localStorage['lastCalled'] === undefined) {
-      localStorage['lastCalled'] = JSON.stringify(Date.now())
-      lastCalled = Date.now()
-    } else {
-      lastCalled = JSON.parse(localStorage['lastCalled']);
-      if (Date.now() - localStorage['lastCalled'] > 86400000) {
-        localStorage['lastCalled'] = Date.now() - 86400000
-      }
-    }
-    App.startHaltNuclearDecay();
-    GlobalMultipliersService.resetAfter();
-    App.purplePhase = HoldingsService.get('purples').greq(new Num(1, 0));
 
-    const mainInterval = setInterval(() => {
-      if (!HoldingsService.get('greenEnergy').greq(new Num(1, 0))) {HoldingsService.set('greenEnergy', new Num(1, 0))}
-      if (!HoldingsService.get('redParticles').greq(new Num(2, 1))) {HoldingsService.set('redParticles', new Num(2, 1))}
-      if (!HoldingsService.get('yellowParticles').greq(new Num(1, 0)) && !App.purplePhase) {HoldingsService.set('yellowParticles', new Num(0, 0))}
-      if (!HoldingsService.get('greenParticles').greq(new Num(1, 0)) && !App.purplePhase) {HoldingsService.set('greenParticles', new Num(0, 0))}
-
-      if (lastCalled+10000 < Date.now()) {
-        if (!App.isIdling) {
-          const idleGain = setInterval(() => {
-            App.isIdling = true;
-            this.gameTick(new Num(2, 3))
-
-            lastCalled += 100000;
-            localStorage['lastCalled'] = JSON.stringify(lastCalled)
-            if (lastCalled >= Date.now()-100000) {
-              clearInterval(idleGain);
-              App.isIdling = false;
-            }
-            console.log('Idling')
-          }, 5)
-        }
-      } else {
-        this.iterations++;
-        this.gameTick(new Num(1, 0))
-
-        lastCalled = Date.now();
-        localStorage['lastCalled'] = JSON.stringify(lastCalled)
-      }
+    this.mainInterval = setInterval(() => {
+      this.iterations++;
+      this.gameTick()
     }, 50)
 
     setInterval(() => {
@@ -76,8 +40,7 @@ export class TickService {
     }, 1000)
 
     setInterval(() => {
-      //ParticleEmitterService.tick();
-      DataManagerService.save()
+      this.dataManagerService.save()
     }, 5000)
   }
 }

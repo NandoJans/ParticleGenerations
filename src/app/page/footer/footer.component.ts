@@ -13,28 +13,34 @@ export class FooterComponent implements OnInit {
   navigations: Navigation[] = [];
   subNavigations: SubNavigation[] = [];
 
-  constructor(private navigation: NavigationsService, private router: Router) {
+  constructor(
+    private navigationsService: NavigationsService,
+    private router: Router
+  ) {
     App.subscribe().subscribe(
       (data) => {
         if (!data) {
-          this.setNavigation(NavigationsService.getNavigation(NavigationsService.selectedNavigation));
+          this.setNavigation(navigationsService.getNavigation(navigationsService.selectedNavigation));
         }
       }
     )
   }
 
   setNavigation(event: any) {
-    NavigationsService.selectedNavigation = event['name']
+    this.navigationsService.selectedNavigation = event['name']
     this.ngOnInit();
   }
 
   navigate(event: any) {
-    NavigationsService.navigate(event);
+    this.navigationsService.navigate(event);
   }
 
   ngOnInit(): void {
-    this.navigations = NavigationsService.getNavigations();
-    this.subNavigations = NavigationsService.getSubNavigations(NavigationsService.selectedNavigation);
-    this.router.navigate([NavigationsService.selectedNavigation+'/'+NavigationsService.getNavigationValue(NavigationsService.selectedNavigation, 'wasOn')])
+    this.navigations = this.navigationsService.getNavigations();
+    this.subNavigations = this.navigationsService.getSubNavigations(this.navigationsService.selectedNavigation);
+    this.router.navigate([
+      this.navigationsService.selectedNavigation+'/'+
+      this.navigationsService.getNavigationValue(this.navigationsService.selectedNavigation, 'wasOn')
+    ])
   }
 }

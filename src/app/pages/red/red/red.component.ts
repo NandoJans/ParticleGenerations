@@ -18,8 +18,7 @@ export class RedComponent {
     GeneratorRecord.fifthRedGenerator,
   ];
   upgrades: Upgrade[] = [
-    UpgradeRecord.redGeneratorExtension,
-    UpgradeRecord.redGeneratorBooster,
+    UpgradeRecord.redGeneratorExtension
   ];
   infoText: string[] = [
     'Red Generators are the base of this game. The first generator generates red particles while the other generators generate generators a level below themself. For example: two generates one, three generates two, and so on.',

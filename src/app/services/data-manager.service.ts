@@ -18,6 +18,7 @@ export class DataManagerService {
     private holdingRecord: HoldingRecord,
     private generatorRecord: GeneratorRecord,
     private upgradeRecord: UpgradeRecord,
+    private navigationsService: NavigationsService,
   ) {
   }
 
@@ -25,21 +26,18 @@ export class DataManagerService {
     this.holdingRecord.save()
     this.generatorRecord.save()
     this.upgradeRecord.save()
-    NavigationsService.save();
+    this.navigationsService.save();
     ChallengeService.save();
     CombinerService.save();
     BlackHoleService.save();
   }
-
-  static save() {}
-  static load() {}
 
   load() {
     if (localStorage['holdings'] !== undefined) this.holdingRecord.load();
     if (localStorage['generators'] !== undefined) this.generatorRecord.load();
     if (localStorage['upgrades'] !== undefined) this.upgradeRecord.load();
     // if (localStorage['prestiges'] !== undefined) PrestigeLayersService.load();
-    if (localStorage['navigations'] !== undefined) NavigationsService.load();
+    if (localStorage['navigations'] !== undefined) this.navigationsService.load();
     if (localStorage['challenges'] !== undefined) ChallengeService.load();
     // if (localStorage['automators'] !== undefined) AutomatorService.load();
     if (localStorage['blackHoleStatus'] !== undefined) BlackHoleService.load();

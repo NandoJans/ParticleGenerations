@@ -1,6 +1,0 @@
-<div class="upgrade-row">
-  <div *ngFor="let upgrade of redUpgradeRecord.getList()">
-    <app-upgrade *ngIf="upgrade.unlocked"  [upgrade]="upgrade"></app-upgrade>
-  </div>
-</div>
-<app-info style="width: 60%" [name]="'red-generators-info'" [text]="infoText"></app-info>

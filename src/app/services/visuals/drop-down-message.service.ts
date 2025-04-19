@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class DropDownMessageService {
   constructor() { }
 
-  static dropDown(title: string, message: string) {
+  dropDown(title: string, message: string) {
     const dropDownElement: HTMLElement = <HTMLElement> document.getElementById('drop-down-message')
     const dropDownTitle: HTMLElement = <HTMLElement> document.getElementById('ddm-title')
     const dropDownContent: HTMLElement = <HTMLElement> document.getElementById('ddm-content')

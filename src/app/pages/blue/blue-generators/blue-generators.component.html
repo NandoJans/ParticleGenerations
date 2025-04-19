@@ -1,7 +1,0 @@
-<app-number-display [holding]="holdingRecord.getBlueHydrogen()"></app-number-display>
-<div class="generators-row">
-  <div *ngFor="let generator of generators">
-    <app-generator *ngIf="generator.unlocked" [generator]="generator"></app-generator>
-  </div>
-</div>
-<app-particle-emitter style="width: 100%; height: 100%;" [type]="'green-particle-emitter'"></app-particle-emitter>

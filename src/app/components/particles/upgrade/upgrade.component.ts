@@ -1,5 +1,4 @@
 import {Component, Input} from '@angular/core';
-import {BuyableService} from "../../../services/interactables/buyable.service";
 import {Upgrade} from "../../../classes/features/upgrade";
 import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
 
@@ -11,9 +10,7 @@ import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
 export class UpgradeComponent {
   @Input() upgrade: Upgrade = UpgradeRecord.redGeneratorExtension;
 
-  constructor(
-    private buyableService: BuyableService
-  ) { }
+  constructor() { }
 
   buy() {
     this.upgrade.buy()

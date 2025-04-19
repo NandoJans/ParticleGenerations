@@ -6,6 +6,7 @@ import {RedGenerator} from "./red-generator";
 import {ResetHelper} from "../../helpers/reset-helper";
 
 export class FirstRedGenerator extends RedGenerator {
+  override unlocked: boolean = true;
   baseCost: Num = new Num(1, 1);
   cost: Num = new Num(1, 1);
   displayName: string = 'Red Generator 1';

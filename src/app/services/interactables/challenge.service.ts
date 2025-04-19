@@ -95,7 +95,6 @@ export class ChallengeService {
         HoldingsService.set('yellowFusion', new Num(0, 0));
         ChallengeService.resetChallenges();
         App.next();
-        DataManagerService.load();
       }
     })
   }
@@ -108,10 +107,8 @@ export class ChallengeService {
       this.activeChallenge.completed.add(new Num(1, 0));
     }
     this.activeChallenge = undefined;
-    DataManagerService.save();
     ChallengeService.resetChallenges();
     App.next()
-    DataManagerService.load();
   }
 
   static leaveChallenge() {
@@ -120,7 +117,6 @@ export class ChallengeService {
       this.activeChallenge = undefined;
       ChallengeService.resetChallenges();
       App.next()
-      DataManagerService.load();
     }
   }
 
@@ -165,7 +161,7 @@ export class ChallengeService {
   static unlock() {
     this.challenges.forEach(challenge => {
       if (HoldingsService.get(challenge.requirement[0]).greq(challenge.requirement[1])) {
-        if (!challenge.unlocked) DropDownMessageService.dropDown('Challenge Unlocked!', 'You have unlocked '+challenge.displayName);
+
         challenge.unlocked = true;
       }
       if (
