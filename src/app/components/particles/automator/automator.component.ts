@@ -29,19 +29,19 @@ export class AutomatorComponent implements OnInit {
 
   setAutomationType(type: string) {
     if (typeof this.name === 'string') {
-      AutomatorService.setValue(this.name, 'prestigeType', type)
+      return "";
     }
+    return "";
   }
 
   getAutomationType() {
     if (typeof this.name === 'string') {
-      return AutomatorService.getValue(this.name, 'prestigeType')
+      return "";
     }
+    return "";
   }
 
   onChange() {
-    AutomatorService.setActive(this.name, this.formGroup.value.active)
-    if (this.isPrestigeAutomator) AutomatorService.setWaitFor(this.name, this.formGroup.value.waitFor)
   }
 
   ngOnInit(): void {
@@ -50,8 +50,6 @@ export class AutomatorComponent implements OnInit {
     this.cost = this.automator?.cost;
     this.currency = this.automator?.currency;
     this.style = this.automator?.style;
-    this.waitForValue = AutomatorService.getWaitFor(this.name).toString();
-    this.activeValue = AutomatorService.getActive(this.name);
   }
 
 }

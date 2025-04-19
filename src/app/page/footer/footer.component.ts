@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {NavigationsService} from "../../services/navigations.service";
 import {Navigation, SubNavigation} from "../../globals";
 import {Router} from "@angular/router";
-import {NumberDisplayService} from "../../services/number-display.service";
 import {App} from "../../App";
 
 @Component({

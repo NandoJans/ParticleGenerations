@@ -37,4 +37,5 @@ export class MultiplierRecord {
   static yellowPowerPower: Multiplier = new Multiplier('yellowPowerPower', new Num(1, 0));
   static blueNeutronPower: Multiplier = new Multiplier('blueNeutronPower', new Num(1, 0));
   static blueParticleGenerators: Multiplier = new Multiplier('blueParticleGenerators', new Num(1, 0));
+  static nuclearDecayPower: Multiplier = new Multiplier('nuclearDecayPower', new Num(1, 0))
 }

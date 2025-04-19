@@ -14,8 +14,6 @@ export class BlueAutomatorsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.automators = AutomatorService.getAutomators('blue-automators')
-    this.upgradeAutomators = AutomatorService.getAutomators('blue-upgrade-automators')
   }
 
 }

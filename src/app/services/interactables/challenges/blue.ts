@@ -1,6 +1,5 @@
-import {Challenge, Generator} from "../../../globals";
+import {Challenge} from "../../../globals";
 import {Num} from "../../../num";
-import {UpgradeService} from "../upgrade.service";
 import {GeneratorService} from "../generator.service";
 import {HoldingsService} from "../../holdings.service";
 import {GlobalMultipliersService} from "../../globals/global-multipliers.service";
@@ -28,16 +27,6 @@ export const blueChallenges:Challenge[] = [
     nerfs: (self: Challenge) => {
       HoldingsService.set('darkPower', new Num(0, 0))
       HoldingsService.set('redAccelerators', new Num(1, 0));
-      UpgradeService.disableUpgrades('red-upgrades');
-      UpgradeService.disableUpgrades('red-accelerators');
-      UpgradeService.disableUpgrade('red-generator-extension');
-      GeneratorService.disableGenerators('red-accelerators');
-      GeneratorService.disableGenerator('red-generator-2');
-      GeneratorService.disableGenerator('red-generator-3');
-      GeneratorService.disableGenerator('red-generator-4');
-      GeneratorService.disableGenerator('red-generator-5');
-      UpgradeService.disableUpgrades('nuclear-decay');
-      GeneratorService.disableGenerators('nuclear-decay');
     }
   },
   {
@@ -59,12 +48,6 @@ export const blueChallenges:Challenge[] = [
       }
     },
     nerfs: (self: Challenge) => {
-      GeneratorService.disableGenerators('nuclear-decay');
-      UpgradeService.disableUpgrades('nuclear-decay');
-      GeneratorService.disableGenerators('yellow-particles');
-      GeneratorService.disableGenerators('yellow-fusion');
-      UpgradeService.disableUpgrades('yellow-upgrades');
-      UpgradeService.disableUpgrades('yellow-fusion');
       ChallengeService.disableChallenges('yellow-challenges');
     }
   },
@@ -87,11 +70,6 @@ export const blueChallenges:Challenge[] = [
       }
     },
     nerfs: (self: Challenge) => {
-      GeneratorService.disableGenerators('green-particles');
-      GeneratorService.disableGenerators('nuclear-decay');
-      UpgradeService.disableUpgrades('green-limited-upgrades');
-      UpgradeService.disableUpgrades('nuclear-decay');
-      UpgradeService.disableUpgrades('dark-upgrade');
       HoldingsService.set('yellowFusion', new Num(1, 110));
     }
   },
@@ -102,7 +80,6 @@ export const blueChallenges:Challenge[] = [
     requirement: ['blueParticles', new Num(1, 8)],
     reward: (self: Challenge) => {
     if (self.completed instanceof Num) {
-      const generator: Generator = GeneratorService.getGenerator('green-generator-1')
       // @ts-ignore
       const buff: Num | undefined = generator.amount.mul(generator.multiplier, false).pow(new Num(3, 1).mul(self.completed, false), false)
       // @ts-ignore
@@ -115,8 +92,6 @@ export const blueChallenges:Challenge[] = [
     nerfs: (self: Challenge) => {
       HoldingsService.set('greenEnergy', new Num(1, 0))
       HoldingsService.set('yellowPower', new Num(1, 0))
-      GeneratorService.setValue('green-generator-1', 'generates', 'yellow-generator-5')
-      GeneratorService.setValue('yellow-generator-1', 'generates', 'red-generator-5')
     }
   },
   {
@@ -137,13 +112,6 @@ export const blueChallenges:Challenge[] = [
     },
     nerfs: (self: Challenge) => {
       ChallengeService.disableChallenges('yellow-challenges');
-      UpgradeService.disableUpgrades('red-accelerators');
-      UpgradeService.disableUpgrades('yellow-upgrades');
-      UpgradeService.disableUpgrades('red-upgrades');
-      UpgradeService.disableUpgrades('nuclear-decay');
-      UpgradeService.disableUpgrades('green-limited-upgrades');
-      GeneratorService.disableGenerators('nuclear-decay');
-      UpgradeService.disableUpgrade('red-generator-extension');
 
       //UpgradeService.setValue('dark-yellow-fusion', 'buffer', new Num(1, 10))
       //UpgradeService.setValue('dark-green-generators', 'buffer', new Num(6, 0))
@@ -161,7 +129,6 @@ export const blueChallenges:Challenge[] = [
       if (self.completed instanceof Num) {
         // @ts-ignore
         const buff: Num | undefined = new Num(1.8, 0).pow(self.completed, false);
-        UpgradeService.getValue('blue-light-multiplier-repeatable', 'buffer').mul(buff);
         // @ts-ignore
         return buff;
       } else {
@@ -203,19 +170,8 @@ export const blueChallenges:Challenge[] = [
       }
     },
     nerfs: (self: Challenge) => {
-      GeneratorService.disableGenerators('nuclear-decay');
-      UpgradeService.disableUpgrades('nuclear-decay');
-      GeneratorService.disableGenerators('yellow-particles');
-      GeneratorService.disableGenerators('yellow-fusion');
-      UpgradeService.disableUpgrades('yellow-upgrades');
-      UpgradeService.disableUpgrades('yellow-fusion');
       ChallengeService.disableChallenges('yellow-challenges');
 
-      GeneratorService.disableGenerators('green-particles');
-      GeneratorService.disableGenerators('nuclear-decay');
-      UpgradeService.disableUpgrades('green-limited-upgrades');
-      UpgradeService.disableUpgrades('nuclear-decay');
-      UpgradeService.disableUpgrades('dark-upgrade');
       HoldingsService.set('yellowFusion', new Num(1, 110));
     }
   },
@@ -226,43 +182,12 @@ export const blueChallenges:Challenge[] = [
     requirement: ['blueParticles', new Num(1, 30)],
     reward: (self: Challenge) => {
       if (self.completed instanceof Num) {
-        // @ts-ignore
-        const buff: Num | undefined = new Num(1, 1).pow(new Num(5, 0).sub(self.completed, false).div(new Num(5, 0), false), false).add(new Num(1, 0), false);
-        GeneratorService.setValues('red-particles', 'red-particles', buff);
-        // @ts-ignore
-        return buff;
+        return new Num(0, 0);
       } else {
         return new Num(0, 0);
       }
     },
     nerfs: (self: Challenge) => {
-      GeneratorService.disableGenerator('red-generator-2')
-      GeneratorService.disableGenerator('red-generator-3')
-      GeneratorService.disableGenerator('red-generator-4')
-      GeneratorService.disableGenerator('red-generator-5')
-
-      GeneratorService.disableGenerator('red-accelerator-generator-2')
-
-      GeneratorService.disableGenerator('yellow-generator-2')
-      GeneratorService.disableGenerator('yellow-generator-3')
-      GeneratorService.disableGenerator('yellow-generator-4')
-      GeneratorService.disableGenerator('yellow-generator-5')
-
-      GeneratorService.disableGenerator('green-generator-2')
-      GeneratorService.disableGenerator('green-generator-3')
-      GeneratorService.disableGenerator('green-generator-4')
-      GeneratorService.disableGenerator('green-generator-5')
-
-      GeneratorService.disableGenerator('nuclear-decay-generator-2')
-      GeneratorService.disableGenerator('nuclear-decay-generator-3')
-
-      //GeneratorService.disableGenerator('blue-neutron-generator-2')
-      //GeneratorService.disableGenerator('blue-neutron-generator-3')
-
-      //GeneratorService.disableGenerator('blue-generator-2')
-      //GeneratorService.disableGenerator('blue-generator-3')
-      //GeneratorService.disableGenerator('blue-generator-4')
-      //GeneratorService.disableGenerator('blue-generator-5')
     }
   }
 ]

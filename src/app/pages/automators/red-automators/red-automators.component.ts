@@ -12,6 +12,5 @@ export class RedAutomatorsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.automators = AutomatorService.getAutomators('red-automators')
   }
 }

@@ -17,7 +17,7 @@ export class PrestigeButtonComponent implements OnInit {
   ) { }
 
   prestige() {
-    PrestigeLayersService.prestige(this.name);
+
   }
 
   ngOnInit(): void {

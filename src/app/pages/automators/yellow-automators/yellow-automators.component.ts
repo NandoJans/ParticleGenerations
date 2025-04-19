@@ -12,6 +12,5 @@ export class YellowAutomatorsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.automators = AutomatorService.getAutomators('yellow-automators')
   }
 }

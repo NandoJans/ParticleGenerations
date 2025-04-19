@@ -1,63 +1,5 @@
 import {Num} from "./num";
 
-export interface Generator {
-  name: string,
-  displayName: string,
-  baseCost: Num,
-  cost: Num,
-  increase: Num,
-  scaling: Num,
-  bought: Num,
-  currency: string,
-  generates: string,
-  baseMulMod: Num,
-  baseMultiplier: Num,
-  multiplier: Num,
-  amount: Num,
-  type: string,
-  resetId: string,
-  unlocked: boolean,
-  requirement: any[],
-  auto?: boolean,
-  style: string,
-  noMax?: boolean,
-  scalingStart?: Num,
-  nav?: string,
-  subNav?: string,
-  globalMultiplier?: string
-}
-
-export interface Upgrade {
-  name: string,
-  displayName: string,
-  description: string,
-  baseCost: Num,
-  cost: Num,
-  increase: Num,
-  scaling: Num,
-  scalingStart?: Num,
-  bought: Num,
-  currency: string,
-  baseBuffer: Num,
-  buffer: Num,
-  amount: Num,
-  type: string,
-  resetId: string,
-  style: string,
-  unlocked: boolean,
-  oneTime: boolean,
-  resets: string,
-  requirement: any[],
-  action?: Function,
-  auto?: boolean,
-  limit?: Num,
-  noMax?: boolean,
-  nav?: string,
-  subNav?: string,
-  effect?: Num,
-  maxEffect?: Num
-}
-
 export interface Automator {
   name: string,
   displayName: string,
@@ -166,10 +108,4 @@ export interface TimelineEvent {
   type: string,
   reached: boolean,
   unlock: any[]
-}
-
-const test = {
-  action: (self: Upgrade) => {
-
-  }
 }

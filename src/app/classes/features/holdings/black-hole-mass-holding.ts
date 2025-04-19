@@ -29,7 +29,6 @@ export class BlackHoleMassHolding extends Holding {
           HoldingsService.get(holding).pow(new Num(9, -1))
         }
       })
-      addMass.mul(UpgradeService.getValue('purple-galaxy', 'buffer').pow(UpgradeService.getValue('purple-galaxy', 'bought').add(new Num(1, 0), false), false))
       addMass.mul(App.getSpeed())
       HoldingsService.add('blackHoleMass', addMass)
     }

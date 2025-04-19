@@ -20,7 +20,6 @@ export class BuyableComponent implements OnInit {
   ) { }
 
   buy() {
-    this.buyables.buy(this.name);
   }
 
   ngOnInit(): void {

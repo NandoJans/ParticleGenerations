@@ -5,6 +5,9 @@ import {Styles} from "../../enums/styles";
 import {HoldingDisplayFactory} from "../../factories/holding-display-factory";
 import {GlobalMultipliersService} from "../../../services/globals/global-multipliers.service";
 import {GeneratorService} from "../../../services/interactables/generator.service";
+import {GeneratorRecord} from "../../records/generators/generator-record";
+import {RedGeneratorRecord} from "../../records/generators/red-generator-record";
+import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 
 export class BlueNeutronHolding extends Holding {
   name = 'blueNeutrons';
@@ -22,7 +25,11 @@ export class BlueNeutronHolding extends Holding {
     // @ts-ignore
     let buffer: Num = amount.pow(new Num(5, 0).mul(GlobalMultipliersService.get('blueNeutronPower'), false), false);
 
-    GeneratorService.setValues('red-particles', 'baseMulMod', buffer);
+    GeneratorRecord.firstRedGenerator.baseMulMod = buffer;
+    GeneratorRecord.secondRedGenerator.baseMulMod = buffer;
+    GeneratorRecord.thirdRedGenerator.baseMulMod = buffer;
+    GeneratorRecord.fourthRedGenerator.baseMulMod = buffer;
+    GeneratorRecord.fifthRedGenerator.baseMulMod = buffer;
 
     return buffer;
   }

@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import {Num} from "../../../num";
 import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
-import {YellowPurpleGeneratorRecord} from "../../../classes/records/generators/yellow-purple-generator-record";
-import {YellowPurpleUpgradeRecord} from "../../../classes/records/upgrades/yellow-purple-upgrade-record";
+import {Holding} from "../../../classes/features/holding";
+import {Generator} from "../../../classes/features/generator";
+import {GeneratorRecord} from "../../../classes/records/generators/generator-record";
+import {Upgrade} from "../../../classes/features/upgrade";
+import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
 
 @Component({
   selector: 'app-yellow-purple',
@@ -11,10 +14,17 @@ import {YellowPurpleUpgradeRecord} from "../../../classes/records/upgrades/yello
 })
 export class YellowPurpleComponent {
   effect: any[] = ['prePurple', 'yellowPurple', new Num(1, 2)];
-  constructor(
-    public holdingRecord: HoldingRecord,
-    public yellowPurpleGeneratorRecord: YellowPurpleGeneratorRecord,
-    public yellowPurpleUpgradeRecord: YellowPurpleUpgradeRecord,
-  ) { }
+  holding: Holding = HoldingRecord.yellowPurple;
+  generators: Generator[] = [
+    GeneratorRecord.firstYellowPurpleGenerator,
+    GeneratorRecord.secondYellowPurpleGenerator,
+    GeneratorRecord.thirdYellowPurpleGenerator
+  ];
+  upgrades: Upgrade[] = [
+    UpgradeRecord.yellowPurpleBufferUpgrade,
+    UpgradeRecord.yellowPurpleBoosterUpgrade,
+  ]
+
+  constructor() { }
 
 }

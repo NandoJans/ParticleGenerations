@@ -20,10 +20,6 @@ export class UnlockBlackHoleUpgrade extends BlackHoleUpgrade {
   override oneTime: boolean = true;
 
   action(): Num | undefined {
-    UpgradeService.setValue('unlock-black-hole', 'requirement', ['never'])
-    GeneratorService.setValue('gravity-generator', 'amount', new Num(1, 0));
-    GeneratorService.setValue('gravity-generator', 'bought', new Num(1, 0));
-    GeneratorService.setValue('gravity-generator', 'unlocked', true);
     return undefined;
   }
 

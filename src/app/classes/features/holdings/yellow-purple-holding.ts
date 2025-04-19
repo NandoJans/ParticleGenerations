@@ -7,6 +7,7 @@ import {Styles} from "../../enums/styles";
 import {Holding} from "../holding";
 import {HoldingDisplayFactory} from "../../factories/holding-display-factory";
 import {HoldingRecord} from "../../records/holdings/holding-record";
+import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 
 export class YellowPurpleHolding extends Holding {
   name: string = 'yellowPurple';
@@ -24,7 +25,7 @@ export class YellowPurpleHolding extends Holding {
     // @ts-ignore
     let buffer: Num = new Num(2, 0).add(amount.pow(HoldingRecord.purpleVoid.amount.log10(false), false).log(new Num(3, 2), false), false)
     buffer.mul(GlobalMultipliersService.get('purpleVoidEffect'))
-    if (App.purplePhase) UpgradeService.setValue('yellow-repeatable-multiplier', 'buffer', buffer);
+    if (App.purplePhase) UpgradeRecord.yellowRepeatableMultiplier.buffer = buffer;
     return buffer
   }
 

@@ -16,7 +16,6 @@ export class YellowMilestonesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.milestones = MilestoneService.getMilestones('yellow-milestone')
   }
 
   getMaxYellowParticleGainSpeed() {

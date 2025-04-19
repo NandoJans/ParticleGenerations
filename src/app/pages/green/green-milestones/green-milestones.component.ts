@@ -15,7 +15,6 @@ export class GreenMilestonesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.milestones = MilestoneService.getMilestones('green-milestone')
   }
 
   getMaxGreenParticleGainSpeed() {

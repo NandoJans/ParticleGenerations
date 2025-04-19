@@ -4,8 +4,7 @@ import {UpgradeRecord} from "./upgrade-record";
 
 export class YellowPurpleUpgradeRecord extends Record {
   static override list: Upgrade[] = [
-    UpgradeRecord.yellowPurpleBufferUpgrade,
-    UpgradeRecord.yellowPurpleBoosterUpgrade,
+
   ];
 
   getList(): Upgrade[] {

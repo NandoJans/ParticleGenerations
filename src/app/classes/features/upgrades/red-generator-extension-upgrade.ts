@@ -4,6 +4,7 @@ import {ResetKey} from "../../enums/reset-key";
 import {UpgradeService} from "../../../services/interactables/upgrade.service";
 import {RedUpgrade} from "./red-upgrade";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 
 export class RedGeneratorExtensionUpgrade extends RedUpgrade {
   baseCost: Num = new Num(1, 3)
@@ -26,7 +27,7 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
   action(): Num {
     const buff: Num = this.buffer.pow(this.bought, false);
     MultiplierRecord.redParticleGenerators.correct(buff)
-    const boughtUpgrade: boolean = UpgradeService.bought('red-generator-extension-upgrade');
+    const boughtUpgrade: boolean = UpgradeRecord.redGeneratorExtension.hasBought()
     if (this.bought.greq(new Num(4, 0)) && !boughtUpgrade) {
       this.limit = new Num(4, 0)
     } else if (!boughtUpgrade) {

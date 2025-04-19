@@ -5,6 +5,8 @@ import {HoldingDisplayFactory} from "../../factories/holding-display-factory";
 import {Styles} from "../../enums/styles";
 import {UpgradeService} from "../../../services/interactables/upgrade.service";
 import {GlobalMultipliersService} from "../../../services/globals/global-multipliers.service";
+import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
+import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 
 export class NuclearDecayHolding extends Holding {
   name: string = 'nuclearDecay';
@@ -17,11 +19,8 @@ export class NuclearDecayHolding extends Holding {
     .build();
 
   override action(): Num | undefined {
-    const redGeneratorBooster = UpgradeService.getUpgrade('red-generator-booster');
-    // @ts-ignore
-    let buffer: Num = amount.pow(new Num(3, -1).mul(GlobalMultipliersService.get('nuclearDecayPower'), false), false);
-    // @ts-ignore
-    redGeneratorBooster.buffer = redGeneratorBooster.buffer.mul(buffer, false);
+    let buffer: Num = this.amount.pow(new Num(3, -1).mul(MultiplierRecord.nuclearDecayPower.num, false), false);
+    UpgradeRecord.redGeneratorBooster.buffer = UpgradeRecord.redGeneratorBooster.buffer.mul(buffer, false);
 
     return buffer.copy();
   }

@@ -1,11 +1,11 @@
-<app-number-display [holding]="holdingRecord.getRedPurple()"></app-number-display>
+<app-number-display [holding]="holding"></app-number-display>
 <div class="generators-row">
-  <div *ngFor="let generator of redPurpleGeneratorRecord.getList()">
+  <div *ngFor="let generator of generators">
     <app-generator *ngIf="generator.unlocked" [generator]="generator"></app-generator>
   </div>
 </div>
 <div class="upgrade-row">
-  <div *ngFor="let upgrade of redPurpleUpgradeRecord.getList()">
+  <div *ngFor="let upgrade of upgrades">
     <app-upgrade *ngIf="upgrade.unlocked" [upgrade]="upgrade"></app-upgrade>
   </div>
 </div>

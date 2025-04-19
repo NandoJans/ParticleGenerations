@@ -1,4 +1,3 @@
-import {Generator} from "../../../../globals";
 import {Num} from "../../../../num";
 
 export const blueLightGenerators = [

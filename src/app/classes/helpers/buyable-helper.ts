@@ -4,6 +4,7 @@ import {NavigationsService} from "../../services/navigations.service";
 import {Buyable} from "../features/buyable";
 import {ResetKey} from "../enums/reset-key";
 import {Transaction} from "../features/interfaces/transaction";
+import {ResetHelper} from "./reset-helper";
 
 export class BuyableHelper {
   constructor(private buyable: Buyable) {
@@ -88,7 +89,7 @@ export class BuyableHelper {
     if (buyable.currency.amount.greq(buyable.cost)) {
       if (buyable.resets !== 'none' || (buyable.noMax !== undefined && buyable.noMax) || buyable.oneTime) {
         const transaction = this.buyAction();
-        if (buyable.resets !== 'none') ResetService.reset(buyable.resets || ResetKey.NONE);
+        if (buyable.resets !== 'none') ResetHelper.reset(buyable.resets || ResetKey.NONE);
         return transaction;
       } else {
         const result = this.calculateBulk(buyable)
@@ -117,7 +118,7 @@ export class BuyableHelper {
       (buyable.limit === undefined || !buyable.bought.greq(buyable.limit.sub(new Num(1, 0), false)))) {
       if (buyable.resets !== 'none' || buyable.oneTime) {
         if ((buyable.oneTime && !buyable.bought.greq(new Num(1, 0))) || !buyable.oneTime) return this.buyAction();
-        if (buyable.resets !== 'none') ResetService.reset(buyable.resets || ResetKey.NONE);
+        if (buyable.resets !== 'none') ResetHelper.reset(buyable.resets || ResetKey.NONE);
       } else {
         const result = this.calculateBulk(buyable)
 

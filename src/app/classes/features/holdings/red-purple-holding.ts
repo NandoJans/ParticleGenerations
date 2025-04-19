@@ -7,6 +7,7 @@ import {GlobalMultipliersService} from "../../../services/globals/global-multipl
 import {App} from "../../../App";
 import {UpgradeService} from "../../../services/interactables/upgrade.service";
 import {HoldingRecord} from "../../records/holdings/holding-record";
+import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 
 export class RedPurpleHolding extends Holding {
   name: string = 'redPurple';
@@ -24,7 +25,7 @@ export class RedPurpleHolding extends Holding {
     // @ts-ignore
     let buffer: Num = new Num(4, 0).add(amount.pow(HoldingRecord.purpleVoid.amount.log10(false), false).log(new Num(1, 1), false), false);
     buffer.mul(GlobalMultipliersService.get('purpleVoidEffect'))
-    if (App.purplePhase) UpgradeService.setValue('red-generator-extension', 'buffer', buffer);
+    if (App.purplePhase) UpgradeRecord.redGeneratorExtension.buffer = buffer;
     return buffer
   }
 

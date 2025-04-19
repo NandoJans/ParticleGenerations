@@ -3,6 +3,7 @@ import {HoldingRecord} from "../../records/holdings/holding-record";
 import {UpgradeService} from "../../../services/interactables/upgrade.service";
 import {RedUpgrade} from "./red-upgrade";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 
 export class RedGeneratorBoosterUpgrade extends RedUpgrade {
   baseCost: Num = new Num(1, 3)
@@ -20,7 +21,7 @@ export class RedGeneratorBoosterUpgrade extends RedUpgrade {
   override subNav: string = 'redParticles';
 
   action(): Num | undefined {
-    if (!UpgradeService.getValue('unlock-red-generators-booster', 'bought').greq(new Num(1, 0))) {
+    if (!UpgradeRecord.unlockRedGeneratorBooster.hasBought()) {
       this.unlocked = false;
       this.requirement = [];
     }

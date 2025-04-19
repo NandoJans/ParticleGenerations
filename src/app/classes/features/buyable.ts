@@ -26,7 +26,7 @@ export abstract class Buyable extends GameElement {
     return new BuyableHelper(this)
   }
 
-  buy(amount: Num): Transaction {
+  buy(amount: Num = new Num(1, 0)): Transaction {
     if (this.resets) {
       ResetHelper.reset(this.resets)
     }

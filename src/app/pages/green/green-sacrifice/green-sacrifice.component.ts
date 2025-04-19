@@ -26,14 +26,6 @@ export class GreenSacrificeComponent {
   ) { }
 
   respecSouls() {
-    UpgradeService.getUpgrades('green-limited-upgrades').forEach((upgrade) => {
-      upgrade.bought.mul(new Num(0, 0))
-      const doc = (<HTMLElement> document.getElementById('buyable-'+upgrade.name));
-      if (doc !== undefined) {
-        doc.innerHTML = upgrade.cost.toString() + ' ' + HoldingsService.getAbbreviation(upgrade.currency);
-        doc.classList.remove('maxed');
-      }
-    })
-    ResetService.reset('green');
+
   }
 }

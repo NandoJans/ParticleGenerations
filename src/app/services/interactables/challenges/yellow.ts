@@ -1,9 +1,7 @@
-import {Challenge, Upgrade} from "../../../globals";
+import {Challenge} from "../../../globals";
 import {Num} from "../../../num";
-import {UpgradeService} from "../upgrade.service";
 import {GlobalMultipliersService} from "../../globals/global-multipliers.service";
 import {HoldingsService} from "../../holdings.service";
-import {GeneratorService} from "../generator.service";
 import {AutomatorService} from "../automator.service";
 
 export const yellowChallenges: Challenge[] = [
@@ -25,19 +23,8 @@ export const yellowChallenges: Challenge[] = [
     instantComplete: false,
     requirement: ['yellowParticles', new Num(1, 5)],
     reward: (self: Challenge) => {
-      let buff: Num = UpgradeService.getValue('red-generator-booster', 'buffer').pow(UpgradeService.getValue('red-generator-booster', 'amount').add(new Num(1, 0), false), false);
-      buff.pow(new Num(2, 0))
-      if (buff.greq(new Num(1, 1000))) {
-        // @ts-ignore
-        const tempBuff: Num = buff.pow(new Num(1, -1), false);
-        tempBuff.mul(new Num(1, 1000));
-        buff = tempBuff;
-      }
-      GlobalMultipliersService.correct('redAcceleratorGenerators', buff)
-      return buff;
     },
     nerfs: (self: Challenge) => {
-      UpgradeService.disableUpgrade('red-generator-booster')
     }
   },
   {
@@ -58,12 +45,9 @@ export const yellowChallenges: Challenge[] = [
     instantComplete: false,
     requirement: ['yellowParticles', new Num(1, 8)],
     reward: (self: Challenge) => {
-      GeneratorService.setValue('red-accelerator-generator-2', 'unlocked', true)
     },
     nerfs: (self: Challenge) => {
       HoldingsService.set('redAccelerators', new Num(1, 0));
-      GeneratorService.disableGenerators('red-accelerators');
-      UpgradeService.disableUpgrades('red-accelerators');
     }
   },
   {
@@ -85,20 +69,9 @@ export const yellowChallenges: Challenge[] = [
     requirement: ['yellowParticles', new Num(1, 11)],
     maxEffect: new Num(1, 10),
     reward: (self: Challenge) => {
-      let buff: Num = GeneratorService.getValue('red-generator-5', 'amount').pow(new Num(4, 0), false);
-      if (self.maxEffect instanceof Num && buff.greq(self.maxEffect)) {
-        buff = self.maxEffect.copy();
-      }
-      GlobalMultipliersService.correct('yellowParticleGenerators', buff)
-      return buff;
     },
     nerfs: (self: Challenge) => {
       HoldingsService.set('redAccelerators', new Num(1, 0));
-      GeneratorService.disableGenerators('red-accelerators');
-      UpgradeService.disableUpgrades('red-accelerators');
-      UpgradeService.disableUpgrades('red-particles');
-      UpgradeService.disableUpgrades('red-upgrades');
-      UpgradeService.disableUpgrades('yellow-upgrades');
     }
   },
   {
@@ -131,33 +104,6 @@ export const yellowChallenges: Challenge[] = [
     },
     nerfs: (self: Challenge) => {
       HoldingsService.set('yellowPower', new Num(0, 0));
-      GeneratorService.disableGenerators('yellow-particles');
-      UpgradeService.disableUpgrades('red-particles');
-      UpgradeService.disableUpgrades('red-upgrades');
-      UpgradeService.disableUpgrades('yellow-upgrades');
-
-      GeneratorService.setValue('red-accelerator-generator-2', 'baseCost', new Num(1, 16));
-
-      GeneratorService.setValue('red-accelerator-generator-1', 'baseMultiplier', new Num(1, 2));
-      GeneratorService.setValue('red-accelerator-generator-2', 'baseMultiplier', new Num(1, 3));
-
-      UpgradeService.setValues('red-accelerators', 'scaling', new Num(1, 2))
-      GeneratorService.setValues('red-accelerators', 'scaling', new Num(1, 2))
-
-      UpgradeService.setValue('red-accelerator-multiplier-1', 'buffer', new Num(1, 3))
-      UpgradeService.setValue('red-accelerator-multiplier-2', 'buffer', new Num(1, 4))
-      UpgradeService.setValue('red-accelerator-multiplier-3', 'buffer', new Num(1, 5))
-
-      UpgradeService.setValue('red-accelerator-multiplier-1', 'baseCost', new Num(1, 8))
-      UpgradeService.setValue('red-accelerator-multiplier-2', 'baseCost', new Num(1, 70))
-      UpgradeService.setValue('red-accelerator-multiplier-3', 'baseCost', new Num(1, 152))
-
-      GeneratorService.setValue('red-accelerator-generator-1', 'requirement', ['holding', 'redAccelerators', new Num(1, 0)])
-      GeneratorService.setValue('red-accelerator-generator-2', 'requirement', ['holding', 'redAccelerators', new Num(1, 16)])
-
-      UpgradeService.setValue('red-accelerator-multiplier-1', 'requirement', ['redAccelerators', new Num(1, 8)])
-      UpgradeService.setValue('red-accelerator-multiplier-2', 'requirement', ['redAccelerators', new Num(1, 70)])
-      UpgradeService.setValue('red-accelerator-multiplier-3', 'requirement', ['redAccelerators', new Num(1, 152)])
 
       if (!HoldingsService.get('redAccelerators').greq(new Num(1, 0))) {
         HoldingsService.set('redAccelerators', new Num(1, 0));
@@ -168,8 +114,6 @@ export const yellowChallenges: Challenge[] = [
       }
 
       if (!HoldingsService.get('greens').greq(new Num(1, 0)) && !HoldingsService.get('purples').greq(new Num(2, 0))) {
-        AutomatorService.setActive('red-accelerators-automator', false);
-        AutomatorService.setActive('red-accelerator-upgrades-automator', false);
       }
     }
   },
@@ -191,19 +135,8 @@ export const yellowChallenges: Challenge[] = [
     instantComplete: false,
     requirement: ['yellowParticles', new Num(1, 23)],
     reward: (self: Challenge) => {
-      let buff: Num = GeneratorService.getValue('red-generator-1', 'amount').pow(new Num(2, -2), false);
-      if (buff.greq(new Num(1, 37500))) {
-        // @ts-ignore
-        const tempBuff: Num = buff.pow(new Num(1, -1), false);
-        tempBuff.mul(new Num(1, 37500));
-        buff = tempBuff;
-      }
-      GlobalMultipliersService.correct('redParticleGenerators', buff)
-      return buff;
     },
     nerfs: (self: Challenge) => {
-      GeneratorService.setValues('red-particles', 'baseMulMod', new Num(0, 0));
-      GeneratorService.setValues('yellow-particles', 'baseMulMod', new Num(0, 0));
     }
   },
   {
@@ -224,17 +157,9 @@ export const yellowChallenges: Challenge[] = [
     instantComplete: false,
     requirement: ['yellowParticles', new Num(1, 29)],
     reward: (self: Challenge) => {
-      UpgradeService.setValue('red-accelerators-particles-based', 'action', (self: Upgrade) => {
-        const buff: Num = HoldingsService.get('redParticles').pow(new Num(1, -2), false);
-        GlobalMultipliersService.correct('redAcceleratorGenerators', buff);
-        return buff
-      })
+
     },
     nerfs: (self: Challenge) => {
-      GeneratorService.disableGenerator('red-generator-2');
-      GeneratorService.disableGenerator('red-generator-3');
-      GeneratorService.disableGenerator('red-generator-4');
-      GeneratorService.disableGenerator('red-generator-5');
     }
   },
   {
@@ -260,11 +185,6 @@ export const yellowChallenges: Challenge[] = [
       return buff
     },
     nerfs: (self: Challenge) => {
-      UpgradeService.disableUpgrades('red-particles');
-      UpgradeService.disableUpgrades('red-upgrades');
-      UpgradeService.disableUpgrades('yellow-upgrades');
-      UpgradeService.setValue('accelerate-yellow-fusion', 'buffer', new Num(1.05, 0));
-      UpgradeService.setValue('increase-yellow-fusion', 'buffer', new Num(1.075, 0));
     }
   },
   {
@@ -288,9 +208,6 @@ export const yellowChallenges: Challenge[] = [
       HoldingsService.set('yellowFusionPower', new Num(4, -1));
     },
     nerfs: (self: Challenge) => {
-      GeneratorService.setValue('yellow-generator-1', 'generates', 'red-accelerator-generator-2')
-      UpgradeService.setValue('accelerate-yellow-fusion', 'buffer', new Num(1.05, 0));
-      UpgradeService.setValue('increase-yellow-fusion', 'buffer', new Num(1.075, 0));
     }
   },
 ]

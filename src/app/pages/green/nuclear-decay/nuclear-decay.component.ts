@@ -29,19 +29,10 @@ export class NuclearDecayComponent {
   enoughSacrificeUpgrades = !HoldingsService.get('limitedUpgradeCount').greq(new Num(1, 1));
 
   constructor(
-    public holdingRecord: HoldingRecord
+    public holdingRecord: HoldingRecord,
   ) { }
 
   respecSouls() {
     HoldingsService.set('nuclearDecay', new Num(1, 0))
-    UpgradeService.getUpgrades('nuclear-decay').forEach((upgrade) => {
-      upgrade.bought.mul(new Num(0, 0))
-      upgrade.amount.mul(new Num(0, 0))
-    })
-    GeneratorService.getGenerators('nuclear-decay').forEach((upgrade) => {
-      upgrade.bought.mul(new Num(0, 0))
-      upgrade.amount.mul(new Num(0, 0))
-    })
-    ResetService.reset('green');
   }
 }

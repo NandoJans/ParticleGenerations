@@ -2,11 +2,8 @@ import { Injectable } from '@angular/core';
 import {Navigation, SubNavigation} from "../globals";
 import {HoldingsService} from "./holdings.service";
 import {Num} from "../num";
-import {FooterComponent} from "../page/footer/footer.component";
 import {Router} from "@angular/router";
-import {TickService} from "./tick.service";
 import {DataManagerService} from "./data-manager.service";
-import {NumberDisplayService} from "./number-display.service";
 import {App} from "../App";
 import {DropDownMessageService} from "./visuals/drop-down-message.service";
 
@@ -229,7 +226,6 @@ export class NavigationsService {
   static navigate(event: any = this.subNavigations[0]) {
     let currentUrl: string[] = this.router.url.split('/')
     if (currentUrl[1] !== event.parent || currentUrl[2] !== event.location) {
-      NumberDisplayService.reset();
       let navigation = this.getLocation(event);
       this.save();
       this.router.navigate([navigation])

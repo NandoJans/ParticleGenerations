@@ -22,9 +22,5 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
     this.purplePhase = App.purplePhase;
-    this.unlockedYellow = PrestigeLayersService.getValue('yellow', 'unlocked');
-    this.unlockedGreen = PrestigeLayersService.getValue('green', 'unlocked');
-    this.unlockedBlue = PrestigeLayersService.getValue('blue', 'unlocked');
-    this.unlockedPurple = PrestigeLayersService.getValue('purple', 'unlocked');
   }
 }

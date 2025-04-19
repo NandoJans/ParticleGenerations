@@ -16,9 +16,6 @@ export class YellowFusionAcceleratorUpgrade extends BlueLightUpgrade {
   name: string = "yellow-fusion-accelerator";
 
   action(): Num {
-    if (MilestoneService.isReached('quality-of-life-milestone')) {
-      this.buffer = new Num(1, 50);
-    }
     const buff: Num = this.buffer.pow(this.bought, false);
     MultiplierRecord.yellowFusion.correct(buff);
     return buff;

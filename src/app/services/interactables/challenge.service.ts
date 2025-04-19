@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {yellowChallenges} from "./challenges/yellow";
-import {Challenge, Upgrade} from "../../globals";
+import {Challenge} from "../../globals";
 import {ResetService} from "./reset.service";
 import {HoldingsService} from "../holdings.service";
 import {PrestigeLayersService} from "../prestige-layers.service";
@@ -93,9 +93,6 @@ export class ChallengeService {
       if (challenge.name === name) {
         this.activeChallenge = challenge;
         HoldingsService.set('yellowFusion', new Num(0, 0));
-        ResetService.reset(challenge.prestige);
-        UpgradeService.resetUpgrades();
-        GeneratorService.resetGenerators();
         ChallengeService.resetChallenges();
         App.next();
         DataManagerService.load();
@@ -112,8 +109,6 @@ export class ChallengeService {
     }
     this.activeChallenge = undefined;
     DataManagerService.save();
-    UpgradeService.resetUpgrades();
-    GeneratorService.resetGenerators();
     ChallengeService.resetChallenges();
     App.next()
     DataManagerService.load();
@@ -123,9 +118,6 @@ export class ChallengeService {
     if (this.activeChallenge !== undefined) {
       const prestige = this.activeChallenge.prestige
       this.activeChallenge = undefined;
-      ResetService.reset(prestige)
-      UpgradeService.resetUpgrades();
-      GeneratorService.resetGenerators();
       ChallengeService.resetChallenges();
       App.next()
       DataManagerService.load();
@@ -135,7 +127,6 @@ export class ChallengeService {
   static checkGoal() {
     if (this.activeChallenge === undefined) return
     const goalReached = HoldingsService.get(this.activeChallenge.currency).greq(this.activeChallenge.goal);
-    PrestigeLayersService.challengeButton(this.activeChallenge.prestige, this.activeChallenge.goal, goalReached);
   }
 
   static applyNerfs() {
@@ -176,9 +167,6 @@ export class ChallengeService {
       if (HoldingsService.get(challenge.requirement[0]).greq(challenge.requirement[1])) {
         if (!challenge.unlocked) DropDownMessageService.dropDown('Challenge Unlocked!', 'You have unlocked '+challenge.displayName);
         challenge.unlocked = true;
-        if (MilestoneService.isReached('auto-complete-'+challenge.prestige+'-challenges') && challenge.type === 'yellow-challenges') {
-          challenge.completed = true;
-        }
       }
       if (
         (!challenge.dynamic && challenge.completed && (<HTMLElement> document.getElementById(challenge.name+'-button')) !== null) ||

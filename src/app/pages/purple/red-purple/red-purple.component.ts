@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import {GeneratorService} from "../../../services/interactables/generator.service";
-import {UpgradeService} from "../../../services/interactables/upgrade.service";
+import { Component } from '@angular/core';
 import {Num} from "../../../num";
-import {Generator, Upgrade} from "../../../globals";
 import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
-import {RedPurpleGeneratorRecord} from "../../../classes/records/generators/red-purple-generator-record";
-import {RedPurpleUpgradeRecord} from "../../../classes/records/upgrades/red-purple-upgrade-record";
+import {Holding} from "../../../classes/features/holding";
+import {GeneratorRecord} from "../../../classes/records/generators/generator-record";
+import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
+import {Generator} from "../../../classes/features/generator";
+import {Upgrade} from "../../../classes/features/upgrade";
 
 @Component({
   selector: 'app-red-purple',
@@ -14,9 +14,16 @@ import {RedPurpleUpgradeRecord} from "../../../classes/records/upgrades/red-purp
 })
 export class RedPurpleComponent {
   effect: any[] = ['prePurple', 'redPurple', new Num(1, 2)];
-  constructor(
-    public holdingRecord: HoldingRecord,
-    public redPurpleGeneratorRecord: RedPurpleGeneratorRecord,
-    public redPurpleUpgradeRecord: RedPurpleUpgradeRecord,
-  ) { }
+  holding: Holding = HoldingRecord.redPurple;
+  generators: Generator[] = [
+    GeneratorRecord.firstRedPurpleGenerator,
+    GeneratorRecord.secondRedPurpleGenerator,
+    GeneratorRecord.thirdRedPurpleGenerator
+  ];
+  upgrades: Upgrade[] = [
+    UpgradeRecord.redPurpleBoosterUpgrade,
+    UpgradeRecord.redPurpleBufferUpgrade,
+  ]
+
+  constructor() { }
 }

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CombinerService} from "../../../services/interactables/combiner.service";
-import {ResetService} from "../../../services/interactables/reset.service";
+import {ResetHelper} from "../../../classes/helpers/reset-helper";
+import {ResetKey} from "../../../classes/enums/reset-key";
 
 @Component({
   selector: 'app-combiner-box',
@@ -25,7 +26,7 @@ export class CombinerBoxComponent implements OnInit {
 
   clearCombinations() {
     CombinerService.clearCombinations()
-    ResetService.reset('blue')
+    ResetHelper.reset(ResetKey.BLUE)
     this.ngOnInit()
   }
 }

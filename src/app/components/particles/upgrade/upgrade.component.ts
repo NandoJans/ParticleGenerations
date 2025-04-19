@@ -16,6 +16,6 @@ export class UpgradeComponent {
   ) { }
 
   buy() {
-    this.buyableService.buy(this.upgrade.name);
+    this.upgrade.buy()
   }
 }

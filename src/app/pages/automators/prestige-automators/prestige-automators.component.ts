@@ -12,7 +12,6 @@ export class PrestigeAutomatorsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.automators = AutomatorService.getAutomators('prestige-automators')
   }
 
 }

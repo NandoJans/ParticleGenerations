@@ -15,7 +15,6 @@ export class BlueMilestonesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.milestones = MilestoneService.getMilestones('blue-milestone')
   }
 
   getMaxBlueParticleGainSpeed() {

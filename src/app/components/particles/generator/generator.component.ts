@@ -34,6 +34,6 @@ export class GeneratorComponent {
   }
 
   buy() {
-    this.buyableService.buy(this.generator.name)
+    this.generator.buy()
   }
 }

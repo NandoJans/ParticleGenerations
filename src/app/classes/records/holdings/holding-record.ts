@@ -26,11 +26,7 @@ import {GreenPurpleHolding} from "../../features/holdings/green-purple-holding";
 import {BluePurpleHolding} from "../../features/holdings/blue-purple-holding";
 import {BlackHoleMassHolding} from "../../features/holdings/black-hole-mass-holding";
 import {GravityHolding} from "../../features/holdings/gravity-holding";
-import {Injectable} from "@angular/core";
 
-@Injectable({
-  providedIn: 'root'
-})
 export class HoldingRecord {
 
   // Red Phase
@@ -72,33 +68,33 @@ export class HoldingRecord {
 
   static getArray(): Holding[] {
     return [
-      this.redParticles,
-      this.redAccelerators,
-      this.yellowParticles,
-      this.yellows,
-      this.yellowPower,
-      this.yellowFusion,
-      this.greenParticles,
-      this.greens,
-      this.greenEnergy,
-      this.greenSouls,
-      this.darkEnergy,
-      this.darkPower,
-      this.nuclearDecay,
-      this.blueParticles,
-      this.blues,
-      this.blueNeutrons,
-      this.blueLight,
-      this.blueHydrogen,
-      this.purpleParticles,
-      this.purples,
-      this.purpleVoid,
-      this.redPurple,
-      this.yellowPurple,
-      this.greenPurple,
-      this.bluePurple,
-      this.blackHoleMass,
-      this.gravity
+      HoldingRecord.redParticles,
+      HoldingRecord.redAccelerators,
+      HoldingRecord.yellowParticles,
+      HoldingRecord.yellows,
+      HoldingRecord.yellowPower,
+      HoldingRecord.yellowFusion,
+      HoldingRecord.greenParticles,
+      HoldingRecord.greens,
+      HoldingRecord.greenEnergy,
+      HoldingRecord.greenSouls,
+      HoldingRecord.darkEnergy,
+      HoldingRecord.darkPower,
+      HoldingRecord.nuclearDecay,
+      HoldingRecord.blueParticles,
+      HoldingRecord.blues,
+      HoldingRecord.blueNeutrons,
+      HoldingRecord.blueLight,
+      HoldingRecord.blueHydrogen,
+      HoldingRecord.purpleParticles,
+      HoldingRecord.purples,
+      HoldingRecord.purpleVoid,
+      HoldingRecord.redPurple,
+      HoldingRecord.yellowPurple,
+      HoldingRecord.greenPurple,
+      HoldingRecord.bluePurple,
+      HoldingRecord.blackHoleMass,
+      HoldingRecord.gravity
     ]
   }
 

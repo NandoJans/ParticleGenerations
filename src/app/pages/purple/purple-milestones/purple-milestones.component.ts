@@ -16,7 +16,6 @@ export class PurpleMilestonesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.milestones = MilestoneService.getMilestones('purple-milestone');
   }
 
   getMaxPurpleParticleGainSpeed() {
