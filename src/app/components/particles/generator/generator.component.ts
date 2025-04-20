@@ -1,8 +1,7 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Num} from "../../../num";
 import {Generator} from "../../../classes/features/generator";
 import {GeneratorRecord} from "../../../classes/records/generators/generator-record";
-import {BuyableService} from "../../../services/interactables/buyable.service";
 
 @Component({
   selector: 'app-generator',
@@ -12,9 +11,7 @@ import {BuyableService} from "../../../services/interactables/buyable.service";
 export class GeneratorComponent {
   @Input() generator: Generator = GeneratorRecord.firstRedGenerator;
 
-  constructor(
-    private buyableService: BuyableService,
-  ) {}
+  constructor() {}
 
 
   getAmount(): Num {
@@ -34,6 +31,16 @@ export class GeneratorComponent {
   }
 
   buy() {
-    this.generator.buy()
+    if (this.getIsBuyable()) {
+      this.generator.buy();
+    }
+  }
+
+  getIsBuyable(): boolean {
+    return this.generator.isBuyable();
+  }
+
+  getCurrencyAbbreviation() {
+    return this.generator.currency.abbreviation;
   }
 }

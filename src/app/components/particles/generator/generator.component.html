@@ -1,11 +1,14 @@
-<button [id]="'buyable-'+generator.name" [class]="'generator '+generator.style" (click)="buy()">
+<button
+  [id]="'buyable-'+generator.name"
+  [class]="'generator '+generator.style+' '+((getIsBuyable()) ? 'buyable' : '')"
+  (click)="buy()"
+>
   <h4>{{ getDisplayName() }}</h4>
   <div>
-    <!--  TODO: implement-->
-<!--    <app-number-display [name]="name" [style]="''" [type]="'amount'"></app-number-display>-->
-<!--    <app-number-display [name]="name" [style]="''" [type]="'multiplier'"></app-number-display>-->
+    <p>{{ getAmount().toString() }}</p>
+    <p>{{ getMultiplier().toString(true) }}x</p>
   </div>
-<!--  <app-number-display [name]="name" [style]="''" [type]="'cost'" [currency]="currency"></app-number-display>-->
+  <p>Cost: {{ getCost() }} {{ getCurrencyAbbreviation() }}</p>
   <div class="challenge-disabled" style="display: none;">
     <h2>Challenge Disabled</h2>
   </div>

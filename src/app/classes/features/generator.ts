@@ -7,6 +7,7 @@ import {LocalStorageHelper} from "../helpers/local-storage-helper";
 import {ResetKey} from "../enums/reset-key";
 import {Multiplier} from "./multiplier";
 import {Resetable} from "./interfaces/resetable";
+import {Transaction} from "./interfaces/transaction";
 
 export abstract class Generator extends Buyable implements Generatable, Storable, Resetable {
   abstract name: string
@@ -67,5 +68,11 @@ export abstract class Generator extends Buyable implements Generatable, Storable
   reset(): void {
     this.bought = new Num(0, 0)
     this.amount = new Num(0, 0)
+  }
+
+  override buy(amount: Num = new Num(1, 0)): Transaction {
+    const transaction = super.buy(amount);
+    this.multiplier = this.baseMultiplier.mul(this.baseMulMod, false).pow(this.bought, false) as Num
+    return transaction
   }
 }

@@ -1,0 +1,21 @@
+button {
+  cursor: pointer;
+}
+
+.navigation-button {
+  color: white;
+  font-size: 16px;
+  height: 100%;
+  width: 100%;
+  border: none;
+  background-color: transparent;
+}
+
+.navigation-button.buyable-nav {
+  color: var(--green-button-color);
+  font-weight: 700;
+}
+
+.navigation-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}

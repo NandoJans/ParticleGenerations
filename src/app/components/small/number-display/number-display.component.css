@@ -1,0 +1,21 @@
+div span {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--text-color-darkened);
+}
+
+div span p {
+  margin: 0 6px;
+}
+
+.holding {
+  font-size: 2rem;
+}
+
+.red-style {
+  color: var(--text-color-red);
+}

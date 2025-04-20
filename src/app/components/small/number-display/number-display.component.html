@@ -1,7 +1,7 @@
 <div>
   <span>
     <p>{{ holdingDisplay.getAmountPrefix() }}</p>
-    <p [class]="holding.getStyle()">{{ getHoldingAmount() }}</p>
+    <p [class]="'holding ' + holding.getStyle()">{{ getHoldingAmount() }}</p>
     <p>{{ holdingDisplay.getAmountSuffix() }}</p>
   </span>
   <span *ngIf="hasHoldingEffect()">

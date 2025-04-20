@@ -25,5 +25,7 @@ export class RedComponent {
     'These generators are the main focus of the game, with every upgrade eventually boosting the red generators. As the game goes on, you will understand what is meant by that.',
     'Red extensions add up to five extra red generators. When having five generators, red extensions do not do anything. It is recommended that you wait until you are able to buy something new that boosts it effect.'
   ]
-  constructor() { }
+  constructor() {
+
+  }
 }

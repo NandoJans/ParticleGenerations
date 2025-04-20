@@ -8,6 +8,9 @@ export class LocalStorageHelper {
   constructor(category: string, key: string) {
     this.category = category;
     this.key = key;
+    if (localStorage[this.category] === undefined) {
+      localStorage[this.category] = JSON.stringify({ [this.key]: {} });
+    }
     this.storage = JSON.parse(localStorage[this.category]);
   }
 

@@ -1,0 +1,32 @@
+button {
+  width: 100%;
+  border: none;
+  color: var(--text-color-main);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+button.buyable {
+  border: 2px solid var(--green-button-color) !important;
+  cursor: pointer;
+}
+
+button.buyable:hover {
+  box-shadow: 0 0 10000px rgba(255, 255, 255, 0.1) inset;
+}
+
+button p {
+  margin: 0;
+  padding: 0;
+}
+
+button:nth-child(2n) {
+  background-color: var(--background-color-3);
+  border: 2px solid var(--background-color-3);
+}
+
+button.red-style:nth-child(2n + 1) {
+  background-color: var(--background-color-red);
+  border: 2px solid var(--background-color-red);
+}

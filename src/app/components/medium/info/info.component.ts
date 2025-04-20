@@ -5,24 +5,26 @@ import {Component, Input, OnInit} from '@angular/core';
   templateUrl: './info.component.html',
   styleUrls: ['./info.component.css']
 })
-export class InfoComponent implements OnInit {
+export class InfoComponent {
   @Input() name: string | undefined
   @Input() text: string[] | undefined
+  hidden: boolean = true
+
   constructor() { }
 
   show() {
-    if (this.name !== undefined && this.text !== undefined) {
-      (<HTMLElement> document.getElementById(this.name)).style.display = 'unset';
-    }
+    this.hidden = false;
   }
 
   hide() {
-    if (this.name !== undefined && this.text !== undefined) {
-      (<HTMLElement> document.getElementById(this.name)).style.display = 'none';
-    }
+    this.hidden = true;
   }
 
-  ngOnInit(): void {
+  toggle() {
+    this.hidden = !this.hidden;
   }
 
+  getHidden() {
+    return this.hidden;
+  }
 }

@@ -439,7 +439,7 @@ export class Num {
 
   static fromStorage(storageValue: { num: number, exp: number }) {
     if (storageValue === undefined) {
-      return new Num(0, 0)
+      return undefined;
     }
     return new Num(storageValue.num, storageValue.exp)
   }

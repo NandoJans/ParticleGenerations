@@ -11,7 +11,7 @@ export abstract class Buyable extends GameElement {
   abstract baseCost: Num
   abstract cost: Num
   abstract increase: Num
-  scalingStart: Num = new Num(1, 0)
+  scalingStart: Num | undefined = undefined
   scaling: Num = new Num(1, 0)
   limit: Num | undefined = undefined
   abstract bought: Num
@@ -20,7 +20,6 @@ export abstract class Buyable extends GameElement {
   noMax: boolean = true
   oneTime: boolean = false
   auto: boolean = false
-  // TODO: add the methods from buyable service
 
   getBuyableHelper(): BuyableHelper {
     return new BuyableHelper(this)
@@ -39,5 +38,13 @@ export abstract class Buyable extends GameElement {
 
   hasBought(): boolean {
     return this.bought.greq(new Num(1, 0))
+  }
+
+  compare() {
+    return this.getBuyableHelper().compare()
+  }
+
+  isBuyable() {
+    return this.currency.amount.greq(this.cost);
   }
 }
