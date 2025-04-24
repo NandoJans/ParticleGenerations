@@ -6,9 +6,9 @@ import {Styles} from "../../enums/styles";
 import {Num} from "../../../num";
 
 export abstract class YellowMilestone extends Milestone {
-  currency: Holding = HoldingRecord.yellows;
+  currency: Holding = HoldingRecord.redParticles;
   requirement: Requirement[] = [
-    new Requirement(HoldingRecord.yellows, new Num(1, 0))
+    new Requirement(HoldingRecord.redParticles, new Num(1, 0), this)
   ];
   style: Styles = Styles.YELLOW;
   type: string = 'yellow-milestone';

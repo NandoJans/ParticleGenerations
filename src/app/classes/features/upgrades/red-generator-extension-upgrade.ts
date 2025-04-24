@@ -4,12 +4,13 @@ import {ResetKey} from "../../enums/reset-key";
 import {RedUpgrade} from "./red-upgrade";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
+import {ResetHelper} from "../../helpers/reset-helper";
 
 export class RedGeneratorExtensionUpgrade extends RedUpgrade {
-  baseCost: Num = new Num(1, 3)
-  cost: Num = new Num(1, 3)
+  baseCost: Num = new Num(1, 4)
+  cost: Num = new Num(1, 4)
   bought: Num = new Num(0, 0);
-  override scaling: Num = new Num(1, 1);
+  override scaling: Num = new Num(1, 2);
   override limit: Num = new Num(4, 0);
 
   override baseBuffer: Num = new Num(2, 0);
@@ -18,6 +19,7 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
   displayName: string = "Red Generator Extension";
   increase: Num = new Num(1, 2);
   name: string = "red-generator-extension";
+  resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED, this);
   override subNav: string = 'redParticles';
   override requirement: Requirement[] = [];
   override resets: ResetKey = ResetKey.RED_EXTENSION;

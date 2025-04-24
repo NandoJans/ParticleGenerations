@@ -3,9 +3,7 @@ import {TickService} from "./services/tick.service";
 import {DataManagerService} from "./services/data-manager.service";
 import {App} from "./App";
 import {Router} from "@angular/router";
-import {NavigationsService} from "./services/navigations.service";
 import {ChallengeService} from "./services/interactables/challenge.service";
-import {HoldingRecord} from "./classes/records/holdings/holding-record";
 
 @Component({
   selector: 'app-root',
@@ -35,8 +33,6 @@ export class AppComponent implements OnInit{
   ngOnInit(): void {
     this.dataManagerService.load();
 
-    console.log(HoldingRecord.redParticles)
-
     if (!this.isTicking) {
       this.tick.tick();
       this.isTicking = true;
@@ -44,6 +40,6 @@ export class AppComponent implements OnInit{
   }
 
   getActiveChallengeStyle() {
-    return this.challengeService.getActiveChallengeStyle() || '';
+    return '';
   }
 }

@@ -4,6 +4,10 @@ import {RedGenerator} from "./red-generator";
 import {GeneratorRecord} from "../../records/generators/generator-record";
 import {Requirement} from "../interfaces/requirement";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
+import {RedGeneratorMultiplierUpgrade} from "../upgrades/red-generator-multiplier-upgrade";
+import {RedGeneratorBuyMultiplierUpgrade} from "../upgrades/red-generator-buy-multiplier-upgrade";
+import {ResetKey} from "../../enums/reset-key";
+import {ResetHelper} from "../../helpers/reset-helper";
 
 export class SecondRedGenerator extends RedGenerator {
   baseCost: Num = new Num(1, 2);
@@ -11,8 +15,29 @@ export class SecondRedGenerator extends RedGenerator {
   displayName: string = 'Red Generator 2';
   generates: Generatable = GeneratorRecord.firstRedGenerator;
   name: string = 'red-generator-2';
+  resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED_EXTENSION, this);
+  softResetId: ResetKey = ResetHelper.registerSoftReset(ResetKey.RED_EXTENSION, this);
   increase: Num = new Num(1, 2);
   override requirement: Requirement[] = [
-    new Requirement(UpgradeRecord.redGeneratorExtension, new Num(1, 0))
+    new Requirement(UpgradeRecord.redGeneratorExtension, new Num(1, 0), this)
   ];
+
+  multiplierUpgrade: RedGeneratorMultiplierUpgrade = new RedGeneratorMultiplierUpgrade(
+    2,
+    "Second",
+    new Num(1, 4),
+    new Num(1, 3),
+    new Num(1, 1),
+    new Num(1.25, 0),
+    this
+  );
+  buyMultiplierUpgrade: RedGeneratorBuyMultiplierUpgrade = new RedGeneratorBuyMultiplierUpgrade(
+    2,
+    "Second",
+    new Num(1, 5),
+    new Num(1, 4),
+    new Num(1, 1),
+    new Num(1.05, 0),
+    this
+  );
 }

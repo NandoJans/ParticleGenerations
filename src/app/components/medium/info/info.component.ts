@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-info',
@@ -7,7 +7,7 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class InfoComponent {
   @Input() name: string | undefined
-  @Input() text: string[] | undefined
+  @Input() infoText: string[] | undefined
   hidden: boolean = true
 
   constructor() { }

@@ -1,6 +1,8 @@
 <div class="generators-row">
-  <div *ngFor="let generator of generators">
+  <div class="generator" *ngFor="let generator of generators">
     <app-generator *ngIf="generator.unlocked" [generator]="generator"></app-generator>
+    <app-upgrade *ngIf="generator.unlocked" [upgrade]="generator.multiplierUpgrade"></app-upgrade>
+    <app-upgrade *ngIf="generator.unlocked" [upgrade]="generator.buyMultiplierUpgrade"></app-upgrade>
   </div>
 </div>
 <div class="upgrade-row">
@@ -8,4 +10,4 @@
     <app-upgrade *ngIf="upgrade.unlocked" [upgrade]="upgrade"></app-upgrade>
   </div>
 </div>
-<app-info style="width: 60%" [name]="'red-generators-info'" [text]="infoText"></app-info>
+<app-info style="width: 60%" [name]="'red-generators-info'" [infoText]="infoText"></app-info>

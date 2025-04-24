@@ -4,7 +4,6 @@ import {GameElement} from "./game-element";
 import {BuyableHelper} from "../helpers/buyable-helper";
 import {ResetKey} from "../enums/reset-key";
 import {Transaction} from "./interfaces/transaction";
-import {ResetHelper} from "../helpers/reset-helper";
 
 export abstract class Buyable extends GameElement {
   abstract amount: Num
@@ -16,7 +15,7 @@ export abstract class Buyable extends GameElement {
   limit: Num | undefined = undefined
   abstract bought: Num
   abstract currency: Holding
-  resets: ResetKey | undefined = undefined
+  resets: ResetKey = ResetKey.NONE
   noMax: boolean = true
   oneTime: boolean = false
   auto: boolean = false
@@ -26,9 +25,6 @@ export abstract class Buyable extends GameElement {
   }
 
   buy(amount: Num = new Num(1, 0)): Transaction {
-    if (this.resets) {
-      ResetHelper.reset(this.resets)
-    }
     return this.getBuyableHelper().buy()
   }
 

@@ -1,9 +1,12 @@
-<button [class]="'upgrade '+upgrade.style" [id]="'buyable-'+upgrade.name" (click)="buy()">
-  <h4>{{ upgrade.displayName }}</h4>
-  <p>{{ upgrade.getDescription() }}</p>
-<!--  TODO: implement this-->
-<!--  <app-number-display [name]="name" [style]="''" [type]="'effect'" [effect]="effect"></app-number-display>-->
-<!--  <app-number-display [name]="name" [style]="''" [type]="'cost'" [currency]="currency"></app-number-display>-->
+<button
+  [id]="'buyable-'+upgrade.name"
+  [class]="'generator '+upgrade.style+' '+((getIsBuyable()) ? 'buyable' : '')"
+  (click)="buy()"
+>
+  <h4 *ngIf="getDisplayName() !== ''">{{ getDisplayName() }}</h4>
+  <p class="description" *ngIf="getDescription() !== ''">{{ getDescription() }}</p>
+  <p *ngIf="getEffect()">{{ getEffect() }}</p>
+  <p>Cost: {{ getCost() }} {{ getCurrencyAbbreviation() }}</p>
   <div class="challenge-disabled" style="display: none;">
     <h2>Challenge Disabled</h2>
   </div>

@@ -21,4 +21,5 @@ export enum Styles {
   BLUE_NEUTRON_GENERATOR = 'blue-neutron-generator-style',
   BLUE_NEUTRON = 'blue-neutron-style',
   BLUE_GENERATOR = 'blue-generator-style',
+  SUB_RED = 'sub-red-style',
 }

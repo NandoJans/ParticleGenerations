@@ -1,7 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Challenge} from "../../../globals";
-import {ChallengeService} from "../../../services/interactables/challenge.service";
-import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 
 @Component({
   selector: 'app-challenge',
@@ -19,14 +17,9 @@ export class ChallengeComponent implements OnInit {
   dynamic: boolean | undefined;
   completions: any[] | undefined;
   effect: any[] | undefined;
-  constructor(
-    private challengeService: ChallengeService,
-    public holdingRecord: HoldingRecord
-  ) { }
+  constructor() { }
 
   start() {
-    if (this.challenge?.name !== undefined)
-    ChallengeService.startChallenge(this.challenge?.name);
   }
 
   ngOnInit(): void {
@@ -46,6 +39,6 @@ export class ChallengeComponent implements OnInit {
 
   isCompleted() {
     if (this.challenge === undefined) return false;
-    return this.challengeService.isCompleted(this.challenge.name);
+    return false;
   }
 }

@@ -8,8 +8,10 @@ import {ResetKey} from "../enums/reset-key";
 import {Multiplier} from "./multiplier";
 import {Resetable} from "./interfaces/resetable";
 import {Transaction} from "./interfaces/transaction";
+import {Require} from "./interfaces/require";
+import {Upgrade} from "./upgrade";
 
-export abstract class Generator extends Buyable implements Generatable, Storable, Resetable {
+export abstract class Generator extends Buyable implements Generatable, Storable, Resetable, Require {
   abstract name: string
   abstract displayName: string
   abstract generates: Generatable
@@ -32,8 +34,14 @@ export abstract class Generator extends Buyable implements Generatable, Storable
     return this.amount.mul(this.multiplier, false) as Num
   }
 
-  run(): any {
-    this.generates.generate(this.getGenerateAmount())
+  run(speed: Num): any {
+    this.generates.generate(this.getGenerateAmount().mul(speed, false) as Num)
+    this.multiplier = this.baseMultiplier
+      .mul(this.baseMulMod, false)
+      .pow(this.bought, false)
+      .mul(this.globalMultiplier.getNum(), false) as Num
+    this.baseMulMod = new Num(1, 0)
+    this.correctCost();
   }
 
   generate(amount: Num): any {
@@ -52,13 +60,12 @@ export abstract class Generator extends Buyable implements Generatable, Storable
     this.localStorageHelper = new LocalStorageHelper('generators', this.getSaveKey())
     this.localStorageHelper.saveNum(this.bought, 'bought')
     this.localStorageHelper.saveNum(this.amount, 'amount')
-    this.localStorageHelper.saveNum(this.cost, 'cost')
   }
 
   tryLoad(): void {
+    this.localStorageHelper = new LocalStorageHelper('generators', this.getSaveKey())
     this.bought = this.localStorageHelper.loadNum(this.bought, 'bought')
     this.amount = this.localStorageHelper.loadNum(this.amount, 'amount')
-    this.cost = this.localStorageHelper.loadNum(this.cost, 'cost')
   }
 
   softReset(): void {
@@ -74,5 +81,13 @@ export abstract class Generator extends Buyable implements Generatable, Storable
     const transaction = super.buy(amount);
     this.multiplier = this.baseMultiplier.mul(this.baseMulMod, false).pow(this.bought, false) as Num
     return transaction
+  }
+
+  requirementSatisfied(amount: Num): boolean {
+    return this.amount.greq(amount);
+  }
+
+  getUpgrades(): Upgrade[] {
+    return [];
   }
 }

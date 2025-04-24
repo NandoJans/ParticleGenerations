@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
-import {HoldingsService} from "./holdings.service";
 import {GlobalMultipliersService} from "./globals/global-multipliers.service";
 import {Num} from "../num";
 import {DataManagerService} from "./data-manager.service";
-import {App} from "../App";
 import {GeneratorService} from "./interactables/generator.service";
+import {UpgradeService} from "./interactables/upgrade.service";
+import {Requirement} from "../classes/features/interfaces/requirement";
+import {ComponentService} from "./component.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,14 +16,22 @@ export class TickService {
   constructor(
     private dataManagerService: DataManagerService,
     private generatorService: GeneratorService,
+    private upgradeService: UpgradeService,
+    private componentService: ComponentService,
+    private multiplierService: GlobalMultipliersService,
   ) { }
 
   /**
    * Game tick function for running the game logic. The game tick is called every 50ms.
    * @param speed The speed of the game tick. This is used to slow down the game tick for testing purposes.
    */
-  gameTick(speed: Num = new Num(1, 0)) {
+  gameTick(speed: Num = new Num(1, -1)) {
+    Requirement.checkRequirements();
     this.generatorService.tick(speed);
+    this.multiplierService.tick();
+    this.upgradeService.tick();
+    this.componentService.reloadComponents();
+
   }
 
   iterations: number = 0;

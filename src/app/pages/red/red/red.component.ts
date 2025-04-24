@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import {GeneratorRecord} from "../../../classes/records/generators/generator-record";
-import {Generator} from "../../../classes/features/generator";
 import {Upgrade} from "../../../classes/features/upgrade";
 import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
+import {RedGenerator} from "../../../classes/features/generators/red-generator";
 
 @Component({
   selector: 'app-red',
@@ -10,7 +10,7 @@ import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
   styleUrls: ['./red.component.css']
 })
 export class RedComponent {
-  generators: Generator[] = [
+  generators: RedGenerator[] = [
     GeneratorRecord.firstRedGenerator,
     GeneratorRecord.secondRedGenerator,
     GeneratorRecord.thirdRedGenerator,
@@ -18,7 +18,8 @@ export class RedComponent {
     GeneratorRecord.fifthRedGenerator,
   ];
   upgrades: Upgrade[] = [
-    UpgradeRecord.redGeneratorExtension
+    UpgradeRecord.redGeneratorExtension,
+    UpgradeRecord.redGeneratorBooster,
   ];
   infoText: string[] = [
     'Red Generators are the base of this game. The first generator generates red particles while the other generators generate generators a level below themself. For example: two generates one, three generates two, and so on.',

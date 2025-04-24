@@ -49,23 +49,44 @@ export class LocalStorageHelper {
     }
   }
 
-  saveNum(num: Num, key: string = ''): void {
-    if (key) {
-      this.storage[this.key][key] = num
-    } else {
-      this.storage[this.key] = num
+  saveNum(num: Num, key: string = 'x'): void {
+    const k = this.key;
+
+    // Ensure we always have an object bucket for this.key
+    if (
+      this.storage[k] === undefined ||
+      typeof this.storage[k] !== 'object'
+    ) {
+      this.storage[k] = {};
     }
-    this.store()
+
+    // Store under the (possibly empty) key
+    this.storage[k][key] = num;        // or num.toJSON() if you need raw data
+    this.store();
   }
 
-  loadNum(ifNotSet: Num, key: string = ''): Num {
-    if (this.storage[this.key] === undefined) {
-      this.storage[this.key] = ifNotSet
+  loadNum(ifNotSet: Num, key: string = 'x'): Num {
+    const k = this.key;
+
+    // Ensure the bucket exists
+    if (
+      this.storage[k] === undefined ||
+      typeof this.storage[k] !== 'object'
+    ) {
+      this.storage[k] = {};
     }
-    if (key) {
-      return Num.fromStorage(this.storage[this.key][key]) || ifNotSet
-    } else {
-      return Num.fromStorage(this.storage[this.key]) || ifNotSet
+
+    const bucket = this.storage[k] as Record<string, any>;
+    const stored = bucket[key];
+
+    if (stored == null) {
+      // Not set yet, write the default into storage so future loads see it
+      bucket[key] = ifNotSet;         // or defaultNum.toJSON()
+      this.store();
+      return ifNotSet;
     }
+
+    // Otherwise deserialize
+    return Num.fromStorage(stored) as Num;
   }
 }

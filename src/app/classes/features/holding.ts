@@ -4,8 +4,10 @@ import {Styles} from "../enums/styles";
 import {HoldingDisplay} from "../displays/holding-display";
 import {Generatable} from "./interfaces/generatable";
 import {Require} from "./interfaces/require";
+import {Resetable} from "./interfaces/resetable";
+import {ResetKey} from "../enums/reset-key";
 
-export abstract class Holding implements Generatable, Require {
+export abstract class Holding implements Generatable, Require, Resetable {
   abstract name: string;
   abstract abbreviation: string;
   abstract amount: Num;
@@ -14,6 +16,8 @@ export abstract class Holding implements Generatable, Require {
   abstract holdingDisplay: HoldingDisplay;
   protected gainSpeed: Num = new Num(1, 0);
   protected maxGainSpeed: Num = new Num(1, 0);
+  abstract resetId: ResetKey;
+  softResetId: ResetKey = ResetKey.NONE;
 
   abstract getStyle(): Styles;
 
@@ -29,10 +33,11 @@ export abstract class Holding implements Generatable, Require {
 
   tryLoad(): void {
     this.localStorageHelper = new LocalStorageHelper('holdings', this.getSaveKey())
-    this.amount = this.localStorageHelper.loadNum(this.startAmount, 'amount')
+    this.amount = this.localStorageHelper.loadNum(this.startAmount)
   }
 
   save(): void {
+    this.localStorageHelper = new LocalStorageHelper('holdings', this.getSaveKey())
     this.localStorageHelper.saveNum(this.amount)
   }
 
@@ -48,6 +53,8 @@ export abstract class Holding implements Generatable, Require {
   reset(): void {
     this.amount = this.startAmount.copy()
   }
+
+  softReset(): void {}
 
   add(amount: Num): void {
     this.amount.add(amount)

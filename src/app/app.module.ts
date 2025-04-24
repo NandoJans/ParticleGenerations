@@ -21,8 +21,6 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import { TimelineComponent } from './components/particles/timeline/timeline.component';
 import { TimelineEventComponent } from './components/particles/timeline-event/timeline-event.component';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
-import { CombinerComponent } from './components/particles/combiner/combiner.component';
-import {CombinerBoxComponent} from "./components/particles/combiner-box/combiner-box.component";
 import { InfoComponent } from './components/medium/info/info.component';
 import { ParticleEmitterComponent } from './components/medium/particle-emitter/particle-emitter.component';
 
@@ -44,8 +42,6 @@ import { ParticleEmitterComponent } from './components/medium/particle-emitter/p
     AutomatorComponent,
     TimelineComponent,
     TimelineEventComponent,
-    CombinerComponent,
-    CombinerBoxComponent,
     InfoComponent,
     ParticleEmitterComponent,
   ],

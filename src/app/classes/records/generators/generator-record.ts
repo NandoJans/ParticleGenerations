@@ -34,12 +34,18 @@ export class GeneratorRecord extends Record {
   load() {
     this.getList().forEach((generator) => {
       generator.tryLoad();
+      generator.getUpgrades().forEach((upgrade) => {
+        upgrade.tryLoad();
+      });
     });
   }
 
   save() {
     this.getList().forEach((generator) => {
       generator.save();
+      generator.getUpgrades().forEach((upgrade) => {
+        upgrade.save();
+      });
     });
   }
 }

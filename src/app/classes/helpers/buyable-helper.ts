@@ -1,6 +1,4 @@
 import {Num} from "../../num";
-import {ResetService} from "../../services/interactables/reset.service";
-import {NavigationsService} from "../../services/navigations.service";
 import {Buyable} from "../features/buyable";
 import {ResetKey} from "../enums/reset-key";
 import {Transaction} from "../features/interfaces/transaction";
@@ -84,9 +82,9 @@ export class BuyableHelper {
   buy() {
     const buyable = this.buyable
     if (buyable.currency.amount.greq(buyable.cost)) {
-      if (buyable.resets !== 'none' || (buyable.noMax !== undefined && buyable.noMax) || buyable.oneTime) {
+      if (buyable.resets !== ResetKey.NONE || (buyable.noMax !== undefined && buyable.noMax) || buyable.oneTime) {
         const transaction = this.buyAction();
-        if (buyable.resets !== 'none') ResetHelper.reset(buyable.resets || ResetKey.NONE);
+        if (buyable.resets !== ResetKey.NONE) ResetHelper.reset(buyable.resets || ResetKey.NONE);
         return transaction;
       } else {
         const result = this.calculateBulk(buyable)

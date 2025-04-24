@@ -1,6 +1,8 @@
-import {Component, Input} from '@angular/core';
+import {ChangeDetectorRef, Component, Input} from '@angular/core';
 import {Upgrade} from "../../../classes/features/upgrade";
 import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
+import {ComponentService} from "../../../services/component.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-upgrade',
@@ -9,10 +11,48 @@ import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
 })
 export class UpgradeComponent {
   @Input() upgrade: Upgrade = UpgradeRecord.redGeneratorExtension;
+  private sub: Subscription;
 
-  constructor() { }
+  constructor(
+    public cd: ChangeDetectorRef,
+    private componentService: ComponentService
+  ) {
+    this.sub = this.componentService.reload$.subscribe(() => {
+      this.cd.detectChanges();
+    });
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
 
   buy() {
-    this.upgrade.buy()
+    if (this.getIsBuyable()) {
+      this.upgrade.buy();
+    }
+  }
+
+  getDescription() {
+    return this.upgrade.getDescription();
+  }
+
+  getCost() {
+    return this.upgrade.cost;
+  }
+
+  getCurrencyAbbreviation() {
+    return this.upgrade.currency.abbreviation;
+  }
+
+  getDisplayName() {
+    return this.upgrade.displayName;
+  }
+
+  getIsBuyable(): boolean {
+    return this.upgrade.isBuyable();
+  }
+
+  getEffect() {
+    return this.upgrade.effectString();
   }
 }

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ResetService } from './reset.service';
+import { ComponentService } from './component.service';
 
-describe('ResetService', () => {
-  let service: ResetService;
+describe('ComponentService', () => {
+  let service: ComponentService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ResetService);
+    service = TestBed.inject(ComponentService);
   });
 
   it('should be created', () => {

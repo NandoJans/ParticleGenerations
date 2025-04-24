@@ -6,6 +6,7 @@ import {Require} from "./interfaces/require";
 import {Resetable} from "./interfaces/resetable";
 import {Storable} from "./interfaces/storable";
 import {LocalStorageHelper} from "../helpers/local-storage-helper";
+import {Transaction} from "./interfaces/transaction";
 
 export abstract class Upgrade extends Buyable implements Storable, Require, Resetable {
   abstract name: string
@@ -31,11 +32,12 @@ export abstract class Upgrade extends Buyable implements Storable, Require, Rese
     if (effect) {
       this.effect = effect;
     }
+    this.correctCost()
     return effect;
   }
 
   effectString(): string {
-    return this.effect ? this.effect.toString() : '';
+    return this.effect ? this.effect.toString(true) : '';
   }
 
   getEffectDisplay(): string {
@@ -65,13 +67,18 @@ export abstract class Upgrade extends Buyable implements Storable, Require, Rese
     this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey())
     this.localStorageHelper.saveNum(this.amount, 'amount')
     this.localStorageHelper.saveNum(this.bought, 'bought')
-    this.localStorageHelper.saveNum(this.cost, 'cost')
   }
 
   tryLoad(): void {
     this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey())
     this.amount = this.localStorageHelper.loadNum(this.amount, 'amount')
     this.bought = this.localStorageHelper.loadNum(this.bought, 'bought')
-    this.cost = this.localStorageHelper.loadNum(this.cost, 'cost')
+  }
+
+  override buy(amount: Num = new Num(1, 0)): Transaction {
+    const transaction = super.buy(amount);
+    this.run();
+    console.log(this)
+    return transaction;
   }
 }
