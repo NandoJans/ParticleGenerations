@@ -46,7 +46,7 @@ export class NavigationsService {
 
   load() {
     this.selectedNavigation = this.localStorageHelper.load(this.selectedNavigation, 'selectedNavigation')
-    this.selectedSubNavigation = this.localStorageHelper.load(this.selectedNavigation, 'selectedSubNavigation')
+    this.selectedSubNavigation = this.localStorageHelper.load(this.selectedSubNavigation, 'selectedSubNavigation')
     const loadedNavigations = this.localStorageHelper.load({}, 'navigations');
     const navigations: any[] = [];
     navigations.concat(this.subNavigations, this.navigations).forEach((navigation) => {
