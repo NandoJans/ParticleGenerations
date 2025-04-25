@@ -3,11 +3,13 @@ import {NavigationsService} from "./navigations.service";
 import {HoldingRecord} from "../classes/records/holdings/holding-record";
 import {GeneratorRecord} from "../classes/records/generators/generator-record";
 import {UpgradeRecord} from "../classes/records/upgrades/upgrade-record";
+import {LocalStorageHelper} from "../classes/helpers/local-storage-helper";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataManagerService {
+  localStorageHelper: LocalStorageHelper = new LocalStorageHelper('app', 'app');
 
   constructor(
     private holdingRecord: HoldingRecord,
@@ -23,6 +25,7 @@ export class DataManagerService {
     this.generatorRecord.save()
     this.upgradeRecord.save()
     this.navigationsService.save();
+    this.localStorageHelper.store();
   }
 
   load() {

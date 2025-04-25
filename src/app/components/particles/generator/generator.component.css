@@ -7,12 +7,8 @@ button {
   align-items: center;
 }
 
-button.buyable {
-  border: 2px solid var(--green-button-color) !important;
-  cursor: pointer;
-}
-
 button.buyable:hover {
+  cursor: pointer;
   box-shadow: 0 0 10000px rgba(255, 255, 255, 0.1) inset;
 }
 
@@ -21,12 +17,13 @@ button p {
   padding: 0;
 }
 
-button:nth-child(2n) {
-  background-color: var(--background-color-3);
-  border: 2px solid var(--background-color-3);
+button.red-style {
+  background-color: var(--background-color-red);
+  border: 1px solid var(--background-color-red);
 }
 
-button.red-style:nth-child(2n + 1) {
-  background-color: var(--background-color-red);
-  border: 2px solid var(--background-color-red);
+button.red-style.buyable {
+  background-color: var(--background-color-3);
+  border: 1px solid var(--text-color-red);
+  color: var(--text-color-red);
 }
