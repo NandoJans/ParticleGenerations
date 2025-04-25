@@ -3,7 +3,7 @@ name: Build and Deploy Angular App
 on:
   push:
     branches:
-      - main
+      - new
 
 jobs:
   build_and_deploy:
