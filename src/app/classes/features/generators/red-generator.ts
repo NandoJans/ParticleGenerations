@@ -15,8 +15,9 @@ export abstract class RedGenerator extends Generator {
   override unlocked: boolean = false;
   requirement: Requirement[] = [];
   currency: Holding = HoldingRecord.redParticles;
-  override scaling: Num = new Num(1, 1);
   baseMultiplier: Num = new Num(2, 0);
+  override scalingStart: Num = new Num(1, 100);
+  override scaling: Num = new Num(1, 1);
   globalMultiplier: Multiplier = MultiplierRecord.redParticleGenerators;
   nav: string = 'red';
   style: Styles = Styles.RED;
