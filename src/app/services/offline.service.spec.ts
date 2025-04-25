@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { NumberDisplayService } from './number-display.service';
+import { OfflineService } from './offline.service';
 
-describe('NumberDisplayService', () => {
-  let service: NumberDisplayService;
+describe('OfflineService', () => {
+  let service: OfflineService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(NumberDisplayService);
+    service = TestBed.inject(OfflineService);
   });
 
   it('should be created', () => {

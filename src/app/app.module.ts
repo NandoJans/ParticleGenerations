@@ -23,6 +23,7 @@ import { TimelineEventComponent } from './components/particles/timeline-event/ti
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import { InfoComponent } from './components/medium/info/info.component';
 import { ParticleEmitterComponent } from './components/medium/particle-emitter/particle-emitter.component';
+import { OfflineComponent } from './components/medium/offline/offline.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { ParticleEmitterComponent } from './components/medium/particle-emitter/p
     TimelineEventComponent,
     InfoComponent,
     ParticleEmitterComponent,
+    OfflineComponent,
   ],
     imports: [
         BrowserModule,

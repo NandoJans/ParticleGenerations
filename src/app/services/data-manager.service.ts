@@ -9,7 +9,7 @@ import {LocalStorageHelper} from "../classes/helpers/local-storage-helper";
   providedIn: 'root'
 })
 export class DataManagerService {
-  localStorageHelper: LocalStorageHelper = new LocalStorageHelper('app', 'app');
+  localStorageHelper: LocalStorageHelper = new LocalStorageHelper('app', 'lastSave');
 
   constructor(
     private holdingRecord: HoldingRecord,
@@ -25,6 +25,8 @@ export class DataManagerService {
     this.generatorRecord.save()
     this.upgradeRecord.save()
     this.navigationsService.save();
+
+    this.setLastSave();
     this.localStorageHelper.store();
   }
 
@@ -34,5 +36,9 @@ export class DataManagerService {
     this.generatorRecord.load();
     this.upgradeRecord.load();
     this.navigationsService.load();
+  }
+
+  setLastSave(): void {
+    this.localStorageHelper.save(new Date().toISOString());
   }
 }

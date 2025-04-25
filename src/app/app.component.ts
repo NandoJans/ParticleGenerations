@@ -5,6 +5,7 @@ import {App} from "./App";
 import {Router} from "@angular/router";
 import {ChallengeService} from "./services/interactables/challenge.service";
 import {LocalStorageHelper} from "./classes/helpers/local-storage-helper";
+import {OfflineService} from "./services/offline.service";
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,8 @@ export class AppComponent implements OnInit{
     private tick: TickService,
     private router: Router,
     private challengeService: ChallengeService,
-    private dataManagerService: DataManagerService
+    private dataManagerService: DataManagerService,
+    private offlineService: OfflineService,
   ) {
     App.subscribe().subscribe((data) => {
       if (data) {
@@ -34,6 +36,8 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
     this.dataManagerService.load();
+    this.offlineService.load();
+    this.dataManagerService.save();
     this.localStorageHelper.save("V0.1");
 
     if (!this.isTicking) {
@@ -44,5 +48,9 @@ export class AppComponent implements OnInit{
 
   getActiveChallengeStyle() {
     return '';
+  }
+
+  offlineCalculating(): boolean {
+    return !this.offlineService.isClosed();
   }
 }
