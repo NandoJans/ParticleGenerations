@@ -4,6 +4,7 @@ import {DataManagerService} from "./services/data-manager.service";
 import {App} from "./App";
 import {Router} from "@angular/router";
 import {ChallengeService} from "./services/interactables/challenge.service";
+import {LocalStorageHelper} from "./classes/helpers/local-storage-helper";
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,7 @@ import {ChallengeService} from "./services/interactables/challenge.service";
 })
 export class AppComponent implements OnInit{
   title = 'ParticleGenerations';
+  localStorageHelper: LocalStorageHelper = new LocalStorageHelper('app', 'app');
 
   constructor(
     private tick: TickService,
@@ -32,6 +34,7 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
     this.dataManagerService.load();
+    this.localStorageHelper.save("V0.1");
 
     if (!this.isTicking) {
       this.tick.tick();

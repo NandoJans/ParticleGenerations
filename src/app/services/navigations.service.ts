@@ -4,6 +4,7 @@ import {HoldingsService} from "./holdings.service";
 import {Router} from "@angular/router";
 import {App} from "../App";
 import {DropDownMessageService} from "./visuals/drop-down-message.service";
+import {LocalStorageHelper} from "../classes/helpers/local-storage-helper";
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class NavigationsService {
 
   selectedNavigation: string = 'red';
   selectedSubNavigation: string = 'particles';
+  localStorageHelper: LocalStorageHelper = new LocalStorageHelper('navigations', 'navigations');
 
   constructor(
     private router: Router,
@@ -37,19 +39,15 @@ export class NavigationsService {
     this.subNavigations.forEach((navigation) => {
       save[navigation.name] = {unlocked: navigation.unlocked};
     })
-    localStorage['navigations'] = JSON.stringify(save)
-    localStorage['selectedNavigation'] = JSON.stringify(this.selectedNavigation);
-    localStorage['selectedSubNavigation'] = JSON.stringify(this.selectedSubNavigation);
+    this.localStorageHelper.saveMultiple(save);
+    this.localStorageHelper.save(this.selectedNavigation, 'selectedNavigation');
+    this.localStorageHelper.save(this.selectedSubNavigation, 'selectedSubNavigation');
   }
 
   load() {
-    this.selectedNavigation = (localStorage['selectedNavigation'] !== undefined)
-      ? JSON.parse(localStorage['selectedNavigation'])
-      : this.navigations[0].name;
-    this.selectedSubNavigation = (localStorage['selectedSubNavigation'] !== undefined)
-      ? JSON.parse(localStorage['selectedSubNavigation'])
-      : this.subNavigations[0].name;
-    const loadedNavigations = JSON.parse(localStorage['navigations'])
+    this.selectedNavigation = this.localStorageHelper.load(this.selectedNavigation, 'selectedNavigation')
+    this.selectedSubNavigation = this.localStorageHelper.load(this.selectedNavigation, 'selectedSubNavigation')
+    const loadedNavigations = this.localStorageHelper.load({}, 'navigations');
     const navigations: any[] = [];
     navigations.concat(this.subNavigations, this.navigations).forEach((navigation) => {
       if (loadedNavigations[navigation.name] !== undefined) {

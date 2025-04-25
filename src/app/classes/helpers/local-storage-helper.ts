@@ -3,36 +3,49 @@ import {Num} from "../../num";
 export class LocalStorageHelper {
   category: string;
   key: string;
-  storage: { [key: string]: any };
+
+  static STORAGE_KEY = 'particleGenerations';
+  static STORAGE: any = null;
 
   constructor(category: string, key: string) {
     this.category = category;
     this.key = key;
-    if (localStorage[this.category] === undefined) {
-      localStorage[this.category] = JSON.stringify({ [this.key]: {} });
+    if (!LocalStorageHelper.STORAGE) {
+      if (localStorage[LocalStorageHelper.STORAGE_KEY] !== undefined) {
+        LocalStorageHelper.STORAGE = JSON.parse(localStorage[LocalStorageHelper.STORAGE_KEY]);
+      } else {
+        LocalStorageHelper.STORAGE = {};
+      }
     }
-    this.storage = JSON.parse(localStorage[this.category]);
+    if (LocalStorageHelper.STORAGE[this.category] === undefined) {
+      LocalStorageHelper.STORAGE[this.category] = {};
+    }
   }
 
-  protected store(): void {
-    localStorage[this.category] = JSON.stringify(this.storage);
+  store(): void {
+    localStorage[LocalStorageHelper.STORAGE_KEY] = JSON.stringify(LocalStorageHelper.STORAGE);
   }
 
   exists(key: string = ''): boolean {
     if (key) {
-      return this.storage[this.key][key] !== null;
+      if (LocalStorageHelper.STORAGE[this.category][this.key] === undefined) {
+        LocalStorageHelper.STORAGE[this.category][this.key] = {};
+      }
+      return LocalStorageHelper.STORAGE[this.category][this.key][key] !== null;
     } else {
-      return this.storage[this.key] !== null;
+      return LocalStorageHelper.STORAGE[this.category][this.key] !== null;
     }
   }
 
   save(value: any, key: string = ''): void {
     if (key) {
-      this.storage[this.key][key] = value
+      if (LocalStorageHelper.STORAGE[this.category][this.key] === undefined) {
+        LocalStorageHelper.STORAGE[this.category][this.key] = {};
+      }
+      LocalStorageHelper.STORAGE[this.category][this.key][key] = value
     } else {
-      this.storage[this.key] = value
+      LocalStorageHelper.STORAGE[this.category][this.key] = value
     }
-    this.store()
   }
 
   saveMultiple(values: {[key: string]: any}): void {
@@ -43,46 +56,43 @@ export class LocalStorageHelper {
 
   load(ifNotSet: any, key: string = ''): any {
     if (key) {
-      return this.storage[this.key][key] || ifNotSet
+      if (LocalStorageHelper.STORAGE[this.category][this.key] === undefined) {
+        LocalStorageHelper.STORAGE[this.category][this.key] = {};
+      }
+      return LocalStorageHelper.STORAGE[this.category][this.key][key] || ifNotSet
     } else {
-      return this.storage[this.key] || ifNotSet
+      return LocalStorageHelper.STORAGE[this.category][this.key] || ifNotSet
     }
   }
 
   saveNum(num: Num, key: string = 'x'): void {
-    const k = this.key;
-
     // Ensure we always have an object bucket for this.key
     if (
-      this.storage[k] === undefined ||
-      typeof this.storage[k] !== 'object'
+      LocalStorageHelper.STORAGE[this.category][this.key] === undefined ||
+      typeof LocalStorageHelper.STORAGE[this.category][this.key] !== 'object'
     ) {
-      this.storage[k] = {};
+      LocalStorageHelper.STORAGE[this.category][this.key] = {};
     }
 
     // Store under the (possibly empty) key
-    this.storage[k][key] = num;        // or num.toJSON() if you need raw data
-    this.store();
+    LocalStorageHelper.STORAGE[this.category][this.key][key] = num;        // or num.toJSON() if you need raw data
   }
 
   loadNum(ifNotSet: Num, key: string = 'x'): Num {
-    const k = this.key;
-
     // Ensure the bucket exists
     if (
-      this.storage[k] === undefined ||
-      typeof this.storage[k] !== 'object'
+      LocalStorageHelper.STORAGE[this.category][this.key] === undefined ||
+      typeof LocalStorageHelper.STORAGE[this.category][this.key] !== 'object'
     ) {
-      this.storage[k] = {};
+      LocalStorageHelper.STORAGE[this.category][this.key] = {};
     }
 
-    const bucket = this.storage[k] as Record<string, any>;
+    const bucket = LocalStorageHelper.STORAGE[this.category][this.key] as Record<string, any>;
     const stored = bucket[key];
 
     if (stored == null) {
       // Not set yet, write the default into storage so future loads see it
       bucket[key] = ifNotSet;         // or defaultNum.toJSON()
-      this.store();
       return ifNotSet;
     }
 

@@ -67,18 +67,19 @@ export abstract class Upgrade extends Buyable implements Storable, Require, Rese
     this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey())
     this.localStorageHelper.saveNum(this.amount, 'amount')
     this.localStorageHelper.saveNum(this.bought, 'bought')
+    this.localStorageHelper.save(this.unlocked, 'unlocked')
   }
 
   tryLoad(): void {
     this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey())
     this.amount = this.localStorageHelper.loadNum(this.amount, 'amount')
     this.bought = this.localStorageHelper.loadNum(this.bought, 'bought')
+    this.unlocked = this.localStorageHelper.load(this.unlocked, 'unlocked')
   }
 
   override buy(amount: Num = new Num(1, 0)): Transaction {
     const transaction = super.buy(amount);
     this.run();
-    console.log(this)
     return transaction;
   }
 }

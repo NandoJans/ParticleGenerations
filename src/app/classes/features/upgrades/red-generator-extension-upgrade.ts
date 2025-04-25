@@ -2,14 +2,12 @@ import {Num} from "../../../num";
 import {Requirement} from "../interfaces/requirement";
 import {ResetKey} from "../../enums/reset-key";
 import {RedUpgrade} from "./red-upgrade";
-import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
-import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {GeneratorRecord} from "../../records/generators/generator-record";
 
 export class RedGeneratorExtensionUpgrade extends RedUpgrade {
-  baseCost: Num = new Num(1, 4)
-  cost: Num = new Num(1, 4)
+  baseCost: Num = new Num(1, 3)
+  cost: Num = new Num(1, 3)
   bought: Num = new Num(0, 0);
   override scaling: Num = new Num(1, 2);
 
