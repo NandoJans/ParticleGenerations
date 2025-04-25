@@ -1,0 +1,13 @@
+<div class="background">
+  <div class="container">
+    <div class="progress-bar">
+      <div class="progress" [style]="'width: ' + getOfflineProgress() + '%;'"></div>
+    </div>
+    <div class="progress-text">
+      <p>{{ getTickProgress() }}/{{ getTotalTicks() }} Ticks</p>
+    </div>
+    <button *ngIf="isDone()" class="success" (click)="close()">
+      Close
+    </button>
+  </div>
+</div>
