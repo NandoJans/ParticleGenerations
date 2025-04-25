@@ -5,14 +5,15 @@ import {RedUpgrade} from "./red-upgrade";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {ResetHelper} from "../../helpers/reset-helper";
+import {GeneratorRecord} from "../../records/generators/generator-record";
 
 export class RedGeneratorExtensionUpgrade extends RedUpgrade {
   baseCost: Num = new Num(1, 4)
   cost: Num = new Num(1, 4)
   bought: Num = new Num(0, 0);
   override scaling: Num = new Num(1, 2);
-  override limit: Num = new Num(4, 0);
 
+  override buffer: Num = new Num(2, 0);
   override baseBuffer: Num = new Num(2, 0);
 
   description: string = this.getDescription();
@@ -25,21 +26,30 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
   override resets: ResetKey = ResetKey.RED_EXTENSION;
   override unlocked: boolean = true;
 
-  action(): Num {
-    const buff: Num = this.buffer.pow(this.bought, false);
-    MultiplierRecord.redParticleGenerators.correct(buff)
-    const boughtUpgrade: boolean = UpgradeRecord.redGeneratorExtension.hasBought()
-    if (this.bought.greq(new Num(4, 0)) && !boughtUpgrade) {
-      this.limit = new Num(4, 0)
-    } else if (!boughtUpgrade) {
-    } else {
-      this.limit = new Num(1, 1000000)
-    }
-    return buff;
+  action(): undefined {
+    const generators = [
+      GeneratorRecord.firstRedGenerator,
+      GeneratorRecord.secondRedGenerator,
+      GeneratorRecord.thirdRedGenerator,
+      GeneratorRecord.fourthRedGenerator,
+      GeneratorRecord.fifthRedGenerator,
+    ];
+    generators.forEach((generator, index) => {
+      const compare = new Num(index, 0);
+      if (this.bought.greq(compare)) {
+        const buff: Num = this.buffer.pow(this.bought.sub(compare, false), false);
+        generator.multiplier.mul(buff);
+      }
+    });
+    return
   }
 
   getDescription(): string {
-    return "Get a new generator that generates the one before it.";
+    if (this.bought.greq(new Num(4, 0))) {
+      return `Multiply red generator production by ${this.buffer.toString(true)}x.`;
+    } else {
+      return `Get a new generator. Multiply other red generator production by ${this.buffer.toString(true)}`;
+    }
   }
 
   override effectString() {

@@ -17,7 +17,7 @@ export class FifthRedGenerator extends RedGenerator {
   name: string = 'red-generator-5';
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED_EXTENSION, this);
   softResetId: ResetKey = ResetHelper.registerSoftReset(ResetKey.RED_EXTENSION, this);
-  increase: Num = new Num(1, 5);
+  increase: Num = new Num(1, 6);
   override requirement: Requirement[] = [
     new Requirement(UpgradeRecord.redGeneratorExtension, new Num(4, 0), this)
   ];

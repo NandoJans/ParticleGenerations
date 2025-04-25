@@ -16,7 +16,7 @@ export abstract class Buyable extends GameElement {
   abstract bought: Num
   abstract currency: Holding
   resets: ResetKey = ResetKey.NONE
-  noMax: boolean = true
+  noMax: boolean = false
   oneTime: boolean = false
   auto: boolean = false
 
