@@ -29,7 +29,9 @@ export class OfflineComponent implements OnInit {
   }
 
   close() {
-    this.offlineService.close();
+    if (this.offlineService.isDone()) {
+      this.offlineService.close();
+    }
   }
 
   isDone() {
