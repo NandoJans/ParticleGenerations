@@ -21,7 +21,7 @@ export class RedGeneratorMultiplierUpgrade extends RedGeneratorUpgrade {
   resetId: ResetKey;
 
   action(): Num {
-    const buff: Num = this.buffer.pow(this.bought, false);
+    const buff: Num = this.buffer.pow(this.amount, false);
     this.generator.multiplier.mul(buff);
     return buff;
   }

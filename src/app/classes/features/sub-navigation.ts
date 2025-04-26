@@ -34,4 +34,12 @@ export class SubNavigation extends GameElement {
   tryLoad() {
     this.unlocked = this.localStorageHelper.load(this.unlocked, 'unlocked');
   }
+
+  override unlock(): {title: string, message: string} {
+    this.unlocked = true;
+    return {
+      title: 'Sub Navigation Unlocked',
+      message: `You have unlocked the ${this.name} navigation!`
+    };
+  }
 }

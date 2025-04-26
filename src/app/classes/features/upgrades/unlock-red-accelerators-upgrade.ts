@@ -20,16 +20,22 @@ export class UnlockRedAcceleratorsUpgrade extends Upgrade {
   requirement: Requirement[] = [
     new Requirement(HoldingRecord.redParticles, new Num(1, 75), this),
   ];
-  resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED, this);
+  resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED_BOOSTER_ACCELERATION, this);
   style: Styles =  Styles.RED_ACCELERATOR_UNLOCK;
   subNav: string = 'red-accelerators';
   type: string = 'unlock';
   override oneTime: boolean = true;
 
   action(): undefined {
-    GeneratorRecord.redAcceleratorGenerator.amount = new Num(1, 0);
-    GeneratorRecord.redAcceleratorGenerator.bought = new Num(1, 0);
-    GeneratorRecord.redAcceleratorGenerator.unlocked = true;
+    if (this.hasBought()) {
+      GeneratorRecord.redAcceleratorGenerator.amount = new Num(1, 0);
+      GeneratorRecord.redAcceleratorGenerator.bought = new Num(1, 0);
+      GeneratorRecord.redAcceleratorGenerator.unlocked = true;
+    } else {
+      GeneratorRecord.redAcceleratorGenerator.amount = new Num(0, 0);
+      GeneratorRecord.redAcceleratorGenerator.bought = new Num(0, 0);
+      GeneratorRecord.redAcceleratorGenerator.unlocked = false;
+    }
     return undefined;
   }
 

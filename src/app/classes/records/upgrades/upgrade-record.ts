@@ -9,6 +9,7 @@ import {ImproveRedAcceleratorsEffectUpgrade} from "../../features/upgrades/impro
 import {
   ImproveRedParticlesToAcceleratorsUpgrade
 } from "../../features/upgrades/improve-red-particles-to-accelerators-upgrade";
+import {BoosterAccelerationUpgrade} from "../../features/upgrades/booster-acceleration-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,7 @@ export class UpgradeRecord extends Record {
   static multiplyRedAcceleratorGeneration: MultiplyRedAcceletorGenerationUpgrade = new MultiplyRedAcceletorGenerationUpgrade();
   static improveRedAcceleratorsEffect: ImproveRedAcceleratorsEffectUpgrade = new ImproveRedAcceleratorsEffectUpgrade();
   static improveRedParticlesToAcceleratorsUpgrade: ImproveRedParticlesToAcceleratorsUpgrade = new ImproveRedParticlesToAcceleratorsUpgrade();
+  static boosterAccelerationUpgrade: BoosterAccelerationUpgrade = new BoosterAccelerationUpgrade();
 
   static override list: Upgrade[] = [
     UpgradeRecord.redGeneratorExtension,
@@ -32,7 +34,8 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.unlockRedAccelerators,
     UpgradeRecord.multiplyRedAcceleratorGeneration,
     UpgradeRecord.improveRedAcceleratorsEffect,
-    UpgradeRecord.improveRedParticlesToAcceleratorsUpgrade
+    UpgradeRecord.improveRedParticlesToAcceleratorsUpgrade,
+    UpgradeRecord.boosterAccelerationUpgrade,
   ]
 
   getList(): Upgrade[] {

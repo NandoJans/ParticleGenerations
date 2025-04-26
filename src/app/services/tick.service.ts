@@ -9,6 +9,7 @@ import {ComponentService} from "./component.service";
 import {LocalStorageHelper} from "../classes/helpers/local-storage-helper";
 import {AutomatorService} from "./interactables/automator.service";
 import {HoldingService} from "./holding.service";
+import {DropDownMessageService} from "./visuals/drop-down-message.service";
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,8 @@ export class TickService {
     private componentService: ComponentService,
     private multiplierService: GlobalMultipliersService,
     private automatorService: AutomatorService,
-    private holdingService: HoldingService
+    private holdingService: HoldingService,
+    private dropDownMessageService: DropDownMessageService
   ) { }
 
   /**
@@ -34,13 +36,21 @@ export class TickService {
    * @param speed The speed of the game tick. This is used to slow down the game tick for testing purposes.
    */
   gameTick(speed: Num = new Num(1, -1)) {
-    Requirement.checkRequirements();
+    this.checkRequirements();
+
     this.generatorService.tick(speed);
     this.multiplierService.tick();
     this.upgradeService.tick();
     this.holdingService.tick();
     this.automatorService.tick();
     this.componentService.reloadComponents();
+  }
+
+  private checkRequirements() {
+    const dropDownMessage = Requirement.checkRequirements();
+    if (dropDownMessage) {
+      this.dropDownMessageService.dropDown(dropDownMessage.title, dropDownMessage.message);
+    }
   }
 
   iterations: number = 0;

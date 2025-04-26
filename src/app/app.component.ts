@@ -6,8 +6,6 @@ import {Router} from "@angular/router";
 import {ChallengeService} from "./services/interactables/challenge.service";
 import {LocalStorageHelper} from "./classes/helpers/local-storage-helper";
 import {OfflineService} from "./services/offline.service";
-import {HoldingRecord} from "./classes/records/holdings/holding-record";
-import {Num} from "./num";
 
 @Component({
   selector: 'app-root',
@@ -52,14 +50,10 @@ export class AppComponent implements OnInit{
   isTicking = false;
 
   ngOnInit(): void {
-    // Request fullscreen mode for android devices
-
     this.dataManagerService.load();
     this.offlineService.load();
     this.dataManagerService.save();
     this.localStorageHelper.save("V0.1");
-
-
 
     if (!this.isTicking) {
       this.tick.startIntervals();

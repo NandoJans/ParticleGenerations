@@ -11,3 +11,8 @@
     <app-upgrade [upgrade]="unlockRedAccelerators"></app-upgrade>
   </div>
 </div>
+<div *ngIf="boughtUnlockRedAccelerators() || boughtBoosterAcceleration()" class="upgrade-row">
+  <div>
+    <app-upgrade [upgrade]="boosterAccelerationUpgrade"></app-upgrade>
+  </div>
+</div>

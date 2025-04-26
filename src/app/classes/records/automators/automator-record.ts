@@ -4,6 +4,10 @@ import {Automator} from "../../features/automator";
 import {GeneratorRecord} from "../generators/generator-record";
 import {Injectable} from '@angular/core';
 import {RedGeneratorBoosterAutomator} from "../../features/automators/red-generator-booster-automator";
+import {MultiplyRedAccelerationGenerationAutomator} from "../../features/automators/multiply-red-acceleration-generation-automator";
+import {ImproveRedAcceleratorsEffectAutomator} from "../../features/automators/improve-red-accelerators-effect-automator";
+import {ImproveRedParticlesToAcceleratorsAutomator} from "../../features/automators/improve-red-particles-to-accelerators-automator";
+import {BoosterAccelerationAutomator} from "../../features/automators/booster-acceleration-automator";
 
 @Injectable({
   providedIn: 'root'
@@ -18,12 +22,23 @@ export class AutomatorRecord extends Record {
 
   static redGeneratorBooster: RedGeneratorBoosterAutomator = new RedGeneratorBoosterAutomator();
 
+  // Red Accelerator Phase
+  static multiplyRedAccelerationGeneration: MultiplyRedAccelerationGenerationAutomator = new MultiplyRedAccelerationGenerationAutomator();
+  static improveRedAcceleratorsEffect: ImproveRedAcceleratorsEffectAutomator = new ImproveRedAcceleratorsEffectAutomator();
+  static improveRedParticlesToAccelerators: ImproveRedParticlesToAcceleratorsAutomator = new ImproveRedParticlesToAcceleratorsAutomator();
+  static boosterAcceleration: BoosterAccelerationAutomator = new BoosterAccelerationAutomator();
+
   static override list: Automator[] = [
     AutomatorRecord.firstRedGenerator,
     AutomatorRecord.secondRedGenerator,
     AutomatorRecord.thirdRedGenerator,
     AutomatorRecord.fourthRedGenerator,
     AutomatorRecord.fifthRedGenerator,
+    AutomatorRecord.redGeneratorBooster,
+    AutomatorRecord.multiplyRedAccelerationGeneration,
+    AutomatorRecord.improveRedAcceleratorsEffect,
+    AutomatorRecord.improveRedParticlesToAccelerators,
+    AutomatorRecord.boosterAcceleration,
   ]
 
   getList(): Automator[] {

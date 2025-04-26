@@ -61,3 +61,11 @@ button.buyable:hover {
   cursor: pointer;
   box-shadow: 0 0 10000px rgba(255, 255, 255, 0.1) inset;
 }
+
+button.super {
+  width: 30rem;
+}
+
+button.super h4 {
+  font-size: 1.5rem;
+}

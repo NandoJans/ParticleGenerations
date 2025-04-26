@@ -21,13 +21,16 @@ export class Requirement {
     return this.requirement.requirementSatisfied(this.amount);
   }
 
-  static checkRequirements(): void {
+  static checkRequirements(): void|{title: string, message: string} {
     Requirement.requirements = Requirement.requirements.filter((requirement) => {
       if (requirement.requirementMet()) {
-        requirement.gameElement.unlocked = true;
-        return false; // Remove this requirement from the array
+        const message = requirement.gameElement.unlock();
+        if (message) {
+          return message;
+        }
+        return false;
       }
-      return true; // Keep this requirement in the array
+      return true;
     });
   }
 }

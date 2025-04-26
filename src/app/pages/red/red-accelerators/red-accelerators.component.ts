@@ -11,6 +11,7 @@ import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
 })
 export class RedAcceleratorsComponent implements OnInit {
   unlockRedAccelerators: Upgrade = UpgradeRecord.unlockRedAccelerators;
+  boosterAccelerationUpgrade: Upgrade = UpgradeRecord.boosterAccelerationUpgrade;
   upgrades: Upgrade[] = [
     UpgradeRecord.multiplyRedAcceleratorGeneration,
     UpgradeRecord.improveRedAcceleratorsEffect,
@@ -25,5 +26,9 @@ export class RedAcceleratorsComponent implements OnInit {
 
   boughtUnlockRedAccelerators(): boolean {
     return UpgradeRecord.unlockRedAccelerators.hasBought()
+  }
+
+  boughtBoosterAcceleration() {
+    return this.boosterAccelerationUpgrade.hasBought();
   }
 }

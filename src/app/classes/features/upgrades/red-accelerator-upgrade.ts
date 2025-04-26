@@ -17,6 +17,7 @@ export abstract class RedAcceleratorUpgrade extends Upgrade {
   ];
   style: Styles = Styles.RED_ACCELERATOR;
   type: string = 'red-accelerators';
-  resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED, this);
-  override scaling: Num = new Num(1, 5);
+  resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED_BOOSTER_ACCELERATION, this);
+  override scalingStart: Num = new Num(1, 1000);
+  override scaling: Num = new Num(1, 2);
 }

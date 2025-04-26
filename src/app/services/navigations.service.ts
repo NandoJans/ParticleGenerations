@@ -13,7 +13,7 @@ import {Num} from "../num";
 export class NavigationsService {
   navigations: {[key: string]: Navigation} = {
     red: new Navigation('red', faAtom, 'red', [], 'particles', true),
-    automators: new Navigation('automators', faCogs, 'automators', [], 'red', false),
+    automators: new Navigation('automators', faCogs, 'automators', [], 'red', true),
 }
 
   subNavigations: {[key: string]: SubNavigation} = {

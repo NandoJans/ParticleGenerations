@@ -11,6 +11,12 @@ export class ResetHelper {
 
   }
 
+  static resetOrder: ResetKey[] = [
+    ResetKey.RED_EXTENSION,
+    ResetKey.RED_BOOSTER_ACCELERATION,
+    ResetKey.RED,
+  ];
+
   static registerReset(resetKey: ResetKey, resetable: Resetable): ResetKey {
     if (!this.resetList[resetKey]) {
       this.resetList[resetKey] = {};
@@ -28,18 +34,25 @@ export class ResetHelper {
   }
 
   static reset(resetKey: ResetKey): void {
-    if (this.resetList[resetKey]) {
-      Object.values(this.resetList[resetKey]).forEach(resetable => {
+    for (let resetOrderKey of this.resetOrder) {
+      console.log('resetting', resetOrderKey);
+      Object.values(this.resetList[resetOrderKey]).forEach(resetable => {
         resetable.reset();
       });
+      if (resetOrderKey === resetKey) {
+        break;
+      }
     }
   }
 
   static softReset(resetKey: ResetKey): void {
-    if (this.softResetList[resetKey]) {
-      Object.values(this.softResetList[resetKey]).forEach(resetable => {
+    for (let resetOrderKey of this.resetOrder) {
+      Object.values(this.softResetList[resetOrderKey]).forEach(resetable => {
         resetable.softReset();
       });
+      if (resetOrderKey === resetKey) {
+        break;
+      }
     }
   }
 

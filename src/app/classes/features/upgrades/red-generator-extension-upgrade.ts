@@ -18,7 +18,7 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
   displayName: string = "Red Generator Extension";
   increase: Num = new Num(1, 2);
   name: string = "red-generator-extension";
-  resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED, this);
+  resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED_BOOSTER_ACCELERATION, this);
   override subNav: string = 'redParticles';
   override requirement: Requirement[] = [];
   override resets: ResetKey = ResetKey.RED_EXTENSION;
@@ -34,19 +34,19 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
     ];
     generators.forEach((generator, index) => {
       const compare = new Num(index, 0);
-      if (this.bought.greq(compare)) {
-        const buff: Num = this.buffer.pow(this.bought.sub(compare, false), false);
+      if (this.amount.greq(compare)) {
+        const buff: Num = this.buffer.pow(this.amount.sub(compare, false), false);
         generator.multiplier.mul(buff);
       }
     });
-    return this.buffer.pow(this.bought, false);
+    return this.buffer.pow(this.amount, false);
   }
 
   getDescription(): string {
-    if (this.bought.greq(new Num(4, 0))) {
+    if (this.amount.greq(new Num(4, 0))) {
       return `Multiply red generator production by ${this.buffer.toString(true)}x.`;
     } else {
-      return `Get a new generator. Multiply other red generator production by ${this.buffer.toString(true)}`;
+      return `Get a new generator and apply ${this.buffer.toString(true)}x`;
     }
   }
 
