@@ -33,7 +33,13 @@ export class OfflineComponent implements OnInit {
 
   close() {
     if (this.offlineService.isDone()) {
-      document.documentElement.requestFullscreen({ navigationUI: 'hide' });
+      document.documentElement.requestFullscreen({ navigationUI: 'hide' })
+        .then(() => {
+          console.log('Fullscreen mode activated successfully.');
+        })
+        .catch((error) => {
+          console.error('Failed to activate fullscreen mode:', error);
+        });
       this.offlineService.close();
     }
   }
