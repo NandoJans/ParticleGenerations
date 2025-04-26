@@ -39,7 +39,7 @@ export class TickService {
 
   iterations: number = 0;
 
-  tick() {
+  startIntervals() {
     this.clearIntervals()
     this.setIntervals()
   }

@@ -37,7 +37,7 @@ export class AppComponent implements OnInit{
       this.dataManagerService.load();
       this.offlineService.load();
       this.dataManagerService.save();
-      this.tick.tick();
+      this.tick.startIntervals();
     }
 
     window.onblur = () => {
@@ -56,7 +56,7 @@ export class AppComponent implements OnInit{
     this.localStorageHelper.save("V0.1");
 
     if (!this.isTicking) {
-      this.tick.tick();
+      this.tick.startIntervals();
       this.isTicking = true;
     }
   }
