@@ -22,11 +22,12 @@ export class Requirement {
   }
 
   static checkRequirements(): void {
-    Requirement.requirements.forEach((requirement, index) => {
+    Requirement.requirements = Requirement.requirements.filter((requirement) => {
       if (requirement.requirementMet()) {
         requirement.gameElement.unlocked = true;
-        Requirement.requirements.splice(index, 1);
+        return false; // Remove this requirement from the array
       }
+      return true; // Keep this requirement in the array
     });
   }
 }
