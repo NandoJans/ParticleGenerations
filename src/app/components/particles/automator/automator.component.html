@@ -1,14 +1,21 @@
-<div [class]="'upgrade '+style" [id]="name">
-  <h4>{{ displayName }}</h4>
-  <form class="automator-form" [formGroup]="formGroup" (change)="onChange()">
+<div [class]="'automator '+automator.style+' '" [id]="automator.name">
+  <h4>{{ automator.displayName }}</h4>
+  <div *ngIf="completed()" class="automator-form" (change)="onChange()">
     <app-button *ngIf="isPrestigeAutomator && getAutomationType() === 'waitFor'" [style]="'prestige-automator-button yellow'" [text]="'Wait For x'" (function)="setAutomationType('timesHighest')"></app-button>
     <app-button *ngIf="isPrestigeAutomator && getAutomationType() === 'timesHighest'" [style]="'prestige-automator-button green'" [text]="'x Times Highest'" (function)="setAutomationType('afterSeconds')"></app-button>
     <app-button *ngIf="isPrestigeAutomator && getAutomationType() === 'afterSeconds'" [style]="'prestige-automator-button blue'" [text]="'After x seconds'" (function)="setAutomationType('waitFor')"></app-button>
-    <input *ngIf="isPrestigeAutomator" formControlName="waitFor" [(ngModel)]="waitForValue">
+    <input *ngIf="isPrestigeAutomator" formControlName="waitFor">
     <div>
       <label>Active: </label>
-      <input type="checkbox" class="checkbox" formControlName="active" [(ngModel)]="activeValue">
+      <input type="checkbox" class="checkbox" (input)="setActive($event)" [checked]="getChecked()">
     </div>
-  </form>
-  <app-buyable style="width: 100%;" [name]="name" [cost]="cost" [currency]="currency"></app-buyable>
+  </div>
+  <div *ngIf="!completed()">
+    <h3>Unlock required</h3>
+    <p>{{ getGoalString() }}</p>
+    <div class="progress-bar">
+      <div class="progress" [style.width]="getProgressPercentage() + '%'"></div>
+    </div>
+    <p>{{ getProgressString() }}</p>
+  </div>
 </div>

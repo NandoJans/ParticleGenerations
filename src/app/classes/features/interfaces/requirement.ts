@@ -22,9 +22,10 @@ export class Requirement {
   }
 
   static checkRequirements(): void {
-    Requirement.requirements.forEach((requirement) => {
+    Requirement.requirements.forEach((requirement, index) => {
       if (requirement.requirementMet()) {
         requirement.gameElement.unlocked = true;
+        Requirement.requirements.splice(index, 1);
       }
     });
   }

@@ -2,6 +2,7 @@
   --background-color-1: rgb(21, 21, 21);
   --background-color-2: rgb(26, 26, 26);
   --background-color-3: rgb(16, 16, 16);
+  --background-color-4: rgb(39, 39, 39);
   --background-color-light: rgb(114, 114, 114);
   --background-color-red: rgb(109, 48, 48);
 
@@ -34,6 +35,14 @@ button.success {
   font-size: 1.2rem;
   cursor: pointer;
   font-weight: bold;
+}
+
+.upgrade-row, .generator-row {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 10px;
 }
 
 @keyframes gliding {

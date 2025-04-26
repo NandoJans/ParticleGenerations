@@ -16,11 +16,11 @@ export class FirstRedGenerator extends RedGenerator {
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED_EXTENSION, this);
   softResetId: ResetKey = ResetHelper.registerSoftReset(ResetKey.RED_EXTENSION, this);
   increase: Num = new Num(1, 2);
+  stringRank: string = 'First';
+  rank: number = 1;
   override unlocked: boolean = true;
 
   multiplierUpgrade: RedGeneratorMultiplierUpgrade = new RedGeneratorMultiplierUpgrade(
-    1,
-    "First",
     new Num(1, 2),
     new Num(1, 2),
     new Num(1, 1),
@@ -28,8 +28,6 @@ export class FirstRedGenerator extends RedGenerator {
     this
   );
   buyMultiplierUpgrade: RedGeneratorBuyMultiplierUpgrade = new RedGeneratorBuyMultiplierUpgrade(
-    1,
-    "First",
     new Num(1, 3),
     new Num(1, 3),
     new Num(1, 1),

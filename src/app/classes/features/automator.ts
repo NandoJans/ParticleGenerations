@@ -4,13 +4,15 @@ import {Buyable} from "./buyable";
 import {Requirement} from "./interfaces/requirement";
 import {Storable} from "./interfaces/storable";
 import { LocalStorageHelper } from "../helpers/local-storage-helper";
+import {Styles} from "../enums/styles";
 
 export abstract class Automator extends GameElement implements Storable {
   abstract name: string;
   abstract displayName: string;
+  abstract style: Styles;
+  active = true;
 
   abstract buyables(): Buyable[];
-  bought: Num = new Num(0, 0);
 
   completed: boolean = false;
   abstract goal: Num
@@ -19,7 +21,7 @@ export abstract class Automator extends GameElement implements Storable {
 
   requirement: Requirement[] = [];
 
-  private checkTask(): void {
+  checkTask(): void {
     const progress = this.task();
     if (progress.greq(this.goal)) {
       const buyables = this.buyables();
@@ -27,12 +29,18 @@ export abstract class Automator extends GameElement implements Storable {
         buyable.auto = true;
       });
       this.completed = true;
-      this.bought = new Num(1, 0)
+      this.save();
     }
   }
 
   run(): void {
-    if (!this.completed) {
+    if (this.completed && this.active) {
+      this.buyables().forEach(buyable => {
+        if (buyable.isBuyable() && buyable.auto) {
+          buyable.buy();
+        }
+      })
+    } else if (!this.completed) {
       this.checkTask();
     }
   }
@@ -40,22 +48,40 @@ export abstract class Automator extends GameElement implements Storable {
   localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey());
 
   getSaveCategory(): string {
-    throw 'automators';
+    return 'automators';
   }
 
   getSaveKey(): string {
-    throw this.name;
+    return this.name;
   }
 
   tryLoad(): void {
     this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey());
-    this.bought = this.localStorageHelper.load(new Num(0, 0), 'bought');
-    if (this.bought.greq(new Num(1, 0))) {
-      this.completed = true;
-    }
+    this.localStorageHelper.load('completed');
+    this.localStorageHelper.load('active');
   }
 
   save() {
-    this.localStorageHelper.save(this.bought, 'bought');
+    this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey());
+    this.localStorageHelper.save(this.completed, 'completed');
+    this.localStorageHelper.save(this.active, 'active');
+  }
+
+  enable(): void {
+    if (this.completed) {
+      this.active = true;
+      this.save();
+      this.buyables().forEach(buyable => {
+        buyable.auto = true;
+      })
+    }
+  }
+
+  disable(): void {
+    this.active = false;
+    this.save();
+    this.buyables().forEach(buyable => {
+      buyable.auto = false;
+    })
   }
 }

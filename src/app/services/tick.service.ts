@@ -7,6 +7,7 @@ import {UpgradeService} from "./interactables/upgrade.service";
 import {Requirement} from "../classes/features/interfaces/requirement";
 import {ComponentService} from "./component.service";
 import {LocalStorageHelper} from "../classes/helpers/local-storage-helper";
+import {AutomatorService} from "./interactables/automator.service";
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class TickService {
     private upgradeService: UpgradeService,
     private componentService: ComponentService,
     private multiplierService: GlobalMultipliersService,
+    private automatorService: AutomatorService
   ) { }
 
   /**
@@ -34,6 +36,7 @@ export class TickService {
     this.generatorService.tick(speed);
     this.multiplierService.tick();
     this.upgradeService.tick();
+    this.automatorService.tick();
     this.componentService.reloadComponents();
   }
 

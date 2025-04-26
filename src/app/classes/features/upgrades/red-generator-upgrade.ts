@@ -8,8 +8,6 @@ import {Requirement} from "../interfaces/requirement";
 
 export abstract class RedGeneratorUpgrade extends Upgrade {
   protected constructor(
-    rank: number,
-    stringRank: string,
     cost: Num,
     increase: Num,
     scaling: Num,
@@ -23,7 +21,7 @@ export abstract class RedGeneratorUpgrade extends Upgrade {
     this.increase = increase.copy();
     this.scaling = scaling.copy();
     this.requirement = [
-      new Requirement(generator, new Num(rank, 0), this),
+      new Requirement(generator, new Num(generator.rank, 0), this),
     ];
     this.buffer = buffer.copy();
     this.baseBuffer = buffer.copy();
