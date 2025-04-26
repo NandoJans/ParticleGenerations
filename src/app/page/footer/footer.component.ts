@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {NavigationsService} from "../../services/navigations.service";
-import {Navigation, SubNavigation} from "../../globals";
 import {Router} from "@angular/router";
 import {App} from "../../App";
+import {Navigation} from "../../classes/features/navigation";
+import {SubNavigation} from "../../classes/features/sub-navigation";
 
 @Component({
   selector: 'app-footer',
@@ -20,14 +21,14 @@ export class FooterComponent implements OnInit {
     App.subscribe().subscribe(
       (data) => {
         if (!data) {
-          this.setNavigation(navigationsService.getNavigation(navigationsService.selectedNavigation));
+          this.setNavigation(navigationsService.selectedNavigation);
         }
       }
     )
   }
 
   setNavigation(event: any) {
-    this.navigationsService.selectedNavigation = event['name']
+    this.navigationsService.setNavigationByEvent(event);
     this.ngOnInit();
   }
 
@@ -39,8 +40,8 @@ export class FooterComponent implements OnInit {
     this.navigations = this.navigationsService.getNavigations();
     this.subNavigations = this.navigationsService.getSubNavigations(this.navigationsService.selectedNavigation);
     this.router.navigate([
-      this.navigationsService.selectedNavigation+'/'+
-      this.navigationsService.getNavigationValue(this.navigationsService.selectedNavigation, 'wasOn')
+      this.navigationsService.selectedNavigation.location+'/'+
+      this.navigationsService.getWasOnLocation()
     ])
   }
 }
