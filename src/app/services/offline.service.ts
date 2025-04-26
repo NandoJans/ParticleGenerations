@@ -47,8 +47,15 @@ export class OfflineService {
         clearInterval(calculatingOfflineProgress);
         return;
       }
-      this.tickService.gameTick(new Num(1, 1));
-      this.ticksDone += 100;
+      if (this.ticksDone + 100 > this.totalTicks) {
+        this.ticksDone = this.totalTicks;
+        const tickAmount = this.totalTicks - this.ticksDone;
+        this.tickService.gameTick(new Num(tickAmount, 1));
+        this.done = true;
+      } else {
+        this.tickService.gameTick(new Num(1, 1));
+        this.ticksDone += 100;
+      }
     }, 0);
   }
 
