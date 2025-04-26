@@ -3,7 +3,6 @@ import {Num} from "../../../num";
 import {Buyable} from "../buyable";
 import {Styles} from "../../enums/styles";
 import {Requirement} from "../interfaces/requirement";
-import {Require} from "../interfaces/require";
 import {StatsService} from "../../../services/stats.service";
 import {RedGenerator} from "../generators/red-generator";
 
@@ -15,12 +14,14 @@ export class RedGeneratorAutomator extends Automator {
   generator: RedGenerator;
   style: Styles = Styles.RED_AUTOMATOR;
 
-  constructor(generator: RedGenerator, requirement: { require: Require, amount: Num }[]) {
+  constructor(generator: RedGenerator) {
     super();
     this.displayName = generator.stringRank + ' Red Generator Automator';
     this.name = 'red-generator-automator-' + generator.rank;
     this.goalString = 'Buy ' + this.goal.toString() + ' ' + generator.stringRank + ' Red Generators';
-    this.requirement = requirement.map(req => new Requirement(req.require, req.amount, this));
+    this.requirement = [
+      new Requirement(generator, new Num(1, 0), this)
+    ]
     this.generator = generator
   }
 
