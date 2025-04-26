@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {LocalStorageHelper} from "../classes/helpers/local-storage-helper";
 import {TickService} from "./tick.service";
+import {Num} from "../num";
 
 @Injectable({
   providedIn: 'root'
@@ -46,9 +47,16 @@ export class OfflineService {
         clearInterval(calculatingOfflineProgress);
         return;
       }
-      this.tickService.gameTick();
-      this.ticksDone++;
-    }, 0.1);
+      if (this.ticksDone + 100 > this.totalTicks) {
+        const tickAmount = this.totalTicks - this.ticksDone;
+        this.ticksDone = this.totalTicks;
+        this.tickService.gameTick(new Num(tickAmount, 1));
+        this.done = true;
+      } else {
+        this.tickService.gameTick(new Num(1, 1));
+        this.ticksDone += 100;
+      }
+    }, 0);
   }
 
   private calculateTicks(lastSave: string) {
