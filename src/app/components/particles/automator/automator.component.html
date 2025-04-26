@@ -11,7 +11,6 @@
     </div>
   </div>
   <div *ngIf="!completed()">
-    <h3>Unlock required</h3>
     <p>{{ getGoalString() }}</p>
     <div class="progress-bar">
       <div class="progress" [style.width]="getProgressPercentage() + '%'"></div>

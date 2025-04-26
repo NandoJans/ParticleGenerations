@@ -2,9 +2,7 @@ import {RedGeneratorAutomator} from "../../features/automators/red-generator-aut
 import {Record} from "../record";
 import {Automator} from "../../features/automator";
 import {GeneratorRecord} from "../generators/generator-record";
-import {HoldingRecord} from "../holdings/holding-record";
-import {Num} from "../../../num";
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {RedGeneratorBoosterAutomator} from "../../features/automators/red-generator-booster-automator";
 
 @Injectable({
@@ -12,26 +10,12 @@ import {RedGeneratorBoosterAutomator} from "../../features/automators/red-genera
 })
 export class AutomatorRecord extends Record {
   // Red Phase
-  static firstRedGenerator: RedGeneratorAutomator = new RedGeneratorAutomator(
-    GeneratorRecord.firstRedGenerator,
-    [{require: HoldingRecord.redParticles, amount: new Num(1, 10)}],
-  );
-  static secondRedGenerator: RedGeneratorAutomator = new RedGeneratorAutomator(
-    GeneratorRecord.secondRedGenerator,
-    [{require: HoldingRecord.redParticles, amount: new Num(1, 10)}],
-  );
-  static thirdRedGenerator: RedGeneratorAutomator = new RedGeneratorAutomator(
-    GeneratorRecord.thirdRedGenerator,
-    [{require: HoldingRecord.redParticles, amount: new Num(1, 10)}],
-  );
-  static fourthRedGenerator: RedGeneratorAutomator = new RedGeneratorAutomator(
-    GeneratorRecord.fourthRedGenerator,
-    [{require: HoldingRecord.redParticles, amount: new Num(1, 10)}],
-  );
-  static fifthRedGenerator: RedGeneratorAutomator = new RedGeneratorAutomator(
-    GeneratorRecord.fifthRedGenerator,
-    [{require: HoldingRecord.redParticles, amount: new Num(1, 10)}],
-  );
+  static firstRedGenerator: RedGeneratorAutomator = new RedGeneratorAutomator(GeneratorRecord.firstRedGenerator);
+  static secondRedGenerator: RedGeneratorAutomator = new RedGeneratorAutomator(GeneratorRecord.secondRedGenerator);
+  static thirdRedGenerator: RedGeneratorAutomator = new RedGeneratorAutomator(GeneratorRecord.thirdRedGenerator);
+  static fourthRedGenerator: RedGeneratorAutomator = new RedGeneratorAutomator(GeneratorRecord.fourthRedGenerator);
+  static fifthRedGenerator: RedGeneratorAutomator = new RedGeneratorAutomator(GeneratorRecord.fifthRedGenerator);
+
   static redGeneratorBooster: RedGeneratorBoosterAutomator = new RedGeneratorBoosterAutomator();
 
   static override list: Automator[] = [

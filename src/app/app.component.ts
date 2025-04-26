@@ -50,6 +50,8 @@ export class AppComponent implements OnInit{
   isTicking = false;
 
   ngOnInit(): void {
+    // Request fullscreen mode for android devices
+
     this.dataManagerService.load();
     this.offlineService.load();
     this.dataManagerService.save();

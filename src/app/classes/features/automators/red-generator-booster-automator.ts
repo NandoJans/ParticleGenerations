@@ -12,6 +12,7 @@ export class RedGeneratorBoosterAutomator extends Automator {
   goalString: string = 'Have a total multiplier of 10x';
   name: string = 'red-generator-booster-automator';
   style: Styles = Styles.RED_AUTOMATOR;
+  override unlocked: boolean = false;
   override requirement: Requirement[] = [
     new Requirement(HoldingRecord.redParticles, new Num(1, 1), this),
   ];
