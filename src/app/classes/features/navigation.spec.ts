@@ -2,6 +2,8 @@ import { Navigation } from './navigation';
 
 describe('Navigation', () => {
   it('should create an instance', () => {
-    expect(new Navigation()).toBeTruthy();
+    const mockRoute = '/home';
+    const mockOptions = { enableLogging: true };
+    expect(new Navigation(mockRoute, mockOptions)).toBeTruthy();
   });
 });
