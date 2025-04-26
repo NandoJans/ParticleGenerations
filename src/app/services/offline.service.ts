@@ -66,14 +66,18 @@ export class OfflineService {
       return;
     }
     this.totalTicks = Math.floor((dateDiff) / 50);
-    if (this.totalTicks > 1000000) {
-      this.totalTicks = 1000000;
+
+    if (this.totalTicks > 1e6) {
+      this.totalTicks = 1e6;
     }
   }
 
   load(): void {
     const lastSave = this.localStorageHelper.load(null);
     if (lastSave) {
+      this.done = false;
+      this.closed = false;
+      this.ticksDone = 0;
       this.calculateTicks(lastSave);
       this.calculateOfflineProgress();
     } else {

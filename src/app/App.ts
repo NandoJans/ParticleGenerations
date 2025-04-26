@@ -3,7 +3,6 @@ import {Num} from "./num";
 
 export class App {
   static shouldReload: boolean = false;
-  static isIdling: boolean = false;
   static haltNuclearDecay: boolean = false;
   static purplePhase: boolean = false;
 
