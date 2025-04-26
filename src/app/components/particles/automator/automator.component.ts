@@ -44,8 +44,14 @@ export class AutomatorComponent implements OnInit {
   getProgressPercentage(): number {
     const progress = this.automator.task();
     const goal = this.automator.goal;
-
-    return progress.div(goal, false).mul(new Num(1, 2)).convertToNumber();
+    if (goal.greq(new Num(1, 10))) {
+      return progress.log10(false)
+        .div(goal.log10(false), false)
+        .mul(new Num(1, 2), false)
+        .convertToNumber();
+    } else {
+      return progress.div(goal, false).mul(new Num(1, 2)).convertToNumber();
+    }
   }
 
   getProgressString(): string {

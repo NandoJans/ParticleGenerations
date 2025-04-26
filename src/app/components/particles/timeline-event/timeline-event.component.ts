@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TimelineEvent} from "../../../globals";
-import {HoldingsService} from "../../../services/holdings.service";
 
 @Component({
   selector: 'app-timeline-event',
@@ -27,7 +26,6 @@ export class TimelineEventComponent implements OnInit {
     this.hasProgress = this.timelineEvent?.hasProgress
     this.type = this.timelineEvent?.type
     this.requirement = this.timelineEvent?.unlock[1].toString()
-    this.abbreviation = HoldingsService.getAbbreviation(this.timelineEvent?.unlock[0])
   }
 
 }

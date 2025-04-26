@@ -16,6 +16,6 @@ div span p {
   font-size: 2rem;
 }
 
-.red-style {
+.red {
   color: var(--text-color-red);
 }

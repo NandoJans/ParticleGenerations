@@ -4,6 +4,7 @@ import {HoldingRecord} from "../classes/records/holdings/holding-record";
 import {GeneratorRecord} from "../classes/records/generators/generator-record";
 import {UpgradeRecord} from "../classes/records/upgrades/upgrade-record";
 import {LocalStorageHelper} from "../classes/helpers/local-storage-helper";
+import {AutomatorService} from "./interactables/automator.service";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class DataManagerService {
     private generatorRecord: GeneratorRecord,
     private upgradeRecord: UpgradeRecord,
     private navigationsService: NavigationsService,
+    private automatorService: AutomatorService,
   ) {
   }
 
@@ -25,6 +27,7 @@ export class DataManagerService {
     this.generatorRecord.save()
     this.upgradeRecord.save()
     this.navigationsService.save();
+    this.automatorService.save();
 
     this.setLastSave();
     this.localStorageHelper.store();
@@ -36,6 +39,7 @@ export class DataManagerService {
     this.generatorRecord.load();
     this.upgradeRecord.load();
     this.navigationsService.load();
+    this.automatorService.load();
   }
 
   setLastSave(): void {

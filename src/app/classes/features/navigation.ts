@@ -35,4 +35,12 @@ export class Navigation extends GameElement {
     this.wasOn = this.localStorageHelper.load(this.wasOn, 'wasOn');
     this.unlocked = this.localStorageHelper.load(this.unlocked, 'unlocked');
   }
+
+  override unlock(): {title: string, message: string} {
+    this.unlocked = true;
+    return {
+      title: 'Navigation Unlocked',
+      message: `You have unlocked the ${this.name} navigation!`
+    };
+  }
 }

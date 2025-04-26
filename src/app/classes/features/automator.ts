@@ -30,6 +30,7 @@ export abstract class Automator extends GameElement implements Storable {
       });
       this.completed = true;
       this.save();
+      return true;
     }
     return false;
   }
@@ -59,8 +60,8 @@ export abstract class Automator extends GameElement implements Storable {
 
   tryLoad(): void {
     this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey());
-    this.completed = this.localStorageHelper.load('completed');
-    this.active = this.localStorageHelper.load('active');
+    this.completed = this.localStorageHelper.load(this.completed, 'completed');
+    this.active = this.localStorageHelper.load(this.active, 'active');
   }
 
   save() {

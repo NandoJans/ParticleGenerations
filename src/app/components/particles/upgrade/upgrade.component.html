@@ -5,8 +5,8 @@
 >
   <h4 *ngIf="getDisplayName() !== ''">{{ getDisplayName() }}</h4>
   <p class="description" *ngIf="getDescription() !== ''">{{ getDescription() }}</p>
-  <p *ngIf="getEffect()">{{ getEffect() }}</p>
-  <p>Cost: {{ getCost() }} {{ getCurrencyAbbreviation() }}</p>
+  <p *ngIf="getEffect()" class="effect">{{ getEffect() }}</p>
+  <p class="cost">Cost: {{ getCost() }} {{ getCurrencyAbbreviation() }}</p>
   <div class="challenge-disabled" style="display: none;">
     <h2>Challenge Disabled</h2>
   </div>

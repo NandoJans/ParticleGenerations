@@ -6,7 +6,6 @@ import {Require} from "./interfaces/require";
 import {Resetable} from "./interfaces/resetable";
 import {Storable} from "./interfaces/storable";
 import {LocalStorageHelper} from "../helpers/local-storage-helper";
-import {Transaction} from "./interfaces/transaction";
 
 export abstract class Upgrade extends Buyable implements Storable, Require, Resetable {
   abstract name: string
@@ -29,6 +28,8 @@ export abstract class Upgrade extends Buyable implements Storable, Require, Rese
 
   run(): Num | undefined {
     const effect = this.action();
+    this.buffer = this.baseBuffer.copy();
+    this.amount = this.bought.copy();
     if (effect) {
       this.effect = effect;
     }
@@ -37,7 +38,7 @@ export abstract class Upgrade extends Buyable implements Storable, Require, Rese
   }
 
   effectString(): string {
-    return this.effect ? this.effect.toString(true) : '';
+    return this.effect ? this.effect.toString(true) + 'x' : '';
   }
 
   getEffectDisplay(): string {
@@ -68,6 +69,7 @@ export abstract class Upgrade extends Buyable implements Storable, Require, Rese
     this.localStorageHelper.saveNum(this.amount, 'amount')
     this.localStorageHelper.saveNum(this.bought, 'bought')
     this.localStorageHelper.save(this.unlocked, 'unlocked')
+    this.localStorageHelper.save(this.auto, 'auto')
   }
 
   tryLoad(): void {
@@ -75,11 +77,6 @@ export abstract class Upgrade extends Buyable implements Storable, Require, Rese
     this.amount = this.localStorageHelper.loadNum(this.amount, 'amount')
     this.bought = this.localStorageHelper.loadNum(this.bought, 'bought')
     this.unlocked = this.localStorageHelper.load(this.unlocked, 'unlocked')
-  }
-
-  override buy(amount: Num = new Num(1, 0)): Transaction {
-    const transaction = super.buy(amount);
-    this.run();
-    return transaction;
+    this.auto = this.localStorageHelper.load(this.auto, 'auto')
   }
 }

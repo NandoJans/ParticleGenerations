@@ -6,7 +6,7 @@
   </span>
   <span *ngIf="hasHoldingEffect()">
     <p>{{ holdingDisplay.getEffectPrefix() }}</p>
-    <p>{{ getHoldingEffect() }}</p>
+    <p [class]="'effect ' + holding.getStyle()">{{ getHoldingEffect() }}</p>
     <p>{{ holdingDisplay.getEffectSuffix() }}</p>
   </span>
   <span *ngFor="let line of getLines()">

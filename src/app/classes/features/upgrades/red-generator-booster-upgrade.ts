@@ -25,7 +25,7 @@ export class RedGeneratorBoosterUpgrade extends RedUpgrade {
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED_EXTENSION, this);
 
   action(): Num {
-    const buff: Num = this.buffer.pow(this.bought, false);
+    const buff: Num = this.buffer.pow(this.amount, false);
     MultiplierRecord.redParticleGenerators.correct(buff);
     return buff;
   }

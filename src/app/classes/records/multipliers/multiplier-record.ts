@@ -9,9 +9,11 @@ export class MultiplierRecord {
 
   // Red Phase
   static redParticleGenerators: Multiplier = new Multiplier('redParticleGenerators', new Num(1, 0))
+  static redAcceleratorGenerators: Multiplier = new Multiplier('redAcceleratorGenerators', new Num(1, 0));
 
   static list: Multiplier[] = [
     MultiplierRecord.redParticleGenerators,
+    MultiplierRecord.redAcceleratorGenerators,
   ];
 
   getList(): Multiplier[] {

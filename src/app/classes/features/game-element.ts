@@ -19,6 +19,10 @@ export abstract class GameElement {
     return this.unlocked;
   }
 
+  unlock(): void|{title: string, message: string} {
+    this.unlocked = true;
+  }
+
   protected getGameElementHelper(): GameElementHelper {
     return new GameElementHelper();
   }

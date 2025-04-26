@@ -27,6 +27,7 @@ import { OfflineComponent } from './components/medium/offline/offline.component'
 import { RedAutomatorsComponent } from './pages/automator/red-automators/red-automators.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DropDownMessageComponent } from './components/medium/drop-down-message/drop-down-message.component';
+import { RedAcceleratorsComponent } from './pages/red/red-accelerators/red-accelerators.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { DropDownMessageComponent } from './components/medium/drop-down-message/
     OfflineComponent,
     RedAutomatorsComponent,
     DropDownMessageComponent,
+    RedAcceleratorsComponent,
   ],
     imports: [
         BrowserModule,

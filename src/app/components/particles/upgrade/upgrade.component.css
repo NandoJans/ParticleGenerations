@@ -3,6 +3,16 @@ button {
   border: none;
   border-radius: 0.5rem;
   margin: 0.5rem;
+  height: 12rem;
+  width: 13rem;
+}
+
+button p.cost, button p.effect {
+  margin: 0.5rem 0 0 0;
+}
+
+button.sub p.cost, button.sub p.effect {
+  margin: 0;
 }
 
 button p {
@@ -13,26 +23,36 @@ button h4 {
   margin: 0 0 0.5rem 0;
 }
 
-button.red-style {
-  height: 12rem;
-  width: 13rem;
+button.unlock {
+  margin: 3rem;
+  height: 10rem;
+  width: 20rem;
 }
 
-button.sub-red-style {
+button.unlock h4 {
+  font-size: 2rem;
+}
+
+button.red-accelerator.buyable {
+  background-color: #fff;
+  background-repeat: repeat;
+}
+
+button.sub {
   height: 5.5rem;
   width: 13rem;
 }
 
-button.sub-red-style, button.red-style {
+button.red {
   background-color: var(--background-color-light);
   border: 1px solid var(--text-color-red);
 }
 
-button.sub-red-style p.description {
+button.sub p.description {
   font-weight: bold;
 }
 
-button.sub-red-style.buyable, button.red-style.buyable {
+button.red.buyable {
   background-color: var(--background-color-3);
   color: var(--text-color-red);
 }
@@ -40,4 +60,12 @@ button.sub-red-style.buyable, button.red-style.buyable {
 button.buyable:hover {
   cursor: pointer;
   box-shadow: 0 0 10000px rgba(255, 255, 255, 0.1) inset;
+}
+
+button.super {
+  width: 30rem;
+}
+
+button.super h4 {
+  font-size: 1.5rem;
 }
