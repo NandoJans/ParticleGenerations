@@ -4,18 +4,28 @@ import {LocalStorageHelper} from "../classes/helpers/local-storage-helper";
 import {Navigation} from "../classes/features/navigation";
 import {SubNavigation} from "../classes/features/sub-navigation";
 import {faAtom, faCogs, faIndustry} from "@fortawesome/free-solid-svg-icons";
+import {HoldingRecord} from "../classes/records/holdings/holding-record";
+import {Num} from "../num";
 
 @Injectable({
   providedIn: 'root'
 })
 export class NavigationsService {
   navigations: {[key: string]: Navigation} = {
-    red: new Navigation('red', faAtom, 'red', null, 'redParticles', true),
-    automators: new Navigation('automators', faCogs, 'automators', null, 'redParticles', true),
+    red: new Navigation('red', faAtom, 'red', [], 'particles', true),
+    automators: new Navigation('automators', faCogs, 'automators', [
+      {requirement: HoldingRecord.redParticles, amount: new Num(1, 10)},
+    ], 'red', true),
 }
 
   subNavigations: {[key: string]: SubNavigation} = {
-    redParticles: new SubNavigation('redParticles', faIndustry, 'particles', this.navigations['red'], null, true),
+    // Red
+    redParticles: new SubNavigation('redParticles', faIndustry, 'particles', this.navigations['red'], [], true),
+
+    // Automators
+    redAutomators: new SubNavigation('redParticles', faAtom, 'red', this.navigations['automators'], [
+      {requirement: HoldingRecord.redParticles, amount: new Num(1, 10)},
+    ], true),
   }
 
   selectedNavigation: Navigation = this.navigations['red']
@@ -40,13 +50,17 @@ export class NavigationsService {
     this.getAllNavigations().forEach((navigation: Navigation|SubNavigation) => {
       navigation.save();
     });
-    this.localStorageHelper.save(this.selectedNavigation, 'selectedNavigation');
-    this.localStorageHelper.save(this.selectedSubNavigation, 'selectedSubNavigation');
+    this.localStorageHelper.save(this.selectedNavigation.name, 'selectedNavigation');
+    this.localStorageHelper.save(this.selectedSubNavigation.name, 'selectedSubNavigation');
   }
 
   load(): void {
-    this.selectedNavigation = this.localStorageHelper.load(this.selectedNavigation, 'selectedNavigation')
-    this.selectedSubNavigation = this.localStorageHelper.load(this.selectedSubNavigation, 'selectedSubNavigation')
+    this.selectedNavigation = this.navigations[
+      this.localStorageHelper.load(this.selectedNavigation.name, 'selectedNavigation')
+      ]
+    this.selectedSubNavigation = this.subNavigations[
+      this.localStorageHelper.load(this.selectedSubNavigation.name, 'selectedSubNavigation')
+      ]
     this.getAllNavigations().forEach((navigation: Navigation|SubNavigation) => {
       navigation.tryLoad();
     });
@@ -97,8 +111,6 @@ export class NavigationsService {
   }
 
   getWasOnLocation(): string {
-    const wasOn = this.selectedNavigation.wasOn;
-    this.selectedSubNavigation = this.subNavigations[wasOn];
-    return this.selectedSubNavigation.location
+    return this.selectedNavigation.wasOn;
   }
 }

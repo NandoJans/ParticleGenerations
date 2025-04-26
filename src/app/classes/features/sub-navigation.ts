@@ -2,22 +2,27 @@ import {Requirement} from "./interfaces/requirement";
 import {Navigation} from "./navigation";
 import {LocalStorageHelper} from "../helpers/local-storage-helper";
 import {IconDefinition} from "@fortawesome/free-solid-svg-icons";
+import {Require} from "./interfaces/require";
+import {Num} from "../../num";
+import {GameElement} from "./game-element";
 
-export class SubNavigation {
+export class SubNavigation extends GameElement {
   name: string;
   displayName: IconDefinition;
   location: string;
+  requirement: Requirement[];
   parent: Navigation;
-  requirement: Requirement|null;
-  unlocked: boolean;
   localStorageHelper: LocalStorageHelper;
 
-  constructor(name: string, displayName: IconDefinition, location: string, parent: Navigation, requirement: Requirement|null, unlocked: boolean = false) {
+  constructor(name: string, displayName: IconDefinition, location: string, parent: Navigation, requirement: { requirement: Require, amount: Num }[], unlocked: boolean = false) {
+    super();
     this.name = name;
     this.displayName = displayName;
     this.location = location;
     this.parent = parent;
-    this.requirement = requirement;
+    this.requirement = requirement.map((req) => {
+      return new Requirement(req.requirement, req.amount, this, unlocked);
+    });
     this.unlocked = unlocked;
     this.localStorageHelper = new LocalStorageHelper('navigations', name);
   }
