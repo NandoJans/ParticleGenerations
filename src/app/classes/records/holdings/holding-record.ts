@@ -9,8 +9,8 @@ import {RedAcceleratorHolding} from "../../features/holdings/red-accelerator-hol
 export class HoldingRecord {
 
   // Red Phase
-  static redParticles: Holding = new RedParticleHolding()
-  static redAccelerators: Holding = new RedAcceleratorHolding();
+  static redParticles: RedParticleHolding = new RedParticleHolding()
+  static redAccelerators: RedAcceleratorHolding = new RedAcceleratorHolding();
 
   static getArray(): Holding[] {
     return [

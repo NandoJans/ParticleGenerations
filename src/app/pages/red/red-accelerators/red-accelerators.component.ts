@@ -12,7 +12,9 @@ import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
 export class RedAcceleratorsComponent implements OnInit {
   unlockRedAccelerators: Upgrade = UpgradeRecord.unlockRedAccelerators;
   upgrades: Upgrade[] = [
-
+    UpgradeRecord.multiplyRedAcceleratorGeneration,
+    UpgradeRecord.improveRedAcceleratorsEffect,
+    UpgradeRecord.improveRedParticlesToAcceleratorsUpgrade
   ];
   redAccelerators: Holding = HoldingRecord.redAccelerators;
 
