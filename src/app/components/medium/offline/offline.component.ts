@@ -33,6 +33,7 @@ export class OfflineComponent implements OnInit {
 
   close() {
     if (this.offlineService.isDone()) {
+      document.documentElement.requestFullscreen({ navigationUI: 'hide' });
       this.offlineService.close();
     }
   }
