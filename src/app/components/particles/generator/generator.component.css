@@ -17,12 +17,12 @@ button p {
   padding: 0;
 }
 
-button.red-style {
+button.red {
   background-color: var(--background-color-red);
   border: 1px solid var(--background-color-red);
 }
 
-button.red-style.buyable {
+button.red.buyable {
   background-color: var(--background-color-3);
   border: 1px solid var(--text-color-red);
   color: var(--text-color-red);

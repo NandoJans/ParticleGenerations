@@ -1,0 +1,13 @@
+<div *ngIf="boughtUnlockRedAccelerators()" class="upgrade-row">
+  <app-number-display
+    [holding]="redAccelerators"
+  ></app-number-display>
+  <div *ngFor="let upgrade of upgrades">
+    <app-upgrade [upgrade]="upgrade"></app-upgrade>
+  </div>
+</div>
+<div *ngIf="!boughtUnlockRedAccelerators()" class="upgrade-row">
+  <div>
+    <app-upgrade [upgrade]="unlockRedAccelerators"></app-upgrade>
+  </div>
+</div>

@@ -1,6 +1,8 @@
 export enum Styles {
-  RED = 'red-style',
-  YELLOW = 'yellow-style',
-  SUB_RED = 'sub-red-style',
-  RED_AUTOMATOR = 'red-automator-style',
+  RED = 'red',
+  YELLOW = 'yellow',
+  SUB_RED = 'sub red',
+  RED_AUTOMATOR = 'red automator',
+  RED_UNLOCK = 'red unlock',
+  RED_ACCELERATOR_UNLOCK = 'red red-accelerator unlock',
 }

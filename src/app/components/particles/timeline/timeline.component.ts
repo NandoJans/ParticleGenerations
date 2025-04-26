@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TimelineEvent} from "../../../globals";
-import {TimelineService} from "../../../services/timeline.service";
 
 @Component({
   selector: 'app-timeline',
@@ -13,6 +12,5 @@ export class TimelineComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.events = TimelineService.getEvents(this.eventType);
   }
 }

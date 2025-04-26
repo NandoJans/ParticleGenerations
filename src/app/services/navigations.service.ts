@@ -3,7 +3,7 @@ import {Router} from "@angular/router";
 import {LocalStorageHelper} from "../classes/helpers/local-storage-helper";
 import {Navigation} from "../classes/features/navigation";
 import {SubNavigation} from "../classes/features/sub-navigation";
-import {faAtom, faCogs, faIndustry} from "@fortawesome/free-solid-svg-icons";
+import {faAtom, faCogs, faForward, faIndustry} from "@fortawesome/free-solid-svg-icons";
 import {HoldingRecord} from "../classes/records/holdings/holding-record";
 import {Num} from "../num";
 
@@ -13,19 +13,18 @@ import {Num} from "../num";
 export class NavigationsService {
   navigations: {[key: string]: Navigation} = {
     red: new Navigation('red', faAtom, 'red', [], 'particles', true),
-    automators: new Navigation('automators', faCogs, 'automators', [
-      {requirement: HoldingRecord.redParticles, amount: new Num(1, 10)},
-    ], 'red', true),
+    automators: new Navigation('automators', faCogs, 'automators', [], 'red', false),
 }
 
   subNavigations: {[key: string]: SubNavigation} = {
     // Red
     redParticles: new SubNavigation('redParticles', faIndustry, 'particles', this.navigations['red'], [], true),
+    redAccelerators: new SubNavigation('redAccelerators', faForward, 'accelerators', this.navigations['red'], [
+      {requirement: HoldingRecord.redParticles, amount: new Num(1, 75)},
+    ], false),
 
     // Automators
-    redAutomators: new SubNavigation('redParticles', faAtom, 'red', this.navigations['automators'], [
-      {requirement: HoldingRecord.redParticles, amount: new Num(1, 10)},
-    ], true),
+    redAutomators: new SubNavigation('redParticles', faAtom, 'red', this.navigations['automators'], [], true),
   }
 
   selectedNavigation: Navigation = this.navigations['red']
