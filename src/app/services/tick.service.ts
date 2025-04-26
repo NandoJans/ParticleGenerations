@@ -6,12 +6,16 @@ import {GeneratorService} from "./interactables/generator.service";
 import {UpgradeService} from "./interactables/upgrade.service";
 import {Requirement} from "../classes/features/interfaces/requirement";
 import {ComponentService} from "./component.service";
+import {LocalStorageHelper} from "../classes/helpers/local-storage-helper";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TickService {
   mainInterval: any;
+  saveInterval: any;
+  iterationsInterval: any;
+  localStorageHelper: LocalStorageHelper = new LocalStorageHelper('app', 'lastSave');
 
   constructor(
     private dataManagerService: DataManagerService,
@@ -31,25 +35,34 @@ export class TickService {
     this.multiplierService.tick();
     this.upgradeService.tick();
     this.componentService.reloadComponents();
-
   }
 
   iterations: number = 0;
 
-  tick() {
+  startIntervals() {
+    this.clearIntervals()
+    this.setIntervals()
+  }
 
+  private setIntervals() {
     this.mainInterval = setInterval(() => {
       this.iterations++;
       this.gameTick()
     }, 50)
 
-    setInterval(() => {
+    this.iterationsInterval = setInterval(() => {
       console.log('Iterations: '+this.iterations+'/s')
       this.iterations = 0
     }, 1000)
 
-    setInterval(() => {
+    this.saveInterval = setInterval(() => {
       this.dataManagerService.save()
     }, 5000)
+  }
+
+  clearIntervals() {
+    clearInterval(this.mainInterval);
+    clearInterval(this.saveInterval);
+    clearInterval(this.iterationsInterval);
   }
 }

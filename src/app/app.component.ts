@@ -26,10 +26,25 @@ export class AppComponent implements OnInit{
     App.subscribe().subscribe((data) => {
       if (data) {
         setTimeout(() => {
+          this.isTicking = false;
           this.ngOnInit();
         }, 50)
       }
     })
+
+    window.onfocus = () => {
+      this.localStorageHelper.save("V0.1");
+      this.dataManagerService.load();
+      this.offlineService.load();
+      this.dataManagerService.save();
+      this.tick.startIntervals();
+    }
+
+    window.onblur = () => {
+      this.tick.clearIntervals();
+      this.localStorageHelper.save("V0.1");
+      this.dataManagerService.save();
+    }
   }
 
   isTicking = false;
@@ -41,7 +56,7 @@ export class AppComponent implements OnInit{
     this.localStorageHelper.save("V0.1");
 
     if (!this.isTicking) {
-      this.tick.tick();
+      this.tick.startIntervals();
       this.isTicking = true;
     }
   }
