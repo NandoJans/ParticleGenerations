@@ -63,12 +63,14 @@ export abstract class Generator extends Buyable implements Generatable, Storable
     this.localStorageHelper = new LocalStorageHelper('generators', this.getSaveKey())
     this.localStorageHelper.saveNum(this.bought, 'bought')
     this.localStorageHelper.saveNum(this.amount, 'amount')
+    this.localStorageHelper.save(this.auto, 'auto')
   }
 
   tryLoad(): void {
     this.localStorageHelper = new LocalStorageHelper('generators', this.getSaveKey())
     this.bought = this.localStorageHelper.loadNum(this.bought, 'bought')
     this.amount = this.localStorageHelper.loadNum(this.amount, 'amount')
+    this.auto = this.localStorageHelper.load(this.auto, 'auto')
   }
 
   softReset(): void {

@@ -6,6 +6,7 @@ import {Styles} from "../../enums/styles";
 import {HoldingDisplayFactory} from "../../factories/holding-display-factory";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 import {GeneratorRecord} from "../../records/generators/generator-record";
+import {ResetHelper} from "../../helpers/reset-helper";
 
 export class RedAcceleratorHolding extends Holding {
   abbreviation: string = 'RA';
@@ -20,7 +21,7 @@ export class RedAcceleratorHolding extends Holding {
       ''
     ).build();
   name: string = "Red Accelerator";
-  resetId: ResetKey = ResetKey.RED_EXTENSION;
+  resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED_EXTENSION, this);
   startAmount: Num = new Num(1, 0);
   logEffect: Num = new Num(1, 1);
 

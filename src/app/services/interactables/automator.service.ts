@@ -28,4 +28,15 @@ export class AutomatorService {
     }
   }
 
+  load() {
+    this.automatorRecord.getList().forEach(automator => {
+      automator.tryLoad();
+    });
+  }
+
+  save() {
+    this.automatorRecord.getList().forEach(automator => {
+      automator.save();
+    });
+  }
 }

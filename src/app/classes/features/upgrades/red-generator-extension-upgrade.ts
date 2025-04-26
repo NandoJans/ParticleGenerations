@@ -24,7 +24,7 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
   override resets: ResetKey = ResetKey.RED_EXTENSION;
   override unlocked: boolean = true;
 
-  action(): undefined {
+  action(): Num {
     const generators = [
       GeneratorRecord.firstRedGenerator,
       GeneratorRecord.secondRedGenerator,
@@ -39,7 +39,7 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
         generator.multiplier.mul(buff);
       }
     });
-    return
+    return this.buffer.pow(this.bought, false);
   }
 
   getDescription(): string {
@@ -68,6 +68,6 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
       }
     }
 
-    return "";
+    return super.effectString();
   }
 }

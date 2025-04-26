@@ -37,7 +37,7 @@ export abstract class Upgrade extends Buyable implements Storable, Require, Rese
   }
 
   effectString(): string {
-    return this.effect ? this.effect.toString(true) : '';
+    return this.effect ? this.effect.toString(true) + 'x' : '';
   }
 
   getEffectDisplay(): string {
@@ -68,6 +68,7 @@ export abstract class Upgrade extends Buyable implements Storable, Require, Rese
     this.localStorageHelper.saveNum(this.amount, 'amount')
     this.localStorageHelper.saveNum(this.bought, 'bought')
     this.localStorageHelper.save(this.unlocked, 'unlocked')
+    this.localStorageHelper.save(this.auto, 'auto')
   }
 
   tryLoad(): void {
@@ -75,6 +76,7 @@ export abstract class Upgrade extends Buyable implements Storable, Require, Rese
     this.amount = this.localStorageHelper.loadNum(this.amount, 'amount')
     this.bought = this.localStorageHelper.loadNum(this.bought, 'bought')
     this.unlocked = this.localStorageHelper.load(this.unlocked, 'unlocked')
+    this.auto = this.localStorageHelper.load(this.auto, 'auto')
   }
 
   override buy(amount: Num = new Num(1, 0)): Transaction {

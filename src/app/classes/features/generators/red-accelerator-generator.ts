@@ -41,11 +41,11 @@ export class RedAcceleratorGenerator extends Generator {
     generate.mul(log)
     generate.mul(new Num(1, -2));
 
-    if (generate.greq(new Num(1, -2))) {
+    if (generate.greq(new Num(1, 0))) {
       this.redParticleEffect = generate.copy();
       return generate
     } else {
-      return new Num(1, -2)
+      return new Num(1, 0)
     }
   }
 }

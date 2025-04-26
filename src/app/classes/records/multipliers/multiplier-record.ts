@@ -13,6 +13,7 @@ export class MultiplierRecord {
 
   static list: Multiplier[] = [
     MultiplierRecord.redParticleGenerators,
+    MultiplierRecord.redAcceleratorGenerators,
   ];
 
   getList(): Multiplier[] {
