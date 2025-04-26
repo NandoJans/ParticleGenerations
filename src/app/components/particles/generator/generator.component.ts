@@ -37,7 +37,7 @@ export class GeneratorComponent {
   }
 
   getIsBuyable(): boolean {
-    return this.generator.isBuyable();
+    return this.generator.isBuyable() && !this.generator.auto;
   }
 
   getCurrencyAbbreviation() {

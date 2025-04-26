@@ -7,16 +7,14 @@ import {RedGenerator} from "../generators/red-generator";
 export class RedGeneratorBuyMultiplierUpgrade extends RedGeneratorUpgrade {
 
   constructor(
-    rank: number,
-    stringRank: string,
     cost: Num,
     increase: Num,
     scaling: Num,
     buffer: Num,
     generator: RedGenerator,
   ) {
-    super(rank, stringRank, cost, increase, scaling, buffer, generator);
-    this.name = `red-generator-buy-multiplier-upgrade-${rank}`;
+    super(cost, increase, scaling, buffer, generator);
+    this.name = `red-generator-buy-multiplier-upgrade-${generator.rank}`;
     this.resetId = ResetHelper.registerReset(ResetKey.RED_EXTENSION, this);
   }
   name: string;

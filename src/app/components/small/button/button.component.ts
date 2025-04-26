@@ -1,4 +1,5 @@
 import {Component, EventEmitter, OnInit, Input, Output} from '@angular/core';
+import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-button',
@@ -7,7 +8,8 @@ import {Component, EventEmitter, OnInit, Input, Output} from '@angular/core';
 })
 export class ButtonComponent implements OnInit {
   @Input() object: any;
-  @Input() text: string | undefined;
+  @Input() text: string = '';
+  @Input() icon: IconDefinition | undefined;
   @Input() style: string | undefined;
   @Input() identifier: string | undefined;
   @Output() function: EventEmitter<any> = new EventEmitter<any>();

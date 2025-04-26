@@ -21,10 +21,10 @@ export class SecondRedGenerator extends RedGenerator {
   override requirement: Requirement[] = [
     new Requirement(UpgradeRecord.redGeneratorExtension, new Num(1, 0), this)
   ];
+  stringRank: string = 'Second';
+  rank: number = 2;
 
   multiplierUpgrade: RedGeneratorMultiplierUpgrade = new RedGeneratorMultiplierUpgrade(
-    2,
-    "Second",
     new Num(1, 4),
     new Num(1, 3),
     new Num(1, 1),
@@ -32,8 +32,6 @@ export class SecondRedGenerator extends RedGenerator {
     this
   );
   buyMultiplierUpgrade: RedGeneratorBuyMultiplierUpgrade = new RedGeneratorBuyMultiplierUpgrade(
-    2,
-    "Second",
     new Num(1, 5),
     new Num(1, 4),
     new Num(1, 1),

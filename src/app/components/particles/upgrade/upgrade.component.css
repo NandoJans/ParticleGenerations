@@ -13,6 +13,16 @@ button h4 {
   margin: 1rem 0;
 }
 
+button.red-style {
+  height: 12rem;
+  width: 14rem;
+}
+
+button.sub-red-style {
+  height: 5.5rem;
+  width: 14rem;
+}
+
 button.sub-red-style, button.red-style {
   background-color: var(--background-color-light);
   border: 1px solid var(--text-color-red);

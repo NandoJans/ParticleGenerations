@@ -7,16 +7,14 @@ import {ResetKey} from "../../enums/reset-key";
 export class RedGeneratorMultiplierUpgrade extends RedGeneratorUpgrade {
 
   constructor(
-    rank: number,
-    stringRank: string,
     cost: Num,
     increase: Num,
     scaling: Num,
     buffer: Num,
     generator: RedGenerator,
   ) {
-    super(rank, stringRank, cost, increase, scaling, buffer, generator);
-    this.name = `red-generator-multiplier-upgrade-${rank}`;
+    super(cost, increase, scaling, buffer, generator);
+    this.name = `red-generator-multiplier-upgrade-${generator.rank}`;
     this.resetId = ResetHelper.registerReset(ResetKey.RED_EXTENSION, this);
   }
   name: string;

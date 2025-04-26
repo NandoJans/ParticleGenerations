@@ -71,7 +71,7 @@
       width: 10px; height: 10px;
       transform: translate(random(100)*1vw,
         random(100)*1vh);
-      background-color: var(--green-button-color);
+      background-color: var(--accent-color-green);
       animation-duration: $t;
       animation-delay: -.01 * random(100) * $t;
     }
@@ -91,7 +91,7 @@
       width: 10px; height: 10px;
       transform: translate(random(100)*1vw,
         random(100)*1vh);
-      background: radial-gradient(var(--background-color-3), var(--green-button-color), var(--background-color-2));
+      background: radial-gradient(var(--background-color-3), var(--accent-color-green), var(--background-color-2));
       animation-duration: $t;
       animation-delay: -.01 * random(100) * $t;
     }

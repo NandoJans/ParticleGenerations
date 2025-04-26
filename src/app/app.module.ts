@@ -24,6 +24,9 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
 import { InfoComponent } from './components/medium/info/info.component';
 import { ParticleEmitterComponent } from './components/medium/particle-emitter/particle-emitter.component';
 import { OfflineComponent } from './components/medium/offline/offline.component';
+import { RedAutomatorsComponent } from './pages/automator/red-automators/red-automators.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { DropDownMessageComponent } from './components/medium/drop-down-message/drop-down-message.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +49,8 @@ import { OfflineComponent } from './components/medium/offline/offline.component'
     InfoComponent,
     ParticleEmitterComponent,
     OfflineComponent,
+    RedAutomatorsComponent,
+    DropDownMessageComponent,
   ],
     imports: [
         BrowserModule,
@@ -53,7 +58,8 @@ import { OfflineComponent } from './components/medium/offline/offline.component'
         ReactiveFormsModule,
         FormsModule,
         MatCheckboxModule,
-        MatProgressBarModule
+        MatProgressBarModule,
+        FontAwesomeModule
     ],
   providers: [],
   bootstrap: [AppComponent]

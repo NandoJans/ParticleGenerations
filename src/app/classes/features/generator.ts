@@ -10,6 +10,7 @@ import {Resetable} from "./interfaces/resetable";
 import {Transaction} from "./interfaces/transaction";
 import {Require} from "./interfaces/require";
 import {Upgrade} from "./upgrade";
+import {StatsService} from "../../services/stats.service";
 
 export abstract class Generator extends Buyable implements Generatable, Storable, Resetable, Require {
   abstract name: string
@@ -27,6 +28,8 @@ export abstract class Generator extends Buyable implements Generatable, Storable
   abstract nav: string
   abstract subNav: string
   abstract globalMultiplier: Multiplier
+  abstract stringRank: string
+  abstract rank: number
 
   localStorageHelper: LocalStorageHelper = new LocalStorageHelper('generators', this.getSaveKey())
 
@@ -80,6 +83,7 @@ export abstract class Generator extends Buyable implements Generatable, Storable
   override buy(amount: Num = new Num(1, 0)): Transaction {
     const transaction = super.buy(amount);
     this.multiplier = this.baseMultiplier.mul(this.baseMulMod, false).pow(this.bought, false) as Num
+    StatsService.addNum(this.name, 'totalBought', transaction.amount)
     return transaction
   }
 

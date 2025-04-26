@@ -3,16 +3,18 @@ button {
 }
 
 .navigation-button {
-  color: white;
-  font-size: 16px;
+  color: var(--text-color-main);
+  font-size: 20px;
   height: 100%;
   width: 100%;
   border: none;
   background-color: transparent;
+  border-left: 1px solid var(--text-color-main);
+  border-right: 1px solid var(--text-color-main);
 }
 
 .navigation-button.buyable-nav {
-  color: var(--green-button-color);
+  color: var(--accent-color-green);
   font-weight: 700;
 }
 

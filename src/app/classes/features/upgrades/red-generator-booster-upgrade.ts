@@ -33,5 +33,4 @@ export class RedGeneratorBoosterUpgrade extends RedUpgrade {
   getDescription(): string {
     return `Increases red generator production by ${this.buffer.toString(true)}x.`;
   }
-
 }

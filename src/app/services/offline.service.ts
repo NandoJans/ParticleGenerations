@@ -50,7 +50,7 @@ export class OfflineService {
       if (this.ticksDone + 100 > this.totalTicks) {
         const tickAmount = this.totalTicks - this.ticksDone;
         this.ticksDone = this.totalTicks;
-        this.tickService.gameTick(new Num(tickAmount, 1));
+        this.tickService.gameTick(new Num(tickAmount/10, 0));
         this.done = true;
       } else {
         this.tickService.gameTick(new Num(1, 1));

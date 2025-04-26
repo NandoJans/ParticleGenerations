@@ -1,181 +1,95 @@
 import { Injectable } from '@angular/core';
-import {Navigation, SubNavigation} from "../globals";
-import {HoldingsService} from "./holdings.service";
 import {Router} from "@angular/router";
-import {App} from "../App";
-import {DropDownMessageService} from "./visuals/drop-down-message.service";
 import {LocalStorageHelper} from "../classes/helpers/local-storage-helper";
+import {Navigation} from "../classes/features/navigation";
+import {SubNavigation} from "../classes/features/sub-navigation";
+import {faAtom, faCogs, faIndustry} from "@fortawesome/free-solid-svg-icons";
+import {HoldingRecord} from "../classes/records/holdings/holding-record";
+import {Num} from "../num";
 
 @Injectable({
   providedIn: 'root'
 })
 export class NavigationsService {
-  navigations: Navigation[] = [
-    { name: 'red', displayName: 'R', location: 'red', unlocked: true, requirement: 'none', wasOn: 'particles' }
-  ]
+  navigations: {[key: string]: Navigation} = {
+    red: new Navigation('red', faAtom, 'red', [], 'particles', true),
+    automators: new Navigation('automators', faCogs, 'automators', [
+      {requirement: HoldingRecord.redParticles, amount: new Num(1, 10)},
+    ], 'red', true),
+}
 
-  subNavigations: SubNavigation[] = [
-    { name: 'redParticles', displayName: 'Gen', location: 'particles', parent: 'red', unlocked: true, requirement: 'none' }
-  ]
+  subNavigations: {[key: string]: SubNavigation} = {
+    // Red
+    redParticles: new SubNavigation('redParticles', faIndustry, 'particles', this.navigations['red'], [], true),
 
-  selectedNavigation: string = 'red';
-  selectedSubNavigation: string = 'particles';
+    // Automators
+    redAutomators: new SubNavigation('redParticles', faAtom, 'red', this.navigations['automators'], [
+      {requirement: HoldingRecord.redParticles, amount: new Num(1, 10)},
+    ], true),
+  }
+
+  selectedNavigation: Navigation = this.navigations['red']
+  selectedSubNavigation: SubNavigation = this.subNavigations['redParticles'];
   localStorageHelper: LocalStorageHelper = new LocalStorageHelper('navigations', 'navigations');
 
   constructor(
-    private router: Router,
-    private dropDownMessageService: DropDownMessageService
+    private router: Router
   ) {
     this.load();
-    this.unlock();
+    console.log('Navigations loaded:', this.navigations, this.subNavigations);
   }
 
-
-  save() {
-    const save: any = {}
-    this.navigations.forEach((navigation) => {
-      save[navigation.name] = {unlocked: navigation.unlocked, wasOn: navigation.wasOn};
-    })
-    this.subNavigations.forEach((navigation) => {
-      save[navigation.name] = {unlocked: navigation.unlocked};
-    })
-    this.localStorageHelper.saveMultiple(save);
-    this.localStorageHelper.save(this.selectedNavigation, 'selectedNavigation');
-    this.localStorageHelper.save(this.selectedSubNavigation, 'selectedSubNavigation');
+  getAllNavigations(): (Navigation|SubNavigation)[] {
+    return [
+      ...Object.values(this.navigations),
+      ...Object.values(this.subNavigations)
+    ];
   }
 
-  load() {
-    this.selectedNavigation = this.localStorageHelper.load(this.selectedNavigation, 'selectedNavigation')
-    this.selectedSubNavigation = this.localStorageHelper.load(this.selectedSubNavigation, 'selectedSubNavigation')
-    const loadedNavigations = this.localStorageHelper.load({}, 'navigations');
-    const navigations: any[] = [];
-    navigations.concat(this.subNavigations, this.navigations).forEach((navigation) => {
-      if (loadedNavigations[navigation.name] !== undefined) {
-        navigation.unlocked = loadedNavigations[navigation.name]['unlocked']
-        if (loadedNavigations[navigation.name]['wasOn'] !== undefined) {
-          navigation.wasOn = loadedNavigations[navigation.name]['wasOn']
-        }
-      }
-    })
+  save(): void {
+    this.getAllNavigations().forEach((navigation: Navigation|SubNavigation) => {
+      navigation.save();
+    });
+    this.localStorageHelper.save(this.selectedNavigation.name, 'selectedNavigation');
+    this.localStorageHelper.save(this.selectedSubNavigation.name, 'selectedSubNavigation');
   }
 
-  getNavigationValue(name: string, value: string) {
-    let retValue = undefined
-    this.navigations.forEach((nav) => {
-      if (nav.name === name) {
-        // @ts-ignore
-        return retValue = nav[value];
-      }
-    })
-    return retValue
+  load(): void {
+    this.selectedNavigation = this.navigations[
+      this.localStorageHelper.load(this.selectedNavigation.name, 'selectedNavigation')
+      ]
+    this.selectedSubNavigation = this.subNavigations[
+      this.localStorageHelper.load(this.selectedSubNavigation.name, 'selectedSubNavigation')
+      ]
+    this.getAllNavigations().forEach((navigation: Navigation|SubNavigation) => {
+      navigation.tryLoad();
+    });
   }
 
   getLocation(subNavigation: SubNavigation) {
-    let parentLocation: string = '';
-    this.selectedSubNavigation = subNavigation.location;
-    this.navigations.forEach((nav) => {
-      if (nav.name === subNavigation.parent) {
-        parentLocation = nav.location
-        this.selectedNavigation = nav.location
-        nav.wasOn = subNavigation.location
-      }
-    })
-    return parentLocation + '/' + subNavigation.location;
+    this.selectedSubNavigation = subNavigation;
+    this.selectedNavigation = subNavigation.parent;
+    this.selectedNavigation.wasOn = subNavigation.location;
+    return this.selectedNavigation.location + '/' + subNavigation.location;
   }
 
   getNavigations() {
     let ret_arr: Navigation[] = [];
-    this.navigations.forEach((navigation) => {
+    Object.values(this.navigations).forEach((navigation) => {
       if (navigation.unlocked) ret_arr.push(navigation);
     })
     return ret_arr;
   }
 
-  getSubNavigations(navigation: string) {
+  getSubNavigations(navigation: Navigation): SubNavigation[] {
     let ret_arr: SubNavigation[] = []
-    this.subNavigations.forEach((subNavigation) => {
+    Object.values(this.subNavigations).forEach((subNavigation) => {
       if (subNavigation.parent === navigation && subNavigation.unlocked) ret_arr.push(subNavigation);
     })
     return ret_arr;
   }
 
-  getSubNavigation(navigation: string) {
-    for (let i = 0; i < this.subNavigations.length; i++) {
-      if (this.subNavigations[i].name === navigation) return this.subNavigations[i];
-    }
-    return 0;
-  }
-
-  getNavigation(navigation: string) {
-    for (let i = 0; i < this.navigations.length; i++) {
-      if (this.navigations[i].name === navigation) return this.navigations[i];
-    }
-    return 0;
-  }
-
-  capString(text: string) {
-    return text.charAt(0).toUpperCase() + text.slice(1);
-  }
-
-  unlock() {
-    const perm: any[] = [];
-    perm.concat(this.subNavigations, this.navigations).forEach((navigation) => {
-      if (navigation.requirement !== 'none' && !navigation.unlocked) {
-        if (HoldingsService.get(navigation.requirement[0]).greq(navigation.requirement[1])) {
-          navigation.unlocked = true;
-
-          if (navigation.parent !== undefined && navigation.location !== undefined) {
-            const displayTitle = this.capString(navigation.parent) + ' ' + this.capString(navigation.location)
-            this.dropDownMessageService.dropDown( displayTitle + ' Unlocked', 'You have unlocked the '+navigation.name+' tab.')
-          }
-
-          App.next();
-        }
-      } else if (navigation.requirement === 'none') {
-        navigation.unlocked = true;
-      }
-      let doc = document.getElementById(navigation.name)
-      if (navigation.unlocked) {
-        if (doc !== null) doc.style.display = 'unset';
-      } else {
-        if (doc !== null) {
-          doc.style.display = 'none'
-        }
-      }
-    })
-  }
-
-  markBuyable(navigation: string, parent: string) {
-    const navigationDoc = <HTMLElement> document.getElementById(navigation);
-    if (navigationDoc !== null) navigationDoc.classList.add('buyable-nav');
-    const parentDoc = <HTMLElement> document.getElementById(parent);
-    if (parentDoc !== null) parentDoc.classList.add('buyable-nav');
-    this.trackMakeBuyable[navigation] = false;
-    this.trackMakeBuyable[parent] = false;
-  }
-
-  trackMakeBuyable: any = {};
-
-  resetTracker() {
-    this.trackMakeBuyable = {};
-  }
-
-  removeBuyable(navigation: string, parent: string) {
-    if (this.trackMakeBuyable[navigation] === undefined) {
-      const navigationDoc = <HTMLElement>document.getElementById(navigation);
-      if (navigationDoc !== null) {
-        navigationDoc.classList.remove('buyable-nav');
-      }
-    }
-    if (this.trackMakeBuyable[parent] === undefined) {
-      const parentDoc = <HTMLElement> document.getElementById(parent);
-      if (parentDoc !== null) {
-        parentDoc.classList.remove('buyable-nav');
-      }
-    }
-  }
-
-  navigate(event: any = this.subNavigations[0]) {
+  navigate(event: any = this.subNavigations['redParticles']) {
     let currentUrl: string[] = this.router.url.split('/')
     if (currentUrl[1] !== event.parent || currentUrl[2] !== event.location) {
       let navigation = this.getLocation(event);
@@ -184,17 +98,19 @@ export class NavigationsService {
     }
   }
 
-  lockNavigation(nav: string) {
-    for (let i = 0; i < this.navigations.length; i++) {
-      if (this.navigations[i].name === nav) this.navigations[i].unlocked = false;
+  setNavigationByEvent(event: any) {
+    if (event && event['name']) {
+      this.selectedNavigation = this.navigations[event['name']];
+    } else {
+      this.selectedNavigation = this.navigations['red'];
     }
   }
 
-  setValue(nav: string, key: string, value: any) {
-    this.navigations.forEach((navigation) => {
-      if (navigation.name === nav) { // @ts-ignore
-        navigation[key] = value;
-      }
-    })
+  setSubNavigationByName(name: string) {
+    this.selectedSubNavigation = this.subNavigations[name];
+  }
+
+  getWasOnLocation(): string {
+    return this.selectedNavigation.wasOn;
   }
 }

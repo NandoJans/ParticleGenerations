@@ -1,20 +1,38 @@
 import {Automator} from "../automator";
 import {Num} from "../../../num";
 import {Buyable} from "../buyable";
-import {HoldingRecord} from "../../records/holdings/holding-record";
-import {RedGeneratorRecord} from "../../records/generators/red-generator-record";
+import {Styles} from "../../enums/styles";
+import {Requirement} from "../interfaces/requirement";
+import {Require} from "../interfaces/require";
+import {StatsService} from "../../../services/stats.service";
+import {RedGenerator} from "../generators/red-generator";
 
 export class RedGeneratorAutomator extends Automator {
-  displayName: string = 'Red Generator Automator'
-  name: string = 'red-generators-automator'
-  goal: Num = new Num(1, 50);
-  goalString: string = 'Reach 1e50 ' + HoldingRecord.redParticles.abbreviation;
+  displayName: string;
+  name: string;
+  goal: Num = new Num(2, 1);
+  goalString: string;
+  generator: RedGenerator;
+  style: Styles = Styles.RED_AUTOMATOR;
+
+  constructor(generator: RedGenerator, requirement: { require: Require, amount: Num }[]) {
+    super();
+    this.displayName = generator.stringRank + ' Red Generator Automator';
+    this.name = 'red-generator-automator-' + generator.rank;
+    this.goalString = 'Buy ' + this.goal.toString() + ' ' + generator.stringRank + ' Red Generators';
+    this.requirement = requirement.map(req => new Requirement(req.require, req.amount, this));
+    this.generator = generator
+  }
 
   buyables(): Buyable[] {
-    return RedGeneratorRecord.list;
+    return [
+      this.generator,
+      this.generator.buyMultiplierUpgrade,
+      this.generator.multiplierUpgrade,
+    ];
   }
 
   task(): Num {
-    return HoldingRecord.redParticles.amount;
+    return StatsService.getNum(this.generator.name, 'totalBought');
   }
 }
