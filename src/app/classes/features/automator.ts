@@ -21,7 +21,7 @@ export abstract class Automator extends GameElement implements Storable {
 
   requirement: Requirement[] = [];
 
-  checkTask(): void {
+  checkTask(): boolean {
     const progress = this.task();
     if (progress.greq(this.goal)) {
       const buyables = this.buyables();
@@ -31,9 +31,10 @@ export abstract class Automator extends GameElement implements Storable {
       this.completed = true;
       this.save();
     }
+    return false;
   }
 
-  run(): void {
+  run(): boolean {
     if (this.completed && this.active) {
       this.buyables().forEach(buyable => {
         if (buyable.isBuyable() && buyable.auto) {
@@ -41,8 +42,9 @@ export abstract class Automator extends GameElement implements Storable {
         }
       })
     } else if (!this.completed) {
-      this.checkTask();
+      return this.checkTask();
     }
+    return false
   }
 
   localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey());
@@ -57,8 +59,8 @@ export abstract class Automator extends GameElement implements Storable {
 
   tryLoad(): void {
     this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey());
-    this.localStorageHelper.load('completed');
-    this.localStorageHelper.load('active');
+    this.completed = this.localStorageHelper.load('completed');
+    this.active = this.localStorageHelper.load('active');
   }
 
   save() {

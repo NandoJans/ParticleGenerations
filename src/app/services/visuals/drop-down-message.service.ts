@@ -4,21 +4,30 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class DropDownMessageService {
-  constructor() { }
+  messageQueue: {title: string, message: string, type: string}[] = [];
+  timeOut: any = undefined;
 
-  dropDown(title: string, message: string) {
-    const dropDownElement: HTMLElement = <HTMLElement> document.getElementById('drop-down-message')
-    const dropDownTitle: HTMLElement = <HTMLElement> document.getElementById('ddm-title')
-    const dropDownContent: HTMLElement = <HTMLElement> document.getElementById('ddm-content')
-    if (dropDownElement !== null && dropDownTitle !== null && dropDownContent !== null) {
+  constructor() {}
 
-      dropDownElement.style.top = '80px';
-      dropDownTitle.innerHTML = title;
-      dropDownContent.innerHTML = message;
+  dropDown(title: string, message: string, type: string = 'info') {
+    this.messageQueue.push({title, message, type});
+    this.setTimeout();
+  }
 
-      setTimeout(() => {
-        dropDownElement.style.top = '-100px';
-      }, 3000)
+  private setTimeout() {
+    if (!this.timeOut) {
+      this.timeOut = setTimeout(() => {
+        this.messageQueue.shift();
+        clearTimeout(this.timeOut);
+        this.timeOut = undefined;
+        if (this.messageQueue.length > 0) {
+          this.setTimeout();
+        }
+      }, 5000);
     }
+  }
+
+  getMessage() {
+    return this.messageQueue.length > 0 ? this.messageQueue[0] : null;
   }
 }

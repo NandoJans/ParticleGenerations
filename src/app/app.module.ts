@@ -26,6 +26,7 @@ import { ParticleEmitterComponent } from './components/medium/particle-emitter/p
 import { OfflineComponent } from './components/medium/offline/offline.component';
 import { RedAutomatorsComponent } from './pages/automator/red-automators/red-automators.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { DropDownMessageComponent } from './components/medium/drop-down-message/drop-down-message.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ParticleEmitterComponent,
     OfflineComponent,
     RedAutomatorsComponent,
+    DropDownMessageComponent,
   ],
     imports: [
         BrowserModule,

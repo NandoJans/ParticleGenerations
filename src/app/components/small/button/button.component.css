@@ -14,7 +14,7 @@ button {
 }
 
 .navigation-button.buyable-nav {
-  color: var(--green-button-color);
+  color: var(--accent-color-green);
   font-weight: 700;
 }
 

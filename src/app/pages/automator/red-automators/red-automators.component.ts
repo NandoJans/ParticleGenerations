@@ -14,6 +14,7 @@ export class RedAutomatorsComponent implements OnInit {
     AutomatorRecord.thirdRedGenerator,
     AutomatorRecord.fourthRedGenerator,
     AutomatorRecord.fifthRedGenerator,
+    AutomatorRecord.redGeneratorBooster
   ];
 
   constructor() { }

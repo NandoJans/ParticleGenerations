@@ -3,12 +3,14 @@ div.automator {
   background-color: var(--background-color-1);
   border: 2px solid var(--background-color-4);
   padding: 1rem;
+  margin: 0.5rem;
   border-radius: 0.5rem;
   font-size: 1rem;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 150px;
+  height: 12rem;
+  width: 12rem;
 }
 
 div.progress-bar {
@@ -23,7 +25,7 @@ div.progress-bar {
 div.progress {
   display: block;
   height: 100%;
-  background-color: var(--green-button-color);
+  background-color: var(--accent-color-green);
   border-radius: 0.5rem;
   transition: width 0.3s ease-in-out;
 }

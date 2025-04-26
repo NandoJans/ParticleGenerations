@@ -5,6 +5,7 @@ import {GeneratorRecord} from "../generators/generator-record";
 import {HoldingRecord} from "../holdings/holding-record";
 import {Num} from "../../../num";
 import { Injectable } from '@angular/core';
+import {RedGeneratorBoosterAutomator} from "../../features/automators/red-generator-booster-automator";
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,7 @@ export class AutomatorRecord extends Record {
     GeneratorRecord.fifthRedGenerator,
     [{require: HoldingRecord.redParticles, amount: new Num(1, 10)}],
   );
+  static redGeneratorBooster: RedGeneratorBoosterAutomator = new RedGeneratorBoosterAutomator();
 
   static override list: Automator[] = [
     AutomatorRecord.firstRedGenerator,
@@ -44,9 +46,13 @@ export class AutomatorRecord extends Record {
     return AutomatorRecord.list;
   }
 
-  runAutomators(): void {
+  runAutomators(): Automator[] {
+    const completedAutomators: Automator[] = [];
     AutomatorRecord.list.forEach(automator => {
-      automator.run();
+      if (automator.run()) {
+        completedAutomators.push(automator);
+      }
     });
+    return completedAutomators;
   }
 }
