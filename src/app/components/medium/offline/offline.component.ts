@@ -16,6 +16,9 @@ export class OfflineComponent implements OnInit {
   }
 
   getOfflineProgress(): number {
+    if (this.offlineService.getTotalTicks() === 0) {
+      return 100;
+    }
     const progress = this.offlineService.getTickProgress() / this.offlineService.getTotalTicks() * 100;
     return 100 - Math.min(progress, 100);
   }
