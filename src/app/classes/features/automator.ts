@@ -7,6 +7,7 @@ import { LocalStorageHelper } from "../helpers/local-storage-helper";
 import {Styles} from "../enums/styles";
 import {Resetable} from "./interfaces/resetable";
 import {ResetKey} from "../enums/reset-key";
+import {DropDownMessageService} from "../../services/visuals/drop-down-message.service";
 
 export abstract class Automator extends GameElement implements Storable, Resetable {
   softResetId: ResetKey = ResetKey.NONE;
@@ -48,7 +49,11 @@ export abstract class Automator extends GameElement implements Storable, Resetab
       });
       this.completed = true;
       this.save();
-      return true;
+      DropDownMessageService.dropDown(
+        `Automator ${this.displayName} completed!`,
+        `You have completed the task: ${this.goalString}`,
+        'success'
+      )
     }
     return false;
   }

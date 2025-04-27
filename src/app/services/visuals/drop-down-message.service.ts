@@ -6,8 +6,18 @@ import { Injectable } from '@angular/core';
 export class DropDownMessageService {
   messageQueue: {title: string, message: string, type: string}[] = [];
   timeOut: any = undefined;
+  static instance: DropDownMessageService | undefined = undefined;
 
-  constructor() {}
+  constructor() {
+    if (DropDownMessageService.instance) {
+      return DropDownMessageService.instance;
+    }
+    DropDownMessageService.instance = this;
+  }
+
+  static dropDown(title: string, message: string, type: string = 'info') {
+    return DropDownMessageService.instance?.dropDown(title, message, type);
+  }
 
   dropDown(title: string, message: string, type: string = 'info') {
     this.messageQueue.push({title, message, type});

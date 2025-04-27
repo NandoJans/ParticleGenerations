@@ -40,3 +40,8 @@ div.container.info {
   background-color: var(--background-color-blue);
   border: 2px solid var(--accent-color-blue);
 }
+
+div.container.success {
+  background-color: var(--background-color-green);
+  border: 2px solid var(--accent-color-green);
+}

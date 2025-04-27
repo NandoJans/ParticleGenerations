@@ -58,11 +58,11 @@ export abstract class Holding implements Generatable, Require, Resetable {
   softReset(): void {}
 
   add(amount: Num): void {
-    this.amount.add(amount)
+    this.amount = this.amount.add(amount)
   }
 
   sub(amount: Num): void {
-    this.amount.sub(amount)
+    this.amount = this.amount.sub(amount)
   }
 
   get(): Num {

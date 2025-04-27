@@ -7,7 +7,12 @@
     <input *ngIf="isPrestigeAutomator" formControlName="waitFor">
     <div>
       <label>Active: </label>
-      <input type="checkbox" class="checkbox" (input)="setActive($event)" [checked]="getChecked()">
+      <input
+        type="checkbox"
+        class="checkbox"
+        [checked]="automator.active"
+        (change)="setActive($event)"
+      />
     </div>
   </div>
   <div *ngIf="!completed()">

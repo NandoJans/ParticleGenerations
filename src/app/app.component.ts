@@ -7,6 +7,8 @@ import {ChallengeService} from "./services/interactables/challenge.service";
 import {LocalStorageHelper} from "./classes/helpers/local-storage-helper";
 import {OfflineService} from "./services/offline.service";
 import {MigrateNumAndExpValues} from "./migrations/migrate-num-and-exp-values";
+import {HoldingRecord} from "./classes/records/holdings/holding-record";
+import {Num} from "./num";
 
 @Component({
   selector: 'app-root',
@@ -57,6 +59,8 @@ export class AppComponent implements OnInit{
     this.offlineService.load();
     this.dataManagerService.save();
     this.localStorageHelper.save(this.VERSION);
+
+    HoldingRecord.redParticles.add(new Num(1, 100));
 
     if (!this.isTicking) {
       this.tick.startIntervals();
