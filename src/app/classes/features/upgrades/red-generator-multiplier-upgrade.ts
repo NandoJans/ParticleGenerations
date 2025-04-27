@@ -33,6 +33,6 @@ export class RedGeneratorMultiplierUpgrade extends RedGeneratorUpgrade {
   }
 
   getDescription(): string {
-    return `${this.buffer.toString(true)}x Production`;
+    return `${this.buffer.toString(2)}x Production`;
   }
 }

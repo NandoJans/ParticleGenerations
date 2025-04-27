@@ -1,7 +1,6 @@
 import {RedAcceleratorUpgrade} from "./red-accelerator-upgrade";
 import {Num} from "../../../num";
 import {HoldingRecord} from "../../records/holdings/holding-record";
-import {Requirement} from "../interfaces/requirement";
 
 export class ImproveRedAcceleratorsEffectUpgrade extends RedAcceleratorUpgrade {
   baseCost: Num = new Num(1, 90);
@@ -10,10 +9,9 @@ export class ImproveRedAcceleratorsEffectUpgrade extends RedAcceleratorUpgrade {
   increase: Num = new Num(1, 5);
   override buffer: Num = new Num(0.9, 0);
   override baseBuffer: Num = new Num(0.9, 0);
-  name: string = "improve-red-accelerator-effect";
-  requirement: Requirement[] = [
-    new Requirement(HoldingRecord.redParticles, new Num(1, 75), this, false)
-  ];
+  constructor() {
+    super("improve-red-accelerator-effect");
+  }
 
   action(): Num | undefined {
     const effect: Num = this.buffer.pow(this.amount, false);
@@ -22,10 +20,10 @@ export class ImproveRedAcceleratorsEffectUpgrade extends RedAcceleratorUpgrade {
   }
 
   getDescription(): string {
-    const holdingEffect: string = HoldingRecord.redAccelerators.logEffect.toString(true);
+    const holdingEffect: string = HoldingRecord.redAccelerators.logEffect.toString(2);
     const nextEffect: string = HoldingRecord.redAccelerators.logEffect
       .mul(this.buffer, false)
-      .toString(true);
+      .toString(2);
     return "Log"+holdingEffect+"(RA) → Log"+nextEffect+"(RA).";
   }
 }

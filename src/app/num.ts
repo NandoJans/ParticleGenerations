@@ -35,7 +35,7 @@ export class Num {
     this.exp = ret_exp
   }
 
-  toString = (showDecimals=false) => {
+  toString = (decimals = 0) => {
     if (this.exp >= 1e9) {
       let expNum = this.exp;
       let expExp = 0;
@@ -54,14 +54,14 @@ export class Num {
     if (this.exp >= 6) {
       return String(this.num.toFixed(2)) + 'e' + String(Math.round(this.exp).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
     } else if (this.exp == 0) {
-      if (showDecimals) {
-        return String(this.num.toFixed(2))
+      if (decimals) {
+        return String(this.num.toFixed(decimals))
       } else {
         return String(Math.floor(this.num))
       }
     } else {
-      if (showDecimals) {
-        return String((this.num * 10 ** this.exp).toFixed(2)).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+      if (decimals) {
+        return String((this.num * 10 ** this.exp).toFixed(decimals)).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
       } else {
         return String(Math.floor(this.num * 10 ** this.exp)).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
       }

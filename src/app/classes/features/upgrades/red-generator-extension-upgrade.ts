@@ -23,6 +23,7 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
   override requirement: Requirement[] = [];
   override resets: ResetKey = ResetKey.RED_EXTENSION;
   override unlocked: boolean = true;
+  override startUnlocked: boolean = true;
 
   action(): Num {
     const generators = [
@@ -44,9 +45,9 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
 
   getDescription(): string {
     if (this.amount.greq(new Num(4, 0))) {
-      return `Multiply red generator production by ${this.buffer.toString(true)}x.`;
+      return `Multiply red generator production by ${this.buffer.toString(2)}x.`;
     } else {
-      return `Get a new generator and apply ${this.buffer.toString(true)}x`;
+      return `Get a new generator and apply ${this.buffer.toString(2)}x`;
     }
   }
 

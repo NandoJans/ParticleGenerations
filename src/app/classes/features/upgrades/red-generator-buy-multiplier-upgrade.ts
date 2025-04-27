@@ -34,8 +34,7 @@ export class RedGeneratorBuyMultiplierUpgrade extends RedGeneratorUpgrade {
   }
 
   getDescription(): string {
-    // console.log(this.name, this.effect.toString(true), this.buffer.toString(true));
-    return `${this.buffer.toString(true)}x buy multiplier`;
+    return `${this.buffer.toString(2)}x buy multiplier`;
   }
 }
 

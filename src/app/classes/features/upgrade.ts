@@ -39,7 +39,7 @@ export abstract class Upgrade extends Buyable implements Storable, Require, Rese
   }
 
   effectString(): string {
-    return this.effect ? this.effect.toString(true) + 'x' : '';
+    return this.effect ? this.effect.toString(2) + 'x' : '';
   }
 
   getEffectDisplay(): string {

@@ -63,7 +63,7 @@ export abstract class Generator extends Buyable implements Generatable, Storable
     this.localStorageHelper = new LocalStorageHelper('generators', this.getSaveKey())
     this.localStorageHelper.saveNum(this.bought, 'bought')
     this.localStorageHelper.saveNum(this.amount, 'amount')
-    this.localStorageHelper.save(this.baseMulMod, 'unlocked')
+    this.localStorageHelper.save(this.unlocked, 'unlocked')
     this.localStorageHelper.save(this.auto, 'auto')
   }
 
@@ -82,6 +82,7 @@ export abstract class Generator extends Buyable implements Generatable, Storable
   reset(): void {
     this.bought = new Num(0, 0)
     this.amount = new Num(0, 0)
+    this.unlocked = this.startUnlocked
   }
 
   override buy(amount: Num = new Num(1, 0)): Transaction {

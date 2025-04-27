@@ -4,6 +4,7 @@ import {Num} from "../../num";
 
 export abstract class GameElement {
   unlocked: boolean = false
+  startUnlocked: boolean = false
   abstract requirement: Requirement[]
   hidden: boolean = false
   disabled: boolean = false

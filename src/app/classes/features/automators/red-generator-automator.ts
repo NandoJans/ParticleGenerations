@@ -6,6 +6,8 @@ import {Requirement} from "../interfaces/requirement";
 import {StatsService} from "../../../services/stats.service";
 import {RedGenerator} from "../generators/red-generator";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
+import {ResetKey} from "../../enums/reset-key";
+import {ResetHelper} from "../../helpers/reset-helper";
 
 export class RedGeneratorAutomator extends Automator {
   displayName: string;
@@ -14,6 +16,7 @@ export class RedGeneratorAutomator extends Automator {
   goalString: string;
   generator: RedGenerator;
   style: Styles = Styles.RED_AUTOMATOR;
+  resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED, this);
 
   constructor(generator: RedGenerator) {
     super();

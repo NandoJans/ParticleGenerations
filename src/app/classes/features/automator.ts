@@ -5,8 +5,23 @@ import {Requirement} from "./interfaces/requirement";
 import {Storable} from "./interfaces/storable";
 import { LocalStorageHelper } from "../helpers/local-storage-helper";
 import {Styles} from "../enums/styles";
+import {Resetable} from "./interfaces/resetable";
+import {ResetKey} from "../enums/reset-key";
 
-export abstract class Automator extends GameElement implements Storable {
+export abstract class Automator extends GameElement implements Storable, Resetable {
+  softResetId: ResetKey = ResetKey.NONE;
+  abstract resetId: ResetKey;
+
+  reset(): void {
+    this.completed = false;
+    this.active = false;
+    this.save();
+    this.buyables().forEach(buyable => {
+      buyable.auto = false;
+    })
+  }
+
+  softReset(): void {}
   abstract displayName: string;
   abstract style: Styles;
   active = true;
@@ -86,5 +101,9 @@ export abstract class Automator extends GameElement implements Storable {
     this.buyables().forEach(buyable => {
       buyable.auto = false;
     })
+  }
+
+  taskString(): string {
+    return this.task().toString();
   }
 }

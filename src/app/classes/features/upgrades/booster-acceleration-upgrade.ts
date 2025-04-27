@@ -48,12 +48,12 @@ export class BoosterAccelerationUpgrade extends Upgrade {
   }
 
   getDescription(): string {
-    return "Increase the power of red generator boosters by " + this.buffer.toString(true) +
-      " and give " + this.freeBuys.toString(true) +
+    return "Increase the power of red generator boosters by " + this.buffer.toString(2) +
+      " and give " + this.freeBuys.toString(2) +
       " free buys. Resets all red particles and red accelerators.";
   }
 
   override effectString(): string {
-    return this.effect ? this.effect.toString(true) + ' and ' + this.totalFreeBuys.toString() + ' free buys' : '';
+    return this.effect ? this.effect.toString(2) + ' and ' + this.totalFreeBuys.toString() + ' free buys' : '';
   }
 }
