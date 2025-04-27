@@ -3,6 +3,8 @@ import {Num} from "../../../num";
 import {ResetKey} from "../../enums/reset-key";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 import {ResetHelper} from "../../helpers/reset-helper";
+import {Transaction} from "../interfaces/transaction";
+import {StatsService} from "../../../services/stats.service";
 
 export class RedGeneratorBoosterUpgrade extends RedUpgrade {
   cost: Num = new Num(1, 2);
@@ -28,5 +30,11 @@ export class RedGeneratorBoosterUpgrade extends RedUpgrade {
 
   getDescription(): string {
     return `Increases red generator production by ${this.buffer.toString(3)}x.`;
+  }
+
+  override buy(amount: Num = new Num(1, 0)): Transaction {
+    const transaction = super.buy(amount);
+    StatsService.addNum(this.name, 'totalBought', transaction.amount);
+    return transaction;
   }
 }

@@ -11,7 +11,7 @@ import {RedGeneratorBuyMultiplierUpgrade} from "../upgrades/red-generator-buy-mu
 import {Upgrade} from "../upgrade";
 
 export abstract class RedGenerator extends Generator {
-  type: string = 'red-particles';
+  type: string = 'red-particle-generator';
   override unlocked: boolean = false;
   requirement: Requirement[] = [];
   currency: Holding = HoldingRecord.redParticles;

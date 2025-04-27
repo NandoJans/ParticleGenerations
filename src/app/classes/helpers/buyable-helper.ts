@@ -144,15 +144,38 @@ export class BuyableHelper {
       } else {
 
         buyable.cost = buyable.baseCost.mul(buyable.increase.pow(buyable.bought, false), false)
+
         if (buyable.cost.greq(buyable.scalingStart)) {
+          // 1) how many buys to hit the start
+          const thresholdCount = buyable.scalingStart
+            .div(buyable.baseCost, false)
+            .ln(false)
+            .div(buyable.increase.ln(false), false)
+            .floor(false);
 
-          let buyableAmount = buyable.scalingStart.div(buyable.baseCost, false).ln(false).div(buyable.increase.ln(false), false).floor(false)
+          // 2) how many beyond that
+          const postBought = buyable.bought.sub(thresholdCount, false);
 
-          buyable.cost = buyable.baseCost.mul(buyable.increase.pow(buyableAmount, false), false)
+          // 3) cost exactly at threshold
+          const preCost = buyable.baseCost
+            .mul(buyable.increase.pow(thresholdCount, false), false);
 
-          let postBought = buyable.bought.sub(buyableAmount, false);
+          // 4) increase^n
+          const incPow = buyable.increase.pow(postBought, false);
 
-          buyable.cost.mul(buyable.baseCost.mul(buyable.increase.mul(buyable.scaling.pow(postBought, false), false).pow(postBought, false), false))
+          // 5) triangular exponent n(n+1)/2
+          const triExp = postBought
+            .mul(postBought.add(new Num(1, 0), false), false)
+            .div(new Num(2, 0), false)
+            .floor(false);
+
+          // 6) scaling^(n(n+1)/2)
+          const scalePow = buyable.scaling.pow(triExp, false);
+
+          // 7) final assignment
+          buyable.cost = preCost
+            .mul(incPow, false)
+            .mul(scalePow, false);
         }
       }
     }

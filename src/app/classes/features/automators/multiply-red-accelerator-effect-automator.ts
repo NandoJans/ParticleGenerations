@@ -1,18 +1,18 @@
 import {Automator} from "../automator";
-import {Num} from "../../../num";
-import {Buyable} from "../buyable";
-import {Styles} from "../../enums/styles";
 import {Requirement} from "../interfaces/requirement";
+import {Num} from "../../../num";
 import {HoldingRecord} from "../../records/holdings/holding-record";
-import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {ResetKey} from "../../enums/reset-key";
+import {Buyable} from "../buyable";
+import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {ResetHelper} from "../../helpers/reset-helper";
+import {Styles} from "../../enums/styles";
 
-export class MultiplyRedAccelerationGenerationAutomator extends Automator {
-  displayName: string = 'Faster Acceleration Generation';
+export class MultiplyRedAcceleratorEffectAutomator extends Automator {
+  displayName: string = 'Multiply Accelerator Effect';
   goal: Num = new Num(1, 20);
-  goalString: string = 'Have a total of 1e20 Red Accelerators';
-  name: string = 'multiply-red-acceleration-generation-automator';
+  goalString: string = "Have the effect from Faster Acceleration of 1e20x";
+  name: string = 'multiply-red-accelerator-effect-automator';
   style: Styles = Styles.RED_AUTOMATOR;
   override unlocked: boolean = false;
   override requirement: Requirement[] = [
@@ -22,11 +22,11 @@ export class MultiplyRedAccelerationGenerationAutomator extends Automator {
 
   buyables(): Buyable[] {
     return [
-      UpgradeRecord.multiplyRedAcceleratorGeneration
+      UpgradeRecord.improveRedAcceleratorsEffect
     ];
   }
 
   task(): Num {
-    return HoldingRecord.redAccelerators.amount || new Num(1, 0);
+    return UpgradeRecord.multiplyRedAcceleratorGeneration.effect || new Num(1, 0);
   }
 }

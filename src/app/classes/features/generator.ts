@@ -80,6 +80,11 @@ export abstract class Generator extends Buyable implements Generatable, Storable
   }
 
   reset(): void {
+    if (this.hasBought()) {
+      StatsService.addNum(this.name, 'totalReset', new Num(1, 0))
+      StatsService.addNum(this.type, 'totalReset', new Num(1, 0))
+    }
+
     this.bought = new Num(0, 0)
     this.amount = new Num(0, 0)
     this.unlocked = this.startUnlocked

@@ -7,11 +7,12 @@ import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {Styles} from "../../enums/styles";
 import {ResetKey} from "../../enums/reset-key";
 import {ResetHelper} from "../../helpers/reset-helper";
+import {StatsService} from "../../../services/stats.service";
 
 export class BoosterAccelerationAutomator extends Automator {
   displayName: string = 'Booster Acceleration Automator';
   goal: Num = new Num(1, 5);
-  goalString: string = 'Have a total of 1.000 red generator booster buys';
+  goalString: string = 'Have a total of 100.000 red generator booster buys';
   name: string = 'booster-acceleration-automator';
   style: Styles = Styles.RED_AUTOMATOR;
   override unlocked: boolean = false;
@@ -27,10 +28,6 @@ export class BoosterAccelerationAutomator extends Automator {
   }
 
   task(): Num {
-    return UpgradeRecord.redGeneratorBooster.bought || new Num(1, 0);
-  }
-
-  override taskString(): string {
-    return this.task().toString(2);
+    return StatsService.getNum(UpgradeRecord.redGeneratorBooster.name, 'totalBought') || new Num(1, 0);
   }
 }

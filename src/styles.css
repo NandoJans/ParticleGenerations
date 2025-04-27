@@ -12,6 +12,7 @@
 
   /* Text colors */
   --text-color-main: rgb(226, 226, 226);
+  --text-color-light: rgb(155, 155, 155);
   --text-color-darkened: rgb(95, 95, 95);
   --text-color-red: rgb(224, 67, 67);
 }

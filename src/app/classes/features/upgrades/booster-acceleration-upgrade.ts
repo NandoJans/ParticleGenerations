@@ -7,21 +7,24 @@ import {HoldingRecord} from "../../records/holdings/holding-record";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {Styles} from "../../enums/styles";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
+import {Transaction} from "../interfaces/transaction";
+import {StatsService} from "../../../services/stats.service";
 
 export class BoosterAccelerationUpgrade extends Upgrade {
   baseCost: Num = new Num(1, 5);
   bought: Num = new Num(0, 0);
   cost: Num = new Num(1, 5);
+  increase: Num = new Num(1, 1);
+  override scaling = new Num(2, 1);
+  override scalingStart: Num = new Num(1, 10);
 
   override buffer: Num = new Num(0.025, 0);
   override baseBuffer: Num = new Num(0.025, 0);
 
   freeBuys: Num = new Num(1, 1);
   baseFreeBuys: Num = new Num(1, 1);
-
   currency: Holding = HoldingRecord.redAccelerators;
   displayName: string = "Booster Acceleration";
-  increase: Num = new Num(1, 1);
   name: string = "booster-acceleration-upgrade";
   nav: string = "red";
   requirement: Requirement[] = [
@@ -55,5 +58,11 @@ export class BoosterAccelerationUpgrade extends Upgrade {
 
   override effectString(): string {
     return this.effect ? this.effect.toString(2) + ' and ' + this.totalFreeBuys.toString() + ' free buys' : '';
+  }
+
+  override buy(amount: Num = new Num(1, 0)): Transaction {
+    const transaction = super.buy(amount);
+    StatsService.addNum(UpgradeRecord.redGeneratorBooster.name, 'totalBought', this.freeBuys);
+    return transaction;
   }
 }

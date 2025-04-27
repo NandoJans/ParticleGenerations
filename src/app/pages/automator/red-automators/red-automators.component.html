@@ -1,5 +1,18 @@
+<h2>Red Generators Automators</h2>
 <div class="upgrade-row">
-    <div *ngFor="let automator of automators">
+    <div *ngFor="let automator of redGeneratorAutomators">
       <app-automator *ngIf="automator.unlocked" [automator]="automator"></app-automator>
     </div>
+</div>
+<h2>Red Upgrade Automators</h2>
+<div class="upgrade-row">
+  <div *ngFor="let automator of redUpgradeAutomators">
+    <app-automator *ngIf="automator.unlocked" [automator]="automator"></app-automator>
+  </div>
+</div>
+<h2>Red Accelerators Automators</h2>
+<div class="upgrade-row">
+  <div *ngFor="let automator of redAcceleratorAutomators">
+    <app-automator *ngIf="automator.unlocked" [automator]="automator"></app-automator>
+  </div>
 </div>

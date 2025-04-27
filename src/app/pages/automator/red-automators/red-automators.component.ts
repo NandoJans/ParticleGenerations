@@ -8,14 +8,20 @@ import {AutomatorRecord} from "../../../classes/records/automators/automator-rec
   styleUrls: ['./red-automators.component.css']
 })
 export class RedAutomatorsComponent implements OnInit {
-  automators: Automator[] = [
+  redGeneratorAutomators: Automator[] = [
     AutomatorRecord.firstRedGenerator,
     AutomatorRecord.secondRedGenerator,
     AutomatorRecord.thirdRedGenerator,
     AutomatorRecord.fourthRedGenerator,
     AutomatorRecord.fifthRedGenerator,
+  ];
+  redUpgradeAutomators: Automator[] = [
+    AutomatorRecord.redGeneratorExtension,
     AutomatorRecord.redGeneratorBooster,
+  ];
+  redAcceleratorAutomators: Automator[] = [
     AutomatorRecord.multiplyRedAccelerationGeneration,
+    AutomatorRecord.multiplyRedAcceleratorEffect,
     AutomatorRecord.improveRedAcceleratorsEffect,
     AutomatorRecord.improveRedParticlesToAccelerators,
     AutomatorRecord.boosterAcceleration,

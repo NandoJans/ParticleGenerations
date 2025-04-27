@@ -8,6 +8,10 @@ import {MultiplyRedAccelerationGenerationAutomator} from "../../features/automat
 import {ImproveRedAcceleratorsEffectAutomator} from "../../features/automators/improve-red-accelerators-effect-automator";
 import {ImproveRedParticlesToAcceleratorsAutomator} from "../../features/automators/improve-red-particles-to-accelerators-automator";
 import {BoosterAccelerationAutomator} from "../../features/automators/booster-acceleration-automator";
+import {RedGeneratorExtensionAutomator} from "../../features/automators/red-generator-extension-automator";
+import {
+  MultiplyRedAcceleratorEffectAutomator
+} from "../../features/automators/multiply-red-accelerator-effect-automator";
 
 @Injectable({
   providedIn: 'root'
@@ -20,10 +24,12 @@ export class AutomatorRecord extends Record {
   static fourthRedGenerator: RedGeneratorAutomator = new RedGeneratorAutomator(GeneratorRecord.fourthRedGenerator);
   static fifthRedGenerator: RedGeneratorAutomator = new RedGeneratorAutomator(GeneratorRecord.fifthRedGenerator);
 
+  static redGeneratorExtension: RedGeneratorExtensionAutomator = new RedGeneratorExtensionAutomator();
   static redGeneratorBooster: RedGeneratorBoosterAutomator = new RedGeneratorBoosterAutomator();
 
   // Red Accelerator Phase
   static multiplyRedAccelerationGeneration: MultiplyRedAccelerationGenerationAutomator = new MultiplyRedAccelerationGenerationAutomator();
+  static multiplyRedAcceleratorEffect: MultiplyRedAcceleratorEffectAutomator = new MultiplyRedAcceleratorEffectAutomator();
   static improveRedAcceleratorsEffect: ImproveRedAcceleratorsEffectAutomator = new ImproveRedAcceleratorsEffectAutomator();
   static improveRedParticlesToAccelerators: ImproveRedParticlesToAcceleratorsAutomator = new ImproveRedParticlesToAcceleratorsAutomator();
   static boosterAcceleration: BoosterAccelerationAutomator = new BoosterAccelerationAutomator();
@@ -34,8 +40,12 @@ export class AutomatorRecord extends Record {
     AutomatorRecord.thirdRedGenerator,
     AutomatorRecord.fourthRedGenerator,
     AutomatorRecord.fifthRedGenerator,
+
+    AutomatorRecord.redGeneratorExtension,
     AutomatorRecord.redGeneratorBooster,
+
     AutomatorRecord.multiplyRedAccelerationGeneration,
+    AutomatorRecord.multiplyRedAcceleratorEffect,
     AutomatorRecord.improveRedAcceleratorsEffect,
     AutomatorRecord.improveRedParticlesToAccelerators,
     AutomatorRecord.boosterAcceleration,
