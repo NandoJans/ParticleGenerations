@@ -24,6 +24,7 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
   override resets: ResetKey = ResetKey.RED_EXTENSION;
   override unlocked: boolean = true;
   override startUnlocked: boolean = true;
+  override calculationOrder = 1001;
 
   action(): Num {
     const generators = [
@@ -38,6 +39,7 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
       if (this.amount.greq(compare)) {
         const buff: Num = this.buffer.pow(this.amount.sub(compare));
         generator.multiplier = generator.multiplier.mul(buff);
+        console.log(generator.multiplier.toString(2));
       }
     });
     return this.buffer.pow(this.amount);
