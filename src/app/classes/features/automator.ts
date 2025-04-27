@@ -19,6 +19,9 @@ export abstract class Automator extends GameElement implements Storable, Resetab
     this.buyables().forEach(buyable => {
       buyable.auto = false;
     })
+    this.requirement.forEach(requirement => {
+      requirement.register();
+    })
   }
 
   softReset(): void {}

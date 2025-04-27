@@ -53,6 +53,10 @@ export abstract class Upgrade extends Buyable implements Storable, Require, Rese
   reset() {
     this.amount = new Num(0, 0);
     this.bought = new Num(0, 0);
+    this.unlocked = this.startUnlocked;
+    this.requirement.forEach(requirement => {
+      requirement.register();
+    })
   }
 
   softReset() {}

@@ -14,7 +14,7 @@ export class Requirement {
     this.unlocked = unlocked;
     this.amount = amount;
     this.gameElement = gameElement;
-    Requirement.requirements[gameElement.name] = this;
+    this.register(gameElement);
   }
 
   requirementMet(): boolean {
@@ -38,5 +38,9 @@ export class Requirement {
     });
 
     return messages;
+  }
+
+  register(gameElement: GameElement = this.gameElement) {
+    Requirement.requirements[gameElement.name] = this;
   }
 }

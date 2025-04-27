@@ -83,6 +83,9 @@ export abstract class Generator extends Buyable implements Generatable, Storable
     this.bought = new Num(0, 0)
     this.amount = new Num(0, 0)
     this.unlocked = this.startUnlocked
+    this.requirement.forEach(requirement => {
+      requirement.register();
+    })
   }
 
   override buy(amount: Num = new Num(1, 0)): Transaction {
