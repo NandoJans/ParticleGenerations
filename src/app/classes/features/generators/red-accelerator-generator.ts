@@ -29,7 +29,7 @@ export class RedAcceleratorGenerator extends Generator {
   style: Styles = Styles.RED;
   subNav: string = 'none';
   type: string = 'generator';
-  logEffect: Num = new Num(1, 1);
+  powEffect: Num = new Num(1, 0);
   redParticleEffect: Num = new Num(1, -2);
 
   protected override getGenerateAmount(): Num {
@@ -37,9 +37,12 @@ export class RedAcceleratorGenerator extends Generator {
 
     const log = HoldingRecord.redParticles.amount
       .sub(new Num(1, 75))
-      .log(this.logEffect);
+      .log(10)
+      .pow(this.powEffect);
     generate = generate.mul(log)
     generate = generate.mul(new Num(1, -2));
+
+    this.powEffect = new Num(1, 0);
 
     if (generate.greq(new Num(1, 0))) {
       this.redParticleEffect = generate.copy();

@@ -23,4 +23,6 @@ export class MultiplyRedAcceleratorEffectUpgrade extends RedAcceleratorUpgrade {
   getDescription(): string {
     return "Multiply red accelerator effect by " + this.buffer.toString(2) + "x.";
   }
+
+
 }
