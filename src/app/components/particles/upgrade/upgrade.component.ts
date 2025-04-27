@@ -18,7 +18,7 @@ export class UpgradeComponent {
     private componentService: ComponentService
   ) {
     this.sub = this.componentService.reload$.subscribe(() => {
-      this.cd.detectChanges();
+      this.cd.markForCheck();
     });
   }
 

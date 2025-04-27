@@ -30,4 +30,10 @@ export class DropDownMessageService {
   getMessage() {
     return this.messageQueue.length > 0 ? this.messageQueue[0] : null;
   }
+
+  addAllDropDowns(dropDownMessages: { title: string; message: string }[]) {
+    dropDownMessages.forEach((dropDownMessage) => {
+      this.dropDown(dropDownMessage.title, dropDownMessage.message);
+    });
+  }
 }

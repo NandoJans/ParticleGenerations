@@ -20,7 +20,7 @@ export class BoosterAccelerationUpgrade extends Upgrade {
   baseFreeBuys: Num = new Num(1, 1);
 
   currency: Holding = HoldingRecord.redAccelerators;
-  displayName: string = "Booster Acceleration Upgrade";
+  displayName: string = "Booster Acceleration";
   increase: Num = new Num(1, 5);
   name: string = "booster-acceleration-upgrade";
   nav: string = "red";
@@ -48,12 +48,12 @@ export class BoosterAccelerationUpgrade extends Upgrade {
   }
 
   getDescription(): string {
-    return "Increase the power of red generator boosters by " + this.buffer.toString(true) +
-      " and give " + this.freeBuys.toString(true) +
+    return "Increase the power of red generator boosters by " + this.buffer.toString(2) +
+      " and give " + this.freeBuys.toString(2) +
       " free buys. Resets all red particles and red accelerators.";
   }
 
   override effectString(): string {
-    return this.effect ? this.effect.toString(true) + ' and ' + this.totalFreeBuys.toString() + ' free buys' : '';
+    return this.effect ? this.effect.toString(2) + ' and ' + this.totalFreeBuys.toString() + ' free buys' : '';
   }
 }

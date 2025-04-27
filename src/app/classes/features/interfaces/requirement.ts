@@ -7,30 +7,36 @@ export class Requirement {
   amount: Num;
   unlocked: boolean;
   gameElement: GameElement;
-  static requirements: Requirement[] = [];
+  static requirements: {[key: string]: Requirement} = {};
 
   constructor(requirement: Require, amount: Num, gameElement: GameElement, unlocked: boolean = false) {
     this.requirement = requirement;
     this.unlocked = unlocked;
     this.amount = amount;
     this.gameElement = gameElement;
-    Requirement.requirements.push(this);
+    Requirement.requirements[gameElement.name] = this;
   }
 
   requirementMet(): boolean {
     return this.requirement.requirementSatisfied(this.amount);
   }
 
-  static checkRequirements(): void|{title: string, message: string} {
-    Requirement.requirements = Requirement.requirements.filter((requirement) => {
+  static checkRequirements(): {title: string, message: string}[] {
+    const messages: {title: string, message: string}[] = [];
+
+    Object.entries(Requirement.requirements).forEach(([key, requirement]) => {
       if (requirement.requirementMet()) {
+        if (requirement.gameElement.unlocked) {
+          return;
+        }
         const message = requirement.gameElement.unlock();
         if (message) {
-          return message;
+          messages.push(message);
         }
-        return false;
+        delete Requirement.requirements[key];
       }
-      return true;
     });
+
+    return messages;
   }
 }

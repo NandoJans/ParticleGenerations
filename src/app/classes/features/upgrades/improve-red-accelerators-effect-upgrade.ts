@@ -9,7 +9,9 @@ export class ImproveRedAcceleratorsEffectUpgrade extends RedAcceleratorUpgrade {
   increase: Num = new Num(1, 5);
   override buffer: Num = new Num(0.9, 0);
   override baseBuffer: Num = new Num(0.9, 0);
-  name: string = "improve-red-accelerator-effect";
+  constructor() {
+    super("improve-red-accelerator-effect");
+  }
 
   action(): Num | undefined {
     const effect: Num = this.buffer.pow(this.amount, false);
@@ -18,10 +20,10 @@ export class ImproveRedAcceleratorsEffectUpgrade extends RedAcceleratorUpgrade {
   }
 
   getDescription(): string {
-    const holdingEffect: string = HoldingRecord.redAccelerators.logEffect.toString(true);
+    const holdingEffect: string = HoldingRecord.redAccelerators.logEffect.toString(2);
     const nextEffect: string = HoldingRecord.redAccelerators.logEffect
       .mul(this.buffer, false)
-      .toString(true);
+      .toString(2);
     return "Log"+holdingEffect+"(RA) → Log"+nextEffect+"(RA).";
   }
 }

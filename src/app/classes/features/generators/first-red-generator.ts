@@ -19,6 +19,7 @@ export class FirstRedGenerator extends RedGenerator {
   stringRank: string = 'First';
   rank: number = 1;
   override unlocked: boolean = true;
+  override startUnlocked: boolean = true;
 
   multiplierUpgrade: RedGeneratorMultiplierUpgrade = new RedGeneratorMultiplierUpgrade(
     new Num(1, 2),

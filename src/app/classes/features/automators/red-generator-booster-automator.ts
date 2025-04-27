@@ -5,6 +5,8 @@ import {Styles} from "../../enums/styles";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {Requirement} from "../interfaces/requirement";
 import {HoldingRecord} from "../../records/holdings/holding-record";
+import {ResetKey} from "../../enums/reset-key";
+import {ResetHelper} from "../../helpers/reset-helper";
 
 export class RedGeneratorBoosterAutomator extends Automator {
   displayName: string = 'Red Generator Booster Automator';
@@ -16,6 +18,7 @@ export class RedGeneratorBoosterAutomator extends Automator {
   override requirement: Requirement[] = [
     new Requirement(HoldingRecord.redParticles, new Num(1, 1), this),
   ];
+  resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED, this);
 
   buyables(): Buyable[] {
     return [

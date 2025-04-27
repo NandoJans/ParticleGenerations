@@ -9,7 +9,9 @@ export class MultiplyRedAcceletorGenerationUpgrade extends RedAcceleratorUpgrade
   increase: Num = new Num(1, 10);
   override buffer: Num = new Num(2, 0);
   override baseBuffer: Num = new Num(2, 0);
-  name: string = "multiple-red-accelerator-generation";
+  constructor() {
+    super("multiple-red-accelerator-generation");
+  }
 
   action(): Num | undefined {
     const effect: Num = this.buffer.pow(this.amount, false);
@@ -18,6 +20,6 @@ export class MultiplyRedAcceletorGenerationUpgrade extends RedAcceleratorUpgrade
   }
 
   getDescription(): string {
-    return "Multiply RA generation by " + this.buffer.toString(true) + "x";
+    return "Multiply RA generation by " + this.buffer.toString(2) + "x";
   }
 }

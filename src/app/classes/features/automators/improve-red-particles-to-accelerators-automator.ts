@@ -5,6 +5,8 @@ import {Buyable} from "../buyable";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {Styles} from "../../enums/styles";
 import {HoldingRecord} from "../../records/holdings/holding-record";
+import {ResetKey} from "../../enums/reset-key";
+import {ResetHelper} from "../../helpers/reset-helper";
 
 export class ImproveRedParticlesToAcceleratorsAutomator extends Automator {
   displayName: string = 'Better Particle Effect Automator';
@@ -16,6 +18,7 @@ export class ImproveRedParticlesToAcceleratorsAutomator extends Automator {
   override requirement: Requirement[] = [
     new Requirement(HoldingRecord.redParticles, new Num(1, 75), this)
   ];
+  resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED, this);
 
   buyables(): Buyable[] {
     return [

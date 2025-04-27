@@ -1,5 +1,6 @@
 import {ResetKey} from "../enums/reset-key";
 import {Resetable} from "../features/interfaces/resetable";
+import {Storable} from "../features/interfaces/storable";
 
 export class ResetHelper {
 
@@ -33,11 +34,19 @@ export class ResetHelper {
     return resetKey;
   }
 
+  private static isStorable(object: any): object is Storable {
+    return object && typeof object.getSaveKey === 'function' && typeof object.getSaveCategory === 'function';
+  }
+
   static reset(resetKey: ResetKey): void {
     for (let resetOrderKey of this.resetOrder) {
       console.log('resetting', resetOrderKey);
       Object.values(this.resetList[resetOrderKey]).forEach(resetable => {
         resetable.reset();
+
+        if (this.isStorable(resetable)) {
+          resetable.save();
+        }
       });
       if (resetOrderKey === resetKey) {
         break;
@@ -49,6 +58,10 @@ export class ResetHelper {
     for (let resetOrderKey of this.resetOrder) {
       Object.values(this.softResetList[resetOrderKey]).forEach(resetable => {
         resetable.softReset();
+
+        if (this.isStorable(resetable)) {
+          resetable.save();
+        }
       });
       if (resetOrderKey === resetKey) {
         break;

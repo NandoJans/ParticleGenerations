@@ -5,6 +5,9 @@ import {Styles} from "../../enums/styles";
 import {Requirement} from "../interfaces/requirement";
 import {StatsService} from "../../../services/stats.service";
 import {RedGenerator} from "../generators/red-generator";
+import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
+import {ResetKey} from "../../enums/reset-key";
+import {ResetHelper} from "../../helpers/reset-helper";
 
 export class RedGeneratorAutomator extends Automator {
   displayName: string;
@@ -13,6 +16,7 @@ export class RedGeneratorAutomator extends Automator {
   goalString: string;
   generator: RedGenerator;
   style: Styles = Styles.RED_AUTOMATOR;
+  resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED, this);
 
   constructor(generator: RedGenerator) {
     super();
@@ -20,7 +24,7 @@ export class RedGeneratorAutomator extends Automator {
     this.name = 'red-generator-automator-' + generator.rank;
     this.goalString = 'Buy ' + this.goal.toString() + ' ' + generator.stringRank + ' Red Generators';
     this.requirement = [
-      new Requirement(generator, new Num(1, 0), this)
+      new Requirement(UpgradeRecord.redGeneratorExtension, new Num(generator.rank - 1, 0), this)
     ]
     this.generator = generator
   }

@@ -55,10 +55,10 @@ export class AutomatorComponent implements OnInit {
   }
 
   getProgressString(): string {
-    const progress = this.automator.task();
+    const progress = this.automator.taskString();
     const goal = this.automator.goal;
 
-    return `${progress.toString()} / ${goal.toString()}`;
+    return `${progress} / ${goal.toString()}`;
   }
 
   getChecked(): boolean {

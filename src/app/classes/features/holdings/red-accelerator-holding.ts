@@ -17,7 +17,7 @@ export class RedAcceleratorHolding extends Holding {
     .withEffectPrefix('They multiply red particle generators by')
     .addLine(
       'Red Particles multiply their generation by',
-      () => GeneratorRecord.redAcceleratorGenerator.redParticleEffect.toString(true) + 'x',
+      () => GeneratorRecord.redAcceleratorGenerator.redParticleEffect.toString(2) + 'x',
       ''
     ).build();
   name: string = "Red Accelerator";
@@ -37,7 +37,7 @@ export class RedAcceleratorHolding extends Holding {
   }
 
   override effectString(effect: Num): string {
-    return effect.toString(true) + 'x';
+    return effect.toString(2) + 'x';
   }
 
 }

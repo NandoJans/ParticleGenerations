@@ -18,6 +18,7 @@ export abstract class Holding implements Generatable, Require, Resetable {
   protected maxGainSpeed: Num = new Num(1, 0);
   abstract resetId: ResetKey;
   softResetId: ResetKey = ResetKey.NONE;
+  calculationOrder: number = 300;
 
   abstract getStyle(): Styles;
 

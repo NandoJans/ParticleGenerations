@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {UpgradeRecord} from "../../classes/records/upgrades/upgrade-record";
 import {GeneratorRecord} from "../../classes/records/generators/generator-record";
+import {Generator} from "../../classes/features/generator";
+import {Upgrade} from "../../classes/features/upgrade";
 @Injectable({
   providedIn: 'root'
 })
@@ -31,5 +33,9 @@ export class UpgradeService {
         });
       }
     });
+  }
+
+  getElements(): Upgrade[] {
+    return this.upgradeRecord.getList();
   }
 }

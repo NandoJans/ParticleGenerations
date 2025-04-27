@@ -1,6 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Num} from "../../num";
 import {GeneratorRecord} from "../../classes/records/generators/generator-record";
+import {Generator} from "../../classes/features/generator";
+import {Multiplier} from "../../classes/features/multiplier";
+import {Upgrade} from "../../classes/features/upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +31,12 @@ export class GeneratorService {
         generator.run(speed);
       }
     });
+  }
+
+  getElements(): (Generator|Upgrade)[] {
+    return [
+      ...this.generatorRecord.getList(),
+      ...this.generatorRecord.getList().flatMap(generator => generator.getUpgrades()),
+    ];
   }
 }

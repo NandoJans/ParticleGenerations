@@ -10,6 +10,9 @@ import {LocalStorageHelper} from "../classes/helpers/local-storage-helper";
 import {AutomatorService} from "./interactables/automator.service";
 import {HoldingService} from "./holding.service";
 import {DropDownMessageService} from "./visuals/drop-down-message.service";
+import {GameElement} from "../classes/features/game-element";
+import {Holding} from "../classes/features/holding";
+import {Multiplier} from "../classes/features/multiplier";
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +32,7 @@ export class TickService {
     private automatorService: AutomatorService,
     private holdingService: HoldingService,
     private dropDownMessageService: DropDownMessageService
-  ) { }
+  ) {}
 
   /**
    * Game tick function for running the game logic. The game tick is called every 50ms.
@@ -38,19 +41,26 @@ export class TickService {
   gameTick(speed: Num = new Num(1, -1)) {
     this.checkRequirements();
 
-    this.generatorService.tick(speed);
-    this.multiplierService.tick();
-    this.upgradeService.tick();
-    this.holdingService.tick();
-    this.automatorService.tick();
+    this.calculationOrder.forEach((elements) => {
+      elements.forEach((element) => {
+        if (element instanceof Holding) {
+          element.run();
+        } else if (element instanceof Multiplier) {
+          element.reset();
+        } else {
+          if (element.isUnlocked()) {
+            element.run(speed);
+          }
+        }
+      });
+    });
+
     this.componentService.reloadComponents();
   }
 
   private checkRequirements() {
-    const dropDownMessage = Requirement.checkRequirements();
-    if (dropDownMessage) {
-      this.dropDownMessageService.dropDown(dropDownMessage.title, dropDownMessage.message);
-    }
+    const dropDownMessages: {title: string, message: string}[] = Requirement.checkRequirements();
+    this.dropDownMessageService.addAllDropDowns(dropDownMessages);
   }
 
   iterations: number = 0;
@@ -61,6 +71,11 @@ export class TickService {
   }
 
   private setIntervals() {
+    if (this.calculationOrder.length == 0) {
+      this.applyCalculationOrder();
+      console.log(this.calculationOrder);
+    }
+
     this.mainInterval = setInterval(() => {
       this.iterations++;
       this.gameTick()
@@ -80,5 +95,37 @@ export class TickService {
     clearInterval(this.mainInterval);
     clearInterval(this.saveInterval);
     clearInterval(this.iterationsInterval);
+  }
+
+  calculationOrder: (GameElement|Holding|Multiplier)[][] = []
+
+  private applyCalculationOrder() {
+    const services = [
+      this.multiplierService,
+      this.upgradeService,
+      this.automatorService,
+      this.holdingService,
+      this.generatorService
+    ];
+
+    services.forEach(service => {
+      service.getElements().forEach(element => {
+        this.pushToCalculationOrder(element);
+      });
+    });
+  }
+
+  private pushToCalculationOrder(element: GameElement|Holding|Multiplier) {
+    if (element.calculationOrder == undefined) {
+      if (this.calculationOrder[4] == undefined) {
+        this.calculationOrder[4] = []
+      }
+      this.calculationOrder[4].push(element)
+    } else {
+      if (this.calculationOrder[element.calculationOrder] == undefined) {
+        this.calculationOrder[element.calculationOrder] = []
+      }
+      this.calculationOrder[element.calculationOrder].push(element)
+    }
   }
 }
