@@ -10,6 +10,7 @@ import {
   ImproveRedParticlesToAcceleratorsUpgrade
 } from "../../features/upgrades/improve-red-particles-to-accelerators-upgrade";
 import {BoosterAccelerationUpgrade} from "../../features/upgrades/booster-acceleration-upgrade";
+import {MultiplyRedAcceleratorEffectUpgrade} from "../../features/upgrades/multiply-red-accelerator-effect-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class UpgradeRecord extends Record {
   // Red Accelerators
   static unlockRedAccelerators: UnlockRedAcceleratorsUpgrade = new UnlockRedAcceleratorsUpgrade()
   static multiplyRedAcceleratorGeneration: MultiplyRedAcceletorGenerationUpgrade = new MultiplyRedAcceletorGenerationUpgrade();
+  static multiplyRedAcceleratorEffectUpgrade: MultiplyRedAcceleratorEffectUpgrade = new MultiplyRedAcceleratorEffectUpgrade();
   static improveRedAcceleratorsEffect: ImproveRedAcceleratorsEffectUpgrade = new ImproveRedAcceleratorsEffectUpgrade();
   static improveRedParticlesToAcceleratorsUpgrade: ImproveRedParticlesToAcceleratorsUpgrade = new ImproveRedParticlesToAcceleratorsUpgrade();
   static boosterAccelerationUpgrade: BoosterAccelerationUpgrade = new BoosterAccelerationUpgrade();
@@ -33,6 +35,7 @@ export class UpgradeRecord extends Record {
 
     UpgradeRecord.unlockRedAccelerators,
     UpgradeRecord.multiplyRedAcceleratorGeneration,
+    UpgradeRecord.multiplyRedAcceleratorEffectUpgrade,
     UpgradeRecord.improveRedAcceleratorsEffect,
     UpgradeRecord.improveRedParticlesToAcceleratorsUpgrade,
     UpgradeRecord.boosterAccelerationUpgrade,

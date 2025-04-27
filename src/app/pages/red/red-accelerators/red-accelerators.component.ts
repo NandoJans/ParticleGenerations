@@ -14,6 +14,7 @@ export class RedAcceleratorsComponent implements OnInit {
   boosterAccelerationUpgrade: Upgrade = UpgradeRecord.boosterAccelerationUpgrade;
   upgrades: Upgrade[] = [
     UpgradeRecord.multiplyRedAcceleratorGeneration,
+    UpgradeRecord.multiplyRedAcceleratorEffectUpgrade,
     UpgradeRecord.improveRedAcceleratorsEffect,
     UpgradeRecord.improveRedParticlesToAcceleratorsUpgrade
   ];

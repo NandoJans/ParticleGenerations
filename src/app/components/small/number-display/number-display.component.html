@@ -5,13 +5,13 @@
     <p>{{ holdingDisplay.getAmountSuffix() }}</p>
   </span>
   <span *ngIf="hasHoldingEffect()">
-    <p>{{ holdingDisplay.getEffectPrefix() }}</p>
+    {{ holdingDisplay.getEffectPrefix() }}
     <p [class]="'effect ' + holding.getStyle()">{{ getHoldingEffect() }}</p>
-    <p>{{ holdingDisplay.getEffectSuffix() }}</p>
+    {{ holdingDisplay.getEffectSuffix() }}
   </span>
   <span *ngFor="let line of getLines()">
-    <p>{{ line.prefix }}</p>
-    <p>{{ line.valueFunction() }}</p>
-    <p>{{ line.suffix }}</p>
+    {{ line.prefix }}
+    <p [class]="'effect ' + holding.getStyle()">{{ line.valueFunction() }}</p>
+    {{ line.suffix }}
   </span>
 </div>

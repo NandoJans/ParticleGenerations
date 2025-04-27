@@ -10,7 +10,7 @@ import {ResetHelper} from "../../helpers/reset-helper";
 
 export class BoosterAccelerationAutomator extends Automator {
   displayName: string = 'Booster Acceleration Automator';
-  goal: Num = new Num(1, 20);
+  goal: Num = new Num(1, 5);
   goalString: string = 'Have a total of 1.000 red generator booster buys';
   name: string = 'booster-acceleration-automator';
   style: Styles = Styles.RED_AUTOMATOR;

@@ -21,7 +21,7 @@ export class BoosterAccelerationUpgrade extends Upgrade {
 
   currency: Holding = HoldingRecord.redAccelerators;
   displayName: string = "Booster Acceleration";
-  increase: Num = new Num(1, 5);
+  increase: Num = new Num(1, 1);
   name: string = "booster-acceleration-upgrade";
   nav: string = "red";
   requirement: Requirement[] = [

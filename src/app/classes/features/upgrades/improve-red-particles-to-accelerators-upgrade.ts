@@ -7,8 +7,8 @@ export class ImproveRedParticlesToAcceleratorsUpgrade extends RedAcceleratorUpgr
   cost: Num = new Num(1, 100);
   displayName: string = "Better Particle Effect";
   increase: Num = new Num(1, 15);
-  override buffer: Num = new Num(0.95, 0);
-  override baseBuffer: Num = new Num(0.95, 0);
+  override buffer: Num = new Num(0.9, 0);
+  override baseBuffer: Num = new Num(0.9, 0);
   constructor() {
     super("improve-red-particles-to-accelerators-effect");
   }
@@ -20,10 +20,14 @@ export class ImproveRedParticlesToAcceleratorsUpgrade extends RedAcceleratorUpgr
   }
 
   getDescription(): string {
-    const holdingEffect: string = GeneratorRecord.redAcceleratorGenerator.logEffect.toString(2);
+    const holdingEffect: string = GeneratorRecord.redAcceleratorGenerator.logEffect.toString(3);
     const nextEffect: string = GeneratorRecord.redAcceleratorGenerator.logEffect
       .mul(this.buffer, false)
-      .toString(2);
+      .toString(3);
     return "Log"+holdingEffect+"(RP) → Log"+nextEffect+"(RP).";
+  }
+
+  override effectString(): string {
+    return "";
   }
 }

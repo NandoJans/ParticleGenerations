@@ -20,10 +20,14 @@ export class ImproveRedAcceleratorsEffectUpgrade extends RedAcceleratorUpgrade {
   }
 
   getDescription(): string {
-    const holdingEffect: string = HoldingRecord.redAccelerators.logEffect.toString(2);
+    const holdingEffect: string = HoldingRecord.redAccelerators.logEffect.toString(3);
     const nextEffect: string = HoldingRecord.redAccelerators.logEffect
       .mul(this.buffer, false)
-      .toString(2);
+      .toString(3);
     return "Log"+holdingEffect+"(RA) → Log"+nextEffect+"(RA).";
+  }
+
+  override effectString(): string {
+    return "";
   }
 }

@@ -7,6 +7,7 @@ import {Styles} from "../../enums/styles";
 import {HoldingRecord} from "../../records/holdings/holding-record";
 import {ResetKey} from "../../enums/reset-key";
 import {ResetHelper} from "../../helpers/reset-helper";
+import {GeneratorRecord} from "../../records/generators/generator-record";
 
 export class ImproveRedParticlesToAcceleratorsAutomator extends Automator {
   displayName: string = 'Better Particle Effect Automator';
@@ -27,6 +28,6 @@ export class ImproveRedParticlesToAcceleratorsAutomator extends Automator {
   }
 
   task(): Num {
-    return UpgradeRecord.improveRedParticlesToAcceleratorsUpgrade.effect || new Num(1, 0);
+    return GeneratorRecord.redAcceleratorGenerator.redParticleEffect || new Num(1, 0);
   }
 }

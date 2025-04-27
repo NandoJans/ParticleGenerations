@@ -5,7 +5,6 @@ import {Requirement} from "../interfaces/requirement";
 import {Buyable} from "../buyable";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {HoldingRecord} from "../../records/holdings/holding-record";
-import {GeneratorRecord} from "../../records/generators/generator-record";
 import {ResetKey} from "../../enums/reset-key";
 import {ResetHelper} from "../../helpers/reset-helper";
 
@@ -28,6 +27,6 @@ export class ImproveRedAcceleratorsEffectAutomator extends Automator {
   }
 
   task(): Num {
-    return GeneratorRecord.redAcceleratorGenerator.redParticleEffect || new Num(1, 0);
+    return HoldingRecord.redAccelerators.effect || new Num(1, 0);
   }
 }
