@@ -6,8 +6,6 @@ import {Router} from "@angular/router";
 import {ChallengeService} from "./services/interactables/challenge.service";
 import {LocalStorageHelper} from "./classes/helpers/local-storage-helper";
 import {OfflineService} from "./services/offline.service";
-import {HoldingRecord} from "./classes/records/holdings/holding-record";
-import {Num} from "./num";
 
 @Component({
   selector: 'app-root',
@@ -56,9 +54,6 @@ export class AppComponent implements OnInit{
     this.offlineService.load();
     this.dataManagerService.save();
     this.localStorageHelper.save("V0.1");
-
-    HoldingRecord.redParticles.add(new Num(1, 101))
-    HoldingRecord.redAccelerators.add(new Num(1, 16))
 
     if (!this.isTicking) {
       this.tick.startIntervals();
