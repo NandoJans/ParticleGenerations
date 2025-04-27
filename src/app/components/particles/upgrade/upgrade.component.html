@@ -1,6 +1,6 @@
 <button
   [id]="'buyable-'+upgrade.name"
-  [class]="'generator '+upgrade.style+' '+((getIsBuyable()) ? 'buyable' : '')"
+  [class]="'generator '+upgrade.style+' '+((getIsBuyable()) ? 'buyable' : '')+' '+((getIsMaxed()) ? 'maxed' : '')"
   (click)="buy()"
 >
   <h4 *ngIf="getDisplayName() !== ''">{{ getDisplayName() }}</h4>

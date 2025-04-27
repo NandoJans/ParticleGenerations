@@ -55,4 +55,8 @@ export class UpgradeComponent {
   getEffect() {
     return this.upgrade.effectString();
   }
+
+  getIsMaxed(): boolean {
+    return this.upgrade.isMaxed();
+  }
 }

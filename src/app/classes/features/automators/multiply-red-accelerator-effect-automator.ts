@@ -22,7 +22,7 @@ export class MultiplyRedAcceleratorEffectAutomator extends Automator {
 
   buyables(): Buyable[] {
     return [
-      UpgradeRecord.improveRedAcceleratorsEffect
+      UpgradeRecord.multiplyRedAcceleratorEffectUpgrade
     ];
   }
 

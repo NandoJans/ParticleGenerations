@@ -34,21 +34,21 @@ export abstract class Generator extends Buyable implements Generatable, Storable
   localStorageHelper: LocalStorageHelper = new LocalStorageHelper('generators', this.getSaveKey())
 
   protected getGenerateAmount(): Num {
-    return this.amount.mul(this.multiplier, false) as Num
+    return this.amount.mul(this.multiplier) as Num
   }
 
   override run(speed: Num): any {
-    this.generates.generate(this.getGenerateAmount().mul(speed, false) as Num)
+    this.generates.generate(this.getGenerateAmount().mul(speed) as Num)
     this.multiplier = this.baseMultiplier
-      .mul(this.baseMulMod, false)
-      .pow(this.bought, false)
-      .mul(this.globalMultiplier.getNum(), false) as Num
+      .mul(this.baseMulMod)
+      .pow(this.bought)
+      .mul(this.globalMultiplier.getNum()) as Num
     this.baseMulMod = new Num(1, 0)
     this.correctCost();
   }
 
   generate(amount: Num): any {
-    this.amount.add(amount)
+    this.amount = this.amount.add(amount)
   }
 
   getSaveCategory(): string {

@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 import {ChallengeService} from "./services/interactables/challenge.service";
 import {LocalStorageHelper} from "./classes/helpers/local-storage-helper";
 import {OfflineService} from "./services/offline.service";
+import {MigrateNumAndExpValues} from "./migrations/migrate-num-and-exp-values";
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ import {OfflineService} from "./services/offline.service";
 export class AppComponent implements OnInit{
   title = 'ParticleGenerations';
   localStorageHelper: LocalStorageHelper = new LocalStorageHelper('app', 'app');
+  VERSION = '0.2';
 
   constructor(
     private tick: TickService,
@@ -33,7 +35,7 @@ export class AppComponent implements OnInit{
     })
 
     window.onfocus = () => {
-      this.localStorageHelper.save("V0.1");
+      this.localStorageHelper.save(this.VERSION);
       this.dataManagerService.load();
       this.offlineService.load();
       this.dataManagerService.save();
@@ -42,7 +44,7 @@ export class AppComponent implements OnInit{
 
     window.onblur = () => {
       this.tick.clearIntervals();
-      this.localStorageHelper.save("V0.1");
+      this.localStorageHelper.save(this.VERSION);
       this.dataManagerService.save();
     }
   }
@@ -50,14 +52,27 @@ export class AppComponent implements OnInit{
   isTicking = false;
 
   ngOnInit(): void {
+    this.updateVersion();
     this.dataManagerService.load();
     this.offlineService.load();
     this.dataManagerService.save();
-    this.localStorageHelper.save("V0.1");
+    this.localStorageHelper.save(this.VERSION);
 
     if (!this.isTicking) {
       this.tick.startIntervals();
       this.isTicking = true;
+    }
+  }
+
+  private updateVersion() {
+    const version = this.localStorageHelper.load('');
+    if (version !== this.VERSION) {
+      const migrations = [
+        new MigrateNumAndExpValues(),
+      ];
+      for (const migration of migrations) {
+        migration.up();
+      }
     }
   }
 

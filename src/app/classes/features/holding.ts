@@ -110,7 +110,7 @@ export abstract class Holding implements Generatable, Require, Resetable {
   }
 
   generate(amount: Num): any {
-    this.amount.add(amount)
+    this.amount = this.amount.add(amount)
   }
 
   requirementSatisfied(amount: Num): boolean {

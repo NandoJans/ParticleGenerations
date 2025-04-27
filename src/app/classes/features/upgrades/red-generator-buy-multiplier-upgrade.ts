@@ -28,8 +28,8 @@ export class RedGeneratorBuyMultiplierUpgrade extends RedGeneratorUpgrade {
 
 
   action(): Num {
-    const buff: Num = this.buffer.pow(this.amount, false);
-    this.generator.baseMulMod.mul(buff);
+    const buff: Num = this.buffer.pow(this.amount);
+    this.generator.baseMulMod = this.generator.baseMulMod.mul(buff);
     return buff;
   }
 

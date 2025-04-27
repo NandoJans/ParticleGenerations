@@ -33,13 +33,13 @@ export class RedAcceleratorGenerator extends Generator {
   redParticleEffect: Num = new Num(1, -2);
 
   protected override getGenerateAmount(): Num {
-    const generate: Num = super.getGenerateAmount();
+    let generate: Num = super.getGenerateAmount();
 
     const log = HoldingRecord.redParticles.amount
-      .sub(new Num(1, 75), false)
-      .log(this.logEffect, false);
-    generate.mul(log)
-    generate.mul(new Num(1, -2));
+      .sub(new Num(1, 75))
+      .log(this.logEffect);
+    generate = generate.mul(log)
+    generate = generate.mul(new Num(1, -2));
 
     if (generate.greq(new Num(1, 0))) {
       this.redParticleEffect = generate.copy();

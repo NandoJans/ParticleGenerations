@@ -14,7 +14,7 @@ export class MultiplyRedAcceletorGenerationUpgrade extends RedAcceleratorUpgrade
   }
 
   action(): Num | undefined {
-    const effect: Num = this.buffer.pow(this.amount, false);
+    const effect: Num = this.buffer.pow(this.amount);
     MultiplierRecord.redAcceleratorGenerators.correct(effect);
     return effect;
   }

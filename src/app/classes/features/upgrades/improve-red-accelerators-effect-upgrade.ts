@@ -14,15 +14,15 @@ export class ImproveRedAcceleratorsEffectUpgrade extends RedAcceleratorUpgrade {
   }
 
   action(): Num | undefined {
-    const effect: Num = this.buffer.pow(this.amount, false);
-    HoldingRecord.redAccelerators.logEffect = (new Num(1, 1)).mul(effect, false);
+    const effect: Num = this.buffer.pow(this.amount);
+    HoldingRecord.redAccelerators.logEffect = (new Num(1, 1)).mul(effect);
     return effect;
   }
 
   getDescription(): string {
     const holdingEffect: string = HoldingRecord.redAccelerators.logEffect.toString(3);
     const nextEffect: string = HoldingRecord.redAccelerators.logEffect
-      .mul(this.buffer, false)
+      .mul(this.buffer)
       .toString(3);
     return "Log"+holdingEffect+"(RA) → Log"+nextEffect+"(RA).";
   }

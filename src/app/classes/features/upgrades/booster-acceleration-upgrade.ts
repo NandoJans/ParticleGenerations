@@ -39,12 +39,12 @@ export class BoosterAccelerationUpgrade extends Upgrade {
   override resets: ResetKey = ResetKey.RED_BOOSTER_ACCELERATION;
 
   action(): Num {
-    const effect: Num = this.buffer.mul(this.amount, false);
-    const effect2: Num = this.freeBuys.mul(this.amount, false);
+    const effect: Num = this.buffer.mul(this.amount);
+    const effect2: Num = this.freeBuys.mul(this.amount);
     this.freeBuys = this.baseFreeBuys.copy();
 
-    UpgradeRecord.redGeneratorBooster.buffer.add(effect);
-    UpgradeRecord.redGeneratorBooster.amount.add(effect2);
+    UpgradeRecord.redGeneratorBooster.buffer = UpgradeRecord.redGeneratorBooster.buffer.add(effect);
+    UpgradeRecord.redGeneratorBooster.amount = UpgradeRecord.redGeneratorBooster.amount.add(effect2);
 
     this.totalFreeBuys = effect2.copy();
     return effect;

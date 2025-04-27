@@ -1,446 +1,201 @@
 export class Num {
-  num: number;
-  exp: number;
+  private mantissa: number;   // in [1,10) or 0
+  private exponent: number;   // integer power of 10
 
-  constructor(num: number, exp: number) {
-    this.num = num;
-    this.exp = exp;
+  constructor(mantissa: number, exponent: number) {
+    this.mantissa = mantissa;
+    this.exponent = exponent;
+    this.normalize();
   }
 
-  correct = () => {
-    let ret_num = this.num
-    let ret_exp = this.exp
-
-    if (ret_num >= 10) {
-      let arr = ret_num.toString().split('e');
-      if (arr[1] !== undefined) {
-        ret_num = parseFloat(arr[0])
-        ret_exp = parseInt(arr[1].slice(1))
-      } else {
-        let buff = Math.floor(ret_num).toString().length
-        ret_exp += buff
-        ret_num *= 10 ** -buff
-      }
+  /** Normalize mantissa into [1,10) (or zero) and adjust exponent */
+  private normalize(): void {
+    if (!isFinite(this.mantissa) || isNaN(this.mantissa) || this.mantissa === 0) {
+      // zero out
+      this.mantissa = 0;
+      this.exponent = 0;
+      return;
     }
-    while (ret_num < 1 && ret_num !== 0 || ret_num === 0 && ret_exp > 0) {
-      ret_num *= 10
-      ret_exp -= 1
+    // shift so mantissa in [1,10)
+    const shift = Math.floor(Math.log10(Math.abs(this.mantissa)));
+    this.mantissa /= Math.pow(10, shift);
+    this.exponent += shift;
+    // guard: if mantissa pushed to 10 by rounding
+    if (this.mantissa >= 10) {
+      this.mantissa /= 10;
+      this.exponent += 1;
     }
-
-    if (ret_num === 0) {
-      ret_num = 0
-    }
-
-    this.num = ret_num
-    this.exp = ret_exp
   }
 
-  toString = (decimals = 0) => {
-    if (this.exp >= 1e9) {
-      let expNum = this.exp;
-      let expExp = 0;
-      let arr = this.exp.toString().split('e');
-      if (arr[1] !== undefined) {
-        expNum = parseFloat(arr[0])
-        expExp = parseInt(arr[1].slice(1))
-      } else {
-        let buff = Math.floor(this.exp).toString().length-1
-        expExp += buff
-        expNum *= 10 ** -buff
-      }
+  /** Create a fresh copy */
+  copy(): Num {
+    return new Num(this.mantissa, this.exponent);
+  }
 
-      return String(this.num.toFixed(2)) + 'e' + String((expNum.toFixed(2)+'e'+expExp).replace(/\B(?=(\d{3})+(?!\d))/g, ","))
+  /** For serializing back to storage */
+  saveData(): { mantissa: number; exponent: number } {
+    return { mantissa: this.mantissa, exponent: this.exponent };
+  }
+
+  /** Reverse of saveData */
+  static fromStorage(obj: { mantissa: number; exponent: number }): Num {
+    return new Num(obj.mantissa, obj.exponent);
+  }
+
+  /** JS number (may overflow or lose precision if exponent is large) */
+  toNumber(): number {
+    return this.mantissa * Math.pow(10, this.exponent);
+  }
+
+  /** String with optional decimals and comma‐grouping */
+  toString(decimals: number = 0, exponentDecimals: number = 2): string {
+    if (this.mantissa === 0) return "0";
+    // scientific if too big or too small
+    if (this.exponent >= 6 || this.exponent <= -4) {
+      return `${this.mantissa.toFixed(exponentDecimals)}e${this.exponent}`;
     }
-    if (this.exp >= 6) {
-      return String(this.num.toFixed(2)) + 'e' + String(Math.round(this.exp).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
-    } else if (this.exp == 0) {
-      if (decimals) {
-        return String(this.num.toFixed(decimals))
-      } else {
-        return String(Math.floor(this.num))
-      }
+    // otherwise full number with commas
+    const str = this.toNumber().toFixed(decimals);
+    const parts = str.split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+  }
+
+  /** a + b */
+  add(b: Num): Num {
+    // zero‐short‐circuit
+    if (this.mantissa === 0) return b.copy();
+    if (b.mantissa === 0) return this.copy();
+
+    // align exponents
+    const diff = this.exponent - b.exponent;
+    if (diff === 0) {
+      return new Num(this.mantissa + b.mantissa, this.exponent);
+    } else if (diff > 0) {
+      // this is larger
+      return new Num(this.mantissa + b.mantissa / Math.pow(10, diff), this.exponent);
     } else {
-      if (decimals) {
-        return String((this.num * 10 ** this.exp).toFixed(decimals)).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-      } else {
-        return String(Math.floor(this.num * 10 ** this.exp)).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-      }
+      // b is larger
+      return new Num(this.mantissa / Math.pow(10, -diff) + b.mantissa, b.exponent);
     }
   }
 
-  toNumber = () => {
-    return this.exp+Math.log10(this.num);
+  /** a - b */
+  sub(b: Num): Num {
+    return this.add(b.negate());
   }
 
-  convertToNumber = () => {
-    return this.num * 10 ** this.exp;
+  /** a * b */
+  mul(b: Num): Num {
+    if (this.mantissa === 0 || b.mantissa === 0) {
+      return new Num(0, 0);
+    }
+    return new Num(this.mantissa * b.mantissa, this.exponent + b.exponent);
   }
 
-  copy = () => {
-    return new Num(this.num, this.exp)
+  /** a / b */
+  div(b: Num): Num {
+    if (b.mantissa === 0) {
+      throw new Error("Division by zero in Num.div");
+    }
+    if (this.mantissa === 0) {
+      return new Num(0, 0);
+    }
+    return new Num(this.mantissa / b.mantissa, this.exponent - b.exponent);
   }
 
-  // @ts-ignore
-  add = (x: Num, overwrite = true, depth: number = 0): Num => {
-    let ret_num = this.num
-    let ret_exp = this.exp
-
-    if (this.exp < x.exp) {
-      ret_exp = x.exp
-      ret_num = x.num
-      ret_num += this.num / 10 ** (x.exp - this.exp)
-    } else if (this.exp > x.exp) {
-      ret_num += x.num / 10 ** (this.exp - x.exp)
-    } else if (this.exp == x.exp) {
-      ret_num = this.num + x.num
+  /** a ^ x, where x can be a Num or raw number */
+  pow(x: Num | number): Num {
+    // get the real exponent value
+    const expVal = x instanceof Num ? x.toNumber() : x;
+    if (this.mantissa < 0) {
+      throw new Error("Negative base in Num.pow");
     }
-
-    if (ret_num < 0.0001 && ret_num > 0) {
-      ret_num = 0.0001
+    if (this.mantissa === 0) {
+      return new Num(0, 0);
     }
-
-    while (ret_num >= 10 || ret_num <= -10 && ret_num !== 0) {
-      ret_exp += 1
-      ret_num /= 10
-    }
-    while (ret_num < 1 && ret_num !== 0 && ret_num > 0) {
-      ret_num *= 10
-      ret_exp -= 1
-    }
-
-    if (overwrite) {
-      this.num = ret_num
-      this.exp = ret_exp
-      return this
-    } else {
-      return new Num(ret_num, ret_exp)
-    }
+    // log10(this)
+    const log10this = this.exponent + Math.log10(this.mantissa);
+    // multiply by exponent
+    const resultLog = log10this * expVal;
+    const newExp  = Math.floor(resultLog);
+    const newMan  = Math.pow(10, resultLog - newExp);
+    return new Num(newMan, newExp);
   }
 
-  // @ts-ignore
-  sub = (x, overwrite = true): Num => {
-    let ret_exp;
-    let ret_num;
-    let div;
-
-    div = x.exp - this.exp;
-    ret_exp = this.exp;
-    if (div > 10) {
-      ret_exp = x.exp
-      ret_num = -x.num;
-
-    } else if (div < -10) {
-      ret_num = this.num
-    } else {
-      ret_num = this.num - x.num * 10 ** div
+  /** natural log ln(a) */
+  ln(): Num {
+    if (this.mantissa <= 0) {
+      // clamp non-positive to zero
+      return new Num(0, 0);
     }
-
-    while (ret_num >= 10 || ret_num <= -10 && ret_num !== 0) {
-      ret_exp += 1
-      ret_num /= 10
-    }
-    while (ret_num < 1 && ret_num !== 0 && ret_num > 0) {
-      ret_exp -= 1
-      ret_num *= 10
-    }
-
-    if (ret_num === 0) ret_exp = 0;
-
-    if (overwrite) {
-      this.num = Number(ret_num.toFixed(10))
-      this.exp = ret_exp
-      return this
-    } else {
-      return new Num(Number(ret_num.toFixed(10)), ret_exp)
-    }
+    // ln(a) = log10(a)*ln(10)
+    const log10this = this.exponent + Math.log10(this.mantissa);
+    return new Num(log10this * Math.LN10, 0);
   }
 
-  // @ts-ignore
-  mul = (x: Num, overwrite = true): Num => {
-    let ret_num = this.num * x.num
-    let ret_exp = this.exp + x.exp
-
-    if (ret_num === 0) {
-      ret_exp = 0;
-    }
-
-    if (ret_num < 0.0001 && ret_exp > 1) {
-      ret_num = 0.0001
-    }
-
-    if (ret_num >= 10 || ret_num <= -10) {
-      ret_exp += 1
-      ret_num /= 10
-    }
-
-    if (overwrite) {
-      this.num = Number(ret_num.toFixed(10))
-      this.exp = ret_exp
-      return this
-    } else {
-      return new Num(Number(ret_num.toFixed(10)), ret_exp)
-    }
+  /** log base 10 */
+  log10(): Num {
+    const log10this = this.exponent + Math.log10(this.mantissa);
+    return new Num(log10this, 0);
   }
 
-  // @ts-ignore
-  div = (x: Num, overwrite = true): Num => {
-    let ret_num;
-    let ret_exp;
-    if (x.num === 0 || this.num === 0) {
-      ret_num = this.num;
-      ret_exp = this.exp;
-    } else {
-      ret_num = this.num / x.num;
-      ret_exp = this.exp - x.exp;
-
-      if (ret_num < 1 && ret_exp > 0 && ret_num > 0) {
-        ret_exp -= 1
-        ret_num *= 10
-      }
-    }
-
-    if (overwrite) {
-      this.num = Number(ret_num.toFixed(10))
-      this.exp = ret_exp
-      return this
-    } else {
-      return new Num(Number(ret_num.toFixed(10)), ret_exp)
-    }
+  /** log base b (b can be Num or number) */
+  log(b: Num | number): Num {
+    const lnA = this.ln().toNumber();
+    const lnB = (b instanceof Num ? b.ln() : new Num(Math.log(b as number), 0)).toNumber();
+    return new Num(lnA / lnB, 0);
   }
 
-  // @ts-ignore
-  pow = (x: Num, overwrite: boolean = true): Num => {
-    let ret_exp: number;
-    let ret_num: number;
-    if (this.num === 0 && this.exp === 0) {
-      ret_exp = 0;
-      ret_num = 1;
-    } else {
-      ret_exp = this.exp * (x.num * 10 ** x.exp);
-      ret_num = this.num ** (x.num * 10 ** x.exp)
-    }
-
-    if (ret_num > 1) {
-      ret_num = Math.log10(this.num) * (x.num * 10 ** x.exp)
-      ret_exp += Math.floor(ret_num)
-      ret_num = Math.pow(10, Number('0.'+ret_num.toString().split('.')[1]))
-    }
-
-    if (ret_num >= 10) {
-      let arr = ret_num.toString().split('e');
-      if (arr[1] !== undefined) {
-        ret_num = parseFloat(arr[0])
-        ret_exp = parseInt(arr[1].slice(1))
-      } else {
-        let buff = Math.floor(ret_num).toString().length
-        ret_exp += buff
-        ret_num *= 10 ** -buff
-      }
-    }
-
-    if (ret_num === 0) {
-      ret_num = 1;
-      ret_exp += 10;
-    }
-
-    while (ret_num < 1 && ret_num !== 0) {
-      ret_exp -= 1
-      ret_num *= 10
-    }
-
-    if (overwrite) {
-      this.exp = ret_exp
-      this.num = ret_num
-      return this
-    } else {
-      return new Num(ret_num, ret_exp)
-    }
+  /** sqrt(a) = a^(1/2) */
+  sqrt(): Num {
+    return this.pow(0.5);
   }
 
-  // @ts-ignore
-  log = (x: Num, overwrite: boolean = true): Num => {
-    let ret_num = (this.exp * 10 + Math.log10(this.num) * 10) / (x.num * 10 ** x.exp);
-    let ret_exp = 0;
-
-    if (ret_num >= 10) {
-      let arr = ret_num.toString().split('e');
-      if (arr[1] !== undefined) {
-        ret_num = parseFloat(arr[0])
-        ret_exp = parseInt(arr[1].slice(1))
-      } else {
-        let buff = Math.floor(ret_num).toString().length-1
-        ret_exp += buff
-        ret_num *= 10 ** -buff
-      }
+  /** floor(a) → integer part */
+  floor(): Num {
+    // if too small, floor is zero
+    if (this.exponent < 0) return new Num(0, 0);
+    // if exponent is modest, we can safely toNumber + Math.floor
+    if (this.exponent <= 15) {
+      return new Num(Math.floor(this.toNumber()), 0);
     }
-
-    if (overwrite) {
-      this.exp = ret_exp
-      this.num = ret_num
-      return this
-    } else {
-      return new Num(ret_num, ret_exp)
-    }
+    // number is ≥ 1e16; fractional part is in the mantissa:
+    // floor just truncates mantissa * 10^exponent to integer,
+    // but since exponent>>, we can drop any <1 unit in mantissa:
+    return new Num(this.mantissa, this.exponent);
   }
 
-  // @ts-ignore
-  log10 = (overwrite: boolean = true): Num => {
-    let ret_num = this.exp + Math.log10(this.num);
-    let ret_exp = 0
-
-    if (overwrite) {
-      this.exp = ret_exp
-      this.num = ret_num
-      return this
-    } else {
-      return new Num(ret_num, ret_exp)
+  /** ≥ comparison */
+  greq(b: Num): boolean {
+    if (this.mantissa === 0 && b.mantissa === 0) return true;
+    if (this.exponent !== b.exponent) {
+      return this.exponent > b.exponent;
     }
+    return this.mantissa >= b.mantissa;
   }
 
-  // @ts-ignore
-  ln = (overwrite: boolean = true): Num => {
-    let ret_exp = 0
-    let ret_num = Math.log(10) * (this.exp + Math.log10(this.num))
-
-    if (ret_num === Infinity || ret_num === -Infinity) {
-      ret_num = 0;
+  /** true if this > other */
+  gt(other: Num): boolean {
+    if (this.exponent !== other.exponent) {
+      return this.exponent > other.exponent;
     }
-
-    if (overwrite) {
-      this.exp = ret_exp
-      this.num = ret_num
-      return this
-    } else {
-      return new Num(ret_num, ret_exp)
-    }
-  }
-
-  // @ts-ignore
-  negate = (overwrite: boolean = true): Num => {
-    const ret_exp = this.exp
-    const ret_num = -this.num
-
-    if (overwrite) {
-      this.exp = ret_exp
-      this.num = ret_num
-      return this
-    } else {
-      return new Num(ret_num, ret_exp)
-    }
-  }
-
-  // @ts-ignore
-  floor = (overwrite: boolean = true): Num => {
-    let ret_exp = this.exp
-    let ret_num = this.num
-    if (ret_exp <= 10 ) {
-      ret_num = Math.floor(ret_num * 10 ** ret_exp);
-      ret_exp = 0;
-    }
-
-    while ((ret_num >= 10 || ret_num <= -10)) {
-      ret_exp += 1
-      ret_num /= 10
-    }
-
-    if (overwrite) {
-      this.exp = ret_exp
-      this.num = ret_num
-      return this
-    } else {
-      return new Num(ret_num, ret_exp)
-    }
-  }
-
-  // @ts-ignore
-  sqrt = (overwrite: boolean = true): Num => {
-    let ret_num = this.num;
-    let ret_exp = this.exp;
-
-    if (ret_exp % 2 === 0) {
-      ret_num = Math.sqrt(this.num)
-    } else {
-      ret_num = Math.sqrt(this.num * 10)
-    }
-
-    ret_exp /= 2;
-
-    if (ret_num >= 10) {
-      ret_exp += 1
-      ret_num /= 10
-    }
-
-    if (overwrite) {
-      this.exp = Math.floor(ret_exp)
-      this.num = ret_num
-      return this
-    } else {
-      return new Num(ret_num, Math.floor(ret_exp))
-    }
+    return this.mantissa > other.mantissa;
   }
 
 
-  greq = (x: Num) => {
-    //if (this.num === 0 && x.num !== 0) return false;
-    //if (x.num === 0 && this.num !== 0) return true;
-    if (isNaN(this.num)) {
-      this.num = 1
-    }
-    if (isNaN(x.num)) {
-      x.num = 1
-    }
-    if (x.num < 1) {
-      x.num *= 10
-      x.exp -= 1
-    }
-    if (this.num < 1) {
-      this.num *= 10
-      this.exp -= 1
-    }
-    if (x.num >= 10) {
-      x.num /= 10
-      x.exp += 1
-    }
-    if (this.num >= 10) {
-      this.num /= 10
-      this.exp += 1
-    }
-    this.exp = Math.round(this.exp)
-    x.exp = Math.round(x.exp)
-    if (x.num < 0 && this.num > 0) {
-      return true
-    } else if (x.num > 0 && this.num < 0) {
-      return false
-    } else if (this.exp > x.exp) {
-      return true
-    } else if (this.exp === x.exp) {
-      return this.num >= x.num;
-    } else {
-      return false
-    }
+  /** < comparison */
+  lt(b: Num): boolean {
+    return !this.greq(b) && !this.equals(b);
   }
 
-  eqto = (x: Num) => {
-    return this.exp == x.exp && this.num == x.num;
+  /** equals */
+  equals(b: Num): boolean {
+    return this.exponent === b.exponent && this.mantissa === b.mantissa;
   }
 
-  setValue = (num: Num) => {
-    this.num = num.num;
-    this.exp = num.exp;
-  }
-
-  getExponent = () => {
-    return this.exp;
-  }
-
-  saveData = () => {
-    return [this.exp, this.num];
-  }
-
-  static fromStorage(storageValue: { num: number, exp: number }) {
-    if (storageValue === undefined) {
-      return undefined;
-    }
-    return new Num(storageValue.num, storageValue.exp)
+  /** negate sign */
+  negate(): Num {
+    return new Num(-this.mantissa, this.exponent);
   }
 }

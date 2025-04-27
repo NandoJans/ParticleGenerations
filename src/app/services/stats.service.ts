@@ -52,8 +52,8 @@ export class StatsService {
 
   static addNum(item: string, key: string, value: Num) {
     const localStorageHelper = new LocalStorageHelper(this.getCategory(), item);
-    const currentValue = localStorageHelper.loadNum(new Num(0, 0), key);
-    currentValue.add(value);
+    let currentValue = localStorageHelper.loadNum(new Num(0, 0), key);
+    currentValue = currentValue.add(value);
     localStorageHelper.saveNum(currentValue, key);
   }
 }

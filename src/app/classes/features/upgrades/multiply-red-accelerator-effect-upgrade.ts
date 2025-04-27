@@ -15,8 +15,8 @@ export class MultiplyRedAcceleratorEffectUpgrade extends RedAcceleratorUpgrade {
   }
 
   action(): Num {
-    const effect = this.buffer.pow(this.bought, false);
-    HoldingRecord.redAccelerators.mulEffect.mul(effect);
+    const effect = this.buffer.pow(this.bought);
+    HoldingRecord.redAccelerators.mulEffect = HoldingRecord.redAccelerators.mulEffect.mul(effect);
     return effect;
   }
 

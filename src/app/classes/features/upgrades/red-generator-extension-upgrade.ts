@@ -36,11 +36,11 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
     generators.forEach((generator, index) => {
       const compare = new Num(index, 0);
       if (this.amount.greq(compare)) {
-        const buff: Num = this.buffer.pow(this.amount.sub(compare, false), false);
-        generator.multiplier.mul(buff);
+        const buff: Num = this.buffer.pow(this.amount.sub(compare));
+        generator.multiplier = generator.multiplier.mul(buff);
       }
     });
-    return this.buffer.pow(this.amount, false);
+    return this.buffer.pow(this.amount);
   }
 
   getDescription(): string {
@@ -52,8 +52,8 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
   }
 
   override effectString() {
-    if (this.amount.exp === 0) {
-      switch (this.amount.num) {
+    if (this.amount.toNumber() < 5) {
+      switch (this.amount.toNumber()) {
         case 0:
           return "Red generator 1";
         case 1:

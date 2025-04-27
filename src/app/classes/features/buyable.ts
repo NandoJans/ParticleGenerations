@@ -43,4 +43,8 @@ export abstract class Buyable extends GameElement {
   isBuyable() {
     return this.currency.amount.greq(this.cost);
   }
+
+  isMaxed() {
+    return this.limit !== undefined && this.bought.greq(this.limit);
+  }
 }

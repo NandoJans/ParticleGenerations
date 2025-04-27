@@ -45,12 +45,12 @@ export class AutomatorComponent implements OnInit {
     const progress = this.automator.task();
     const goal = this.automator.goal;
     if (goal.greq(new Num(1, 10))) {
-      return progress.log10(false)
-        .div(goal.log10(false), false)
-        .mul(new Num(1, 2), false)
-        .convertToNumber();
+      return progress.log(10)
+        .div(goal.log(10))
+        .mul(new Num(1, 2))
+        .toNumber();
     } else {
-      return progress.div(goal, false).mul(new Num(1, 2)).convertToNumber();
+      return progress.div(goal).mul(new Num(1, 2)).toNumber()
     }
   }
 

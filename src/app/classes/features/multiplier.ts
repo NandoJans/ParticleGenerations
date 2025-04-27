@@ -17,7 +17,7 @@ export class Multiplier {
   }
 
   correct(num: Num): void {
-    this.num.mul(num)
+    this.num = this.num.mul(num)
   }
 
   getNum(): Num {

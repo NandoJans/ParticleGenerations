@@ -57,6 +57,12 @@ button.red.buyable {
   color: var(--text-color-red);
 }
 
+button.red.maxed {
+  background-color: var(--text-color-red);
+  border-color: var(--background-color-red);
+  color: var(--background-color-1);
+}
+
 button.buyable:hover {
   cursor: pointer;
   box-shadow: 0 0 10000px rgba(255, 255, 255, 0.1) inset;
