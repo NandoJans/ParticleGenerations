@@ -30,7 +30,7 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   maxCompletions: Num | undefined = undefined
   goalIncrease: Num | undefined = undefined
 
-  run(): Num | undefined {
+  override run(): Num | undefined {
     const reward = this.reward();
     if (reward) {
       this.effect = reward;

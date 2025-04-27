@@ -3,6 +3,7 @@ import {Num} from "../../../num";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {ResetKey} from "../../enums/reset-key";
 import {RedGenerator} from "../generators/red-generator";
+import {Requirement} from "../interfaces/requirement";
 
 export class RedGeneratorBuyMultiplierUpgrade extends RedGeneratorUpgrade {
 
@@ -16,7 +17,12 @@ export class RedGeneratorBuyMultiplierUpgrade extends RedGeneratorUpgrade {
     super(cost, increase, scaling, buffer, generator);
     this.name = `red-generator-buy-multiplier-upgrade-${generator.rank}`;
     this.resetId = ResetHelper.registerReset(ResetKey.RED_EXTENSION, this);
+    this.requirement = [
+      new Requirement(generator, new Num(generator.rank, 0), this),
+    ];
   }
+
+  requirement: Requirement[];
   name: string;
   resetId: ResetKey;
 
@@ -28,6 +34,7 @@ export class RedGeneratorBuyMultiplierUpgrade extends RedGeneratorUpgrade {
   }
 
   getDescription(): string {
+    // console.log(this.name, this.effect.toString(true), this.buffer.toString(true));
     return `${this.buffer.toString(true)}x buy multiplier`;
   }
 }

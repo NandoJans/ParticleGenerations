@@ -12,31 +12,31 @@ export class HoldingRecord {
   static redParticles: RedParticleHolding = new RedParticleHolding()
   static redAccelerators: RedAcceleratorHolding = new RedAcceleratorHolding();
 
-  static getArray(): Holding[] {
+  static getList(): Holding[] {
     return [
       HoldingRecord.redParticles,
       HoldingRecord.redAccelerators,
     ]
   }
 
-  getArray(): Holding[] {
-    return HoldingRecord.getArray()
+  getList(): Holding[] {
+    return HoldingRecord.getList()
   }
 
   load() {
-    this.getArray().forEach((holding: Holding) => {
+    this.getList().forEach((holding: Holding) => {
       holding.tryLoad()
     })
   }
 
   save() {
-    this.getArray().forEach((holding: Holding) => {
+    this.getList().forEach((holding: Holding) => {
       holding.save()
     })
   }
 
   action() {
-    this.getArray().forEach((holding: Holding) => {
+    this.getList().forEach((holding: Holding) => {
       holding.effect = holding.action()
     })
   }

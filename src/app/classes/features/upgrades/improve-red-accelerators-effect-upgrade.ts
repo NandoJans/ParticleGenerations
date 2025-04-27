@@ -1,6 +1,7 @@
 import {RedAcceleratorUpgrade} from "./red-accelerator-upgrade";
 import {Num} from "../../../num";
 import {HoldingRecord} from "../../records/holdings/holding-record";
+import {Requirement} from "../interfaces/requirement";
 
 export class ImproveRedAcceleratorsEffectUpgrade extends RedAcceleratorUpgrade {
   baseCost: Num = new Num(1, 90);
@@ -10,6 +11,9 @@ export class ImproveRedAcceleratorsEffectUpgrade extends RedAcceleratorUpgrade {
   override buffer: Num = new Num(0.9, 0);
   override baseBuffer: Num = new Num(0.9, 0);
   name: string = "improve-red-accelerator-effect";
+  requirement: Requirement[] = [
+    new Requirement(HoldingRecord.redParticles, new Num(1, 75), this, false)
+  ];
 
   action(): Num | undefined {
     const effect: Num = this.buffer.pow(this.amount, false);

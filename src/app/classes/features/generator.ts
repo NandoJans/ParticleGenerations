@@ -13,7 +13,6 @@ import {Upgrade} from "./upgrade";
 import {StatsService} from "../../services/stats.service";
 
 export abstract class Generator extends Buyable implements Generatable, Storable, Resetable, Require {
-  abstract name: string
   abstract displayName: string
   abstract generates: Generatable
   baseMulMod: Num = new Num(1, 0);
@@ -30,6 +29,7 @@ export abstract class Generator extends Buyable implements Generatable, Storable
   abstract globalMultiplier: Multiplier
   abstract stringRank: string
   abstract rank: number
+  override calculationOrder: number = 1000
 
   localStorageHelper: LocalStorageHelper = new LocalStorageHelper('generators', this.getSaveKey())
 
@@ -37,7 +37,7 @@ export abstract class Generator extends Buyable implements Generatable, Storable
     return this.amount.mul(this.multiplier, false) as Num
   }
 
-  run(speed: Num): any {
+  override run(speed: Num): any {
     this.generates.generate(this.getGenerateAmount().mul(speed, false) as Num)
     this.multiplier = this.baseMultiplier
       .mul(this.baseMulMod, false)
@@ -63,6 +63,7 @@ export abstract class Generator extends Buyable implements Generatable, Storable
     this.localStorageHelper = new LocalStorageHelper('generators', this.getSaveKey())
     this.localStorageHelper.saveNum(this.bought, 'bought')
     this.localStorageHelper.saveNum(this.amount, 'amount')
+    this.localStorageHelper.save(this.baseMulMod, 'unlocked')
     this.localStorageHelper.save(this.auto, 'auto')
   }
 
@@ -70,6 +71,7 @@ export abstract class Generator extends Buyable implements Generatable, Storable
     this.localStorageHelper = new LocalStorageHelper('generators', this.getSaveKey())
     this.bought = this.localStorageHelper.loadNum(this.bought, 'bought')
     this.amount = this.localStorageHelper.loadNum(this.amount, 'amount')
+    this.unlocked = this.localStorageHelper.load(this.unlocked, 'unlocked')
     this.auto = this.localStorageHelper.load(this.auto, 'auto')
   }
 

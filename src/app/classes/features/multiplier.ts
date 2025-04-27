@@ -4,11 +4,12 @@ export class Multiplier {
   name: string
   num: Num
   originalNum: Num
+  calculationOrder: number = 200
 
   constructor(name: string, num: Num) {
     this.name = name
-    this.num = num
-    this.originalNum = num
+    this.num = num.copy()
+    this.originalNum = num.copy()
   }
 
   reset(): void {

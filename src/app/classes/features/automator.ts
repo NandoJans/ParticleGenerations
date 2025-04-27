@@ -7,7 +7,6 @@ import { LocalStorageHelper } from "../helpers/local-storage-helper";
 import {Styles} from "../enums/styles";
 
 export abstract class Automator extends GameElement implements Storable {
-  abstract name: string;
   abstract displayName: string;
   abstract style: Styles;
   active = true;
@@ -18,6 +17,7 @@ export abstract class Automator extends GameElement implements Storable {
   abstract goal: Num
   abstract goalString: string;
   abstract task(): Num;
+  override calculationOrder: number = 100
 
   requirement: Requirement[] = [];
 
@@ -35,7 +35,7 @@ export abstract class Automator extends GameElement implements Storable {
     return false;
   }
 
-  run(): boolean {
+  override run(): boolean {
     if (this.completed && this.active) {
       this.buyables().forEach(buyable => {
         if (buyable.isBuyable() && buyable.auto) {

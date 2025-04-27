@@ -19,7 +19,7 @@ export abstract class Milestone extends GameElement {
 
   abstract action(): Num | undefined
 
-  run(): void {
+  override run(): void {
     if (this.goalReached()) {
       const effect = this.action()
       if (effect) {

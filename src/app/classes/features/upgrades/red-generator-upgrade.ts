@@ -20,9 +20,6 @@ export abstract class RedGeneratorUpgrade extends Upgrade {
     this.displayName = '';
     this.increase = increase.copy();
     this.scaling = scaling.copy();
-    this.requirement = [
-      new Requirement(generator, new Num(generator.rank, 0), this),
-    ];
     this.buffer = buffer.copy();
     this.baseBuffer = buffer.copy();
   }
@@ -31,7 +28,6 @@ export abstract class RedGeneratorUpgrade extends Upgrade {
   cost: Num;
   displayName: string;
   increase: Num;
-  requirement: Requirement[];
   bought: Num = new Num(0, 0);
   currency: Holding = HoldingRecord.redParticles;
   nav: string = "red";

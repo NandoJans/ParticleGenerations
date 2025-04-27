@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {AutomatorRecord} from "../../classes/records/automators/automator-record";
 import {DropDownMessageService} from "../visuals/drop-down-message.service";
 import {Automator} from "../../classes/features/automator";
+import {Generator} from "../../classes/features/generator";
 
 @Injectable({
   providedIn: 'root'
@@ -38,5 +39,9 @@ export class AutomatorService {
     this.automatorRecord.getList().forEach(automator => {
       automator.save();
     });
+  }
+
+  getElements(): Automator[] {
+    return this.automatorRecord.getList();
   }
 }

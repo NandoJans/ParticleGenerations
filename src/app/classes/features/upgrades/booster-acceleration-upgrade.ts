@@ -20,7 +20,7 @@ export class BoosterAccelerationUpgrade extends Upgrade {
   baseFreeBuys: Num = new Num(1, 1);
 
   currency: Holding = HoldingRecord.redAccelerators;
-  displayName: string = "Booster Acceleration Upgrade";
+  displayName: string = "Booster Acceleration";
   increase: Num = new Num(1, 5);
   name: string = "booster-acceleration-upgrade";
   nav: string = "red";

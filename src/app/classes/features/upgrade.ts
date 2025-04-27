@@ -8,7 +8,7 @@ import {Storable} from "./interfaces/storable";
 import {LocalStorageHelper} from "../helpers/local-storage-helper";
 
 export abstract class Upgrade extends Buyable implements Storable, Require, Resetable {
-  abstract name: string
+  abstract override name: string
   abstract displayName: string
   abstract getDescription(): string
   baseBuffer: Num = new Num(1, 0)
@@ -23,10 +23,11 @@ export abstract class Upgrade extends Buyable implements Storable, Require, Rese
   abstract subNav: string
   effect: Num | undefined = undefined
   maxEffect: Num | undefined = undefined
+  override calculationOrder: number = 400
 
   localStorageHelper: LocalStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey())
 
-  run(): Num | undefined {
+  override run(): Num | undefined {
     const effect = this.action();
     this.buffer = this.baseBuffer.copy();
     this.amount = this.bought.copy();
