@@ -11,8 +11,11 @@ import {Transaction} from "./interfaces/transaction";
 import {Require} from "./interfaces/require";
 import {Upgrade} from "./upgrade";
 import {StatsService} from "../../services/stats.service";
+import {Enhancable} from "./interfaces/enhancable";
+import {Enhancement} from "./enhancements/enhancement";
+import {EnhancementRecord} from "../records/enhancement-record";
 
-export abstract class Generator extends Buyable implements Generatable, Storable, Resetable, Require {
+export abstract class Generator extends Buyable implements Generatable, Storable, Resetable, Require, Enhancable {
   abstract displayName: string
   abstract generates: Generatable
   baseMulMod: Num = new Num(1, 0);
@@ -65,6 +68,10 @@ export abstract class Generator extends Buyable implements Generatable, Storable
     this.localStorageHelper.saveNum(this.amount, 'amount')
     this.localStorageHelper.save(this.unlocked, 'unlocked')
     this.localStorageHelper.save(this.auto, 'auto')
+    this.localStorageHelper.save(
+      (this.enhancement instanceof Enhancement) ? this.enhancement.saveName : null,
+      'enhancement'
+    )
   }
 
   tryLoad(): void {
@@ -73,6 +80,18 @@ export abstract class Generator extends Buyable implements Generatable, Storable
     this.amount = this.localStorageHelper.loadNum(this.amount, 'amount')
     this.unlocked = this.localStorageHelper.load(this.unlocked, 'unlocked')
     this.auto = this.localStorageHelper.load(this.auto, 'auto')
+
+    const enhancementName = this.localStorageHelper.load(null, 'enhancement')
+    // @ts-ignore
+    if (enhancementName && enhancementName in EnhancementRecord && EnhancementRecord[enhancementName] instanceof Enhancement) {
+      // @ts-ignore
+      this.enhancement = EnhancementRecord[enhancementName];
+      if (this.enhancement instanceof Enhancement) {
+        this.enhancement.add(this);
+      }
+    } else {
+      this.enhancement = null
+    }
   }
 
   softReset(): void {
@@ -107,5 +126,20 @@ export abstract class Generator extends Buyable implements Generatable, Storable
 
   getUpgrades(): Upgrade[] {
     return [];
+  }
+
+  allowedEnhancements: Enhancement[] = [
+    EnhancementRecord.yellow
+  ];
+  enhancement: Enhancement | null = null;
+
+  canEnhance(): boolean {
+    return true;
+  }
+
+  enhance(): void {
+    if (this.enhancement instanceof Enhancement) {
+      this.baseMulMod = this.baseMulMod.mul(this.enhancement.getMultiplier()) as Num
+    }
   }
 }

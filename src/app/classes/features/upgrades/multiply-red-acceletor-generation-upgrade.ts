@@ -9,8 +9,8 @@ export class MultiplyRedAcceletorGenerationUpgrade extends RedAcceleratorUpgrade
   increase: Num = new Num(1, 10);
   override buffer: Num = new Num(2, 0);
   override baseBuffer: Num = new Num(2, 0);
-  constructor() {
-    super("multiple-red-accelerator-generation");
+  constructor(saveName: string) {
+    super(saveName, "multiple-red-accelerator-generation");
   }
 
   action(): Num | undefined {

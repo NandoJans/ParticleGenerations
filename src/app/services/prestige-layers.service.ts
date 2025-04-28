@@ -7,12 +7,14 @@ import {ResetKey} from "../classes/enums/reset-key";
 import {MessageStepsFactory} from "../classes/factories/message-steps-factory";
 import {faKey} from "@fortawesome/free-solid-svg-icons";
 import {MessageStepsService} from "./message-steps.service";
+import {NavigationsService} from "./navigations.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PrestigeLayersService {
   static yellowPrestigeLayer: PrestigeLayer = new PrestigeLayer(
+    'yellowPrestigeLayer',
     'yellow',
     HoldingRecord.redParticles,
     new Num(1, 1000),
@@ -37,7 +39,8 @@ export class PrestigeLayersService {
   ];
 
   constructor(
-    private messageStepsService: MessageStepsService
+    private messageStepsService: MessageStepsService,
+    private navigationsService: NavigationsService
   ) {}
 
   getList(): PrestigeLayer[] {
@@ -66,6 +69,7 @@ export class PrestigeLayersService {
     if (prestigeLayer.isUnlocked() && prestigeLayer.hasReached()) {
       if (!prestigeLayer.prestigedFirstTime) {
         this.messageStepsService.setMessageSteps(prestigeLayer.messageSteps)
+
         prestigeLayer.prestigedFirstTime = true;
       }
 

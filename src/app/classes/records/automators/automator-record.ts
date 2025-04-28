@@ -18,21 +18,21 @@ import {
 })
 export class AutomatorRecord extends Record {
   // Red Phase
-  static firstRedGenerator: RedGeneratorAutomator = new RedGeneratorAutomator(GeneratorRecord.firstRedGenerator);
-  static secondRedGenerator: RedGeneratorAutomator = new RedGeneratorAutomator(GeneratorRecord.secondRedGenerator);
-  static thirdRedGenerator: RedGeneratorAutomator = new RedGeneratorAutomator(GeneratorRecord.thirdRedGenerator);
-  static fourthRedGenerator: RedGeneratorAutomator = new RedGeneratorAutomator(GeneratorRecord.fourthRedGenerator);
-  static fifthRedGenerator: RedGeneratorAutomator = new RedGeneratorAutomator(GeneratorRecord.fifthRedGenerator);
+  static firstRedGenerator: RedGeneratorAutomator = new RedGeneratorAutomator('firstRedGenerator', GeneratorRecord.firstRedGenerator);
+  static secondRedGenerator: RedGeneratorAutomator = new RedGeneratorAutomator('secondRedGenerator', GeneratorRecord.secondRedGenerator);
+  static thirdRedGenerator: RedGeneratorAutomator = new RedGeneratorAutomator('thirdRedGenerator', GeneratorRecord.thirdRedGenerator);
+  static fourthRedGenerator: RedGeneratorAutomator = new RedGeneratorAutomator('fourthRedGenerator', GeneratorRecord.fourthRedGenerator);
+  static fifthRedGenerator: RedGeneratorAutomator = new RedGeneratorAutomator('fifthRedGenerator', GeneratorRecord.fifthRedGenerator);
 
-  static redGeneratorExtension: RedGeneratorExtensionAutomator = new RedGeneratorExtensionAutomator();
-  static redGeneratorBooster: RedGeneratorBoosterAutomator = new RedGeneratorBoosterAutomator();
+  static redGeneratorExtension: RedGeneratorExtensionAutomator = new RedGeneratorExtensionAutomator('redGeneratorExtension');
+  static redGeneratorBooster: RedGeneratorBoosterAutomator = new RedGeneratorBoosterAutomator('redGeneratorBooster');
 
   // Red Accelerator Phase
-  static multiplyRedAccelerationGeneration: MultiplyRedAccelerationGenerationAutomator = new MultiplyRedAccelerationGenerationAutomator();
-  static multiplyRedAcceleratorEffect: MultiplyRedAcceleratorEffectAutomator = new MultiplyRedAcceleratorEffectAutomator();
-  static improveRedAcceleratorsEffect: ImproveRedAcceleratorsEffectAutomator = new ImproveRedAcceleratorsEffectAutomator();
-  static improveRedParticlesToAccelerators: ImproveRedParticlesToAcceleratorsAutomator = new ImproveRedParticlesToAcceleratorsAutomator();
-  static boosterAcceleration: BoosterAccelerationAutomator = new BoosterAccelerationAutomator();
+  static multiplyRedAccelerationGeneration: MultiplyRedAccelerationGenerationAutomator = new MultiplyRedAccelerationGenerationAutomator('multiplyRedAccelerationGeneration');
+  static multiplyRedAcceleratorEffect: MultiplyRedAcceleratorEffectAutomator = new MultiplyRedAcceleratorEffectAutomator('multiplyRedAcceleratorEffect');
+  static improveRedAcceleratorsEffect: ImproveRedAcceleratorsEffectAutomator = new ImproveRedAcceleratorsEffectAutomator('improveRedAcceleratorsEffect');
+  static improveRedParticlesToAccelerators: ImproveRedParticlesToAcceleratorsAutomator = new ImproveRedParticlesToAcceleratorsAutomator('improveRedParticlesToAccelerators');
+  static boosterAcceleration: BoosterAccelerationAutomator = new BoosterAccelerationAutomator('boosterAcceleration');
 
   static override list: Automator[] = [
     AutomatorRecord.firstRedGenerator,

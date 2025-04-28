@@ -4,17 +4,17 @@ import {HoldingRecord} from "../../records/holdings/holding-record";
 import {Num} from "../../../num";
 import {Styles} from "../../enums/styles";
 import {RedGenerator} from "../generators/red-generator";
-import {Requirement} from "../interfaces/requirement";
 
 export abstract class RedGeneratorUpgrade extends Upgrade {
   protected constructor(
+    saveName: string,
     cost: Num,
     increase: Num,
     scaling: Num,
     buffer: Num,
     public generator: RedGenerator,
   ) {
-    super();
+    super(saveName);
     this.baseCost = cost.copy();
     this.cost = cost.copy();
     this.displayName = '';

@@ -14,6 +14,7 @@ import {GameElement} from "../classes/features/game-element";
 import {Holding} from "../classes/features/holding";
 import {Multiplier} from "../classes/features/multiplier";
 import {PrestigeLayersService} from "./prestige-layers.service";
+import {EnhancementService} from "./enhancement.service";
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,7 @@ export class TickService {
     private multiplierService: GlobalMultipliersService,
     private automatorService: AutomatorService,
     private holdingService: HoldingService,
+    private enhancementService: EnhancementService,
     private prestigeLayersService: PrestigeLayersService,
     private dropDownMessageService: DropDownMessageService
   ) {}
@@ -57,6 +59,7 @@ export class TickService {
       });
     });
 
+    this.enhancementService.tick();
     this.prestigeLayersService.tick(speed);
     this.componentService.reloadComponents();
   }

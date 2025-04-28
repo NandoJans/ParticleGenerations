@@ -6,6 +6,9 @@
     [holding]="holdingRecord.getRedParticles()"
   ></app-number-display>
 </div>
+<div *ngFor="let enhancement of getEnhancements()" class="action-message">
+  <h2>{{ enhancement.actionMessage }}</h2>
+</div>
 <div class="page">
   <router-outlet></router-outlet>
 </div>

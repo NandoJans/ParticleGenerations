@@ -10,6 +10,11 @@ export abstract class GameElement {
   disabled: boolean = false
   calculationOrder: number|undefined = undefined
   abstract name: string
+  saveName: string
+
+  constructor(saveName: string) {
+    this.saveName = saveName;
+  }
 
   requirementsMet(): boolean {
     return this.requirement.every((requirement) => requirement.requirementMet());

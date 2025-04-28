@@ -10,8 +10,8 @@ export class MultiplyRedAcceleratorEffectUpgrade extends RedAcceleratorUpgrade {
   override buffer: Num = new Num(1.5, 0);
   override baseBuffer: Num = new Num(1.5, 0);
 
-  constructor() {
-    super("multiply-red-accelerator-effect");
+  constructor(saveName: string) {
+    super(saveName, "multiply-red-accelerator-effect");
   }
 
   action(): Num {

@@ -36,12 +36,7 @@ html, body {
   background-color: var(--background-color-2);
 }
 
-botton:hover {
-  box-shadow: 0 100000px 100000px rgba(255, 255, 255, 0.5) inset;
-}
-
-button.success {
-  background-color: var(--accent-color-green);
+button.button {
   color: var(--text-color-main);
   border: none;
   border-radius: 5px;
@@ -49,6 +44,30 @@ button.success {
   font-size: 1.2rem;
   cursor: pointer;
   font-weight: bold;
+}
+
+button.button:hover {
+  box-shadow: 0 0 1000px rgba(255, 255, 255, 0.2) inset;
+}
+
+button.button.success {
+  background-color: var(--accent-color-green);
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.baseline {
+  align-items: baseline;
+}
+
+.flex-row * {
+  margin: 4px;
 }
 
 .upgrade-row, .generator-row {

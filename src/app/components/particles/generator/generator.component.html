@@ -1,6 +1,10 @@
 <button
   [id]="'buyable-'+generator.name"
-  [class]="'generator '+generator.style+' '+((getIsBuyable()) ? 'buyable' : '')"
+  [class]="'generator '
+  +generator.style+' '
+  +((getIsBuyable()) ? 'buyable' : '')+' '
+  +((isEnhancing()) ? 'enhancing enhancing-' + getEnhancementStyle() : '')+' '
+"
   (click)="buy()"
 >
   <h4>{{ getDisplayName() }}</h4>

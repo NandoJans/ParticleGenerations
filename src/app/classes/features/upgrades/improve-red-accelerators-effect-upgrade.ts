@@ -9,8 +9,8 @@ export class ImproveRedAcceleratorsEffectUpgrade extends RedAcceleratorUpgrade {
   increase: Num = new Num(1, 5);
   override buffer: Num = new Num(1.01, 0);
   override baseBuffer: Num = new Num(1.01, 0);
-  constructor() {
-    super("improve-red-accelerator-effect");
+  constructor(saveName: string) {
+    super(saveName, "improve-red-accelerator-effect");
   }
 
   action(): Num | undefined {

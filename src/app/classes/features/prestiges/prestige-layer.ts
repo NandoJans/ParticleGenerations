@@ -23,6 +23,7 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
   messageSteps: MessageSteps;
 
   constructor(
+    saveName: string,
     name: string,
     holdingRequired: Holding,
     amountRequired: Num,
@@ -31,7 +32,7 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     resets: ResetKey,
     message: MessageSteps
   ) {
-    super();
+    super(saveName);
     this.name = name;
     this.requirement = [
       new Requirement(holdingRequired, amountRequired, this)
