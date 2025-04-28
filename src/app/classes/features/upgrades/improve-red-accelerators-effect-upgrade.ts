@@ -15,7 +15,7 @@ export class ImproveRedAcceleratorsEffectUpgrade extends RedAcceleratorUpgrade {
 
   action(): Num | undefined {
     const effect: Num = this.buffer.pow(this.amount);
-    HoldingRecord.redAccelerators.powEffect = HoldingRecord.redAccelerators.powEffect.mul(effect);
+    HoldingRecord.redAccelerators.powEffect = HoldingRecord.redAccelerators.powEffect.pow(effect);
     return effect;
   }
 
