@@ -31,6 +31,10 @@ html, body {
   background-color: var(--background-color-2);
 }
 
+botton:hover {
+  box-shadow: 0 100000px 100000px rgba(255, 255, 255, 0.5) inset;
+}
+
 button.success {
   background-color: var(--accent-color-green);
   color: var(--text-color-main);

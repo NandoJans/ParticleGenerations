@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {LocalStorageHelper} from "../classes/helpers/local-storage-helper";
 import {TickService} from "./tick.service";
 import {Num} from "../num";
+import { HoldingRecord } from '../classes/records/holdings/holding-record';
+import {Holding} from "../classes/features/holding";
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +14,11 @@ export class OfflineService {
   closed: boolean = false;
   ticksDone: number = 0;
   totalTicks: number = 0;
+  generatedHoldings: {holding: Holding, startAmount: Num, generated: Num}[] = [];
 
   constructor(
-    private tickService: TickService
+    private tickService: TickService,
+    private holdingRecord: HoldingRecord
   ) { }
 
   isDone(): boolean {
@@ -40,7 +44,16 @@ export class OfflineService {
     return this.totalTicks;
   }
 
+  getGeneratedHoldings(): {holding: Holding, startAmount: Num, generated: Num}[] {
+    return this.generatedHoldings.filter(generatedHolding => {
+      return generatedHolding.generated.gt(new Num(0, 0));
+    })
+  }
+
   private calculateOfflineProgress() {
+    // Invert holding list
+    this.generatedHoldings = this.getHoldingList();
+
     const calculatingOfflineProgress = setInterval(() => {
       if (this.ticksDone >= this.totalTicks) {
         this.done = true;
@@ -56,6 +69,7 @@ export class OfflineService {
         this.tickService.gameTick(new Num(1, 1));
         this.ticksDone += 100;
       }
+      this.updateGeneratedHoldings();
     }, 0);
   }
 
@@ -89,5 +103,24 @@ export class OfflineService {
   close() {
     this.closed = true;
     this.done = true;
+  }
+
+  private getHoldingList(): {holding: Holding, startAmount: Num, generated: Num}[] {
+    // Invert holding list
+    const holdingList = this.holdingRecord.getList();
+    let holdingListCopy: {holding: Holding, startAmount: Num, generated: Num}[] = [];
+    for (const holding of holdingList) {
+      holdingListCopy = [
+        {holding: holding, startAmount: holding.amount.copy(), generated: new Num(0, 0)},
+        ...holdingListCopy
+      ];
+    }
+    return holdingListCopy;
+  }
+
+  private updateGeneratedHoldings() {
+    for (const generatedHolding of this.generatedHoldings) {
+      generatedHolding.generated = generatedHolding.holding.amount.sub(generatedHolding.startAmount);
+    }
   }
 }

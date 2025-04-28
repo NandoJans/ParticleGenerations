@@ -6,6 +6,7 @@ import {Require} from "./interfaces/require";
 import {Resetable} from "./interfaces/resetable";
 import {Storable} from "./interfaces/storable";
 import {LocalStorageHelper} from "../helpers/local-storage-helper";
+import {Transaction} from "./interfaces/transaction";
 
 export abstract class Upgrade extends Buyable implements Storable, Require, Resetable {
   abstract override name: string
@@ -83,5 +84,11 @@ export abstract class Upgrade extends Buyable implements Storable, Require, Rese
     this.bought = this.localStorageHelper.loadNum(this.bought, 'bought')
     this.unlocked = this.localStorageHelper.load(this.unlocked, 'unlocked')
     this.auto = this.localStorageHelper.load(this.auto, 'auto')
+  }
+
+  override buy(amount: Num = new Num(1, 0)): Transaction {
+    const transaction = super.buy(amount);
+    console.log('Buy', this.name, this.bought.toString(), transaction.amount.toString());
+    return transaction;
   }
 }

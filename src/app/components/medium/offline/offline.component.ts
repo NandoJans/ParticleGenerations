@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {OfflineService} from "../../../services/offline.service";
+import {Holding} from "../../../classes/features/holding";
+import {Num} from "../../../num";
 
 @Component({
   selector: 'app-offline',
@@ -46,5 +48,13 @@ export class OfflineComponent implements OnInit {
 
   isDone() {
     return this.offlineService.isDone();
+  }
+
+  getGeneratedHoldings(): {holding: Holding, startAmount: Num, generated: Num}[] {
+    return this.offlineService.getGeneratedHoldings();
+  }
+
+  stopClose(event: MouseEvent) {
+    event.stopPropagation();
   }
 }

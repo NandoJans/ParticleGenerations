@@ -1,10 +1,19 @@
 <div class="background" (click)="close()">
-  <div class="container">
+  <div class="container" (click)="stopClose($event)">
     <div class="progress-bar">
       <div class="progress" [style]="'width: ' + getOfflineProgress() + '%;'"></div>
     </div>
     <div class="progress-text">
       <p>{{ getTickProgress() }}/{{ getTotalTicks() }} Ticks</p>
+    </div>
+    <div class="holdings">
+      <div class="holdings-text">
+        <h3>Generated Holdings</h3>
+      </div>
+      <div *ngFor="let generatedHolding of getGeneratedHoldings()" class="holdings-value {{ generatedHolding.holding.getStyle() }}">
+        <p class="holding-name">{{ generatedHolding.holding.holdingDisplay.getAmountSuffix() }}</p>
+        <p class="holding-generated">{{ generatedHolding.generated.toString() }}</p>
+      </div>
     </div>
     <button *ngIf="isDone()" class="success" (click)="close()">
       Close
