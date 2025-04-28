@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {Num} from "../../../num";
 import {Generator} from "../../../classes/features/generator";
 import {GeneratorRecord} from "../../../classes/records/generators/generator-record";
+import {EnhancementService} from "../../../services/enhancement.service";
 
 @Component({
   selector: 'app-generator',
@@ -11,12 +12,14 @@ import {GeneratorRecord} from "../../../classes/records/generators/generator-rec
 export class GeneratorComponent {
   @Input() generator: Generator = GeneratorRecord.firstRedGenerator;
 
-  constructor() {}
-
+  constructor(
+    private enhancementService: EnhancementService
+  ) {}
 
   getAmount(): Num {
     return this.generator.amount;
   }
+
 
   getDisplayName(): string {
     return this.generator.displayName;
@@ -31,7 +34,9 @@ export class GeneratorComponent {
   }
 
   buy() {
-    if (this.getIsBuyable()) {
+    if (this.isEnhancing()) {
+      this.enhancementService.enhance(this.generator);
+    } else if (this.getIsBuyable()) {
       this.generator.buy();
     }
   }
@@ -42,5 +47,24 @@ export class GeneratorComponent {
 
   getCurrencyAbbreviation() {
     return this.generator.currency.abbreviation;
+  }
+
+  isEnhancing(): boolean {
+    return this.enhancementService.isEnhancing() && this.generator.enhancement !== this.enhancementService.enhancing;
+  }
+
+  getEnhancementStyle(): string {
+    if (this.enhancementService.enhancing) {
+      return this.enhancementService.enhancing.style;
+    }
+    return '';
+  }
+
+  isEnhanced() {
+    return this.generator.enhancement !== null;
+  }
+
+  getEnhancedStyle() {
+    return this.generator.enhancement?.style;
   }
 }

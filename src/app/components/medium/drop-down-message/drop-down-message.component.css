@@ -6,6 +6,7 @@ div.container {
   height: 100px;
   border-radius: 10px;
   transition: 0.5s ease-in-out;
+  z-index: 10;
 }
 
 div.container.open {

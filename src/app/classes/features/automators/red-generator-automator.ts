@@ -16,16 +16,17 @@ export class RedGeneratorAutomator extends Automator {
   goalString: string;
   generator: RedGenerator;
   style: Styles = Styles.RED_AUTOMATOR;
-  resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED, this);
+  resetId: ResetKey;
 
-  constructor(generator: RedGenerator) {
-    super();
+  constructor(saveName: string, generator: RedGenerator) {
+    super(saveName);
     this.displayName = generator.stringRank + ' Red Generator Automator';
     this.name = 'red-generator-automator-' + generator.rank;
     this.goalString = 'Buy ' + this.goal.toString() + ' ' + generator.stringRank + ' Red Generators';
     this.requirement = [
       new Requirement(UpgradeRecord.redGeneratorExtension, new Num(generator.rank - 1, 0), this)
     ]
+    this.resetId = ResetHelper.registerReset(ResetKey.RED, this);
     this.generator = generator
   }
 
@@ -38,6 +39,11 @@ export class RedGeneratorAutomator extends Automator {
   }
 
   task(): Num {
-    return StatsService.getNum(this.generator.name, 'totalBought');
+    return StatsService.getNum(this.generator.name, 'totalBoughtAutomator');
+  }
+
+  override reset() {
+    StatsService.setNum(this.generator.name, 'totalBoughtAutomator', new Num(0, 0));
+    super.reset();
   }
 }

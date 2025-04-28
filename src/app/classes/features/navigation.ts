@@ -14,7 +14,7 @@ export class Navigation extends GameElement {
   localStorageHelper: LocalStorageHelper;
 
   constructor(name: string, displayIcon: IconDefinition, location: string, requirement: { requirement: Require, amount: Num }[], wasOn: string, unlocked: boolean = false) {
-    super();
+    super(name);
     this.name = name;
     this.displayIcon = displayIcon;
     this.location = location;

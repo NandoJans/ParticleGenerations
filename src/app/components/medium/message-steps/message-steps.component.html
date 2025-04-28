@@ -1,0 +1,32 @@
+<div class="background" (click)="close()">
+  <div class="container {{ getStyle() }}" (click)="stopClose($event)">
+    <div class="icon">
+      <fa-icon [icon]="getIcon()"></fa-icon>
+    </div>
+    <div class="header">
+      <h2>{{ getTitle() }}</h2>
+    </div>
+    <div class="message">
+      <p>
+        {{ getMessage() }}
+      </p>
+    </div>
+    <div class="footer">
+      <div>
+        <button *ngIf="showLeftButton()" class="" (click)="previous()">
+          <fa-icon [icon]="faArrowLeft"></fa-icon>
+        </button>
+      </div>
+      <div>
+        <button *ngIf="showDoneButton()" class="" (click)="close()">
+          <fa-icon [icon]="faCheck"></fa-icon>
+        </button>
+      </div>
+      <div>
+        <button *ngIf="showRightButton()" class="" (click)="next()">
+          <fa-icon [icon]="faArrowRight"></fa-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -6,17 +6,22 @@
   --background-color-light: rgb(114, 114, 114);
 
   --background-color-red: rgb(109, 48, 48);
+  --background-color-yellow: rgb(173, 134, 51);
   --background-color-green: rgb(48, 109, 48);
   --background-color-blue: rgb(51, 134, 173);
 
   --accent-color-green: #64D24AFF;
+  --accent-color-yellow: rgb(240, 240, 27);
   --accent-color-blue: rgb(92, 184, 227);
 
   /* Text colors */
   --text-color-main: rgb(226, 226, 226);
   --text-color-light: rgb(155, 155, 155);
   --text-color-darkened: rgb(95, 95, 95);
+
   --text-color-red: rgb(224, 67, 67);
+  --text-color-yellow: rgb(240, 240, 27);
+  --text-color-green: rgb(67, 224, 67);
 }
 
 html, body {
@@ -31,12 +36,7 @@ html, body {
   background-color: var(--background-color-2);
 }
 
-botton:hover {
-  box-shadow: 0 100000px 100000px rgba(255, 255, 255, 0.5) inset;
-}
-
-button.success {
-  background-color: var(--accent-color-green);
+button.button {
   color: var(--text-color-main);
   border: none;
   border-radius: 5px;
@@ -44,6 +44,30 @@ button.success {
   font-size: 1.2rem;
   cursor: pointer;
   font-weight: bold;
+}
+
+button.button:hover {
+  box-shadow: 0 0 1000px rgba(255, 255, 255, 0.2) inset;
+}
+
+button.button.success {
+  background-color: var(--accent-color-green);
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.baseline {
+  align-items: baseline;
+}
+
+.flex-row * {
+  margin: 4px;
 }
 
 .upgrade-row, .generator-row {

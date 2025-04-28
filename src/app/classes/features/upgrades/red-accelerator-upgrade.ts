@@ -8,8 +8,8 @@ import {ResetKey} from "../../enums/reset-key";
 import {ResetHelper} from "../../helpers/reset-helper";
 
 export abstract class RedAcceleratorUpgrade extends Upgrade {
-  protected constructor(name: string) {
-    super();
+  protected constructor(saveName: string, name: string) {
+    super(saveName);
     this.name = name;
     this.requirement = [
       new Requirement(HoldingRecord.redParticles, new Num(1, 75), this, false)

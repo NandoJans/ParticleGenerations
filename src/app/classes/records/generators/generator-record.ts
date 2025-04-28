@@ -13,14 +13,14 @@ import {RedAcceleratorGenerator} from "../../features/generators/red-accelerator
 })
 export class GeneratorRecord extends Record {
   // Red Generators
-  static firstRedGenerator: FirstRedGenerator     = new FirstRedGenerator();
-  static secondRedGenerator: SecondRedGenerator   = new SecondRedGenerator();
-  static thirdRedGenerator: ThirdRedGenerator     = new ThirdRedGenerator();
-  static fourthRedGenerator: FourthRedGenerator   = new FourthRedGenerator();
-  static fifthRedGenerator: FifthRedGenerator     = new FifthRedGenerator();
+  static firstRedGenerator: FirstRedGenerator     = new FirstRedGenerator('firstRedGenerator');
+  static secondRedGenerator: SecondRedGenerator   = new SecondRedGenerator('secondRedGenerator');
+  static thirdRedGenerator: ThirdRedGenerator     = new ThirdRedGenerator('thirdRedGenerator');
+  static fourthRedGenerator: FourthRedGenerator   = new FourthRedGenerator('fourthRedGenerator');
+  static fifthRedGenerator: FifthRedGenerator     = new FifthRedGenerator('fifthRedGenerator');
 
   // Red Accelerators
-  static redAcceleratorGenerator: RedAcceleratorGenerator = new RedAcceleratorGenerator();
+  static redAcceleratorGenerator: RedAcceleratorGenerator = new RedAcceleratorGenerator('redAcceleratorGenerator');
 
 
   static override list: Generator[] = [

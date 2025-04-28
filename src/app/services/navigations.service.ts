@@ -3,7 +3,7 @@ import {Router} from "@angular/router";
 import {LocalStorageHelper} from "../classes/helpers/local-storage-helper";
 import {Navigation} from "../classes/features/navigation";
 import {SubNavigation} from "../classes/features/sub-navigation";
-import {faAtom, faCogs, faForward, faIndustry} from "@fortawesome/free-solid-svg-icons";
+import {faAtom, faCogs, faForward, faIndustry, faMountain} from "@fortawesome/free-solid-svg-icons";
 import {HoldingRecord} from "../classes/records/holdings/holding-record";
 import {Num} from "../num";
 
@@ -13,6 +13,9 @@ import {Num} from "../num";
 export class NavigationsService {
   navigations: {[key: string]: Navigation} = {
     red: new Navigation('red', faAtom, 'red', [], 'particles', true),
+    yellow: new Navigation('yellow', faMountain, 'yellow', [
+      {requirement: HoldingRecord.yellowPrestiges, amount: new Num(1, 0)},
+    ], 'yellow', true),
     automators: new Navigation('automators', faCogs, 'automators', [], 'red', true),
 }
 
@@ -21,6 +24,11 @@ export class NavigationsService {
     redParticles: new SubNavigation('redParticles', faIndustry, 'particles', this.navigations['red'], [], true),
     redAccelerators: new SubNavigation('redAccelerators', faForward, 'accelerators', this.navigations['red'], [
       {requirement: HoldingRecord.redParticles, amount: new Num(1, 75)},
+    ], false),
+
+    // Yellow
+    yellowUpgrades: new SubNavigation('yellowUpgrades', faMountain, 'upgrades', this.navigations['yellow'], [
+      {requirement: HoldingRecord.yellowPrestiges, amount: new Num(1, 0)},
     ], false),
 
     // Automators

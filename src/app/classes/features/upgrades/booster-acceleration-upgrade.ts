@@ -63,6 +63,7 @@ export class BoosterAccelerationUpgrade extends Upgrade {
   override buy(amount: Num = new Num(1, 0)): Transaction {
     const transaction = super.buy(amount);
     StatsService.addNum(UpgradeRecord.redGeneratorBooster.name, 'totalBought', this.freeBuys);
+    StatsService.addNum(UpgradeRecord.redGeneratorBooster.name, 'totalBoughtAutomator', this.freeBuys);
     return transaction;
   }
 }

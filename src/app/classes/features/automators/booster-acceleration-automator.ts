@@ -28,6 +28,11 @@ export class BoosterAccelerationAutomator extends Automator {
   }
 
   task(): Num {
-    return StatsService.getNum(UpgradeRecord.redGeneratorBooster.name, 'totalBought') || new Num(1, 0);
+    return StatsService.getNum(UpgradeRecord.redGeneratorBooster.name, 'totalBoughtAutomator') || new Num(1, 0);
+  }
+
+  override reset() {
+    StatsService.setNum(UpgradeRecord.redGeneratorBooster.name, 'totalBoughtAutomator', new Num(0, 0));
+    super.reset();
   }
 }

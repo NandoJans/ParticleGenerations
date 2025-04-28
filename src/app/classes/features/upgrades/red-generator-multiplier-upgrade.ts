@@ -8,13 +8,14 @@ import {Requirement} from "../interfaces/requirement";
 export class RedGeneratorMultiplierUpgrade extends RedGeneratorUpgrade {
 
   constructor(
+    saveName: string,
     cost: Num,
     increase: Num,
     scaling: Num,
     buffer: Num,
     generator: RedGenerator,
   ) {
-    super(cost, increase, scaling, buffer, generator);
+    super(saveName, cost, increase, scaling, buffer, generator);
     this.name = `red-generator-multiplier-upgrade-${generator.rank}`;
     this.resetId = ResetHelper.registerReset(ResetKey.RED_EXTENSION, this);
     this.requirement = [

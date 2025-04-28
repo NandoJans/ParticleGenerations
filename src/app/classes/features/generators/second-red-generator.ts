@@ -25,6 +25,7 @@ export class SecondRedGenerator extends RedGenerator {
   rank: number = 2;
 
   multiplierUpgrade: RedGeneratorMultiplierUpgrade = new RedGeneratorMultiplierUpgrade(
+    this.name + '.multiplierUpgrade',
     new Num(1, 4),
     new Num(1, 3),
     new Num(1, 1),
@@ -32,6 +33,7 @@ export class SecondRedGenerator extends RedGenerator {
     this
   );
   buyMultiplierUpgrade: RedGeneratorBuyMultiplierUpgrade = new RedGeneratorBuyMultiplierUpgrade(
+    this.name + '.buyMultiplierUpgrade',
     new Num(1, 5),
     new Num(1, 4),
     new Num(1, 1),

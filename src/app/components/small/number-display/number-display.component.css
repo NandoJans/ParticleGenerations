@@ -19,3 +19,7 @@ div span p {
 .red {
   color: var(--text-color-red);
 }
+
+.yellow {
+  color: var(--text-color-yellow);
+}

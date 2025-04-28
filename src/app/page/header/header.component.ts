@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {PrestigeLayersService} from "../../services/prestige-layers.service";
-import {ChallengeService} from "../../services/interactables/challenge.service";
-import {App} from "../../App";
+import {PrestigeLayer} from "../../classes/features/prestiges/prestige-layer";
 
 @Component({
   selector: 'app-header',
@@ -9,21 +8,11 @@ import {App} from "../../App";
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  redParticles: string = '';
+  yellowPrestigeLayer: PrestigeLayer = PrestigeLayersService.yellowPrestigeLayer
 
-  docYellow: string | undefined;
-  docGreen: string | undefined;
-  docBlue: string | undefined;
-  docPurple: string | undefined;
+  constructor(
 
-  inPurplePhase: boolean | undefined;
-  constructor() {
-    App.subscribe().subscribe((r) => {
-      if (r) {
-        this.ngOnInit();
-      }
-    })
-  }
+  ) {}
 
   ngOnInit(): void {
   }

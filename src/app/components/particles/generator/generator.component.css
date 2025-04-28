@@ -18,12 +18,33 @@ button p {
 }
 
 button.red {
+  --linear-gradient-to: var(--background-color-red);
   background-color: var(--background-color-red);
   border: 1px solid var(--background-color-red);
 }
 
 button.red.buyable {
+  --linear-gradient-to: var(--background-color-3);
   background-color: var(--background-color-3);
   border: 1px solid var(--text-color-red);
   color: var(--text-color-red);
+}
+
+button.enhancing.enhancing-yellow {
+  background-color: var(--background-color-3);
+  border: 1px solid var(--accent-color-yellow);
+  color: var(--text-color-yellow);
+}
+
+button.enhancing:hover {
+  box-shadow: 0 0 10000px rgba(255, 255, 255, 0.1) inset;
+  cursor: pointer;
+}
+
+button.enhanced {
+  background: linear-gradient(to right, var(--linear-gradient-from), var(--linear-gradient-to) 25%);
+}
+
+button.enhanced.enhanced-yellow {
+  --linear-gradient-from: var(--background-color-yellow);
 }

@@ -15,7 +15,7 @@ export class SubNavigation extends GameElement {
   localStorageHelper: LocalStorageHelper;
 
   constructor(name: string, displayName: IconDefinition, location: string, parent: Navigation, requirement: { requirement: Require, amount: Num }[], unlocked: boolean = false) {
-    super();
+    super(name);
     this.name = name;
     this.displayName = displayName;
     this.location = location;

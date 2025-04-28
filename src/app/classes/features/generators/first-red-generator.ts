@@ -22,6 +22,7 @@ export class FirstRedGenerator extends RedGenerator {
   override startUnlocked: boolean = true;
 
   multiplierUpgrade: RedGeneratorMultiplierUpgrade = new RedGeneratorMultiplierUpgrade(
+    this.name + '.multiplierUpgrade',
     new Num(1, 2),
     new Num(1, 2),
     new Num(1, 1),
@@ -29,6 +30,7 @@ export class FirstRedGenerator extends RedGenerator {
     this
   );
   buyMultiplierUpgrade: RedGeneratorBuyMultiplierUpgrade = new RedGeneratorBuyMultiplierUpgrade(
+    this.name + '.buyMultiplierUpgrade',
     new Num(1, 3),
     new Num(1, 3),
     new Num(1, 1),
