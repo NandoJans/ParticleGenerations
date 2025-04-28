@@ -7,15 +7,15 @@ export class ImproveRedAcceleratorsEffectUpgrade extends RedAcceleratorUpgrade {
   cost: Num = new Num(1, 90);
   displayName: string = "Better Acceleration";
   increase: Num = new Num(1, 5);
-  override buffer: Num = new Num(1.05, 0);
-  override baseBuffer: Num = new Num(1.05, 0);
+  override buffer: Num = new Num(1.01, 0);
+  override baseBuffer: Num = new Num(1.01, 0);
   constructor() {
     super("improve-red-accelerator-effect");
   }
 
   action(): Num | undefined {
     const effect: Num = this.buffer.pow(this.amount);
-    HoldingRecord.redAccelerators.powEffect = HoldingRecord.redAccelerators.powEffect.mul(effect);
+    HoldingRecord.redAccelerators.powEffect = HoldingRecord.redAccelerators.powEffect.pow(effect);
     return effect;
   }
 
