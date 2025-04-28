@@ -26,17 +26,60 @@ div.container {
 
 div.progress-bar {
   height: 2rem;
-  margin: 10% 0;
+  margin: 10% 0 0 0;
   width: 90%;
   background-color: var(--background-color-2);
   border: var(--text-color-main) solid 2px;
   border-radius: 5px;
 }
 
+div.progress-text p {
+  margin: 0.5rem 0 1rem 0;
+}
+
 div.progress {
   height: 100%;
   background-color: var(--accent-color-green);
   border-radius: 2px;
+}
+
+div.holdings {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: auto;
+  width: 90%;
+  margin-bottom: 5%;
+  background-color: var(--background-color-1);
+  border: var(--background-color-3) solid 2px;
+  border-radius: 5px;
+}
+
+div.holdings-value {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  padding: 0 5%;
+}
+
+div.holdings-value:nth-child(1) {
+  background-color: var(--background-color-1);
+}
+
+div.holdings-value:nth-child(2) {
+  background-color: var(--background-color-3);
+}
+
+div.holdings-value.red p.holding-name {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+div.holdings-value.red p.holding-name {
+  color: var(--text-color-red);
 }
 
 @media (max-width: 768px) {
