@@ -13,6 +13,7 @@ export class ResetHelper {
   }
 
   static resetOrder: ResetKey[] = [
+    ResetKey.NONE,
     ResetKey.RED_EXTENSION,
     ResetKey.RED_BOOSTER_ACCELERATION,
     ResetKey.RED,
@@ -41,13 +42,15 @@ export class ResetHelper {
   static reset(resetKey: ResetKey): void {
     for (let resetOrderKey of this.resetOrder) {
       console.log('resetting', resetOrderKey);
-      Object.values(this.resetList[resetOrderKey]).forEach(resetable => {
-        resetable.reset();
+      if (this.resetList[resetOrderKey] !== undefined) {
+        Object.values(this.resetList[resetOrderKey]).forEach(resetable => {
+          resetable.reset();
 
-        if (this.isStorable(resetable)) {
-          resetable.save();
-        }
-      });
+          if (this.isStorable(resetable)) {
+            resetable.save();
+          }
+        });
+      }
       if (resetOrderKey === resetKey) {
         break;
       }

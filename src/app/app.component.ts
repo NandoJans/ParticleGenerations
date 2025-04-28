@@ -9,6 +9,7 @@ import {OfflineService} from "./services/offline.service";
 import {MigrateNumAndExpValues} from "./migrations/migrate-num-and-exp-values";
 import {HoldingRecord} from "./classes/records/holdings/holding-record";
 import {Num} from "./num";
+import {MessageStepsService} from "./services/message-steps.service";
 
 @Component({
   selector: 'app-root',
@@ -26,6 +27,7 @@ export class AppComponent implements OnInit{
     private challengeService: ChallengeService,
     private dataManagerService: DataManagerService,
     private offlineService: OfflineService,
+    private messageStepsService: MessageStepsService,
   ) {
     App.subscribe().subscribe((data) => {
       if (data) {
@@ -86,5 +88,9 @@ export class AppComponent implements OnInit{
 
   offlineCalculating(): boolean {
     return !this.offlineService.isClosed();
+  }
+
+  showMessageSteps(): boolean {
+    return this.messageStepsService.showMessageSteps();
   }
 }

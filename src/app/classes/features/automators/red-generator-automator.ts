@@ -38,6 +38,11 @@ export class RedGeneratorAutomator extends Automator {
   }
 
   task(): Num {
-    return StatsService.getNum(this.generator.name, 'totalBought');
+    return StatsService.getNum(this.generator.name, 'totalBoughtAutomator');
+  }
+
+  override reset() {
+    StatsService.setNum(this.generator.name, 'totalBoughtAutomator', new Num(0, 0));
+    super.reset();
   }
 }

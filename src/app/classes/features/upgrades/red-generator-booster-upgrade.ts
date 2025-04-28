@@ -35,6 +35,7 @@ export class RedGeneratorBoosterUpgrade extends RedUpgrade {
   override buy(amount: Num = new Num(1, 0)): Transaction {
     const transaction = super.buy(amount);
     StatsService.addNum(this.name, 'totalBought', transaction.amount);
+    StatsService.addNum(this.name, 'totalBoughtAutomator', transaction.amount);
     return transaction;
   }
 }

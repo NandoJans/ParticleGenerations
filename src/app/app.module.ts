@@ -28,6 +28,7 @@ import { RedAutomatorsComponent } from './pages/automator/red-automators/red-aut
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { DropDownMessageComponent } from './components/medium/drop-down-message/drop-down-message.component';
 import { RedAcceleratorsComponent } from './pages/red/red-accelerators/red-accelerators.component';
+import { MessageStepsComponent } from './components/medium/message-steps/message-steps.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { RedAcceleratorsComponent } from './pages/red/red-accelerators/red-accel
     RedAutomatorsComponent,
     DropDownMessageComponent,
     RedAcceleratorsComponent,
+    MessageStepsComponent,
   ],
     imports: [
         BrowserModule,

@@ -1,17 +1,25 @@
 button {
   width: 100%;
   height: 100%;
-}
-
-button.yellow {
   background-color: var(--background-color-2);
-  color: var(--background-color-yellow);
-  border: 2px solid var(--background-color-yellow);
   border-radius: 5px;
 }
 
+button.yellow {
+  color: var(--background-color-yellow);
+  border: 2px solid var(--background-color-yellow);
+}
+
 button.yellow.reached {
-  background-color: var(--background-color-3);
   color: var(--text-color-yellow);
   border-color: var(--accent-color-yellow);
+}
+
+button.reached {
+  background-color: var(--background-color-3);
+  cursor: pointer;
+}
+
+button.reached:hover {
+  box-shadow: 0 0 1000px rgba(255, 255, 255, 0.2) inset
 }

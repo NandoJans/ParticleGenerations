@@ -17,7 +17,9 @@ export class PrestigeButtonComponent implements OnInit {
   ) { }
 
   prestige() {
-
+    if (this.prestigeLayer.hasReached()) {
+      this.prestigeLayers.prestige(this.prestigeLayer);
+    }
   }
 
   ngOnInit(): void {

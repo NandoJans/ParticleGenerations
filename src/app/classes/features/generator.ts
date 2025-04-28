@@ -83,6 +83,7 @@ export abstract class Generator extends Buyable implements Generatable, Storable
     if (this.hasBought()) {
       StatsService.addNum(this.name, 'totalReset', new Num(1, 0))
       StatsService.addNum(this.type, 'totalReset', new Num(1, 0))
+      StatsService.addNum(this.type, 'totalResetAutomator', new Num(1, 0))
     }
 
     this.bought = new Num(0, 0)
@@ -95,8 +96,8 @@ export abstract class Generator extends Buyable implements Generatable, Storable
 
   override buy(amount: Num = new Num(1, 0)): Transaction {
     const transaction = super.buy(amount);
+    StatsService.addNum(this.name, 'totalBoughtAutomator', transaction.amount)
     StatsService.addNum(this.name, 'totalBought', transaction.amount)
-    console.log('Bought', this.name, transaction.amount.toString(), 'times');
     return transaction
   }
 

@@ -7,17 +7,20 @@ import {ResetHelper} from "../../helpers/reset-helper";
 import {Storable} from "../interfaces/storable";
 import {LocalStorageHelper} from "../../helpers/local-storage-helper";
 import {Holding} from "../holding";
+import {MessageSteps} from "../../display/message-steps";
 
 export class PrestigeLayer extends GameElement implements Resetable, Storable {
   name: string;
   requirement: Requirement[];
   reached: boolean = false;
+  prestigedFirstTime: boolean = false;
   style: string;
   limitPhaseBelow: boolean = true;
   holdingPhaseBelow: Holding;
   amountRequired: Num;
   gainHoldings: {holding: Holding, basedOnRequiredHolding: boolean}[] = [];
   resets: ResetKey;
+  messageSteps: MessageSteps;
 
   constructor(
     name: string,
@@ -26,6 +29,7 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     style: string,
     gainHoldings: {holding: Holding, basedOnRequiredHolding: boolean}[],
     resets: ResetKey,
+    message: MessageSteps
   ) {
     super();
     this.name = name;
@@ -37,12 +41,10 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     this.amountRequired = amountRequired;
     this.gainHoldings = gainHoldings;
     this.resets = resets;
+    this.messageSteps = message;
   }
 
   override unlock(): void | { title: string; message: string } {
-    if (this.unlocked) {
-
-    }
     this.unlocked = true;
     this.reached = true;
   }
@@ -77,12 +79,14 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     const localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey());
     localStorageHelper.save(this.reached, 'reached');
     localStorageHelper.save(this.unlocked, 'unlocked');
+    localStorageHelper.save(this.prestigedFirstTime, 'prestigedFirstTime');
   }
 
   tryLoad(): void {
     const localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey());
     this.reached = localStorageHelper.load(this.reached, 'reached');
     this.unlocked = localStorageHelper.load(this.unlocked, 'unlocked');
+    this.prestigedFirstTime = localStorageHelper.load(this.prestigedFirstTime, 'prestigedFirstTime');
   }
 
   private shouldLimitPhaseBelow(): boolean {
@@ -108,7 +112,7 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
 
   override run(speed: Num) {
     this.applyLimitPhaseBelow();
-
+    this.checkRequirements();
   }
 
   private applyReset() {
@@ -119,6 +123,16 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     if (this.hasReached()) {
       this.applyReset();
       this.addGainHoldings();
+    }
+  }
+
+  firstTimeMessage(): MessageSteps {
+    return this.messageSteps;
+  }
+
+  private checkRequirements() {
+    if (this.holdingPhaseBelow.amount.greq(this.amountRequired)) {
+      this.unlock();
     }
   }
 }

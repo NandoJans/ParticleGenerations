@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {PrestigeLayersService} from "../../services/prestige-layers.service";
 import {App} from "../../App";
 import {HoldingRecord} from "../../classes/records/holdings/holding-record";
+import {YellowParticleHolding} from "../../classes/features/holdings/yellow-particle-holding";
 
 @Component({
   selector: 'app-main',
@@ -15,6 +16,7 @@ export class MainComponent implements OnInit {
   unlockedPurple: boolean | undefined;
 
   purplePhase: boolean = App.purplePhase;
+  yellowParticles: YellowParticleHolding = HoldingRecord.yellowParticles;
 
   constructor(
     public holdingRecord: HoldingRecord
@@ -22,5 +24,9 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
     this.purplePhase = App.purplePhase;
+  }
+
+  getPrestigedYellow(): boolean {
+    return PrestigeLayersService.yellowPrestigeLayer.prestigedFirstTime
   }
 }
