@@ -12,11 +12,11 @@ import {StatsService} from "../../../services/stats.service";
 
 export class BoosterAccelerationUpgrade extends Upgrade {
   baseCost: Num = new Num(1, 5);
-  bought: Num = new Num(0, 0);
   cost: Num = new Num(1, 5);
-  increase: Num = new Num(1, 1);
-  override scaling = new Num(2, 1);
-  override scalingStart: Num = new Num(1, 10);
+  increase: Num = new Num(1, 3);
+  override scaling = new Num(2, 2);
+  override scalingStart: Num = new Num(1, 25);
+  bought: Num = new Num(0, 0);
 
   override buffer: Num = new Num(0.025, 0);
   override baseBuffer: Num = new Num(0.025, 0);
