@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {PrestigeLayersService} from "../../../services/prestige-layers.service";
 import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
+import {PrestigeLayer} from "../../../classes/features/prestiges/prestige-layer";
 
 @Component({
   selector: 'app-prestige-button',
@@ -8,9 +9,8 @@ import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
   styleUrls: ['./prestige-button.component.css']
 })
 export class PrestigeButtonComponent implements OnInit {
-  @Input() name: string | undefined;
-  @Input() buttonId: string | undefined;
-  @Input() style: string | undefined;
+  @Input() prestigeLayer: PrestigeLayer = PrestigeLayersService.yellowPrestigeLayer;
+
   constructor(
     private prestigeLayers: PrestigeLayersService,
     public holdingRecord: HoldingRecord
@@ -24,4 +24,15 @@ export class PrestigeButtonComponent implements OnInit {
 
   }
 
+  getDisplay() {
+    return (this.prestigeLayer.isUnlocked()) ? '' : 'none';
+  }
+
+  getName() {
+    return this.prestigeLayer.name.charAt(0).toUpperCase() + this.prestigeLayer.name.slice(1);
+  }
+
+  getReached(): string {
+    return (this.prestigeLayer.hasReached()) ? 'reached' : '';
+  }
 }
