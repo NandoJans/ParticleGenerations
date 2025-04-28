@@ -59,4 +59,12 @@ export class GeneratorComponent {
     }
     return '';
   }
+
+  isEnhanced() {
+    return this.generator.enhancement !== null;
+  }
+
+  getEnhancedStyle() {
+    return this.generator.enhancement?.style;
+  }
 }

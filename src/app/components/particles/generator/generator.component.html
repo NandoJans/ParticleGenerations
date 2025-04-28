@@ -4,6 +4,7 @@
   +generator.style+' '
   +((getIsBuyable()) ? 'buyable' : '')+' '
   +((isEnhancing()) ? 'enhancing enhancing-' + getEnhancementStyle() : '')+' '
+  +((isEnhanced()) ? 'enhanced enhanced-' + getEnhancedStyle() : '')+' '
 "
   (click)="buy()"
 >

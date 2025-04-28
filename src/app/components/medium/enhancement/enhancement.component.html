@@ -9,7 +9,7 @@
     Stop {{ enhancement.displayName }}
   </button>
 </div>
-<div *ngIf="!canEnhance() || true" [class]="'flex-row baseline '+enhancement.style">
+<div *ngIf="!canEnhance()" [class]="'flex-row baseline '+enhancement.style">
   <p>
     You need
   </p>
