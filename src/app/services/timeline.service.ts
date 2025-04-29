@@ -41,6 +41,22 @@ export class TimelineService {
     .build()
     .build()
 
+  static yellowTimeline: Timeline = TimelineFactory.start(
+    'yellow-timeline',
+    Styles.YELLOW,
+    'Yellow Timeline',
+    'Yellow is the second phase of the universe. It is a phase of energy and power. Yellow is the color of the sun and the stars. It is a phase of light and heat. Yellow is the color of life and growth.'
+  )
+    .addTimelineEvent(
+      'yellow-phase-lock',
+      'Yellow Phase Lock',
+      'Yellow phase is locked. You need to unlock yellow power to open it.',
+      HoldingRecord.yellowPrestiges,
+      new Num(1, 0)
+    )
+    .build()
+    .build()
+
   static list: Timeline[] = [
     TimelineService.redTimeline,
   ]
