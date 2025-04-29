@@ -1,0 +1,28 @@
+div.timeline-event {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 25%;
+  background: var(--background-color-4);
+  border-radius: 10px;
+  border: 5px solid var(--background-color-3);
+}
+
+div.timeline-event.reached {
+  background: var(--background-color-2);
+  border: 5px solid var(--accent-color);
+}
+
+div.timeline-event.red {
+  --background-color: var(--accent-color-red)
+}
+
+div.timeline-event.yellow {
+  --background-color: var(--accent-color-yellow)
+}
+
+@media (max-width: 768px) {
+  div.timeline-event {
+    margin: 0 5%;
+  }
+}

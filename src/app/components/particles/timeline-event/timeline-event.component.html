@@ -1,10 +1,4 @@
-<div id="{{ name }}">
-  <div *ngIf="hasProgress" class="progress-bar-container">
-    <div [id]="name+'-progress'" class="progress-bar {{ type }}" style="height: 0"><p>0%</p></div>
-  </div>
-  <div class="timeline-event {{ type }}" [id]="name+'-event'">
-    <h3>{{ displayName }}</h3>
-    <p>{{ description }}</p>
-    <p>Requirement: {{ requirement }} {{ abbreviation }}</p>
-  </div>
+<div [class]="'timeline-event '+getStyle()">
+  <h2>{{ getTitle() }}</h2>
+  <p>{{ getMessage() }}</p>
 </div>

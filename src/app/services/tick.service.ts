@@ -15,6 +15,7 @@ import {Holding} from "../classes/features/holding";
 import {Multiplier} from "../classes/features/multiplier";
 import {PrestigeLayersService} from "./prestige-layers.service";
 import {EnhancementService} from "./enhancement.service";
+import {TimelineService} from "./timeline.service";
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,7 @@ export class TickService {
     private holdingService: HoldingService,
     private enhancementService: EnhancementService,
     private prestigeLayersService: PrestigeLayersService,
+    private timelineService: TimelineService,
     private dropDownMessageService: DropDownMessageService
   ) {}
 
@@ -59,6 +61,7 @@ export class TickService {
       });
     });
 
+    this.timelineService.tick();
     this.enhancementService.tick();
     this.prestigeLayersService.tick(speed);
     this.componentService.reloadComponents();
