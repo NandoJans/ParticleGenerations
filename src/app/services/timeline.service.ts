@@ -28,7 +28,15 @@ export class TimelineService {
       'Particle Accelerators',
       'Things need to go faster, red accelerators tend to behave that way.',
       HoldingRecord.redParticles,
-      new Num(1, 0)
+      new Num(1, 75)
+    )
+    .build()
+    .addTimelineEvent(
+      'yellow-phase-unlock',
+      'Unlock yellow phase',
+      'What do we do with all these red particles? We need to unlock the yellow phase.',
+      HoldingRecord.redParticles,
+      new Num(1, 1000)
     )
     .build()
     .build()
@@ -44,6 +52,18 @@ export class TimelineService {
   tick() {
     this.getList().forEach(timeline => {
       timeline.run();
+    })
+  }
+
+  save() {
+    this.getList().forEach(timeline => {
+      timeline.save();
+    })
+  }
+
+  load() {
+    this.getList().forEach(timeline => {
+      timeline.tryLoad();
     })
   }
 }

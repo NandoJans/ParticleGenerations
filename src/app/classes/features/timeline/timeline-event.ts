@@ -6,7 +6,9 @@ import {LocalStorageHelper} from "../../helpers/local-storage-helper";
 
 export class TimelineEvent implements Storable {
   shouldShow: boolean = false;
-  unlocked: boolean = false;
+  reached: boolean = false;
+  firstTime: boolean = true;
+  highestAmount: Num = new Num(1, 0);
 
   constructor(
     public name: string,
@@ -30,23 +32,48 @@ export class TimelineEvent implements Storable {
 
   save() {
     this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey());
-    this.localStorageHelper.save(this.unlocked, 'unlocked');
+    this.localStorageHelper.save(this.reached, 'reached');
     this.localStorageHelper.save(this.shouldShow, 'shouldShow');
+    this.localStorageHelper.save(this.firstTime, 'firstTime');
+    this.localStorageHelper.saveNum(this.highestAmount, 'highestAmount');
   }
 
   tryLoad() {
     this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey());
-    this.unlocked = this.localStorageHelper.load(this.unlocked, 'unlocked');
+    this.reached = this.localStorageHelper.load(this.reached, 'reached');
     this.shouldShow = this.localStorageHelper.load(this.shouldShow, 'shouldShow');
+    this.firstTime = this.localStorageHelper.load(this.firstTime, 'firstTime');
+    this.highestAmount = this.localStorageHelper.loadNum(this.highestAmount, 'highestAmount');
   }
 
-  unlock(): void {
-    this.unlocked = true;
+  reach(): void {
+    this.reached = true;
     this.shouldShow = true;
-    this.timeline.onUnlockedEvent(this);
   }
 
   show() {
     this.shouldShow = true;
+  }
+
+  run(): boolean {
+    this.updateHighestAmount();
+
+    if (!this.reached && this.holdingRequirement.amount.greq(this.requiredAmount)) {
+      this.reach();
+      const result = this.firstTime;
+      this.firstTime = false;
+      return result;
+    }
+    return false;
+  }
+
+  private updateHighestAmount() {
+    if (this.holdingRequirement.amount.greq(this.highestAmount)) {
+      this.highestAmount = this.holdingRequirement.amount;
+    }
+  }
+
+  getNext(): TimelineEvent | null {
+    return this.timeline.getNext(this);
   }
 }

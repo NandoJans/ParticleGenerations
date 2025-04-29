@@ -19,8 +19,9 @@ export class TimelineEventComponent implements OnInit {
     new Num(1, 0),
     new Timeline("test", Styles.RED, "test", "test")
   );
+  next: TimelineEvent | null = null;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
   }
@@ -35,5 +36,53 @@ export class TimelineEventComponent implements OnInit {
 
   getStyle() {
     return this.timelineEvent.timeline.style;
+  }
+
+  shouldShow() {
+    return this.timelineEvent.shouldShow;
+  }
+
+  hasReached() {
+    return this.timelineEvent.reached
+  }
+
+  getRequirement() {
+    return this.timelineEvent.requiredAmount.toString();
+  }
+
+  getAbbreviation() {
+    return this.timelineEvent.holdingRequirement.abbreviation;
+  }
+
+  hasNext(): boolean {
+    return this.getNext() !== null && this.getNext() !== undefined;
+  }
+
+  getNext() {
+    if (this.next) return this.next;
+    this.next = this.timelineEvent.getNext();
+    return this.next;
+  }
+
+  getProgress(): number {
+    const next = this.getNext();
+    if (next instanceof TimelineEvent) {
+      const start = this.timelineEvent.requiredAmount;
+      const goal = next.requiredAmount;
+      const progress = this.timelineEvent.highestAmount.div(start);
+
+      const percentage = progress.log(10)
+        .div(goal.log(10))
+        .mul(new Num(1, 2))
+        .toNumber();
+      if (percentage > 100) {
+        return 100;
+      } else if (percentage < 0) {
+        return 0
+      } else {
+        return percentage;
+      }
+    }
+    return 0;
   }
 }

@@ -48,11 +48,6 @@ button.unlock h4 {
   font-size: 2rem;
 }
 
-button.red-accelerator.buyable {
-  background-color: #fff;
-  background-repeat: repeat;
-}
-
 button.sub {
   height: 5.5rem;
   width: 13rem;
@@ -99,9 +94,22 @@ button.enhancing:hover {
 }
 
 button.enhanced {
-  background: linear-gradient(to top, var(--linear-gradient-from), var(--linear-gradient-to) 25%);
+  background: linear-gradient(to bottom right,
+  var(--linear-gradient-to) 19%,
+  var(--linear-gradient-from) 20%,
+  var(--linear-gradient-from) 30%,
+  var(--linear-gradient-to) 31%,
+  var(--linear-gradient-to) 69%,
+  var(--linear-gradient-from) 70%,
+  var(--linear-gradient-from) 80%,
+  var(--linear-gradient-to) 81%
+  );
 }
 
 button.enhanced.enhanced-yellow {
   --linear-gradient-from: var(--background-color-yellow);
+}
+
+button.enhance.buyable.enhanced-yellow {
+  --linear-gradient-from: var(--background-color-yellow-dark);
 }

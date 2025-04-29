@@ -1,5 +1,6 @@
 import {TimelineEvent} from "./timeline-event";
 import {Styles} from "../../enums/styles";
+import {DropDownMessageService} from "../../../services/visuals/drop-down-message.service";
 
 export class Timeline {
   name: string;
@@ -16,13 +17,46 @@ export class Timeline {
   }
 
   onUnlockedEvent(event: TimelineEvent) {
-    const index = this.events.indexOf(event);
-    if (index > -1 && index < this.events.length) {
-      this.events[index + 1].show();
+    const nextEvent = this.getNext(event);
+    if (nextEvent) {
+      nextEvent.show();
     }
   }
 
-  run() {
+  dropDown(event: TimelineEvent) {
+    DropDownMessageService.dropDown(
+      'You have reached a new timeline event!',
+      event.title + ': ' + event.message,
+      'success'
+    )
+  }
 
+  run() {
+    this.events.forEach(event => {
+      if (event.run()) {
+        this.dropDown(event);
+        this.onUnlockedEvent(event);
+      }
+    });
+  }
+
+  save() {
+    this.events.forEach(event => {
+      event.save();
+    });
+  }
+
+  tryLoad() {
+    this.events.forEach(event => {
+      event.tryLoad();
+    })
+  }
+
+  getNext(event: TimelineEvent) {
+    const index = this.events.indexOf(event);
+    if (index > -1 && index < this.events.length) {
+      return this.events[index + 1];
+    }
+    return null;
   }
 }

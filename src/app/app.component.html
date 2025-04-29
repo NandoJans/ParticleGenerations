@@ -6,7 +6,7 @@
 <main [class]="getActiveChallengeStyle()">
   <app-main style="width: 100%; height: 100%;"></app-main>
   <app-message-steps *ngIf="showMessageSteps()"></app-message-steps>
-  <app-offline *ngIf="offlineCalculating()"></app-offline>
+  <app-offline *ngIf="offlineCalculating() && false"></app-offline>
 </main>
 <div style="height: 15%; width: 100%"></div>
 <footer>
