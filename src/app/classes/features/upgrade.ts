@@ -6,9 +6,11 @@ import {Require} from "./interfaces/require";
 import {Resetable} from "./interfaces/resetable";
 import {Storable} from "./interfaces/storable";
 import {LocalStorageHelper} from "../helpers/local-storage-helper";
-import {Transaction} from "./interfaces/transaction";
+import {Enhancable} from "./interfaces/enhancable";
+import {Enhancement} from "./enhancements/enhancement";
+import {EnhancementRecord} from "../records/enhancement-record";
 
-export abstract class Upgrade extends Buyable implements Storable, Require, Resetable {
+export abstract class Upgrade extends Buyable implements Storable, Require, Resetable, Enhancable {
   abstract override name: string
   abstract displayName: string
   abstract getDescription(): string
@@ -25,6 +27,7 @@ export abstract class Upgrade extends Buyable implements Storable, Require, Rese
   effect: Num | undefined = undefined
   maxEffect: Num | undefined = undefined
   override calculationOrder: number = 400
+  enhancement: Enhancement|null = null
 
   localStorageHelper: LocalStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey())
 
@@ -76,6 +79,10 @@ export abstract class Upgrade extends Buyable implements Storable, Require, Rese
     this.localStorageHelper.saveNum(this.bought, 'bought')
     this.localStorageHelper.save(this.unlocked, 'unlocked')
     this.localStorageHelper.save(this.auto, 'auto')
+    this.localStorageHelper.save(
+      (this.enhancement instanceof Enhancement) ? this.enhancement.saveName : null,
+      'enhancement'
+    )
   }
 
   tryLoad(): void {
@@ -84,5 +91,22 @@ export abstract class Upgrade extends Buyable implements Storable, Require, Rese
     this.bought = this.localStorageHelper.loadNum(this.bought, 'bought')
     this.unlocked = this.localStorageHelper.load(this.unlocked, 'unlocked')
     this.auto = this.localStorageHelper.load(this.auto, 'auto')
+
+    const enhancementName = this.localStorageHelper.load(null, 'enhancement')
+    // @ts-ignore
+    if (enhancementName && enhancementName in EnhancementRecord && EnhancementRecord[enhancementName] instanceof Enhancement) {
+      // @ts-ignore
+      this.enhancement = EnhancementRecord[enhancementName];
+      if (this.enhancement instanceof Enhancement) {
+        this.enhancement.add(this);
+      }
+    } else {
+      this.enhancement = null
+    }
   }
+
+  abstract allowedEnhancements: Enhancement[];
+  abstract enhancementString(enhancement:Enhancement): string;
+  abstract canEnhance(): boolean;
+  abstract enhance(): void;
 }

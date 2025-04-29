@@ -3,6 +3,7 @@ import {Upgrade} from "../../../classes/features/upgrade";
 import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
 import {ComponentService} from "../../../services/component.service";
 import {Subscription} from "rxjs";
+import {EnhancementService} from "../../../services/enhancement.service";
 
 @Component({
   selector: 'app-upgrade',
@@ -15,7 +16,8 @@ export class UpgradeComponent {
 
   constructor(
     public cd: ChangeDetectorRef,
-    private componentService: ComponentService
+    private componentService: ComponentService,
+    private enhancementService: EnhancementService
   ) {
     this.sub = this.componentService.reload$.subscribe(() => {
       this.cd.markForCheck();
@@ -27,7 +29,9 @@ export class UpgradeComponent {
   }
 
   buy() {
-    if (this.getIsBuyable()) {
+    if (this.isEnhancing()) {
+      this.enhancementService.enhance(this.upgrade);
+    } else if (this.getIsBuyable()) {
       this.upgrade.buy();
     }
   }
@@ -58,5 +62,34 @@ export class UpgradeComponent {
 
   getIsMaxed(): boolean {
     return this.upgrade.isMaxed();
+  }
+
+
+  isEnhancing(): boolean {
+    return this.enhancementService.isEnhancing() && this.upgrade.canEnhance() && this.upgrade.enhancement !== this.enhancementService.enhancing;
+  }
+
+  getEnhancementStyle(): string {
+    if (this.enhancementService.enhancing) {
+      return this.enhancementService.enhancing.style;
+    }
+    return '';
+  }
+
+  isEnhanced() {
+    return this.upgrade.enhancement !== null;
+  }
+
+  getEnhancedStyle() {
+    return this.upgrade.enhancement?.style;
+  }
+
+  getEnhancementString(): string {
+    if (this.enhancementService.enhancing) {
+      return this.upgrade.enhancementString(
+        this.enhancementService.enhancing
+      );
+    }
+    return '';
   }
 }

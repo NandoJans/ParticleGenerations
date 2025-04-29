@@ -5,6 +5,7 @@ import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {Transaction} from "../interfaces/transaction";
 import {StatsService} from "../../../services/stats.service";
+import {Enhancement} from "../enhancements/enhancement";
 
 export class RedGeneratorBoosterUpgrade extends RedUpgrade {
   cost: Num = new Num(1, 2);
@@ -37,5 +38,13 @@ export class RedGeneratorBoosterUpgrade extends RedUpgrade {
     StatsService.addNum(this.name, 'totalBought', transaction.amount);
     StatsService.addNum(this.name, 'totalBoughtAutomator', transaction.amount);
     return transaction;
+  }
+
+  override enhance(): void {
+    this.buffer = this.buffer.add(this.enhancement?.getAddition().mul(new Num(2.5, -2)) as Num)
+  }
+
+  override enhancementString(enhancement: Enhancement): string {
+    return `Adds ${enhancement.getAddition().mul(new Num(2.5, -2)).toString(3)}x to red generator booster production.`;
   }
 }

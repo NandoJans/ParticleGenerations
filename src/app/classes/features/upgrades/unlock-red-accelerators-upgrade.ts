@@ -7,6 +7,8 @@ import {Styles} from "../../enums/styles";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {HoldingRecord} from "../../records/holdings/holding-record";
 import {GeneratorRecord} from "../../records/generators/generator-record";
+import { Enhancement } from "../enhancements/enhancement";
+import {EnhancementRecord} from "../../records/enhancement-record";
 
 export class UnlockRedAcceleratorsUpgrade extends Upgrade {
   baseCost: Num = new Num(1, 75);
@@ -43,4 +45,16 @@ export class UnlockRedAcceleratorsUpgrade extends Upgrade {
     return "";
   }
 
+  allowedEnhancements: Enhancement[] = [
+    EnhancementRecord.yellow,
+  ];
+  enhancementString(enhancement:Enhancement): string {
+    return "Remove the red accelerator unlock requirement.";
+  }
+  canEnhance(): boolean {
+    return true;
+  }
+  enhance(): void {
+    this.bought = new Num(1, 0);
+  }
 }

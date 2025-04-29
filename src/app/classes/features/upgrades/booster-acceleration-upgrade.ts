@@ -9,6 +9,8 @@ import {Styles} from "../../enums/styles";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {Transaction} from "../interfaces/transaction";
 import {StatsService} from "../../../services/stats.service";
+import { Enhancement } from "../enhancements/enhancement";
+import {EnhancementRecord} from "../../records/enhancement-record";
 
 export class BoosterAccelerationUpgrade extends Upgrade {
   baseCost: Num = new Num(1, 5);
@@ -66,5 +68,22 @@ export class BoosterAccelerationUpgrade extends Upgrade {
     StatsService.addNum(UpgradeRecord.redGeneratorBooster.name, 'totalBought', this.freeBuys);
     StatsService.addNum(UpgradeRecord.redGeneratorBooster.name, 'totalBoughtAutomator', this.freeBuys);
     return transaction;
+  }
+
+  override enhancementString(): string {
+    return "Enhance to add multiplier to red generator boosters of "+this.enhancement?.getAddition().mul(new Num(5, -3)).toString();
+  }
+
+  allowedEnhancements: Enhancement[] = [
+    EnhancementRecord.yellow
+  ];
+  canEnhance(): boolean {
+    return true;
+  }
+  enhance(): void {
+    const enhancement = this.enhancement?.getAddition().mul(new Num(5, -3));
+    if (enhancement) {
+      this.baseBuffer = this.baseBuffer.add(enhancement) as Num;
+    }
   }
 }

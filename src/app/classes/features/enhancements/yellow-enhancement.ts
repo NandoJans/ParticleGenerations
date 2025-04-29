@@ -24,7 +24,11 @@ export class YellowEnhancement extends Enhancement {
   }
 
   getMultiplier(): Num {
-    return new Num(1.2, 0);
+    return new Num(1.5, 0);
+  }
+
+  override getAddition(): Num {
+    return new Num(2, 0);
   }
 
   private enhancableAmount() {

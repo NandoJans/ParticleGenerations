@@ -139,11 +139,11 @@ export abstract class Generator extends Buyable implements Generatable, Storable
 
   enhance(): void {
     if (this.enhancement instanceof Enhancement) {
-      this.baseMulMod = this.baseMulMod.mul(this.enhancement.getMultiplier()) as Num
+      this.baseMulMod = this.baseMulMod.mul(this.enhancement.getMultiplier().mul(new Num(8, -1))) as Num
     }
   }
 
-  getEnhancementsString(enhancement: Enhancement): string {
-    return "Enhance to multiply the buy multiplier by "+enhancement.getMultiplier().toString(2)+"x";
+  enhancementString(enhancement: Enhancement): string {
+    return "Enhance to multiply the buy multiplier by "+enhancement.getMultiplier().mul(new Num(8, -1)).toString(2)+"x";
   }
 }

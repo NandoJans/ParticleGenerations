@@ -52,6 +52,7 @@ export abstract class Holding implements Generatable, Require, Resetable {
   }
 
   reset(): void {
+    console.log('Resetting...', this.name)
     this.amount = this.startAmount.copy()
   }
 

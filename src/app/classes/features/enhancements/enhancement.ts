@@ -39,6 +39,7 @@ export abstract class Enhancement implements Resetable {
   }
 
   abstract getMultiplier(): Num;
+  abstract getAddition(): Num;
 
   run(): void {
     Object.values(this.enhancables).forEach((enhancable) => {
