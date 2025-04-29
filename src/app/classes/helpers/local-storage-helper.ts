@@ -59,9 +59,9 @@ export class LocalStorageHelper {
       if (LocalStorageHelper.STORAGE[this.category][this.key] === undefined) {
         LocalStorageHelper.STORAGE[this.category][this.key] = {};
       }
-      return LocalStorageHelper.STORAGE[this.category][this.key][key] || ifNotSet
+      return LocalStorageHelper.STORAGE[this.category][this.key][key] ?? ifNotSet
     } else {
-      return LocalStorageHelper.STORAGE[this.category][this.key] || ifNotSet
+      return LocalStorageHelper.STORAGE[this.category][this.key] ?? ifNotSet
     }
   }
 

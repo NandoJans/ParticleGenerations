@@ -10,7 +10,10 @@
       <input
         type="checkbox"
         class="checkbox"
-        [checked]="automator.active"
+        [id]="automator.name"
+        [name]="automator.name"
+        [value]="automator.name"
+        [checked]="getActive()"
         (change)="setActive($event)"
       />
     </div>

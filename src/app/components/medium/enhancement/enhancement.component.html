@@ -5,7 +5,7 @@
   <button *ngIf="!enhancing()" class="start button" (click)="startEnhancing()">
     Start {{ enhancement.displayName }}
   </button>
-  <button *ngIf="enhancing()" class="stop button">
+  <button *ngIf="enhancing()" class="stop button" (click)="stopEnhancing()">
     Stop {{ enhancement.displayName }}
   </button>
 </div>

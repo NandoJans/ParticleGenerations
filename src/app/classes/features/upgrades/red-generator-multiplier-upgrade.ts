@@ -25,6 +25,7 @@ export class RedGeneratorMultiplierUpgrade extends RedGeneratorUpgrade {
   name: string;
   resetId: ResetKey;
   requirement: Requirement[];
+  override calculationOrder: number = 1005;
 
 
   action(): Num {

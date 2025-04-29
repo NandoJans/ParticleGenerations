@@ -83,6 +83,10 @@ div.holdings-value.red p.holding-name {
   color: var(--text-color-red);
 }
 
+div.holdings-value.yellow p.holding-name {
+  color: var(--text-color-yellow);
+}
+
 @media (max-width: 768px) {
   div.container {
     top: 10%;

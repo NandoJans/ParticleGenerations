@@ -15,7 +15,7 @@ export class NavigationsService {
     red: new Navigation('red', faAtom, 'red', [], 'particles', true),
     yellow: new Navigation('yellow', faMountain, 'yellow', [
       {requirement: HoldingRecord.yellowPrestiges, amount: new Num(1, 0)},
-    ], 'yellow', true),
+    ], 'yellow', false),
     automators: new Navigation('automators', faCogs, 'automators', [], 'red', true),
 }
 

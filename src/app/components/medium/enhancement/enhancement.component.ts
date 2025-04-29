@@ -29,4 +29,8 @@ export class EnhancementComponent implements OnInit {
   startEnhancing() {
     this.enhancementService.startEnhancing(this.enhancement);
   }
+
+  stopEnhancing() {
+    this.enhancementService.stopEnhancing();
+  }
 }

@@ -67,4 +67,13 @@ export class GeneratorComponent {
   getEnhancedStyle() {
     return this.generator.enhancement?.style;
   }
+
+  getEnhancementString(): string {
+    if (this.enhancementService.enhancing) {
+      return this.generator.getEnhancementsString(
+        this.enhancementService.enhancing
+      );
+    }
+    return '';
+  }
 }

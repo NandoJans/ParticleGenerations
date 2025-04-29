@@ -11,7 +11,7 @@ export class YellowEnhancement extends Enhancement {
   holding: Holding = HoldingRecord.yellowKeys;
   name: string = 'yellow-enhancement';
   displayName: string = 'Yellow Enhancement';
-  description: string = 'You are able to enhance a red phase element.'
+  description: string = 'You are able to enhance a red phase element.';
   actionMessage: string = 'Click a red phase element to enhance it.';
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
 
@@ -24,7 +24,7 @@ export class YellowEnhancement extends Enhancement {
   }
 
   getMultiplier(): Num {
-    return new Num(1.5, 0);
+    return new Num(1.2, 0);
   }
 
   private enhancableAmount() {

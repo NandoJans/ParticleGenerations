@@ -72,4 +72,8 @@ export class AutomatorComponent implements OnInit {
       this.automator.disable();
     }
   }
+
+  getActive(): boolean {
+    return this.automator.active;
+  }
 }

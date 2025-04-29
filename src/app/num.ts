@@ -198,4 +198,8 @@ export class Num {
   negate(): Num {
     return new Num(-this.mantissa, this.exponent);
   }
+
+  lte(b: Num) {
+    return this.lt(b) || this.equals(b);
+  }
 }

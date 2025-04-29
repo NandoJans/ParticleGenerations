@@ -31,28 +31,75 @@ export class BuyableHelper {
   }
 
   /**
-   * Returns [howMany, totalCost] you can buy with currency.amount/split.
+   * Returns [howMany extra buys, totalCost] you can afford.
    */
   calculateBulk(b: Buyable, split: Num = new Num(1, 0)): [Num, Num] {
-    const budget = b.currency.amount.copy().div(split);
-    let lo = new Num(0, 0), hi = new Num(1, 0);
-    // find an upper‐bound
-    while (this._sumTriCosts(b.bought, hi, b.baseCost, b.increase, b.scaling).greq(budget)) {
-      hi = hi.mul(new Num(2, 0));
+    const baseCost = b.baseCost.copy();
+    const increase = b.increase.copy();
+    const scaling  = b.scaling.copy();
+    const bought   = b.bought.copy();
+    const budget   = b.currency.amount.copy().div(split);
+
+    // 1) No delayed scaling → full triangular series
+    if (b.scalingStart === undefined) {
+      const extra   = this._maxExtra(budget, baseCost, increase, scaling);
+      const sumCost = this._sumTriCosts(bought, extra, baseCost, increase, scaling);
+      return [extra, sumCost];
     }
-    // binary search between lo and hi
-    const ONE = new Num(1, 0);
-    while (hi.sub(lo).gt(ONE)) {
-      const mid = lo.add(hi).div(new Num(2, 0)).floor();
-      if (this._sumTriCosts(b.bought, mid, b.baseCost, b.increase, b.scaling).greq(budget)) {
-        hi = mid;
-      } else {
-        lo = mid;
-      }
+
+    // 2) Delayed scaling: split pre- and post-threshold
+    const thresholdCount = b.scalingStart
+      .copy()
+      .div(baseCost)
+      .ln()
+      .div(increase.ln())
+      .floor();
+
+    // 2a) Price at threshold
+    const costAtThresh = baseCost.mul(increase.pow(thresholdCount));
+
+    // 2b) Sum cost from 0 → thresholdCount-1
+    const incToT = increase.pow(thresholdCount);
+    const sumTotalToT = baseCost
+      .mul(incToT.sub(new Num(1, 0)))
+      .div(increase.sub(new Num(1, 0)));
+
+    // 2c) Sum spent so far from 0 → bought-1
+    const incToB = increase.pow(bought);
+    const sumTotalToB = baseCost
+      .mul(incToB.sub(new Num(1, 0)))
+      .div(increase.sub(new Num(1, 0)));
+
+    // 2d) Remaining pre-threshold cost
+    const sumPre = sumTotalToT.sub(sumTotalToB);
+
+    // 3) If budget can't cover pre-threshold
+    if (budget.lt(sumPre)) {
+      const k = budget
+        .div(baseCost)
+        .ln()
+        .div(increase.ln())
+        .floor();
+      const sum = baseCost
+        .mul(increase.pow(k).sub(new Num(1, 0)))
+        .div(increase.sub(new Num(1, 0)));
+      return [k.sub(bought), sum];
     }
-    const extra    = lo;
-    const totalCost = this._sumTriCosts(b.bought, extra, b.baseCost, b.increase, b.scaling);
-    return [extra, totalCost];
+
+    // 4) Budget after pre-threshold
+    const rem   = budget.sub(sumPre);
+
+    // 5) Compute post-threshold extras
+    const extra     = this._maxExtra(rem, costAtThresh, increase, scaling);
+    const totalBuys = thresholdCount.add(extra);
+
+    // 6) Sum post-threshold costs
+    const postSum    = this._sumTriCosts(thresholdCount, extra, costAtThresh, increase, scaling);
+
+    // 7) Grand total
+    const grandTotal = sumPre.add(postSum);
+
+    return [totalBuys.sub(bought), grandTotal];
   }
 
   buy(): Transaction {
@@ -97,110 +144,40 @@ export class BuyableHelper {
     return { amount: new Num(0, 0), cost: new Num(0, 0), currency: b.currency };
   }
 
-  /**
-   * Recalculates the current cost based on how many have been bought,
-   * taking into account a possible delayed‐scaling start.
-   */
   correct(): void {
     const b = this.buyable;
-
-    // 0) nothing bought yet → baseCost
     if (!b.bought.greq(new Num(1, 0))) {
       b.cost = b.baseCost.copy();
       return;
     }
-
-    // 1) one-time stays at baseCost indefinitely
     if (b.oneTime) {
       return;
     }
-
-    // grab immutable copies
     const baseCost = b.baseCost.copy();
     const increase = b.increase.copy();
     const scaling  = b.scaling.copy();
     const bought   = b.bought.copy();
 
-    // 2) no delayed scaling → full triangular from the start
     if (b.scalingStart === undefined) {
       b.cost = this._triCost(bought, baseCost, increase, scaling);
       return;
     }
 
-    // 3) compute how many buys hit the scalingStart “price point”
-    const thresholdCount = b.scalingStart!
+    const thresholdCount = b.scalingStart
       .copy()
       .div(baseCost)
       .ln()
       .div(increase.ln())
       .floor();
-
-    // 4) price of that threshold-th buy
     const costAtThresh = baseCost.mul(increase.pow(thresholdCount));
 
-    // 5) if we haven’t yet bought up to that point, do simple pre-scaling growth:
-    //    cost = baseCost × increase^(bought)
     if (bought.lt(thresholdCount.add(new Num(1, 0)))) {
       b.cost = baseCost.mul(increase.pow(bought));
       return;
     }
 
-    // 6) once we’re past threshold, do the triangular scaling off costAtThresh
     const post = bought.sub(thresholdCount);
     b.cost = this._triCost(post, costAtThresh, increase, scaling);
-  }
-
-
-  // ——— private helpers ———
-
-  private _maxExtra(
-    budget: Num,
-    preCost: Num,
-    increase: Num,
-    scaling: Num
-  ): Num {
-    // try closed-form if scaling > 1
-    if (scaling.greq(new Num(1, 0))) {
-      const lnBud = budget.ln().toNumber();
-      const lnPre = preCost.ln().toNumber();
-      const lnA   = increase.ln().toNumber();
-      const lnB   = scaling.ln().toNumber();
-      if (isFinite(lnBud) && isFinite(lnPre) && isFinite(lnA) && isFinite(lnB)) {
-        const C     = lnBud - lnPre;
-        const Acoef = lnB / 2;
-        const Bcoef = lnB / 2 + lnA;
-        const disc  = Bcoef * Bcoef + 4 * Acoef * C;
-        if (disc >= 0 && isFinite(disc) && Acoef !== 0) {
-          const root = (-Bcoef + Math.sqrt(disc)) / (2 * Acoef);
-          if (isFinite(root) && root >= 0) {
-            return new Num(Math.floor(root), 0);
-          }
-        }
-      }
-    }
-    return this._maxExtraBinary(budget, preCost, increase, scaling);
-  }
-
-  private _maxExtraBinary(
-    budget: Num,
-    preCost: Num,
-    increase: Num,
-    scaling: Num
-  ): Num {
-    let lo = new Num(0, 0), hi = new Num(1, 0);
-    while (!this._triCost(hi, preCost, increase, scaling).greq(budget)) {
-      hi = hi.mul(new Num(2, 0));
-    }
-    const ONE = new Num(1, 0);
-    while (hi.sub(lo).greq(ONE)) {
-      const mid = lo.add(hi).div(new Num(2, 0)).floor();
-      if (this._triCost(mid, preCost, increase, scaling).greq(budget)) {
-        hi = mid;
-      } else {
-        lo = mid;
-      }
-    }
-    return lo;
   }
 
   private _triCost(
@@ -209,11 +186,12 @@ export class BuyableHelper {
     increase: Num,
     scaling: Num
   ): Num {
-    const incPow = increase.pow(n);
+    // triangular scaling: exponent = n*(n+1)/2
     const triExp = n
       .mul(n.add(new Num(1, 0)))
       .div(new Num(2, 0))
       .floor();
+    const incPow   = increase.pow(n);
     const scalePow = scaling.pow(triExp);
     return preCost.mul(incPow).mul(scalePow);
   }
@@ -226,13 +204,60 @@ export class BuyableHelper {
     scaling: Num
   ): Num {
     let sum = new Num(0, 0);
-    for (
-      let i = new Num(1, 0);
-      i.sub(n).lt(new Num(0, 0));
-      i = i.add(new Num(1, 0))
-    ) {
+    for (let i = new Num(1, 0); i.lte(n); i = i.add(new Num(1, 0))) {
       sum = sum.add(this._triCost(start.add(i), baseCost, increase, scaling));
     }
     return sum;
+  }
+
+  private _maxExtra(
+    budget: Num,
+    preCost: Num,
+    increase: Num,
+    scaling: Num
+  ): Num {
+    // closed-form quadratic solve for triangular scaling
+    const ONE = new Num(1, 0);
+    const lnB = scaling.ln();
+    const lnA = increase.ln();
+    const lnPre = preCost.ln();
+    const lnBud = budget.ln();
+
+    const Acoef = lnB.toNumber() / 2;
+    const Bcoef = (lnB.toNumber() / 2) + lnA.toNumber();
+    const C = lnBud.toNumber() - lnPre.toNumber();
+    const disc = Bcoef * Bcoef + 4 * Acoef * C;
+
+    if (Acoef !== 0 && disc >= 0) {
+      const root = (-Bcoef + Math.sqrt(disc)) / (2 * Acoef);
+      if (root >= 0 && isFinite(root)) {
+        return new Num(Math.floor(root), 0);
+      }
+    }
+
+    // fallback binary search
+    return this._maxExtraBinary(budget, preCost, increase, scaling);
+  }
+
+  private _maxExtraBinary(
+    budget: Num,
+    preCost: Num,
+    increase: Num,
+    scaling: Num
+  ): Num {
+    let lo = new Num(0, 0), hi = new Num(1, 0);
+    while (this._triCost(hi, preCost, increase, scaling).lte(budget)) {
+      hi = hi.mul(new Num(2, 0));
+    }
+    const ONE = new Num(1, 0);
+    while (hi.sub(lo).gt(ONE)) {
+      const mid = lo.add(hi).div(new Num(2, 0)).floor();
+      if (this._triCost(mid, preCost, increase, scaling).lte(budget)) {
+        lo = mid;
+      } else {
+        hi = mid;
+      }
+    }
+    return lo;
   }
 }

@@ -63,7 +63,7 @@ button.red.maxed {
   color: var(--background-color-1);
 }
 
-button.buyable:hover {
+button.buyable:not(.maxed):hover {
   cursor: pointer;
   box-shadow: 0 0 10000px rgba(255, 255, 255, 0.1) inset;
 }

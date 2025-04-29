@@ -142,4 +142,8 @@ export abstract class Generator extends Buyable implements Generatable, Storable
       this.baseMulMod = this.baseMulMod.mul(this.enhancement.getMultiplier()) as Num
     }
   }
+
+  getEnhancementsString(enhancement: Enhancement): string {
+    return "Enhance to multiply the buy multiplier by "+enhancement.getMultiplier().toString(2)+"x";
+  }
 }
