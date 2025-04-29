@@ -52,7 +52,8 @@ export abstract class Holding implements Generatable, Require, Resetable {
   }
 
   reset(): void {
-    this.amount = this.startAmount.copy()
+    this.amount = this.startAmount.copy();
+    this.effect = undefined;
   }
 
   softReset(): void {}
