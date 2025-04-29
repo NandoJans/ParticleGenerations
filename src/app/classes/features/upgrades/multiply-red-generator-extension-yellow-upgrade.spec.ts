@@ -2,6 +2,6 @@ import { MultiplyRedGeneratorExtensionYellowUpgrade } from './multiply-red-gener
 
 describe('MultiplyRedGeneratorExtensionYellowUpgrade', () => {
   it('should create an instance', () => {
-    expect(new MultiplyRedGeneratorExtensionYellowUpgrade()).toBeTruthy();
+    expect(new MultiplyRedGeneratorExtensionYellowUpgrade('test')).toBeTruthy();
   });
 });
