@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Timeline} from "../../../classes/features/timeline/timeline";
+import {TimelineService} from "../../../services/timeline.service";
 
 @Component({
   selector: 'app-red-timeline',
@@ -6,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./red-timeline.component.css']
 })
 export class RedTimelineComponent implements OnInit {
-
+  timeline: Timeline = TimelineService.redTimeline;
   constructor() { }
 
   ngOnInit(): void {

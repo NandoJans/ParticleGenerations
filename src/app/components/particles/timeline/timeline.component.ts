@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {TimelineEvent} from "../../../globals";
+import {Timeline} from "../../../classes/features/timeline/timeline";
+import {TimelineService} from "../../../services/timeline.service";
+import {TimelineEvent} from "../../../classes/features/timeline/timeline-event";
 
 @Component({
   selector: 'app-timeline',
@@ -7,10 +9,13 @@ import {TimelineEvent} from "../../../globals";
   styleUrls: ['./timeline.component.css']
 })
 export class TimelineComponent implements OnInit {
-  @Input() eventType: string = '';
-  events: TimelineEvent[] = []
+  @Input() timeline: Timeline = TimelineService.redTimeline
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  getEvents(): TimelineEvent[] {
+    return this.timeline.events
   }
 }

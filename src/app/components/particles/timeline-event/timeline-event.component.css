@@ -1,0 +1,51 @@
+div.timeline-event {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 25%;
+  background: var(--background-color-4);
+  border-radius: 10px;
+  border: 5px solid var(--background-color-3);
+}
+
+div.timeline-event.reached {
+  border: 5px solid var(--accent-color);
+}
+
+div.timeline-event.red, div.progress-bar.red {
+  --accent-color: var(--accent-color-red)
+}
+
+div.timeline-event.yellow, div.progress-bar.yellow {
+  --accent-color: var(--accent-color-yellow)
+}
+
+div.progress-bar {
+  display: grid;
+  grid-area: 1/1;
+  margin: 0 auto;
+  width: 5rem;
+  height: 100px;
+  background-color: var(--background-color-3);
+}
+
+div.progress-bar div.progress {
+  align-self: start;
+  justify-self: stretch;
+  background-color: var(--accent-color);
+}
+
+div.progress-bar p {
+  position: absolute;
+  margin: 0;
+  justify-self: center;
+  align-self: center;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  div.timeline-event {
+    margin: 0 5%;
+  }
+}

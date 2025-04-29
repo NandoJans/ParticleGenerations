@@ -1,5 +1,5 @@
 <div class="timeline">
-  <div *ngFor="let event of events">
-    <app-timeline-event [timelineEvent]="event"></app-timeline-event>
+  <div *ngFor="let event of getEvents()">
+    <app-timeline-event *ngIf="event.shouldShow" [timelineEvent]="event"></app-timeline-event>
   </div>
 </div>
