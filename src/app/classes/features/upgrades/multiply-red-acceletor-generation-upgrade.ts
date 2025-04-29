@@ -1,6 +1,8 @@
 import {RedAcceleratorUpgrade} from "./red-accelerator-upgrade";
 import {Num} from "../../../num";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {Enhancement} from "../enhancements/enhancement";
+import {EnhancementRecord} from "../../records/enhancement-record";
 
 export class MultiplyRedAcceletorGenerationUpgrade extends RedAcceleratorUpgrade {
   baseCost: Num = new Num(1, 80);
@@ -21,5 +23,21 @@ export class MultiplyRedAcceletorGenerationUpgrade extends RedAcceleratorUpgrade
 
   getDescription(): string {
     return "Multiply RA generation by " + this.buffer.toString(2) + "x";
+  }
+
+  allowedEnhancements: Enhancement[] = [
+    EnhancementRecord.yellow
+  ];
+
+  override canEnhance(): boolean {
+    return true;
+  }
+
+  override enhancementString(enhancement: Enhancement): string {
+    return "Multiply buffer by " + enhancement.getMultiplier().toString(2) + "x";
+  }
+
+  override enhance() {
+    this.buffer = this.buffer.mul(this.enhancement?.getMultiplier() as Num)
   }
 }

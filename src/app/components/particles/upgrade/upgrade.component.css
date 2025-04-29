@@ -1,10 +1,25 @@
 button {
   padding: 1rem;
-  border: none;
   border-radius: 0.5rem;
   margin: 0.5rem;
   height: 12rem;
   width: 13rem;
+  --linear-gradient-to: var(--background-color-light);
+  background-color: var(--background-color-light);
+  border: 1px solid var(--accent-color);
+}
+
+button.buyable {
+  --linear-gradient-to: var(--background-color-3);
+  background-color: var(--background-color-3);
+  color: var(--text-color);
+}
+
+button.maxed {
+  --linear-gradient-to: var(--accent-color);
+  background-color: var(--accent-color);
+  border-color: var(--background-color);
+  color: var(--background-color-1);
 }
 
 button p.cost, button p.effect {
@@ -43,24 +58,8 @@ button.sub {
   width: 13rem;
 }
 
-button.red {
-  background-color: var(--background-color-light);
-  border: 1px solid var(--text-color-red);
-}
-
 button.sub p.description {
   font-weight: bold;
-}
-
-button.red.buyable {
-  background-color: var(--background-color-3);
-  color: var(--text-color-red);
-}
-
-button.red.maxed {
-  background-color: var(--text-color-red);
-  border-color: var(--background-color-red);
-  color: var(--background-color-1);
 }
 
 button.buyable:not(.maxed):hover {
@@ -74,4 +73,35 @@ button.super {
 
 button.super h4 {
   font-size: 1.5rem;
+}
+
+button.red {
+  --accent-color: var(--accent-color-red);
+  --text-color: var(--text-color-red);
+  --background-color: var(--background-color-red);
+}
+
+button.yellow {
+  --accent-color: var(--accent-color-yellow);
+  --text-color: var(--text-color-yellow);
+  --background-color: var(--background-color-yellow);
+}
+
+button.enhancing.enhancing-yellow {
+  background-color: var(--background-color-3);
+  border: 1px solid var(--accent-color-yellow);
+  color: var(--text-color-yellow);
+}
+
+button.enhancing:hover {
+  box-shadow: 0 0 10000px rgba(255, 255, 255, 0.1) inset;
+  cursor: pointer;
+}
+
+button.enhanced {
+  background: linear-gradient(to top, var(--linear-gradient-from), var(--linear-gradient-to) 25%);
+}
+
+button.enhanced.enhanced-yellow {
+  --linear-gradient-from: var(--background-color-yellow);
 }

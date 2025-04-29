@@ -8,6 +8,7 @@ import {Storable} from "../interfaces/storable";
 import {LocalStorageHelper} from "../../helpers/local-storage-helper";
 import {Holding} from "../holding";
 import {MessageSteps} from "../../display/message-steps";
+import {Multiplier} from "../multiplier";
 
 export class PrestigeLayer extends GameElement implements Resetable, Storable {
   name: string;
@@ -18,7 +19,7 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
   limitPhaseBelow: boolean = true;
   holdingPhaseBelow: Holding;
   amountRequired: Num;
-  gainHoldings: {holding: Holding, basedOnRequiredHolding: boolean}[] = [];
+  gainHoldings: {holding: Holding, basedOnRequiredHolding: boolean, gainMultiplier: Multiplier}[] = [];
   resets: ResetKey;
   messageSteps: MessageSteps;
 
@@ -28,9 +29,9 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     holdingRequired: Holding,
     amountRequired: Num,
     style: string,
-    gainHoldings: {holding: Holding, basedOnRequiredHolding: boolean}[],
+    gainHoldings: {holding: Holding, basedOnRequiredHolding: boolean, gainMultiplier: Multiplier}[],
     resets: ResetKey,
-    message: MessageSteps
+    message: MessageSteps,
   ) {
     super(saveName);
     this.name = name;
@@ -107,7 +108,7 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
   private addGainHoldings() {
     this.gainHoldings.forEach(gain => {
       // TODO: use calculateHoldingGain when implemented;
-      gain.holding.amount = gain.holding.amount.add(new Num(1, 0));
+      gain.holding.amount = gain.holding.amount.add(new Num(1, 0).mul(gain.gainMultiplier.num));
     });
   }
 

@@ -4,6 +4,7 @@ import {HoldingRecord} from "../../records/holdings/holding-record";
 import {Num} from "../../../num";
 import {Styles} from "../../enums/styles";
 import {RedGenerator} from "../generators/red-generator";
+import {Enhancement} from "../enhancements/enhancement";
 
 export abstract class RedGeneratorUpgrade extends Upgrade {
   protected constructor(
@@ -35,4 +36,13 @@ export abstract class RedGeneratorUpgrade extends Upgrade {
   subNav: string = "redParticles";
   type: string = "red-particles";
   override effect: Num = new Num(1, 0);
+
+  override canEnhance(): boolean {
+    return false;
+  }
+  override enhance() {}
+  allowedEnhancements: Enhancement[] = [];
+  override enhancementString(enhancement: Enhancement): string {
+    return "";
+  }
 }

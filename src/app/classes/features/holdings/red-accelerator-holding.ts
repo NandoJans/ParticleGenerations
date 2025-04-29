@@ -20,7 +20,7 @@ export class RedAcceleratorHolding extends Holding {
       () => GeneratorRecord.redAcceleratorGenerator.redParticleEffect.toString(2) + 'x',
       ''
     ).build();
-  name: string = "Red Accelerator";
+  name: string = "redAccelerators";
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED_EXTENSION, this);
   startAmount: Num = new Num(1, 0);
   mulEffect: Num = new Num(1, 0);

@@ -4,6 +4,7 @@ import {ResetKey} from "../../enums/reset-key";
 import {RedUpgrade} from "./red-upgrade";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {GeneratorRecord} from "../../records/generators/generator-record";
+import {Enhancement} from "../enhancements/enhancement";
 
 export class RedGeneratorExtensionUpgrade extends RedUpgrade {
   baseCost: Num = new Num(1, 3)
@@ -71,5 +72,13 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
     }
 
     return super.effectString();
+  }
+
+  override enhance() {
+    this.buffer = this.buffer.mul(this.enhancement?.getMultiplier() as Num);
+  }
+
+  override enhancementString(enhancement: Enhancement): string {
+    return `Enhance to multiply buffer by ${enhancement.getMultiplier().toString(2)}x`;
   }
 }

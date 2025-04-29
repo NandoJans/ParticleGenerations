@@ -6,4 +6,5 @@ export interface Enhancable {
   allowedEnhancements: Enhancement[];
   enhance(): void;
   canEnhance(): boolean;
+  enhancementString(enhancement: Enhancement): string;
 }

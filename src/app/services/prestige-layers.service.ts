@@ -8,6 +8,7 @@ import {MessageStepsFactory} from "../classes/factories/message-steps-factory";
 import {faKey} from "@fortawesome/free-solid-svg-icons";
 import {MessageStepsService} from "./message-steps.service";
 import {NavigationsService} from "./navigations.service";
+import {MultiplierRecord} from "../classes/records/multipliers/multiplier-record";
 
 @Injectable({
   providedIn: 'root'
@@ -20,9 +21,9 @@ export class PrestigeLayersService {
     new Num(1, 1000),
     Styles.YELLOW,
     [
-      { holding: HoldingRecord.yellowParticles, basedOnRequiredHolding: false },
-      { holding: HoldingRecord.yellowKeys, basedOnRequiredHolding: false },
-      { holding: HoldingRecord.yellowPrestiges, basedOnRequiredHolding: false }
+      { holding: HoldingRecord.yellowParticles, basedOnRequiredHolding: false, gainMultiplier: MultiplierRecord.yellowParticleGain},
+      { holding: HoldingRecord.yellowKeys, basedOnRequiredHolding: false, gainMultiplier: MultiplierRecord.yellowKeyGain},
+      { holding: HoldingRecord.yellowPrestiges, basedOnRequiredHolding: false, gainMultiplier: MultiplierRecord.yellowPrestigeGain},
     ],
     ResetKey.RED,
     MessageStepsFactory.start(Styles.YELLOW, faKey)

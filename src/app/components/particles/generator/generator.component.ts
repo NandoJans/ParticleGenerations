@@ -50,7 +50,7 @@ export class GeneratorComponent {
   }
 
   isEnhancing(): boolean {
-    return this.enhancementService.isEnhancing() && this.generator.enhancement !== this.enhancementService.enhancing;
+    return this.enhancementService.isEnhancing() && this.generator.canEnhance() && this.generator.enhancement !== this.enhancementService.enhancing;
   }
 
   getEnhancementStyle(): string {
@@ -70,7 +70,7 @@ export class GeneratorComponent {
 
   getEnhancementString(): string {
     if (this.enhancementService.enhancing) {
-      return this.generator.getEnhancementsString(
+      return this.generator.enhancementString(
         this.enhancementService.enhancing
       );
     }

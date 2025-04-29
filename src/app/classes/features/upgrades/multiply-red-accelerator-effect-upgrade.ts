@@ -1,6 +1,8 @@
 import {RedAcceleratorUpgrade} from "./red-accelerator-upgrade";
 import {Num} from "../../../num";
 import {HoldingRecord} from "../../records/holdings/holding-record";
+import {Enhancement} from "../enhancements/enhancement";
+import {EnhancementRecord} from "../../records/enhancement-record";
 
 export class MultiplyRedAcceleratorEffectUpgrade extends RedAcceleratorUpgrade {
   displayName: string = "Multiply Accelerator Effect";
@@ -24,5 +26,19 @@ export class MultiplyRedAcceleratorEffectUpgrade extends RedAcceleratorUpgrade {
     return "Multiply red accelerator effect by " + this.buffer.toString(2) + "x.";
   }
 
+  allowedEnhancements: Enhancement[] = [
+    EnhancementRecord.yellow
+  ];
 
+  override canEnhance(): boolean {
+    return true;
+  }
+
+  override enhancementString(enhancement: Enhancement): string {
+    return "Multiply buffer by " + enhancement.getMultiplier().toString(2) + "x";
+  }
+
+  override enhance() {
+    this.buffer = this.buffer.mul(this.enhancement?.getMultiplier() as Num)
+  }
 }
