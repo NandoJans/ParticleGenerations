@@ -13,7 +13,7 @@ import {StatsService} from "../../../services/stats.service";
 export class BoosterAccelerationUpgrade extends Upgrade {
   baseCost: Num = new Num(1, 5);
   cost: Num = new Num(1, 5);
-  increase: Num = new Num(1, 3);
+  increase: Num = new Num(1, 2);
   override scaling = new Num(2, 2);
   override scalingStart: Num = new Num(1, 25);
   bought: Num = new Num(0, 0);
