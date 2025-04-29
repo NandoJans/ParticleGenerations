@@ -19,7 +19,7 @@ export class BoosterAccelerationUpgrade extends Upgrade {
   override scaling = new Num(1, 3);
   override scalingStart: Num = new Num(1, 15);
   bought: Num = new Num(0, 0);
-  override limit: Num = new Num(6, 0);
+  override limit: Num = new Num(7, 0);
 
   override buffer: Num = new Num(0.025, 0);
   override baseBuffer: Num = new Num(0.025, 0);
