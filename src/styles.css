@@ -10,6 +10,7 @@
   --background-color-green: rgb(48, 109, 48);
   --background-color-blue: rgb(51, 134, 173);
 
+  --accent-color-red: rgb(224, 67, 67);
   --accent-color-green: #64D24AFF;
   --accent-color-yellow: rgb(240, 240, 27);
   --accent-color-blue: rgb(92, 184, 227);
@@ -77,6 +78,10 @@ button.button.success {
   flex-wrap: wrap;
   align-items: center;
   padding: 10px;
+}
+
+.light {
+  color: var(--text-color-light);
 }
 
 @keyframes gliding {

@@ -27,7 +27,7 @@ export class YellowEnhancement extends Enhancement {
     return new Num(1.5, 0);
   }
 
-  override getAddition(): Num {
+  getAddition(): Num {
     return new Num(2, 0);
   }
 

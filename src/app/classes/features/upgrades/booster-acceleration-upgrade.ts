@@ -71,7 +71,7 @@ export class BoosterAccelerationUpgrade extends Upgrade {
   }
 
   override enhancementString(): string {
-    return "Enhance to add multiplier to red generator boosters of "+this.enhancement?.getAddition().mul(new Num(5, -3)).toString();
+    return "Enhance to add power increase of red generator boosters of "+this.enhancement?.getAddition().mul(new Num(5, -3)).toString();
   }
 
   allowedEnhancements: Enhancement[] = [

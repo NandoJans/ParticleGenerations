@@ -11,6 +11,14 @@ import {
 } from "../../features/upgrades/improve-red-particles-to-accelerators-upgrade";
 import {BoosterAccelerationUpgrade} from "../../features/upgrades/booster-acceleration-upgrade";
 import {MultiplyRedAcceleratorEffectUpgrade} from "../../features/upgrades/multiply-red-accelerator-effect-upgrade";
+import {MultiplyRedGeneratorsYellowUpgrade} from "../../features/upgrades/multiply-red-generators-yellow-upgrade";
+import {MultiplyYellowParticlesYellowUpgrade} from "../../features/upgrades/multiply-yellow-particles-yellow-upgrade";
+import {
+  MultiplyRedGeneratorExtensionYellowUpgrade
+} from "../../features/upgrades/multiply-red-generator-extension-yellow-upgrade";
+import {
+  RedGeneratorMultiplierYellowPrestigeYellowUpgrade
+} from "../../features/upgrades/red-generator-multiplier-yellow-prestige-yellow-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +37,12 @@ export class UpgradeRecord extends Record {
   static improveRedParticlesToAcceleratorsUpgrade: ImproveRedParticlesToAcceleratorsUpgrade = new ImproveRedParticlesToAcceleratorsUpgrade('improveRedParticlesToAcceleratorsUpgrade');
   static boosterAccelerationUpgrade: BoosterAccelerationUpgrade = new BoosterAccelerationUpgrade('boosterAccelerationUpgrade');
 
+  // Yellow Upgrades
+  static multiplyRedGeneratorsYellow: MultiplyRedGeneratorsYellowUpgrade = new MultiplyRedGeneratorsYellowUpgrade('multiplyRedGeneratorsYellow');
+  static multiplyYellowParticlesYellow: MultiplyYellowParticlesYellowUpgrade = new MultiplyYellowParticlesYellowUpgrade('multiplyYellowParticlesYellow');
+  static redGeneratorMultiplierYellowPrestigeYellow: RedGeneratorMultiplierYellowPrestigeYellowUpgrade = new RedGeneratorMultiplierYellowPrestigeYellowUpgrade('redGeneratorMultiplierYellowPrestigeYellow');
+  static multiplyRedGeneratorExtensionYellow: MultiplyRedGeneratorExtensionYellowUpgrade = new MultiplyRedGeneratorExtensionYellowUpgrade('multiplyRedGeneratorExtensionYellow');
+
   static override list: Upgrade[] = [
     UpgradeRecord.redGeneratorExtension,
     UpgradeRecord.redGeneratorBooster,
@@ -39,6 +53,12 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.improveRedAcceleratorsEffect,
     UpgradeRecord.improveRedParticlesToAcceleratorsUpgrade,
     UpgradeRecord.boosterAccelerationUpgrade,
+
+    // Yellow Upgrades
+    UpgradeRecord.multiplyRedGeneratorsYellow,
+    UpgradeRecord.multiplyYellowParticlesYellow,
+    UpgradeRecord.redGeneratorMultiplierYellowPrestigeYellow,
+    UpgradeRecord.multiplyRedGeneratorExtensionYellow,
   ]
 
   getList(): Upgrade[] {

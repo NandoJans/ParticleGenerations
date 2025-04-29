@@ -4,6 +4,8 @@ import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 import {YellowPrestigeHolding} from "../../../classes/features/holdings/yellow-prestige-holding";
 import {YellowEnhancement} from "../../../classes/features/enhancements/yellow-enhancement";
 import {EnhancementRecord} from "../../../classes/records/enhancement-record";
+import {Upgrade} from "../../../classes/features/upgrade";
+import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
 
 @Component({
   selector: 'app-yellow-upgrades',
@@ -14,6 +16,12 @@ export class YellowUpgradesComponent implements OnInit {
   yellowKeys: YellowKeyHolding = HoldingRecord.yellowKeys;
   yellowPrestiges: YellowPrestigeHolding = HoldingRecord.yellowPrestiges;
   yellowEnhancement: YellowEnhancement = EnhancementRecord.yellow;
+  upgrades: Upgrade[] = [
+    UpgradeRecord.multiplyRedGeneratorsYellow,
+    UpgradeRecord.multiplyYellowParticlesYellow,
+    UpgradeRecord.redGeneratorMultiplierYellowPrestigeYellow,
+    UpgradeRecord.multiplyRedGeneratorExtensionYellow,
+  ];
 
   constructor() { }
 

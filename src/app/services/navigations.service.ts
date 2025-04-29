@@ -3,7 +3,14 @@ import {Router} from "@angular/router";
 import {LocalStorageHelper} from "../classes/helpers/local-storage-helper";
 import {Navigation} from "../classes/features/navigation";
 import {SubNavigation} from "../classes/features/sub-navigation";
-import {faAtom, faCogs, faForward, faIndustry, faMountain} from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowUp,
+  faAtom, faCalendar,
+  faCogs,
+  faForward,
+  faIndustry,
+  faMountain
+} from "@fortawesome/free-solid-svg-icons";
 import {HoldingRecord} from "../classes/records/holdings/holding-record";
 import {Num} from "../num";
 
@@ -17,6 +24,7 @@ export class NavigationsService {
       {requirement: HoldingRecord.yellowPrestiges, amount: new Num(1, 0)},
     ], 'yellow', false),
     automators: new Navigation('automators', faCogs, 'automators', [], 'red', true),
+    timeline: new Navigation('timeline', faCalendar, 'timeline', [], 'redTimeline', true),
 }
 
   subNavigations: {[key: string]: SubNavigation} = {
@@ -27,12 +35,19 @@ export class NavigationsService {
     ], false),
 
     // Yellow
-    yellowUpgrades: new SubNavigation('yellowUpgrades', faMountain, 'upgrades', this.navigations['yellow'], [
+    yellowUpgrades: new SubNavigation('yellowUpgrades', faArrowUp, 'upgrades', this.navigations['yellow'], [
       {requirement: HoldingRecord.yellowPrestiges, amount: new Num(1, 0)},
     ], false),
 
     // Automators
     redAutomators: new SubNavigation('redParticles', faAtom, 'red', this.navigations['automators'], [], true),
+
+    // Timeline
+    redTimeline: new SubNavigation('redTimeline', faAtom, 'red', this.navigations['timeline'], [], true),
+    yellowTimeline: new SubNavigation('yellowTimeline', faMountain, 'yellow', this.navigations['timeline'], [
+      {requirement: HoldingRecord.yellowPrestiges, amount: new Num(1, 0)},
+    ], false),
+
   }
 
   selectedNavigation: Navigation = this.navigations['red']

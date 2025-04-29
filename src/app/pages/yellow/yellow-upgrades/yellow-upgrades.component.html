@@ -1,5 +1,12 @@
+<h3 class="light">Holdings</h3>
 <div class="holding">
   <app-number-display [holding]="yellowPrestiges"></app-number-display>
   <app-number-display [holding]="yellowKeys"></app-number-display>
   <app-enhancement [enhancement]="yellowEnhancement"></app-enhancement>
+</div>
+<h3 class="light">Upgrades</h3>
+<div class="upgrade-row">
+  <div *ngFor="let upgrade of upgrades">
+    <app-upgrade [upgrade]="upgrade"></app-upgrade>
+  </div>
 </div>

@@ -31,6 +31,8 @@ import { RedAcceleratorsComponent } from './pages/red/red-accelerators/red-accel
 import { MessageStepsComponent } from './components/medium/message-steps/message-steps.component';
 import { YellowUpgradesComponent } from './pages/yellow/yellow-upgrades/yellow-upgrades.component';
 import { EnhancementComponent } from './components/medium/enhancement/enhancement.component';
+import { RedTimelineComponent } from './pages/timeline/red-timeline/red-timeline.component';
+import { YellowTimelineComponent } from './pages/timeline/yellow-timeline/yellow-timeline.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +61,8 @@ import { EnhancementComponent } from './components/medium/enhancement/enhancemen
     MessageStepsComponent,
     YellowUpgradesComponent,
     EnhancementComponent,
+    RedTimelineComponent,
+    YellowTimelineComponent,
   ],
     imports: [
         BrowserModule,
