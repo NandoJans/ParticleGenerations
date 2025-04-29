@@ -2,6 +2,6 @@ import { MultiplyYellowParticlesYellowUpgrade } from './multiply-yellow-particle
 
 describe('MultiplyYellowParticlesYellowUpgrade', () => {
   it('should create an instance', () => {
-    expect(new MultiplyYellowParticlesYellowUpgrade()).toBeTruthy();
+    expect(new MultiplyYellowParticlesYellowUpgrade('test')).toBeTruthy();
   });
 });
