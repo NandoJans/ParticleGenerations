@@ -20,6 +20,7 @@ export class MultiplyRedGeneratorExtensionYellowUpgrade extends YellowUpgrade {
     return;
   }
 
+  limit: Num = new Num(1, 0);
   baseCost: Num = new Num(4, 0);
   cost: Num = new Num(4, 0);
 }
