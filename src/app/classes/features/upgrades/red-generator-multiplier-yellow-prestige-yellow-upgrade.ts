@@ -24,7 +24,7 @@ export class RedGeneratorMultiplierYellowPrestigeYellowUpgrade extends YellowUpg
     return new Num(1, 0);
   }
 
-  limit: Num = new Num(1, 0);
+  override limit: Num = new Num(1, 0);
   baseCost: Num = new Num(3, 0);
   cost: Num = new Num(3, 0);
 }
