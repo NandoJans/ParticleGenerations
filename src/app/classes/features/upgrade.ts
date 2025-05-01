@@ -106,6 +106,11 @@ export abstract class Upgrade extends Buyable implements Storable, Require, Rese
     }
   }
 
+  override unlock() {
+    super.unlock();
+    this.effect = undefined;
+  }
+
   abstract allowedEnhancements: Enhancement[];
   abstract enhancementString(enhancement:Enhancement): string;
   abstract canEnhance(): boolean;

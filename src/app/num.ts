@@ -1,6 +1,6 @@
 export class Num {
-  private mantissa: number;   // in [1,10) or 0
-  private exponent: number;   // integer power of 10
+  mantissa: number;   // in [1,10) or 0
+  exponent: number;   // integer power of 10
 
   constructor(mantissa: number, exponent: number) {
     this.mantissa = mantissa;
@@ -168,6 +168,13 @@ export class Num {
 
   /** ≥ comparison */
   greq(b: Num): boolean {
+    // Check if mantissa is negative
+    if (this.mantissa < 0 && b.mantissa > 0) {
+      return false;
+    }
+    if (this.mantissa > 0 && b.mantissa < 0) {
+      return true;
+    }
     if (this.mantissa === 0 && b.mantissa === 0) return true;
     if (this.exponent !== b.exponent) {
       return this.exponent > b.exponent;
@@ -177,6 +184,13 @@ export class Num {
 
   /** true if this > other */
   gt(other: Num): boolean {
+    // Check if mantissa is negative
+    if (this.mantissa < 0 && other.mantissa > 0) {
+      return false;
+    }
+    if (this.mantissa > 0 && other.mantissa < 0) {
+      return true;
+    }
     if (this.exponent !== other.exponent) {
       return this.exponent > other.exponent;
     }

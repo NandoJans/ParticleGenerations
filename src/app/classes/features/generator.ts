@@ -105,6 +105,7 @@ export abstract class Generator extends Buyable implements Generatable, Storable
       StatsService.addNum(this.type, 'totalResetAutomator', new Num(1, 0))
     }
 
+    this.multiplier = this.baseMultiplier.copy();
     this.bought = new Num(0, 0)
     this.amount = new Num(0, 0)
     this.unlocked = this.startUnlocked
