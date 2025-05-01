@@ -151,7 +151,7 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     const timeDiff = currentTime.getTime() - this.prestigeStarted.getTime();
     const timeDiffInSeconds = Math.floor(timeDiff / 20);
     const generationPerTick = holdingGain.div(new Num(timeDiffInSeconds, 0));
-    if (generationPerTick.greq(this.highestGenerationPerTick)) {
+    if (generationPerTick.gt(this.highestGenerationPerTick)) {
       this.highestGenerationPerTick = generationPerTick;
     }
   }
