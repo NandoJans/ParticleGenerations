@@ -61,6 +61,12 @@ export class RedAcceleratorGenerator extends Generator {
     }
   }
 
+  override reset() {
+    this.powEffect = new Num(1, 0);
+    this.redParticleEffect = new Num(1, -2);
+    super.reset();
+  }
+
   override unlock(): void | { title: string; message: string } {
     this.powEffect = new Num(1, 0);
     this.redParticleEffect = new Num(1, -2);
