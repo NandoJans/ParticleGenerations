@@ -8,6 +8,7 @@ import {AutomatorService} from "./interactables/automator.service";
 import {PrestigeLayersService} from "./prestige-layers.service";
 import {TimelineService} from "./timeline.service";
 import {MilestoneRecord} from "../classes/records/milestones/milestone-record";
+import {Num} from "../num";
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,7 @@ export class DataManagerService {
   ) {}
 
   save() {
+    // return;
     console.log('Saving data...');
     this.holdingRecord.save()
     this.generatorRecord.save()

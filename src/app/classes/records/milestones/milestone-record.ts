@@ -56,6 +56,40 @@ export class MilestoneRecord extends Record {
     AutomatorRecord.redGeneratorExtension
   )
 
+  // Keep red accelerator automators
+  static keepFasterAccelerationAuto: ChangeResetKeyYellowMilestone = new ChangeResetKeyYellowMilestone(
+    'keepFasterAccelerationAuto',
+    'Keep Faster Acceleration Automator',
+    new Num(2, 1),
+    AutomatorRecord.multiplyRedAccelerationGeneration
+  )
+  static keepMultiplyAcceleratorEffectAuto: ChangeResetKeyYellowMilestone = new ChangeResetKeyYellowMilestone(
+    'keepMultiplyAcceleratorEffectAuto',
+    'Keep Multiply Accelerator Effect Automator',
+    new Num(3, 1),
+    AutomatorRecord.multiplyRedAcceleratorEffect
+  )
+  static keepBetterAccelerationEffectAuto: ChangeResetKeyYellowMilestone = new ChangeResetKeyYellowMilestone(
+    'keepBetterAccelerationEffectAuto',
+    'Keep Red Accelerator Automator',
+    new Num(4, 1),
+    AutomatorRecord.improveRedAcceleratorsEffect
+  )
+  static keepBetterRedParticleToAcceleratorEffectAuto: ChangeResetKeyYellowMilestone = new ChangeResetKeyYellowMilestone(
+    'keepBetterRedParticleToAcceleratorEffectAuto',
+    'Keep Better Red Particle to Accelerator Effect Automator',
+    new Num(5, 1),
+    AutomatorRecord.improveRedParticlesToAccelerators
+  )
+  static keepBoosterAccelerationAuto: ChangeResetKeyYellowMilestone = new ChangeResetKeyYellowMilestone(
+    'keepBoosterAccelerationAuto',
+    'Keep Better Red Particle to Accelerator Effect Automator',
+    new Num(6, 1),
+    AutomatorRecord.boosterAcceleration
+  )
+
+  // Generate Yellow Particles
+
 
   // Green Phase
 
@@ -73,7 +107,15 @@ export class MilestoneRecord extends Record {
 
     // Keep Other Automators
     MilestoneRecord.keepRedGenBoosterAuto,
-    MilestoneRecord.keepRedExtensionAuto
+    MilestoneRecord.keepRedExtensionAuto,
+
+    // Keep red accelerator automators
+    MilestoneRecord.keepFasterAccelerationAuto,
+    MilestoneRecord.keepMultiplyAcceleratorEffectAuto,
+    MilestoneRecord.keepBetterAccelerationEffectAuto,
+    MilestoneRecord.keepBetterRedParticleToAcceleratorEffectAuto,
+    MilestoneRecord.keepBoosterAccelerationAuto
+
   ];
 
   getList(): Milestone[] {

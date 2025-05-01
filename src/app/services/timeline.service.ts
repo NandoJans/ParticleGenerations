@@ -62,6 +62,11 @@ export class TimelineService {
     .addMilestone(MilestoneRecord.keepFifthRedGenAuto)
     .addMilestone(MilestoneRecord.keepRedGenBoosterAuto)
     .addMilestone(MilestoneRecord.keepRedExtensionAuto)
+    .addMilestone(MilestoneRecord.keepFasterAccelerationAuto)
+    .addMilestone(MilestoneRecord.keepMultiplyAcceleratorEffectAuto)
+    .addMilestone(MilestoneRecord.keepBetterAccelerationEffectAuto)
+    .addMilestone(MilestoneRecord.keepBetterRedParticleToAcceleratorEffectAuto)
+    .addMilestone(MilestoneRecord.keepBoosterAccelerationAuto)
     .build()
     .build()
 

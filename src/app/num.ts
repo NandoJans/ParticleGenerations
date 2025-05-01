@@ -185,6 +185,8 @@ export class Num {
   /** true if this > other */
   gt(other: Num): boolean {
     // Check if mantissa is negative
+    if (this.mantissa === 0) return false;
+    if (other.mantissa === 0) return true;
     if (this.mantissa < 0 && other.mantissa > 0) {
       return false;
     }

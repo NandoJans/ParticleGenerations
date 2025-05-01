@@ -15,6 +15,7 @@ export class MultiplierRecord {
   static yellowParticleGain: Multiplier = new Multiplier('yellowParticleGain', new Num(1, 0));
   static yellowKeyGain: Multiplier = new Multiplier('yellowKeyGain', new Num(1, 0));
   static yellowPrestigeGain: Multiplier = new Multiplier('yellowPrestigeGain', new Num(1, 0));
+  static yellowParticleIdleGeneration: Multiplier = new Multiplier('yellowParticleIdleGeneration', new Num(0, 0));
 
   static list: Multiplier[] = [
     // Red Phase
