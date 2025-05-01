@@ -59,6 +59,7 @@ export class TimelineService {
 
   static list: Timeline[] = [
     TimelineService.redTimeline,
+    TimelineService.yellowTimeline
   ]
 
   getList(): Timeline[] {

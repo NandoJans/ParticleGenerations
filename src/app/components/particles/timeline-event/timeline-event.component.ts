@@ -58,6 +58,14 @@ export class TimelineEventComponent implements OnInit {
     return this.getNext() !== null && this.getNext() !== undefined;
   }
 
+  showNext(): boolean {
+    const next = this.getNext();
+    if (next instanceof TimelineEvent) {
+      return next.shouldShow;
+    }
+    return false;
+  }
+
   getNext() {
     if (this.next) return this.next;
     this.next = this.timelineEvent.getNext();
@@ -68,13 +76,14 @@ export class TimelineEventComponent implements OnInit {
     const next = this.getNext();
     if (next instanceof TimelineEvent) {
       const start = this.timelineEvent.requiredAmount;
-      const goal = next.requiredAmount;
+      const goal = next.requiredAmount.div(start);
       const progress = this.timelineEvent.highestAmount.div(start);
 
       const percentage = progress.log(10)
         .div(goal.log(10))
         .mul(new Num(1, 2))
         .toNumber();
+
       if (percentage > 100) {
         return 100;
       } else if (percentage < 0) {
