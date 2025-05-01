@@ -15,7 +15,9 @@ export class NoResetRedExtensionsUpgrade extends YellowUpgrade {
   }
 
   action(): undefined {
-    UpgradeRecord.redGeneratorExtension.resets = ResetKey.NONE;
+    if (this.hasBought()) {
+      UpgradeRecord.redGeneratorExtension.resets = ResetKey.NONE;
+    }
     return;
   }
 
