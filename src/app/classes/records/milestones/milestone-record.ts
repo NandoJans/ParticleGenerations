@@ -4,6 +4,9 @@ import {ChangeResetKeyYellowMilestone} from "../../features/milestones/change-re
 import {Num} from "../../../num";
 import {AutomatorRecord} from "../automators/automator-record";
 import {Injectable} from "@angular/core";
+import {ChangeHoldingGeneratePercentage} from "../../features/milestones/change-holding-generate-percentage";
+import {MultiplierRecord} from "../multipliers/multiplier-record";
+import {BreakYellowBarrierMilestone} from "../../features/milestones/break-yellow-barrier-milestone";
 
 @Injectable({
   providedIn: 'root'
@@ -90,6 +93,80 @@ export class MilestoneRecord extends Record {
 
   // Generate Yellow Particles
 
+  static generate5PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
+    'generate5PercentYellowParticles',
+    '5% Yellow Particles',
+    new Num(15, 0),
+    MultiplierRecord.yellowParticleIdleGeneration,
+    new Num(0.05, 0)
+  )
+  static generate10PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
+    'generate10PercentYellowParticles',
+    '10% Yellow Particles',
+    new Num(25, 0),
+    MultiplierRecord.yellowParticleIdleGeneration,
+    new Num(0.1, 0)
+  )
+  static generate15PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
+    'generate15PercentYellowParticles',
+    '15% Yellow Particles',
+    new Num(35, 0),
+    MultiplierRecord.yellowParticleIdleGeneration,
+    new Num(0.15, 0)
+  )
+  static generate20PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
+    'generate20PercentYellowParticles',
+    '20% Yellow Particles',
+    new Num(45, 0),
+    MultiplierRecord.yellowParticleIdleGeneration,
+    new Num(0.2, 0)
+  )
+  static generate25PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
+    'generate25PercentYellowParticles',
+    '25% Yellow Particles',
+    new Num(75, 0),
+    MultiplierRecord.yellowParticleIdleGeneration,
+    new Num(0.25, 0)
+  )
+  static generate30PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
+    'generate30PercentYellowParticles',
+    '30% Yellow Particles',
+    new Num(100, 0),
+    MultiplierRecord.yellowParticleIdleGeneration,
+    new Num(0.3, 0)
+  )
+  static generate35PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
+    'generate35PercentYellowParticles',
+    '35% Yellow Particles',
+    new Num(150, 0),
+    MultiplierRecord.yellowParticleIdleGeneration,
+    new Num(0.35, 0)
+  )
+  static generate40PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
+    'generate40PercentYellowParticles',
+    '40% Yellow Particles',
+    new Num(200, 0),
+    MultiplierRecord.yellowParticleIdleGeneration,
+    new Num(0.4, 0)
+  )
+  static generate45PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
+    'generate45PercentYellowParticles',
+    '45% Yellow Particles',
+    new Num(300, 0),
+    MultiplierRecord.yellowParticleIdleGeneration,
+    new Num(0.45, 0)
+  )
+  static generate50PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
+    'generate50PercentYellowParticles',
+    '50% Yellow Particles',
+    new Num(500, 0),
+    MultiplierRecord.yellowParticleIdleGeneration,
+    new Num(0.5, 0)
+  )
+
+  // Break yellow barrier
+  static breakYellowBarrier: BreakYellowBarrierMilestone = new BreakYellowBarrierMilestone('breakYellowBarrier');
+
 
   // Green Phase
 
@@ -114,7 +191,22 @@ export class MilestoneRecord extends Record {
     MilestoneRecord.keepMultiplyAcceleratorEffectAuto,
     MilestoneRecord.keepBetterAccelerationEffectAuto,
     MilestoneRecord.keepBetterRedParticleToAcceleratorEffectAuto,
-    MilestoneRecord.keepBoosterAccelerationAuto
+    MilestoneRecord.keepBoosterAccelerationAuto,
+
+    // Generate Yellow Particles
+    MilestoneRecord.generate5PercentYellowParticles,
+    MilestoneRecord.generate10PercentYellowParticles,
+    MilestoneRecord.generate15PercentYellowParticles,
+    MilestoneRecord.generate20PercentYellowParticles,
+    MilestoneRecord.generate25PercentYellowParticles,
+    MilestoneRecord.generate30PercentYellowParticles,
+    MilestoneRecord.generate35PercentYellowParticles,
+    MilestoneRecord.generate40PercentYellowParticles,
+    MilestoneRecord.generate45PercentYellowParticles,
+    MilestoneRecord.generate50PercentYellowParticles,
+
+    // Break yellow barrier
+    MilestoneRecord.breakYellowBarrier
 
   ];
 

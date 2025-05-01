@@ -1,7 +1,7 @@
-import { CorrectMultiplierYellowMilestone } from './correct-multiplier-yellow-milestone';
+import { ChangeHoldingGeneratePercentage } from './change-holding-generate-percentage';
 
 describe('ChangeHoldingGenerationMultiplierMilestone', () => {
   it('should create an instance', () => {
-    expect(new CorrectMultiplierYellowMilestone()).toBeTruthy();
+    expect(new ChangeHoldingGeneratePercentage()).toBeTruthy();
   });
 });
