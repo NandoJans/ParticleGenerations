@@ -9,8 +9,8 @@ export class IncreaseRedGeneratorBuyMultipliersUpgrade extends YellowUpgrade {
   }
   displayName: string = 'Increase Red Generator Buy Multipliers';
 
-  override buffer: Num = new Num(0.05, 0);
-  override baseBuffer: Num = new Num(0.05, 0);
+  override buffer: Num = new Num(0.01, 0);
+  override baseBuffer: Num = new Num(0.01, 0);
   override calculationOrder: number = 1001;
 
   getDescription(): string {
