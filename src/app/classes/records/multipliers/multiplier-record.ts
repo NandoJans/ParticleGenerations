@@ -1,6 +1,7 @@
 import {Multiplier} from "../../features/multiplier";
 import {Num} from "../../../num";
 import { Injectable } from '@angular/core';
+import {RedGenerator} from "../../features/generators/red-generator";
 
 @Injectable({
   providedIn: 'root'

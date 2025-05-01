@@ -21,6 +21,13 @@ import {
 } from "../../features/upgrades/red-generator-multiplier-yellow-prestige-yellow-upgrade";
 import {StartWithMoreRedExtensionsUpgrade} from "../../features/upgrades/start-with-more-red-extensions-upgrade";
 import {NoResetRedExtensionsUpgrade} from "../../features/upgrades/no-reset-red-extensions-upgrade";
+import {
+  IncreaseRedGeneratorSubMultipliersUpgrade
+} from "../../features/upgrades/increase-red-generator-sub-multipliers-upgrade";
+import {
+  IncreaseRedGeneratorBuyMultipliersUpgrade
+} from "../../features/upgrades/increase-red-generator-buy-multipliers-upgrade";
+import {MultiplyYellowKeyGainUpgrade} from "../../features/upgrades/multiply-yellow-key-gain-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +53,9 @@ export class UpgradeRecord extends Record {
   static multiplyRedGeneratorExtensionYellow: MultiplyRedGeneratorExtensionYellowUpgrade = new MultiplyRedGeneratorExtensionYellowUpgrade('multiplyRedGeneratorExtensionYellow');
   static startWithMoreRedExtensionsUpgrade: StartWithMoreRedExtensionsUpgrade = new StartWithMoreRedExtensionsUpgrade('startWithMoreRedExtensionsUpgrade');
   static noResetRedExtension: NoResetRedExtensionsUpgrade = new NoResetRedExtensionsUpgrade('noResetRedExtension');
+  static increaseRedGeneratorSubMultipliers: IncreaseRedGeneratorSubMultipliersUpgrade = new IncreaseRedGeneratorSubMultipliersUpgrade('increaseGeneratorSubMultipliers');
+  static increaseRedGeneratorBuyMultipliers: IncreaseRedGeneratorBuyMultipliersUpgrade = new IncreaseRedGeneratorBuyMultipliersUpgrade('increaseGeneratorBuyMultipliers');
+  static multiplyYellowKeyGain: MultiplyYellowKeyGainUpgrade = new MultiplyYellowKeyGainUpgrade('multiplyYellowKeyGain');
 
   static override list: Upgrade[] = [
     UpgradeRecord.redGeneratorExtension,
@@ -63,7 +73,11 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.multiplyYellowParticlesYellow,
     UpgradeRecord.redGeneratorMultiplierYellowPrestigeYellow,
     UpgradeRecord.multiplyRedGeneratorExtensionYellow,
-    UpgradeRecord.startWithMoreRedExtensionsUpgrade
+    UpgradeRecord.startWithMoreRedExtensionsUpgrade,
+    UpgradeRecord.increaseRedGeneratorSubMultipliers,
+    UpgradeRecord.increaseRedGeneratorBuyMultipliers,
+    UpgradeRecord.noResetRedExtension,
+    UpgradeRecord.multiplyYellowKeyGain
   ]
 
   getList(): Upgrade[] {
