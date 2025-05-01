@@ -6,7 +6,7 @@
   <p>{{ getMessage() }}</p>
   <p>Requirement: {{ getRequirement() }} {{ getAbbreviation() }}</p>
 </div>
-<div *ngIf="hasNext()" [class]="'progress-bar '+getStyle()">
+<div *ngIf="hasNext() && showNext()" [class]="'progress-bar '+getStyle()">
   <div class="progress" [style.height]="getProgress()+'%'"></div>
   <p>{{ getProgress().toFixed(2) }}%</p>
 </div>

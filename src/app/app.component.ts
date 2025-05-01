@@ -2,8 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {TickService} from "./services/tick.service";
 import {DataManagerService} from "./services/data-manager.service";
 import {App} from "./App";
-import {Router} from "@angular/router";
-import {ChallengeService} from "./services/interactables/challenge.service";
 import {LocalStorageHelper} from "./classes/helpers/local-storage-helper";
 import {OfflineService} from "./services/offline.service";
 import {MigrateNumAndExpValues} from "./migrations/migrate-num-and-exp-values";
@@ -21,8 +19,6 @@ export class AppComponent implements OnInit{
 
   constructor(
     private tick: TickService,
-    private router: Router,
-    private challengeService: ChallengeService,
     private dataManagerService: DataManagerService,
     private offlineService: OfflineService,
     private messageStepsService: MessageStepsService,

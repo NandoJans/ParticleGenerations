@@ -9,6 +9,7 @@ import {HoldingRecord} from "../../records/holdings/holding-record";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {Styles} from "../../enums/styles";
+import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 
 export class RedAcceleratorGenerator extends Generator {
   baseCost: Num = new Num(1, 1e100);
@@ -22,7 +23,9 @@ export class RedAcceleratorGenerator extends Generator {
   name: string = 'redAcceleratorGenerator';
   nav: string = 'none';
   rank: number = 1;
-  requirement: Requirement[] = [];
+  requirement: Requirement[] = [
+    new Requirement(UpgradeRecord.unlockRedAccelerators, new Num(1, 0), this),
+  ];
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED_BOOSTER_ACCELERATION, this);
   softResetId: ResetKey = ResetHelper.registerReset(ResetKey.RED_EXTENSION, this);
   stringRank: string = '1';
@@ -35,20 +38,38 @@ export class RedAcceleratorGenerator extends Generator {
   protected override getGenerateAmount(): Num {
     let generate: Num = super.getGenerateAmount();
 
-    const log = HoldingRecord.redParticles.amount
-      .sub(new Num(1, 75))
+    let log = HoldingRecord.redParticles.amount
+      .div(new Num(1, 75))
       .log(10)
-      .pow(this.powEffect);
+    if (log.lt(new Num(1, 0))) {
+      log = new Num(1, 0);
+
+    }
+    generate = generate.pow(this.powEffect);
     generate = generate.mul(log)
+
     generate = generate.mul(new Num(1, -2));
 
     this.powEffect = new Num(1, 0);
 
-    if (generate.greq(new Num(1, 0))) {
+    if (generate.mantissa > 0 && generate.greq(new Num(1, -2))) {
       this.redParticleEffect = generate.copy();
       return generate
     } else {
-      return new Num(1, 0)
+      this.redParticleEffect = new Num(1, -2);
+      return new Num(1, -2)
     }
+  }
+
+  override reset() {
+    this.powEffect = new Num(1, 0);
+    this.redParticleEffect = new Num(1, -2);
+    super.reset();
+  }
+
+  override unlock(): void | { title: string; message: string } {
+    this.powEffect = new Num(1, 0);
+    this.redParticleEffect = new Num(1, -2);
+    return super.unlock();
   }
 }

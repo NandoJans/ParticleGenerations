@@ -34,7 +34,9 @@ export class UnlockRedAcceleratorsUpgrade extends Upgrade {
       GeneratorRecord.redAcceleratorGenerator.bought = new Num(1, 0);
       GeneratorRecord.redAcceleratorGenerator.unlocked = true;
     } else {
-      HoldingRecord.redAccelerators.amount = new Num(0, 0);
+      HoldingRecord.redAccelerators.amount = new Num(1, 0);
+      HoldingRecord.redAccelerators.powEffect = new Num(1, 0);
+      HoldingRecord.redAccelerators.mulEffect = new Num(1, 0);
       GeneratorRecord.redAcceleratorGenerator.amount = new Num(0, 0);
       GeneratorRecord.redAcceleratorGenerator.bought = new Num(0, 0);
       GeneratorRecord.redAcceleratorGenerator.unlocked = false;
