@@ -4,6 +4,7 @@ import {Timeline} from "../../../classes/features/timeline/timeline";
 import {Styles} from "../../../classes/enums/styles";
 import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 import {Num} from "../../../num";
+import {Milestone} from "../../../classes/features/milestone";
 
 @Component({
   selector: 'app-timeline-event',
@@ -20,10 +21,14 @@ export class TimelineEventComponent implements OnInit {
     new Timeline("test", Styles.RED, "test", "test")
   );
   next: TimelineEvent | null = null;
+  milestone: Milestone | null = null;
 
   constructor() {}
 
   ngOnInit(): void {
+    if (this.hasMilestones()) {
+      this.setMilestoneUpcoming();
+    }
   }
 
   getTitle() {
@@ -93,5 +98,37 @@ export class TimelineEventComponent implements OnInit {
       }
     }
     return 0;
+  }
+
+  hasMilestones(): boolean {
+    return this.timelineEvent.milestones.length > 0;
+  }
+
+  getMilestones(): Milestone[] {
+    return this.timelineEvent.milestones;
+  }
+
+  setMilestone(milestone: Milestone) {
+    this.milestone = milestone;
+  }
+
+  setMilestoneUpcoming() {
+    this.milestone = this.timelineEvent.getUpcomingMilestone();
+  }
+
+  getMilestoneName(): string {
+    return this.milestone?.displayName ?? "";
+  }
+
+  getMilestoneDescription(): string {
+    return this.milestone?.getDescription() ?? "";
+  }
+
+  getMilestoneGoal(): string {
+    return this.milestone?.goal.toString() ?? "";
+  }
+
+  getMilestoneHoldingAbbreviation(): string {
+    return this.milestone?.currency.abbreviation ?? "";
   }
 }

@@ -3,12 +3,14 @@ import {Holding} from "../holding";
 import {Num} from "../../../num";
 import {Storable} from "../interfaces/storable";
 import {LocalStorageHelper} from "../../helpers/local-storage-helper";
+import {Milestone} from "../milestone";
 
 export class TimelineEvent implements Storable {
   shouldShow: boolean = false;
   reached: boolean = false;
   firstTime: boolean = true;
   highestAmount: Num = new Num(1, 0);
+  milestones: Milestone[] = [];
 
   constructor(
     public name: string,
@@ -75,5 +77,16 @@ export class TimelineEvent implements Storable {
 
   getNext(): TimelineEvent | null {
     return this.timeline.getNext(this);
+  }
+
+  getUpcomingMilestone() {
+    if (this.milestones.length > 0) {
+      for (const milestone of this.milestones) {
+        if (!milestone.unlocked) {
+          return milestone;
+        }
+      }
+    }
+    return null;
   }
 }

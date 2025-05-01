@@ -51,6 +51,9 @@ export class DataManagerService {
     this.prestigeLayersService.load();
     this.timelineService.load();
     this.milestoneRecord.load();
+
+    // Run milestones
+    this.milestoneRecord.run();
   }
 
   setLastSave(): void {

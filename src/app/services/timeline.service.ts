@@ -4,6 +4,7 @@ import {TimelineFactory} from "../classes/factories/timeline-factory";
 import {Styles} from "../classes/enums/styles";
 import {HoldingRecord} from "../classes/records/holdings/holding-record";
 import {Num} from "../num";
+import {MilestoneRecord} from "../classes/records/milestones/milestone-record";
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +55,7 @@ export class TimelineService {
       HoldingRecord.yellowPrestiges,
       new Num(1, 0)
     )
+    .addMilestone(MilestoneRecord.keepFirstRedGenAuto)
     .build()
     .build()
 

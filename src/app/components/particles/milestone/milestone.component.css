@@ -1,0 +1,23 @@
+div.milestone {
+  background-color: var(--background-color-light);
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+div.milestone.unlocked {
+  --text-color-unlocked: var(--text-color-main);
+  color: var(--text-color-unlocked);
+  background-color: var(--background-color-unlocked);
+}
+
+div.milestone.yellow {
+  --background-color-unlocked: var(--accent-color-yellow);
+  --text-color-unlocked: var(--background-color-2);
+}
+
+div.milestone:hover {
+  box-shadow: 0 0 10000px rgba(255, 255, 255, 0.2) inset;
+}

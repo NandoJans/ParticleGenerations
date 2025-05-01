@@ -1,7 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Milestone} from "../../../globals";
+import { Milestone } from 'src/app/classes/features/milestone';
+import {MilestoneRecord} from "../../../classes/records/milestones/milestone-record";
 import {Num} from "../../../num";
-import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
+import {Styles} from "../../../classes/enums/styles";
 
 @Component({
   selector: 'app-milestone',
@@ -9,25 +10,34 @@ import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
   styleUrls: ['./milestone.component.css']
 })
 export class MilestoneComponent implements OnInit {
-  @Input() milestone: Milestone | undefined;
-  name: string | undefined;
-  description: string | undefined;
-  displayName: string | undefined;
-  cost: Num | undefined;
-  currency: string | undefined;
-  style: string | undefined;
+  @Input() milestone: Milestone = MilestoneRecord.keepFirstRedGenAuto;
 
-  constructor(
-    public holdingRecord: HoldingRecord
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.name = this.milestone?.name;
-    this.description = this.milestone?.description;
-    this.displayName = this.milestone?.displayName;
-    this.cost = this.milestone?.cost;
-    this.currency = this.milestone?.currency;
-    this.style = this.milestone?.style;
   }
 
+  getName(): string {
+    return this.milestone.name;
+  }
+
+  getStyle(): Styles {
+    return this.milestone.style;
+  }
+
+  getGoal(): Num {
+    return this.milestone.goal;
+  }
+
+  isUnlocked(): boolean {
+    return this.milestone.unlocked;
+  }
+
+  getDisplayName(): string {
+    return this.milestone.displayName;
+  }
+
+  getDescription(): string {
+    return this.milestone.getDescription();
+  }
 }

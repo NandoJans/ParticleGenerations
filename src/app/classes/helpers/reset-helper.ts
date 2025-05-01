@@ -38,13 +38,21 @@ export class ResetHelper {
   }
 
   static removeIfResetSet(resetable: Resetable): void {
-    if (resetable.resetId !== ResetKey.NONE) {
+    if (
+      resetable.resetId !== ResetKey.NONE &&
+      this.resetList[resetable.resetId] &&
+      this.resetList[resetable.resetId][resetable.name]
+    ) {
       delete this.resetList[resetable.resetId][resetable.name];
     }
   }
 
   static removeIfSoftResetSet(resetable: Resetable): void {
-    if (resetable.softResetId !== ResetKey.NONE) {
+    if (
+      resetable.softResetId !== ResetKey.NONE &&
+      this.softResetList[resetable.softResetId] &&
+      this.softResetList[resetable.softResetId][resetable.name]
+    ) {
       delete this.softResetList[resetable.softResetId][resetable.name];
     }
   }

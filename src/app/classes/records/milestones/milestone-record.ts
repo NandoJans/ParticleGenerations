@@ -42,4 +42,10 @@ export class MilestoneRecord extends Record {
       milestone.tryLoad()
     })
   }
+
+  run() {
+    this.getList().forEach((milestone: Milestone) => {
+      milestone.run()
+    })
+  }
 }

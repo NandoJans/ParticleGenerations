@@ -60,4 +60,9 @@ export abstract class Milestone extends GameElement implements Resetable, Storab
     this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey());
     this.unlocked = this.localStorageHelper.load(this.unlocked, 'unlocked');
   }
+
+  override unlock(): void {
+    super.unlock();
+    this.action();
+  }
 }
