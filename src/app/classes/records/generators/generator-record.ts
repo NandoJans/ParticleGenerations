@@ -7,6 +7,7 @@ import { Generator } from "../../features/generator";
 import {Record} from "../record";
 import { Injectable } from '@angular/core';
 import {RedAcceleratorGenerator} from "../../features/generators/red-accelerator-generator";
+import {RedGenerator} from "../../features/generators/red-generator";
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,14 @@ export class GeneratorRecord extends Record {
 
     GeneratorRecord.redAcceleratorGenerator
   ]
+
+  static redGenerators: RedGenerator[] = [
+    GeneratorRecord.firstRedGenerator,
+    GeneratorRecord.secondRedGenerator,
+    GeneratorRecord.thirdRedGenerator,
+    GeneratorRecord.fourthRedGenerator,
+    GeneratorRecord.fifthRedGenerator
+  ];
 
   getList(): Generator[] {
     return GeneratorRecord.list;

@@ -1,6 +1,6 @@
-<div [class]="'upgrade '+style" [id]="name">
-  <h4>{{ displayName }}</h4>
-  <p>{{ description }}</p>
-  <!--  TODO: implement-->
-<!--  <app-number-display [name]="name" [style]="''" [type]="'cost'" [currency]="currency"></app-number-display>-->
+<div [class]="
+'milestone '+getStyle()+' '
++((isUnlocked()) ? 'unlocked' : '')+' '
+" [id]="getName()">
+  {{ getGoal().toString() }}
 </div>

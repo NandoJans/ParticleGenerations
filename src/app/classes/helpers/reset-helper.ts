@@ -23,6 +23,7 @@ export class ResetHelper {
     if (!this.resetList[resetKey]) {
       this.resetList[resetKey] = {};
     }
+    ResetHelper.removeIfResetSet(resetable);
     this.resetList[resetKey][resetable.name] = resetable;
     return resetKey;
   }
@@ -31,8 +32,29 @@ export class ResetHelper {
     if (!this.softResetList[resetKey]) {
       this.softResetList[resetKey] = {};
     }
+    ResetHelper.removeIfSoftResetSet(resetable);
     this.softResetList[resetKey][resetable.name] = resetable;
     return resetKey;
+  }
+
+  static removeIfResetSet(resetable: Resetable): void {
+    if (
+      resetable.resetId !== ResetKey.NONE &&
+      this.resetList[resetable.resetId] &&
+      this.resetList[resetable.resetId][resetable.name]
+    ) {
+      delete this.resetList[resetable.resetId][resetable.name];
+    }
+  }
+
+  static removeIfSoftResetSet(resetable: Resetable): void {
+    if (
+      resetable.softResetId !== ResetKey.NONE &&
+      this.softResetList[resetable.softResetId] &&
+      this.softResetList[resetable.softResetId][resetable.name]
+    ) {
+      delete this.softResetList[resetable.softResetId][resetable.name];
+    }
   }
 
   private static isStorable(object: any): object is Storable {

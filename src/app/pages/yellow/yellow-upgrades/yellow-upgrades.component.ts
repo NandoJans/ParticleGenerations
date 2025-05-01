@@ -6,6 +6,8 @@ import {YellowEnhancement} from "../../../classes/features/enhancements/yellow-e
 import {EnhancementRecord} from "../../../classes/records/enhancement-record";
 import {Upgrade} from "../../../classes/features/upgrade";
 import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
+import {PrestigeLayer} from "../../../classes/features/prestiges/prestige-layer";
+import {PrestigeLayersService} from "../../../services/prestige-layers.service";
 
 @Component({
   selector: 'app-yellow-upgrades',
@@ -19,9 +21,15 @@ export class YellowUpgradesComponent implements OnInit {
   upgrades: Upgrade[] = [
     UpgradeRecord.multiplyRedGeneratorsYellow,
     UpgradeRecord.multiplyYellowParticlesYellow,
+    UpgradeRecord.multiplyYellowKeyGain,
     UpgradeRecord.redGeneratorMultiplierYellowPrestigeYellow,
     UpgradeRecord.multiplyRedGeneratorExtensionYellow,
+    UpgradeRecord.startWithMoreRedExtensionsUpgrade,
+    UpgradeRecord.increaseRedGeneratorSubMultipliers,
+    UpgradeRecord.increaseRedGeneratorBuyMultipliers,
+    UpgradeRecord.noResetRedExtension
   ];
+  yellowPrestige: PrestigeLayer = PrestigeLayersService.yellowPrestigeLayer;
 
   constructor() { }
 

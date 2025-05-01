@@ -33,6 +33,7 @@ import { YellowUpgradesComponent } from './pages/yellow/yellow-upgrades/yellow-u
 import { EnhancementComponent } from './components/medium/enhancement/enhancement.component';
 import { RedTimelineComponent } from './pages/timeline/red-timeline/red-timeline.component';
 import { YellowTimelineComponent } from './pages/timeline/yellow-timeline/yellow-timeline.component';
+import { FastestPrestigeComponent } from './components/small/fastest-prestige/fastest-prestige.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { YellowTimelineComponent } from './pages/timeline/yellow-timeline/yellow
     EnhancementComponent,
     RedTimelineComponent,
     YellowTimelineComponent,
+    FastestPrestigeComponent,
   ],
     imports: [
         BrowserModule,

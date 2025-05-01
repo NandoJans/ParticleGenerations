@@ -44,6 +44,43 @@ div.progress-bar p {
   font-weight: bold;
 }
 
+div.milestones {
+  margin: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+div.milestone-details {
+  margin-top: 1rem;
+  background-color: var(--background-color-3);
+  border-radius: 10px;
+  border: 5px solid var(--background-color-1);
+  color: var(--text-color-light);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: start;
+  padding: 1rem;
+}
+
+div.milestone-details p {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+div.milestone-details p.description {
+  margin: 0.5rem 0;
+  font-size: 0.8rem;
+  font-weight: normal;
+}
+
+div.milestone-details h3 {
+  margin: 0;
+}
+
 @media (max-width: 768px) {
   div.timeline-event {
     margin: 0 5%;

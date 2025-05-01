@@ -1,23 +1,172 @@
 import {Record} from "../record";
 import {Milestone} from "../../features/milestone";
-import {ThousandRedParticlesMilestone} from "../../features/milestones/thousand-red-particles-milestone";
-import {StartWithExtensionsMilestone} from "../../features/milestones/start-with-extensions-milestone";
-import {StartWithBoosterMilestone} from "../../features/milestones/start-with-booster-milestone";
-import {IdleYellowParticlesMilestone} from "../../features/milestones/idle-yellow-particles-milestone";
-import {KeepRedUpgradesMilestone} from "../../features/milestones/keep-red-upgrades-milestone";
-import {StartWithMoreRedParticlesMilestone} from "../../features/milestones/start-with-more-red-particles-milestone";
-import {PreventExtensionResetMilestone} from "../../features/milestones/prevent-extension-reset-milestone";
+import {ChangeResetKeyYellowMilestone} from "../../features/milestones/change-reset-key-yellow-milestone";
+import {Num} from "../../../num";
+import {AutomatorRecord} from "../automators/automator-record";
+import {Injectable} from "@angular/core";
+import {ChangeHoldingGeneratePercentage} from "../../features/milestones/change-holding-generate-percentage";
+import {MultiplierRecord} from "../multipliers/multiplier-record";
+import {BreakYellowBarrierMilestone} from "../../features/milestones/break-yellow-barrier-milestone";
 
+@Injectable({
+  providedIn: 'root'
+})
 export class MilestoneRecord extends Record {
 
-  // Yellow Phase
-  static thousandRedParticles: ThousandRedParticlesMilestone = new ThousandRedParticlesMilestone();
-  static startWithExtensions: StartWithExtensionsMilestone = new StartWithExtensionsMilestone();
-  static startWithBooster: StartWithBoosterMilestone = new StartWithBoosterMilestone();
-  static idleYellowParticles: IdleYellowParticlesMilestone = new IdleYellowParticlesMilestone();
-  static keepRedUpgrades: KeepRedUpgradesMilestone = new KeepRedUpgradesMilestone();
-  static startWithMoreRedParticles: StartWithMoreRedParticlesMilestone = new StartWithMoreRedParticlesMilestone();
-  static preventExtensionReset: PreventExtensionResetMilestone = new PreventExtensionResetMilestone();
+  // Keep Red Generator Automators
+  static keepFirstRedGenAuto: ChangeResetKeyYellowMilestone = new ChangeResetKeyYellowMilestone(
+    'keepFirstRedGenAuto',
+    'Keep First Red Generator Automator',
+    new Num(1, 0),
+    AutomatorRecord.firstRedGenerator
+  )
+  static keepSecondRedGenAuto: ChangeResetKeyYellowMilestone = new ChangeResetKeyYellowMilestone(
+    'keepSecondRedGenAuto',
+    'Keep Second Red Generator Automator',
+    new Num(2, 0),
+    AutomatorRecord.secondRedGenerator
+  )
+  static keepThirdRedGenAuto: ChangeResetKeyYellowMilestone = new ChangeResetKeyYellowMilestone(
+    'keepThirdRedGenAuto',
+    'Keep Third Red Generator Automator',
+    new Num(3, 0),
+    AutomatorRecord.thirdRedGenerator
+  )
+  static keepFourthRedGenAuto: ChangeResetKeyYellowMilestone = new ChangeResetKeyYellowMilestone(
+    'keepFourthRedGenAuto',
+    'Keep Fourth Red Generator Automator',
+    new Num(4, 0),
+    AutomatorRecord.fourthRedGenerator
+  )
+  static keepFifthRedGenAuto: ChangeResetKeyYellowMilestone = new ChangeResetKeyYellowMilestone(
+    'keepFifthRedGenAuto',
+    'Keep Fifth Red Generator Automator',
+    new Num(5, 0),
+    AutomatorRecord.fifthRedGenerator
+  )
+
+  // Keep Other Automators
+  static keepRedGenBoosterAuto: ChangeResetKeyYellowMilestone = new ChangeResetKeyYellowMilestone(
+    'keepRedGenBoosterAuto',
+    'Keep Red Generator Booster Automator',
+    new Num(6, 0),
+    AutomatorRecord.redGeneratorBooster
+  )
+  static keepRedExtensionAuto: ChangeResetKeyYellowMilestone = new ChangeResetKeyYellowMilestone(
+    'keepRedExtensionAuto',
+    'Keep Red Extension Automator',
+    new Num(1, 1),
+    AutomatorRecord.redGeneratorExtension
+  )
+
+  // Keep red accelerator automators
+  static keepFasterAccelerationAuto: ChangeResetKeyYellowMilestone = new ChangeResetKeyYellowMilestone(
+    'keepFasterAccelerationAuto',
+    'Keep Faster Acceleration Automator',
+    new Num(1.2, 1),
+    AutomatorRecord.multiplyRedAccelerationGeneration
+  )
+  static keepMultiplyAcceleratorEffectAuto: ChangeResetKeyYellowMilestone = new ChangeResetKeyYellowMilestone(
+    'keepMultiplyAcceleratorEffectAuto',
+    'Keep Multiply Accelerator Effect Automator',
+    new Num(1.7, 1),
+    AutomatorRecord.multiplyRedAcceleratorEffect
+  )
+  static keepBetterAccelerationEffectAuto: ChangeResetKeyYellowMilestone = new ChangeResetKeyYellowMilestone(
+    'keepBetterAccelerationEffectAuto',
+    'Keep Red Accelerator Automator',
+    new Num(2, 1),
+    AutomatorRecord.improveRedAcceleratorsEffect
+  )
+  static keepBetterRedParticleToAcceleratorEffectAuto: ChangeResetKeyYellowMilestone = new ChangeResetKeyYellowMilestone(
+    'keepBetterRedParticleToAcceleratorEffectAuto',
+    'Keep Better Red Particle to Accelerator Effect Automator',
+    new Num(2.2, 1),
+    AutomatorRecord.improveRedParticlesToAccelerators
+  )
+  static keepBoosterAccelerationAuto: ChangeResetKeyYellowMilestone = new ChangeResetKeyYellowMilestone(
+    'keepBoosterAccelerationAuto',
+    'Keep Better Red Particle to Accelerator Effect Automator',
+    new Num(2.7, 1),
+    AutomatorRecord.boosterAcceleration
+  )
+
+  // Generate Yellow Particles
+
+  static generate5PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
+    'generate5PercentYellowParticles',
+    '5% Yellow Particles',
+    new Num(15, 0),
+    MultiplierRecord.yellowParticleIdleGeneration,
+    new Num(0.05, 0)
+  )
+  static generate10PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
+    'generate10PercentYellowParticles',
+    '10% Yellow Particles',
+    new Num(25, 0),
+    MultiplierRecord.yellowParticleIdleGeneration,
+    new Num(0.1, 0)
+  )
+  static generate15PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
+    'generate15PercentYellowParticles',
+    '15% Yellow Particles',
+    new Num(35, 0),
+    MultiplierRecord.yellowParticleIdleGeneration,
+    new Num(0.15, 0)
+  )
+  static generate20PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
+    'generate20PercentYellowParticles',
+    '20% Yellow Particles',
+    new Num(45, 0),
+    MultiplierRecord.yellowParticleIdleGeneration,
+    new Num(0.2, 0)
+  )
+  static generate25PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
+    'generate25PercentYellowParticles',
+    '25% Yellow Particles',
+    new Num(75, 0),
+    MultiplierRecord.yellowParticleIdleGeneration,
+    new Num(0.25, 0)
+  )
+  static generate30PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
+    'generate30PercentYellowParticles',
+    '30% Yellow Particles',
+    new Num(100, 0),
+    MultiplierRecord.yellowParticleIdleGeneration,
+    new Num(0.3, 0)
+  )
+  static generate35PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
+    'generate35PercentYellowParticles',
+    '35% Yellow Particles',
+    new Num(150, 0),
+    MultiplierRecord.yellowParticleIdleGeneration,
+    new Num(0.35, 0)
+  )
+  static generate40PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
+    'generate40PercentYellowParticles',
+    '40% Yellow Particles',
+    new Num(200, 0),
+    MultiplierRecord.yellowParticleIdleGeneration,
+    new Num(0.4, 0)
+  )
+  static generate45PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
+    'generate45PercentYellowParticles',
+    '45% Yellow Particles',
+    new Num(300, 0),
+    MultiplierRecord.yellowParticleIdleGeneration,
+    new Num(0.45, 0)
+  )
+  static generate50PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
+    'generate50PercentYellowParticles',
+    '50% Yellow Particles',
+    new Num(500, 0),
+    MultiplierRecord.yellowParticleIdleGeneration,
+    new Num(0.5, 0)
+  )
+
+  // Break yellow barrier
+  static breakYellowBarrier: BreakYellowBarrierMilestone = new BreakYellowBarrierMilestone('breakYellowBarrier');
+
 
   // Green Phase
 
@@ -26,18 +175,60 @@ export class MilestoneRecord extends Record {
   // Purple Phase
 
   static override list: Milestone[] = [
-    MilestoneRecord.thousandRedParticles,
-    MilestoneRecord.startWithExtensions,
-    MilestoneRecord.startWithBooster,
-    MilestoneRecord.idleYellowParticles,
-    MilestoneRecord.keepRedUpgrades,
-    MilestoneRecord.startWithMoreRedParticles,
-    MilestoneRecord.preventExtensionReset,
+    // Keep Red Generator Automators
+    MilestoneRecord.keepFirstRedGenAuto,
+    MilestoneRecord.keepSecondRedGenAuto,
+    MilestoneRecord.keepThirdRedGenAuto,
+    MilestoneRecord.keepFourthRedGenAuto,
+    MilestoneRecord.keepFifthRedGenAuto,
+
+    // Keep Other Automators
+    MilestoneRecord.keepRedGenBoosterAuto,
+    MilestoneRecord.keepRedExtensionAuto,
+
+    // Keep red accelerator automators
+    MilestoneRecord.keepFasterAccelerationAuto,
+    MilestoneRecord.keepMultiplyAcceleratorEffectAuto,
+    MilestoneRecord.keepBetterAccelerationEffectAuto,
+    MilestoneRecord.keepBetterRedParticleToAcceleratorEffectAuto,
+    MilestoneRecord.keepBoosterAccelerationAuto,
+
+    // Generate Yellow Particles
+    MilestoneRecord.generate5PercentYellowParticles,
+    MilestoneRecord.generate10PercentYellowParticles,
+    MilestoneRecord.generate15PercentYellowParticles,
+    MilestoneRecord.generate20PercentYellowParticles,
+    MilestoneRecord.generate25PercentYellowParticles,
+    MilestoneRecord.generate30PercentYellowParticles,
+    MilestoneRecord.generate35PercentYellowParticles,
+    MilestoneRecord.generate40PercentYellowParticles,
+    MilestoneRecord.generate45PercentYellowParticles,
+    MilestoneRecord.generate50PercentYellowParticles,
+
+    // Break yellow barrier
+    MilestoneRecord.breakYellowBarrier
+
   ];
 
   getList(): Milestone[] {
     return MilestoneRecord.list;
   }
 
+  save() {
+    this.getList().forEach((milestone: Milestone) => {
+      milestone.save()
+    })
+  }
 
+  load() {
+    this.getList().forEach((milestone: Milestone) => {
+      milestone.tryLoad()
+    })
+  }
+
+  run() {
+    this.getList().forEach((milestone: Milestone) => {
+      milestone.run()
+    })
+  }
 }

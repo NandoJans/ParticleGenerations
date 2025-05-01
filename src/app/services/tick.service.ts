@@ -16,6 +16,7 @@ import {Multiplier} from "../classes/features/multiplier";
 import {PrestigeLayersService} from "./prestige-layers.service";
 import {EnhancementService} from "./enhancement.service";
 import {TimelineService} from "./timeline.service";
+import {Generator} from "../classes/features/generator";
 
 @Injectable({
   providedIn: 'root'

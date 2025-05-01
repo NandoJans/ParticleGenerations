@@ -4,6 +4,7 @@ import {TimelineFactory} from "../classes/factories/timeline-factory";
 import {Styles} from "../classes/enums/styles";
 import {HoldingRecord} from "../classes/records/holdings/holding-record";
 import {Num} from "../num";
+import {MilestoneRecord} from "../classes/records/milestones/milestone-record";
 
 @Injectable({
   providedIn: 'root'
@@ -45,15 +46,38 @@ export class TimelineService {
     'yellow-timeline',
     Styles.YELLOW,
     'Yellow Timeline',
-    'Yellow is the second phase of the universe. It is a phase of energy and power. Yellow is the color of the sun and the stars. It is a phase of light and heat. Yellow is the color of life and growth.'
+    'Yellow is the second phase of the universe.'
   )
     .addTimelineEvent(
       'yellow-phase-lock',
       'Yellow Phase Lock',
-      'Yellow phase is locked. You need to unlock yellow power to open it.',
+      'Yellow phase is locked. You need to unlock yellow power to open it. Yellow prestiges are here to help you.',
       HoldingRecord.yellowPrestiges,
       new Num(1, 0)
     )
+    .addMilestone(MilestoneRecord.keepFirstRedGenAuto)
+    .addMilestone(MilestoneRecord.keepSecondRedGenAuto)
+    .addMilestone(MilestoneRecord.keepThirdRedGenAuto)
+    .addMilestone(MilestoneRecord.keepFourthRedGenAuto)
+    .addMilestone(MilestoneRecord.keepFifthRedGenAuto)
+    .addMilestone(MilestoneRecord.keepRedGenBoosterAuto)
+    .addMilestone(MilestoneRecord.keepRedExtensionAuto)
+    .addMilestone(MilestoneRecord.keepFasterAccelerationAuto)
+    .addMilestone(MilestoneRecord.generate5PercentYellowParticles)
+    .addMilestone(MilestoneRecord.keepMultiplyAcceleratorEffectAuto)
+    .addMilestone(MilestoneRecord.keepBetterAccelerationEffectAuto)
+    .addMilestone(MilestoneRecord.keepBetterRedParticleToAcceleratorEffectAuto)
+    .addMilestone(MilestoneRecord.generate10PercentYellowParticles)
+    .addMilestone(MilestoneRecord.keepBoosterAccelerationAuto)
+    .addMilestone(MilestoneRecord.generate15PercentYellowParticles)
+    .addMilestone(MilestoneRecord.generate20PercentYellowParticles)
+    .addMilestone(MilestoneRecord.generate25PercentYellowParticles)
+    .addMilestone(MilestoneRecord.generate30PercentYellowParticles)
+    .addMilestone(MilestoneRecord.generate35PercentYellowParticles)
+    .addMilestone(MilestoneRecord.generate40PercentYellowParticles)
+    .addMilestone(MilestoneRecord.generate45PercentYellowParticles)
+    .addMilestone(MilestoneRecord.generate50PercentYellowParticles)
+    .addMilestone(MilestoneRecord.breakYellowBarrier)
     .build()
     .build()
 

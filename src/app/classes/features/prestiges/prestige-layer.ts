@@ -12,6 +12,7 @@ import {Multiplier} from "../multiplier";
 
 export class PrestigeLayer extends GameElement implements Resetable, Storable {
   name: string;
+  displayName: string = '';
   requirement: Requirement[];
   reached: boolean = false;
   prestigedFirstTime: boolean = false;
@@ -19,9 +20,14 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
   limitPhaseBelow: boolean = true;
   holdingPhaseBelow: Holding;
   amountRequired: Num;
-  gainHoldings: {holding: Holding, basedOnRequiredHolding: boolean, gainMultiplier: Multiplier}[] = [];
+  gainHoldings: {holding: Holding, basedOnRequiredHolding: boolean, gainMultiplier: Multiplier, idleGeneration: boolean}[] = [];
   resets: ResetKey;
   messageSteps: MessageSteps;
+  idleGenerationHolding: Holding
+  idleGenerationMultiplier: Multiplier;
+  prestigeStarted: Date;
+  highestGenerationPerTick: Num = new Num(0, 0);
+
 
   constructor(
     saveName: string,
@@ -29,9 +35,11 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     holdingRequired: Holding,
     amountRequired: Num,
     style: string,
-    gainHoldings: {holding: Holding, basedOnRequiredHolding: boolean, gainMultiplier: Multiplier}[],
+    gainHoldings: {holding: Holding, basedOnRequiredHolding: boolean, gainMultiplier: Multiplier, idleGeneration: boolean}[],
     resets: ResetKey,
     message: MessageSteps,
+    idleGenerationHolding: Holding,
+    idleGenerationMultiplier: Multiplier,
   ) {
     super(saveName);
     this.name = name;
@@ -44,6 +52,11 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     this.gainHoldings = gainHoldings;
     this.resets = resets;
     this.messageSteps = message;
+
+    this.idleGenerationHolding = idleGenerationHolding;
+    this.idleGenerationMultiplier = idleGenerationMultiplier;
+    this.prestigeStarted = new Date();
+    this.highestGenerationPerTick = new Num(0, 0);
   }
 
   override unlock(): void | { title: string; message: string } {
@@ -82,6 +95,8 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     localStorageHelper.save(this.reached, 'reached');
     localStorageHelper.save(this.unlocked, 'unlocked');
     localStorageHelper.save(this.prestigedFirstTime, 'prestigedFirstTime');
+    localStorageHelper.save(this.prestigeStarted.toISOString(), 'prestigeStarted');
+    localStorageHelper.saveNum(this.highestGenerationPerTick, 'highestGenerationPerTick');
   }
 
   tryLoad(): void {
@@ -89,6 +104,8 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     this.reached = localStorageHelper.load(this.reached, 'reached');
     this.unlocked = localStorageHelper.load(this.unlocked, 'unlocked');
     this.prestigedFirstTime = localStorageHelper.load(this.prestigedFirstTime, 'prestigedFirstTime');
+    this.prestigeStarted = new Date(localStorageHelper.load(this.prestigeStarted.toISOString(), 'prestigeStarted'));
+    this.highestGenerationPerTick = localStorageHelper.loadNum(this.highestGenerationPerTick, 'highestGenerationPerTick');
   }
 
   private shouldLimitPhaseBelow(): boolean {
@@ -101,30 +118,49 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     }
   }
 
-  private calculateHoldingGain() {
+  private calculateHoldingGain(gain: {holding: Holding, basedOnRequiredHolding: boolean, gainMultiplier: Multiplier, idleGeneration: boolean}): Num {
     // TODO: implement
+    return new Num(1, 0).mul(gain.gainMultiplier.getNum());
   }
 
   private addGainHoldings() {
+    let generatedHoldings: Num = new Num(0, 0);
     this.gainHoldings.forEach(gain => {
-      // TODO: use calculateHoldingGain when implemented;
-      gain.holding.amount = gain.holding.amount.add(new Num(1, 0).mul(gain.gainMultiplier.num));
+      const holdingGain = this.calculateHoldingGain(gain);
+      console.log('Holding gain:', holdingGain.toString(2));
+      if (gain.idleGeneration) {
+        generatedHoldings = holdingGain
+      }
+      gain.holding.amount = gain.holding.amount.add(holdingGain);
     });
+    return generatedHoldings;
   }
 
   override run(speed: Num) {
     this.applyLimitPhaseBelow();
     this.checkRequirements();
+    this.idleGeneration();
   }
 
   private applyReset() {
     ResetHelper.reset(this.resets);
   }
 
+  private calculateFastestPrestige(holdingGain: Num) {
+    const currentTime = new Date();
+    const timeDiff = currentTime.getTime() - this.prestigeStarted.getTime();
+    const timeDiffInSeconds = Math.floor(timeDiff / 20);
+    const generationPerTick = holdingGain.div(new Num(timeDiffInSeconds, 0));
+    if (generationPerTick.greq(this.highestGenerationPerTick)) {
+      this.highestGenerationPerTick = generationPerTick;
+    }
+  }
+
   prestige() {
     if (this.hasReached()) {
       this.applyReset();
-      this.addGainHoldings();
+      const holdingGain = this.addGainHoldings();
+      this.calculateFastestPrestige(holdingGain);
     }
   }
 
@@ -135,6 +171,14 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
   private checkRequirements() {
     if (this.holdingPhaseBelow.amount.greq(this.amountRequired)) {
       this.unlock();
+    }
+  }
+
+  private idleGeneration() {
+    // Calculate idle generation for the holding based on the fastest prestige time multiplied by the multiplier
+    const idleGeneration = this.highestGenerationPerTick.mul(this.idleGenerationMultiplier.num);
+    if (idleGeneration.gt(new Num(0, 0))) {
+      this.idleGenerationHolding.amount = this.idleGenerationHolding.amount.add(idleGeneration);
     }
   }
 }

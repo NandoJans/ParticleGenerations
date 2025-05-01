@@ -21,6 +21,7 @@ export class RedAcceleratorHolding extends Holding {
       ''
     ).build();
   name: string = "redAccelerators";
+  displayName: string = "Red Accelerator";
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED_EXTENSION, this);
   startAmount: Num = new Num(1, 0);
   mulEffect: Num = new Num(1, 0);

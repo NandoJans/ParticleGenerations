@@ -21,9 +21,9 @@ export class PrestigeLayersService {
     new Num(1, 1000),
     Styles.YELLOW,
     [
-      { holding: HoldingRecord.yellowParticles, basedOnRequiredHolding: false, gainMultiplier: MultiplierRecord.yellowParticleGain},
-      { holding: HoldingRecord.yellowKeys, basedOnRequiredHolding: false, gainMultiplier: MultiplierRecord.yellowKeyGain},
-      { holding: HoldingRecord.yellowPrestiges, basedOnRequiredHolding: false, gainMultiplier: MultiplierRecord.yellowPrestigeGain},
+      { holding: HoldingRecord.yellowParticles, basedOnRequiredHolding: false, gainMultiplier: MultiplierRecord.yellowParticleGain, idleGeneration: true},
+      { holding: HoldingRecord.yellowKeys, basedOnRequiredHolding: false, gainMultiplier: MultiplierRecord.yellowKeyGain, idleGeneration: false},
+      { holding: HoldingRecord.yellowPrestiges, basedOnRequiredHolding: false, gainMultiplier: MultiplierRecord.yellowPrestigeGain, idleGeneration: false},
     ],
     ResetKey.RED,
     MessageStepsFactory.start(Styles.YELLOW, faKey)
@@ -32,7 +32,9 @@ export class PrestigeLayersService {
       .addStep('Access Restricted', 'Yellow has left you a message:')
       .addStep('Access Restricted', 'Unlocking yellow power is the only way to get in. Try unlocking yellow power.')
       .addStep('Information', 'You can unlock yellow power by reaching red particles.')
-      .build()
+      .build(),
+    HoldingRecord.yellowParticles,
+    MultiplierRecord.yellowParticleIdleGeneration,
   );
 
   static list: PrestigeLayer[] = [

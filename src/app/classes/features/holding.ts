@@ -9,6 +9,7 @@ import {ResetKey} from "../enums/reset-key";
 
 export abstract class Holding implements Generatable, Require, Resetable {
   abstract name: string;
+  abstract displayName: string;
   abstract abbreviation: string;
   abstract amount: Num;
   abstract startAmount: Num;

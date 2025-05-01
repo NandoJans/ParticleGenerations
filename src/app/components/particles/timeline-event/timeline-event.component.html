@@ -1,9 +1,27 @@
 <div [class]="
 'timeline-event '+getStyle()+' '
 +((hasReached()) ? 'reached' : '')+' '
++((hasMilestones()) ? 'has-milestones' : '')+' '
 ">
   <h2>{{ getTitle() }}</h2>
   <p>{{ getMessage() }}</p>
+  <h3 *ngIf="hasMilestones()">Milestones</h3>
+  <div class="milestones" *ngIf="hasMilestones()">
+    <app-milestone
+      *ngFor="let milestone of getMilestones()"
+      [milestone]="milestone"
+      (mouseenter)="setMilestone(milestone)"
+      (mouseleave)="setMilestoneUpcoming()"
+    ></app-milestone>
+  </div>
+  <div class="milestone-details" *ngIf="hasMilestones() && milestone">
+    <h3>{{ getMilestoneName() }}</h3>
+    <p class="description">{{ getMilestoneDescription() }}</p>
+    <p>{{ getMilestoneGoal() }} {{ getMilestoneHoldingAbbreviation() }}</p>
+  </div>
+  <div class="milestone-details" *ngIf="hasMilestones() && !milestone">
+    <p>All milestones completed</p>
+  </div>
   <p>Requirement: {{ getRequirement() }} {{ getAbbreviation() }}</p>
 </div>
 <div *ngIf="hasNext() && showNext()" [class]="'progress-bar '+getStyle()">

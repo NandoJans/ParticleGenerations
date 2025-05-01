@@ -1,19 +1,5 @@
 import {Num} from "./num";
 
-export interface Milestone {
-  name: string,
-  displayName: string,
-  description: string,
-  style: string,
-  type: string,
-  unlocked: boolean,
-  requirement: any[],
-  cost: Num,
-  currency: string,
-  buffer: Num,
-  action: Function
-}
-
 export interface Challenge {
   name: string,
   displayName: string,
