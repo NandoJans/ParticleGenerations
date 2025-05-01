@@ -12,6 +12,7 @@ import {Multiplier} from "../multiplier";
 
 export class PrestigeLayer extends GameElement implements Resetable, Storable {
   name: string;
+  displayName: string = '';
   requirement: Requirement[];
   reached: boolean = false;
   prestigedFirstTime: boolean = false;

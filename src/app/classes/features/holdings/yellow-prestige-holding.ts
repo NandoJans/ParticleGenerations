@@ -14,6 +14,7 @@ export class YellowPrestigeHolding extends Holding {
     .withAmountSuffix(' Yellow Prestiges')
     .build();
   name: string = 'yellow-prestige';
+  displayName: string = 'Yellow Prestige';
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
   startAmount: Num = new Num(0, 0);
 

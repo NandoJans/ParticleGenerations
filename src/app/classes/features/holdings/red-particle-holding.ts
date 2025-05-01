@@ -8,6 +8,7 @@ import {ResetKey} from "../../enums/reset-key";
 
 export class RedParticleHolding extends Holding {
   name = 'redParticles';
+  displayName = 'Red Particles';
   abbreviation = 'RP';
   amount = new Num(1, 1);
   startAmount: Num = new Num(1, 1);

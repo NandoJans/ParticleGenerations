@@ -3,28 +3,28 @@ import {Num} from "../../num";
 import {Styles} from "../enums/styles";
 import {Holding} from "./holding";
 import {ResetKey} from "../enums/reset-key";
+import {Resetable} from "./interfaces/resetable";
+import {Storable} from "./interfaces/storable";
+import {LocalStorageHelper} from "../helpers/local-storage-helper";
 
-export abstract class Milestone extends GameElement {
-  abstract name: string
+export abstract class Milestone extends GameElement implements Resetable, Storable {
   abstract displayName: string
   abstract getDescription(): string
   abstract type: string
   abstract style: Styles
   abstract goal: Num
   abstract currency: Holding
+  abstract resetId: ResetKey
+  softResetId: ResetKey = ResetKey.NONE
 
-  effect: Num | undefined
   buffer: Num = new Num(1, 0)
   baseBuffer: Num = new Num(1, 0)
 
-  abstract action(): Num | undefined
+  action(): void {}
 
   override run(): void {
     if (this.goalReached()) {
-      const effect = this.action()
-      if (effect) {
-        this.effect = effect.copy()
-      }
+      this.action()
     }
   }
 
@@ -32,11 +32,32 @@ export abstract class Milestone extends GameElement {
     return this.currency.amount.greq(this.goal)
   }
 
-  effectString(): string {
-    return this.effect ? this.effect.toString() : ''
+  reset() {
+    this.unlocked = this.startUnlocked;
+    this.requirement.forEach(requirement => {
+      requirement.register();
+    })
   }
 
-  getEffectDisplay(): string {
-    return this.effectString()
+  softReset() {}
+
+  getSaveKey(): string {
+    return this.name;
+  }
+
+  getSaveCategory(): string {
+    return "milestones";
+  }
+
+  localStorageHelper: LocalStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey());
+
+  save(): void {
+    this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey());
+    this.localStorageHelper.save(this.unlocked, 'unlocked');
+  }
+
+  tryLoad() {
+    this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey());
+    this.unlocked = this.localStorageHelper.load(this.unlocked, 'unlocked');
   }
 }

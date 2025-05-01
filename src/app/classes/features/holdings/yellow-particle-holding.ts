@@ -14,6 +14,7 @@ export class YellowParticleHolding extends Holding {
     .withAmountSuffix(' Yellow Particles')
     .build();
   name: string = 'yellow-particles';
+  displayName: string = 'Yellow Particles';
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
   startAmount: Num = new Num(0, 0);
 

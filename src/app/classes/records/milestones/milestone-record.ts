@@ -1,24 +1,22 @@
 import {Record} from "../record";
 import {Milestone} from "../../features/milestone";
-import {ThousandRedParticlesMilestone} from "../../features/milestones/thousand-red-particles-milestone";
-import {StartWithExtensionsMilestone} from "../../features/milestones/start-with-extensions-milestone";
-import {StartWithBoosterMilestone} from "../../features/milestones/start-with-booster-milestone";
-import {IdleYellowParticlesMilestone} from "../../features/milestones/idle-yellow-particles-milestone";
-import {KeepRedUpgradesMilestone} from "../../features/milestones/keep-red-upgrades-milestone";
-import {StartWithMoreRedParticlesMilestone} from "../../features/milestones/start-with-more-red-particles-milestone";
-import {PreventExtensionResetMilestone} from "../../features/milestones/prevent-extension-reset-milestone";
+import {ChangeResetKeyYellowMilestone} from "../../features/milestones/change-reset-key-yellow-milestone";
+import {Num} from "../../../num";
+import {AutomatorRecord} from "../automators/automator-record";
+import {Injectable} from "@angular/core";
 
+@Injectable({
+  providedIn: 'root'
+})
 export class MilestoneRecord extends Record {
 
   // Yellow Phase
-  static thousandRedParticles: ThousandRedParticlesMilestone = new ThousandRedParticlesMilestone();
-  static startWithExtensions: StartWithExtensionsMilestone = new StartWithExtensionsMilestone();
-  static startWithBooster: StartWithBoosterMilestone = new StartWithBoosterMilestone();
-  static idleYellowParticles: IdleYellowParticlesMilestone = new IdleYellowParticlesMilestone();
-  static keepRedUpgrades: KeepRedUpgradesMilestone = new KeepRedUpgradesMilestone();
-  static startWithMoreRedParticles: StartWithMoreRedParticlesMilestone = new StartWithMoreRedParticlesMilestone();
-  static preventExtensionReset: PreventExtensionResetMilestone = new PreventExtensionResetMilestone();
-
+  static keepFirstRedGenAuto: ChangeResetKeyYellowMilestone = new ChangeResetKeyYellowMilestone(
+    'keep-first-red-gen-auto',
+    'Keep First Red Generator Automator',
+    new Num(1, 0),
+    AutomatorRecord.firstRedGenerator
+  )
   // Green Phase
 
   // Blue Phase
@@ -26,18 +24,22 @@ export class MilestoneRecord extends Record {
   // Purple Phase
 
   static override list: Milestone[] = [
-    MilestoneRecord.thousandRedParticles,
-    MilestoneRecord.startWithExtensions,
-    MilestoneRecord.startWithBooster,
-    MilestoneRecord.idleYellowParticles,
-    MilestoneRecord.keepRedUpgrades,
-    MilestoneRecord.startWithMoreRedParticles,
-    MilestoneRecord.preventExtensionReset,
+    MilestoneRecord.keepFirstRedGenAuto,
   ];
 
   getList(): Milestone[] {
     return MilestoneRecord.list;
   }
 
+  save() {
+    this.getList().forEach((milestone: Milestone) => {
+      milestone.save()
+    })
+  }
 
+  load() {
+    this.getList().forEach((milestone: Milestone) => {
+      milestone.tryLoad()
+    })
+  }
 }

@@ -7,6 +7,7 @@ import {LocalStorageHelper} from "../classes/helpers/local-storage-helper";
 import {AutomatorService} from "./interactables/automator.service";
 import {PrestigeLayersService} from "./prestige-layers.service";
 import {TimelineService} from "./timeline.service";
+import {MilestoneRecord} from "../classes/records/milestones/milestone-record";
 
 @Injectable({
   providedIn: 'root'
@@ -18,12 +19,12 @@ export class DataManagerService {
     private holdingRecord: HoldingRecord,
     private generatorRecord: GeneratorRecord,
     private upgradeRecord: UpgradeRecord,
+    private milestoneRecord: MilestoneRecord,
     private navigationsService: NavigationsService,
     private automatorService: AutomatorService,
     private prestigeLayersService: PrestigeLayersService,
     private timelineService: TimelineService,
-  ) {
-  }
+  ) {}
 
   save() {
     console.log('Saving data...');
@@ -34,6 +35,7 @@ export class DataManagerService {
     this.automatorService.save();
     this.prestigeLayersService.save();
     this.timelineService.save();
+    this.milestoneRecord.save();
 
     this.setLastSave();
     this.localStorageHelper.store();
@@ -48,6 +50,7 @@ export class DataManagerService {
     this.automatorService.load();
     this.prestigeLayersService.load();
     this.timelineService.load();
+    this.milestoneRecord.load();
   }
 
   setLastSave(): void {

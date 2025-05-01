@@ -14,6 +14,7 @@ export class YellowKeyHolding extends Holding {
     .withAmountSuffix(' Yellow Keys')
     .build();
   name: string = 'yellow-keys'
+  displayName: string = 'Yellow Keys';
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
   startAmount: Num = new Num(0, 0);
 
