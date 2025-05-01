@@ -120,13 +120,14 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
 
   private calculateHoldingGain(gain: {holding: Holding, basedOnRequiredHolding: boolean, gainMultiplier: Multiplier, idleGeneration: boolean}): Num {
     // TODO: implement
-    return new Num(1, 0).mul(gain.gainMultiplier.num);
+    return new Num(1, 0).mul(gain.gainMultiplier.getNum());
   }
 
   private addGainHoldings() {
     let generatedHoldings: Num = new Num(0, 0);
     this.gainHoldings.forEach(gain => {
       const holdingGain = this.calculateHoldingGain(gain);
+      console.log('Holding gain:', holdingGain.toString(2));
       if (gain.idleGeneration) {
         generatedHoldings = holdingGain
       }
@@ -150,7 +151,7 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     const timeDiff = currentTime.getTime() - this.prestigeStarted.getTime();
     const timeDiffInSeconds = Math.floor(timeDiff / 20);
     const generationPerTick = holdingGain.div(new Num(timeDiffInSeconds, 0));
-    if (this.highestGenerationPerTick.greq(generationPerTick)) {
+    if (generationPerTick.greq(this.highestGenerationPerTick)) {
       this.highestGenerationPerTick = generationPerTick;
     }
   }

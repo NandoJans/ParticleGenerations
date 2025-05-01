@@ -9,6 +9,7 @@ import {Enhancement} from "../enhancements/enhancement";
 export class RedGeneratorExtensionUpgrade extends RedUpgrade {
   baseCost: Num = new Num(1, 3)
   cost: Num = new Num(1, 3)
+  startBought: Num = new Num(0, 0);
   bought: Num = new Num(0, 0);
   override scaling: Num = new Num(1, 2);
 
@@ -80,5 +81,10 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
 
   override enhancementString(enhancement: Enhancement): string {
     return `Enhance to multiply buffer by ${enhancement.getMultiplier().toString(2)}x`;
+  }
+
+  override reset() {
+    super.reset();
+    this.bought = this.startBought.copy();
   }
 }

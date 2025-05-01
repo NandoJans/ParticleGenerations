@@ -10,6 +10,7 @@ export class MultiplyRedGeneratorExtensionYellowUpgrade extends YellowUpgrade {
 
   override buffer: Num = new Num(1.5, 0);
   override baseBuffer: Num = new Num(1.5, 0);
+  override calculationOrder: number = 1002;
 
   getDescription(): string {
     return "Multiply red extension buffer by " + this.buffer.toString(2) + "x";

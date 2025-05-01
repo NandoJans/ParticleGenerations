@@ -17,6 +17,6 @@ export class ChangeResetKeyYellowMilestone extends YellowMilestone {
   }
 
   override getDescription(): string {
-    return "Stop resetting "+this.resetable.displayName+" on yellow prestige.";
+    return "Stop resetting "+this.resetable.displayName+" Automator on yellow prestige.";
   }
 }

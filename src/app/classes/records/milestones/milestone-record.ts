@@ -63,31 +63,31 @@ export class MilestoneRecord extends Record {
   static keepFasterAccelerationAuto: ChangeResetKeyYellowMilestone = new ChangeResetKeyYellowMilestone(
     'keepFasterAccelerationAuto',
     'Keep Faster Acceleration Automator',
-    new Num(2, 1),
+    new Num(1.2, 1),
     AutomatorRecord.multiplyRedAccelerationGeneration
   )
   static keepMultiplyAcceleratorEffectAuto: ChangeResetKeyYellowMilestone = new ChangeResetKeyYellowMilestone(
     'keepMultiplyAcceleratorEffectAuto',
     'Keep Multiply Accelerator Effect Automator',
-    new Num(3, 1),
+    new Num(1.7, 1),
     AutomatorRecord.multiplyRedAcceleratorEffect
   )
   static keepBetterAccelerationEffectAuto: ChangeResetKeyYellowMilestone = new ChangeResetKeyYellowMilestone(
     'keepBetterAccelerationEffectAuto',
     'Keep Red Accelerator Automator',
-    new Num(4, 1),
+    new Num(2, 1),
     AutomatorRecord.improveRedAcceleratorsEffect
   )
   static keepBetterRedParticleToAcceleratorEffectAuto: ChangeResetKeyYellowMilestone = new ChangeResetKeyYellowMilestone(
     'keepBetterRedParticleToAcceleratorEffectAuto',
     'Keep Better Red Particle to Accelerator Effect Automator',
-    new Num(5, 1),
+    new Num(2.2, 1),
     AutomatorRecord.improveRedParticlesToAccelerators
   )
   static keepBoosterAccelerationAuto: ChangeResetKeyYellowMilestone = new ChangeResetKeyYellowMilestone(
     'keepBoosterAccelerationAuto',
     'Keep Better Red Particle to Accelerator Effect Automator',
-    new Num(6, 1),
+    new Num(2.7, 1),
     AutomatorRecord.boosterAcceleration
   )
 

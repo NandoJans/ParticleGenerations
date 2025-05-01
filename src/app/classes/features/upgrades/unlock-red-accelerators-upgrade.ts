@@ -58,6 +58,8 @@ export class UnlockRedAcceleratorsUpgrade extends Upgrade {
     return true;
   }
   enhance(): void {
-    this.bought = new Num(1, 0);
+    if (HoldingRecord.redParticles.amount.greq(this.cost)) {
+      this.bought = new Num(1, 0);
+    }
   }
 }

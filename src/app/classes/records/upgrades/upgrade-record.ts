@@ -19,6 +19,8 @@ import {
 import {
   RedGeneratorMultiplierYellowPrestigeYellowUpgrade
 } from "../../features/upgrades/red-generator-multiplier-yellow-prestige-yellow-upgrade";
+import {StartWithMoreRedExtensionsUpgrade} from "../../features/upgrades/start-with-more-red-extensions-upgrade";
+import {NoResetRedExtensionsUpgrade} from "../../features/upgrades/no-reset-red-extensions-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +44,8 @@ export class UpgradeRecord extends Record {
   static multiplyYellowParticlesYellow: MultiplyYellowParticlesYellowUpgrade = new MultiplyYellowParticlesYellowUpgrade('multiplyYellowParticlesYellow');
   static redGeneratorMultiplierYellowPrestigeYellow: RedGeneratorMultiplierYellowPrestigeYellowUpgrade = new RedGeneratorMultiplierYellowPrestigeYellowUpgrade('redGeneratorMultiplierYellowPrestigeYellow');
   static multiplyRedGeneratorExtensionYellow: MultiplyRedGeneratorExtensionYellowUpgrade = new MultiplyRedGeneratorExtensionYellowUpgrade('multiplyRedGeneratorExtensionYellow');
+  static startWithMoreRedExtensionsUpgrade: StartWithMoreRedExtensionsUpgrade = new StartWithMoreRedExtensionsUpgrade('startWithMoreRedExtensionsUpgrade');
+  static noResetRedExtension: NoResetRedExtensionsUpgrade = new NoResetRedExtensionsUpgrade('noResetRedExtension');
 
   static override list: Upgrade[] = [
     UpgradeRecord.redGeneratorExtension,
@@ -59,6 +63,7 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.multiplyYellowParticlesYellow,
     UpgradeRecord.redGeneratorMultiplierYellowPrestigeYellow,
     UpgradeRecord.multiplyRedGeneratorExtensionYellow,
+    UpgradeRecord.startWithMoreRedExtensionsUpgrade
   ]
 
   getList(): Upgrade[] {
