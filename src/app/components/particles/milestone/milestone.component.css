@@ -5,6 +5,7 @@ div.milestone {
   padding: 0.5rem;
   font-size: 1.25rem;
   font-weight: bold;
+  margin: 0.5rem;
 }
 
 div.milestone.unlocked {

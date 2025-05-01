@@ -5,6 +5,7 @@
 ">
   <h2>{{ getTitle() }}</h2>
   <p>{{ getMessage() }}</p>
+  <h3 *ngIf="hasMilestones()">Milestones</h3>
   <div class="milestones" *ngIf="hasMilestones()">
     <app-milestone
       *ngFor="let milestone of getMilestones()"

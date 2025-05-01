@@ -46,16 +46,22 @@ export class TimelineService {
     'yellow-timeline',
     Styles.YELLOW,
     'Yellow Timeline',
-    'Yellow is the second phase of the universe. It is a phase of energy and power. Yellow is the color of the sun and the stars. It is a phase of light and heat. Yellow is the color of life and growth.'
+    'Yellow is the second phase of the universe.'
   )
     .addTimelineEvent(
       'yellow-phase-lock',
       'Yellow Phase Lock',
-      'Yellow phase is locked. You need to unlock yellow power to open it.',
+      'Yellow phase is locked. You need to unlock yellow power to open it. Yellow prestiges are here to help you.',
       HoldingRecord.yellowPrestiges,
       new Num(1, 0)
     )
     .addMilestone(MilestoneRecord.keepFirstRedGenAuto)
+    .addMilestone(MilestoneRecord.keepSecondRedGenAuto)
+    .addMilestone(MilestoneRecord.keepThirdRedGenAuto)
+    .addMilestone(MilestoneRecord.keepFourthRedGenAuto)
+    .addMilestone(MilestoneRecord.keepFifthRedGenAuto)
+    .addMilestone(MilestoneRecord.keepRedGenBoosterAuto)
+    .addMilestone(MilestoneRecord.keepRedExtensionAuto)
     .build()
     .build()
 

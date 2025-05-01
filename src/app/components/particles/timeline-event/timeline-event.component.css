@@ -44,6 +44,12 @@ div.progress-bar p {
   font-weight: bold;
 }
 
+div.milestones {
+  margin: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+
 div.milestone-details {
   margin-top: 1rem;
   background-color: var(--background-color-3);
