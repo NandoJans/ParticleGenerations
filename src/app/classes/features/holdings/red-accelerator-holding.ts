@@ -33,7 +33,7 @@ export class RedAcceleratorHolding extends Holding {
   override action(): Num {
     let effect = this.amount.log(10);
     if (effect.gt(new Num(0, 0))) {
-      effect.pow(this.powEffect).add(new Num(1, 0));
+      effect = effect.pow(this.powEffect).add(new Num(1, 0));
       effect = effect.mul(this.mulEffect);
       MultiplierRecord.redParticleGenerators.correct(effect);
       this.powEffect = new Num(1, 0)
