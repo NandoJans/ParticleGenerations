@@ -27,6 +27,8 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
   idleGenerationMultiplier: Multiplier;
   prestigeStarted: Date;
   highestGenerationPerTick: Num = new Num(0, 0);
+  holdingGain: Num = new Num(0, 0);
+  bestPrestige: Num = new Num(0, 0);
 
 
   constructor(
@@ -97,6 +99,7 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     localStorageHelper.save(this.prestigedFirstTime, 'prestigedFirstTime');
     localStorageHelper.save(this.prestigeStarted.toISOString(), 'prestigeStarted');
     localStorageHelper.saveNum(this.highestGenerationPerTick, 'highestGenerationPerTick');
+    localStorageHelper.saveNum(this.bestPrestige, 'bestPrestige');
   }
 
   tryLoad(): void {
@@ -106,6 +109,7 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     this.prestigedFirstTime = localStorageHelper.load(this.prestigedFirstTime, 'prestigedFirstTime');
     this.prestigeStarted = new Date(localStorageHelper.load(this.prestigeStarted.toISOString(), 'prestigeStarted'));
     this.highestGenerationPerTick = localStorageHelper.loadNum(this.highestGenerationPerTick, 'highestGenerationPerTick');
+    this.bestPrestige = localStorageHelper.loadNum(this.bestPrestige, 'bestPrestige');
   }
 
   private shouldLimitPhaseBelow(): boolean {
@@ -127,16 +131,27 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     let generatedHoldings: Num = new Num(0, 0);
     this.gainHoldings.forEach(gain => {
       const holdingGain = this.calculateHoldingGain(gain);
-      console.log('Holding gain:', holdingGain.toString(2));
       if (gain.idleGeneration) {
-        generatedHoldings = holdingGain
+        generatedHoldings = holdingGain;
+        if (generatedHoldings.gt(this.bestPrestige)) {
+          this.bestPrestige = generatedHoldings;
+        }
       }
       gain.holding.amount = gain.holding.amount.add(holdingGain);
     });
     return generatedHoldings;
   }
 
+  private setHoldingGain() {
+    for (const gain of this.gainHoldings) {
+      if (gain.idleGeneration) {
+        this.holdingGain = this.calculateHoldingGain(gain);
+      }
+    }
+  }
+
   override run(speed: Num) {
+    this.setHoldingGain();
     this.applyLimitPhaseBelow();
     this.checkRequirements();
     this.idleGeneration();

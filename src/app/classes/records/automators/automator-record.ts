@@ -12,6 +12,7 @@ import {RedGeneratorExtensionAutomator} from "../../features/automators/red-gene
 import {
   MultiplyRedAcceleratorEffectAutomator
 } from "../../features/automators/multiply-red-accelerator-effect-automator";
+import {YellowPrestigeAutomator} from "../../features/automators/yellow-prestige-automator";
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,9 @@ export class AutomatorRecord extends Record {
   static improveRedParticlesToAccelerators: ImproveRedParticlesToAcceleratorsAutomator = new ImproveRedParticlesToAcceleratorsAutomator('improveRedParticlesToAccelerators');
   static boosterAcceleration: BoosterAccelerationAutomator = new BoosterAccelerationAutomator('boosterAcceleration');
 
+  // Yellow prestige automators
+  static yellowPrestige: YellowPrestigeAutomator = new YellowPrestigeAutomator('yellowPrestige');
+
   static override list: Automator[] = [
     AutomatorRecord.firstRedGenerator,
     AutomatorRecord.secondRedGenerator,
@@ -49,6 +53,8 @@ export class AutomatorRecord extends Record {
     AutomatorRecord.improveRedAcceleratorsEffect,
     AutomatorRecord.improveRedParticlesToAccelerators,
     AutomatorRecord.boosterAcceleration,
+
+    AutomatorRecord.yellowPrestige,
   ]
 
   getList(): Automator[] {

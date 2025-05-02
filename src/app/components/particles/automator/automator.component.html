@@ -1,12 +1,28 @@
-<div [class]="'automator '+automator.style+' '" [id]="automator.name">
+<div [class]="
+'automator '+automator.style+' '
++((isPrestigeAutomator()) ? 'prestige' : '')+' '
+" [id]="automator.name">
   <h4>{{ automator.displayName }}</h4>
-  <div *ngIf="completed()" class="automator-form" (change)="onChange()">
-    <app-button *ngIf="isPrestigeAutomator && getAutomationType() === 'waitFor'" [style]="'prestige-automator-button yellow'" [text]="'Wait For x'" (function)="setAutomationType('timesHighest')"></app-button>
-    <app-button *ngIf="isPrestigeAutomator && getAutomationType() === 'timesHighest'" [style]="'prestige-automator-button green'" [text]="'x Times Highest'" (function)="setAutomationType('afterSeconds')"></app-button>
-    <app-button *ngIf="isPrestigeAutomator && getAutomationType() === 'afterSeconds'" [style]="'prestige-automator-button blue'" [text]="'After x seconds'" (function)="setAutomationType('waitFor')"></app-button>
-    <input *ngIf="isPrestigeAutomator" formControlName="waitFor">
+  <div *ngIf="completed()" [class]="'automator-form '+((isPrestigeAutomator()) ? 'prestige' : '')+' '" (change)="onChange()">
+    <button
+      *ngIf="isPrestigeAutomator() && getMode() === 'atX'"
+      class="button prestige yellow"
+      (click)="switchMode('afterXSeconds')"
+    >At X</button>
+    <button
+      *ngIf="isPrestigeAutomator() && getMode() === 'afterXSeconds'"
+      class="button prestige green"
+      (click)="switchMode('afterXTimesBest')"
+    >After X Seconds</button>
+    <button
+      *ngIf="isPrestigeAutomator() && getMode() === 'afterXTimesBest'"
+      class="button prestige blue"
+      (click)="switchMode('atX')"
+    >X times best</button>
+    <input *ngIf="isPrestigeAutomator()" type="text" (change)="setSetting($event)" [value]="getSetting()"/>
     <input *ngIf="hasMaxBuys()" type="text" (change)="setMaxBuys($event)" [value]="getMaxBuys()"/>
-    <div>
+    <p class="prestige-status" *ngIf="isPrestigeAutomator()">{{ getPrestigeStatus() }}</p>
+    <div class="active-row">
       <label>Active: </label>
       <input
         type="checkbox"
