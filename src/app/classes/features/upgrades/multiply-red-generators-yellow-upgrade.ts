@@ -1,6 +1,7 @@
 import { Num } from "src/app/num";
 import {YellowUpgrade} from "./yellow-upgrade";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {Transaction} from "../interfaces/transaction";
 
 export class MultiplyRedGeneratorsYellowUpgrade extends YellowUpgrade {
   constructor(saveName: string) {
@@ -14,10 +15,10 @@ export class MultiplyRedGeneratorsYellowUpgrade extends YellowUpgrade {
   getDescription(): string {
       return "Multiply red generators by " + this.buffer.toString(2) + "x";
   }
-  action(): Num {
-      const effect: Num = this.buffer.pow(this.amount);
-      MultiplierRecord.redParticleGenerators.correct(effect);
-      return effect
+  action(): Num|undefined {
+    const effect: Num = this.buffer.pow(this.amount);
+    MultiplierRecord.redParticleGenerators.correct(effect);
+    return effect
   }
 
   override oneTime: boolean = false;

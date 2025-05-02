@@ -21,6 +21,7 @@ export class NoResetRedExtensionsUpgrade extends YellowUpgrade {
     return;
   }
 
+  override limit: Num = new Num(1, 0);
   baseCost: Num = new Num(9, 0);
   cost: Num = new Num(9, 0);
 

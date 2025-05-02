@@ -6,6 +6,7 @@ import {RedAcceleratorsComponent} from "./pages/red/red-accelerators/red-acceler
 import {YellowUpgradesComponent} from "./pages/yellow/yellow-upgrades/yellow-upgrades.component";
 import {RedTimelineComponent} from "./pages/timeline/red-timeline/red-timeline.component";
 import {YellowTimelineComponent} from "./pages/timeline/yellow-timeline/yellow-timeline.component";
+import {YellowAutomatorsComponent} from "./pages/automators/yellow-automators/yellow-automators.component";
 
 const routes: Routes = [
   { path: '', component: RedComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'yellow/upgrades', component: YellowUpgradesComponent },
   // Automators
   { path: 'automators/red' , component: RedAutomatorsComponent },
+  { path: 'automators/yellow' , component: YellowAutomatorsComponent },
   // Timeline
   { path: 'timeline/red', component: RedTimelineComponent },
   { path: 'timeline/yellow', component: YellowTimelineComponent },

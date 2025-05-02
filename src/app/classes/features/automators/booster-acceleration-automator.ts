@@ -21,6 +21,10 @@ export class BoosterAccelerationAutomator extends Automator {
   ];
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED, this);
 
+  override hasMaxBuys(): boolean {
+    return UpgradeRecord.boosterAccelerationUpgrade.resets !== ResetKey.NONE;
+  }
+
   buyables(): Buyable[] {
     return [
       UpgradeRecord.boosterAccelerationUpgrade

@@ -28,6 +28,10 @@ import {
   IncreaseRedGeneratorBuyMultipliersUpgrade
 } from "../../features/upgrades/increase-red-generator-buy-multipliers-upgrade";
 import {MultiplyYellowKeyGainUpgrade} from "../../features/upgrades/multiply-yellow-key-gain-upgrade";
+import {ImproveFasterAccelerationYellowUpgrade} from "../../features/upgrades/improve-faster-acceleration-yellow-upgrade";
+import {ImproveMultiplyAcceleratorEffectYellowUpgrade} from "../../features/upgrades/improve-multiply-accelerator-effect-yellow-upgrade";
+import {ImproveBetterAccelerationYellowUpgrade} from "../../features/upgrades/improve-better-acceleration-yellow-upgrade";
+import {ImproveBetterParticleEffectYellowUpgrade} from "../../features/upgrades/improve-better-particle-effect-yellow-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -56,6 +60,10 @@ export class UpgradeRecord extends Record {
   static increaseRedGeneratorSubMultipliers: IncreaseRedGeneratorSubMultipliersUpgrade = new IncreaseRedGeneratorSubMultipliersUpgrade('increaseGeneratorSubMultipliers');
   static increaseRedGeneratorBuyMultipliers: IncreaseRedGeneratorBuyMultipliersUpgrade = new IncreaseRedGeneratorBuyMultipliersUpgrade('increaseGeneratorBuyMultipliers');
   static multiplyYellowKeyGain: MultiplyYellowKeyGainUpgrade = new MultiplyYellowKeyGainUpgrade('multiplyYellowKeyGain');
+  static improveFasterAccelerationYellow: ImproveFasterAccelerationYellowUpgrade = new ImproveFasterAccelerationYellowUpgrade('improveFasterAccelerationYellow');
+  static improveMultiplyAcceleratorEffectYellow: ImproveMultiplyAcceleratorEffectYellowUpgrade = new ImproveMultiplyAcceleratorEffectYellowUpgrade('improveMultiplyAcceleratorEffectYellow');
+  static improveBetterAccelerationYellow: ImproveBetterAccelerationYellowUpgrade = new ImproveBetterAccelerationYellowUpgrade('improveBetterAccelerationYellow');
+  static improveBetterParticleEffectYellow: ImproveBetterParticleEffectYellowUpgrade = new ImproveBetterParticleEffectYellowUpgrade('improveBetterParticleEffectYellow');
 
   static override list: Upgrade[] = [
     UpgradeRecord.redGeneratorExtension,
@@ -77,7 +85,11 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.increaseRedGeneratorSubMultipliers,
     UpgradeRecord.increaseRedGeneratorBuyMultipliers,
     UpgradeRecord.noResetRedExtension,
-    UpgradeRecord.multiplyYellowKeyGain
+    UpgradeRecord.multiplyYellowKeyGain,
+    UpgradeRecord.improveFasterAccelerationYellow,
+    UpgradeRecord.improveMultiplyAcceleratorEffectYellow,
+    UpgradeRecord.improveBetterAccelerationYellow,
+    UpgradeRecord.improveBetterParticleEffectYellow,
   ]
 
   getList(): Upgrade[] {

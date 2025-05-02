@@ -22,11 +22,11 @@ export class ImproveRedAcceleratorsEffectUpgrade extends RedAcceleratorUpgrade {
   }
 
   getDescription(): string {
-    return `Raise accelerator effect by ^${this.buffer.toString(2)}`;
+    return `Raise accelerator effect by ^${this.buffer.toString(3)}`;
   }
 
   override effectString(): string {
-    return '^' + this.effect?.toString(2);
+    return '^' + this.effect?.toString(3);
   }
 
   allowedEnhancements: Enhancement[] = [
@@ -38,7 +38,7 @@ export class ImproveRedAcceleratorsEffectUpgrade extends RedAcceleratorUpgrade {
   }
 
   override enhancementString(enhancement: Enhancement): string {
-    return "Add " + enhancement.getAddition().mul(new Num(5, -3)).toString(2) + "^ to the buffer";
+    return "Add " + enhancement.getAddition().mul(new Num(5, -3)).toString(3) + "^ to the buffer";
   }
 
   override enhance() {
