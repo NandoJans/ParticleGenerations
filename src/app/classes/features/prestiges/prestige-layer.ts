@@ -154,6 +154,7 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     if (generationPerTick.gt(this.highestGenerationPerTick)) {
       this.highestGenerationPerTick = generationPerTick;
     }
+    this.prestigeStarted = new Date();
   }
 
   prestige() {
