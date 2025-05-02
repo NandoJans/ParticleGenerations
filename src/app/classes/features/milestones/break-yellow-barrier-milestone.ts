@@ -6,7 +6,7 @@ export class BreakYellowBarrierMilestone extends YellowMilestone {
     super(
       name,
       "Break Yellow's Barrier",
-      new Num(1, 3)
+      new Num(5, 2)
     );
   }
   override getDescription(): string {

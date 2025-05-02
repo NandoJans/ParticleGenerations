@@ -27,7 +27,11 @@ export class YellowUpgradesComponent implements OnInit {
     UpgradeRecord.startWithMoreRedExtensionsUpgrade,
     UpgradeRecord.increaseRedGeneratorSubMultipliers,
     UpgradeRecord.increaseRedGeneratorBuyMultipliers,
-    UpgradeRecord.noResetRedExtension
+    UpgradeRecord.noResetRedExtension,
+    UpgradeRecord.improveFasterAccelerationYellow,
+    UpgradeRecord.improveMultiplyAcceleratorEffectYellow,
+    UpgradeRecord.improveBetterAccelerationYellow,
+    UpgradeRecord.improveBetterParticleEffectYellow,
   ];
   yellowPrestige: PrestigeLayer = PrestigeLayersService.yellowPrestigeLayer;
 

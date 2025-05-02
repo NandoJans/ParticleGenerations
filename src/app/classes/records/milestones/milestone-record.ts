@@ -159,14 +159,13 @@ export class MilestoneRecord extends Record {
   static generate50PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
     'generate50PercentYellowParticles',
     '50% Yellow Particles',
-    new Num(500, 0),
+    new Num(400, 0),
     MultiplierRecord.yellowParticleIdleGeneration,
     new Num(0.5, 0)
   )
 
   // Break yellow barrier
   static breakYellowBarrier: BreakYellowBarrierMilestone = new BreakYellowBarrierMilestone('breakYellowBarrier');
-
 
   // Green Phase
 

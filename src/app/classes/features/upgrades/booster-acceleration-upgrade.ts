@@ -54,13 +54,13 @@ export class BoosterAccelerationUpgrade extends Upgrade {
   }
 
   getDescription(): string {
-    return "Increase the power of red generator boosters by " + this.buffer.toString(2) +
-      " and give " + this.freeBuys.toString(2) +
+    return "Increase the power of red generator boosters by " + this.buffer.toString(3) +
+      " and give " + this.freeBuys +
       " free buys. Resets all red particles and red accelerators.";
   }
 
   override effectString(): string {
-    return this.effect ? this.effect.toString(2) + ' and ' + this.totalFreeBuys.toString() + ' free buys' : '';
+    return this.effect ? this.effect.toString(3) + ' and ' + this.totalFreeBuys.toString() + ' free buys' : '';
   }
 
   override buy(amount: Num = new Num(1, 0)): Transaction {
@@ -70,8 +70,8 @@ export class BoosterAccelerationUpgrade extends Upgrade {
     return transaction;
   }
 
-  override enhancementString(): string {
-    return "Enhance to add power increase of red generator boosters of "+this.enhancement?.getAddition().mul(new Num(5, -3)).toString();
+  override enhancementString(enhancement:Enhancement): string {
+    return "Enhance to add power increase of red generator boosters of "+enhancement.getAddition().mul(new Num(5, -3)).toString(3);
   }
 
   allowedEnhancements: Enhancement[] = [
@@ -83,7 +83,7 @@ export class BoosterAccelerationUpgrade extends Upgrade {
   enhance(): void {
     const enhancement = this.enhancement?.getAddition().mul(new Num(5, -3));
     if (enhancement) {
-      this.baseBuffer = this.baseBuffer.add(enhancement) as Num;
+      this.buffer = this.buffer.add(enhancement) as Num;
     }
   }
 }

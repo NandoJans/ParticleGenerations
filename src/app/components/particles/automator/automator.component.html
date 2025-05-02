@@ -20,8 +20,9 @@
       (click)="switchMode('atX')"
     >X times best</button>
     <input *ngIf="isPrestigeAutomator()" type="text" (change)="setSetting($event)" [value]="getSetting()"/>
-    <input *ngIf="hasMaxBuys()" type="text" (change)="setMaxBuys($event)" [value]="getMaxBuys()"/>
     <p class="prestige-status" *ngIf="isPrestigeAutomator()">{{ getPrestigeStatus() }}</p>
+    <p *ngIf="hasMaxBuys()" class="prestige-status">Max buys:</p>
+    <input *ngIf="hasMaxBuys()" type="text" (change)="setMaxBuys($event)" [value]="getMaxBuys()"/>
     <div class="active-row">
       <label>Active: </label>
       <input

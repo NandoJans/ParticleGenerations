@@ -192,7 +192,7 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
 
   private idleGeneration() {
     // Calculate idle generation for the holding based on the fastest prestige time multiplied by the multiplier
-    const idleGeneration = this.highestGenerationPerTick.mul(this.idleGenerationMultiplier.num);
+    const idleGeneration = this.highestGenerationPerTick.mul(this.idleGenerationMultiplier.num).div(new Num(2, 1));
     if (idleGeneration.gt(new Num(0, 0))) {
       this.idleGenerationHolding.amount = this.idleGenerationHolding.amount.add(idleGeneration);
     }

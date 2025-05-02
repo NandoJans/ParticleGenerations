@@ -234,7 +234,6 @@ export class BuyableHelper {
         return new Num(Math.floor(root), 0);
       }
     }
-
     // fallback binary search
     return this._maxExtraBinary(budget, preCost, increase, scaling);
   }
@@ -251,8 +250,11 @@ export class BuyableHelper {
     }
     const ONE = new Num(1, 0);
     while (hi.sub(lo).gt(ONE)) {
-      const mid = lo.add(hi).div(new Num(2, 0)).floor();
-      if (this._triCost(mid, preCost, increase, scaling).lte(budget)) {
+      let mid = lo.add(hi).div(new Num(2, 0)).floor();
+      if (mid.equals(lo) || mid.equals(hi)) {
+        mid = lo.add(new Num(1,0))
+      }
+      if (this._triCost(mid, preCost, increase, scaling).lt(budget)) {
         lo = mid;
       } else {
         hi = mid;
