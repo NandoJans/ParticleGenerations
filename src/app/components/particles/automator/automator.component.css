@@ -13,6 +13,11 @@ div.automator {
   width: 12rem;
 }
 
+div.automator.red {
+  --background-color: var(--background-color-red);
+  --accent-color: var(--accent-color-red);
+}
+
 div.automator h4 {
   margin: 0 0 0.5rem 0;
 }
@@ -32,4 +37,13 @@ div.progress {
   background-color: var(--accent-color-green);
   border-radius: 0.5rem;
   transition: width 0.3s ease-in-out;
+}
+
+input[type="text"] {
+  width: 80%;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--accent-color);
+  background-color: var(--background-color-2);
+  color: var(--text-color);
 }

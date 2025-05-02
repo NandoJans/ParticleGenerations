@@ -36,6 +36,7 @@ export abstract class Automator extends GameElement implements Storable, Resetab
   abstract goalString: string;
   abstract task(): Num;
   override calculationOrder: number = 100
+  maxBuys: Num|null = null
 
   requirement: Requirement[] = [];
 
@@ -60,7 +61,7 @@ export abstract class Automator extends GameElement implements Storable, Resetab
   override run(): boolean {
     if (this.completed && this.active) {
       this.buyables().forEach(buyable => {
-        if (buyable.isBuyable() && buyable.auto) {
+        if (buyable.isBuyable() && buyable.auto && this.belowMax()) {
           buyable.buy();
         }
       })
@@ -84,12 +85,16 @@ export abstract class Automator extends GameElement implements Storable, Resetab
     this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey());
     this.completed = this.localStorageHelper.load(this.completed, 'completed');
     this.active = this.localStorageHelper.load(this.active, 'active');
+    this.maxBuys = this.localStorageHelper.loadNum(new Num(1, 100), 'maxBuys');
   }
 
   save() {
     this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey());
     this.localStorageHelper.save(this.completed, 'completed');
     this.localStorageHelper.save(this.active, 'active');
+    if (this.maxBuys !== null) {
+      this.localStorageHelper.saveNum(this.maxBuys, 'maxBuys');
+    }
   }
 
   enable(): void {
@@ -112,5 +117,20 @@ export abstract class Automator extends GameElement implements Storable, Resetab
 
   taskString(): string {
     return this.task().toString();
+  }
+
+  hasMaxBuys(): boolean {
+    return false;
+  }
+
+  belowMax(): boolean {
+    if (this.hasMaxBuys() && this.maxBuys instanceof Num) {
+      for (const buyable of this.buyables()) {
+        if (!buyable.bought.lt(this.maxBuys ?? new Num(0, 0))) {
+          return false;
+        }
+      }
+    }
+    return true
   }
 }

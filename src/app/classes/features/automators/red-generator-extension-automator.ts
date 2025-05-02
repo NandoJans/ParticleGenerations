@@ -17,6 +17,10 @@ export class RedGeneratorExtensionAutomator extends Automator {
   override startUnlocked: boolean = true;
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED, this);
 
+  override hasMaxBuys(): boolean {
+    return UpgradeRecord.redGeneratorExtension.resets !== ResetKey.NONE;
+  }
+
   buyables(): Buyable[] {
     return [
       UpgradeRecord.redGeneratorExtension,

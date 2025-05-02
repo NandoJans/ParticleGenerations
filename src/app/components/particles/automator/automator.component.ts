@@ -78,4 +78,28 @@ export class AutomatorComponent implements OnInit {
   getActive(): boolean {
     return this.automator.active;
   }
+
+  hasMaxBuys() {
+    return this.automator.hasMaxBuys()
+  }
+
+  setMaxBuys(event: any) {
+    this.automator.maxBuys = this.getNumFromString(event.target.value);
+  }
+
+  getNumFromString(value: string): Num {
+    if (value.includes("e")) {
+      const parts = value.split("e");
+      const base = parseFloat(parts[0]);
+      const exponent = parseInt(parts[1]);
+      return new Num(base, exponent);
+    } else {
+      const num = parseFloat(value);
+      return new Num(num, 0);
+    }
+  }
+
+  getMaxBuys(): string {
+    return this.automator.maxBuys?.toString() ?? "";
+  }
 }

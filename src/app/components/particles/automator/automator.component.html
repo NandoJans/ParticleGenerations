@@ -5,6 +5,7 @@
     <app-button *ngIf="isPrestigeAutomator && getAutomationType() === 'timesHighest'" [style]="'prestige-automator-button green'" [text]="'x Times Highest'" (function)="setAutomationType('afterSeconds')"></app-button>
     <app-button *ngIf="isPrestigeAutomator && getAutomationType() === 'afterSeconds'" [style]="'prestige-automator-button blue'" [text]="'After x seconds'" (function)="setAutomationType('waitFor')"></app-button>
     <input *ngIf="isPrestigeAutomator" formControlName="waitFor">
+    <input *ngIf="hasMaxBuys()" type="text" (change)="setMaxBuys($event)" [value]="getMaxBuys()"/>
     <div>
       <label>Active: </label>
       <input
