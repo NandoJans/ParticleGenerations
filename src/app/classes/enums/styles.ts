@@ -8,4 +8,5 @@ export enum Styles {
   RED_ACCELERATOR = 'red red-accelerator',
   RED_SUPER = 'red super',
   YELLOW_SUPER = 'yellow super',
+  SUB_YELLOW = 'sub yellow',
 }

@@ -9,7 +9,7 @@ export abstract class YellowGeneratorUpgrade extends GeneratorUpgrade {
   bought: Num = new Num(0, 0);
   currency: Holding = HoldingRecord.yellowParticles;
   nav: string = "yellow";
-  style: Styles = Styles.SUB_RED;
+  style: Styles = Styles.SUB_YELLOW;
   subNav: string = "yellowGenerators";
   type: string = "yellow-generators";
   override effect: Num = new Num(1, 0);

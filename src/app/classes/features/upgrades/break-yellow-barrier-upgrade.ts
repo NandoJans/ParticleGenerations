@@ -2,6 +2,7 @@ import {YellowUpgrade} from "./yellow-upgrade";
 import {Num} from "../../../num";
 import {PrestigeLayersService} from "../../../services/prestige-layers.service";
 import {Styles} from "../../enums/styles";
+import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 
 export class BreakYellowBarrierUpgrade extends YellowUpgrade {
   displayName: string = 'Break Yellow Barrier';
@@ -13,12 +14,13 @@ export class BreakYellowBarrierUpgrade extends YellowUpgrade {
   override calculationOrder: number = 1;
 
   getDescription(): string {
-    return "Break yellow barrier to be able to gain more red particles";
+    return "Break yellow barrier to be able to gain more red particles and booster accelerations are unlimited";
   }
 
   action(): undefined {
     if (this.hasBought()) {
       PrestigeLayersService.yellowPrestigeLayer.limitPhaseBelow = false;
+      UpgradeRecord.boosterAccelerationUpgrade.limit = undefined;
     }
     return;
   }

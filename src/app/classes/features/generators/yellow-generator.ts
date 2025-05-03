@@ -9,6 +9,8 @@ import {Styles} from "../../enums/styles";
 import {Upgrade} from "../upgrade";
 import {YellowGeneratorMultiplierUpgrade} from "../upgrades/yellow-generator-multiplier-upgrade";
 import {YellowGeneratorBuyMultiplierUpgrade} from "../upgrades/yellow-generator-buy-multiplier-upgrade";
+import {ResetHelper} from "../../helpers/reset-helper";
+import {ResetKey} from "../../enums/reset-key";
 
 export abstract class YellowGenerator extends Generator {
   type: string = 'yellow-generator';
@@ -22,7 +24,12 @@ export abstract class YellowGenerator extends Generator {
     this.requirement = [
       new Requirement(HoldingRecord.yellowPrestiges, new Num(5, 2), this)
     ];
+    this.resetId = ResetHelper.registerReset(ResetKey.YELLOW, this);
+    this.softResetId = ResetHelper.registerSoftReset(ResetKey.RED, this);
   }
+
+  resetId: ResetKey;
+  softResetId: ResetKey;
 
   currency: Holding = HoldingRecord.yellowParticles;
   baseMultiplier: Num = new Num(2, 0);

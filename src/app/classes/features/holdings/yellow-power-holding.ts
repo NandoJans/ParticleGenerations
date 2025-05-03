@@ -31,6 +31,7 @@ export class YellowPowerHolding extends Holding {
     override action(): Num {
       const effect = this.amount.pow(this.yellowPower);
       MultiplierRecord.redParticleGenerators.correct(effect);
+      this.yellowPower = new Num(1, 0);
       return effect;
     }
 

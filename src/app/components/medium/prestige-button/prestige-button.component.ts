@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import {PrestigeLayersService} from "../../../services/prestige-layers.service";
 import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 import {PrestigeLayer} from "../../../classes/features/prestiges/prestige-layer";
+import {Num} from "../../../num";
 
 @Component({
   selector: 'app-prestige-button',
@@ -16,7 +17,7 @@ export class PrestigeButtonComponent implements OnInit {
     public holdingRecord: HoldingRecord
   ) { }
 
-  prestige() {
+  prestige(): void {
     if (this.prestigeLayer.hasReached()) {
       this.prestigeLayers.prestige(this.prestigeLayer);
     }
@@ -26,15 +27,35 @@ export class PrestigeButtonComponent implements OnInit {
 
   }
 
-  getDisplay() {
+  getDisplay(): string {
     return (this.prestigeLayer.isUnlocked()) ? '' : 'none';
   }
 
-  getName() {
+  getName(): string {
     return this.prestigeLayer.name.charAt(0).toUpperCase() + this.prestigeLayer.name.slice(1);
   }
 
+  hasReached(): boolean {
+    return this.prestigeLayer.hasReached();
+  }
+
   getReached(): string {
-    return (this.prestigeLayer.hasReached()) ? 'reached' : '';
+    return (this.hasReached()) ? 'reached' : '';
+  }
+
+  firstTime(): boolean {
+    return this.prestigeLayer.prestigedFirstTime
+  }
+
+  getFirstTimeText(): string {
+    return this.prestigeLayer.firstTimeText;
+  }
+
+  getGainAmount(): Num {
+    return this.prestigeLayer.holdingGain
+  }
+
+  getGainHolding(): string {
+    return this.prestigeLayer.idleGenerationHolding.displayName
   }
 }

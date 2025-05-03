@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {Holding} from "../../../classes/features/holding";
 import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
-import {Generator} from "../../../classes/features/generator";
 import {GeneratorRecord} from "../../../classes/records/generators/generator-record";
+import {YellowGenerator} from "../../../classes/features/generators/yellow-generator";
+import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
+import {Upgrade} from "../../../classes/features/upgrade";
 
 @Component({
   selector: 'app-yellow-generators',
@@ -11,8 +13,11 @@ import {GeneratorRecord} from "../../../classes/records/generators/generator-rec
 })
 export class YellowGeneratorsComponent implements OnInit {
   yellowPower: Holding = HoldingRecord.yellowPower;
-  generators: Generator[] = [
+  generators: YellowGenerator[] = [
     GeneratorRecord.firstYellowGenerator,
+  ]
+  upgrades: Upgrade[] = [
+    UpgradeRecord.yellowPower
   ]
   constructor() { }
 

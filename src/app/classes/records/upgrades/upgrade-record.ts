@@ -33,6 +33,7 @@ import {ImproveMultiplyAcceleratorEffectYellowUpgrade} from "../../features/upgr
 import {ImproveBetterAccelerationYellowUpgrade} from "../../features/upgrades/improve-better-acceleration-yellow-upgrade";
 import {ImproveBetterParticleEffectYellowUpgrade} from "../../features/upgrades/improve-better-particle-effect-yellow-upgrade";
 import {BreakYellowBarrierUpgrade} from "../../features/upgrades/break-yellow-barrier-upgrade";
+import {YellowPowerUpgrade} from "../../features/upgrades/yellow-power-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -67,6 +68,9 @@ export class UpgradeRecord extends Record {
   static improveBetterParticleEffectYellow: ImproveBetterParticleEffectYellowUpgrade = new ImproveBetterParticleEffectYellowUpgrade('improveBetterParticleEffectYellow');
   static breakYellowBarrier: BreakYellowBarrierUpgrade = new BreakYellowBarrierUpgrade('breakYellowBarrier');
 
+  // Yellow generator upgrades
+  static yellowPower: YellowPowerUpgrade = new YellowPowerUpgrade('yellowPowerUpgrade');
+
   static override list: Upgrade[] = [
     UpgradeRecord.redGeneratorExtension,
     UpgradeRecord.redGeneratorBooster,
@@ -93,6 +97,9 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.improveBetterAccelerationYellow,
     UpgradeRecord.improveBetterParticleEffectYellow,
     UpgradeRecord.breakYellowBarrier,
+
+    // Yellow generator upgrades
+    UpgradeRecord.yellowPower,
   ]
 
   getList(): Upgrade[] {

@@ -21,7 +21,7 @@ export class PrestigeLayersService {
     new Num(1, 1000),
     Styles.YELLOW,
     [
-      { holding: HoldingRecord.yellowParticles, basedOnRequiredHolding: false, gainMultiplier: MultiplierRecord.yellowParticleGain, idleGeneration: true},
+      { holding: HoldingRecord.yellowParticles, basedOnRequiredHolding: true, gainMultiplier: MultiplierRecord.yellowParticleGain, idleGeneration: true},
       { holding: HoldingRecord.yellowKeys, basedOnRequiredHolding: false, gainMultiplier: MultiplierRecord.yellowKeyGain, idleGeneration: false},
       { holding: HoldingRecord.yellowPrestiges, basedOnRequiredHolding: false, gainMultiplier: MultiplierRecord.yellowPrestigeGain, idleGeneration: false},
     ],
@@ -33,6 +33,7 @@ export class PrestigeLayersService {
       .addStep('Access Restricted', 'Unlocking yellow power is the only way to get in. Try unlocking yellow power.')
       .addStep('Information', 'You can unlock yellow power by reaching red particles.')
       .build(),
+    'Yellow does not allow you to enter. Reset your progress to access yellow\'s upgrades',
     HoldingRecord.yellowParticles,
     MultiplierRecord.yellowParticleIdleGeneration,
   );

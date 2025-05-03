@@ -1,6 +1,11 @@
 <app-number-display [holding]="yellowPower"></app-number-display>
 <div class="generator" *ngFor="let generator of generators">
   <app-generator *ngIf="generator.unlocked" [generator]="generator"></app-generator>
-<!--  <app-upgrade *ngIf="generator.unlocked" [upgrade]="generator.multiplierUpgrade"></app-upgrade>-->
-<!--  <app-upgrade *ngIf="generator.unlocked" [upgrade]="generator.buyMultiplierUpgrade"></app-upgrade>-->
+  <app-upgrade *ngIf="generator.unlocked" [upgrade]="generator.multiplierUpgrade"></app-upgrade>
+  <app-upgrade *ngIf="generator.unlocked" [upgrade]="generator.buyMultiplierUpgrade"></app-upgrade>
+</div>
+<div class="upgrade-row">
+  <div *ngFor="let upgrade of upgrades">
+    <app-upgrade [upgrade]="upgrade"></app-upgrade>
+  </div>
 </div>
