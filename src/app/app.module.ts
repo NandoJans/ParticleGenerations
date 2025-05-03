@@ -35,6 +35,7 @@ import { RedTimelineComponent } from './pages/timeline/red-timeline/red-timeline
 import { YellowTimelineComponent } from './pages/timeline/yellow-timeline/yellow-timeline.component';
 import { FastestPrestigeComponent } from './components/small/fastest-prestige/fastest-prestige.component';
 import { YellowAutomatorsComponent } from './pages/automators/yellow-automators/yellow-automators.component';
+import { YellowGeneratorsComponent } from './pages/yellow/yellow-generators/yellow-generators.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { YellowAutomatorsComponent } from './pages/automators/yellow-automators/
     YellowTimelineComponent,
     FastestPrestigeComponent,
     YellowAutomatorsComponent,
+    YellowGeneratorsComponent,
   ],
     imports: [
         BrowserModule,

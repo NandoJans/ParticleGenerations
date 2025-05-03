@@ -5,6 +5,7 @@ import {RedAcceleratorHolding} from "../../features/holdings/red-accelerator-hol
 import {YellowParticleHolding} from "../../features/holdings/yellow-particle-holding";
 import {YellowKeyHolding} from "../../features/holdings/yellow-key-holding";
 import {YellowPrestigeHolding} from "../../features/holdings/yellow-prestige-holding";
+import {YellowPowerHolding} from "../../features/holdings/yellow-power-holding";
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class HoldingRecord {
   static yellowParticles: YellowParticleHolding = new YellowParticleHolding();
   static yellowKeys: YellowKeyHolding = new YellowKeyHolding();
   static yellowPrestiges: YellowPrestigeHolding = new YellowPrestigeHolding();
+  static yellowPower: YellowPowerHolding = new YellowPowerHolding();
 
 
   static getList(): Holding[] {
@@ -28,7 +30,8 @@ export class HoldingRecord {
 
       HoldingRecord.yellowParticles,
       HoldingRecord.yellowKeys,
-      HoldingRecord.yellowPrestiges
+      HoldingRecord.yellowPrestiges,
+      HoldingRecord.yellowPower
     ]
   }
 

@@ -20,6 +20,10 @@ div.timeline-event.yellow, div.progress-bar.yellow {
   --accent-color: var(--accent-color-yellow)
 }
 
+div.progress-bar.yellow {
+  color: var(--background-color-3);
+}
+
 div.progress-bar {
   display: grid;
   grid-area: 1/1;
