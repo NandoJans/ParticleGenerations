@@ -23,6 +23,7 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
   gainHoldings: {holding: Holding, basedOnRequiredHolding: boolean, gainMultiplier: Multiplier, idleGeneration: boolean}[] = [];
   resets: ResetKey;
   messageSteps: MessageSteps;
+  firstTimeText: string;
   idleGenerationHolding: Holding
   idleGenerationMultiplier: Multiplier;
   prestigeStarted: Date;
@@ -40,6 +41,7 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     gainHoldings: {holding: Holding, basedOnRequiredHolding: boolean, gainMultiplier: Multiplier, idleGeneration: boolean}[],
     resets: ResetKey,
     message: MessageSteps,
+    firstTimeText: string,
     idleGenerationHolding: Holding,
     idleGenerationMultiplier: Multiplier,
   ) {
@@ -54,7 +56,7 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     this.gainHoldings = gainHoldings;
     this.resets = resets;
     this.messageSteps = message;
-
+    this.firstTimeText = firstTimeText;
     this.idleGenerationHolding = idleGenerationHolding;
     this.idleGenerationMultiplier = idleGenerationMultiplier;
     this.prestigeStarted = new Date();
@@ -122,9 +124,23 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     }
   }
 
-  private calculateHoldingGain(gain: {holding: Holding, basedOnRequiredHolding: boolean, gainMultiplier: Multiplier, idleGeneration: boolean}): Num {
-    // TODO: implement
-    return new Num(1, 0).mul(gain.gainMultiplier.getNum());
+  private calculateHoldingGain(gain: {
+    holding: Holding,
+    basedOnRequiredHolding: boolean,
+    gainMultiplier: Multiplier,
+    idleGeneration: boolean
+  }): Num {
+    // start with the normal gain
+    let baseGain = new Num(1, 0).mul(gain.gainMultiplier.getNum());
+
+    if (gain.basedOnRequiredHolding) {
+      const exponent = this.holdingPhaseBelow.amount.log10()
+      const base = this.amountRequired.log10();
+      const thresholds = exponent.div(base);
+      baseGain = baseGain.mul(new Num(2, 0).pow(thresholds));
+    }
+
+    return baseGain;
   }
 
   private addGainHoldings() {

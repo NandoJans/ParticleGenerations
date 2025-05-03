@@ -38,6 +38,9 @@ export class NavigationsService {
     yellowUpgrades: new SubNavigation('yellowUpgrades', faArrowUp, 'upgrades', this.navigations['yellow'], [
       {requirement: HoldingRecord.yellowPrestiges, amount: new Num(1, 0)},
     ], false),
+    yellowGenerators: new SubNavigation('yellowGenerators', faIndustry, 'generators', this.navigations['yellow'], [
+      {requirement: HoldingRecord.yellowPrestiges, amount: new Num(5, 2)},
+    ], false),
 
     // Automators
     redAutomators: new SubNavigation('redParticles', faAtom, 'red', this.navigations['automators'], [], true),

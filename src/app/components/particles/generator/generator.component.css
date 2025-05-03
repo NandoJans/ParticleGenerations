@@ -30,6 +30,19 @@ button.red.buyable {
   color: var(--text-color-red);
 }
 
+button.yellow {
+  --linear-gradient-to: var(--background-color-yellow);
+  background-color: var(--background-color-yellow);
+  border: 1px solid var(--background-color-yellow);
+}
+
+button.yellow.buyable {
+  --linear-gradient-to: var(--background-color-3);
+  background-color: var(--background-color-3);
+  border: 1px solid var(--text-color-yellow);
+  color: var(--text-color-yellow);
+}
+
 button.enhancing.enhancing-yellow {
   background-color: var(--background-color-3);
   border: 1px solid var(--accent-color-yellow);

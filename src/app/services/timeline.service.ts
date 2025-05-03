@@ -79,6 +79,14 @@ export class TimelineService {
     .addMilestone(MilestoneRecord.generate50PercentYellowParticles)
     .addMilestone(MilestoneRecord.breakYellowBarrier)
     .build()
+    .addTimelineEvent(
+      'break-yellow-barrier',
+      'Break yellow\'s barrier',
+      'Yellow protects it\'s generators. With the yellow barrier broken, you have access to yellow\'s power.',
+      HoldingRecord.yellowPrestiges,
+      new Num(5, 2)
+    )
+    .build()
     .build()
 
   static list: Timeline[] = [

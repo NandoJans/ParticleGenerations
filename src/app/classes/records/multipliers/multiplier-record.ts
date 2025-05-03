@@ -1,7 +1,6 @@
 import {Multiplier} from "../../features/multiplier";
 import {Num} from "../../../num";
 import { Injectable } from '@angular/core';
-import {RedGenerator} from "../../features/generators/red-generator";
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +16,7 @@ export class MultiplierRecord {
   static yellowKeyGain: Multiplier = new Multiplier('yellowKeyGain', new Num(1, 0));
   static yellowPrestigeGain: Multiplier = new Multiplier('yellowPrestigeGain', new Num(1, 0));
   static yellowParticleIdleGeneration: Multiplier = new Multiplier('yellowParticleIdleGeneration', new Num(0, 0));
+  static yellowGenerators: Multiplier = new Multiplier('yellowGenerators', new Num(1, 0));
 
   static list: Multiplier[] = [
     // Red Phase

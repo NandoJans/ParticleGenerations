@@ -6,8 +6,6 @@ import {LocalStorageHelper} from "./classes/helpers/local-storage-helper";
 import {OfflineService} from "./services/offline.service";
 import {MigrateNumAndExpValues} from "./migrations/migrate-num-and-exp-values";
 import {MessageStepsService} from "./services/message-steps.service";
-import {HoldingRecord} from "./classes/records/holdings/holding-record";
-import {Num} from "./num";
 
 @Component({
   selector: 'app-root',
@@ -57,6 +55,8 @@ export class AppComponent implements OnInit{
     this.offlineService.load();
     this.dataManagerService.save();
     this.localStorageHelper.save(this.VERSION);
+
+    // HoldingRecord.yellowPrestiges.amount = HoldingRecord.yellowPrestiges.amount.add(new Num(5, 2));
 
     if (!this.isTicking) {
       this.tick.startIntervals();

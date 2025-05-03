@@ -8,6 +8,7 @@ import {Record} from "../record";
 import { Injectable } from '@angular/core';
 import {RedAcceleratorGenerator} from "../../features/generators/red-accelerator-generator";
 import {RedGenerator} from "../../features/generators/red-generator";
+import {FirstYellowGenerator} from "../../features/generators/first-yellow-generator";
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,9 @@ export class GeneratorRecord extends Record {
   // Red Accelerators
   static redAcceleratorGenerator: RedAcceleratorGenerator = new RedAcceleratorGenerator('redAcceleratorGenerator');
 
+  // Yellow Generators
+  static firstYellowGenerator: FirstYellowGenerator = new FirstYellowGenerator('firstYellowGenerator');
+
 
   static override list: Generator[] = [
     GeneratorRecord.firstRedGenerator,
@@ -31,7 +35,9 @@ export class GeneratorRecord extends Record {
     GeneratorRecord.fourthRedGenerator,
     GeneratorRecord.fifthRedGenerator,
 
-    GeneratorRecord.redAcceleratorGenerator
+    GeneratorRecord.redAcceleratorGenerator,
+
+    GeneratorRecord.firstYellowGenerator
   ]
 
   static redGenerators: RedGenerator[] = [

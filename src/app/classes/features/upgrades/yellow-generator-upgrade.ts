@@ -1,24 +1,28 @@
+import {Num} from "../../../num";
 import {Holding} from "../holding";
 import {HoldingRecord} from "../../records/holdings/holding-record";
-import {Num} from "../../../num";
 import {Styles} from "../../enums/styles";
 import {Enhancement} from "../enhancements/enhancement";
 import {GeneratorUpgrade} from "./generator-upgrade";
 
-export abstract class RedGeneratorUpgrade extends GeneratorUpgrade {
+export abstract class YellowGeneratorUpgrade extends GeneratorUpgrade {
   bought: Num = new Num(0, 0);
-  currency: Holding = HoldingRecord.redParticles;
-  nav: string = "red";
-  style: Styles = Styles.SUB_RED;
-  subNav: string = "redParticles";
-  type: string = "red-particles";
+  currency: Holding = HoldingRecord.yellowParticles;
+  nav: string = "yellow";
+  style: Styles = Styles.SUB_YELLOW;
+  subNav: string = "yellowGenerators";
+  type: string = "yellow-generators";
   override effect: Num = new Num(1, 0);
 
   override canEnhance(): boolean {
     return false;
   }
-  override enhance() {}
+
+  override enhance() {
+  }
+
   allowedEnhancements: Enhancement[] = [];
+
   override enhancementString(enhancement: Enhancement): string {
     return "";
   }
