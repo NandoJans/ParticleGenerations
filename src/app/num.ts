@@ -1,6 +1,12 @@
 export class Num {
   mantissa: number;   // in [1,10) or 0
   exponent: number;   // integer power of 10
+  static ZERO: Num = new Num(0, 0);
+  static ONE: Num = new Num(1, 0);
+  static TWO: Num = new Num(2, 0);
+  static THREE: Num = new Num(3, 0);
+  static FOUR: Num = new Num(4, 0);
+
 
   constructor(mantissa: number, exponent: number) {
     this.mantissa = mantissa;

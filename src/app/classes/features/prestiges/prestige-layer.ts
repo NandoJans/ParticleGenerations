@@ -170,7 +170,7 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     this.setHoldingGain();
     this.applyLimitPhaseBelow();
     this.checkRequirements();
-    this.idleGeneration();
+    this.idleGeneration(speed);
   }
 
   private applyReset() {
@@ -190,14 +190,10 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
 
   prestige() {
     if (this.hasReached()) {
-      this.applyReset();
       const holdingGain = this.addGainHoldings();
       this.calculateFastestPrestige(holdingGain);
+      this.applyReset();
     }
-  }
-
-  firstTimeMessage(): MessageSteps {
-    return this.messageSteps;
   }
 
   private checkRequirements() {
@@ -206,9 +202,9 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     }
   }
 
-  private idleGeneration() {
+  private idleGeneration(speed: Num) {
     // Calculate idle generation for the holding based on the fastest prestige time multiplied by the multiplier
-    const idleGeneration = this.highestGenerationPerTick.mul(this.idleGenerationMultiplier.num).div(new Num(2, 1));
+    const idleGeneration = this.highestGenerationPerTick.mul(this.idleGenerationMultiplier.num).mul(speed);
     if (idleGeneration.gt(new Num(0, 0))) {
       this.idleGenerationHolding.amount = this.idleGenerationHolding.amount.add(idleGeneration);
     }

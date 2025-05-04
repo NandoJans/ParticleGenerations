@@ -15,6 +15,8 @@ export class YellowGeneratorsComponent implements OnInit {
   yellowPower: Holding = HoldingRecord.yellowPower;
   generators: YellowGenerator[] = [
     GeneratorRecord.firstYellowGenerator,
+    GeneratorRecord.secondYellowGenerator,
+    GeneratorRecord.thirdYellowGenerator,
   ]
   upgrades: Upgrade[] = [
     UpgradeRecord.yellowPower
