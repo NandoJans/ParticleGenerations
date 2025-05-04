@@ -95,6 +95,7 @@ export abstract class Generator extends Buyable implements Generatable, Storable
   }
 
   softReset(): void {
+    console.log("Soft resetting generator " + this.name)
     this.amount = this.bought.copy()
   }
 

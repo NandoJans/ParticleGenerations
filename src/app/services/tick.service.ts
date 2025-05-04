@@ -17,6 +17,7 @@ import {PrestigeLayersService} from "./prestige-layers.service";
 import {EnhancementService} from "./enhancement.service";
 import {TimelineService} from "./timeline.service";
 import {Generator} from "../classes/features/generator";
+import {ChallengeService} from "./interactables/challenge.service";
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +39,8 @@ export class TickService {
     private enhancementService: EnhancementService,
     private prestigeLayersService: PrestigeLayersService,
     private timelineService: TimelineService,
-    private dropDownMessageService: DropDownMessageService
+    private dropDownMessageService: DropDownMessageService,
+    private challengeService: ChallengeService,
   ) {}
 
   /**
@@ -115,7 +117,8 @@ export class TickService {
       this.upgradeService,
       this.automatorService,
       this.holdingService,
-      this.generatorService
+      this.generatorService,
+      this.challengeService
     ];
 
     services.forEach(service => {

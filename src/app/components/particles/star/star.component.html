@@ -1,0 +1,22 @@
+<div class="challenge {{ star.style }}">
+  <div class="star">
+
+  </div>
+  <div class="details">
+    <div class="name">
+      <h2>{{ star.displayName }}</h2>
+    </div>
+    <div class="description">
+      <p>{{ star.getDescription() }}</p>
+    </div>
+    <div class="reward">
+      <p>{{ star.getRewardDescription() }}</p>
+    </div>
+    <div class="effect">
+      <p>{{ star.getEffectDisplay() }}</p>
+    </div>
+    <div class="start">
+      <button class="button" (click)="startChallenge()">Enter</button>
+    </div>
+  </div>
+</div>

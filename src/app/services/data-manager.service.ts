@@ -9,6 +9,7 @@ import {PrestigeLayersService} from "./prestige-layers.service";
 import {TimelineService} from "./timeline.service";
 import {MilestoneRecord} from "../classes/records/milestones/milestone-record";
 import {Num} from "../num";
+import {ChallengeService} from "./interactables/challenge.service";
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,7 @@ export class DataManagerService {
     private navigationsService: NavigationsService,
     private automatorService: AutomatorService,
     private prestigeLayersService: PrestigeLayersService,
+    private challengeService: ChallengeService,
     private timelineService: TimelineService,
   ) {}
 
@@ -38,6 +40,7 @@ export class DataManagerService {
     this.prestigeLayersService.save();
     this.timelineService.save();
     this.milestoneRecord.save();
+    this.challengeService.save();
 
     this.setLastSave();
     this.localStorageHelper.store();
@@ -53,9 +56,11 @@ export class DataManagerService {
     this.prestigeLayersService.load();
     this.timelineService.load();
     this.milestoneRecord.load();
+    this.challengeService.load();
 
     // Run milestones
     this.milestoneRecord.run();
+    this.challengeService.applyCurrentChallengeNerfs();
   }
 
   setLastSave(): void {

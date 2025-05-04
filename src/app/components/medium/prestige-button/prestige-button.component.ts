@@ -3,6 +3,7 @@ import {PrestigeLayersService} from "../../../services/prestige-layers.service";
 import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 import {PrestigeLayer} from "../../../classes/features/prestiges/prestige-layer";
 import {Num} from "../../../num";
+import {ChallengeService} from "../../../services/interactables/challenge.service";
 
 @Component({
   selector: 'app-prestige-button',
@@ -14,11 +15,17 @@ export class PrestigeButtonComponent implements OnInit {
 
   constructor(
     private prestigeLayers: PrestigeLayersService,
+    private challengeService: ChallengeService,
     public holdingRecord: HoldingRecord
   ) { }
 
   prestige(): void {
-    if (this.prestigeLayer.hasReached()) {
+    if (this.inChallenge() && this.goalReached() && this.prestigeLayer.hasReached()) {
+      this.challengeService.completeChallenge(this.prestigeLayer.name);
+      this.prestigeLayers.prestige(this.prestigeLayer);
+    }
+
+    if (!this.inChallenge() && this.prestigeLayer.hasReached()) {
       this.prestigeLayers.prestige(this.prestigeLayer);
     }
   }
@@ -57,5 +64,13 @@ export class PrestigeButtonComponent implements OnInit {
 
   getGainHolding(): string {
     return this.prestigeLayer.idleGenerationHolding.displayName
+  }
+
+  inChallenge(): boolean {
+    return this.challengeService.inChallenge(this.prestigeLayer.name);
+  }
+
+  goalReached(): boolean {
+    return this.challengeService.challengeGoalReached(this.prestigeLayer.name);
   }
 }

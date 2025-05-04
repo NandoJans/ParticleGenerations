@@ -13,6 +13,7 @@ export abstract class RedGeneratorUpgrade extends GeneratorUpgrade {
   subNav: string = "redParticles";
   type: string = "red-particles";
   override effect: Num = new Num(1, 0);
+  override noMax: boolean = true;
 
   override canEnhance(): boolean {
     return false;

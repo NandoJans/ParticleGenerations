@@ -115,7 +115,7 @@ export class Num {
     // get the real exponent value
     const expVal = x instanceof Num ? x.toNumber() : x;
     if (this.mantissa < 0) {
-      throw new Error("Negative base in Num.pow");
+      return new Num(0, 0);
     }
     if (this.mantissa === 0) {
       return new Num(0, 0);

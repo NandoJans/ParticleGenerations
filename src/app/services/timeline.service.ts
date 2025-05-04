@@ -87,6 +87,14 @@ export class TimelineService {
       new Num(5, 2)
     )
     .build()
+    .addTimelineEvent(
+      'yellow-stars',
+      'Yellow Stars',
+      'Yellow stars hold energy that can be used to power up yellow generators. Finish yellow stars to unlock different yellow upgrades.',
+      HoldingRecord.yellowPrestiges,
+      new Num(1, 3)
+    )
+    .build()
     .build()
 
   static list: Timeline[] = [

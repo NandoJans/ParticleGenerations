@@ -42,6 +42,6 @@ export class ImproveRedAcceleratorsEffectUpgrade extends RedAcceleratorUpgrade {
   }
 
   override enhance() {
-    this.buffer = this.buffer.mul(this.enhancement?.getAddition().mul(new Num(5, -3)) as Num)
+    this.buffer = this.buffer.add(this.enhancement?.getAddition().mul(new Num(1, -3)) as Num)
   }
 }

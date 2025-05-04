@@ -27,6 +27,9 @@ export class MultiplierRecord {
     MultiplierRecord.yellowParticleGain,
     MultiplierRecord.yellowKeyGain,
     MultiplierRecord.yellowPrestigeGain,
+    MultiplierRecord.yellowParticleIdleGeneration,
+    MultiplierRecord.yellowGenerators,
+
   ];
 
   getList(): Multiplier[] {

@@ -63,7 +63,6 @@ export class ResetHelper {
 
   static reset(resetKey: ResetKey): void {
     for (let resetOrderKey of this.resetOrder) {
-      console.log('resetting', resetOrderKey);
       if (this.resetList[resetOrderKey] !== undefined) {
         Object.values(this.resetList[resetOrderKey]).forEach(resetable => {
           resetable.reset();
@@ -77,19 +76,22 @@ export class ResetHelper {
         break;
       }
     }
+    this.softReset(resetKey);
   }
 
   static softReset(resetKey: ResetKey): void {
     for (let resetOrderKey of this.resetOrder) {
-      Object.values(this.softResetList[resetOrderKey]).forEach(resetable => {
-        resetable.softReset();
-
-        if (this.isStorable(resetable)) {
-          resetable.save();
-        }
-      });
       if (resetOrderKey === resetKey) {
         break;
+      }
+      if (this.softResetList[resetOrderKey] !== undefined) {
+        Object.values(this.softResetList[resetOrderKey]).forEach(resetable => {
+
+          resetable.softReset();
+          if (this.isStorable(resetable)) {
+            resetable.save();
+          }
+        });
       }
     }
   }

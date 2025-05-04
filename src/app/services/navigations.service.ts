@@ -9,7 +9,7 @@ import {
   faCogs,
   faForward,
   faIndustry,
-  faMountain
+  faMountain, faStar, faSun
 } from "@fortawesome/free-solid-svg-icons";
 import {HoldingRecord} from "../classes/records/holdings/holding-record";
 import {Num} from "../num";
@@ -22,9 +22,9 @@ export class NavigationsService {
     red: new Navigation('red', faAtom, 'red', [], 'particles', true),
     yellow: new Navigation('yellow', faMountain, 'yellow', [
       {requirement: HoldingRecord.yellowPrestiges, amount: new Num(1, 0)},
-    ], 'yellow', false),
+    ], 'upgrades', false),
     automators: new Navigation('automators', faCogs, 'automators', [], 'red', true),
-    timeline: new Navigation('timeline', faCalendar, 'timeline', [], 'redTimeline', true),
+    timeline: new Navigation('timeline', faCalendar, 'timeline', [], 'red', true),
 }
 
   subNavigations: {[key: string]: SubNavigation} = {
@@ -40,6 +40,9 @@ export class NavigationsService {
     ], false),
     yellowGenerators: new SubNavigation('yellowGenerators', faIndustry, 'generators', this.navigations['yellow'], [
       {requirement: HoldingRecord.yellowPrestiges, amount: new Num(5, 2)},
+    ], false),
+    yellowStars: new SubNavigation('yellowStars', faSun, 'stars', this.navigations['yellow'], [
+      {requirement: HoldingRecord.yellowPrestiges, amount: new Num(1, 3)},
     ], false),
 
     // Automators
