@@ -9,6 +9,7 @@ import {LocalStorageHelper} from "../../helpers/local-storage-helper";
 import {Holding} from "../holding";
 import {MessageSteps} from "../../display/message-steps";
 import {Multiplier} from "../multiplier";
+import {ChallengeService} from "../../../services/interactables/challenge.service";
 
 export class PrestigeLayer extends GameElement implements Resetable, Storable {
   name: string;
@@ -189,7 +190,14 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
   }
 
   prestige() {
-    if (this.hasReached()) {
+    if (ChallengeService.inChallenge(this.name)) {
+      if (ChallengeService.challengeGoalReached(this.name)) {
+        ChallengeService.completeChallenge(this.name);
+        const holdingGain = this.addGainHoldings();
+        this.calculateFastestPrestige(holdingGain);
+        this.applyReset();
+      }
+    } else if (this.hasReached()) {
       const holdingGain = this.addGainHoldings();
       this.calculateFastestPrestige(holdingGain);
       this.applyReset();

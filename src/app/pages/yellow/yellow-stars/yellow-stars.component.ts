@@ -10,7 +10,8 @@ import {ChallengeService} from "../../../services/interactables/challenge.servic
 })
 export class YellowStarsComponent implements OnInit {
   stars: YellowStarChallenge[] = [
-    ChallengeRecord.proximaCentauriStar
+    ChallengeRecord.proximaCentauriStar,
+    ChallengeRecord.lalandeStar,
   ]
   constructor(
     private challengeService: ChallengeService,

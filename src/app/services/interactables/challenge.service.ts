@@ -14,6 +14,12 @@ export class ChallengeService {
     return ChallengeRecord.list;
   }
 
+  tick(): void {
+    Object.values(ChallengeRecord.currentChallenges).forEach((challenge) => {
+      challenge.constantNerfs();
+    });
+  }
+
   save() {
     this.getList().forEach((challenge) => {
       challenge.save();
@@ -72,11 +78,15 @@ export class ChallengeService {
     this.saveCurrentChallenges();
   }
 
-  inChallenge(prestigeLayer: string): boolean {
+  static inChallenge(prestigeLayer: string): boolean {
     return ChallengeRecord.currentChallenges[prestigeLayer] !== undefined;
   }
 
-  challengeGoalReached(prestigeLayer: string) {
+  inChallenge(prestigeLayer: string): boolean {
+    return ChallengeService.inChallenge(prestigeLayer);
+  }
+
+  static challengeGoalReached(prestigeLayer: string) {
     const challenge = ChallengeRecord.currentChallenges[prestigeLayer];
     if (challenge) {
       return challenge.reached();
@@ -84,23 +94,36 @@ export class ChallengeService {
     return false;
   }
 
-  completeChallenge(prestigeLayer: string): void {
+  challengeGoalReached(prestigeLayer: string) {
+    return ChallengeService.challengeGoalReached(prestigeLayer);
+  }
+
+  static completeChallenge(prestigeLayer: string): void {
     const challenge = ChallengeRecord.currentChallenges[prestigeLayer];
     if (challenge) {
       challenge.completed = true;
       challenge.revert();
       delete ChallengeRecord.currentChallenges[prestigeLayer];
-      this.saveCurrentChallenges();
     }
   }
 
-  leaveChallenge(prestigeLayer: string): void {
+  completeChallenge(prestigeLayer: string): void {
+    ChallengeService.completeChallenge(prestigeLayer);
+  }
+
+  static leaveChallenge(prestigeLayer: string): void {
     const challenge = ChallengeRecord.currentChallenges[prestigeLayer];
     if (challenge) {
       challenge.revert();
       delete ChallengeRecord.currentChallenges[prestigeLayer];
-      this.saveCurrentChallenges();
     }
-    console.log(ChallengeRecord.currentChallenges);
+  }
+
+  leaveChallenge(prestigeLayer: string): void {
+    ChallengeService.leaveChallenge(prestigeLayer);
+  }
+
+  getChallenge(prestigeLayer: string): Challenge|undefined {
+    return ChallengeRecord.currentChallenges[prestigeLayer];
   }
 }

@@ -16,8 +16,9 @@ import {Multiplier} from "../classes/features/multiplier";
 import {PrestigeLayersService} from "./prestige-layers.service";
 import {EnhancementService} from "./enhancement.service";
 import {TimelineService} from "./timeline.service";
-import {Generator} from "../classes/features/generator";
 import {ChallengeService} from "./interactables/challenge.service";
+import {MilestoneService} from "./interactables/milestone.service";
+import {MilestoneRecord} from "../classes/records/milestones/milestone-record";
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,7 @@ export class TickService {
     private prestigeLayersService: PrestigeLayersService,
     private timelineService: TimelineService,
     private dropDownMessageService: DropDownMessageService,
+    private milestoneRecord: MilestoneRecord,
     private challengeService: ChallengeService,
   ) {}
 
@@ -64,6 +66,8 @@ export class TickService {
       });
     });
 
+    this.milestoneRecord.tick();
+    this.challengeService.tick();
     this.timelineService.tick();
     this.enhancementService.tick();
     this.prestigeLayersService.tick(speed);

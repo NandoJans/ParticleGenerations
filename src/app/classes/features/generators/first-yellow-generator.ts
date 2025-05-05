@@ -22,7 +22,7 @@ export class FirstYellowGenerator extends YellowGenerator {
     new Num(2, 3),
     new Num(1, 1),
     new Num(1, 1),
-    new Num(2, 0),
+    new Num(5, 0),
     this
   );
   buyMultiplierUpgrade: YellowGeneratorBuyMultiplierUpgrade = new YellowGeneratorBuyMultiplierUpgrade(
@@ -30,7 +30,7 @@ export class FirstYellowGenerator extends YellowGenerator {
     new Num(1, 4),
     new Num(1, 2),
     new Num(1, 1),
-    new Num(1.1, 0),
+    new Num(1.2, 0),
     this
   );
 }

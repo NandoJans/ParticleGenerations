@@ -15,6 +15,9 @@
     <div class="effect">
       <p>{{ star.getEffectDisplay() }}</p>
     </div>
+    <div class="goal">
+      <p>Reach {{ star.goal.toString() }} {{ star.currency.displayName }}</p>
+    </div>
     <div class="start">
       <button class="button" (click)="startChallenge()">Enter</button>
     </div>

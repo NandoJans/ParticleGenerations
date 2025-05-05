@@ -7,15 +7,14 @@ import {YellowStarChallenge} from "./yellow-star-challenge";
 import {HoldingRecord} from "../../records/holdings/holding-record";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {GeneratorRecord} from "../../records/generators/generator-record";
-import {AutomatorRecord} from "../../records/automators/automator-record";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 
 export class ProximaCentauriStarChallenge extends YellowStarChallenge {
   name: string = 'proxima-centauri-star-challenge';
   displayName: string = 'Proxima Centauri';
 
-  baseGoal: Num = new Num(1, 6000);
-  goal: Num = new Num(1, 6000);
+  baseGoal: Num = new Num(1, 3450);
+  goal: Num = new Num(1, 3450);
 
   currency: Holding = HoldingRecord.redParticles;
 
@@ -26,9 +25,7 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
     return "Yellow generators multiplied based on yellow particles by raising them to ^"+this.buffer.toString(2);
   }
   getDescription(): string {
-    return "Proxixa Centauri Star hides its red generators across its solar system. availables: " +
-      "Second generators are available at 1e35 red particles" +
-      ", third generators are available at 1e70 red accelerators"
+    return "Proxixa Centauri Star hides its red generators across its solar system.";
   }
 
   style: Styles = Styles.PROXIMA_CENTAURI;
@@ -60,13 +57,13 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
       require: HoldingRecord.redParticles, amount: new Num(1, 35)
     })
     this.applyRequirementNerf(GeneratorRecord.thirdRedGenerator, {
-      require: HoldingRecord.redAccelerators, amount: new Num(1, 70)
+      require: HoldingRecord.redAccelerators, amount: new Num(1, 10)
     })
     this.applyRequirementNerf(GeneratorRecord.fourthRedGenerator, {
-      require: HoldingRecord.redParticles, amount: new Num(1, 2250)
+      require: HoldingRecord.redParticles, amount: new Num(1, 1325)
     })
     this.applyRequirementNerf(GeneratorRecord.fifthRedGenerator, {
-      require: HoldingRecord.redAccelerators, amount: new Num(1, 4000)
+      require: HoldingRecord.redAccelerators, amount: new Num(1, 287)
     })
   }
 }

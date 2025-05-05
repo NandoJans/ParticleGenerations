@@ -21,6 +21,7 @@ export abstract class Milestone extends GameElement implements Resetable, Storab
   baseBuffer: Num = new Num(1, 0)
 
   action(): void {}
+  tick(): void {}
 
   override run(): void {
     if (this.goalReached()) {

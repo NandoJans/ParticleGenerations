@@ -1,12 +1,3 @@
-<div [class]="'challenge '+style" [id]="name">
-  <div class="challenge-disabled" style="display: none;">
-    <h2>Challenge Disabled</h2>
-  </div>
-  <h4>{{ displayName }}</h4>
-  <p>Reach {{goal}} {{description}}</p>
-  <p>Reward: {{rewardDescription}}</p>
-  <!--  TODO: implement-->
-<!--  <app-number-display *ngIf="dynamic" [name]="name+'-completions'" [style]="''" [effect]="completions" [type]="'challengeCompletions'"></app-number-display>-->
-<!--  <app-number-display [name]="name" [style]="''" [effect]="effect" [type]="'effect'"></app-number-display>-->
-  <app-button [text]="'Start Challenge'" [style]="'challenge-button ' + style + ' ' + (isCompleted() ? 'completed' : '')" [identifier]="name+'-button'" (click)="start()"></app-button>
+<div [class]="'challenge '" [id]="">
+
 </div>

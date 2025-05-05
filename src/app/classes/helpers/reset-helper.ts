@@ -81,17 +81,17 @@ export class ResetHelper {
 
   static softReset(resetKey: ResetKey): void {
     for (let resetOrderKey of this.resetOrder) {
-      if (resetOrderKey === resetKey) {
-        break;
-      }
       if (this.softResetList[resetOrderKey] !== undefined) {
         Object.values(this.softResetList[resetOrderKey]).forEach(resetable => {
-
           resetable.softReset();
+
           if (this.isStorable(resetable)) {
             resetable.save();
           }
         });
+      }
+      if (resetOrderKey === resetKey) {
+        break;
       }
     }
   }

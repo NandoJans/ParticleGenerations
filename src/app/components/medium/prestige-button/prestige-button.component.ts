@@ -4,6 +4,7 @@ import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 import {PrestigeLayer} from "../../../classes/features/prestiges/prestige-layer";
 import {Num} from "../../../num";
 import {ChallengeService} from "../../../services/interactables/challenge.service";
+import {Challenge} from "../../../classes/features/challenge";
 
 @Component({
   selector: 'app-prestige-button',
@@ -12,6 +13,7 @@ import {ChallengeService} from "../../../services/interactables/challenge.servic
 })
 export class PrestigeButtonComponent implements OnInit {
   @Input() prestigeLayer: PrestigeLayer = PrestigeLayersService.yellowPrestigeLayer;
+  challenge: Challenge|undefined = undefined;
 
   constructor(
     private prestigeLayers: PrestigeLayersService,
@@ -72,5 +74,24 @@ export class PrestigeButtonComponent implements OnInit {
 
   goalReached(): boolean {
     return this.challengeService.challengeGoalReached(this.prestigeLayer.name);
+  }
+
+  getChallenge(): Challenge|undefined {
+    if (this.challenge === undefined) {
+      this.challenge = this.challengeService.getChallenge(this.prestigeLayer.name);
+    }
+    return this.challenge;
+  }
+
+  getChallengeName(): string {
+    return this.getChallenge()?.displayName ?? '';
+  }
+
+  getCompletionAmount(): string {
+    return this.getChallenge()?.goal.toString() ?? '';
+  }
+
+  getCompletionHolding(): string {
+    return this.getChallenge()?.currency.displayName ?? '';
   }
 }

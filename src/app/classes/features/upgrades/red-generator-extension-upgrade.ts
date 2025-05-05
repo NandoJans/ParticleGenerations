@@ -5,6 +5,8 @@ import {RedUpgrade} from "./red-upgrade";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {GeneratorRecord} from "../../records/generators/generator-record";
 import {Enhancement} from "../enhancements/enhancement";
+import {Transaction} from "../interfaces/transaction";
+import {HoldingRecord} from "../../records/holdings/holding-record";
 
 export class RedGeneratorExtensionUpgrade extends RedUpgrade {
   baseCost: Num = new Num(1, 3)

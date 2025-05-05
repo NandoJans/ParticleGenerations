@@ -24,6 +24,7 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   softResetId: ResetKey = ResetKey.NONE;
   instantComplete: boolean = false
   abstract reward(): Num | undefined
+  constantNerfs(): void {};
   abstract nerfs(): void
   completed: boolean | Num = false
   effect: Num | undefined = undefined
@@ -73,14 +74,25 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   }
 
   save(): void {
-    this.localStorageHelper.save(this.completed, "completed");
+    this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey())
+
     this.localStorageHelper.save(this.unlocked, "unlocked");
+    if (this.completed instanceof Num) {
+      this.localStorageHelper.saveNum(this.completed, "completed");
+    } else {
+      this.localStorageHelper.save(this.completed, "completed");
+    }
   }
 
   tryLoad(): void {
     this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey())
-    this.completed = this.localStorageHelper.load(false, "completed");
-    this.unlocked = this.localStorageHelper.load(false, "unlocked");
+    this.unlocked = this.localStorageHelper.load(this.unlocked, "unlocked");
+
+    if (this.completed instanceof Num) {
+      this.completed = this.localStorageHelper.loadNum(this.completed, "completed");
+    } else {
+      this.completed = this.localStorageHelper.load(this.completed, "completed");
+    }
   }
 
   reached(): boolean {

@@ -2,8 +2,8 @@ div.challenge {
   background-color: var(--background-color-1);
   border: 5px solid var(--background-color-3);
   border-radius: 10px;
-  width: 90%;
-  margin: 0 auto;
+  width: 28rem;
+  margin: 1rem;
 }
 
 div.details {
@@ -39,7 +39,24 @@ div.challenge.proxima-centauri div.star {
     rgb(215, 64, 34) 70%,
     rgb(199, 24, 8) 100%
   );
-  box-shadow: 0 0 25px rgb(218, 72, 43);
+  box-shadow: 0 0 15px rgb(218, 72, 43);
+  width: 6rem;
+  height: 6rem;
+  margin: 2rem auto;
+}
+
+div.challenge.lalande div.name h2 {
+  color: rgb(215, 64, 34);
+}
+
+div.challenge.lalande div.star {
+  background: radial-gradient(
+    circle,
+    rgb(255, 217, 165) 0%,
+    rgb(215, 103, 34) 70%,
+    rgb(218, 45, 15) 100%
+  );
+  box-shadow: 0 0 35px rgb(215, 103, 34);
   width: 10rem;
   height: 10rem;
   margin: 2rem auto;
