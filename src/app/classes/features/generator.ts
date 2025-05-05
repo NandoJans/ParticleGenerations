@@ -41,7 +41,9 @@ export abstract class Generator extends Buyable implements Generatable, Storable
   }
 
   override run(speed: Num): any {
-    this.generates.generate(this.getGenerateAmount().mul(speed) as Num)
+    if (this.isUnlocked()) {
+      this.generates.generate(this.getGenerateAmount().mul(speed) as Num)
+    }
     this.multiplier = this.baseMultiplier
       .mul(this.baseMulMod)
       .pow(this.bought)

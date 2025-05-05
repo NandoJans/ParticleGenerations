@@ -59,6 +59,8 @@ export abstract class Automator extends GameElement implements Storable, Resetab
   }
 
   override run(): boolean {
+    if (!this.isUnlocked()) return false;
+
     if (this.completed && this.active) {
       this.buyables().forEach(buyable => {
         if (buyable.isBuyable() && buyable.auto && this.belowMax()) {

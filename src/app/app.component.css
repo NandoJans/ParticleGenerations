@@ -34,3 +34,13 @@ main.proxima-centauri {
     var(--background-color-2) 10%
   ) no-repeat center center fixed;
 }
+
+main.lalande {
+  background: radial-gradient(
+    circle,
+    rgb(255, 217, 165) 0%,
+    rgb(215, 103, 34) 13%,
+    rgba(215, 103, 34, 0.5) 13.3%,
+    var(--background-color-2) 20%
+  ) no-repeat center center fixed;
+}

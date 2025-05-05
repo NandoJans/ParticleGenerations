@@ -10,6 +10,7 @@ import {Holding} from "../holding";
 import {MessageSteps} from "../../display/message-steps";
 import {Multiplier} from "../multiplier";
 import {ChallengeService} from "../../../services/interactables/challenge.service";
+import {App} from "../../../App";
 
 export class PrestigeLayer extends GameElement implements Resetable, Storable {
   name: string;
@@ -139,6 +140,10 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
       const base = this.amountRequired.log10();
       const thresholds = exponent.div(base);
       baseGain = baseGain.mul(new Num(2, 0).pow(thresholds));
+    }
+
+    if (App.offlineCalculation) {
+      baseGain = baseGain.mul(App.gameSpeed);
     }
 
     return baseGain;
