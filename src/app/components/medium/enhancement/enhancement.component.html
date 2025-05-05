@@ -16,3 +16,8 @@
   <p [class]="'holding '+enhancement.holding.getStyle()">{{ enhancement.getRequirement().toString() }}</p>
   <p>{{ enhancement.holding.holdingDisplay.getAmountSuffix() }} to start enhancement</p>
 </div>
+<div [class]="enhancement.style">
+  <button class="stop button respec" (click)="respecEnhancement()">
+    Respec {{ enhancement.displayName }}
+  </button>
+</div>

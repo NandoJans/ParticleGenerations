@@ -8,6 +8,7 @@ import {Num} from "../../../num";
 
 export class YellowEnhancement extends Enhancement {
   style: Styles = Styles.YELLOW;
+  respecResetKey: ResetKey = ResetKey.RED;
   holding: Holding = HoldingRecord.yellowKeys;
   name: string = 'yellow-enhancement';
   displayName: string = 'Yellow Enhancement';

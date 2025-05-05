@@ -20,10 +20,10 @@ export class LalandeStarChallenge extends YellowStarChallenge {
   override baseBuffer: Num = new Num(0.39, 0);
 
   getRewardDescription(): string {
-    return "Yellow generators multiplied based on yellow particles by raising them to ^"+this.buffer.toString(2);
+    return "Every purchase of a red generator also adds 1 free amount to their sub-upgrades.";
   }
   getDescription(): string {
-    return "Lalande 21185 requires a lot of red particles to fuel its solar system. Red particles are sparse here. And this star is hungry for red generators.";
+    return "Lalande 21185 lacks sub upgrades for red generators. They are no where to be found.";
   }
 
   style: Styles = Styles.LALANDE;
@@ -44,8 +44,7 @@ export class LalandeStarChallenge extends YellowStarChallenge {
   }
 
   override constantNerfs() {
-    if (HoldingRecord.redParticles.amount.greq(new Num(1, 2))) {
-    }
+
   }
 
   nerfs(): void {
