@@ -42,13 +42,13 @@ export class RedGeneratorBuyMultiplierUpgrade extends RedGeneratorUpgrade {
 
   override enhance() {
     if (this.enhancement) {
-      const addition = this.enhancement.getAddition().mul(new Num(2.5, -2));
+      const addition = this.enhancement.getAddition().mul(new Num(1, -2));
       this.buffer = this.buffer.add(addition);
     }
   }
 
   override enhancementString(enhancement: Enhancement): string {
-    const addition = enhancement.getAddition().mul(new Num(2.5, -2));
+    const addition = enhancement.getAddition().mul(new Num(1, -2));
     return "Enhance to add " + addition.toString(2) + " to the buffer";
   }
 }

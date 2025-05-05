@@ -19,19 +19,13 @@ export class UpgradeService {
 
   private runActions() {
     this.upgradeRecord.getList().forEach(upgrade => {
-      if (upgrade.isUnlocked()) {
-        upgrade.run();
-      }
+      upgrade.run();
     });
 
     this.generatorRecord.getList().forEach(generator => {
-      if (generator.isUnlocked()) {
-        generator.getUpgrades().forEach(upgrade => {
-          if (upgrade.isUnlocked()) {
-            upgrade.run();
-          }
-        });
-      }
+      generator.getUpgrades().forEach(upgrade => {
+        upgrade.run();
+      });
     });
   }
 

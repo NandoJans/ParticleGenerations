@@ -23,6 +23,7 @@ export abstract class Enhancement implements Resetable {
   abstract displayName: string;
   abstract description: string;
   abstract resetId: ResetKey;
+  abstract respecResetKey: ResetKey;
   softResetId: ResetKey = ResetKey.NONE;
 
   reset(): void {

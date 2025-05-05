@@ -6,7 +6,7 @@ export class App {
   static haltNuclearDecay: boolean = false;
   static purplePhase: boolean = false;
 
-  static gameSpeed: Num = new Num(1, 0);
+  static gameSpeed: Num = new Num(1, -1);
 
   static observable: Observable<any> = new Observable<any>(subscriber => {
     setInterval(() => {
@@ -14,6 +14,7 @@ export class App {
       this.shouldReload = false;
     }, 50);
   });
+  static offlineCalculation: boolean;
 
   static startHaltNuclearDecay() {
     this.haltNuclearDecay = true;

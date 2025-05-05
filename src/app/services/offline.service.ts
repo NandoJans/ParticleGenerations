@@ -4,6 +4,7 @@ import {TickService} from "./tick.service";
 import {Num} from "../num";
 import { HoldingRecord } from '../classes/records/holdings/holding-record';
 import {Holding} from "../classes/features/holding";
+import {App} from "../App";
 
 @Injectable({
   providedIn: 'root'
@@ -55,8 +56,12 @@ export class OfflineService {
     this.generatedHoldings = this.getHoldingList();
 
     const calculatingOfflineProgress = setInterval(() => {
+      App.gameSpeed = new Num(1, 1);
+      App.offlineCalculation = true;
       if (this.ticksDone >= this.totalTicks) {
         this.done = true;
+        App.gameSpeed = new Num(1, -1);
+        App.offlineCalculation = false;
         clearInterval(calculatingOfflineProgress);
         return;
       }

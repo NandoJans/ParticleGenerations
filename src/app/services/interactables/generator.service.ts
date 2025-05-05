@@ -27,9 +27,7 @@ export class GeneratorService {
    */
   private generate(speed: Num) {
     this.generatorRecord.getList().forEach(generator => {
-      if (generator.isUnlocked()) {
-        generator.run(speed);
-      }
+      generator.run(speed);
     });
   }
 

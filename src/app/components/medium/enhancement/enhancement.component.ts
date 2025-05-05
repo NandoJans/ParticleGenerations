@@ -33,4 +33,8 @@ export class EnhancementComponent implements OnInit {
   stopEnhancing() {
     this.enhancementService.stopEnhancing();
   }
+
+  respecEnhancement() {
+    this.enhancementService.respecEnhancement(this.enhancement);
+  }
 }

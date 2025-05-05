@@ -59,9 +59,7 @@ export class TickService {
         } else if (element instanceof Multiplier) {
           element.reset();
         } else {
-          if (element.isUnlocked()) {
-            element.run(speed);
-          }
+          element.run(speed);
         }
       });
     });

@@ -32,12 +32,15 @@ export abstract class Upgrade extends Buyable implements Storable, Require, Rese
   localStorageHelper: LocalStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey())
 
   override run(): Num | undefined {
-    const effect = this.action();
+    let effect = undefined;
+    if (this.isUnlocked()) {
+      effect = this.action();
+      if (effect) {
+        this.effect = effect;
+      }
+    }
     this.buffer = this.baseBuffer.copy();
     this.amount = this.bought.copy();
-    if (effect) {
-      this.effect = effect;
-    }
     this.correctCost()
     return effect;
   }
