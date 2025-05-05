@@ -12,7 +12,7 @@ export class ChangeHoldingGeneratePercentage extends YellowMilestone {
     this.percentage = percentage;
   }
 
-  override action(): void {
+  override tick(): void {
     this.multiplier.num = this.multiplier.num.add(this.percentage);
   }
 

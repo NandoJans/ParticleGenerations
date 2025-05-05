@@ -36,6 +36,8 @@ import { YellowTimelineComponent } from './pages/timeline/yellow-timeline/yellow
 import { FastestPrestigeComponent } from './components/small/fastest-prestige/fastest-prestige.component';
 import { YellowAutomatorsComponent } from './pages/automators/yellow-automators/yellow-automators.component';
 import { YellowGeneratorsComponent } from './pages/yellow/yellow-generators/yellow-generators.component';
+import { YellowStarsComponent } from './pages/yellow/yellow-stars/yellow-stars.component';
+import { StarComponent } from './components/particles/star/star.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +71,8 @@ import { YellowGeneratorsComponent } from './pages/yellow/yellow-generators/yell
     FastestPrestigeComponent,
     YellowAutomatorsComponent,
     YellowGeneratorsComponent,
+    YellowStarsComponent,
+    StarComponent,
   ],
     imports: [
         BrowserModule,

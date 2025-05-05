@@ -4,6 +4,7 @@ import {RedGenerator} from "../generators/red-generator";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {ResetKey} from "../../enums/reset-key";
 import {Requirement} from "../interfaces/requirement";
+import {Enhancement} from "../enhancements/enhancement";
 
 export class RedGeneratorMultiplierUpgrade extends RedGeneratorUpgrade {
 
@@ -36,5 +37,17 @@ export class RedGeneratorMultiplierUpgrade extends RedGeneratorUpgrade {
 
   getDescription(): string {
     return `${this.buffer.toString(2)}x Production`;
+  }
+
+  override enhance() {
+    if (this.enhancement) {
+      const addition = this.enhancement.getMultiplier().mul(new Num(2, 0));
+      this.buffer = this.buffer.mul(addition);
+    }
+  }
+
+  override enhancementString(enhancement: Enhancement): string {
+    const addition = enhancement.getMultiplier().mul(new Num(2, 0));
+    return "Enhance to multiply buffer by " + addition.toString(2) + "x";
   }
 }

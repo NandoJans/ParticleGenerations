@@ -1,277 +1,141 @@
-import { Num } from "../../num";
-import { Buyable } from "../features/buyable";
-import { ResetKey } from "../enums/reset-key";
-import { Transaction } from "../features/interfaces/transaction";
-import { ResetHelper } from "./reset-helper";
+import {Num} from "../../num";
+import {Buyable} from "../features/buyable";
+import {ResetKey} from "../enums/reset-key";
+import {ResetHelper} from "./reset-helper";
+import {Transaction} from "../features/interfaces/transaction";
 
 export class BuyableHelper {
-  constructor(private buyable: Buyable) {}
-
-  /* ────────────────────────── PUBLIC ACTIONS ────────────────────────── */
-
-  buyAction(): Transaction {
-    const b = this.buyable;
-    if (!b.currency.amount.greq(b.cost)) {
-      return { amount: new Num(0, 0), cost: new Num(0, 0), currency: b.currency };
-    }
-    // spend one
-    b.currency.amount = b.currency.amount.sub(b.cost);
-    b.amount = b.amount.add(new Num(1, 0));
-    b.bought = b.bought.add(new Num(1, 0));
-    this.correct();
-    return { amount: new Num(1, 0), cost: b.cost.copy(), currency: b.currency };
+  constructor(private buyable: Buyable) {
   }
 
-  bulkBuyAction(cost: Num, bulk: Num): Transaction {
-    const b = this.buyable;
-    // spend total
-    b.currency.amount = b.currency.amount.sub(cost);
-    b.amount = b.amount.add(bulk);
-    b.bought = b.bought.add(bulk);
-    this.correct();
-    return { amount: bulk.copy(), cost: cost.copy(), currency: b.currency };
+  buyAction () {
+    const buyable = this.buyable
+    if (buyable.currency.amount.greq(buyable.cost)) {
+      if (buyable.amount !== undefined) buyable.amount = buyable.amount.add(new Num(1, 0));
+      // @ts-ignore
+      buyable.bought = buyable.bought.add(new Num(1, 0));
+      this.correct();
+    }
   }
 
-  /**
-   * Returns [extraBuys, totalCost] that fit in `b.currency.amount`.
-   */
-  calculateBulk(b: Buyable, split: Num = new Num(1, 0)): [Num, Num] {
-    const baseCost = b.baseCost.copy();
-    const increase = b.increase.copy();
-    const scaling  = b.scaling.copy();
-    const bought   = b.bought.copy();
-    const budget   = b.currency.amount.copy().div(split);
+  bulkBuyAction (cost: Num, bulk: Num) {
+    const buyable = this.buyable
+    buyable.currency.amount = buyable.currency.amount.sub(cost);
+    buyable.amount = buyable.amount.add(bulk);
+    // @ts-ignore
+    buyable.bought = buyable.bought.add(bulk);
+    this.correct();
+  }
 
-    /* ═════════ 1.  NO delayed scaling ═══════════════════════════════ */
-    if (b.scalingStart === undefined) {
-      const extra   = this._maxExtra(budget, baseCost, increase, scaling);
-      const sumCost = this._sumTriCosts(new Num(0, 0), extra,
-        baseCost, increase, scaling);
-      return [extra, sumCost];
+  calculateBulk(buyable: Buyable, split: Num = new Num(1, 0)) {
+    const a = buyable.increase
+    const b = buyable.scaling
+    const c = buyable.bought
+    let x = buyable.currency.amount.div(split)
+    const y = buyable.baseCost
+    const two = new Num(2, 0)
+    const four = new Num(4, 0)
+    let futureBuying: Num;
+    let futureCost: Num;
+    if (buyable.scalingStart !== undefined) {
+      futureBuying = x.div(y).ln().div(a.ln()).floor() as Num
+      // @ts-ignore
+      futureCost = y.mul(a.pow(futureBuying))
+      if (futureCost.greq(buyable.scalingStart)) {
+        x = buyable.scalingStart
+        let buyUntilScaling = x.div(y).ln().div(a.ln()).floor()
+        // @ts-ignore
+        futureCost = y.mul(buyable.increase.pow(buyUntilScaling))
+        let leftOverCurrency = buyable.currency.amount.div(futureCost)
+        // @ts-ignore
+        let postScalingBuying = a.ln().sub(a.ln().pow(two).add(four.mul(b.ln()).mul(leftOverCurrency.div(y).ln())).sqrt()).div(two.mul(b.ln()))
+        // @ts-ignore
+        postScalingBuying = postScalingBuying.negate().floor()
+        futureBuying = buyUntilScaling.add(postScalingBuying)
+        futureCost = futureCost.mul(a.mul(b.pow(postScalingBuying)).pow(postScalingBuying))
+      }
+    } else {
+      if (b.greq(new Num(1.1, 0))) {
+        // @ts-ignore
+        futureBuying = a.ln().sub(a.ln().pow(two).add(four.mul(b.ln()).mul(x.div(y).ln())).sqrt()).div(two.mul(b.ln()))
+        // @ts-ignore
+        futureBuying = futureBuying.negate().floor()
+      } else {
+        futureBuying = x.div(y).ln().div(a.ln()).floor()
+      }
+      // @ts-ignore
+      futureCost = y.mul(a.mul(b.pow(futureBuying)).pow(futureBuying))
     }
-
-    /* ═════════ 2.  delayed scaling: split phases ════════════════════ */
-    const thresholdCount = b.scalingStart
-      .copy()
-      .div(baseCost)
-      .ln()
-      .div(increase.ln())
-      .floor();                         // #buys until cost reaches scalingStart
-
-    /* 2a.  cost at the threshold (first triangular‑scaled price) */
-    const costAtThresh = baseCost.mul(increase.pow(thresholdCount));
-
-    /* 2b.  geometric‑phase cost already paid, and still to pay         */
-    const incToT = increase.pow(thresholdCount);
-    const sumTotalToT = baseCost.mul(incToT.sub(new Num(1, 0)))
-      .div(increase.sub(new Num(1, 0)));
-
-    const incToB = increase.pow(bought);
-    const sumTotalToB = baseCost.mul(incToB.sub(new Num(1, 0)))
-      .div(increase.sub(new Num(1, 0)));
-
-    // still needed to finish geometric phase
-    let sumPre = sumTotalToT.sub(sumTotalToB);
-    if (sumPre.lt(new Num(0, 0))) sumPre = new Num(0, 0);
-
-    /* 3.  budget is not enough even for the remainder of the geo phase */
-    if (budget.lt(sumPre)) {
-      const k = budget.div(baseCost).ln().div(increase.ln()).floor();
-      const sum = baseCost.mul(increase.pow(k).sub(new Num(1, 0)))
-        .div(increase.sub(new Num(1, 0)));
-      return [k.sub(bought), sum];
-    }
-
-    /* 4.  budget left for the triangular phase                         */
-    const rem = budget.sub(sumPre);
-
-    /* 5.  already in the triangular phase?  offset ≥ 0                 */
-    const offset = bought.gt(thresholdCount)
-      ? bought.sub(thresholdCount)
-      : new Num(0, 0);
-
-    const preCostExtra = this._triCost(offset,   // cost of *next* purchase
-      costAtThresh,
-      increase,
-      scaling);
-
-    /* 6.  how many triangular buys fit? (exact inverse)                */
-    const extra = this._maxExtra(rem, preCostExtra, increase, scaling);
-
-    /* 7.  sum their exact prices                                       */
-    const postSum = this._sumTriCosts(offset, extra,
-      costAtThresh, increase, scaling);
-
-    /* 8.  final answers                                                */
-    const grandTotal = sumPre.add(postSum);
-    const extraBuys  = extra;                       // relative extras only
-    return [extraBuys, grandTotal];
+    // @ts-ignore
+    futureBuying = futureBuying.sub(c).add(new Num(1, 0))
+    return [futureBuying, futureCost]
   }
 
   buy(): Transaction {
-    const b = this.buyable;
-    if (!b.currency.amount.greq(b.cost)) {
-      return { amount: new Num(0, 0), cost: new Num(0, 0), currency: b.currency };
+    const buyable = this.buyable
+    const transaction = {
+      cost: new Num(0, 0),
+      amount: new Num(0, 0),
+      currency: buyable.currency,
     }
-    if (b.resets !== ResetKey.NONE || b.oneTime || b.noMax) {
-      const tx = this.buyAction();
-      if (b.resets !== ResetKey.NONE) ResetHelper.reset(b.resets);
-      return tx;
-    }
+    if (buyable.currency.amount.greq(buyable.cost)) {
+      if (buyable.resets !== 'none' || (buyable.noMax !== undefined && buyable.noMax) || buyable.oneTime) {
+        this.buyAction();
 
-    let [count, cost] = this.calculateBulk(b);
-    if (count.greq(new Num(1, 0)) && b.currency.amount.greq(cost)) {
-      if (b.limit && count.greq(b.limit)) {
-        count = b.limit.copy();
-      }
-      return this.bulkBuyAction(cost, count);
-    }
-    return this.buyAction();
-  }
+        transaction.cost = buyable.cost;
+        transaction.amount = new Num(1, 0);
 
-  compare(): Transaction {
-    const b = this.buyable;
-    if (
-      b.auto &&
-      b.unlocked &&
-      b.currency.amount.greq(b.cost) &&
-      (!b.limit || b.bought.lt(b.limit.sub(new Num(1, 0))))
-    ) {
-      if (b.resets !== ResetKey.NONE || b.oneTime) {
-        if (b.oneTime && b.bought.lt(new Num(1, 0))) return this.buyAction();
-        if (!b.oneTime) return this.buyAction();
-        if (b.resets !== ResetKey.NONE) ResetHelper.reset(b.resets);
+        if (buyable.resets !== 'none') ResetHelper.reset(buyable.resets || ResetKey.NONE);
       } else {
-        const [c, cost] = this.calculateBulk(b);
-        if (c.greq(new Num(1, 0)) && b.currency.amount.greq(cost)) {
-          return this.bulkBuyAction(cost, c);
+        const result = this.calculateBulk(buyable)
+
+        if (result[0].greq(new Num(1, 0)) && buyable.currency.amount.greq(result[1])) {
+          if (buyable.limit !== undefined && result[0].greq(buyable.limit)) result[0] = buyable.limit;
+          this.bulkBuyAction(result[1], result[0]);
+
+          transaction.cost = result[1];
+          transaction.amount = result[0];
         }
       }
     }
-    return { amount: new Num(0, 0), cost: new Num(0, 0), currency: b.currency };
+    return transaction;
   }
 
-  correct(): void {
-    const b = this.buyable;
-    if (!b.bought.greq(new Num(1, 0))) {
-      b.cost = b.baseCost.copy();
-      return;
-    }
-    if (b.oneTime) return;
-
-    const baseCost = b.baseCost.copy();
-    const increase = b.increase.copy();
-    const scaling  = b.scaling.copy();
-    const bought   = b.bought.copy();
-
-    if (b.scalingStart === undefined) {
-      b.cost = this._triCost(bought, baseCost, increase, scaling);
-      return;
-    }
-
-    const thresholdCount = b.scalingStart
-      .copy()
-      .div(baseCost)
-      .ln()
-      .div(increase.ln())
-      .floor();
-    const costAtThresh = baseCost.mul(increase.pow(thresholdCount));
-
-    if (bought.lt(thresholdCount.add(new Num(1, 0)))) {
-      b.cost = baseCost.mul(increase.pow(bought));
-      return;
-    }
-
-    const post = bought.sub(thresholdCount);
-    b.cost = this._triCost(post, costAtThresh, increase, scaling);
-  }
-
-  /* ────────────────────────── HELPERS ─────────────────────────── */
-
-  private _triCost(
-    n: Num,
-    preCost: Num,
-    increase: Num,
-    scaling: Num
-  ): Num {
-    // triangular scaling: exponent = n*(n+1)/2
-    const triExp = n.mul(n.add(new Num(1, 0)))
-      .div(new Num(2, 0))
-      .floor();
-    return preCost.mul(increase.pow(n)).mul(scaling.pow(triExp));
-  }
-
-  /**
-   * Exact cumulative cost of n items starting at absolute index `start`.
-   * Loops k = 0 … n‑1 (inclusive upper bound removed).
-   */
-  private _sumTriCosts(
-    start: Num,
-    n: Num,
-    preCost: Num,
-    increase: Num,
-    scaling: Num
-  ): Num {
-    let cost = this._triCost(start, preCost, increase, scaling);
-    let sum  = cost.copy();
-
-    for (let i = new Num(0, 0); i.lt(n); i = i.add(new Num(1, 0))) {
-      const idx   = start.add(i); // k
-      cost = cost.mul(increase).mul(scaling.pow(idx.add(new Num(1, 0))));
-      sum  = sum.add(cost);
-    }
-    return sum;
-  }
-
-  /* ────────────────── EXACT INVERSE (doubling + binary) ────────────────── */
-
-  /**
-   * Returns the largest n such that the total cost of n extras
-   * does not exceed `budget`. Guaranteed exact.
-   */
-  private _maxExtraExact(
-    budget: Num,
-    preCost: Num,
-    increase: Num,
-    scaling: Num
-  ): Num {
-    if (budget.lt(preCost)) return new Num(0, 0);           // can't afford 1
-
-    const ONE = new Num(1, 0);
-
-    /* Phase 1 – exponential search to find an upper bound */
-    let lo = new Num(1, 0);      // 1 is surely affordable
-    let hi = new Num(2, 0);
-
-    while (this._sumTriCosts(new Num(0, 0), hi,
-      preCost, increase, scaling).lte(budget)) {
-      lo = hi;
-      hi = hi.mul(new Num(2, 0)); // 2, 4, 8, 16, ...
-    }
-
-    /* Phase 2 – binary search between lo and hi */
-    while (hi.sub(lo).gt(ONE.add(new Num(1, -3)))) {
-      let mid = lo.add(hi).div(new Num(2, 0)).floor();
-      if (mid.equals(lo)) mid = mid.add(ONE);   // guarantee progress
-
-      const sum = this._sumTriCosts(new Num(0, 0), mid,
-        preCost, increase, scaling);
-      if (sum.lte(budget)) {
-        lo = mid;                         // mid is affordable
+  compare() {
+    const buyable = this.buyable
+    if (buyable.currency.amount.greq(buyable.cost) && buyable.unlocked && buyable.auto &&
+      (buyable.limit === undefined || !buyable.bought.greq(buyable.limit.sub(new Num(1, 0))))) {
+      if (buyable.resets !== 'none' || buyable.oneTime) {
+        if ((buyable.oneTime && !buyable.bought.greq(new Num(1, 0))) || !buyable.oneTime) this.buyAction();
+        if (buyable.resets !== 'none') ResetHelper.reset(buyable.resets || ResetKey.NONE);
       } else {
-        hi = mid;                         // mid too expensive
+        const result = this.calculateBulk(buyable)
+
+        if (result[0].greq(new Num(1, 0)) && buyable.currency.amount.greq(result[1])) {
+          this.bulkBuyAction(result[1], result[0]);
+        }
       }
     }
-    return lo;                   // exact maximum extras
   }
 
-  /** Public wrapper (kept same name). */
-  private _maxExtra(
-    budget: Num,
-    preCost: Num,
-    increase: Num,
-    scaling: Num
-  ): Num {
-    return this._maxExtraExact(budget, preCost, increase, scaling);
+  correct() {
+    const buyable = this.buyable
+    if (!buyable.bought.greq(new Num(1, 0))) {
+      buyable.cost = buyable.baseCost
+
+    } else {
+      if (buyable.scalingStart === undefined) {
+        buyable.cost = buyable.baseCost.mul(buyable.increase.mul(buyable.scaling.pow(buyable.bought)).pow(buyable.bought))
+      } else {
+        buyable.cost = buyable.baseCost.mul(buyable.increase.pow(buyable.bought))
+        if (buyable.cost.greq(buyable.scalingStart)) {
+          let buyableAmount = buyable.scalingStart.div(buyable.baseCost).ln().div(buyable.increase.ln()).floor()
+          buyable.cost = buyable.baseCost.mul(buyable.increase.pow(buyableAmount))
+
+          let postBought = buyable.bought.sub(buyableAmount);
+          buyable.cost = buyable.cost.mul(buyable.baseCost.mul(buyable.increase.mul(buyable.scaling.pow(postBought)).pow(postBought)))
+        }
+      }
+    }
   }
 }

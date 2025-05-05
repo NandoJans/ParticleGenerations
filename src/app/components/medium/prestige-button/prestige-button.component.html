@@ -1,5 +1,11 @@
-<button [class]="prestigeLayer.style+' '+getReached()" [style.display]="getDisplay()" (click)="prestige()">
+<button *ngIf="!inChallenge()" [class]="prestigeLayer.style+' '+getReached()" [style.display]="getDisplay()" (click)="prestige()">
   <h3>Start {{ getName() }}</h3>
   <p *ngIf="!firstTime()">{{ getFirstTimeText() }}</p>
   <p *ngIf="firstTime() && hasReached()">Gain {{ getGainAmount() }} {{ getGainHolding() }}</p>
+</button>
+<button *ngIf="inChallenge()" [class]="prestigeLayer.style+' '
++((goalReached()) ? 'reached' : '')+' '
+" [style.display]="getDisplay()" (click)="prestige()">
+  <h3>Complete {{ getChallengeName() }}</h3>
+  <p>Requires {{ getCompletionAmount() }} {{ getCompletionHolding() }}</p>
 </button>

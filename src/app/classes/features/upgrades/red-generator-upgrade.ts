@@ -4,6 +4,7 @@ import {Num} from "../../../num";
 import {Styles} from "../../enums/styles";
 import {Enhancement} from "../enhancements/enhancement";
 import {GeneratorUpgrade} from "./generator-upgrade";
+import {EnhancementRecord} from "../../records/enhancement-record";
 
 export abstract class RedGeneratorUpgrade extends GeneratorUpgrade {
   bought: Num = new Num(0, 0);
@@ -13,13 +14,12 @@ export abstract class RedGeneratorUpgrade extends GeneratorUpgrade {
   subNav: string = "redParticles";
   type: string = "red-particles";
   override effect: Num = new Num(1, 0);
+  override noMax: boolean = true;
 
   override canEnhance(): boolean {
-    return false;
+    return true;
   }
-  override enhance() {}
-  allowedEnhancements: Enhancement[] = [];
-  override enhancementString(enhancement: Enhancement): string {
-    return "";
-  }
+  allowedEnhancements: Enhancement[] = [
+    EnhancementRecord.yellow
+  ];
 }

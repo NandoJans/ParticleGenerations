@@ -230,4 +230,10 @@ export class MilestoneRecord extends Record {
       milestone.run()
     })
   }
+
+  tick() {
+    this.getList().forEach((milestone: Milestone) => {
+      milestone.tick()
+    })
+  }
 }

@@ -38,10 +38,10 @@ export class ImproveRedAcceleratorsEffectUpgrade extends RedAcceleratorUpgrade {
   }
 
   override enhancementString(enhancement: Enhancement): string {
-    return "Add " + enhancement.getAddition().mul(new Num(5, -3)).toString(3) + "^ to the buffer";
+    return "Add " + enhancement.getAddition().mul(new Num(2, -3)).toString(3) + "^ to the buffer";
   }
 
   override enhance() {
-    this.buffer = this.buffer.add(this.enhancement?.getAddition().mul(new Num(1, -3)) as Num)
+    this.buffer = this.buffer.add(this.enhancement?.getAddition().mul(new Num(2, -3)) as Num)
   }
 }

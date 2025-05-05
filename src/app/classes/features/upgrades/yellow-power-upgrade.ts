@@ -46,8 +46,11 @@ export class YellowPowerUpgrade extends Upgrade {
   bought: Num = new Num(0, 0);
   currency: Holding = HoldingRecord.yellowPower;
 
-  override buffer: Num = new Num(0.1, 0);
-  override baseBuffer: Num = new Num(0.1, 0);
+  override scaling: Num = new Num(1, 5);
+  override scalingStart: Num = new Num(1, 20);
+
+  override buffer: Num = new Num(0.2, 0);
+  override baseBuffer: Num = new Num(0.2, 0);
 
   override action(): Num | undefined {
     const effect = this.buffer.mul(this.amount)

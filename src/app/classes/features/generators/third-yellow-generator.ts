@@ -1,25 +1,25 @@
-import {Num} from "src/app/num";
-import {Generatable} from "../interfaces/generatable";
 import {YellowGenerator} from "./yellow-generator";
-import {HoldingRecord} from "../../records/holdings/holding-record";
+import {Generatable} from "../interfaces/generatable";
+import {GeneratorRecord} from "../../records/generators/generator-record";
+import {Num} from "../../../num";
 import {YellowGeneratorMultiplierUpgrade} from "../upgrades/yellow-generator-multiplier-upgrade";
 import {YellowGeneratorBuyMultiplierUpgrade} from "../upgrades/yellow-generator-buy-multiplier-upgrade";
 
-export class FirstYellowGenerator extends YellowGenerator {
+export class ThirdYellowGenerator extends YellowGenerator {
   constructor(saveName: string) {
-    super(saveName, 'first-yellow-generator');
+    super(saveName, 'third-yellow-generator');
   }
-  displayName: string = 'First Yellow Generator';
-  generates: Generatable = HoldingRecord.yellowPower;
-  stringRank: string = '1';
-  rank: number = 1;
-  baseCost: Num = new Num(1, 2);
-  cost: Num = new Num(1, 2);
-  increase: Num = new Num(1, 1);
+  displayName: string = 'Third Yellow Generator';
+  generates: Generatable = GeneratorRecord.secondYellowGenerator;
+  stringRank: string = '3';
+  rank: number = 3;
+  baseCost: Num = new Num(1, 4);
+  cost: Num = new Num(1, 4);
+  increase: Num = new Num(1, 3);
 
   multiplierUpgrade: YellowGeneratorMultiplierUpgrade = new YellowGeneratorMultiplierUpgrade(
     this.name + '.multiplierUpgrade',
-    new Num(2, 3),
+    new Num(2, 5),
     new Num(1, 1),
     new Num(1, 1),
     new Num(5, 0),
@@ -27,7 +27,7 @@ export class FirstYellowGenerator extends YellowGenerator {
   );
   buyMultiplierUpgrade: YellowGeneratorBuyMultiplierUpgrade = new YellowGeneratorBuyMultiplierUpgrade(
     this.name + '.buyMultiplierUpgrade',
-    new Num(1, 4),
+    new Num(1, 6),
     new Num(1, 2),
     new Num(1, 1),
     new Num(1.2, 0),

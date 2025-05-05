@@ -9,6 +9,7 @@ import {LocalStorageHelper} from "../../helpers/local-storage-helper";
 import {Holding} from "../holding";
 import {MessageSteps} from "../../display/message-steps";
 import {Multiplier} from "../multiplier";
+import {ChallengeService} from "../../../services/interactables/challenge.service";
 
 export class PrestigeLayer extends GameElement implements Resetable, Storable {
   name: string;
@@ -170,7 +171,7 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     this.setHoldingGain();
     this.applyLimitPhaseBelow();
     this.checkRequirements();
-    this.idleGeneration();
+    this.idleGeneration(speed);
   }
 
   private applyReset() {
@@ -189,15 +190,18 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
   }
 
   prestige() {
-    if (this.hasReached()) {
-      this.applyReset();
+    if (ChallengeService.inChallenge(this.name)) {
+      if (ChallengeService.challengeGoalReached(this.name)) {
+        ChallengeService.completeChallenge(this.name);
+        const holdingGain = this.addGainHoldings();
+        this.calculateFastestPrestige(holdingGain);
+        this.applyReset();
+      }
+    } else if (this.hasReached()) {
       const holdingGain = this.addGainHoldings();
       this.calculateFastestPrestige(holdingGain);
+      this.applyReset();
     }
-  }
-
-  firstTimeMessage(): MessageSteps {
-    return this.messageSteps;
   }
 
   private checkRequirements() {
@@ -206,9 +210,9 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     }
   }
 
-  private idleGeneration() {
+  private idleGeneration(speed: Num) {
     // Calculate idle generation for the holding based on the fastest prestige time multiplied by the multiplier
-    const idleGeneration = this.highestGenerationPerTick.mul(this.idleGenerationMultiplier.num).div(new Num(2, 1));
+    const idleGeneration = this.highestGenerationPerTick.mul(this.idleGenerationMultiplier.num).mul(speed);
     if (idleGeneration.gt(new Num(0, 0))) {
       this.idleGenerationHolding.amount = this.idleGenerationHolding.amount.add(idleGeneration);
     }

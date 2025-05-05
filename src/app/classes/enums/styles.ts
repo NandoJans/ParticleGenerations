@@ -9,4 +9,6 @@ export enum Styles {
   RED_SUPER = 'red super',
   YELLOW_SUPER = 'yellow super',
   SUB_YELLOW = 'sub yellow',
+  PROXIMA_CENTAURI = "yellow proxima-centauri",
+  LALANDE = "yellow lalande"
 }
