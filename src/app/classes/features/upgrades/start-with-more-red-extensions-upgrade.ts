@@ -28,7 +28,7 @@ export class StartWithMoreRedExtensionsUpgrade extends YellowUpgrade {
   }
 
   override oneTime: boolean = false;
-  override limit: Num = new Num(4, 0);
+  override limit: Num = new Num(5, 0);
   override increase: Num = new Num(5, 0);
   baseCost: Num = new Num(5, 0);
   cost: Num = new Num(5, 0);
