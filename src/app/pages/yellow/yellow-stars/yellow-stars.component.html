@@ -1,7 +1,12 @@
 <p>Current star: {{ getCurrentStar() }}</p>
 <button *ngIf="inChallenge()" class="button" (click)="leaveChallenge()">Leave challenge</button>
+<div *ngIf="inChallenge()" class="upgrade-row">
+  <div *ngFor="let upgrade of getChallengeUpgrades()">
+    <app-upgrade [upgrade]="upgrade"></app-upgrade>
+  </div>
+</div>
 <div class="upgrade-row">
-  <div *ngFor="let star of stars">
+  <div *ngFor="let star of getStars()">
     <app-star [star]="star"></app-star>
   </div>
 </div>

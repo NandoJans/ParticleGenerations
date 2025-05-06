@@ -62,4 +62,8 @@ export class LalandeStarChallenge extends YellowStarChallenge {
       })
     })
   }
+
+  init() {
+
+  }
 }

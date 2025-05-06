@@ -87,7 +87,6 @@ export class TickService {
   private setIntervals() {
     if (this.calculationOrder.length == 0) {
       this.applyCalculationOrder();
-      console.log(this.calculationOrder);
     }
 
     this.mainInterval = setInterval(() => {

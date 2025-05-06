@@ -8,6 +8,7 @@ import {HoldingRecord} from "../../records/holdings/holding-record";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {GeneratorRecord} from "../../records/generators/generator-record";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {YellowStarChallengeUnlockUpgrade} from "./upgrades/yellow-star-challenge-unlock-upgrade";
 
 export class ProximaCentauriStarChallenge extends YellowStarChallenge {
   name: string = 'proxima-centauri-star-challenge';
@@ -53,17 +54,52 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
     GeneratorRecord.fourthRedGenerator.unlocked = false;
     GeneratorRecord.fifthRedGenerator.unlocked = false;
 
-    this.applyRequirementNerf(GeneratorRecord.secondRedGenerator, {
-      require: HoldingRecord.redParticles, amount: new Num(1, 75)
-    })
-    this.applyRequirementNerf(GeneratorRecord.thirdRedGenerator, {
-      require: HoldingRecord.redAccelerators, amount: new Num(1, 24)
-    })
-    this.applyRequirementNerf(GeneratorRecord.fourthRedGenerator, {
-      require: HoldingRecord.redParticles, amount: new Num(1, 1740)
-    })
-    this.applyRequirementNerf(GeneratorRecord.fifthRedGenerator, {
-      require: HoldingRecord.redAccelerators, amount: new Num(1, 382)
-    })
+    this.applyRequirementNerf(GeneratorRecord.secondRedGenerator)
+    this.applyRequirementNerf(GeneratorRecord.thirdRedGenerator)
+    this.applyRequirementNerf(GeneratorRecord.fourthRedGenerator)
+    this.applyRequirementNerf(GeneratorRecord.fifthRedGenerator)
+
+    ResetHelper.softReset(ResetKey.RED_EXTENSION);
+  }
+
+  init() {
+    this.challengeUpgrades = {
+      unlockSecondRedGenerator: new YellowStarChallengeUnlockUpgrade(
+        'unlockSecondRedGenerator',
+        'unlock-second-red-generator',
+        'Unlock Second Red Generator',
+        new Num(1, 75),
+        HoldingRecord.redParticles,
+        this.style,
+        GeneratorRecord.secondRedGenerator,
+      ),
+      unlockThirdRedGenerator: new YellowStarChallengeUnlockUpgrade(
+        'unlockThirdRedGenerator',
+        'unlock-third-red-generator',
+        'Unlock Third Red Generator',
+        new Num(1, 23),
+        HoldingRecord.redAccelerators,
+        this.style,
+        GeneratorRecord.thirdRedGenerator,
+      ),
+      unlockFourthRedGenerator: new YellowStarChallengeUnlockUpgrade(
+        'unlockFourthRedGenerator',
+        'unlock-fourth-red-generator',
+        'Unlock Fourth Red Generator',
+        new Num(1, 1750),
+        HoldingRecord.redParticles,
+        this.style,
+        GeneratorRecord.fourthRedGenerator,
+      ),
+      unlockFifthRedGenerator: new YellowStarChallengeUnlockUpgrade(
+        'unlockFifthRedGenerator',
+        'unlock-fifth-red-generator',
+        'Unlock Fifth Red Generator',
+        new Num(1, 393),
+        HoldingRecord.redAccelerators,
+        this.style,
+        GeneratorRecord.fifthRedGenerator,
+      ),
+    }
   }
 }

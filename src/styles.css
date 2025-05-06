@@ -24,6 +24,9 @@
   --text-color-red: rgb(224, 67, 67);
   --text-color-yellow: rgb(240, 240, 27);
   --text-color-green: rgb(67, 224, 67);
+
+  --proxima-centauri-color: rgb(215, 64, 34);
+  --lalande-color: rgb(215, 103, 34);
 }
 
 html, body {

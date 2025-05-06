@@ -31,4 +31,12 @@ export class YellowStarsComponent implements OnInit {
   leaveChallenge() {
     this.challengeService.leaveChallenge('yellow');
   }
+
+  getChallengeUpgrades() {
+    return ChallengeRecord.currentChallenges['yellow']?.getUpgrades() ?? [];
+  }
+
+  getStars() {
+    return this.challengeService.sortByCompleted(this.stars);
+  }
 }

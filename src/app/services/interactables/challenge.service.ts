@@ -16,7 +16,7 @@ export class ChallengeService {
 
   tick(): void {
     Object.values(ChallengeRecord.currentChallenges).forEach((challenge) => {
-      challenge.constantNerfs();
+      challenge.tick();
     });
   }
 
@@ -62,18 +62,18 @@ export class ChallengeService {
 
   applyCurrentChallengeNerfs() {
     Object.values(ChallengeRecord.currentChallenges).forEach((challenge) => {
-      challenge.nerfs();
+      challenge.start();
     });
   }
 
   startChallenge(challenge: Challenge) {
     ResetHelper.reset(challenge.prestige)
-    challenge.nerfs();
+    challenge.start();
     ChallengeRecord.currentChallenges[challenge.prestigeLayer] = challenge;
   }
 
   endChallenge(challenge: Challenge) {
-    challenge.revert();
+    challenge.end();
     delete ChallengeRecord.currentChallenges[challenge.prestigeLayer];
     this.saveCurrentChallenges();
   }
@@ -102,8 +102,9 @@ export class ChallengeService {
     const challenge = ChallengeRecord.currentChallenges[prestigeLayer];
     if (challenge) {
       challenge.completed = true;
-      challenge.revert();
+      challenge.end();
       delete ChallengeRecord.currentChallenges[prestigeLayer];
+      ResetHelper.reset(challenge.prestige);
     }
   }
 
@@ -114,8 +115,9 @@ export class ChallengeService {
   static leaveChallenge(prestigeLayer: string): void {
     const challenge = ChallengeRecord.currentChallenges[prestigeLayer];
     if (challenge) {
-      challenge.revert();
+      challenge.end();
       delete ChallengeRecord.currentChallenges[prestigeLayer];
+      ResetHelper.reset(challenge.prestige);
     }
   }
 
@@ -125,5 +127,21 @@ export class ChallengeService {
 
   getChallenge(prestigeLayer: string): Challenge|undefined {
     return ChallengeRecord.currentChallenges[prestigeLayer];
+  }
+
+  sortByCompleted(challenges: Challenge[]) {
+    return challenges.sort((a, b) => {
+      if (ChallengeRecord.currentChallenges[a.prestigeLayer] === a) {
+        return -1;
+      } else if (ChallengeRecord.currentChallenges[b.prestigeLayer] === b) {
+        return 1;
+      } if (a.completed && !b.completed) {
+        return 1;
+      } else if (!a.completed && b.completed) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
   }
 }
