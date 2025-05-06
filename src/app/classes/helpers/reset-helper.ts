@@ -1,6 +1,7 @@
 import {ResetKey} from "../enums/reset-key";
 import {Resetable} from "../features/interfaces/resetable";
 import {Storable} from "../features/interfaces/storable";
+import {MultiplierRecord} from "../records/multipliers/multiplier-record";
 
 export class ResetHelper {
 
@@ -94,6 +95,7 @@ export class ResetHelper {
         break;
       }
     }
+    MultiplierRecord.reset();
   }
 
   static setResetId(resetable: Resetable, resetKey: ResetKey) {
