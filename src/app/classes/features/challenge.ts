@@ -8,6 +8,12 @@ import {Storable} from "./interfaces/storable";
 import {LocalStorageHelper} from "../helpers/local-storage-helper";
 import {Require} from "./interfaces/require";
 import {Requirement} from "./interfaces/requirement";
+import {ChallengeUpgrade} from "./challenges/upgrades/challenge-upgrade";
+import {Generator} from "./generator";
+import {App} from "../../App";
+import {Upgrade} from "./upgrade";
+import {ChallengeHolding} from "./challenges/holdings/challenge-holding";
+import {ChallengeGenerator} from "./challenges/generators/challenge-generator";
 
 export abstract class Challenge extends GameElement implements Resetable, Storable {
   abstract displayName: string
@@ -25,7 +31,8 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   instantComplete: boolean = false
   abstract reward(): Num | undefined
   constantNerfs(): void {};
-  abstract nerfs(): void
+  abstract init(): void;
+  abstract nerfs(): void;
   completed: boolean | Num = false
   effect: Num | undefined = undefined
   maxEffect: Num | undefined = undefined
@@ -35,6 +42,9 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   buffer: Num = new Num(0, 0)
   baseBuffer: Num = new Num(0, 0)
   override calculationOrder: number = 200;
+  challengeUpgrades: {[key: string]: ChallengeUpgrade} = {};
+  challengeHoldings: {[key: string]: ChallengeHolding} = {};
+  challengeGenerators: {[key: string]: ChallengeGenerator} = {};
 
   override run(): Num | undefined {
     if (this.completed) {
@@ -48,6 +58,11 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
     return;
   }
 
+  tick() {
+    this.constantNerfs();
+    this.runChallengeUpgrades();
+  }
+
   effectString(): string {
     return this.effect ? this.effect.toString() : "";
   }
@@ -58,6 +73,9 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
 
   reset(): void {
     this.completed = false;
+    this.getChallengeElements().forEach((challengeElement) => {
+      challengeElement.reset();
+    })
   }
 
   softReset(): void {
@@ -82,9 +100,12 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
     } else {
       this.localStorageHelper.save(this.completed, "completed");
     }
+
+    this.saveChallengeUpgrades();
   }
 
   tryLoad(): void {
+    this.init();
     this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey())
     this.unlocked = this.localStorageHelper.load(this.unlocked, "unlocked");
 
@@ -93,6 +114,20 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
     } else {
       this.completed = this.localStorageHelper.load(this.completed, "completed");
     }
+
+    this.tryLoadChallengeUpgrades();
+  }
+
+  saveChallengeUpgrades(): void {
+    this.getChallengeElements().forEach((value) => {
+      value.save()
+    })
+  }
+
+  tryLoadChallengeUpgrades() {
+    this.getChallengeElements().forEach((value) => {
+      value.tryLoad()
+    })
   }
 
   reached(): boolean {
@@ -110,6 +145,7 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
     };
     if (Array.isArray(requirement)) {
       gameElement.requirement = requirement;
+      Requirement.clear(gameElement);
     } else {
       gameElement.requirement = [
         new Requirement(requirement.require, requirement.amount, gameElement),
@@ -130,5 +166,51 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
       });
     })
     this.appliedNerfs['requirements'] = {};
+  }
+
+  getChallengeElements(): (ChallengeGenerator | ChallengeUpgrade | ChallengeHolding)[] {
+    return [
+      ...Object.values(this.challengeGenerators),
+      ...Object.values(this.challengeUpgrades),
+      ...Object.values(this.challengeHoldings),
+    ];
+  }
+
+  start(): void {
+    this.nerfs()
+    this.getChallengeElements().forEach((value: ChallengeGenerator | ChallengeUpgrade | ChallengeHolding) => {
+      value.reset();
+      if (!(value instanceof Holding)) {
+        value.unlocked = true;
+      }
+    })
+  }
+
+  end(): void {
+    this.revert();
+    this.getChallengeElements().forEach((value: ChallengeGenerator | ChallengeUpgrade | ChallengeHolding) => {
+      value.reset();
+      if (!(value instanceof Holding)) {
+        value.unlocked = false;
+      }
+    })
+  }
+
+  private runChallengeUpgrades() {
+    this.getChallengeElements().forEach((value: ChallengeGenerator | ChallengeUpgrade | ChallengeHolding) => {
+      value.run(App.gameSpeed);
+    })
+  }
+
+  getUpgrades(): ChallengeUpgrade[] {
+    return Object.values(this.challengeUpgrades);
+  }
+
+  getHoldings(): ChallengeHolding[] {
+    return Object.values(this.challengeHoldings);
+  }
+
+  getGenerators(): ChallengeGenerator[] {
+    return Object.values(this.challengeGenerators);
   }
 }

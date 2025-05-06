@@ -29,34 +29,51 @@ div.start button {
 }
 
 div.challenge.proxima-centauri div.name h2 {
-  color: rgb(215, 64, 34);
+  color: var(--proxima-centauri-color);
 }
 
 div.challenge.proxima-centauri div.star {
   background: radial-gradient(
     circle,
     rgb(255, 198, 132) 0%,
-    rgb(215, 64, 34) 70%,
+    var(--proxima-centauri-color) 70%,
     rgb(199, 24, 8) 100%
   );
-  box-shadow: 0 0 15px rgb(218, 72, 43);
+  box-shadow: 0 0 15px var(--proxima-centauri-color);
   width: 6rem;
   height: 6rem;
   margin: 2rem auto;
 }
 
 div.challenge.lalande div.name h2 {
-  color: rgb(215, 64, 34);
+  color: var(--lalande-color);
 }
 
 div.challenge.lalande div.star {
   background: radial-gradient(
     circle,
     rgb(255, 217, 165) 0%,
-    rgb(215, 103, 34) 70%,
+    var(--lalande-color) 70%,
     rgb(218, 45, 15) 100%
   );
-  box-shadow: 0 0 35px rgb(215, 103, 34);
+  box-shadow: 0 0 35px var(--lalande-color);
+  width: 8rem;
+  height: 8rem;
+  margin: 2rem auto;
+}
+
+div.challenge.sun div.name h2 {
+  color: var(--sun-color);
+}
+
+div.challenge.sun div.star {
+  background: radial-gradient(
+    circle,
+    rgb(255, 255, 255) 0%,
+    var(--sun-color) 70%,
+    rgb(255, 255, 0) 100%
+  );
+  box-shadow: 0 0 35px var(--sun-color);
   width: 10rem;
   height: 10rem;
   margin: 2rem auto;

@@ -102,7 +102,7 @@ export class Num {
   /** a / b */
   div(b: Num): Num {
     if (b.mantissa === 0) {
-      throw new Error("Division by zero in Num.div");
+      return new Num(0, 0);
     }
     if (this.mantissa === 0) {
       return new Num(0, 0);

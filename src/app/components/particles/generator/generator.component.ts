@@ -76,4 +76,8 @@ export class GeneratorComponent {
     }
     return '';
   }
+
+  isVisible(): boolean {
+    return this.generator.unlocked && !this.generator.hidden
+  }
 }

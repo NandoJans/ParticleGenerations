@@ -43,4 +43,10 @@ export class Requirement {
   register(gameElement: GameElement = this.gameElement) {
     Requirement.requirements[gameElement.name] = this;
   }
+
+  static clear(gameElement: GameElement) {
+    if (gameElement.name in Requirement.requirements) {
+      delete Requirement.requirements[gameElement.name];
+    }
+  }
 }

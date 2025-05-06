@@ -56,14 +56,13 @@ export class TickService {
       elements.forEach((element) => {
         if (element instanceof Holding) {
           element.run();
-        } else if (element instanceof Multiplier) {
-          element.reset();
         } else {
           element.run(speed);
         }
       });
     });
 
+    this.multiplierService.tick();
     this.milestoneRecord.tick();
     this.challengeService.tick();
     this.timelineService.tick();
@@ -87,7 +86,6 @@ export class TickService {
   private setIntervals() {
     if (this.calculationOrder.length == 0) {
       this.applyCalculationOrder();
-      console.log(this.calculationOrder);
     }
 
     this.mainInterval = setInterval(() => {
@@ -111,11 +109,10 @@ export class TickService {
     clearInterval(this.iterationsInterval);
   }
 
-  calculationOrder: (GameElement|Holding|Multiplier)[][] = []
+  calculationOrder: (GameElement|Holding)[][] = []
 
   private applyCalculationOrder() {
     const services = [
-      this.multiplierService,
       this.upgradeService,
       this.automatorService,
       this.holdingService,
@@ -130,7 +127,7 @@ export class TickService {
     });
   }
 
-  private pushToCalculationOrder(element: GameElement|Holding|Multiplier) {
+  private pushToCalculationOrder(element: GameElement|Holding) {
     if (element.calculationOrder == undefined) {
       if (this.calculationOrder[4] == undefined) {
         this.calculationOrder[4] = []

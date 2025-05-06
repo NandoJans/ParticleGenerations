@@ -82,15 +82,27 @@ button.yellow {
   --background-color: var(--background-color-yellow);
 }
 
-button.enhancing.enhancing-yellow {
-  background-color: var(--background-color-3);
-  border: 1px solid var(--accent-color-yellow);
-  color: var(--text-color-yellow);
+button.proxima-centauri {
+  --accent-color: var(--proxima-centauri-color);
+  --text-color: var(--proxima-centauri-color);
+  --background-color: var(--background-color-1);
+}
+
+button.lalande {
+  --accent-color: var(--lalande-color);
+  --text-color: var(--lalande-color);
+  --background-color: var(--background-color-1);
 }
 
 button.enhancing:hover {
   box-shadow: 0 0 10000px rgba(255, 255, 255, 0.1) inset;
   cursor: pointer;
+}
+
+button.enhancing.enhancing-yellow {
+  background-color: var(--background-color-3);
+  border: 1px solid var(--accent-color-yellow);
+  color: var(--text-color-yellow);
 }
 
 button.enhanced {

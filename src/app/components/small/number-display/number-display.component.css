@@ -23,3 +23,7 @@ div span p {
 .yellow {
   color: var(--text-color-yellow);
 }
+
+.sun {
+  color: var(--sun-color);
+}

@@ -35,4 +35,10 @@ export class MultiplierRecord {
   getList(): Multiplier[] {
     return MultiplierRecord.list;
   }
+
+  static reset() {
+    this.list.forEach((multiplier) => {
+      multiplier.reset();
+    })
+  }
 }

@@ -12,6 +12,7 @@ export class YellowStarsComponent implements OnInit {
   stars: YellowStarChallenge[] = [
     ChallengeRecord.proximaCentauriStar,
     ChallengeRecord.lalandeStar,
+    ChallengeRecord.sunStar,
   ]
   constructor(
     private challengeService: ChallengeService,
@@ -30,5 +31,21 @@ export class YellowStarsComponent implements OnInit {
 
   leaveChallenge() {
     this.challengeService.leaveChallenge('yellow');
+  }
+
+  getChallengeUpgrades() {
+    return ChallengeRecord.currentChallenges['yellow']?.getUpgrades() ?? [];
+  }
+
+  getChallengeHoldings() {
+    return ChallengeRecord.currentChallenges['yellow']?.getHoldings() ?? [];
+  }
+
+  getChallengeGenerators() {
+    return ChallengeRecord.currentChallenges['yellow']?.getGenerators() ?? [];
+  }
+
+  getStars() {
+    return this.challengeService.sortByCompleted(this.stars);
   }
 }
