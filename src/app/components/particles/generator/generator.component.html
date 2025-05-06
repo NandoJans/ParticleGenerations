@@ -1,4 +1,5 @@
 <button
+  *ngIf="isVisible()"
   [id]="'buyable-'+generator.name"
   [class]="'generator '
   +generator.style+' '

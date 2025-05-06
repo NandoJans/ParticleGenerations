@@ -9,18 +9,19 @@ import {Requirement} from "../interfaces/requirement";
 import {GeneratorRecord} from "../../records/generators/generator-record";
 import {RedGenerator} from "../generators/red-generator";
 import {Upgrade} from "../upgrade";
+import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 
 export class LalandeStarChallenge extends YellowStarChallenge {
   name: string = 'lalande-star-challenge';
   displayName: string = 'Lalande 21185';
 
-  baseGoal: Num = new Num(1, 2750);
-  goal: Num = new Num(1, 2750);
+  baseGoal: Num = new Num(1, 2700);
+  goal: Num = new Num(1, 2700);
 
   currency: Holding = HoldingRecord.redParticles;
 
-  override buffer: Num = new Num(0.39, 0);
-  override baseBuffer: Num = new Num(0.39, 0);
+  override buffer: Num = new Num(1, 0);
+  override baseBuffer: Num = new Num(1, 0);
 
   getRewardDescription(): string {
     return "Every purchase of a red generator also adds free amount to their sub-upgrades by raising their amount to ^"+this.buffer.toString(2)+".";
@@ -37,7 +38,7 @@ export class LalandeStarChallenge extends YellowStarChallenge {
 
   reward(): undefined {
     GeneratorRecord.redGenerators.forEach((generator: RedGenerator) => {
-      const effect: Num = generator.amount.pow(this.buffer).floor();
+      const effect: Num = generator.bought.pow(this.buffer).floor();
       generator.getUpgrades().forEach((upgrade: Upgrade) => {
         upgrade.amount = upgrade.amount.add(effect);
       })
@@ -46,12 +47,7 @@ export class LalandeStarChallenge extends YellowStarChallenge {
   }
 
   override constantNerfs() {
-    // GeneratorRecord.redGenerators.forEach((generator: RedGenerator) => {
-    //   generator.getUpgrades().forEach((upgrade: Upgrade) => {
-    //     upgrade.bought = new Num(0, 0);
-    //     upgrade.unlocked = false;
-    //   })
-    // })
+    UpgradeRecord.unlockRedAccelerators.bought = new Num(1, 0);
   }
 
   nerfs(): void {

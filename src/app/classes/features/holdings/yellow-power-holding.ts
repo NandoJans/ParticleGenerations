@@ -6,6 +6,7 @@ import {Holding} from "../holding";
 import {HoldingDisplayFactory} from "../../factories/holding-display-factory";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {ChallengeRecord} from "../../records/challenges/challenge-record";
 
 export class YellowPowerHolding extends Holding {
     name: string = 'yellow-power-holding';

@@ -12,6 +12,8 @@ import {ChallengeUpgrade} from "./challenges/upgrades/challenge-upgrade";
 import {Generator} from "./generator";
 import {App} from "../../App";
 import {Upgrade} from "./upgrade";
+import {ChallengeHolding} from "./challenges/holdings/challenge-holding";
+import {ChallengeGenerator} from "./challenges/generators/challenge-generator";
 
 export abstract class Challenge extends GameElement implements Resetable, Storable {
   abstract displayName: string
@@ -40,9 +42,9 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   buffer: Num = new Num(0, 0)
   baseBuffer: Num = new Num(0, 0)
   override calculationOrder: number = 200;
-  challengeUpgrades: {[key: string]: Upgrade} = {};
-  challengeHoldings: {[key: string]: Holding} = {};
-  challengeGenerators: {[key: string]: Generator} = {};
+  challengeUpgrades: {[key: string]: ChallengeUpgrade} = {};
+  challengeHoldings: {[key: string]: ChallengeHolding} = {};
+  challengeGenerators: {[key: string]: ChallengeGenerator} = {};
 
   override run(): Num | undefined {
     if (this.completed) {
@@ -166,7 +168,7 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
     this.appliedNerfs['requirements'] = {};
   }
 
-  getChallengeElements(): (Generator | ChallengeUpgrade | Holding)[] {
+  getChallengeElements(): (ChallengeGenerator | ChallengeUpgrade | ChallengeHolding)[] {
     return [
       ...Object.values(this.challengeGenerators),
       ...Object.values(this.challengeUpgrades),
@@ -176,31 +178,39 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
 
   start(): void {
     this.nerfs()
-    this.getChallengeElements().forEach((value: Generator | ChallengeUpgrade | Holding) => {
+    this.getChallengeElements().forEach((value: ChallengeGenerator | ChallengeUpgrade | ChallengeHolding) => {
+      value.reset();
       if (!(value instanceof Holding)) {
         value.unlocked = true;
       }
-      value.reset();
     })
   }
 
   end(): void {
     this.revert();
-    this.getChallengeElements().forEach((value: Generator | ChallengeUpgrade | Holding) => {
+    this.getChallengeElements().forEach((value: ChallengeGenerator | ChallengeUpgrade | ChallengeHolding) => {
+      value.reset();
       if (!(value instanceof Holding)) {
         value.unlocked = false;
       }
-      value.reset();
     })
   }
 
   private runChallengeUpgrades() {
-    this.getChallengeElements().forEach((value: Generator | ChallengeUpgrade | Holding) => {
+    this.getChallengeElements().forEach((value: ChallengeGenerator | ChallengeUpgrade | ChallengeHolding) => {
       value.run(App.gameSpeed);
     })
   }
 
-  getUpgrades(): Upgrade[] {
+  getUpgrades(): ChallengeUpgrade[] {
     return Object.values(this.challengeUpgrades);
+  }
+
+  getHoldings(): ChallengeHolding[] {
+    return Object.values(this.challengeHoldings);
+  }
+
+  getGenerators(): ChallengeGenerator[] {
+    return Object.values(this.challengeGenerators);
   }
 }

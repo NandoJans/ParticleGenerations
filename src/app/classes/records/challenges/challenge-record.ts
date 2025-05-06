@@ -13,6 +13,7 @@ export class ChallengeRecord extends Record {
   static override list: Challenge[] = [
     ChallengeRecord.proximaCentauriStar,
     ChallengeRecord.lalandeStar,
+    ChallengeRecord.sunStar,
   ];
 
   static currentChallenges: {[key: string]: Challenge} = {};
