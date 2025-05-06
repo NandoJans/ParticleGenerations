@@ -13,8 +13,8 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
   name: string = 'proxima-centauri-star-challenge';
   displayName: string = 'Proxima Centauri';
 
-  baseGoal: Num = new Num(1, 3900);
-  goal: Num = new Num(1, 3900);
+  baseGoal: Num = new Num(1, 3800);
+  goal: Num = new Num(1, 3800);
 
   currency: Holding = HoldingRecord.redParticles;
 
@@ -60,10 +60,10 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
       require: HoldingRecord.redAccelerators, amount: new Num(1, 24)
     })
     this.applyRequirementNerf(GeneratorRecord.fourthRedGenerator, {
-      require: HoldingRecord.redParticles, amount: new Num(1, 1760)
+      require: HoldingRecord.redParticles, amount: new Num(1, 1740)
     })
     this.applyRequirementNerf(GeneratorRecord.fifthRedGenerator, {
-      require: HoldingRecord.redAccelerators, amount: new Num(1, 383)
+      require: HoldingRecord.redAccelerators, amount: new Num(1, 382)
     })
   }
 }
