@@ -36,6 +36,7 @@ export abstract class Holding implements Generatable, Require, Resetable {
   tryLoad(): void {
     this.localStorageHelper = new LocalStorageHelper('holdings', this.getSaveKey())
     this.amount = this.localStorageHelper.loadNum(this.startAmount)
+    console.log(this.name, this.amount.toString())
   }
 
   save(): void {

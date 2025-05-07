@@ -8,7 +8,7 @@ import {Requirement} from "../../interfaces/requirement";
 import {Multiplier} from "../../multiplier";
 
 export class ChallengeGenerator extends Generator {
-  globalMultiplier: Multiplier = new Multiplier('', new Num(1, 0));
+  globalMultiplier: Multiplier;
   resetId: ResetKey = ResetKey.NONE;
   softResetId: ResetKey = ResetKey.NONE;
   stringRank: string = '1';
@@ -32,5 +32,6 @@ export class ChallengeGenerator extends Generator {
   ) {
     super(saveName);
     this.baseCost = cost.copy();
+    this.globalMultiplier = new Multiplier(this.name, new Num(1, 0));
   }
 }

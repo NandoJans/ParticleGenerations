@@ -25,6 +25,7 @@ export abstract class ChallengeUpgrade extends Upgrade {
   ) {
     super(saveName);
     this.baseCost = cost.copy();
+    this.baseBuffer = buffer.copy();
   }
   getDescription(): string {
       return "";
