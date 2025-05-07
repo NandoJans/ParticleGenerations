@@ -12,12 +12,10 @@ import {HoldingService} from "./holding.service";
 import {DropDownMessageService} from "./visuals/drop-down-message.service";
 import {GameElement} from "../classes/features/game-element";
 import {Holding} from "../classes/features/holding";
-import {Multiplier} from "../classes/features/multiplier";
 import {PrestigeLayersService} from "./prestige-layers.service";
 import {EnhancementService} from "./enhancement.service";
 import {TimelineService} from "./timeline.service";
 import {ChallengeService} from "./interactables/challenge.service";
-import {MilestoneService} from "./interactables/milestone.service";
 import {MilestoneRecord} from "../classes/records/milestones/milestone-record";
 
 @Injectable({

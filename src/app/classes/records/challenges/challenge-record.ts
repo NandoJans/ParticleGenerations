@@ -16,6 +16,7 @@ export class ChallengeRecord extends Record {
     ChallengeRecord.proximaCentauriStar,
     ChallengeRecord.lalandeStar,
     ChallengeRecord.sunStar,
+    ChallengeRecord.siriusStar,
   ];
 
   static currentChallenges: {[key: string]: Challenge} = {};

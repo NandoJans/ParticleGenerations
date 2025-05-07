@@ -11,6 +11,7 @@ import {RedGenerator} from "../../features/generators/red-generator";
 import {FirstYellowGenerator} from "../../features/generators/first-yellow-generator";
 import {SecondYellowGenerator} from "../../features/generators/second-yellow-generator";
 import {ThirdYellowGenerator} from "../../features/generators/third-yellow-generator";
+import {YellowGenerator} from "../../features/generators/yellow-generator";
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +53,12 @@ export class GeneratorRecord extends Record {
     GeneratorRecord.thirdRedGenerator,
     GeneratorRecord.fourthRedGenerator,
     GeneratorRecord.fifthRedGenerator
+  ];
+
+  static yellowGenerators: YellowGenerator[] = [
+    GeneratorRecord.firstYellowGenerator,
+    GeneratorRecord.secondYellowGenerator,
+    GeneratorRecord.thirdYellowGenerator
   ];
 
   getList(): Generator[] {

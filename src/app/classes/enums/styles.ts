@@ -12,4 +12,5 @@ export enum Styles {
   PROXIMA_CENTAURI = "yellow proxima-centauri",
   LALANDE = "yellow lalande",
   SUN = "yellow sun",
+  SIRIUS = "yellow sirius",
 }

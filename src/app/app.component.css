@@ -45,29 +45,23 @@ main.lalande {
 }
 
 main.sun {
-  background-image:
-  radial-gradient(
-    circle,
-    rgb(255, 255, 255) 0%,
-    rgba(0,0,0,0) 13%
-  ), linear-gradient(
-    to bottom,
-    rgba(0,0,0,0) 40%,
-    rgba(243, 211, 102, 0.4) 48%,
-    var(--sun-color) 49%,
-    rgb(255, 255, 255) 50%,
-    var(--sun-color) 51%,
-    rgba(243, 211, 102, 0.4) 52%,
-    rgba(0,0,0,0) 60%),
-  radial-gradient(
+  background: radial-gradient(
     circle,
     rgb(255, 255, 255) 0%,
     var(--sun-color) 13%,
     rgb(217, 199, 91) 13%,
     rgba(243, 211, 102, 0.5) 15%,
-    var(--background-color-2) 50%
-  );
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-attachment: fixed;
+    var(--background-color-2) 25%
+  ) no-repeat fixed center center;
+}
+
+main.sirius {
+  background: radial-gradient(
+    circle,
+    rgb(255, 255, 255) 0%,
+    var(--sirius-color) 16%,
+    rgba(183, 239, 235, 0.84) 16%,
+    rgba(183, 239, 235, 0.5) 19%,
+    var(--background-color-2) 30%
+  ) no-repeat fixed center center;
 }

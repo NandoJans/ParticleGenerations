@@ -67,6 +67,9 @@ export class ChallengeService {
   }
 
   startChallenge(challenge: Challenge) {
+    if (ChallengeRecord.currentChallenges[challenge.prestigeLayer]) {
+      this.endChallenge(challenge);
+    }
     ResetHelper.reset(challenge.prestige)
     challenge.start();
     ChallengeRecord.currentChallenges[challenge.prestigeLayer] = challenge;
