@@ -166,7 +166,7 @@ export class SunStarChallenge extends YellowStarChallenge {
         'stronger-sun-particle-effect',
         'Supernova',
         new Num(1, 8),
-        new Num(1, 5),
+        new Num(1, 4),
         new Num(1, 0),
         new Num(2, 0),
         this.challengeHoldings['sunParticle'],
@@ -184,8 +184,11 @@ export class SunStarChallenge extends YellowStarChallenge {
       this.challengeUpgrades['strongerSunParticleEffect'].setCustomBuyAction(() => {
         this.challengeHoldings['sunParticle'].reset();
         this.challengeUpgrades['sunGeneratorMultiplierUpgrade1'].reset();
-        this.challengeUpgrades['sunGeneratorMultiplierUpgrade2'].reset();
+        this.challengeUpgrades['sunGeneratorMultiplierUpgrade1'].unlocked = true
+        this.challengeUpgrades['sunGeneratorMultiplierUpgrade2'].reset()
+        this.challengeUpgrades['sunGeneratorMultiplierUpgrade2'].unlocked = true
         this.challengeUpgrades['sunGeneratorMultiplierUpgrade3'].reset();
+        this.challengeUpgrades['sunGeneratorMultiplierUpgrade3'].unlocked = true
         return undefined;
       });
     }
