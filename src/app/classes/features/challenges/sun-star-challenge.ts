@@ -11,13 +11,15 @@ import {ChallengeHolding} from "./holdings/challenge-holding";
 import {HoldingDisplayFactory} from "../../factories/holding-display-factory";
 import {ChallengeGenerator} from "./generators/challenge-generator";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {MultiplierChallengeUpgrade} from "./upgrades/multiplier-challenge-upgrade";
+import {CustomChallengeUpgrade} from "./upgrades/custom-challenge-upgrade";
 
 export class SunStarChallenge extends YellowStarChallenge {
   name: string = 'sun-star-challenge';
   displayName: string = 'Sun';
 
-  baseGoal: Num = new Num(1, 2600);
-  goal: Num = new Num(1, 2600);
+  baseGoal: Num = new Num(1, 5000);
+  goal: Num = new Num(1, 5000);
 
   currency: Holding = HoldingRecord.redParticles;
 
@@ -44,6 +46,8 @@ export class SunStarChallenge extends YellowStarChallenge {
     return;
   }
 
+  private sunParticleGeneration: Num = new Num(1, 0);
+
   override constantNerfs() {
     HoldingRecord.redAccelerators.amount = new Num(1, 0);
     UpgradeRecord.unlockRedAccelerators.bought = new Num(0, 0);
@@ -51,9 +55,14 @@ export class SunStarChallenge extends YellowStarChallenge {
     this.challengeGenerators['sunGenerator'].amount = new Num(1, 0);
     this.challengeGenerators['sunGenerator'].bought = new Num(1, 0);
 
-    this.challengeGenerators['sunGenerator'].multiplier = HoldingRecord.yellowPower.amount.sqrt();
+    const resetUpgradePower = this.challengeUpgrades['strongerSunParticleEffect'].buffer
+      .pow(this.challengeUpgrades['strongerSunParticleEffect'].amount);
 
-    const sunParticleEffect: Num = this.challengeHoldings['sunParticle'].amount.pow(new Num(3, 0)).floor();
+    this.sunParticleGeneration = HoldingRecord.redParticles.amount.pow(new Num(1, -3))
+      .mul(this.challengeGenerators['sunGenerator'].globalMultiplier.getNum());
+    this.challengeGenerators['sunGenerator'].multiplier = this.sunParticleGeneration;
+    // this.challengeHoldings['sunParticle'].amount = new Num(1, 8);
+    const sunParticleEffect: Num = this.challengeHoldings['sunParticle'].amount.pow(new Num(3, 0).mul(resetUpgradePower)).floor();
     this.challengeHoldings['sunParticle'].effect = sunParticleEffect;
     MultiplierRecord.redParticleGenerators.correct(sunParticleEffect);
   }
@@ -68,7 +77,7 @@ export class SunStarChallenge extends YellowStarChallenge {
       sunParticle: new ChallengeHolding(
         'sunParticle',
         'Sun Particle',
-        'LP',
+        'SP',
         new Num(1, 0),
         new Num(1, 0),
         this.style,
@@ -81,7 +90,9 @@ export class SunStarChallenge extends YellowStarChallenge {
         .withAmountSuffix(' Sun Particles')
         .withEffectPrefix('They multiply red generators by ')
         .withEffectSuffix('')
-        .addLine('Their generation is boosted by yellow power', () => {}, '')
+        .addLine('Their generation is boosted by Red Particles', () => {
+          return this.sunParticleGeneration.toString(2) + "x"
+        }, '')
         .build()
     )
 
@@ -105,7 +116,78 @@ export class SunStarChallenge extends YellowStarChallenge {
     this.challengeGenerators['sunGenerator'].hidden = true;
 
     this.challengeUpgrades = {
+      sunGeneratorMultiplierUpgrade1: new MultiplierChallengeUpgrade(
+        'sunGeneratorMultiplierUpgrade1',
+        'sun-generator-multiplier-upgrade-1',
+        'Sun fusion',
+        new Num(1, 4),
+        new Num(1, 3),
+        new Num(1, 0),
+        new Num(3, 0),
+        this.challengeHoldings['sunParticle'],
+        this.style,
+        'yellow',
+        'yellowStars',
+        'sunUpgrade',
+        this.challengeGenerators['sunGenerator'].globalMultiplier
+      ),
+      sunGeneratorMultiplierUpgrade2: new MultiplierChallengeUpgrade(
+        'sunGeneratorMultiplierUpgrade2',
+        'sun-generator-multiplier-upgrade-2',
+        'Sun mass',
+        new Num(1, 5),
+        new Num(1, 3),
+        new Num(1, 0),
+        new Num(5, 0),
+        this.challengeHoldings['sunParticle'],
+        this.style,
+        'yellow',
+        'yellowStars',
+        'sunUpgrade',
+        this.challengeGenerators['sunGenerator'].globalMultiplier
+      ),
+      sunGeneratorMultiplierUpgrade3: new MultiplierChallengeUpgrade(
+        'sunGeneratorMultiplierUpgrade3',
+        'sun-generator-multiplier-upgrade-3',
+        'Sun hydrogen',
+        new Num(1, 6),
+        new Num(1, 3),
+        new Num(1, 0),
+        new Num(9, 0),
+        this.challengeHoldings['sunParticle'],
+        this.style,
+        'yellow',
+        'yellowStars',
+        'sunUpgrade',
+        this.challengeGenerators['sunGenerator'].globalMultiplier
+      ),
+      strongerSunParticleEffect: new CustomChallengeUpgrade(
+        'strongerSunParticleEffect',
+        'stronger-sun-particle-effect',
+        'Supernova',
+        new Num(1, 8),
+        new Num(1, 5),
+        new Num(1, 0),
+        new Num(2, 0),
+        this.challengeHoldings['sunParticle'],
+        this.style,
+        'yellow',
+        'yellowStars',
+        'sunUpgrade',
+      )
+    }
 
+    if (this.challengeUpgrades['strongerSunParticleEffect'] instanceof CustomChallengeUpgrade) {
+      this.challengeUpgrades['strongerSunParticleEffect'].setDescription(() => {
+        return "Reset sun particles to enhance their power by "+this.challengeUpgrades['strongerSunParticleEffect'].buffer.toString(2)+"x."
+      });
+      this.challengeUpgrades['strongerSunParticleEffect'].setCustomBuyAction(() => {
+        this.challengeHoldings['sunParticle'].reset();
+        this.challengeUpgrades['sunGeneratorMultiplierUpgrade1'].reset();
+        this.challengeUpgrades['sunGeneratorMultiplierUpgrade2'].reset();
+        this.challengeUpgrades['sunGeneratorMultiplierUpgrade3'].reset();
+        return undefined;
+      });
     }
   }
 }

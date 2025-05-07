@@ -94,6 +94,18 @@ button.lalande {
   --background-color: var(--background-color-1);
 }
 
+button.sun {
+  --accent-color: var(--sun-color);
+  --text-color: var(--sun-color);
+  --background-color: var(--background-color-1);
+}
+
+button.sirius {
+  --accent-color: var(--sirius-color);
+  --text-color: var(--sirius-color);
+  --background-color: var(--background-color-1);
+}
+
 button.enhancing:hover {
   box-shadow: 0 0 10000px rgba(255, 255, 255, 0.1) inset;
   cursor: pointer;

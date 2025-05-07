@@ -27,3 +27,7 @@ div span p {
 .sun {
   color: var(--sun-color);
 }
+
+.sirius {
+  color: var(--sirius-color);
+}

@@ -179,7 +179,6 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   start(): void {
     this.nerfs()
     this.getChallengeElements().forEach((value: ChallengeGenerator | ChallengeUpgrade | ChallengeHolding) => {
-      value.reset();
       if (!(value instanceof Holding)) {
         value.unlocked = true;
       }
@@ -199,6 +198,9 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   private runChallengeUpgrades() {
     this.getChallengeElements().forEach((value: ChallengeGenerator | ChallengeUpgrade | ChallengeHolding) => {
       value.run(App.gameSpeed);
+      if (value instanceof ChallengeGenerator) {
+        value.globalMultiplier.reset();
+      }
     })
   }
 

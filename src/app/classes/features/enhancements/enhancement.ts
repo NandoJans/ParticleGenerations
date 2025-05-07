@@ -44,7 +44,7 @@ export abstract class Enhancement implements Resetable {
 
   run(): void {
     Object.values(this.enhancables).forEach((enhancable) => {
-      if (enhancable.canEnhance()) {
+      if (enhancable.canEnhance() && enhancable.unlocked) {
         enhancable.enhance();
       }
     });

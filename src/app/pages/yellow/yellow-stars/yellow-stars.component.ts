@@ -13,6 +13,7 @@ export class YellowStarsComponent implements OnInit {
     ChallengeRecord.proximaCentauriStar,
     ChallengeRecord.lalandeStar,
     ChallengeRecord.sunStar,
+    ChallengeRecord.siriusStar,
   ]
   constructor(
     private challengeService: ChallengeService,
