@@ -87,6 +87,30 @@ div.holdings-value.yellow p.holding-name {
   color: var(--text-color-yellow);
 }
 
+div.holdings-value.fusion p.holding-name {
+  --color-switch-1: var(--proxima-centauri-color);
+  --color-switch-2: var(--sun-color);
+  animation: color-switch 10s infinite;
+}
+
+div.holdings-value.hydrogen p.holding-name {
+  --color-switch-1: var(--rigel-color);
+  --color-switch-2: var(--sirius-color);
+  animation: color-switch 5s infinite;
+}
+
+@keyframes color-switch {
+  0% {
+    color: var(--color-switch-1);
+  }
+  50% {
+    color: var(--color-switch-2);
+  }
+  100% {
+    color: var(--color-switch-1);
+  }
+}
+
 @media (max-width: 768px) {
   div.container {
     top: 10%;
