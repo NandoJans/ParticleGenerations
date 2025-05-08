@@ -343,16 +343,5 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         UpgradeRecord.improveRedParticlesToAcceleratorsUpgrade,
       ),
     }
-
-    this.challengeUpgrades['siriusGeneratorMultiplierUpgrade'].setCustomBuyAction(() => {
-  // Reset all Sirius unlock upgrades
-  Object.values(this.challengeUpgrades).forEach(upgrade => {
-      if (upgrade instanceof YellowStarChallengeUnlockUpgrade) {
-          upgrade.unlocked = false;
-          upgrade.startUnlocked = false;
-          upgrade.bought = new Num(0, 0);
-      }
-  });
-});
   }
 }
