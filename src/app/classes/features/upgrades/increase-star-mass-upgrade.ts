@@ -24,5 +24,5 @@ export class IncreaseStarMassUpgrade extends FusionUpgrade {
 
   baseCost: Num = new Num(1, 13);
   cost: Num = new Num(1, 13);
-  increase: Num = new Num(2, 0);
+  increase: Num = new Num(5, 0);
 }
