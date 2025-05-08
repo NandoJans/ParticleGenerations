@@ -12,6 +12,7 @@ import {ChallengeHolding} from "./holdings/challenge-holding";
 import {HoldingDisplayFactory} from "../../factories/holding-display-factory";
 import {ChallengeGenerator} from "./generators/challenge-generator";
 import {GeneratorRecord} from "../../records/generators/generator-record";
+import {MultiplierChallengeUpgrade} from "./upgrades/multiplier-challenge-upgrade";
 import {YellowStarChallengeUnlockUpgrade} from "./upgrades/yellow-star-challenge-unlock-upgrade";
 import {Generator} from "../generator";
 
