@@ -24,5 +24,5 @@ export class IncreaseStarGravityUpgrade extends FusionUpgrade {
 
   baseCost: Num = new Num(1, 15);
   cost: Num = new Num(1, 15);
-  override increase: Num = new Num(1, 4);
+  override increase: Num = new Num(4, 0);
 }

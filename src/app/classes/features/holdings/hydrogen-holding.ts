@@ -18,7 +18,7 @@ export class HydrogenHolding extends Holding {
     .withAmountPrefix('You have')
     .withAmountSuffix('Hydrogen')
     .withEffectPrefix('They generate')
-    .withEffectSuffix('per second')
+    .withEffectSuffix('yellow fusion per second')
     .build()
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
   hydrogenPower: Num = new Num(2, 0);

@@ -21,4 +21,8 @@ export class StarComponent implements OnInit {
   startChallenge(): void {
     this.challengeService.startChallenge(this.star)
   }
+
+  getButtonText() {
+    return (this.star.isCompleted()) ? 'Completed' : 'Enter';
+  }
 }

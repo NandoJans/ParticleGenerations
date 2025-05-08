@@ -20,7 +20,7 @@ export class YellowFusionHolding extends Holding {
     .withEffectSuffix('')
     .build()
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED, this);
-  fusionPower: Num = new Num(1, -1)
+  fusionPower: Num = new Num(3, -1)
   getStyle(): Styles {
     return Styles.FUSION;
   }
@@ -28,7 +28,7 @@ export class YellowFusionHolding extends Holding {
   override action(): Num {
     const effect = this.amount.pow(this.fusionPower);
     MultiplierRecord.yellowGenerators.correct(effect);
-    this.fusionPower = new Num(1, -1);
+    this.fusionPower = new Num(3, -1);
     return effect;
   }
 
