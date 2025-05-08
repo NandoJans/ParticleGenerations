@@ -23,8 +23,8 @@ export class SunStarChallenge extends YellowStarChallenge {
 
   currency: Holding = HoldingRecord.redParticles;
 
-  override buffer: Num = new Num(1, 0);
-  override baseBuffer: Num = new Num(1, 0);
+  override buffer: Num = new Num(3, -2);
+  override baseBuffer: Num = new Num(3, -2);
 
   getRewardDescription(): string {
     return "Yellow power also boosts red accelerator generation ^"+this.buffer.toString(2)+".";
@@ -39,11 +39,12 @@ export class SunStarChallenge extends YellowStarChallenge {
     new Requirement(HoldingRecord.redParticles, new Num(1, 8250), this)
   ];
 
-  reward(): undefined {
+  reward(): Num {
+    const effect = HoldingRecord.yellowPower.effect?.pow(this.buffer) ?? new Num(1, 0)
     MultiplierRecord.redAcceleratorGenerators.correct(
-      HoldingRecord.yellowPower.effect ?? new Num(1, 0)
+      effect
     );
-    return;
+    return effect;
   }
 
   private sunParticleGeneration: Num = new Num(1, 0);

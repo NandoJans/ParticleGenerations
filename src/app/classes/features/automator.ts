@@ -35,7 +35,7 @@ export abstract class Automator extends GameElement implements Storable, Resetab
   abstract goal: Num
   abstract goalString: string;
   abstract task(): Num;
-  override calculationOrder: number = 100
+  override calculationOrder: number = 1050;
   maxBuys: Num|null = null
 
   requirement: Requirement[] = [];
@@ -63,7 +63,7 @@ export abstract class Automator extends GameElement implements Storable, Resetab
 
     if (this.completed && this.active) {
       this.buyables().forEach(buyable => {
-        if (buyable.isBuyable() && buyable.auto && this.belowMax()) {
+        if (buyable.isUnlocked() && buyable.isBuyable() && buyable.auto && this.belowMax()) {
           buyable.buy();
         }
       })

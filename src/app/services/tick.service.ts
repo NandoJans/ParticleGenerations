@@ -17,6 +17,7 @@ import {EnhancementService} from "./enhancement.service";
 import {TimelineService} from "./timeline.service";
 import {ChallengeService} from "./interactables/challenge.service";
 import {MilestoneRecord} from "../classes/records/milestones/milestone-record";
+import {Multiplier} from "../classes/features/multiplier";
 
 @Injectable({
   providedIn: 'root'
@@ -54,18 +55,19 @@ export class TickService {
       elements.forEach((element) => {
         if (element instanceof Holding) {
           element.run();
+        } else if (element instanceof Multiplier) {
+          element.reset();
         } else {
           element.run(speed);
         }
       });
     });
 
-    this.multiplierService.tick();
+    this.prestigeLayersService.tick(speed);
     this.milestoneRecord.tick();
     this.challengeService.tick();
     this.timelineService.tick();
     this.enhancementService.tick();
-    this.prestigeLayersService.tick(speed);
     this.componentService.reloadComponents();
   }
 
@@ -107,7 +109,7 @@ export class TickService {
     clearInterval(this.iterationsInterval);
   }
 
-  calculationOrder: (GameElement|Holding)[][] = []
+  calculationOrder: (GameElement|Holding|Multiplier)[][] = []
 
   private applyCalculationOrder() {
     const services = [
@@ -115,7 +117,8 @@ export class TickService {
       this.automatorService,
       this.holdingService,
       this.generatorService,
-      this.challengeService
+      this.challengeService,
+      this.multiplierService
     ];
 
     services.forEach(service => {
@@ -125,7 +128,7 @@ export class TickService {
     });
   }
 
-  private pushToCalculationOrder(element: GameElement|Holding) {
+  private pushToCalculationOrder(element: GameElement|Holding|Multiplier) {
     if (element.calculationOrder == undefined) {
       if (this.calculationOrder[4] == undefined) {
         this.calculationOrder[4] = []

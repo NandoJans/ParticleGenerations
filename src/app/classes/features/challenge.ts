@@ -215,4 +215,12 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   getGenerators(): ChallengeGenerator[] {
     return Object.values(this.challengeGenerators);
   }
+
+  isCompleted(): boolean {
+    if (this.completed instanceof Num) {
+      return this.completed.greq(this.maxCompletions ?? new Num(1, 0));
+    } else {
+      return this.completed;
+    }
+  }
 }
