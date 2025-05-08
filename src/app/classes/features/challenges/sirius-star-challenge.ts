@@ -137,6 +137,21 @@ export class SiriusStarChallenge extends YellowStarChallenge {
     this.challengeGenerators['siriusGenerator'].hidden = true;
 
     this.challengeUpgrades = {
+      siriusGeneratorMultiplierUpgrade: new MultiplierChallengeUpgrade(
+        'siriusGeneratorMultiplierUpgrade',
+        'sirius-generator-multiplier-upgrade',
+        'Sirius fusion',
+        new Num(1, 3),
+        new Num(1, 1),
+        new Num(1, 0),
+        new Num(2, 0),
+        this.challengeHoldings['siriusParticle'],
+        this.style,
+        'yellow',
+        'yellowStars',
+        'siriusUpgrade',
+        this.challengeGenerators['siriusGenerator'].globalMultiplier
+      ),
       unlockFirstRedGeneratorMultiplierUpgrade: new YellowStarChallengeUnlockUpgrade(
         'unlockFirstRedGeneratorMultiplierUpgrade',
         'unlock-second-red-generator',
