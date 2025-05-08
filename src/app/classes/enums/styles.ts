@@ -13,4 +13,6 @@ export enum Styles {
   LALANDE = "yellow lalande",
   SUN = "yellow sun",
   SIRIUS = "yellow sirius",
+  FUSION = "yellow fusion",
+  HYDROGEN = "yellow hydrogen",
 }

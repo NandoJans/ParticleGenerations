@@ -12,11 +12,12 @@ export class MultiplierRecord {
   static redAcceleratorGenerators: Multiplier = new Multiplier('redAcceleratorGenerators', new Num(1, 0));
 
   // Yellow Phase
-  static yellowParticleGain: Multiplier = new Multiplier('yellowParticleGain', new Num(1, 0));
-  static yellowKeyGain: Multiplier = new Multiplier('yellowKeyGain', new Num(1, 0));
-  static yellowPrestigeGain: Multiplier = new Multiplier('yellowPrestigeGain', new Num(1, 0));
+  static yellowParticleGain: Multiplier = new Multiplier('yellowParticleGain', new Num(1, 0), 50);
+  static yellowKeyGain: Multiplier = new Multiplier('yellowKeyGain', new Num(1, 0), 50);
+  static yellowPrestigeGain: Multiplier = new Multiplier('yellowPrestigeGain', new Num(1, 0), 50);
   static yellowParticleIdleGeneration: Multiplier = new Multiplier('yellowParticleIdleGeneration', new Num(0, 0));
   static yellowGenerators: Multiplier = new Multiplier('yellowGenerators', new Num(1, 0));
+  static yellowFusionGenerators: Multiplier = new Multiplier('yellowFusionGenerators', new Num(1, 0));
 
   static list: Multiplier[] = [
     // Red Phase
@@ -29,6 +30,7 @@ export class MultiplierRecord {
     MultiplierRecord.yellowPrestigeGain,
     MultiplierRecord.yellowParticleIdleGeneration,
     MultiplierRecord.yellowGenerators,
+    MultiplierRecord.yellowFusionGenerators
 
   ];
 

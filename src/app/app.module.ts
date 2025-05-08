@@ -38,6 +38,7 @@ import { YellowAutomatorsComponent } from './pages/automators/yellow-automators/
 import { YellowGeneratorsComponent } from './pages/yellow/yellow-generators/yellow-generators.component';
 import { YellowStarsComponent } from './pages/yellow/yellow-stars/yellow-stars.component';
 import { StarComponent } from './components/particles/star/star.component';
+import { YellowFusionComponent } from './pages/yellow/yellow-fusion/yellow-fusion.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +74,7 @@ import { StarComponent } from './components/particles/star/star.component';
     YellowGeneratorsComponent,
     YellowStarsComponent,
     StarComponent,
+    YellowFusionComponent,
   ],
     imports: [
         BrowserModule,

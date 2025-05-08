@@ -6,7 +6,7 @@ import {SubNavigation} from "../classes/features/sub-navigation";
 import {
   faArrowUp,
   faAtom, faCalendar,
-  faCogs,
+  faCogs, faFire,
   faForward,
   faIndustry,
   faMountain, faStar, faSun
@@ -43,6 +43,9 @@ export class NavigationsService {
     ], false),
     yellowStars: new SubNavigation('yellowStars', faSun, 'stars', this.navigations['yellow'], [
       {requirement: HoldingRecord.yellowPrestiges, amount: new Num(1, 3)},
+    ], false),
+    yellowFusion: new SubNavigation('yellowFusion', faFire, 'fusion', this.navigations['yellow'], [
+      {requirement: HoldingRecord.yellowParticles, amount: new Num(1, 13)},
     ], false),
 
     // Automators

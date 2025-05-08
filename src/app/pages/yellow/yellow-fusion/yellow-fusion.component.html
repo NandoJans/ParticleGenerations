@@ -1,0 +1,10 @@
+<app-number-display [holding]="yellowFusion"></app-number-display>
+<app-number-display [holding]="hydrogen"></app-number-display>
+<div class="upgrade-row">
+  <div *ngFor="let upgrade of upgrades">
+    <app-upgrade *ngIf="upgrade.isUnlocked()" [upgrade]="upgrade"></app-upgrade>
+  </div>
+</div>
+<div>
+  <app-upgrade *ngIf="increaseHydrogen.isUnlocked()" [upgrade]="increaseHydrogen"></app-upgrade>
+</div>

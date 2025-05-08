@@ -95,6 +95,14 @@ export class TimelineService {
       new Num(1, 3)
     )
     .build()
+    .addTimelineEvent(
+      'yellow-fusion',
+      'Yellow Fusion',
+      'We have discovered a lot of stars. It is time we made our own.',
+      HoldingRecord.yellowParticles,
+      new Num(1, 13)
+    )
+    .build()
     .build()
 
   static list: Timeline[] = [

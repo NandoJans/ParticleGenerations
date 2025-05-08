@@ -34,6 +34,10 @@ import {ImproveBetterAccelerationYellowUpgrade} from "../../features/upgrades/im
 import {ImproveBetterParticleEffectYellowUpgrade} from "../../features/upgrades/improve-better-particle-effect-yellow-upgrade";
 import {BreakYellowBarrierUpgrade} from "../../features/upgrades/break-yellow-barrier-upgrade";
 import {YellowPowerUpgrade} from "../../features/upgrades/yellow-power-upgrade";
+import {IncreaseStarMassUpgrade} from "../../features/upgrades/increase-star-mass-upgrade";
+import {IncreaseStarPressureUpgrade} from "../../features/upgrades/increase-star-pressure-upgrade";
+import {IncreaseStarGravityUpgrade} from "../../features/upgrades/increase-star-gravity-upgrade";
+import {IncreaseHydrogenHoldingUpgrade} from "../../features/upgrades/increase-hydrogen-holding-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -71,6 +75,12 @@ export class UpgradeRecord extends Record {
   // Yellow generator upgrades
   static yellowPower: YellowPowerUpgrade = new YellowPowerUpgrade('yellowPowerUpgrade');
 
+  // yellow fusion upgrades
+  static increaseStarMass: IncreaseStarMassUpgrade = new IncreaseStarMassUpgrade('increaseStarMass');
+  static increaseStarPressure: IncreaseStarPressureUpgrade = new IncreaseStarPressureUpgrade('increaseStarPressure');
+  static increaseStarGravity: IncreaseStarGravityUpgrade = new IncreaseStarGravityUpgrade('increaseStarGravity');
+  static increaseHydrogen: IncreaseHydrogenHoldingUpgrade = new IncreaseHydrogenHoldingUpgrade('increaseHydrogen');
+
   static override list: Upgrade[] = [
     UpgradeRecord.redGeneratorExtension,
     UpgradeRecord.redGeneratorBooster,
@@ -100,6 +110,12 @@ export class UpgradeRecord extends Record {
 
     // Yellow generator upgrades
     UpgradeRecord.yellowPower,
+
+    // Yellow fusion upgrades
+    UpgradeRecord.increaseStarMass,
+    UpgradeRecord.increaseStarPressure,
+    UpgradeRecord.increaseStarGravity,
+    UpgradeRecord.increaseHydrogen
   ]
 
   getList(): Upgrade[] {
