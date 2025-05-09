@@ -13,6 +13,7 @@ import {SecondYellowGenerator} from "../../features/generators/second-yellow-gen
 import {ThirdYellowGenerator} from "../../features/generators/third-yellow-generator";
 import {YellowGenerator} from "../../features/generators/yellow-generator";
 import {YellowFusionGenerator} from "../../features/generators/yellow-fusion-generator";
+import {HydrogenGenerator} from "../../features/generators/hydrogen-generator";
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,7 @@ export class GeneratorRecord extends Record {
 
   // Yellow Fusion
   static yellowFusionGenerator: YellowFusionGenerator = new YellowFusionGenerator('yellowFusionGenerator');
+  static hydrogenGenerator: HydrogenGenerator = new HydrogenGenerator('hydrogenGenerator');
 
 
   static override list: Generator[] = [
@@ -50,7 +52,8 @@ export class GeneratorRecord extends Record {
     GeneratorRecord.secondYellowGenerator,
     GeneratorRecord.thirdYellowGenerator,
 
-    GeneratorRecord.yellowFusionGenerator
+    GeneratorRecord.yellowFusionGenerator,
+    GeneratorRecord.hydrogenGenerator
   ]
 
   static redGenerators: RedGenerator[] = [

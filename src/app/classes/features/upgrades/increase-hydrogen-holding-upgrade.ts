@@ -7,21 +7,29 @@ import { Requirement } from "../interfaces/requirement";
 import {Upgrade} from "../upgrade";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {HoldingRecord} from "../../records/holdings/holding-record";
+import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
+import {GeneratorRecord} from "../../records/generators/generator-record";
 
 export class IncreaseHydrogenHoldingUpgrade extends Upgrade {
     name: string = 'increase-hydrogen-holding-upgrade';
-    displayName: string = 'Add Hydrogen';
-    override buffer: Num = new Num(1, 0);
-    override baseBuffer: Num = new Num(1, 0);
+    displayName: string = 'Increase Hydrogen Generation';
+    override buffer: Num = new Num(1.2, 0);
+    override baseBuffer: Num = new Num(1.2, 0);
     getDescription(): string {
-        return `Add ${this.buffer.toString()} Hydrogen to your Hydrogen Holding.`;
+        return `Multiply hydrogen generation by ${this.buffer.toString(2)}x.`;
     }
     type: string = 'increase-hydrogen-holding-upgrade';
     resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
     style: Styles = Styles.HYDROGEN;
     action(): Num {
-      const effect = this.amount.copy();
-      HoldingRecord.hydrogen.amount = effect.copy();
+      const effect = this.buffer.pow(this.amount);
+      MultiplierRecord.hydrogenGenerators.correct(effect)
+      if (this.hasBought()) {
+        GeneratorRecord.hydrogenGenerator.amount = new Num(1, 0);
+        GeneratorRecord.hydrogenGenerator.bought = new Num(1, 0);
+        GeneratorRecord.hydrogenGenerator.unlocked = true;
+      }
       return effect;
     }
     nav: string = 'yellow';
@@ -36,12 +44,12 @@ export class IncreaseHydrogenHoldingUpgrade extends Upgrade {
     enhance(): void {
 
     }
-    baseCost: Num = new Num(1, 1);
-    cost: Num = new Num(1, 1);
+    baseCost: Num = new Num(1, 10);
+    cost: Num = new Num(1, 10);
     increase: Num = new Num(1, 1);
     bought: Num = new Num(0, 0);
-    currency: Holding = HoldingRecord.yellowFusion;
+    currency: Holding = HoldingRecord.yellowParticles;
     requirement: Requirement[] = [
-      new Requirement(HoldingRecord.yellowParticles, new Num(1, 13), this),
+      new Requirement(HoldingRecord.yellowParticles, new Num(1, 10), this),
     ];
 }

@@ -45,7 +45,7 @@ export class NavigationsService {
       {requirement: HoldingRecord.yellowPrestiges, amount: new Num(1, 3)},
     ], false),
     yellowFusion: new SubNavigation('yellowFusion', faFire, 'fusion', this.navigations['yellow'], [
-      {requirement: HoldingRecord.yellowParticles, amount: new Num(1, 13)},
+      {requirement: HoldingRecord.yellowParticles, amount: new Num(1, 10)},
     ], false),
 
     // Automators

@@ -20,15 +20,20 @@ export class YellowFusionHolding extends Holding {
     .withEffectSuffix('')
     .build()
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED, this);
-  fusionPower: Num = new Num(3, -1)
+  fusionPower: Num = new Num(1, -2)
   getStyle(): Styles {
     return Styles.FUSION;
   }
 
+  maxAmount: Num = new Num(1, 1000);
+
   override action(): Num {
     const effect = this.amount.pow(this.fusionPower);
     MultiplierRecord.yellowGenerators.correct(effect);
-    this.fusionPower = new Num(3, -1);
+    this.fusionPower = new Num(1, -2);
+    if (this.amount.greq(this.maxAmount)) {
+      this.amount = this.maxAmount.copy();
+    }
     return effect;
   }
 

@@ -100,7 +100,7 @@ export class TimelineService {
       'Yellow Fusion',
       'We have discovered a lot of stars. It is time we made our own.',
       HoldingRecord.yellowParticles,
-      new Num(1, 15)
+      new Num(1, 10)
     )
     .build()
     .build()

@@ -30,7 +30,11 @@ export abstract class Buyable extends GameElement {
   }
 
   correctCost(): void {
-    this.getBuyableHelper().correct()
+    if (this.limit && this.bought.gt(this.limit)) {
+      this.bought = this.limit.copy();
+      return;
+    }
+    this.getBuyableHelper().correct();
   }
 
   hasBought(): boolean {

@@ -9,9 +9,7 @@ import {LocalStorageHelper} from "../helpers/local-storage-helper";
 import {Require} from "./interfaces/require";
 import {Requirement} from "./interfaces/requirement";
 import {ChallengeUpgrade} from "./challenges/upgrades/challenge-upgrade";
-import {Generator} from "./generator";
 import {App} from "../../App";
-import {Upgrade} from "./upgrade";
 import {ChallengeHolding} from "./challenges/holdings/challenge-holding";
 import {ChallengeGenerator} from "./challenges/generators/challenge-generator";
 
@@ -52,9 +50,14 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
       if (reward) {
         this.effect = reward;
       }
+
+      if (this.maxCompletions instanceof Num && !(this.completed instanceof Num)) {
+        this.completed = new Num(1, 0);
+      }
+      this.buffer = this.baseBuffer.copy();
+
       return reward;
     }
-    this.buffer = this.baseBuffer.copy();
     return;
   }
 

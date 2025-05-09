@@ -28,7 +28,7 @@ export class HydrogenHolding extends Holding {
 
   override action(): Num {
     if (this.amount.greq(Num.ONE)) {
-      const effect = this.hydrogenPower.pow(this.amount.sub(Num.ONE));
+      const effect = this.hydrogenPower.pow(this.amount.sub(Num.ONE).floor());
       GeneratorRecord.yellowFusionGenerator.bought = new Num(1, 0);
       GeneratorRecord.yellowFusionGenerator.amount = new Num(1, 0);
       MultiplierRecord.yellowFusionGenerators.correct(effect);

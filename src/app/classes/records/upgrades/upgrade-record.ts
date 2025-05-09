@@ -34,10 +34,12 @@ import {ImproveBetterAccelerationYellowUpgrade} from "../../features/upgrades/im
 import {ImproveBetterParticleEffectYellowUpgrade} from "../../features/upgrades/improve-better-particle-effect-yellow-upgrade";
 import {BreakYellowBarrierUpgrade} from "../../features/upgrades/break-yellow-barrier-upgrade";
 import {YellowPowerUpgrade} from "../../features/upgrades/yellow-power-upgrade";
-import {IncreaseStarMassUpgrade} from "../../features/upgrades/increase-star-mass-upgrade";
-import {IncreaseStarPressureUpgrade} from "../../features/upgrades/increase-star-pressure-upgrade";
-import {IncreaseStarGravityUpgrade} from "../../features/upgrades/increase-star-gravity-upgrade";
 import {IncreaseHydrogenHoldingUpgrade} from "../../features/upgrades/increase-hydrogen-holding-upgrade";
+import {IncreaseHydrogenEffectUpgrade} from "../../features/upgrades/increase-hydrogen-effect-upgrade";
+import {IncreaseProximaCentauriGoalUpgrade} from "../../features/upgrades/increase-proxima-centauri-goal-upgrade";
+import {IncreaseLalandeGoalUpgrade} from "../../features/upgrades/increase-lalande-goal-upgrade";
+import {IncreaseSunGoalUpgrade} from "../../features/upgrades/increase-sun-goal-upgrade";
+import {IncreaseSiriusGoalUpgrade} from "../../features/upgrades/increase-sirius-goal-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -76,10 +78,12 @@ export class UpgradeRecord extends Record {
   static yellowPower: YellowPowerUpgrade = new YellowPowerUpgrade('yellowPowerUpgrade');
 
   // yellow fusion upgrades
-  static increaseStarMass: IncreaseStarMassUpgrade = new IncreaseStarMassUpgrade('increaseStarMass');
-  static increaseStarPressure: IncreaseStarPressureUpgrade = new IncreaseStarPressureUpgrade('increaseStarPressure');
-  static increaseStarGravity: IncreaseStarGravityUpgrade = new IncreaseStarGravityUpgrade('increaseStarGravity');
   static increaseHydrogen: IncreaseHydrogenHoldingUpgrade = new IncreaseHydrogenHoldingUpgrade('increaseHydrogen');
+  static increaseHydrogenEffect: IncreaseHydrogenEffectUpgrade = new IncreaseHydrogenEffectUpgrade('increaseHydrogenEffect');
+  static increaseProximaCentauriGoal: IncreaseProximaCentauriGoalUpgrade = new IncreaseProximaCentauriGoalUpgrade('increaseProximaCentauriGoal');
+  static increaseLalandeGoal: IncreaseLalandeGoalUpgrade = new IncreaseLalandeGoalUpgrade('increaseLalandeGoal');
+  static increaseSunGoal: IncreaseSunGoalUpgrade = new IncreaseSunGoalUpgrade('increaseSunGoal');
+  static increaseSiriusGoal: IncreaseSiriusGoalUpgrade = new IncreaseSiriusGoalUpgrade('increaseSiriusGoal');
 
   static override list: Upgrade[] = [
     UpgradeRecord.redGeneratorExtension,
@@ -112,10 +116,12 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.yellowPower,
 
     // Yellow fusion upgrades
-    UpgradeRecord.increaseStarMass,
-    UpgradeRecord.increaseStarPressure,
-    UpgradeRecord.increaseStarGravity,
-    UpgradeRecord.increaseHydrogen
+    UpgradeRecord.increaseHydrogen,
+    UpgradeRecord.increaseHydrogenEffect,
+    UpgradeRecord.increaseProximaCentauriGoal,
+    UpgradeRecord.increaseLalandeGoal,
+    UpgradeRecord.increaseSunGoal,
+    UpgradeRecord.increaseSiriusGoal
   ]
 
   getList(): Upgrade[] {
