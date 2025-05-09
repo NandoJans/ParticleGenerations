@@ -7,7 +7,7 @@ export abstract class IncreaseChallengeGoalUpgrade extends Upgrade {
   abstract challenge: Challenge;
 
   override getDescription(): string {
-    return `Increase the goal of ${this.challenge.displayName} by ${this.buffer.toString(2)}x.`;
+    return `+${this.buffer.toString()} max completions for ${this.challenge.displayName}.`;
   }
 
   action(): Num {

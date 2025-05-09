@@ -150,7 +150,8 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         'yellow',
         'yellowStars',
         'siriusUpgrade',
-        this.challengeGenerators['siriusGenerator'].globalMultiplier
+        this.challengeGenerators['siriusGenerator'].globalMultiplier,
+        this.getDifficultyIncrease(),
       ),
       unlockFirstRedGeneratorMultiplierUpgrade: new YellowStarChallengeUnlockUpgrade(
         'unlockFirstRedGeneratorMultiplierUpgrade',
@@ -160,6 +161,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         this.challengeHoldings['siriusParticle'],
         this.style,
         GeneratorRecord.firstRedGenerator.multiplierUpgrade,
+        this.getDifficultyIncrease(),
       ),
       unlockFirstRedGeneratorBuyMultiplierUpgrade: new YellowStarChallengeUnlockUpgrade(
         'unlockFirstRedGeneratorBuyMultiplierUpgrade',
@@ -169,6 +171,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         this.challengeHoldings['siriusParticle'],
         this.style,
         GeneratorRecord.firstRedGenerator.buyMultiplierUpgrade,
+        this.getDifficultyIncrease(),
       ),
       unlockSecondRedGeneratorSirius: new YellowStarChallengeUnlockUpgrade(
         'unlockSecondRedGeneratorSirius',
@@ -178,6 +181,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         this.challengeHoldings['siriusParticle'],
         this.style,
         GeneratorRecord.secondRedGenerator,
+        this.getDifficultyIncrease(),
       ),
       unlockSecondRedGeneratorMultiplierUpgrade: new YellowStarChallengeUnlockUpgrade(
         'unlockSecondRedGeneratorMultiplierUpgrade',
@@ -187,6 +191,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         this.challengeHoldings['siriusParticle'],
         this.style,
         GeneratorRecord.secondRedGenerator.multiplierUpgrade,
+        this.getDifficultyIncrease(),
       ),
       unlockSecondRedGeneratorBuyMultiplierUpgrade: new YellowStarChallengeUnlockUpgrade(
         'unlockSecondRedGeneratorBuyMultiplierUpgrade',
@@ -196,6 +201,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         this.challengeHoldings['siriusParticle'],
         this.style,
         GeneratorRecord.secondRedGenerator.buyMultiplierUpgrade,
+        this.getDifficultyIncrease(),
       ),
       unlockThirdRedGeneratorSirius: new YellowStarChallengeUnlockUpgrade(
         'unlockThirdRedGeneratorSirius',
@@ -205,6 +211,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         this.challengeHoldings['siriusParticle'],
         this.style,
         GeneratorRecord.thirdRedGenerator,
+        this.getDifficultyIncrease(),
       ),
       unlockThirdRedGeneratorMultiplierUpgrade: new YellowStarChallengeUnlockUpgrade(
         'unlockThirdRedGeneratorMultiplierUpgrade',
@@ -214,6 +221,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         this.challengeHoldings['siriusParticle'],
         this.style,
         GeneratorRecord.thirdRedGenerator.multiplierUpgrade,
+        this.getDifficultyIncrease(),
       ),
       unlockThirdRedGeneratorBuyMultiplierUpgrade: new YellowStarChallengeUnlockUpgrade(
         'unlockThirdRedGeneratorBuyMultiplierUpgrade',
@@ -223,6 +231,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         this.challengeHoldings['siriusParticle'],
         this.style,
         GeneratorRecord.thirdRedGenerator.buyMultiplierUpgrade,
+        this.getDifficultyIncrease(),
       ),
       unlockFourthRedGeneratorSirius: new YellowStarChallengeUnlockUpgrade(
         'unlockFourthRedGeneratorSirius',
@@ -232,6 +241,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         this.challengeHoldings['siriusParticle'],
         this.style,
         GeneratorRecord.fourthRedGenerator,
+        this.getDifficultyIncrease(),
       ),
       unlockFourthRedGeneratorMultiplierUpgrade: new YellowStarChallengeUnlockUpgrade(
         'unlockFourthRedGeneratorMultiplierUpgrade',
@@ -241,6 +251,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         this.challengeHoldings['siriusParticle'],
         this.style,
         GeneratorRecord.fourthRedGenerator.multiplierUpgrade,
+        this.getDifficultyIncrease(),
       ),
       unlockFourthRedGeneratorBuyMultiplierUpgrade: new YellowStarChallengeUnlockUpgrade(
         'unlockFourthRedGeneratorBuyMultiplierUpgrade',
@@ -250,6 +261,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         this.challengeHoldings['siriusParticle'],
         this.style,
         GeneratorRecord.fourthRedGenerator.buyMultiplierUpgrade,
+        this.getDifficultyIncrease(),
       ),
       unlockFifthRedGeneratorSirius: new YellowStarChallengeUnlockUpgrade(
         'unlockFifthRedGeneratorSirius',
@@ -259,6 +271,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         this.challengeHoldings['siriusParticle'],
         this.style,
         GeneratorRecord.fifthRedGenerator,
+        this.getDifficultyIncrease(),
       ),
       unlockFifthRedGeneratorMultiplierUpgrade: new YellowStarChallengeUnlockUpgrade(
         'unlockFifthRedGeneratorMultiplierUpgrade',
@@ -268,6 +281,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         this.challengeHoldings['siriusParticle'],
         this.style,
         GeneratorRecord.fifthRedGenerator.multiplierUpgrade,
+        this.getDifficultyIncrease(),
       ),
       unlockFifthRedGeneratorBuyMultiplierUpgrade: new YellowStarChallengeUnlockUpgrade(
         'unlockFifthRedGeneratorBuyMultiplierUpgrade',
@@ -277,6 +291,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         this.challengeHoldings['siriusParticle'],
         this.style,
         GeneratorRecord.fifthRedGenerator.buyMultiplierUpgrade,
+        this.getDifficultyIncrease(),
       ),
       unlockRedGeneratorBooster: new YellowStarChallengeUnlockUpgrade(
         'unlockRedGeneratorBooster',
@@ -286,6 +301,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         this.challengeHoldings['siriusParticle'],
         this.style,
         UpgradeRecord.redGeneratorBooster,
+        this.getDifficultyIncrease(),
       ),
       unlockUnlockRedAccelerators: new YellowStarChallengeUnlockUpgrade(
         'unlockUnlockRedAccelerators',
@@ -295,6 +311,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         this.challengeHoldings['siriusParticle'],
         this.style,
         UpgradeRecord.unlockRedAccelerators,
+        this.getDifficultyIncrease(),
       ),
       unlockMultiplyRedAcceleratorGeneration: new YellowStarChallengeUnlockUpgrade(
         'unlockMultiplyRedAcceleratorGeneration',
@@ -304,6 +321,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         this.challengeHoldings['siriusParticle'],
         this.style,
         UpgradeRecord.multiplyRedAcceleratorGeneration,
+        this.getDifficultyIncrease(),
       ),
       unlockMultiplyRedAcceleratorEffectUpgrade: new YellowStarChallengeUnlockUpgrade(
         'unlockMultiplyRedAcceleratorEffectUpgrade',
@@ -313,6 +331,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         this.challengeHoldings['siriusParticle'],
         this.style,
         UpgradeRecord.multiplyRedAcceleratorEffectUpgrade,
+        this.getDifficultyIncrease(),
       ),
       unlockImproveRedAcceleratorsEffect: new YellowStarChallengeUnlockUpgrade(
         'unlockImproveRedAcceleratorsEffect',
@@ -322,6 +341,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         this.challengeHoldings['siriusParticle'],
         this.style,
         UpgradeRecord.improveRedAcceleratorsEffect,
+        this.getDifficultyIncrease(),
       ),
       unlockImproveRedParticlesToAcceleratorsUpgrade: new YellowStarChallengeUnlockUpgrade(
         'unlockImproveRedParticlesToAcceleratorsUpgrade',
@@ -331,6 +351,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         this.challengeHoldings['siriusParticle'],
         this.style,
         UpgradeRecord.improveRedParticlesToAcceleratorsUpgrade,
+        this.getDifficultyIncrease(),
       ),
       unlockBoosterAccelerationUpgrade: new YellowStarChallengeUnlockUpgrade(
         'unlockBoosterAccelerationUpgrade',
@@ -340,6 +361,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         this.challengeHoldings['siriusParticle'],
         this.style,
         UpgradeRecord.boosterAccelerationUpgrade,
+        this.getDifficultyIncrease(),
       ),
     }
   }

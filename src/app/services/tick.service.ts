@@ -63,8 +63,8 @@ export class TickService {
       });
     });
 
-    this.prestigeLayersService.tick(speed);
     this.milestoneRecord.tick();
+    this.prestigeLayersService.tick(speed);
     this.challengeService.tick();
     this.timelineService.tick();
     this.enhancementService.tick();

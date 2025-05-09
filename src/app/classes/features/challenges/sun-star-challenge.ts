@@ -130,7 +130,8 @@ export class SunStarChallenge extends YellowStarChallenge {
         'yellow',
         'yellowStars',
         'sunUpgrade',
-        this.challengeGenerators['sunGenerator'].globalMultiplier
+        this.challengeGenerators['sunGenerator'].globalMultiplier,
+        this.getDifficultyIncrease(),
       ),
       sunGeneratorMultiplierUpgrade2: new MultiplierChallengeUpgrade(
         'sunGeneratorMultiplierUpgrade2',
@@ -145,7 +146,8 @@ export class SunStarChallenge extends YellowStarChallenge {
         'yellow',
         'yellowStars',
         'sunUpgrade',
-        this.challengeGenerators['sunGenerator'].globalMultiplier
+        this.challengeGenerators['sunGenerator'].globalMultiplier,
+      this.getDifficultyIncrease(),
       ),
       sunGeneratorMultiplierUpgrade3: new MultiplierChallengeUpgrade(
         'sunGeneratorMultiplierUpgrade3',
@@ -160,7 +162,8 @@ export class SunStarChallenge extends YellowStarChallenge {
         'yellow',
         'yellowStars',
         'sunUpgrade',
-        this.challengeGenerators['sunGenerator'].globalMultiplier
+        this.challengeGenerators['sunGenerator'].globalMultiplier,
+        this.getDifficultyIncrease(),
       ),
       strongerSunParticleEffect: new CustomChallengeUpgrade(
         'strongerSunParticleEffect',
@@ -175,6 +178,7 @@ export class SunStarChallenge extends YellowStarChallenge {
         'yellow',
         'yellowStars',
         'sunUpgrade',
+        this.getDifficultyIncrease(),
       )
     }
 

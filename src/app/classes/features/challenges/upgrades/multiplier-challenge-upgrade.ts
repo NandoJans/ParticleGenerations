@@ -18,7 +18,8 @@ export class MultiplierChallengeUpgrade extends ChallengeUpgrade {
     nav: string,
     subNav: string,
     type: string,
-    public multiplier: Multiplier
+    public multiplier: Multiplier,
+    difficultyIncrease: Num
   ) {
     super(
       saveName,
@@ -32,7 +33,8 @@ export class MultiplierChallengeUpgrade extends ChallengeUpgrade {
       style,
       nav,
       subNav,
-      type
+      type,
+      difficultyIncrease
     );
   }
 

@@ -18,6 +18,7 @@ export class CustomChallengeUpgrade extends ChallengeUpgrade {
     nav: string,
     subNav: string,
     type: string,
+    difficultyIncrease: Num,
     public description: Function = () => '',
     public customAction: Function = () => undefined,
     public customBuyAction: Function = () => undefined,
@@ -34,7 +35,8 @@ export class CustomChallengeUpgrade extends ChallengeUpgrade {
       style,
       nav,
       subNav,
-      type
+      type,
+      difficultyIncrease
     );
   }
 

@@ -104,7 +104,7 @@ export class ChallengeService {
   static completeChallenge(prestigeLayer: string): void {
     const challenge = ChallengeRecord.currentChallenges[prestigeLayer];
     if (challenge) {
-      challenge.completed = true;
+      challenge.complete();
       challenge.end();
       delete ChallengeRecord.currentChallenges[prestigeLayer];
       ResetHelper.reset(challenge.prestige);

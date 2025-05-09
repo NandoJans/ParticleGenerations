@@ -62,7 +62,7 @@ export class Num {
       return `${this.mantissa.toFixed(exponentDecimals)}e${exponent}`;
     }
     // otherwise full number with commas
-    const str = this.toNumber().toFixed(decimals);
+    const str = (decimals === 0) ? Math.floor(this.toNumber()).toString() : this.toNumber().toFixed(decimals);
     const parts = str.split(".");
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return parts.join(".");

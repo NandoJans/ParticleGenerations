@@ -16,11 +16,14 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
 
   baseGoal: Num = new Num(1, 3800);
   goal: Num = new Num(1, 3800);
+  override goalIncrease: Num = new Num(1, 15200);
+  override difficultyIncrease: Num = new Num(2, 0);
 
   currency: Holding = HoldingRecord.redParticles;
 
   override buffer: Num = new Num(0.12, 0);
   override baseBuffer: Num = new Num(0.12, 0);
+  override completionBuffer: Num = new Num(2, 0);
 
   getRewardDescription(): string {
     return "Yellow generators multiplied based on yellow particles by raising them to ^"+this.buffer.toString(2);
@@ -66,39 +69,43 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
     this.challengeUpgrades = {
       unlockSecondRedGenerator: new YellowStarChallengeUnlockUpgrade(
         'unlockSecondRedGenerator',
-        'unlock-second-red-generator',
+        'unlock-second-red-generator-proxima-centauri',
         'Unlock Second Red Generator',
         new Num(1, 75),
         HoldingRecord.redParticles,
         this.style,
         GeneratorRecord.secondRedGenerator,
+        this.getDifficultyIncrease(new Num(1.6, 0)),
       ),
       unlockThirdRedGenerator: new YellowStarChallengeUnlockUpgrade(
         'unlockThirdRedGenerator',
-        'unlock-third-red-generator',
+        'unlock-third-red-generator-proxima-centauri',
         'Unlock Third Red Generator',
         new Num(1, 23),
         HoldingRecord.redAccelerators,
         this.style,
         GeneratorRecord.thirdRedGenerator,
+        this.getDifficultyIncrease(new Num(2.1, 0)),
       ),
       unlockFourthRedGenerator: new YellowStarChallengeUnlockUpgrade(
         'unlockFourthRedGenerator',
-        'unlock-fourth-red-generator',
+        'unlock-fourth-red-generator-proxima-centauri',
         'Unlock Fourth Red Generator',
         new Num(1, 1750),
         HoldingRecord.redParticles,
         this.style,
         GeneratorRecord.fourthRedGenerator,
+        this.getDifficultyIncrease(new Num(0.87, 0)),
       ),
       unlockFifthRedGenerator: new YellowStarChallengeUnlockUpgrade(
         'unlockFifthRedGenerator',
-        'unlock-fifth-red-generator',
+        'unlock-fifth-red-generator-proxima-centauri',
         'Unlock Fifth Red Generator',
         new Num(1, 393),
         HoldingRecord.redAccelerators,
         this.style,
         GeneratorRecord.fifthRedGenerator,
+        this.getDifficultyIncrease(new Num(0.89, 0)),
       ),
     }
   }

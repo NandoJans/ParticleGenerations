@@ -27,6 +27,7 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   abstract resetId: ResetKey
   softResetId: ResetKey = ResetKey.NONE;
   instantComplete: boolean = false
+  difficultyIncrease: Num = new Num(1, 0)
   abstract reward(): Num | undefined
   constantNerfs(): void {};
   abstract init(): void;
@@ -39,26 +40,62 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   goalIncrease: Num | undefined = undefined
   buffer: Num = new Num(0, 0)
   baseBuffer: Num = new Num(0, 0)
+  completionBuffer: Num = new Num(1, 0);
   override calculationOrder: number = 200;
   challengeUpgrades: {[key: string]: ChallengeUpgrade} = {};
   challengeHoldings: {[key: string]: ChallengeHolding} = {};
   challengeGenerators: {[key: string]: ChallengeGenerator} = {};
 
+  strongerBuffer(): Num | void {
+    if (this.completed instanceof Num) {
+      this.buffer = this.baseBuffer.mul(this.completionBuffer.pow(this.completed));
+    }
+  }
+
   override run(): Num | undefined {
     if (this.completed) {
+
       const reward = this.reward();
       if (reward) {
         this.effect = reward;
       }
 
-      if (this.maxCompletions instanceof Num && !(this.completed instanceof Num)) {
-        this.completed = new Num(1, 0);
-      }
-      this.buffer = this.baseBuffer.copy();
+      this.correctCompleted();
+      this.correctGoal()
+      this.correctBuffer();
 
       return reward;
     }
     return;
+  }
+
+  private correctCompleted() {
+    if (this.maxCompletions instanceof Num && !(this.completed instanceof Num)) {
+      this.completed = new Num(1, 0);
+    }
+  }
+
+  private correctGoal() {
+    if (this.maxCompletions instanceof Num && this.goalIncrease instanceof Num && this.completed instanceof Num) {
+      this.goal = this.baseGoal.mul(
+        this.goalIncrease.pow(this.completed)
+      );
+    }
+  }
+
+  protected correctBuffer() {
+    this.buffer = this.baseBuffer.copy();
+
+    if (this.completed instanceof Num && this.completed.greq(new Num(2, 0))) {
+      this.strongerBuffer();
+    }
+  }
+
+  getDifficultyIncrease(modifier: Num = new Num(1, 0)): Num {
+    if (this.completed instanceof Num) {
+      return this.difficultyIncrease.mul(modifier).mul(this.completed)
+    }
+    return new Num(1, 0);
   }
 
   tick() {
@@ -108,16 +145,22 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   }
 
   tryLoad(): void {
-    this.init();
     this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey())
     this.unlocked = this.localStorageHelper.load(this.unlocked, "unlocked");
-
     if (this.completed instanceof Num) {
+
       this.completed = this.localStorageHelper.loadNum(this.completed, "completed");
     } else {
       this.completed = this.localStorageHelper.load(this.completed, "completed");
+
+      if (typeof this.completed === "object") {
+        if (this.completed['mantissa'] !== undefined && this.completed['exponent'] !== undefined) {
+          this.completed = new Num(this.completed['mantissa'], this.completed['exponent']);
+        }
+      }
     }
 
+    this.init();
     this.tryLoadChallengeUpgrades();
   }
 
@@ -224,6 +267,14 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
       return this.completed.greq(this.maxCompletions ?? new Num(1, 0));
     } else {
       return this.completed;
+    }
+  }
+
+  complete(): void {
+    if (this.completed instanceof Num) {
+      this.completed = this.completed.add(new Num(1, 0));
+    } else {
+      this.completed = true;
     }
   }
 }
