@@ -20,7 +20,7 @@ export class RedGeneratorBuyMultiplierUpgrade extends RedGeneratorUpgrade {
     this.name = `red-generator-buy-multiplier-upgrade-${generator.rank}`;
     this.resetId = ResetHelper.registerReset(ResetKey.RED_EXTENSION, this);
     this.requirement = [
-      new Requirement(generator, new Num(generator.rank, 0), this),
+      new Requirement(generator, new Num(1, 0), this),
     ];
   }
 

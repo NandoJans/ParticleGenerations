@@ -124,7 +124,7 @@ export abstract class Generator extends Buyable implements Generatable, Storable
   }
 
   requirementSatisfied(amount: Num): boolean {
-    return this.amount.greq(amount);
+    return this.unlocked
   }
 
   getUpgrades(): Upgrade[] {

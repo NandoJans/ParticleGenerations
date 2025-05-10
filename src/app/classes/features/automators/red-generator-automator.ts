@@ -24,7 +24,7 @@ export class RedGeneratorAutomator extends Automator {
     this.name = 'red-generator-automator-' + generator.rank;
     this.goalString = 'Buy ' + this.goal.toString() + ' ' + generator.stringRank + ' Red Generators';
     this.requirement = [
-      new Requirement(UpgradeRecord.redGeneratorExtension, new Num(generator.rank - 1, 0), this)
+      new Requirement(generator, new Num(1, 0), this)
     ]
     this.resetId = ResetHelper.registerReset(ResetKey.RED, this);
     this.generator = generator
