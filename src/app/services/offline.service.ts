@@ -69,13 +69,24 @@ export class OfflineService {
         const tickAmount = this.totalTicks - this.ticksDone;
         this.ticksDone = this.totalTicks;
         this.tickService.gameTick(new Num(tickAmount/10, 0));
+        this.addToLastOnlineSave(tickAmount);
         this.done = true;
       } else {
         this.tickService.gameTick(new Num(1, 1));
         this.ticksDone += 100;
+        this.addToLastOnlineSave(100);
       }
       this.updateGeneratedHoldings();
     }, 0);
+  }
+
+  private addToLastOnlineSave(ticks: number) {
+    const lastSave = this.localStorageHelper.load(null);
+    if (lastSave) {
+      const newDate = new Date();
+      newDate.setTime(new Date(lastSave).getTime() + (ticks * 50));
+      this.localStorageHelper.save(newDate.toString());
+    }
   }
 
   private calculateTicks(lastSave: string) {

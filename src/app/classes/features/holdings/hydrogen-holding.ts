@@ -20,7 +20,7 @@ export class HydrogenHolding extends Holding {
     .withEffectPrefix('They generate')
     .withEffectSuffix('yellow fusion per second')
     .build()
-  resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
+  resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED, this);
   hydrogenPower: Num = new Num(2, 0);
   getStyle(): Styles {
     return Styles.HYDROGEN;

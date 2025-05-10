@@ -11,6 +11,7 @@ export class ImproveRedParticlesToAcceleratorsUpgrade extends RedAcceleratorUpgr
   increase: Num = new Num(1, 15);
   override buffer: Num = new Num(1.01, 0);
   override baseBuffer: Num = new Num(1.01, 0);
+  override limit: Num = new Num(3, 2);
   constructor(saveName: string) {
     super(saveName, "improve-red-particles-to-accelerators-effect");
   }

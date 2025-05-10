@@ -13,6 +13,7 @@ export enum Styles {
   LALANDE = "yellow lalande",
   SUN = "yellow sun",
   SIRIUS = "yellow sirius",
-  FUSION = "yellow fusion",
-  HYDROGEN = "yellow hydrogen",
+  FUSION = "yellow fusion color-switch",
+  HYDROGEN = "yellow hydrogen color-switch",
+  FUSION_SUPER = "yellow fusion super color-switch",
 }

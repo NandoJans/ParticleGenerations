@@ -6,7 +6,11 @@
   </div>
 </div>
 <div class="upgrade-row">
+  <app-upgrade *ngIf="fusionBoosterAcceleration.isUnlocked()" [upgrade]="fusionBoosterAcceleration"></app-upgrade>
+</div>
+<div class="upgrade-row">
   <div *ngFor="let upgrade of upgrades">
     <app-upgrade *ngIf="upgrade.isUnlocked()" [upgrade]="upgrade"></app-upgrade>
   </div>
 </div>
+

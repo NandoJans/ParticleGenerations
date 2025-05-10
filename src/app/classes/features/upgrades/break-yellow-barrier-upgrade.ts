@@ -20,7 +20,7 @@ export class BreakYellowBarrierUpgrade extends YellowUpgrade {
   action(): undefined {
     if (this.hasBought()) {
       PrestigeLayersService.yellowPrestigeLayer.limitPhaseBelow = false;
-      UpgradeRecord.boosterAccelerationUpgrade.limit = undefined;
+      UpgradeRecord.boosterAccelerationUpgrade.limit = new Num(6, 1);
     }
     return;
   }

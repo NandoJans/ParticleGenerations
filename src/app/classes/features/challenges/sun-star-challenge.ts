@@ -20,14 +20,17 @@ export class SunStarChallenge extends YellowStarChallenge {
 
   baseGoal: Num = new Num(1, 5000);
   goal: Num = new Num(1, 5000);
+  override goalIncrease: Num = new Num(1, 15200);
+  override difficultyIncrease: Num = new Num(1.8, 0);
 
   currency: Holding = HoldingRecord.redParticles;
 
   override buffer: Num = new Num(3, -2);
   override baseBuffer: Num = new Num(3, -2);
+  override completionBuffer: Num = new Num(1.001, 0);
 
   getRewardDescription(): string {
-    return "Yellow power also boosts red accelerator generation ^"+this.buffer.toString(2)+".";
+    return "Yellow power also boosts red accelerator generation ^"+this.buffer.toString(3)+".";
   }
   getDescription(): string {
     return "The sun, somehow lacks acceleration. Maybe something else will help you.";
@@ -123,7 +126,8 @@ export class SunStarChallenge extends YellowStarChallenge {
         'Sun fusion',
         new Num(1, 4),
         new Num(1, 3),
-        new Num(1, 0),
+        new Num(1, 1),
+        new Num(1, 20),
         new Num(3, 0),
         this.challengeHoldings['sunParticle'],
         this.style,
@@ -139,7 +143,8 @@ export class SunStarChallenge extends YellowStarChallenge {
         'Sun mass',
         new Num(1, 5),
         new Num(1, 3),
-        new Num(1, 0),
+        new Num(1, 1),
+        new Num(1, 20),
         new Num(5, 0),
         this.challengeHoldings['sunParticle'],
         this.style,
@@ -147,7 +152,7 @@ export class SunStarChallenge extends YellowStarChallenge {
         'yellowStars',
         'sunUpgrade',
         this.challengeGenerators['sunGenerator'].globalMultiplier,
-      this.getDifficultyIncrease(),
+      this.getDifficultyIncrease(new Num(0.94, 0)),
       ),
       sunGeneratorMultiplierUpgrade3: new MultiplierChallengeUpgrade(
         'sunGeneratorMultiplierUpgrade3',
@@ -155,7 +160,8 @@ export class SunStarChallenge extends YellowStarChallenge {
         'Sun hydrogen',
         new Num(1, 6),
         new Num(1, 3),
-        new Num(1, 0),
+        new Num(1, 1),
+        new Num(1, 20),
         new Num(9, 0),
         this.challengeHoldings['sunParticle'],
         this.style,
@@ -163,7 +169,7 @@ export class SunStarChallenge extends YellowStarChallenge {
         'yellowStars',
         'sunUpgrade',
         this.challengeGenerators['sunGenerator'].globalMultiplier,
-        this.getDifficultyIncrease(),
+        this.getDifficultyIncrease(new Num(0.88, 0)),
       ),
       strongerSunParticleEffect: new CustomChallengeUpgrade(
         'strongerSunParticleEffect',
@@ -171,14 +177,15 @@ export class SunStarChallenge extends YellowStarChallenge {
         'Supernova',
         new Num(1, 8),
         new Num(1, 4),
-        new Num(1, 0),
+        new Num(1, 1),
+        new Num(1, 20),
         new Num(2, 0),
         this.challengeHoldings['sunParticle'],
         this.style,
         'yellow',
         'yellowStars',
         'sunUpgrade',
-        this.getDifficultyIncrease(),
+        this.getDifficultyIncrease(new Num(0.82, 0)),
       )
     }
 

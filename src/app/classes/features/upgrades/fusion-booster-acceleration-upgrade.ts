@@ -1,41 +1,38 @@
 import {Upgrade} from "../upgrade";
-import {Requirement} from "../interfaces/requirement";
 import {Num} from "../../../num";
 import {Holding} from "../holding";
-import {ResetKey} from "../../enums/reset-key";
 import {HoldingRecord} from "../../records/holdings/holding-record";
+import {Requirement} from "../interfaces/requirement";
+import {ResetKey} from "../../enums/reset-key";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {Styles} from "../../enums/styles";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {Transaction} from "../interfaces/transaction";
 import {StatsService} from "../../../services/stats.service";
-import { Enhancement } from "../enhancements/enhancement";
-import {EnhancementRecord} from "../../records/enhancement-record";
+import {Enhancement} from "../enhancements/enhancement";
 
-export class BoosterAccelerationUpgrade extends Upgrade {
-  baseCost: Num = new Num(1, 5);
-  cost: Num = new Num(1, 5);
-  increase: Num = new Num(1, 2);
-  override scaling = new Num(1, 3);
-  override scalingStart: Num = new Num(1, 15);
+export class FusionBoosterAccelerationUpgrade extends Upgrade {
+  baseCost: Num = new Num(1, 1000);
+  cost: Num = new Num(1, 1000);
+  increase: Num = new Num(1, 0);
   bought: Num = new Num(0, 0);
-  override limit: Num|undefined = new Num(8, 0);
+  override limit: Num|undefined = new Num(0, 0);
 
-  override buffer: Num = new Num(0.025, 0);
-  override baseBuffer: Num = new Num(0.025, 0);
+  override buffer: Num = new Num(0.05, 0);
+  override baseBuffer: Num = new Num(0.05, 0);
 
   freeBuys: Num = new Num(1, 1);
   baseFreeBuys: Num = new Num(1, 1);
-  currency: Holding = HoldingRecord.redAccelerators;
-  displayName: string = "Booster Acceleration";
-  name: string = "booster-acceleration-upgrade";
-  nav: string = "red";
+  currency: Holding = HoldingRecord.yellowFusion;
+  displayName: string = "Fusion Booster Acceleration";
+  name: string = "fusion-booster-acceleration-upgrade";
+  nav: string = "yellow";
   requirement: Requirement[] = [
     new Requirement(HoldingRecord.redParticles, new Num(1, 75), this)
   ];
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED, this);
-  style: Styles = Styles.RED_SUPER;
-  subNav: string = "accelerators";
+  style: Styles = Styles.FUSION_SUPER;
+  subNav: string = "yellowFusion";
   type: string = "boosterAccelerator";
   totalFreeBuys: Num = new Num(0, 0);
   override noMax: boolean = true;
@@ -48,6 +45,8 @@ export class BoosterAccelerationUpgrade extends Upgrade {
     this.freeBuys = this.baseFreeBuys.copy();
     UpgradeRecord.redGeneratorBooster.buffer = UpgradeRecord.redGeneratorBooster.buffer.add(effect);
     UpgradeRecord.redGeneratorBooster.amount = UpgradeRecord.redGeneratorBooster.amount.add(effect2);
+
+    console.log(this.limit?.toString())
 
     this.totalFreeBuys = effect2.copy();
     return effect;
@@ -67,6 +66,10 @@ export class BoosterAccelerationUpgrade extends Upgrade {
     const transaction = super.buy(amount);
     StatsService.addNum(UpgradeRecord.redGeneratorBooster.name, 'totalBought', this.freeBuys);
     StatsService.addNum(UpgradeRecord.redGeneratorBooster.name, 'totalBoughtAutomator', this.freeBuys);
+    HoldingRecord.hydrogen.reset();
+    HoldingRecord.yellowFusion.reset();
+    console.log(HoldingRecord.hydrogen.amount.toString());
+    console.log(HoldingRecord.yellowFusion.amount.toString());
     return transaction;
   }
 
@@ -74,9 +77,7 @@ export class BoosterAccelerationUpgrade extends Upgrade {
     return "Enhance to add power increase of red generator boosters of "+enhancement.getAddition().mul(new Num(5, -3)).toString(3);
   }
 
-  allowedEnhancements: Enhancement[] = [
-    EnhancementRecord.yellow
-  ];
+  allowedEnhancements: Enhancement[] = [];
   canEnhance(): boolean {
     return true;
   }

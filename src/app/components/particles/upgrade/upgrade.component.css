@@ -106,20 +106,26 @@ button.sirius {
   --background-color: var(--background-color-1);
 }
 
-button.fusion.buyable, button.hydrogen.buyable {
+button.color-switch {
+  animation: border-color-switch 10s infinite;
+}
+
+button.color-switch.buyable {
   animation: color-switch 10s infinite;
+}
+
+button.color-switch.maxed {
+  animation: background-color-switch 10s infinite;
 }
 
 button.fusion {
   --color-switch-1: var(--proxima-centauri-color);
   --color-switch-2: var(--sun-color);
-  animation: border-color-switch 10s infinite;
 }
 
 button.hydrogen {
   --color-switch-1: var(--rigel-color);
   --color-switch-2: var(--sirius-color);
-  animation: border-color-switch 5s infinite;
 }
 
 button.enhancing:hover {
@@ -178,5 +184,17 @@ button.enhance.buyable.enhanced-yellow {
   }
   100% {
     border-color: var(--color-switch-1);
+  }
+}
+
+@keyframes background-color-switch {
+  0% {
+    background-color: var(--color-switch-1);
+  }
+  50% {
+    background-color: var(--color-switch-2);
+  }
+  100% {
+    background-color: var(--color-switch-1);
   }
 }

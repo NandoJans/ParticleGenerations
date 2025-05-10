@@ -20,7 +20,7 @@ export class IncreaseSiriusGoalUpgrade extends IncreaseChallengeGoalUpgrade {
   subNav: string = 'yellowFusion';
   baseCost: Num = new Num(1, 4);
   cost: Num = new Num(1, 4);
-  increase: Num = new Num(1, 4);
+  increase: Num = new Num(1, 5);
   currency: Holding = HoldingRecord.hydrogen;
   requirement: Requirement[] = [
     new Requirement(HoldingRecord.yellowParticles, new Num(1, 10), this),

@@ -3,6 +3,7 @@ import {Holding} from "../../../classes/features/holding";
 import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
 import {Upgrade} from "../../../classes/features/upgrade";
+import {FusionBoosterAccelerationUpgrade} from "../../../classes/features/upgrades/fusion-booster-acceleration-upgrade";
 
 @Component({
   selector: 'app-yellow-fusion',
@@ -20,8 +21,11 @@ export class YellowFusionComponent implements OnInit {
   ];
   hydrogenUpgrades: Upgrade[] = [
     UpgradeRecord.increaseHydrogen,
-    UpgradeRecord.increaseHydrogenEffect
+    UpgradeRecord.increaseHydrogenEffect,
+    UpgradeRecord.increaseMaxFusionBoosterAcceleration,
   ];
+  fusionBoosterAcceleration: FusionBoosterAccelerationUpgrade = UpgradeRecord.fusionBoosterAcceleration;
+
 
   constructor() { }
 

@@ -40,6 +40,10 @@ import {IncreaseProximaCentauriGoalUpgrade} from "../../features/upgrades/increa
 import {IncreaseLalandeGoalUpgrade} from "../../features/upgrades/increase-lalande-goal-upgrade";
 import {IncreaseSunGoalUpgrade} from "../../features/upgrades/increase-sun-goal-upgrade";
 import {IncreaseSiriusGoalUpgrade} from "../../features/upgrades/increase-sirius-goal-upgrade";
+import {FusionBoosterAccelerationUpgrade} from "../../features/upgrades/fusion-booster-acceleration-upgrade";
+import {
+  IncreaseMaxFusionBoosterAccelerationUpgrade
+} from "../../features/upgrades/increase-max-fusion-booster-acceleration-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -84,6 +88,8 @@ export class UpgradeRecord extends Record {
   static increaseLalandeGoal: IncreaseLalandeGoalUpgrade = new IncreaseLalandeGoalUpgrade('increaseLalandeGoal');
   static increaseSunGoal: IncreaseSunGoalUpgrade = new IncreaseSunGoalUpgrade('increaseSunGoal');
   static increaseSiriusGoal: IncreaseSiriusGoalUpgrade = new IncreaseSiriusGoalUpgrade('increaseSiriusGoal');
+  static fusionBoosterAcceleration: FusionBoosterAccelerationUpgrade = new FusionBoosterAccelerationUpgrade('fusionBoosterAcceleration');
+  static increaseMaxFusionBoosterAcceleration: IncreaseMaxFusionBoosterAccelerationUpgrade = new IncreaseMaxFusionBoosterAccelerationUpgrade('increaseMaxFusionBoosterAcceleration');
 
   static override list: Upgrade[] = [
     UpgradeRecord.redGeneratorExtension,
@@ -121,7 +127,9 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.increaseProximaCentauriGoal,
     UpgradeRecord.increaseLalandeGoal,
     UpgradeRecord.increaseSunGoal,
-    UpgradeRecord.increaseSiriusGoal
+    UpgradeRecord.increaseSiriusGoal,
+    UpgradeRecord.fusionBoosterAcceleration,
+    UpgradeRecord.increaseMaxFusionBoosterAcceleration,
   ]
 
   getList(): Upgrade[] {

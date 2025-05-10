@@ -10,6 +10,7 @@ import {TimelineService} from "./timeline.service";
 import {MilestoneRecord} from "../classes/records/milestones/milestone-record";
 import {Num} from "../num";
 import {ChallengeService} from "./interactables/challenge.service";
+import {App} from "../App";
 
 @Injectable({
   providedIn: 'root'
@@ -64,6 +65,8 @@ export class DataManagerService {
   }
 
   setLastSave(): void {
-    this.localStorageHelper.save(new Date().toISOString());
+    if (!App.offlineCalculation) {
+      this.localStorageHelper.save(new Date().toISOString());
+    }
   }
 }

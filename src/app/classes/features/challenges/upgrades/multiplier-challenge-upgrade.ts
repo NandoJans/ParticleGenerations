@@ -12,6 +12,7 @@ export class MultiplierChallengeUpgrade extends ChallengeUpgrade {
     cost: Num,
     increase: Num,
     scaling: Num,
+    scalingStart: Num,
     buffer: Num,
     currency: Holding,
     style: Styles,
@@ -36,6 +37,7 @@ export class MultiplierChallengeUpgrade extends ChallengeUpgrade {
       type,
       difficultyIncrease
     );
+    this.scalingStart = scalingStart;
   }
 
   action(): Num {
