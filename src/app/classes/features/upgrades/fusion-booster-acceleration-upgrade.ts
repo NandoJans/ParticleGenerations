@@ -46,8 +46,6 @@ export class FusionBoosterAccelerationUpgrade extends Upgrade {
     UpgradeRecord.redGeneratorBooster.buffer = UpgradeRecord.redGeneratorBooster.buffer.add(effect);
     UpgradeRecord.redGeneratorBooster.amount = UpgradeRecord.redGeneratorBooster.amount.add(effect2);
 
-    console.log(this.limit?.toString())
-
     this.totalFreeBuys = effect2.copy();
     return effect;
   }
@@ -68,8 +66,6 @@ export class FusionBoosterAccelerationUpgrade extends Upgrade {
     StatsService.addNum(UpgradeRecord.redGeneratorBooster.name, 'totalBoughtAutomator', this.freeBuys);
     HoldingRecord.hydrogen.reset();
     HoldingRecord.yellowFusion.reset();
-    console.log(HoldingRecord.hydrogen.amount.toString());
-    console.log(HoldingRecord.yellowFusion.amount.toString());
     return transaction;
   }
 

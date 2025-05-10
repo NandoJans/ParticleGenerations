@@ -18,9 +18,9 @@ export class IncreaseSunGoalUpgrade extends IncreaseChallengeGoalUpgrade {
   style: Styles = Styles.SUN;
   nav: string = 'yellow';
   subNav: string = 'yellowFusion';
-  baseCost: Num = new Num(1, 3);
-  cost: Num = new Num(1, 3);
-  increase: Num = new Num(1, 5);
+  baseCost: Num = new Num(1, 2);
+  cost: Num = new Num(1, 2);
+  increase: Num = new Num(1, 4);
   currency: Holding = HoldingRecord.hydrogen;
   requirement: Requirement[] = [
     new Requirement(HoldingRecord.yellowParticles, new Num(1, 10), this),

@@ -18,9 +18,9 @@ export class IncreaseProximaCentauriGoalUpgrade extends IncreaseChallengeGoalUpg
   style: Styles = Styles.PROXIMA_CENTAURI;
   nav: string = 'yellow';
   subNav: string = 'yellowFusion';
-  baseCost: Num = new Num(1, 1);
-  cost: Num = new Num(1, 1);
-  increase: Num = new Num(1, 5);
+  baseCost: Num = new Num(1, 0);
+  cost: Num = new Num(1, 0);
+  increase: Num = new Num(1, 4);
   currency: Holding = HoldingRecord.hydrogen;
   requirement: Requirement[] = [
     new Requirement(HoldingRecord.yellowParticles, new Num(1, 10), this),

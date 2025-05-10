@@ -9,7 +9,7 @@ export class SecondYellowGenerator extends YellowGenerator {
   constructor(saveName: string) {
     super(saveName, 'second-yellow-generator');
   }
-  displayName: string = 'Second Yellow Generator';
+  displayName: string = 'Yellow Generator 2';
   generates: Generatable = GeneratorRecord.firstYellowGenerator;
   stringRank: string = '2';
   rank: number = 2;

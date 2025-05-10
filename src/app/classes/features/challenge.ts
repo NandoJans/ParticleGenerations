@@ -206,6 +206,7 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   revertRequirementNerfs(): void {
     Object.values(this.appliedNerfs['requirements']).forEach((value) => {
       const gameElement = value.element;
+      gameElement.unlocked = gameElement.startUnlocked;
       gameElement.requirement = value.value;
       gameElement.requirement.forEach((requirement) => {
         requirement.register();

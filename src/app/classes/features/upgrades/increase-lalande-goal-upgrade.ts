@@ -18,9 +18,9 @@ export class IncreaseLalandeGoalUpgrade extends IncreaseChallengeGoalUpgrade {
   style: Styles = Styles.LALANDE;
   nav: string = 'yellow';
   subNav: string = 'yellowFusion';
-  baseCost: Num = new Num(1, 2);
-  cost: Num = new Num(1, 2);
-  increase: Num = new Num(1, 5);
+  baseCost: Num = new Num(1, 1);
+  cost: Num = new Num(1, 1);
+  increase: Num = new Num(1, 4);
   currency: Holding = HoldingRecord.hydrogen;
   requirement: Requirement[] = [
     new Requirement(HoldingRecord.yellowParticles, new Num(1, 10), this),
