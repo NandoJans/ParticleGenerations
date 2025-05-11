@@ -21,7 +21,7 @@ export class YellowFusionHolding extends Holding {
     .build()
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED, this);
   fusionPower: Num = new Num(1, -1)
-  override calculationOrder = 1100;
+  override calculationOrder = 1200;
   getStyle(): Styles {
     return Styles.FUSION;
   }

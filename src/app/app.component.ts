@@ -59,8 +59,6 @@ export class AppComponent implements OnInit{
     this.dataManagerService.save();
     this.localStorageHelper.save(this.VERSION);
 
-    // HoldingRecord.hydrogen.amount = new Num(1, 5)
-
     if (!this.isTicking) {
       this.tick.startIntervals();
       this.isTicking = true;

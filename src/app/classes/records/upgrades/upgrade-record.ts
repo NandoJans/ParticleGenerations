@@ -128,8 +128,8 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.increaseLalandeGoal,
     UpgradeRecord.increaseSunGoal,
     UpgradeRecord.increaseSiriusGoal,
-    UpgradeRecord.fusionBoosterAcceleration,
     UpgradeRecord.increaseMaxFusionBoosterAcceleration,
+    UpgradeRecord.fusionBoosterAcceleration,
   ]
 
   getList(): Upgrade[] {
