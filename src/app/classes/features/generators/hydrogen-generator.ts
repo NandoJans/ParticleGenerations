@@ -40,7 +40,7 @@ export class HydrogenGenerator extends Generator {
       const exponent = HoldingRecord.hydrogen.amount.log10()
       const base = this.barrier.log10();
       const thresholds = exponent.div(base);
-      amount = amount.div(new Num(2, 0).pow(thresholds));
+      amount = amount.div(new Num(1.01, 0).pow(thresholds));
     }
     return amount;
   }
