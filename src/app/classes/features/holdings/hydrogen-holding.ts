@@ -31,7 +31,7 @@ barrier: Num = new Num(1, 1000);
   override action(): Num {
     if (this.amount.greq(Num.ONE)) {
       const effect = this.hydrogenPower.pow(this.amount.sub(Num.ONE).floor());
-    if (HoldingRecord.hydrogen.amount.greq(this.barrier)) {
+    if (effect.greq(this.barrier)) {
       const exponent = effect.log10()
       const base = this.barrier.log10();
       const thresholds = exponent.div(base);
