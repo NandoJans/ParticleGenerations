@@ -10,6 +10,7 @@ import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {Transaction} from "../interfaces/transaction";
 import {StatsService} from "../../../services/stats.service";
 import {Enhancement} from "../enhancements/enhancement";
+import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 
 export class FusionBoosterAccelerationUpgrade extends Upgrade {
   baseCost: Num = new Num(1, 1000);
@@ -20,6 +21,8 @@ export class FusionBoosterAccelerationUpgrade extends Upgrade {
 
   override buffer: Num = new Num(0.25, 0);
   override baseBuffer: Num = new Num(0.25, 0);
+  hydrogenBuffer: Num = new Num(2, 0);
+  totalHydrogenBuff: Num = new Num(1, 0);
 
   freeBuys: Num = new Num(1, 1);
   baseFreeBuys: Num = new Num(1, 1);
@@ -41,23 +44,26 @@ export class FusionBoosterAccelerationUpgrade extends Upgrade {
   action(): Num {
     const effect: Num = this.buffer.mul(this.amount);
     const effect2: Num = this.freeBuys.mul(this.amount);
+    const effect3: Num = this.hydrogenBuffer.pow(this.amount);
 
     this.freeBuys = this.baseFreeBuys.copy();
+    this.hydrogenBuffer = new Num(2, 0);
     UpgradeRecord.redGeneratorBooster.buffer = UpgradeRecord.redGeneratorBooster.buffer.add(effect);
     UpgradeRecord.redGeneratorBooster.amount = UpgradeRecord.redGeneratorBooster.amount.add(effect2);
+    MultiplierRecord.hydrogenGenerators.correct(effect3);
 
+    this.totalHydrogenBuff = effect3.copy();
     this.totalFreeBuys = effect2.copy();
     return effect;
   }
 
   getDescription(): string {
     return "Increase the power of red generator boosters by " + this.buffer.toString(3) +
-      " and give " + this.freeBuys +
-      " free buys. Resets all red particles and red accelerators.";
+      ", give " + this.freeBuys + " free buys and multiply hydrogen generation by " + this.hydrogenBuffer.toString(2) + 'x.';
   }
 
   override effectString(): string {
-    return this.effect ? this.effect.toString(3) + ' and ' + this.totalFreeBuys.toString() + ' free buys' : '';
+    return this.effect ? this.effect.toString(3) + ', ' + this.totalFreeBuys.toString() + ' free buys and ' + this.totalHydrogenBuff.toString(2) + 'x' : '';
   }
 
   override buy(amount: Num = new Num(1, 0)): Transaction {
