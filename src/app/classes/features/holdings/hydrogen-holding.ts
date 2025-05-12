@@ -30,7 +30,7 @@ barrier: Num = new Num(1, 1000);
 
   override action(): Num {
     if (this.amount.greq(Num.ONE)) {
-      const effect = this.hydrogenPower.pow(this.amount.sub(Num.ONE).floor());
+      let effect = this.hydrogenPower.pow(this.amount.sub(Num.ONE).floor());
     if (effect.greq(this.barrier)) {
       const exponent = effect.log10()
       const base = this.barrier.log10();
