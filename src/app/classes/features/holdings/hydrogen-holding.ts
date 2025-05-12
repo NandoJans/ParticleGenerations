@@ -35,7 +35,7 @@ barrier: Num = new Num(1, 1000);
       const exponent = effect.log10()
       const base = this.barrier.log10();
       const thresholds = exponent.div(base);
-      effect = effect.pow(new Num(5, -1).pow(thresholds));
+      effect = effect.div((new Num(1, 10)).pow(thresholds));
     }
       GeneratorRecord.yellowFusionGenerator.bought = new Num(1, 0);
       GeneratorRecord.yellowFusionGenerator.amount = new Num(1, 0);
