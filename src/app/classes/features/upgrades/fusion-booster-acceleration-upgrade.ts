@@ -18,8 +18,8 @@ export class FusionBoosterAccelerationUpgrade extends Upgrade {
   bought: Num = new Num(0, 0);
   override limit: Num|undefined = new Num(0, 0);
 
-  override buffer: Num = new Num(0.05, 0);
-  override baseBuffer: Num = new Num(0.05, 0);
+  override buffer: Num = new Num(0.25, 0);
+  override baseBuffer: Num = new Num(0.25, 0);
 
   freeBuys: Num = new Num(1, 1);
   baseFreeBuys: Num = new Num(1, 1);
