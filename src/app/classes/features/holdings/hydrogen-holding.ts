@@ -26,9 +26,17 @@ export class HydrogenHolding extends Holding {
     return Styles.HYDROGEN;
   }
 
+barrier: Num = new Num(1, 1000);
+
   override action(): Num {
     if (this.amount.greq(Num.ONE)) {
       const effect = this.hydrogenPower.pow(this.amount.sub(Num.ONE).floor());
+    if (HoldingRecord.hydrogen.amount.greq(this.barrier)) {
+      const exponent = effect.log10()
+      const base = this.barrier.log10();
+      const thresholds = exponent.div(base);
+      effect = effect.div(new Num(2, 0).pow(thresholds));
+    }
       GeneratorRecord.yellowFusionGenerator.bought = new Num(1, 0);
       GeneratorRecord.yellowFusionGenerator.amount = new Num(1, 0);
       MultiplierRecord.yellowFusionGenerators.correct(effect);
