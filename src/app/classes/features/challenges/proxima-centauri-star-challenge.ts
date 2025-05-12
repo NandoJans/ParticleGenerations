@@ -16,7 +16,7 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
 
   baseGoal: Num = new Num(1, 3800);
   goal: Num = new Num(1, 3800);
-  override goalIncrease: Num = new Num(1, 15200);
+  override goalIncrease: Num = new Num(1, 12300);
   override difficultyIncrease: Num = new Num(1.9, 0);
 
   currency: Holding = HoldingRecord.redParticles;
@@ -85,7 +85,7 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
         HoldingRecord.redAccelerators,
         this.style,
         GeneratorRecord.thirdRedGenerator,
-        this.getDifficultyIncrease(new Num(2.1, 0)),
+        this.getDifficultyIncrease(new Num(1.9, 0)),
       ),
       unlockFourthRedGenerator: new YellowStarChallengeUnlockUpgrade(
         'unlockFourthRedGenerator',
@@ -95,7 +95,7 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
         HoldingRecord.redParticles,
         this.style,
         GeneratorRecord.fourthRedGenerator,
-        this.getDifficultyIncrease(new Num(0.87, 0)),
+        this.getDifficultyIncrease(new Num(0.8, 0)),
       ),
       unlockFifthRedGenerator: new YellowStarChallengeUnlockUpgrade(
         'unlockFifthRedGenerator',
@@ -105,7 +105,7 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
         HoldingRecord.redAccelerators,
         this.style,
         GeneratorRecord.fifthRedGenerator,
-        this.getDifficultyIncrease(new Num(0.89, 0)),
+        this.getDifficultyIncrease(new Num(0.75, 0)),
       ),
     }
   }
