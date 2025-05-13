@@ -20,6 +20,7 @@ export class IncreaseProximaCentauriGoalUpgrade extends IncreaseChallengeGoalUpg
   subNav: string = 'yellowFusion';
   baseCost: Num = new Num(1, 0);
   cost: Num = new Num(1, 0);
+override scaling: Num = new Num(1, 1)
   increase: Num = new Num(1, 4);
   currency: Holding = HoldingRecord.hydrogen;
   requirement: Requirement[] = [
