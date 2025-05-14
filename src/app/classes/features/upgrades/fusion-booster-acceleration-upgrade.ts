@@ -21,7 +21,7 @@ export class FusionBoosterAccelerationUpgrade extends Upgrade {
 
   override buffer: Num = new Num(2.5, 0);
   override baseBuffer: Num = new Num(2.5, 0);
-  hydrogenBuffer: Num = new Num(2, 0);
+  hydrogenBuffer: Num = new Num(1.2, 0);
   totalHydrogenBuff: Num = new Num(1, 0);
 
   freeBuys: Num = new Num(1, 1);
