@@ -42,7 +42,7 @@ export class IncreaseMaxFusionBoosterAccelerationUpgrade extends Upgrade {
   cost: Num = new Num(1, 15);
   increase: Num = new Num(1, 1);
   override scaling: Num = new Num(1, 1);
-  override scalingStart: Num = new Num(1, 100);
+  override scalingStart: Num = new Num(1, 35);
   bought: Num = new Num(0, 0);
   currency: Holding = HoldingRecord.yellowParticles;
   requirement: Requirement[] = [
