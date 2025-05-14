@@ -47,7 +47,7 @@ export class FusionBoosterAccelerationUpgrade extends Upgrade {
     const effect3: Num = this.hydrogenBuffer.pow(this.amount);
 
     this.freeBuys = this.baseFreeBuys.copy();
-    this.hydrogenBuffer = new Num(2, 0);
+    this.hydrogenBuffer = new Num(1.2, 0);
     UpgradeRecord.redGeneratorBooster.buffer = UpgradeRecord.redGeneratorBooster.buffer.add(effect);
     UpgradeRecord.redGeneratorBooster.amount = UpgradeRecord.redGeneratorBooster.amount.add(effect2);
     MultiplierRecord.hydrogenGenerators.correct(effect3);
