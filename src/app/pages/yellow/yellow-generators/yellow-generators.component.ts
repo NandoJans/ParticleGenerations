@@ -17,6 +17,8 @@ export class YellowGeneratorsComponent implements OnInit {
     GeneratorRecord.firstYellowGenerator,
     GeneratorRecord.secondYellowGenerator,
     GeneratorRecord.thirdYellowGenerator,
+GeneratorRecord.fourthYellowGenerator,
+GeneratorRecord.fifthYellowGenerator
   ]
   upgrades: Upgrade[] = [
     UpgradeRecord.yellowPower
