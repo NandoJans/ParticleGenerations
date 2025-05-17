@@ -31,7 +31,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
   override difficultyIncrease: Num[] = [
     new Num(1, 0),
     new Num(1.05, 0),
-    new Num(0.95, 0),
+    new Num(0.9, 0),
     new Num(1.7, 0),
   ];
 
