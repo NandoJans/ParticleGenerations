@@ -44,6 +44,8 @@ import {FusionBoosterAccelerationUpgrade} from "../../features/upgrades/fusion-b
 import {
   IncreaseMaxFusionBoosterAccelerationUpgrade
 } from "../../features/upgrades/increase-max-fusion-booster-acceleration-upgrade";
+import {UnlockFourthYellowGeneratorUpgrade} from "../../features/upgrades/unlock-fourth-yellow-generator-upgrade";
+import {UnlockFifthYellowGeneratorUpgrade} from "../../features/upgrades/unlock-fifth-yellow-generator-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -77,6 +79,10 @@ export class UpgradeRecord extends Record {
   static improveBetterAccelerationYellow: ImproveBetterAccelerationYellowUpgrade = new ImproveBetterAccelerationYellowUpgrade('improveBetterAccelerationYellow');
   static improveBetterParticleEffectYellow: ImproveBetterParticleEffectYellowUpgrade = new ImproveBetterParticleEffectYellowUpgrade('improveBetterParticleEffectYellow');
   static breakYellowBarrier: BreakYellowBarrierUpgrade = new BreakYellowBarrierUpgrade('breakYellowBarrier');
+
+  // Break upgrades
+  static unlockFourthYellowGenerator: UnlockFourthYellowGeneratorUpgrade = new UnlockFourthYellowGeneratorUpgrade('unlockFourthYellowGenerator');
+  static unlockFifthYellowGenerator: UnlockFifthYellowGeneratorUpgrade = new UnlockFifthYellowGeneratorUpgrade('unlockFifthYellowGenerator');
 
   // Yellow generator upgrades
   static yellowPower: YellowPowerUpgrade = new YellowPowerUpgrade('yellowPowerUpgrade');
@@ -117,6 +123,10 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.improveBetterAccelerationYellow,
     UpgradeRecord.improveBetterParticleEffectYellow,
     UpgradeRecord.breakYellowBarrier,
+
+    // Yellow break upgrades
+    UpgradeRecord.unlockFourthYellowGenerator,
+    UpgradeRecord.unlockFifthYellowGenerator,
 
     // Yellow generator upgrades
     UpgradeRecord.yellowPower,

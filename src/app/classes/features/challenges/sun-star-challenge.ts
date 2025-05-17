@@ -126,8 +126,8 @@ export class SunStarChallenge extends YellowStarChallenge {
         'Sun fusion',
         new Num(1, 4),
         new Num(1, 3),
-        new Num(1, 1),
-        new Num(1, 28),
+        new Num(1, 0),
+        undefined,
         new Num(3, 0),
         this.challengeHoldings['sunParticle'],
         this.style,
@@ -143,8 +143,8 @@ export class SunStarChallenge extends YellowStarChallenge {
         'Sun mass',
         new Num(1, 5),
         new Num(1, 3),
-        new Num(1, 1),
-        new Num(1, 28),
+        new Num(1, 0),
+        undefined,
         new Num(5, 0),
         this.challengeHoldings['sunParticle'],
         this.style,
@@ -160,8 +160,8 @@ export class SunStarChallenge extends YellowStarChallenge {
         'Sun hydrogen',
         new Num(1, 6),
         new Num(1, 3),
-        new Num(1, 1),
-        new Num(1, 28),
+        new Num(1, 0),
+        undefined,
         new Num(9, 0),
         this.challengeHoldings['sunParticle'],
         this.style,
@@ -178,7 +178,7 @@ export class SunStarChallenge extends YellowStarChallenge {
         new Num(1, 8),
         new Num(1, 4),
         new Num(1, 1),
-        new Num(1, 28),
+        undefined,
         new Num(2, 0),
         this.challengeHoldings['sunParticle'],
         this.style,
@@ -190,6 +190,7 @@ export class SunStarChallenge extends YellowStarChallenge {
     }
 
     if (this.challengeUpgrades['strongerSunParticleEffect'] instanceof CustomChallengeUpgrade) {
+      this.challengeUpgrades['strongerSunParticleEffect'].limit = new Num(3, 0);
       this.challengeUpgrades['strongerSunParticleEffect'].setDescription(() => {
         return "Reset sun particles to enhance their power by "+this.challengeUpgrades['strongerSunParticleEffect'].buffer.toString(2)+"x."
       });

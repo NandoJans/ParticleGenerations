@@ -14,12 +14,16 @@ export abstract class YellowUpgrade extends Upgrade {
   name: string;
   requirement: Requirement[];
 
-  constructor(saveName: string, name: string) {
+  constructor(saveName: string, name: string, isBreak: boolean = false) {
     super(saveName);
     this.name = name;
-    this.requirement = [
-      new Requirement(HoldingRecord.yellowPrestiges, new Num(1, 0), this),
-    ]
+    if (!isBreak) {
+      this.requirement = [
+        new Requirement(HoldingRecord.yellowPrestiges, new Num(1, 0), this),
+      ]
+    } else {
+      this.requirement = []
+    }
     this.resetId = ResetHelper.registerReset(ResetKey.YELLOW, this);
   }
 

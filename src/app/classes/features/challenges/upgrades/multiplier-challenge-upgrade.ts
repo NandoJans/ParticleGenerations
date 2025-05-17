@@ -12,7 +12,7 @@ export class MultiplierChallengeUpgrade extends ChallengeUpgrade {
     cost: Num,
     increase: Num,
     scaling: Num,
-    scalingStart: Num,
+    scalingStart: Num|undefined,
     buffer: Num,
     currency: Holding,
     style: Styles,

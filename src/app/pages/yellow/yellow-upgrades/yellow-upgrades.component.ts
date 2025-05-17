@@ -22,6 +22,8 @@ export class YellowUpgradesComponent implements OnInit {
     UpgradeRecord.multiplyRedGeneratorsYellow,
     UpgradeRecord.multiplyYellowParticlesYellow,
     UpgradeRecord.multiplyYellowKeyGain,
+    UpgradeRecord.unlockFourthYellowGenerator,
+    UpgradeRecord.unlockFifthYellowGenerator,
     UpgradeRecord.redGeneratorMultiplierYellowPrestigeYellow,
     UpgradeRecord.multiplyRedGeneratorExtensionYellow,
     UpgradeRecord.startWithMoreRedExtensionsUpgrade,

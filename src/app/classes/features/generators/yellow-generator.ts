@@ -18,12 +18,16 @@ export abstract class YellowGenerator extends Generator {
   name: string;
   override unlocked: boolean = false;
 
-  protected constructor(saveName: string, name: string) {
+  protected constructor(saveName: string, name: string, isBreak: boolean = false) {
     super(saveName);
     this.name = name;
-    this.requirement = [
-      new Requirement(HoldingRecord.yellowPrestiges, new Num(5, 2), this)
-    ];
+    if (!isBreak) {
+      this.requirement = [
+        new Requirement(HoldingRecord.yellowPrestiges, new Num(5, 2), this)
+      ];
+    } else {
+      this.requirement = [];
+    }
     this.resetId = ResetHelper.registerReset(ResetKey.YELLOW, this);
     this.softResetId = ResetHelper.registerSoftReset(ResetKey.RED, this);
   }

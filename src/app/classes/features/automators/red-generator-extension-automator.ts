@@ -28,7 +28,11 @@ export class RedGeneratorExtensionAutomator extends Automator {
   }
 
   task(): Num {
-    return StatsService.getNum('red-particle-generator', 'totalResetAutomator') || new Num(1, 0);
+    if (UpgradeRecord.noResetRedExtension.hasBought()) {
+      return new Num(1, 3);
+    } else {
+      return StatsService.getNum('red-particle-generator', 'totalResetAutomator') || new Num(1, 0);
+    }
   }
 
   override reset() {
