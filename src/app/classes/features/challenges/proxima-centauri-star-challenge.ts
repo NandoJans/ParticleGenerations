@@ -17,7 +17,11 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
   baseGoal: Num = new Num(1, 3800);
   goal: Num = new Num(1, 3800);
   override goalIncrease: Num = new Num(1, 15200);
-  override difficultyIncrease: Num = new Num(1.9, 0);
+  override difficultyIncrease: Num[] = [
+    new Num(1, 0),
+    new Num(1.9, 0),
+    new Num(1.7, 0),
+  ];
 
   currency: Holding = HoldingRecord.redParticles;
 

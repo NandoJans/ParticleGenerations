@@ -28,7 +28,11 @@ export class SiriusStarChallenge extends YellowStarChallenge {
   override buffer: Num = new Num(2.06, 0);
   override baseBuffer: Num = new Num(2.06, 0);
   override completionBuffer: Num = new Num(1.2, 0);
-  override difficultyIncrease: Num = new Num(1.03, 0);
+  override difficultyIncrease: Num[] = [
+    new Num(1, 0),
+    new Num(1.05, 0),
+    new Num(1.7, 0),
+  ];
 
   getRewardDescription(): string {
     return "Red generator extensions also boost yellow generators by "+this.buffer.toString(2)+"x.";

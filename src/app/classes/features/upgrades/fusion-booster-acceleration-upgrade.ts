@@ -11,6 +11,7 @@ import {Transaction} from "../interfaces/transaction";
 import {StatsService} from "../../../services/stats.service";
 import {Enhancement} from "../enhancements/enhancement";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {ChallengeRecord} from "../../records/challenges/challenge-record";
 
 export class FusionBoosterAccelerationUpgrade extends Upgrade {
   baseCost: Num = new Num(1, 1000);
@@ -19,8 +20,8 @@ export class FusionBoosterAccelerationUpgrade extends Upgrade {
   bought: Num = new Num(0, 0);
   override limit: Num|undefined = new Num(0, 0);
 
-  override buffer: Num = new Num(1, 0);
-  override baseBuffer: Num = new Num(1, 0);
+  override buffer: Num = new Num(0.1, 0);
+  override baseBuffer: Num = new Num(0.1, 0);
   hydrogenBuffer: Num = new Num(1.2, 0);
   totalHydrogenBuff: Num = new Num(1, 0);
 
@@ -42,12 +43,22 @@ export class FusionBoosterAccelerationUpgrade extends Upgrade {
   override resets: ResetKey = ResetKey.RED_BOOSTER_ACCELERATION;
 
   action(): Num {
-    const effect: Num = this.buffer.mul(this.amount);
+    let completions: Num = new Num(0, 0);
+    for (const challenge of ChallengeRecord.list) {
+      if (challenge.isCompleted()) {
+        if (challenge.completed instanceof Num) {
+          completions = completions.add(challenge.completed);
+        } else {
+          completions = completions.add(new Num(1, 0));
+        }
+      }
+    }
+    const effect: Num = this.buffer.mul(this.amount).mul(completions);
     const effect2: Num = this.freeBuys.mul(this.amount);
     const effect3: Num = this.hydrogenBuffer.pow(this.amount);
 
     this.freeBuys = this.baseFreeBuys.copy();
-    this.hydrogenBuffer = new Num(1.2, 0);
+    this.hydrogenBuffer = new Num(2, 0);
     UpgradeRecord.redGeneratorBooster.buffer = UpgradeRecord.redGeneratorBooster.buffer.add(effect);
     UpgradeRecord.redGeneratorBooster.amount = UpgradeRecord.redGeneratorBooster.amount.add(effect2);
     MultiplierRecord.hydrogenGenerators.correct(effect3);

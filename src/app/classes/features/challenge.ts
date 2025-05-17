@@ -27,7 +27,7 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   abstract resetId: ResetKey
   softResetId: ResetKey = ResetKey.NONE;
   instantComplete: boolean = false
-  difficultyIncrease: Num = new Num(1, 0)
+  difficultyIncrease: Num|Num[] = new Num(1, 0)
   abstract reward(): Num | undefined
   constantNerfs(): void {};
   abstract init(): void;
@@ -93,7 +93,16 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
 
   getDifficultyIncrease(modifier: Num = new Num(1, 0)): Num {
     if (this.completed instanceof Num) {
-      return this.difficultyIncrease.mul(modifier).mul(this.completed)
+      if (this.difficultyIncrease instanceof Num) {
+        return this.difficultyIncrease.mul(modifier).mul(this.completed)
+      } else {
+        const index = Math.floor(this.completed.toNumber());
+        if (this.difficultyIncrease[index] !== undefined) {
+          return this.difficultyIncrease[index].mul(modifier).mul(this.completed);
+        } else {
+          return this.difficultyIncrease[this.difficultyIncrease.length - 1].mul(modifier).mul(this.completed);
+        }
+      }
     }
     return new Num(1, 0);
   }
