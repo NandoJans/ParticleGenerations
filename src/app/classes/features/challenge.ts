@@ -187,7 +187,9 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   protected applyRequirementNerf(gameElement: GameElement, requirement: {require: Require, amount: Num}|[] = []): void {
     this.appliedNerfs['requirements'][gameElement.name] = {
       element: gameElement,
-      value: gameElement.requirement
+      value: gameElement.requirement.map(requirement => {
+        return new Requirement(requirement.requirement, requirement.amount, gameElement);
+      })
     };
     if (Array.isArray(requirement)) {
       gameElement.requirement = requirement;
