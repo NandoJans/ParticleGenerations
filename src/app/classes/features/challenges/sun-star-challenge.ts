@@ -20,7 +20,11 @@ export class SunStarChallenge extends YellowStarChallenge {
 
   baseGoal: Num = new Num(1, 5000);
   goal: Num = new Num(1, 5000);
-  override goalIncrease: Num = new Num(1, 15200);
+  override goalIncrease: Num[] = [
+    new Num(1, 15200),
+    new Num(1, 15200),
+    new Num(1, 33300),
+  ];
   override difficultyIncrease: Num[] = [
     new Num(1, 0),
     new Num(1.8, 0),

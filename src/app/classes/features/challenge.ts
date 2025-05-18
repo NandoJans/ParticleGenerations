@@ -37,7 +37,7 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   maxEffect: Num | undefined = undefined
   dynamic: boolean | undefined = undefined
   maxCompletions: Num | undefined = undefined
-  goalIncrease: Num | undefined = undefined
+  goalIncrease: Num | Num[] | undefined = undefined
   buffer: Num = new Num(0, 0)
   baseBuffer: Num = new Num(0, 0)
   completionBuffer: Num = new Num(1, 0);
@@ -76,10 +76,23 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   }
 
   private correctGoal() {
-    if (this.maxCompletions instanceof Num && this.goalIncrease instanceof Num && this.completed instanceof Num) {
-      this.goal = this.baseGoal.mul(
-        this.goalIncrease.pow(this.completed)
-      );
+    if (this.maxCompletions instanceof Num && this.completed instanceof Num) {
+      if (this.goalIncrease instanceof Num) {
+        this.goal = this.baseGoal.mul(
+          this.goalIncrease.pow(this.completed)
+        );
+      } else if (this.goalIncrease instanceof Array) {
+        const index = Math.floor(this.completed.toNumber());
+        if (this.goalIncrease[index] !== undefined) {
+          this.goal = this.baseGoal.mul(
+            this.goalIncrease[index].pow(this.completed)
+          );
+        } else {
+          this.goal = this.baseGoal.mul(
+            this.goalIncrease[this.goalIncrease.length - 1].pow(this.completed)
+          );
+        }
+      }
     }
   }
 

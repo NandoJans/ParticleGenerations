@@ -21,7 +21,12 @@ export class SiriusStarChallenge extends YellowStarChallenge {
 
   baseGoal: Num = new Num(1, 10400);
   goal: Num = new Num(1, 10400);
-  override goalIncrease: Num = new Num(1, 10400);
+  override goalIncrease: Num[] = [
+    new Num(1, 10400),
+    new Num(1, 10400),
+    new Num(1, 10400),
+    new Num(1, 10400),
+  ];
 
   currency: Holding = HoldingRecord.redParticles;
 
