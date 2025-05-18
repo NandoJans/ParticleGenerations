@@ -25,6 +25,7 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
     new Num(1, 0),
     new Num(1.9, 0),
     new Num(1.7, 0),
+new Num(1.7, 0),
   ];
 
   currency: Holding = HoldingRecord.redParticles;
