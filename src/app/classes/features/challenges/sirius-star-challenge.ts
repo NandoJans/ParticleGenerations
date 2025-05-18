@@ -25,7 +25,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
     new Num(1, 10400),
     new Num(1, 10400),
     new Num(1, 10400),
-    new Num(1, 10400),
+    new Num(1, 28400),
   ];
 
   currency: Holding = HoldingRecord.redParticles;
@@ -37,7 +37,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
     new Num(1, 0),
     new Num(1.05, 0),
     new Num(0.87, 0),
-    new Num(0.75, 0),
+    new Num(0.7, 0),
   ];
 
   getRewardDescription(): string {
