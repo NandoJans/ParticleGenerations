@@ -25,7 +25,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
     new Num(1, 10400),
     new Num(1, 10400),
     new Num(1, 10400),
-    new Num(1, 28400),
+    new Num(1, 49400),
   ];
 
   currency: Holding = HoldingRecord.redParticles;
