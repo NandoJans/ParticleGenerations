@@ -9,8 +9,8 @@ export class MultiplyRedAcceleratorEffectUpgrade extends RedAcceleratorUpgrade {
   override baseCost: Num = new Num(1, 100);
   override cost: Num = new Num(1, 100);
   increase: Num = new Num(1, 15);
-  override buffer: Num = new Num(1.5, 0);
-  override baseBuffer: Num = new Num(1.5, 0);
+  override buffer: Num = new Num(2, 0);
+  override baseBuffer: Num = new Num(2, 0);
 
   constructor(saveName: string) {
     super(saveName, "multiply-red-accelerator-effect");

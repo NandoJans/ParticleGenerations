@@ -17,22 +17,28 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
   baseGoal: Num = new Num(1, 3800);
   goal: Num = new Num(1, 3800);
   override goalIncrease: Num[] = [
-    new Num(1, 15200),
-    new Num(1, 15200),
-    new Num(1, 15200),
+    new Num(1, 13200),
+    new Num(1, 13200),
+    new Num(1, 13200),
   ];
   override difficultyIncrease: Num[] = [
     new Num(1, 0),
     new Num(1.9, 0),
     new Num(1.7, 0),
-new Num(1.7, 0),
+    new Num(1.7, 0),
   ];
 
   currency: Holding = HoldingRecord.redParticles;
 
   override buffer: Num = new Num(0.12, 0);
   override baseBuffer: Num = new Num(0.12, 0);
-  override completionBuffer: Num = new Num(2, 0);
+  override completionBuffer: Num = new Num(5, 0);
+
+  override strongerBuffer(): Num | void {
+    if (this.completed instanceof Num) {
+      this.buffer = this.baseBuffer.mul(this.completionBuffer.mul(this.completed));
+    }
+  }
 
   getRewardDescription(): string {
     return "Yellow generators multiplied based on yellow particles by raising them to ^"+this.buffer.toString(2);

@@ -47,6 +47,10 @@ export class SiriusStarChallenge extends YellowStarChallenge {
     return "Sirius locks up a lot of energy. Somehow, it lacks extensions. Maybe it\'s energy is useful.";
   }
 
+  override effectString(): string {
+    return super.effectString()+"x";
+  }
+
   style: Styles = Styles.SIRIUS;
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
   requirement: Requirement[] = [

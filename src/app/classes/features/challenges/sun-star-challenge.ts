@@ -44,6 +44,10 @@ export class SunStarChallenge extends YellowStarChallenge {
     return "The sun, somehow lacks acceleration. Maybe something else will help you.";
   }
 
+  override effectString(): string {
+    return super.effectString()+"x";
+  }
+
   style: Styles = Styles.SUN;
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
   requirement: Requirement[] = [
@@ -160,7 +164,7 @@ export class SunStarChallenge extends YellowStarChallenge {
         'yellowStars',
         'sunUpgrade',
         this.challengeGenerators['sunGenerator'].globalMultiplier,
-      this.getDifficultyIncrease(new Num(0.94, 0)),
+      this.getDifficultyIncrease(new Num(0.91, 0)),
       ),
       sunGeneratorMultiplierUpgrade3: new MultiplierChallengeUpgrade(
         'sunGeneratorMultiplierUpgrade3',
@@ -177,7 +181,7 @@ export class SunStarChallenge extends YellowStarChallenge {
         'yellowStars',
         'sunUpgrade',
         this.challengeGenerators['sunGenerator'].globalMultiplier,
-        this.getDifficultyIncrease(new Num(0.88, 0)),
+        this.getDifficultyIncrease(new Num(0.86, 0)),
       ),
       strongerSunParticleEffect: new CustomChallengeUpgrade(
         'strongerSunParticleEffect',
@@ -204,6 +208,7 @@ export class SunStarChallenge extends YellowStarChallenge {
       });
       this.challengeUpgrades['strongerSunParticleEffect'].setCustomBuyAction(() => {
         this.challengeHoldings['sunParticle'].reset();
+        this.challengeGenerators['sunGenerator'].globalMultiplier.reset();
         this.challengeUpgrades['sunGeneratorMultiplierUpgrade1'].reset();
         this.challengeUpgrades['sunGeneratorMultiplierUpgrade1'].unlocked = true
         this.challengeUpgrades['sunGeneratorMultiplierUpgrade2'].reset()

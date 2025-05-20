@@ -18,11 +18,12 @@ export class IncreaseSiriusGoalUpgrade extends IncreaseChallengeGoalUpgrade {
   style: Styles = Styles.SIRIUS;
   nav: string = 'yellow';
   subNav: string = 'yellowFusion';
-  baseCost: Num = new Num(1, 3);
-  cost: Num = new Num(1, 3);
-override scaling: Num = new Num(1, 1)
-  increase: Num = new Num(1, 4);
-  currency: Holding = HoldingRecord.hydrogen;
+  baseCost: Num = new Num(1, 13);
+  cost: Num = new Num(1, 13);
+override scaling: Num = new Num(1, 2)
+  increase: Num = new Num(1, 3);
+  override limit: Num = new Num(5, 0);
+  currency: Holding = HoldingRecord.yellowParticles;
   requirement: Requirement[] = [
     new Requirement(HoldingRecord.yellowParticles, new Num(1, 10), this),
   ];

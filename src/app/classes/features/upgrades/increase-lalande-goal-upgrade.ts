@@ -18,10 +18,11 @@ export class IncreaseLalandeGoalUpgrade extends IncreaseChallengeGoalUpgrade {
   style: Styles = Styles.LALANDE;
   nav: string = 'yellow';
   subNav: string = 'yellowFusion';
-  baseCost: Num = new Num(1, 1);
-  cost: Num = new Num(1, 1);
-  increase: Num = new Num(1, 4);
-override scaling: Num = new Num(1, 1)
+  baseCost: Num = new Num(1, 11);
+  cost: Num = new Num(1, 11);
+  increase: Num = new Num(1, 3);
+  override scaling: Num = new Num(1, 2);
+  override limit: Num = new Num(5, 0);
   currency: Holding = HoldingRecord.hydrogen;
   requirement: Requirement[] = [
     new Requirement(HoldingRecord.yellowParticles, new Num(1, 10), this),

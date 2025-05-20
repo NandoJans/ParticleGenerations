@@ -46,6 +46,11 @@ import {
 } from "../../features/upgrades/increase-max-fusion-booster-acceleration-upgrade";
 import {UnlockFourthYellowGeneratorUpgrade} from "../../features/upgrades/unlock-fourth-yellow-generator-upgrade";
 import {UnlockFifthYellowGeneratorUpgrade} from "../../features/upgrades/unlock-fifth-yellow-generator-upgrade";
+import {DecreaseRedGeneratorScalingUpgrade} from "../../features/upgrades/decrease-red-generator-scaling-upgrade";
+import {DecreaseRedGeneratorBoosterScalingUpgrade} from "../../features/upgrades/decrease-red-generator-booster-scaling-upgrade";
+import {
+  StopRedBoosterAccelerationResetUpgrade
+} from "../../features/upgrades/stop-red-booster-acceleration-reset-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -83,6 +88,9 @@ export class UpgradeRecord extends Record {
   // Break upgrades
   static unlockFourthYellowGenerator: UnlockFourthYellowGeneratorUpgrade = new UnlockFourthYellowGeneratorUpgrade('unlockFourthYellowGenerator');
   static unlockFifthYellowGenerator: UnlockFifthYellowGeneratorUpgrade = new UnlockFifthYellowGeneratorUpgrade('unlockFifthYellowGenerator');
+  static decreaseRedGeneratorScaling: DecreaseRedGeneratorScalingUpgrade = new DecreaseRedGeneratorScalingUpgrade('decreaseRedGeneratorScaling');
+  static decreaseRedGeneratorBoosterScaling: DecreaseRedGeneratorBoosterScalingUpgrade = new DecreaseRedGeneratorBoosterScalingUpgrade('decreaseRedGeneratorBoosterScaling');
+  static stopRedBoosterAccelerationReset: StopRedBoosterAccelerationResetUpgrade = new StopRedBoosterAccelerationResetUpgrade('stopRedBoosterAccelerationReset');
 
   // Yellow generator upgrades
   static yellowPower: YellowPowerUpgrade = new YellowPowerUpgrade('yellowPowerUpgrade');
@@ -127,6 +135,9 @@ export class UpgradeRecord extends Record {
     // Yellow break upgrades
     UpgradeRecord.unlockFourthYellowGenerator,
     UpgradeRecord.unlockFifthYellowGenerator,
+    UpgradeRecord.stopRedBoosterAccelerationReset,
+    UpgradeRecord.decreaseRedGeneratorScaling,
+    UpgradeRecord.decreaseRedGeneratorBoosterScaling,
 
     // Yellow generator upgrades
     UpgradeRecord.yellowPower,
