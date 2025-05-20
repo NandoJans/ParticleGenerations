@@ -35,7 +35,7 @@ export class SunStarChallenge extends YellowStarChallenge {
 
   override buffer: Num = new Num(3, -2);
   override baseBuffer: Num = new Num(3, -2);
-  override completionBuffer: Num = new Num(1.001, 0);
+  override completionBuffer: Num = new Num(2, 0);
 
   getRewardDescription(): string {
     return "Yellow power also boosts red accelerator generation ^"+this.buffer.toString(3)+".";
@@ -138,7 +138,7 @@ export class SunStarChallenge extends YellowStarChallenge {
         'Sun fusion',
         new Num(1, 4),
         new Num(1, 3),
-        new Num(1, 0),
+        new Num(1.2, 0),
         undefined,
         new Num(3, 0),
         this.challengeHoldings['sunParticle'],
@@ -155,7 +155,7 @@ export class SunStarChallenge extends YellowStarChallenge {
         'Sun mass',
         new Num(1, 5),
         new Num(1, 3),
-        new Num(1, 0),
+        new Num(1.2, 0),
         undefined,
         new Num(5, 0),
         this.challengeHoldings['sunParticle'],
@@ -172,7 +172,7 @@ export class SunStarChallenge extends YellowStarChallenge {
         'Sun hydrogen',
         new Num(1, 6),
         new Num(1, 3),
-        new Num(1, 0),
+        new Num(1.2, 0),
         undefined,
         new Num(9, 0),
         this.challengeHoldings['sunParticle'],
