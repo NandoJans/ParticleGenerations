@@ -13,8 +13,8 @@ import { Enhancement } from "../enhancements/enhancement";
 import {EnhancementRecord} from "../../records/enhancement-record";
 
 export class BoosterAccelerationUpgrade extends Upgrade {
-  baseCost: Num = new Num(1, 4);
-  cost: Num = new Num(1, 4);
+  baseCost: Num = new Num(1, 3);
+  cost: Num = new Num(1, 3);
   increase: Num = new Num(1, 2);
   override scaling = new Num(1, 3);
   override scalingStart: Num = new Num(1, 15);
