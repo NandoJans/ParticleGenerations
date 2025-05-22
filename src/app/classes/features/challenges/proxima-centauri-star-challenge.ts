@@ -18,8 +18,8 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
   goal: Num = new Num(1, 3800);
   override goalIncrease: Num[] = [
     new Num(1, 13200),
-    new Num(1, 13200),
-    new Num(1, 13200),
+    new Num(1, 20200),
+    new Num(1, 20200),
   ];
   override difficultyIncrease: Num[] = [
     new Num(1, 0),

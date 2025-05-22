@@ -20,7 +20,7 @@ import {Num} from "../num";
 export class NavigationsService {
   navigations: {[key: string]: Navigation} = {
     red: new Navigation('red', faAtom, 'red', [], 'particles', true),
-    yellow: new Navigation('yellow', faMountain, 'yellow', [
+    yellow: new Navigation('yellow', faSun, 'yellow', [
       {requirement: HoldingRecord.yellowPrestiges, amount: new Num(1, 0)},
     ], 'upgrades', false),
     automators: new Navigation('automators', faCogs, 'automators', [], 'red', true),
@@ -50,13 +50,13 @@ export class NavigationsService {
 
     // Automators
     redAutomators: new SubNavigation('redParticles', faAtom, 'red', this.navigations['automators'], [], true),
-    yellowAutomators: new SubNavigation('yellowAutomators', faMountain, 'yellow', this.navigations['automators'], [
+    yellowAutomators: new SubNavigation('yellowAutomators', faSun, 'yellow', this.navigations['automators'], [
       {requirement: HoldingRecord.yellowPrestiges, amount: new Num(1, 0)},
     ], false),
 
     // Timeline
     redTimeline: new SubNavigation('redTimeline', faAtom, 'red', this.navigations['timeline'], [], true),
-    yellowTimeline: new SubNavigation('yellowTimeline', faMountain, 'yellow', this.navigations['timeline'], [
+    yellowTimeline: new SubNavigation('yellowTimeline', faSun, 'yellow', this.navigations['timeline'], [
       {requirement: HoldingRecord.yellowPrestiges, amount: new Num(1, 0)},
     ], false),
 

@@ -43,6 +43,22 @@ export class FusionBoosterAccelerationUpgrade extends Upgrade {
   override resets: ResetKey = ResetKey.RED_BOOSTER_ACCELERATION;
 
   action(): Num {
+    const effect: Num = this.buffer.mul(this.amount);
+    const effect2: Num = this.freeBuys.mul(this.amount);
+    const effect3: Num = this.hydrogenBuffer.pow(this.amount);
+
+    this.freeBuys = this.baseFreeBuys.copy();
+    this.hydrogenBuffer = new Num(1.2, 0);
+    UpgradeRecord.redGeneratorBooster.buffer = UpgradeRecord.redGeneratorBooster.buffer.add(effect);
+    UpgradeRecord.redGeneratorBooster.amount = UpgradeRecord.redGeneratorBooster.amount.add(effect2);
+    MultiplierRecord.hydrogenGenerators.correct(effect3);
+
+    this.totalHydrogenBuff = effect3.copy();
+    this.totalFreeBuys = effect2.copy();
+    return effect;
+  }
+
+  override postAction() {
     let completions: Num = new Num(0, 0);
     for (const challenge of ChallengeRecord.list) {
       if (challenge.isCompleted()) {
@@ -53,19 +69,7 @@ export class FusionBoosterAccelerationUpgrade extends Upgrade {
         }
       }
     }
-    const effect: Num = this.buffer.mul(this.amount).mul(completions);
-    const effect2: Num = this.freeBuys.mul(this.amount);
-    const effect3: Num = this.hydrogenBuffer.pow(this.amount);
-
-    this.freeBuys = this.baseFreeBuys.copy();
-    this.hydrogenBuffer = new Num(2, 0);
-    UpgradeRecord.redGeneratorBooster.buffer = UpgradeRecord.redGeneratorBooster.buffer.add(effect);
-    UpgradeRecord.redGeneratorBooster.amount = UpgradeRecord.redGeneratorBooster.amount.add(effect2);
-    MultiplierRecord.hydrogenGenerators.correct(effect3);
-
-    this.totalHydrogenBuff = effect3.copy();
-    this.totalFreeBuys = effect2.copy();
-    return effect;
+    this.buffer = this.buffer.mul(completions)
   }
 
   getDescription(): string {

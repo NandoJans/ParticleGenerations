@@ -42,7 +42,12 @@ export abstract class Upgrade extends Buyable implements Storable, Require, Rese
     this.buffer = this.baseBuffer.copy();
     this.amount = this.bought.copy();
     this.correctCost()
+    this.postAction();
     return effect;
+  }
+
+  postAction(): void {
+
   }
 
   effectString(): string {

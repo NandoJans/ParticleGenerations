@@ -18,6 +18,7 @@ import {TimelineService} from "./timeline.service";
 import {ChallengeService} from "./interactables/challenge.service";
 import {MilestoneRecord} from "../classes/records/milestones/milestone-record";
 import {Multiplier} from "../classes/features/multiplier";
+import {HoldingRecord} from "../classes/records/holdings/holding-record";
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,7 @@ export class TickService {
   saveInterval: any;
   iterationsInterval: any;
   localStorageHelper: LocalStorageHelper = new LocalStorageHelper('app', 'lastSave');
+  firstTick: boolean = true;
 
   constructor(
     private dataManagerService: DataManagerService,
@@ -58,10 +60,15 @@ export class TickService {
         } else if (element instanceof Multiplier) {
           element.reset();
         } else {
-          element.run(speed);
+          if (this.firstTick) {
+            element.run(new Num(0, 0));
+          } else {
+            element.run(speed);
+          }
         }
       });
     });
+    // HoldingRecord.yellowFusion.amount = new Num(1, 1000);
 
     this.milestoneRecord.tick();
     this.prestigeLayersService.tick(speed);
@@ -69,6 +76,7 @@ export class TickService {
     this.timelineService.tick();
     this.enhancementService.tick();
     this.componentService.reloadComponents();
+    this.firstTick = false;
   }
 
   private checkRequirements() {
@@ -84,6 +92,8 @@ export class TickService {
   }
 
   private setIntervals() {
+    this.firstTick = true;
+
     if (this.calculationOrder.length == 0) {
       this.applyCalculationOrder();
     }

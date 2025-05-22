@@ -17,6 +17,6 @@
 </div>
 <div class="upgrade-row">
   <div *ngFor="let star of getStars()">
-    <app-star [star]="star"></app-star>
+    <app-star *ngIf="star.isUnlocked()" [star]="star"></app-star>
   </div>
 </div>
