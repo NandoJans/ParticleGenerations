@@ -91,74 +91,74 @@ export class MilestoneRecord extends Record {
     AutomatorRecord.boosterAcceleration
   )
 
-  // Generate Yellow Particles
+  // Generate Star Particles
 
   static generate5PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
     'generate5PercentYellowParticles',
-    '5% Yellow Particles',
+    '5% Star Particles',
     new Num(15, 0),
     MultiplierRecord.yellowParticleIdleGeneration,
     new Num(0.05, 0)
   )
   static generate10PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
     'generate10PercentYellowParticles',
-    '10% Yellow Particles',
+    '10% Star Particles',
     new Num(25, 0),
     MultiplierRecord.yellowParticleIdleGeneration,
     new Num(0.1, 0)
   )
   static generate15PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
     'generate15PercentYellowParticles',
-    '15% Yellow Particles',
+    '15% Star Particles',
     new Num(35, 0),
     MultiplierRecord.yellowParticleIdleGeneration,
     new Num(0.15, 0)
   )
   static generate20PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
     'generate20PercentYellowParticles',
-    '20% Yellow Particles',
+    '20% Star Particles',
     new Num(45, 0),
     MultiplierRecord.yellowParticleIdleGeneration,
     new Num(0.2, 0)
   )
   static generate25PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
     'generate25PercentYellowParticles',
-    '25% Yellow Particles',
+    '25% Star Particles',
     new Num(75, 0),
     MultiplierRecord.yellowParticleIdleGeneration,
     new Num(0.25, 0)
   )
   static generate30PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
     'generate30PercentYellowParticles',
-    '30% Yellow Particles',
+    '30% Star Particles',
     new Num(100, 0),
     MultiplierRecord.yellowParticleIdleGeneration,
     new Num(0.3, 0)
   )
   static generate35PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
     'generate35PercentYellowParticles',
-    '35% Yellow Particles',
+    '35% Star Particles',
     new Num(150, 0),
     MultiplierRecord.yellowParticleIdleGeneration,
     new Num(0.35, 0)
   )
   static generate40PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
     'generate40PercentYellowParticles',
-    '40% Yellow Particles',
+    '40% Star Particles',
     new Num(200, 0),
     MultiplierRecord.yellowParticleIdleGeneration,
     new Num(0.4, 0)
   )
   static generate45PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
     'generate45PercentYellowParticles',
-    '45% Yellow Particles',
+    '45% Star Particles',
     new Num(300, 0),
     MultiplierRecord.yellowParticleIdleGeneration,
     new Num(0.45, 0)
   )
   static generate50PercentYellowParticles: ChangeHoldingGeneratePercentage = new ChangeHoldingGeneratePercentage(
     'generate50PercentYellowParticles',
-    '50% Yellow Particles',
+    '50% Star Particles',
     new Num(400, 0),
     MultiplierRecord.yellowParticleIdleGeneration,
     new Num(0.5, 0)
@@ -192,7 +192,7 @@ export class MilestoneRecord extends Record {
     MilestoneRecord.keepBetterRedParticleToAcceleratorEffectAuto,
     MilestoneRecord.keepBoosterAccelerationAuto,
 
-    // Generate Yellow Particles
+    // Generate Star Particles
     MilestoneRecord.generate5PercentYellowParticles,
     MilestoneRecord.generate10PercentYellowParticles,
     MilestoneRecord.generate15PercentYellowParticles,

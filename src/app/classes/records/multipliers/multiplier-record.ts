@@ -20,6 +20,10 @@ export class MultiplierRecord {
   static yellowFusionGenerators: Multiplier = new Multiplier('yellowFusionGenerators', new Num(0.1, 0));
   static hydrogenGenerators: Multiplier = new Multiplier('hydrogenGenerators', new Num(0.1, 0));
 
+  // Green Phase
+  static greenParticleGain: Multiplier = new Multiplier('greenParticleGain', new Num(1, 0), 50);
+  static greenParticleIdleGeneration: Multiplier = new Multiplier('greenParticleIdleGeneration', new Num(0, 0), 50);
+
   static list: Multiplier[] = [
     // Red Phase
     MultiplierRecord.redParticleGenerators,

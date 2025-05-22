@@ -41,7 +41,7 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
   }
 
   getRewardDescription(): string {
-    return "Yellow generators multiplied based on yellow particles by raising them to ^"+this.buffer.toString(2);
+    return "Yellow generators multiplied based on star particles by raising them to ^"+this.buffer.toString(2);
   }
   getDescription(): string {
     return "Proxima Centauri Star hides its red generators across its solar system.";

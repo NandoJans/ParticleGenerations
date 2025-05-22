@@ -18,6 +18,6 @@ export class ChangeHoldingGeneratePercentage extends YellowMilestone {
 
   override getDescription(): string {
     const percentage = this.percentage.mul(new Num(1, 2)).toString()
-    return `Generate ${percentage}% of fastest yellow particles per second`;
+    return `Generate ${percentage}% of fastest star particles per second`;
   }
 }

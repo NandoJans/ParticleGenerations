@@ -6,20 +6,19 @@ import {HoldingDisplayFactory} from "../../factories/holding-display-factory";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {Styles} from "../../enums/styles";
 
-export class YellowParticleHolding extends Holding {
-  abbreviation: string = 'YP';
+export class GreenParticleHolding extends Holding {
+  abbreviation: string = 'GP';
   amount: Num = new Num(0, 0);
   holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
     .withAmountPrefix('You have')
-    .withAmountSuffix(' Star Particles')
+    .withAmountSuffix(' Green Particles')
     .build();
-  name: string = 'yellow-particles';
-  displayName: string = 'Star Particles';
-  resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
+  name: string = 'green-particles';
+  displayName: string = 'Green Particles';
+  resetId: ResetKey = ResetHelper.registerReset(ResetKey.GREEN, this);
   startAmount: Num = new Num(0, 0);
 
   getStyle(): Styles {
-    return Styles.YELLOW;
+    return Styles.GREEN;
   }
-
 }

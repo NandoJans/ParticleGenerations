@@ -5,7 +5,7 @@ import {Num} from "../num";
 import {Styles} from "../classes/enums/styles";
 import {ResetKey} from "../classes/enums/reset-key";
 import {MessageStepsFactory} from "../classes/factories/message-steps-factory";
-import {faKey} from "@fortawesome/free-solid-svg-icons";
+import {faCloud, faKey, faStar} from "@fortawesome/free-solid-svg-icons";
 import {MessageStepsService} from "./message-steps.service";
 import {NavigationsService} from "./navigations.service";
 import {MultiplierRecord} from "../classes/records/multipliers/multiplier-record";
@@ -26,20 +26,60 @@ export class PrestigeLayersService {
       { holding: HoldingRecord.yellowPrestiges, basedOnRequiredHolding: false, gainMultiplier: MultiplierRecord.yellowPrestigeGain, idleGeneration: false},
     ],
     ResetKey.RED,
-    MessageStepsFactory.start(Styles.YELLOW, faKey)
-      .addStep('Access Restricted', 'You defeated red and got to yellow. Yellow refuses to let you in.')
-      .addStep('Access Restricted', 'Reaching yellow again will not help you.')
-      .addStep('Access Restricted', 'Yellow has left you a message:')
-      .addStep('Access Restricted', 'Unlocking yellow power is the only way to get in. Try unlocking yellow power.')
-      .addStep('Information', 'You can unlock yellow power by reaching red particles.')
+    MessageStepsFactory.start(Styles.YELLOW, faStar)
+      .addStep('Gilded Prison', 'A vast sphere of molten-gold suns surrounds Yellow’s realm. Its surface throbs like a single titanic heartbeat, denying you fresh red particles.')
+      .addStep('Solar Whisper', '“Your crimson power is frozen here,” the shell murmurs. “Only the radiance you forge inside me can split my skin.”')
+      .addStep('First Hint', 'Every star-particle you harvest dims one facet of the shell. Amass 1 × 10¹⁰⁰⁰ star-particles to weaken its lattice.')
+      .addStep('Second Hint', 'When the lattice trembles, invest those particles in the Break Upgrade. Break is the only tool sharp enough to pierce stellar alloy.')
       .build(),
     'Yellow does not allow you to enter. Reset your progress to access yellow\'s upgrades',
     HoldingRecord.yellowParticles,
     MultiplierRecord.yellowParticleIdleGeneration,
   );
+  static greenPrestigeLayer: PrestigeLayer = new PrestigeLayer(
+    'greenPrestigeLayer',
+    'green',
+    HoldingRecord.yellowParticles,
+    new Num(1, 1000),
+    Styles.GREEN,
+    [
+      { holding: HoldingRecord.greenParticles, basedOnRequiredHolding: true, gainMultiplier: MultiplierRecord.greenParticleGain, idleGeneration: true},
+    ],
+    ResetKey.YELLOW,
+    MessageStepsFactory.start(Styles.GREEN, faCloud)
+      .addStep(
+        'Gravity Wall',
+        'A viridian aurora curdles space ahead, dense enough to bend time itself. This is the **Green Barrier**.'
+      )
+      .addStep(
+        'Voice in the Void',
+        '“Mass alone cannot pass,” Green intones. “Only a bound cosmos may cross.”'
+      )
+      .addStep(
+        'First Hint',
+        'Dark matter drifts here like black snow. **Condense 1 × 10^500 units** into a single, coherent core.'
+      )
+      .addStep(
+        'Second Hint',
+        'When density peaks, ignite the core with star-light to birth your **first galaxy**.'
+      )
+      .addStep(
+        'Galaxy Forge',
+        'Spiral arms unfurl; newborn suns scatter emerald light. The wall senses a self-contained gravity well—and trembles.'
+      )
+      .addStep(
+        'Through the Breach',
+        'Your galaxy barrels forward, punching a tunnel through folded space. Behind it, the Barrier seals, but **you are on the other side**.'
+      )
+      .build(),
+    'There are too many stars, we need to contain them.',
+    HoldingRecord.greenParticles,
+    MultiplierRecord.greenParticleIdleGeneration,
+  );
 
   static list: PrestigeLayer[] = [
-    PrestigeLayersService.yellowPrestigeLayer
+    PrestigeLayersService.yellowPrestigeLayer,
+    PrestigeLayersService.greenPrestigeLayer,
   ];
 
   constructor(

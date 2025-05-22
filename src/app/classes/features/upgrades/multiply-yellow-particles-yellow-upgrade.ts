@@ -6,13 +6,13 @@ export class MultiplyYellowParticlesYellowUpgrade extends YellowUpgrade {
   constructor(saveName: string) {
     super(saveName, 'multiply-yellow-particles-yellow');
   }
-  displayName: string = 'Multiply Yellow Particles';
+  displayName: string = 'Multiply Star Particles';
 
   override buffer: Num = new Num(2, 0);
   override baseBuffer: Num = new Num(2, 0);
 
   getDescription(): string {
-    return "Multiply yellow particle gain by " + this.buffer.toString(2) + "x";
+    return "Multiply star particle gain by " + this.buffer.toString(2) + "x";
   }
   action(): Num {
     const effect: Num = this.buffer.pow(this.amount);
