@@ -3,6 +3,7 @@ import {Upgrade} from "../../../classes/features/upgrade";
 import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
 import {Holding} from "../../../classes/features/holding";
 import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
+import {GalaxyTreeUpgrade} from "../../../classes/features/upgrades/galaxy-tree-upgrade";
 
 @Component({
   selector: 'app-green-galaxy-tree',
@@ -16,7 +17,7 @@ export class GreenGalaxyTreeComponent implements OnInit {
     UpgradeRecord.yellowParticleSacrifice,
     UpgradeRecord.greenParticleSacrifice,
   ];
-  // galaxyTreeStarRoot: GalaxyTreeUpgrade;
+  galaxyTreeStarRoot: GalaxyTreeUpgrade = UpgradeRecord.unlockFirstGreenGenerator;
 
   constructor() { }
 

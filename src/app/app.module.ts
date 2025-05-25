@@ -42,6 +42,7 @@ import { YellowFusionComponent } from './pages/yellow/yellow-fusion/yellow-fusio
 import { GalaxyTreeComponent } from './pages/green/galaxy-tree/galaxy-tree.component';
 import { GreenGalaxyTreeComponent } from './pages/green/green-galaxy-tree/green-galaxy-tree.component';
 import { GalaxyTreeStarComponent } from './components/particles/galaxy-tree-star/galaxy-tree-star.component';
+import { GreenGeneratorsComponent } from './pages/green/green-generators/green-generators.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import { GalaxyTreeStarComponent } from './components/particles/galaxy-tree-star
     GalaxyTreeComponent,
     GreenGalaxyTreeComponent,
     GalaxyTreeStarComponent,
+    GreenGeneratorsComponent,
   ],
     imports: [
         BrowserModule,

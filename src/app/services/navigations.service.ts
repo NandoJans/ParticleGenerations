@@ -13,6 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {HoldingRecord} from "../classes/records/holdings/holding-record";
 import {Num} from "../num";
+import {UpgradeRecord} from "../classes/records/upgrades/upgrade-record";
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +55,9 @@ export class NavigationsService {
     // Green
     greenGalaxyTree: new SubNavigation('greenGalaxyTree', faStar, 'galaxyTree', this.navigations['green'], [
       {requirement: HoldingRecord.greenPrestiges, amount: new Num(1, 0)},
+    ], false),
+    greenGenerators: new SubNavigation('greenGenerators', faIndustry, 'greenGenerators', this.navigations['green'], [
+      {requirement: UpgradeRecord.unlockFirstGreenGenerator, amount: new Num(1, 0)},
     ], false),
 
     // Automators

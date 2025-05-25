@@ -10,6 +10,7 @@ export class MultiplierRecord {
   // Red Phase
   static redParticleGenerators: Multiplier = new Multiplier('redParticleGenerators', new Num(1, 0))
   static redAcceleratorGenerators: Multiplier = new Multiplier('redAcceleratorGenerators', new Num(1, 0));
+  static freeRedGeneratorBoosters: Multiplier = new Multiplier('freeRedGeneratorBoosters', new Num(0, 0), 50);
 
   // Yellow Phase
   static yellowParticleGain: Multiplier = new Multiplier('yellowParticleGain', new Num(1, 0), 50);
@@ -26,11 +27,13 @@ export class MultiplierRecord {
   static greenParticleIdleGeneration: Multiplier = new Multiplier('greenParticleIdleGeneration', new Num(0, 0), 50);
   static totalDarkEnergyGain: Multiplier = new Multiplier('totalDarkEnergyGain', new Num(0, 0), 50);
   static totalDarkEnergyCost: Multiplier = new Multiplier('totalDarkEnergyCost', new Num(0, 0), 50);
+  static greenGenerators: Multiplier = new Multiplier('greenGenerators', new Num(1, 0));
 
   static list: Multiplier[] = [
     // Red Phase
     MultiplierRecord.redParticleGenerators,
     MultiplierRecord.redAcceleratorGenerators,
+    MultiplierRecord.freeRedGeneratorBoosters,
 
     // Yellow Phase
     MultiplierRecord.yellowParticleGain,
@@ -47,6 +50,7 @@ export class MultiplierRecord {
     MultiplierRecord.greenParticleIdleGeneration,
     MultiplierRecord.totalDarkEnergyGain,
     MultiplierRecord.totalDarkEnergyCost,
+    MultiplierRecord.greenGenerators,
 
   ];
 

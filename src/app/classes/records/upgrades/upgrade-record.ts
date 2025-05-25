@@ -54,6 +54,12 @@ import {
 import {RedParticleSacrificeUpgrade} from "../../features/upgrades/red-particle-sacrifice-upgrade";
 import {YellowParticleSacrificeUpgrade} from "../../features/upgrades/yellow-particle-sacrifice-upgrade";
 import {GreenParticleSacrificeUpgrade} from "../../features/upgrades/green-particle-sacrifice-upgrade";
+import {
+  UnlockFirstGreenGeneratorGalaxyTreeUpgrade
+} from "../../features/upgrades/unlock-first-green-generator-galaxy-tree-upgrade";
+import {
+  HalfRedGeneratorIncreaseGalaxyTreeUpgrade
+} from "../../features/generators/half-red-generator-increase-galaxy-tree-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -113,6 +119,9 @@ export class UpgradeRecord extends Record {
   static yellowParticleSacrifice: YellowParticleSacrificeUpgrade = new YellowParticleSacrificeUpgrade('yellowParticleSacrifice');
   static greenParticleSacrifice: GreenParticleSacrificeUpgrade = new GreenParticleSacrificeUpgrade('greenParticleSacrifice');
 
+  static unlockFirstGreenGenerator: UnlockFirstGreenGeneratorGalaxyTreeUpgrade = new UnlockFirstGreenGeneratorGalaxyTreeUpgrade('unlockFirstGreenGenerator');
+  static halfRedGeneratorIncrease: HalfRedGeneratorIncreaseGalaxyTreeUpgrade = new HalfRedGeneratorIncreaseGalaxyTreeUpgrade('halfRedGeneratorIncrease');
+
   static override list: Upgrade[] = [
     UpgradeRecord.redGeneratorExtension,
     UpgradeRecord.redGeneratorBooster,
@@ -164,6 +173,9 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.redParticleSacrifice,
     UpgradeRecord.yellowParticleSacrifice,
     UpgradeRecord.greenParticleSacrifice,
+
+    UpgradeRecord.unlockFirstGreenGenerator
+
   ]
 
   getList(): Upgrade[] {
