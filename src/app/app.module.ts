@@ -39,6 +39,9 @@ import { YellowGeneratorsComponent } from './pages/yellow/yellow-generators/yell
 import { YellowStarsComponent } from './pages/yellow/yellow-stars/yellow-stars.component';
 import { StarComponent } from './components/particles/star/star.component';
 import { YellowFusionComponent } from './pages/yellow/yellow-fusion/yellow-fusion.component';
+import { GalaxyTreeComponent } from './pages/green/galaxy-tree/galaxy-tree.component';
+import { GreenGalaxyTreeComponent } from './pages/green/green-galaxy-tree/green-galaxy-tree.component';
+import { GalaxyTreeStarComponent } from './components/particles/galaxy-tree-star/galaxy-tree-star.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +78,9 @@ import { YellowFusionComponent } from './pages/yellow/yellow-fusion/yellow-fusio
     YellowStarsComponent,
     StarComponent,
     YellowFusionComponent,
+    GalaxyTreeComponent,
+    GreenGalaxyTreeComponent,
+    GalaxyTreeStarComponent,
   ],
     imports: [
         BrowserModule,

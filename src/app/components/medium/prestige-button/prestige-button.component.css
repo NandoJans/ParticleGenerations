@@ -15,6 +15,16 @@ button.yellow.reached {
   border-color: var(--accent-color-yellow);
 }
 
+button.green {
+  color: var(--background-color-green);
+  border: 2px solid var(--background-color-green);
+}
+
+button.green.reached {
+  color: var(--text-color-green);
+  border-color: var(--text-color-green);
+}
+
 button.reached {
   background-color: var(--background-color-3);
   cursor: pointer;

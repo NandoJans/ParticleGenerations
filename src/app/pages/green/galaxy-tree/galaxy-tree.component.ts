@@ -1,0 +1,15 @@
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-galaxy-tree',
+  templateUrl: './galaxy-tree.component.html',
+  styleUrls: ['./galaxy-tree.component.css']
+})
+export class GalaxyTreeComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}

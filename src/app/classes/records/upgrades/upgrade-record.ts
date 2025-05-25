@@ -51,6 +51,9 @@ import {DecreaseRedGeneratorBoosterScalingUpgrade} from "../../features/upgrades
 import {
   StopRedBoosterAccelerationResetUpgrade
 } from "../../features/upgrades/stop-red-booster-acceleration-reset-upgrade";
+import {RedParticleSacrificeUpgrade} from "../../features/upgrades/red-particle-sacrifice-upgrade";
+import {YellowParticleSacrificeUpgrade} from "../../features/upgrades/yellow-particle-sacrifice-upgrade";
+import {GreenParticleSacrificeUpgrade} from "../../features/upgrades/green-particle-sacrifice-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -105,6 +108,11 @@ export class UpgradeRecord extends Record {
   static fusionBoosterAcceleration: FusionBoosterAccelerationUpgrade = new FusionBoosterAccelerationUpgrade('fusionBoosterAcceleration');
   static increaseMaxFusionBoosterAcceleration: IncreaseMaxFusionBoosterAccelerationUpgrade = new IncreaseMaxFusionBoosterAccelerationUpgrade('increaseMaxFusionBoosterAcceleration');
 
+  // green galaxy tree upgrades
+  static redParticleSacrifice: RedParticleSacrificeUpgrade = new RedParticleSacrificeUpgrade('redParticleSacrifice');
+  static yellowParticleSacrifice: YellowParticleSacrificeUpgrade = new YellowParticleSacrificeUpgrade('yellowParticleSacrifice');
+  static greenParticleSacrifice: GreenParticleSacrificeUpgrade = new GreenParticleSacrificeUpgrade('greenParticleSacrifice');
+
   static override list: Upgrade[] = [
     UpgradeRecord.redGeneratorExtension,
     UpgradeRecord.redGeneratorBooster,
@@ -151,6 +159,11 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.increaseSiriusGoal,
     UpgradeRecord.increaseMaxFusionBoosterAcceleration,
     UpgradeRecord.fusionBoosterAcceleration,
+
+    // Green galaxy tree upgrades
+    UpgradeRecord.redParticleSacrifice,
+    UpgradeRecord.yellowParticleSacrifice,
+    UpgradeRecord.greenParticleSacrifice,
   ]
 
   getList(): Upgrade[] {

@@ -138,7 +138,7 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     if (gain.basedOnRequiredHolding) {
       const exponent = this.holdingPhaseBelow.amount.log10()
       const base = this.amountRequired.log10();
-      const thresholds = exponent.div(base);
+      const thresholds = exponent.div(base).sub(new Num(1, 0));
       baseGain = baseGain.mul(new Num(2, 0).pow(thresholds));
     }
 

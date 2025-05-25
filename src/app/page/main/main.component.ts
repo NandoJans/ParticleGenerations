@@ -5,6 +5,8 @@ import {HoldingRecord} from "../../classes/records/holdings/holding-record";
 import {YellowParticleHolding} from "../../classes/features/holdings/yellow-particle-holding";
 import {EnhancementService} from "../../services/enhancement.service";
 import {Enhancement} from "../../classes/features/enhancements/enhancement";
+import {GreenPrestigeHolding} from "../../classes/features/holdings/green-prestige-holding";
+import {GreenParticleHolding} from "../../classes/features/holdings/green-particle-holding";
 
 @Component({
   selector: 'app-main',
@@ -19,6 +21,7 @@ export class MainComponent implements OnInit {
 
   purplePhase: boolean = App.purplePhase;
   yellowParticles: YellowParticleHolding = HoldingRecord.yellowParticles;
+  greenParticles: GreenParticleHolding = HoldingRecord.greenParticles;
 
   constructor(
     public holdingRecord: HoldingRecord,
@@ -31,6 +34,10 @@ export class MainComponent implements OnInit {
 
   getPrestigedYellow(): boolean {
     return PrestigeLayersService.yellowPrestigeLayer.prestigedFirstTime
+  }
+
+  getPrestigedGreen(): any {
+    return PrestigeLayersService.greenPrestigeLayer.prestigedFirstTime;
   }
 
   isEnhancing(): boolean {

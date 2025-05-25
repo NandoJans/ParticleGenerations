@@ -69,6 +69,7 @@ export class TickService {
       });
     });
     // HoldingRecord.yellowFusion.amount = new Num(1, 1000);
+    console.log(HoldingRecord.greenPrestiges.amount.toString());
 
     this.milestoneRecord.tick();
     this.prestigeLayersService.tick(speed);

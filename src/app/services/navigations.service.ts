@@ -23,6 +23,9 @@ export class NavigationsService {
     yellow: new Navigation('yellow', faSun, 'yellow', [
       {requirement: HoldingRecord.yellowPrestiges, amount: new Num(1, 0)},
     ], 'upgrades', false),
+    green: new Navigation('green', faStar, 'green', [
+      {requirement: HoldingRecord.greenPrestiges, amount: new Num(1, 0)},
+    ], 'galaxy', false),
     automators: new Navigation('automators', faCogs, 'automators', [], 'red', true),
     timeline: new Navigation('timeline', faCalendar, 'timeline', [], 'red', true),
 }
@@ -46,6 +49,11 @@ export class NavigationsService {
     ], false),
     yellowFusion: new SubNavigation('yellowFusion', faFire, 'fusion', this.navigations['yellow'], [
       {requirement: HoldingRecord.yellowParticles, amount: new Num(1, 10)},
+    ], false),
+
+    // Green
+    greenGalaxyTree: new SubNavigation('greenGalaxyTree', faStar, 'galaxyTree', this.navigations['green'], [
+      {requirement: HoldingRecord.greenPrestiges, amount: new Num(1, 0)},
     ], false),
 
     // Automators

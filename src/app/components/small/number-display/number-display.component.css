@@ -29,6 +29,21 @@ div span p {
   color: var(--text-color-yellow);
 }
 
+.green {
+  color: var(--text-color-green);
+  --accent-color: var(--text-color-green);
+}
+
+.dark {
+  color: var(--background-color-3);
+  text-shadow:
+    0 0 10px var(--accent-color),
+    -1px -1px 0 var(--accent-color),
+    1px 1px 0 var(--accent-color),
+    -1px 1px 0 var(--accent-color),
+    1px -1px 0 var(--accent-color);
+}
+
 .sun {
   color: var(--sun-color);
 }

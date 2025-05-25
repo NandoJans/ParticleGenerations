@@ -17,4 +17,6 @@ export enum Styles {
   HYDROGEN = "yellow hydrogen color-switch",
   FUSION_SUPER = "yellow fusion super color-switch",
   GREEN = "green",
+  SUB_GREEN = "green sub",
+  DARK = "green dark",
 }
