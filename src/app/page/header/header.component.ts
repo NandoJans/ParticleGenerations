@@ -9,6 +9,7 @@ import {PrestigeLayer} from "../../classes/features/prestiges/prestige-layer";
 })
 export class HeaderComponent implements OnInit {
   yellowPrestigeLayer: PrestigeLayer = PrestigeLayersService.yellowPrestigeLayer
+  greenPrestigeLayer: PrestigeLayer = PrestigeLayersService.greenPrestigeLayer
 
   constructor(
 

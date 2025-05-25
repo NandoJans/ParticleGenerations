@@ -83,6 +83,12 @@ button.yellow {
   --background-color: var(--background-color-yellow);
 }
 
+button.green {
+  --accent-color: var(--accent-color-green);
+  --text-color: var(--text-color-green);
+  --background-color: var(--background-color-green);
+}
+
 button.proxima-centauri {
   --accent-color: var(--proxima-centauri-color);
   --text-color: var(--proxima-centauri-color);

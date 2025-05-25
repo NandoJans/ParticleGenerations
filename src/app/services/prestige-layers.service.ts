@@ -44,6 +44,7 @@ export class PrestigeLayersService {
     Styles.GREEN,
     [
       { holding: HoldingRecord.greenParticles, basedOnRequiredHolding: true, gainMultiplier: MultiplierRecord.greenParticleGain, idleGeneration: true},
+      { holding: HoldingRecord.greenPrestiges, basedOnRequiredHolding: false, gainMultiplier: MultiplierRecord.greenPrestigeGain, idleGeneration: false},
     ],
     ResetKey.YELLOW,
     MessageStepsFactory.start(Styles.GREEN, faCloud)

@@ -10,8 +10,8 @@ import {ResetHelper} from "../../helpers/reset-helper";
 
 export class ImproveRedAcceleratorsEffectAutomator extends Automator {
   displayName: string = 'Better Acceleration Automator';
-  goal: Num = new Num(1, 10);
-  goalString: string = 'Have the effect of Red Accelerators be at least 1e10x';
+  goal: Num = new Num(1, 100);
+  goalString: string = 'Have the effect of Red Accelerators be at least 1e100x';
   name: string = 'improve-red-accelerators-effect-automator';
   style: Styles = Styles.RED_AUTOMATOR;
   override unlocked: boolean = false;

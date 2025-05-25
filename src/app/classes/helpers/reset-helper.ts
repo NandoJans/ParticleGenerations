@@ -18,6 +18,8 @@ export class ResetHelper {
     ResetKey.RED_EXTENSION,
     ResetKey.RED_BOOSTER_ACCELERATION,
     ResetKey.RED,
+    ResetKey.YELLOW,
+    ResetKey.GREEN,
   ];
 
   static registerReset(resetKey: ResetKey, resetable: Resetable): ResetKey {

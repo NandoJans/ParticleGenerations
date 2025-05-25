@@ -10,6 +10,8 @@ import {YellowAutomatorsComponent} from "./pages/automators/yellow-automators/ye
 import {YellowGeneratorsComponent} from "./pages/yellow/yellow-generators/yellow-generators.component";
 import {YellowStarsComponent} from "./pages/yellow/yellow-stars/yellow-stars.component";
 import {YellowFusionComponent} from "./pages/yellow/yellow-fusion/yellow-fusion.component";
+import {GreenGalaxyTreeComponent} from "./pages/green/green-galaxy-tree/green-galaxy-tree.component";
+import {GreenGeneratorsComponent} from "./pages/green/green-generators/green-generators.component";
 
 const routes: Routes = [
   { path: '', component: RedComponent },
@@ -21,6 +23,9 @@ const routes: Routes = [
   { path: 'yellow/generators', component: YellowGeneratorsComponent },
   { path: 'yellow/stars', component: YellowStarsComponent },
   { path: 'yellow/fusion', component: YellowFusionComponent },
+  // Green
+  { path: 'green/galaxyTree', component: GreenGalaxyTreeComponent },
+  { path: 'green/greenGenerators', component: GreenGeneratorsComponent },
   // Automators
   { path: 'automators/red' , component: RedAutomatorsComponent },
   { path: 'automators/yellow' , component: YellowAutomatorsComponent },

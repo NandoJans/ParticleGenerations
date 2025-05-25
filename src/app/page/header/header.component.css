@@ -9,8 +9,15 @@ p {
 }
 
 div.items {
+  display: flex;
+  flex-direction: row;
   width: 100%;
   height: 100%;
   z-index: 5;
 }
 
+app-prestige-button {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+}

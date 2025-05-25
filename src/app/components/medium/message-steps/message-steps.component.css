@@ -73,8 +73,24 @@ div.container.yellow div.icon {
   color: var(--text-color-yellow);
 }
 
-div.container.yellow {
-  border-color: var(--accent-color-yellow);
+div.container.green {
+  border-color: var(--accent-color-green);
+}
+
+div.container.green div.footer button {
+  background-color: var(--text-color-green);
+}
+
+div.container.green div.footer button:hover {
+  color: var(--text-color-green);
+}
+
+div.container.green div.icon {
+  color: var(--text-color-green);
+}
+
+div.container.green {
+  border-color: var(--accent-color-green);
 }
 
 div.holdings-value.red p.holding-name {

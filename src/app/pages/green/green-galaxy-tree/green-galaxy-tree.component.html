@@ -1,0 +1,9 @@
+<app-number-display [holding]="darkEnergy"></app-number-display>
+<div class="upgrade-row">
+  <div *ngFor="let upgrade of upgrades">
+    <app-upgrade [upgrade]="upgrade"></app-upgrade>
+  </div>
+</div>
+<app-galaxy-tree-star
+  [galaxyTreeStar]="galaxyTreeStarRoot"
+></app-galaxy-tree-star>

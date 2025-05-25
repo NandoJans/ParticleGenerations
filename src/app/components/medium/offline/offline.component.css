@@ -87,6 +87,10 @@ div.holdings-value.yellow p.holding-name {
   color: var(--text-color-yellow);
 }
 
+div.holdings-value.green p.holding-name {
+  color: var(--text-color-green);
+}
+
 div.holdings-value.fusion p.holding-name {
   --color-switch-1: var(--proxima-centauri-color);
   --color-switch-2: var(--sun-color);

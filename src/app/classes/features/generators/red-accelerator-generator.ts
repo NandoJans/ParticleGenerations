@@ -32,7 +32,6 @@ export class RedAcceleratorGenerator extends Generator {
   style: Styles = Styles.RED;
   subNav: string = 'none';
   type: string = 'generator';
-  powEffect: Num = new Num(1, 0);
   redParticleEffect: Num = new Num(1, -2);
 
   protected override getGenerateAmount(): Num {
@@ -40,17 +39,14 @@ export class RedAcceleratorGenerator extends Generator {
 
     let log = HoldingRecord.redParticles.amount
       .div(new Num(1, 75))
-      .log(10)
+      .log(10);
     if (log.lt(new Num(1, 0))) {
       log = new Num(1, 0);
 
     }
-    generate = generate.pow(this.powEffect);
     generate = generate.mul(log)
 
     generate = generate.mul(new Num(1, -2));
-
-    this.powEffect = new Num(1, 0);
 
     if (generate.mantissa > 0 && generate.greq(new Num(1, -2))) {
       this.redParticleEffect = generate.copy();
@@ -62,13 +58,11 @@ export class RedAcceleratorGenerator extends Generator {
   }
 
   override reset() {
-    this.powEffect = new Num(1, 0);
     this.redParticleEffect = new Num(1, -2);
     super.reset();
   }
 
   override unlock(): void | { title: string; message: string } {
-    this.powEffect = new Num(1, 0);
     this.redParticleEffect = new Num(1, -2);
     return super.unlock();
   }

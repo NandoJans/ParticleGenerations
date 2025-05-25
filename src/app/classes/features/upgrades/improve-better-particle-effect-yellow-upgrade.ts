@@ -8,11 +8,11 @@ export class ImproveBetterParticleEffectYellowUpgrade extends YellowUpgrade {
     super(name, 'improve-better-particle-effect-yellow');
   }
 
-  override buffer: Num = new Num(0.005, 0);
-  override baseBuffer: Num = new Num(0.005, 0);
+  override buffer: Num = new Num(1.5, 0);
+  override baseBuffer: Num = new Num(1.5, 0);
 
   getDescription(): string {
-    return "Better Particle Effect is increased by " + this.buffer.toString(3);
+    return "Better Particle Effect is increased by " + this.buffer.toString(2);
   }
 
   action(): undefined {

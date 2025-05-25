@@ -1,0 +1,35 @@
+<div
+  [id]="'buyable-'+galaxyTreeStar.name"
+  [class]="'upgrade '+galaxyTreeStar.style+' '
+  +((getIsBuyable()) ? 'buyable' : '')+' '
+  +((getIsMaxed()) ? 'maxed' : '')+' '
+  +((isEnhancing()) ? 'enhancing enhancing-' + getEnhancementStyle() : '')+' '
+  +((isEnhanced()) ? 'enhanced enhanced-' + getEnhancedStyle() : '')+' '
+"
+  (click)="buy()"
+>
+  <h4 *ngIf="getDisplayName() !== ''">{{ getDisplayName() }}</h4>
+    <div class="star icon">
+    </div>
+  <p *ngIf="isEnhancing()">{{ getEnhancementString() }}</p>
+  <p *ngIf="getEffect()" class="effect">{{ getEffect() }}</p>
+  <p *ngIf="!getIsMaxed()" class="cost">Cost: {{ getCost() }} {{ getCurrencyAbbreviation() }}</p>
+  <div class="challenge-disabled" style="display: none;">
+    <h2>Challenge Disabled</h2>
+  </div>
+</div>
+
+<!-- ② lines to children (SVG) ---------------------------------------->
+<svg *ngIf="galaxyTreeStar.getChildren()?.length"
+     class="connectors"
+     [attr.viewBox]="'0 0 100 50'">
+  <line x1="50" y1="0"  x2="50"  y2="50"/>
+</svg>
+
+<!-- ③ render every child node ---------------------------------------->
+<div class="children" *ngIf="galaxyTreeStar.getChildren()?.length">
+  <app-galaxy-tree-star
+    *ngFor="let child of galaxyTreeStar.getChildren()"
+    [galaxyTreeStar]="child">
+  </app-galaxy-tree-star>
+</div>

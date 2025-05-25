@@ -21,6 +21,10 @@ export class Multiplier {
     this.num = this.num.mul(num)
   }
 
+  add(num: Num): void {
+    this.num = this.num.add(num)
+  }
+
   getNum(): Num {
     return this.num
   }
