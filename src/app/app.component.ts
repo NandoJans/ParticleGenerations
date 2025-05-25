@@ -59,6 +59,8 @@ export class AppComponent implements OnInit{
     this.dataManagerService.save();
     this.localStorageHelper.save(this.VERSION);
 
+    // HoldingRecord.redParticles.amount = HoldingRecord.redParticles.amount.add(new Num(1, 76));
+
     if (!this.isTicking) {
       this.tick.startIntervals();
       this.isTicking = true;

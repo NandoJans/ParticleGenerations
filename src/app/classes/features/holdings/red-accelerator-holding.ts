@@ -25,19 +25,16 @@ export class RedAcceleratorHolding extends Holding {
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED_EXTENSION, this);
   startAmount: Num = new Num(1, 0);
   mulEffect: Num = new Num(1, 0);
-  powEffect: Num = new Num(1, 0);
 
   getStyle(): Styles {
     return Styles.RED
   }
 
   override action(): Num {
-    let effect = this.amount.log(10);
+    let effect = this.amount.sqrt();
     if (effect.gt(new Num(0, 0))) {
-      effect = effect.pow(this.powEffect).add(new Num(1, 0));
       effect = effect.mul(this.mulEffect);
       MultiplierRecord.redParticleGenerators.correct(effect);
-      this.powEffect = new Num(1, 0)
       this.mulEffect = new Num(1, 0);
       return effect
     }
