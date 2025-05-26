@@ -6,8 +6,9 @@ import {ResetKey} from "../enums/reset-key";
 import {Resetable} from "./interfaces/resetable";
 import {Storable} from "./interfaces/storable";
 import {LocalStorageHelper} from "../helpers/local-storage-helper";
+import {Require} from "./interfaces/require";
 
-export abstract class Milestone extends GameElement implements Resetable, Storable {
+export abstract class Milestone extends GameElement implements Resetable, Storable, Require {
   abstract displayName: string
   abstract getDescription(): string
   abstract type: string
@@ -19,6 +20,10 @@ export abstract class Milestone extends GameElement implements Resetable, Storab
 
   buffer: Num = new Num(1, 0)
   baseBuffer: Num = new Num(1, 0)
+
+  requirementSatisfied(amount: Num): boolean {
+    return this.goalReached();
+  }
 
   action(): void {}
   tick(): void {}

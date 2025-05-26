@@ -30,9 +30,9 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
 
   currency: Holding = HoldingRecord.redParticles;
 
-  override buffer: Num = new Num(0.12, 0);
-  override baseBuffer: Num = new Num(0.12, 0);
-  override completionBuffer: Num = new Num(5, 0);
+  override buffer: Num = new Num(0.5, 0);
+  override baseBuffer: Num = new Num(0.5, 0);
+  override completionBuffer: Num = new Num(3, 0);
 
   override strongerBuffer(): Num | void {
     if (this.completed instanceof Num) {
@@ -116,7 +116,7 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
         'unlockFifthRedGenerator',
         'unlock-fifth-red-generator-proxima-centauri',
         'Unlock Fifth Red Generator',
-        new Num(1, 393),
+        new Num(1, 140),
         HoldingRecord.redAccelerators,
         this.style,
         GeneratorRecord.fifthRedGenerator,

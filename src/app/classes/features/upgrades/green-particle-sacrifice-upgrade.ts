@@ -13,6 +13,7 @@ export class GreenParticleSacrificeUpgrade extends SacrificeUpgrade {
   baseCost: Num = new Num(2, 0);
   cost: Num = new Num(2, 0);
   increase: Num = new Num(2, 0);
+  startIncrease: Num = new Num(2, 0);
   currency: Holding = HoldingRecord.greenParticles;
 
 }

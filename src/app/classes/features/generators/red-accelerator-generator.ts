@@ -20,6 +20,7 @@ export class RedAcceleratorGenerator extends Generator {
   generates: Generatable = HoldingRecord.redAccelerators;
   globalMultiplier: Multiplier = MultiplierRecord.redAcceleratorGenerators;
   increase: Num = new Num(1, 0);
+  startIncrease: Num = new Num(1, 0);
   name: string = 'redAcceleratorGenerator';
   nav: string = 'none';
   rank: number = 1;

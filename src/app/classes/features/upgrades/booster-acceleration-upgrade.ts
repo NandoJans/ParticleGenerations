@@ -16,6 +16,7 @@ export class BoosterAccelerationUpgrade extends Upgrade {
   baseCost: Num = new Num(1, 5);
   cost: Num = new Num(1, 5);
   increase: Num = new Num(1, 3);
+  startIncrease: Num = new Num(1, 3);
   override scaling = new Num(1, 3);
   override scalingStart: Num = new Num(1, 20);
   bought: Num = new Num(0, 0);

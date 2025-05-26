@@ -15,6 +15,7 @@ export class ChallengeGenerator extends Generator {
   rank: number = 1;
   baseCost: Num;
   requirement: Requirement[] = [];
+  startIncrease: Num;
 
   constructor(
     saveName: string,
@@ -32,6 +33,7 @@ export class ChallengeGenerator extends Generator {
   ) {
     super(saveName);
     this.baseCost = cost.copy();
+    this.startIncrease = increase.copy();
     this.globalMultiplier = new Multiplier(this.name, new Num(1, 0));
   }
 }

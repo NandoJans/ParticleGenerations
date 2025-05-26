@@ -27,6 +27,7 @@ export class HydrogenGenerator extends Generator {
   baseCost: Num = new Num(1, 0);
   cost: Num = new Num(1, 0);
   increase: Num = new Num(1, 0);
+  startIncrease: Num = new Num(1, 0);
   override amount: Num = new Num(1, 0);
   override bought: Num = new Num(1, 0);
   currency: Holding = HoldingRecord.yellowFusion;

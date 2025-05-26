@@ -33,8 +33,8 @@ export class SunStarChallenge extends YellowStarChallenge {
 
   currency: Holding = HoldingRecord.redParticles;
 
-  override buffer: Num = new Num(3, -2);
-  override baseBuffer: Num = new Num(3, -2);
+  override buffer: Num = new Num(1, 1);
+  override baseBuffer: Num = new Num(1, 1);
   override completionBuffer: Num = new Num(2, 0);
 
   getRewardDescription(): string {

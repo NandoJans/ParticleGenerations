@@ -42,6 +42,7 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     style: string,
     gainHoldings: {holding: Holding, basedOnRequiredHolding: boolean, gainMultiplier: Multiplier, idleGeneration: boolean}[],
     resets: ResetKey,
+    resetId: ResetKey,
     message: MessageSteps,
     firstTimeText: string,
     idleGenerationHolding: Holding,
@@ -57,6 +58,7 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     this.amountRequired = amountRequired;
     this.gainHoldings = gainHoldings;
     this.resets = resets;
+    this.resetId = ResetHelper.registerReset(resetId, this)
     this.messageSteps = message;
     this.firstTimeText = firstTimeText;
     this.idleGenerationHolding = idleGenerationHolding;
@@ -70,12 +72,13 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     this.reached = true;
   }
 
-  resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED, this);
+  resetId: ResetKey;
   softResetId: ResetKey = ResetKey.NONE;
 
   reset(): void {
+    console.log('prestige layer reset', this.name);
     this.reached = false;
-this.highestGenerationPerTick = new Num(0, 0);
+    this.highestGenerationPerTick = new Num(0, 0);
     this.requirement.forEach(requirement => {
       requirement.register();
     })

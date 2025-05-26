@@ -88,9 +88,9 @@ export class BuyableHelper {
         if (buyable.resets !== 'none') ResetHelper.reset(buyable.resets || ResetKey.NONE);
       } else {
         const result = this.calculateBulk(buyable)
-
         if (result[0].greq(new Num(1, 0)) && buyable.currency.amount.greq(result[1])) {
-          if (buyable.limit !== undefined && result[0].greq(buyable.limit)) result[0] = buyable.limit;
+          if (buyable.limit !== undefined && result[0].greq(buyable.limit)) result[0] = buyable.limit.copy();
+
           this.bulkBuyAction(result[1], result[0]);
 
           transaction.cost = result[1];

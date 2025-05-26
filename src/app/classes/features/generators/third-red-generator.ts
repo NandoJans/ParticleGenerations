@@ -18,6 +18,7 @@ export class ThirdRedGenerator extends RedGenerator {
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED_EXTENSION, this);
   softResetId: ResetKey = ResetHelper.registerSoftReset(ResetKey.RED_EXTENSION, this);
   increase: Num = new Num(1, 4);
+  startIncrease: Num = new Num(1, 4);
   override requirement: Requirement[] = [
     new Requirement(UpgradeRecord.redGeneratorExtension, new Num(2, 0), this)
   ];

@@ -3,13 +3,20 @@ import {Num} from "../../../num";
 import {PrestigeLayersService} from "../../../services/prestige-layers.service";
 import {Styles} from "../../enums/styles";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
+import {Requirement} from "../interfaces/requirement";
+import {Milestone} from "../milestone";
+import {MilestoneRecord} from "../../records/milestones/milestone-record";
+import {HoldingRecord} from "../../records/holdings/holding-record";
 
 export class BreakYellowBarrierUpgrade extends YellowUpgrade {
   displayName: string = 'Break Yellow Barrier';
   override style: Styles = Styles.YELLOW_SUPER;
 
   constructor(name: string) {
-    super(name, 'break-yellow-barrier');
+    super(name, 'break-yellow-barrier', true);
+    this.requirement = [
+       new Requirement(HoldingRecord.yellowPrestiges, new Num(5, 2), this),
+    ];
   }
   override calculationOrder: number = 1;
 

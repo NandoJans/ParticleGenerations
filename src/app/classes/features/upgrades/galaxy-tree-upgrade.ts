@@ -15,6 +15,7 @@ export abstract class GalaxyTreeUpgrade extends Upgrade {
   bought: Num = new Num(0, 0);
   currency: Holding = HoldingRecord.darkEnergy;
   increase: Num = new Num(1, 0);
+  startIncrease: Num = new Num(1, 0);
   override limit: Num = new Num(1, 0);
   override oneTime: boolean = true;
   allowedEnhancements: any[] = [];

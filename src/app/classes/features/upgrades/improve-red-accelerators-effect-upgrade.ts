@@ -10,6 +10,7 @@ export class ImproveRedAcceleratorsEffectUpgrade extends RedAcceleratorUpgrade {
   cost: Num = new Num(1, 100);
   displayName: string = "Even Faster Acceleration";
   increase: Num = new Num(1, 20);
+  startIncrease: Num = new Num(1, 20);
   override buffer: Num = new Num(3, 0);
   override baseBuffer: Num = new Num(3, 0);
   constructor(saveName: string) {

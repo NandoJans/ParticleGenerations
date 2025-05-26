@@ -10,6 +10,7 @@ export abstract class Buyable extends GameElement {
   abstract baseCost: Num
   abstract cost: Num
   abstract increase: Num
+  abstract startIncrease: Num
   scalingStart: Num | undefined = undefined
   scaling: Num = new Num(1, 0)
   limit: Num | undefined = undefined

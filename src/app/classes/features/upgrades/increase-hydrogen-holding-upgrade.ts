@@ -16,6 +16,7 @@ export class IncreaseHydrogenHoldingUpgrade extends Upgrade {
     displayName: string = 'Increase Hydrogen Generation';
     override buffer: Num = new Num(1.2, 0);
     override baseBuffer: Num = new Num(1.2, 0);
+    override limit: Num = new Num(5, 1);
     getDescription(): string {
         return `Multiply hydrogen generation by ${this.buffer.toString(2)}x.`;
     }
@@ -47,6 +48,7 @@ export class IncreaseHydrogenHoldingUpgrade extends Upgrade {
     baseCost: Num = new Num(1, 10);
     cost: Num = new Num(1, 10);
     increase: Num = new Num(1, 1);
+  startIncrease: Num = new Num(1, 1);
     bought: Num = new Num(0, 0);
     currency: Holding = HoldingRecord.yellowParticles;
     requirement: Requirement[] = [

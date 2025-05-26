@@ -41,6 +41,7 @@ export class YellowPowerUpgrade extends Upgrade {
 
   override oneTime: boolean = false;
   increase: Num = new Num(1, 1);
+  startIncrease: Num = new Num(1, 1);
   cost: Num = new Num(1, 1);
   baseCost: Num = new Num(1, 1);
   bought: Num = new Num(0, 0);

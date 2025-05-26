@@ -9,6 +9,7 @@ export class ImproveRedParticlesToAcceleratorsUpgrade extends RedAcceleratorUpgr
   override baseCost: Num = new Num(1, 110);
   override cost: Num = new Num(1, 110);
   increase: Num = new Num(1, 20);
+  startIncrease: Num = new Num(1, 20);
   override buffer: Num = new Num(3, 0);
   override baseBuffer: Num = new Num(3, 0);
 
