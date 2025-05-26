@@ -24,14 +24,16 @@ export class HalfRedGeneratorIncreaseGalaxyTreeUpgrade extends GalaxyTreeUpgrade
   }
 
   action(): undefined {
-    GeneratorRecord.redGenerators.forEach(generator => {
-      generator.increase = new Num(1, 1);
-    })
+    if (this.hasBought()) {
+      GeneratorRecord.redGenerators.forEach(generator => {
+        generator.increase = new Num(1, 1);
+      })
+    }
     return
   }
 
   style: Styles = Styles.STAR_RED
-  displayName: string = "10x Cost Increase of Red Generators";
+  displayName: string = "Cost Increase of Red Generators to 10x";
 
   cost: Num = new Num(2, 0);
   baseCost: Num = new Num(2, 0);

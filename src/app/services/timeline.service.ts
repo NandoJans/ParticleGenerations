@@ -105,9 +105,27 @@ export class TimelineService {
     .build()
     .build()
 
+  static greenTimeline: Timeline = TimelineFactory.start(
+    'green-timeline',
+    Styles.GREEN,
+    'Green Timeline',
+    'Green is the third phase of the universe. It is a place of galaxies and stars.'
+  )
+    .addTimelineEvent(
+      'green-galaxy-tree',
+      'Galaxy Tree',
+      'Galaxy tree is a place where galaxies are born. It is a place of creation.',
+      HoldingRecord.greenPrestiges,
+      new Num(1, 0)
+    )
+    .addMilestone(MilestoneRecord.keepAllRedAutomators)
+    .build()
+    .build()
+
   static list: Timeline[] = [
     TimelineService.redTimeline,
-    TimelineService.yellowTimeline
+    TimelineService.yellowTimeline,
+    TimelineService.greenTimeline,
   ]
 
   getList(): Timeline[] {

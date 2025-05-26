@@ -71,6 +71,9 @@ export class NavigationsService {
     yellowTimeline: new SubNavigation('yellowTimeline', faSun, 'yellow', this.navigations['timeline'], [
       {requirement: HoldingRecord.yellowPrestiges, amount: new Num(1, 0)},
     ], false),
+    greenTimeline: new SubNavigation('greenTimeline', faStar, 'green', this.navigations['timeline'], [
+      {requirement: HoldingRecord.greenPrestiges, amount: new Num(1, 0)},
+    ], false),
 
   }
 

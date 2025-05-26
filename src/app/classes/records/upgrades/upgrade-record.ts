@@ -174,7 +174,8 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.yellowParticleSacrifice,
     UpgradeRecord.greenParticleSacrifice,
 
-    UpgradeRecord.unlockFirstGreenGenerator
+    UpgradeRecord.unlockFirstGreenGenerator,
+    UpgradeRecord.halfRedGeneratorIncrease,
 
   ]
 

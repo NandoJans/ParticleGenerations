@@ -44,10 +44,10 @@ export class RedGeneratorBoosterUpgrade extends RedUpgrade {
   }
 
   override enhance(): void {
-    this.buffer = this.buffer.add(this.enhancement?.getAddition().mul(new Num(2.5, -2)) as Num)
+    this.buffer = this.buffer.add(this.enhancement?.getAddition().mul(new Num(1.25, -2)) as Num)
   }
 
   override enhancementString(enhancement: Enhancement): string {
-    return `Adds ${enhancement.getAddition().mul(new Num(2.5, -2)).toString(3)}x to red generator booster production.`;
+    return `Adds ${enhancement.getAddition().mul(new Num(1.25, -2)).toString(3)}x to red generator booster production.`;
   }
 }

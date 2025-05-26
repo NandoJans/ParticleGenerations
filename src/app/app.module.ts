@@ -43,6 +43,7 @@ import { GalaxyTreeComponent } from './pages/green/galaxy-tree/galaxy-tree.compo
 import { GreenGalaxyTreeComponent } from './pages/green/green-galaxy-tree/green-galaxy-tree.component';
 import { GalaxyTreeStarComponent } from './components/particles/galaxy-tree-star/galaxy-tree-star.component';
 import { GreenGeneratorsComponent } from './pages/green/green-generators/green-generators.component';
+import { GreenTimelineComponent } from './pages/timeline/green-timeline/green-timeline.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { GreenGeneratorsComponent } from './pages/green/green-generators/green-g
     GreenGalaxyTreeComponent,
     GalaxyTreeStarComponent,
     GreenGeneratorsComponent,
+    GreenTimelineComponent,
   ],
     imports: [
         BrowserModule,

@@ -214,6 +214,8 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
   private checkRequirements() {
     if (this.holdingPhaseBelow.amount.greq(this.amountRequired)) {
       this.unlock();
+    } else {
+      this.reached = false;
     }
   }
 

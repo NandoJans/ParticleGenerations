@@ -7,6 +7,8 @@ import {Injectable} from "@angular/core";
 import {ChangeHoldingGeneratePercentage} from "../../features/milestones/change-holding-generate-percentage";
 import {MultiplierRecord} from "../multipliers/multiplier-record";
 import {BreakYellowBarrierMilestone} from "../../features/milestones/break-yellow-barrier-milestone";
+import {ChangeResetKeyGreenMilestone} from "../../features/milestones/change-reset-key-green-milestone";
+import {GeneratorRecord} from "../generators/generator-record";
 
 @Injectable({
   providedIn: 'root'
@@ -167,6 +169,27 @@ export class MilestoneRecord extends Record {
   // Break yellow barrier
   static breakYellowBarrier: BreakYellowBarrierMilestone = new BreakYellowBarrierMilestone('breakYellowBarrier');
 
+  static keepAllRedAutomators: ChangeResetKeyGreenMilestone = new ChangeResetKeyGreenMilestone(
+    'keepBoosterAccelerationAuto',
+    'Keep Better Red Particle to Accelerator Effect Automator',
+    new Num(1, 0),
+    [
+      AutomatorRecord.firstRedGenerator,
+      AutomatorRecord.secondRedGenerator,
+      AutomatorRecord.thirdRedGenerator,
+      AutomatorRecord.fourthRedGenerator,
+      AutomatorRecord.fifthRedGenerator,
+      AutomatorRecord.redGeneratorBooster,
+      AutomatorRecord.redGeneratorExtension,
+      AutomatorRecord.multiplyRedAccelerationGeneration,
+      AutomatorRecord.multiplyRedAcceleratorEffect,
+      AutomatorRecord.improveRedAcceleratorsEffect,
+      AutomatorRecord.improveRedParticlesToAccelerators,
+      AutomatorRecord.boosterAcceleration,
+    ],
+    'red phase automators'
+  );
+
   // Green Phase
 
   // Blue Phase
@@ -205,7 +228,10 @@ export class MilestoneRecord extends Record {
     MilestoneRecord.generate50PercentYellowParticles,
 
     // Break yellow barrier
-    MilestoneRecord.breakYellowBarrier
+    MilestoneRecord.breakYellowBarrier,
+
+    // Keep all red automators
+    MilestoneRecord.keepAllRedAutomators,
 
   ];
 
