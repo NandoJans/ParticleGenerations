@@ -12,7 +12,7 @@ export class YellowParticleSacrificeUpgrade extends SacrificeUpgrade {
   displayName: string = "Yellow Particle Sacrifice Upgrade";
   baseCost: Num = new Num(1, 0);
   cost: Num = new Num(1, 0);
-  increase: Num = new Num(5, 12);
+  increase: Num = new Num(1, 50);
   currency: Holding = HoldingRecord.yellowParticles;
 
 }

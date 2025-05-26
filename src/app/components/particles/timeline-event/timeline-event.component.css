@@ -20,6 +20,18 @@ div.timeline-event.yellow, div.progress-bar.yellow {
   --accent-color: var(--accent-color-yellow)
 }
 
+div.timeline-event.green, div.progress-bar.green {
+  --accent-color: var(--accent-color-green)
+}
+
+div.timeline-event.blue, div.progress-bar.blue {
+  --accent-color: var(--accent-color-blue)
+}
+
+div.timeline-event.purple, div.progress-bar.purple {
+  --accent-color: var(--accent-color-purple)
+}
+
 div.progress-bar.yellow {
   color: var(--background-color-3);
 }

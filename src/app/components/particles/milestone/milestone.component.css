@@ -13,8 +13,28 @@ div.milestone.unlocked {
   background-color: var(--background-color-unlocked);
 }
 
+div.milestone.red {
+  --background-color-unlocked: var(--accent-color-red);
+  --text-color-unlocked: var(--background-color-2);
+}
+
 div.milestone.yellow {
   --background-color-unlocked: var(--accent-color-yellow);
+  --text-color-unlocked: var(--background-color-2);
+}
+
+div.milestone.green {
+  --background-color-unlocked: var(--accent-color-green);
+  --text-color-unlocked: var(--background-color-2);
+}
+
+div.milestone.blue {
+  --background-color-unlocked: var(--accent-color-blue);
+  --text-color-unlocked: var(--background-color-2);
+}
+
+div.milestone.purple {
+  --background-color-unlocked: var(--accent-color-purple);
   --text-color-unlocked: var(--background-color-2);
 }
 
