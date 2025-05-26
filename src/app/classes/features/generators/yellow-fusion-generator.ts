@@ -27,6 +27,7 @@ export class YellowFusionGenerator extends Generator {
   baseCost: Num = new Num(1, 1);
   cost: Num = new Num(1, 1);
   increase: Num = new Num(1, 1);
+  startIncrease: Num = new Num(1, 1);
   currency: Holding = HoldingRecord.yellowFusion;
   requirement: Requirement[] = [
     new Requirement(HoldingRecord.hydrogen, new Num(1, 0), this)

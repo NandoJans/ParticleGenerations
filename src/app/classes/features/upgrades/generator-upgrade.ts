@@ -16,6 +16,7 @@ export abstract class GeneratorUpgrade extends Upgrade {
     this.cost = cost.copy();
     this.displayName = '';
     this.increase = increase.copy();
+    this.startIncrease = increase.copy();
     this.scaling = scaling.copy();
     this.buffer = buffer.copy();
     this.baseBuffer = buffer.copy();
@@ -25,4 +26,5 @@ export abstract class GeneratorUpgrade extends Upgrade {
   cost: Num;
   displayName: string;
   increase: Num;
+  startIncrease: Num;
 }

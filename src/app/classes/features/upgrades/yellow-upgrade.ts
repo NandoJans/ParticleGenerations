@@ -14,10 +14,10 @@ export abstract class YellowUpgrade extends Upgrade {
   name: string;
   requirement: Requirement[];
 
-  protected constructor(saveName: string, name: string, isBreak: boolean = false) {
+  protected constructor(saveName: string, name: string, customRequirement: boolean = false) {
     super(saveName);
     this.name = name;
-    if (!isBreak) {
+    if (!customRequirement) {
       this.requirement = [
         new Requirement(HoldingRecord.yellowPrestiges, new Num(1, 0), this),
       ]
@@ -40,7 +40,8 @@ export abstract class YellowUpgrade extends Upgrade {
   }
   enhance(): void {}
 
-  increase: Num = new Num(0, 0);
+  increase: Num = new Num(1, 0);
+  startIncrease: Num = new Num(1, 0);
   bought: Num = new Num(0, 0);
   currency: Holding = HoldingRecord.yellowParticles;
 }

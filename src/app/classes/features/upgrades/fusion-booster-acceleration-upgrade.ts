@@ -17,6 +17,7 @@ export class FusionBoosterAccelerationUpgrade extends Upgrade {
   baseCost: Num = new Num(1, 1000);
   cost: Num = new Num(1, 1000);
   increase: Num = new Num(1, 0);
+  startIncrease: Num = new Num(1, 0);
   bought: Num = new Num(0, 0);
   override limit: Num|undefined = new Num(0, 0);
 

@@ -9,6 +9,7 @@ export class MultiplyRedAcceletorGenerationUpgrade extends RedAcceleratorUpgrade
   cost: Num = new Num(1, 80);
   displayName: string = "Faster Acceleration";
   increase: Num = new Num(1, 10);
+  startIncrease: Num = new Num(1, 10);
   override buffer: Num = new Num(2, 0);
   override baseBuffer: Num = new Num(2, 0);
   constructor(saveName: string) {

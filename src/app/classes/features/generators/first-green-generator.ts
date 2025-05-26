@@ -13,6 +13,8 @@ export class FirstGreenGenerator extends GreenGenerator {
   baseCost: Num = new Num(1, 0);
   cost: Num = new Num(1, 0);
   increase: Num = new Num(2, 0);
+  startIncrease: Num = new Num(2, 0);
+
   requirement: Requirement[];
   constructor(saveName: string) {
     super(saveName, 'First Green Generator');

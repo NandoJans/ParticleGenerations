@@ -13,6 +13,7 @@ export class YellowParticleSacrificeUpgrade extends SacrificeUpgrade {
   baseCost: Num = new Num(1, 0);
   cost: Num = new Num(1, 0);
   increase: Num = new Num(1, 50);
+  startIncrease: Num = new Num(1, 50);
   currency: Holding = HoldingRecord.yellowParticles;
 
 }

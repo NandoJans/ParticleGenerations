@@ -8,6 +8,6 @@
 <h3 class="light">Upgrades</h3>
 <div class="upgrade-row">
   <div *ngFor="let upgrade of upgrades">
-    <app-upgrade [upgrade]="upgrade"></app-upgrade>
+    <app-upgrade *ngIf="upgrade.isUnlocked()" [upgrade]="upgrade"></app-upgrade>
   </div>
 </div>

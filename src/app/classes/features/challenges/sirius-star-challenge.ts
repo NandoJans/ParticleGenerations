@@ -30,8 +30,8 @@ export class SiriusStarChallenge extends YellowStarChallenge {
 
   currency: Holding = HoldingRecord.redParticles;
 
-  override buffer: Num = new Num(2.06, 0);
-  override baseBuffer: Num = new Num(2.06, 0);
+  override buffer: Num = new Num(1.5, 0);
+  override baseBuffer: Num = new Num(1.5, 0);
   override completionBuffer: Num = new Num(1.2, 0);
   override difficultyIncrease: Num[] = [
     new Num(1, 0),

@@ -23,5 +23,6 @@ export class MultiplyYellowParticlesYellowUpgrade extends YellowUpgrade {
   override oneTime: boolean = false;
   baseCost: Num = new Num(2, 0);
   override increase: Num = new Num(1, 1);
+  override startIncrease: Num = new Num(1, 1);
   cost: Num = new Num(2, 0);
 }

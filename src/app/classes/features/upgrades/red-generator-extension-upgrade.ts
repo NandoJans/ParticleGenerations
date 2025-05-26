@@ -21,6 +21,7 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
   description: string = this.getDescription();
   displayName: string = "Red Generator Extension";
   increase: Num = new Num(1, 2);
+  startIncrease: Num = new Num(1, 2);
   name: string = "red-generator-extension";
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED_BOOSTER_ACCELERATION, this);
   override subNav: string = 'redParticles';

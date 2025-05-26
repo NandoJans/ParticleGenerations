@@ -13,6 +13,7 @@ export class RedGeneratorBoosterUpgrade extends RedUpgrade {
   override scalingStart: Num = new Num(1, 1000);
   override scaling: Num = new Num(1, 1);
   increase: Num = new Num(1, 1);
+  startIncrease: Num = new Num(1, 1);
   override buffer: Num = new Num(1.025, 0);
   override baseBuffer: Num = new Num(1.025, 0);
   override unlocked: boolean = true;

@@ -5,7 +5,7 @@ import {Num} from "../num";
 import {Styles} from "../classes/enums/styles";
 import {ResetKey} from "../classes/enums/reset-key";
 import {MessageStepsFactory} from "../classes/factories/message-steps-factory";
-import {faCloud, faKey, faSun} from "@fortawesome/free-solid-svg-icons";
+import {faCloud, faSun} from "@fortawesome/free-solid-svg-icons";
 import {MessageStepsService} from "./message-steps.service";
 import {NavigationsService} from "./navigations.service";
 import {MultiplierRecord} from "../classes/records/multipliers/multiplier-record";
@@ -26,6 +26,7 @@ export class PrestigeLayersService {
       { holding: HoldingRecord.yellowPrestiges, basedOnRequiredHolding: false, gainMultiplier: MultiplierRecord.yellowPrestigeGain, idleGeneration: false},
     ],
     ResetKey.RED,
+    ResetKey.YELLOW,
     MessageStepsFactory.start(Styles.YELLOW, faSun)
       .addStep('Gilded Prison', 'A vast sphere of molten-gold suns surrounds Yellow’s realm. Its surface throbs like a single titanic heartbeat, denying you fresh red particles.')
       .addStep('Solar Whisper', '“Your crimson power is frozen here,” the shell murmurs. “Only the radiance you forge inside me can split my skin.”')
@@ -47,6 +48,7 @@ export class PrestigeLayersService {
       { holding: HoldingRecord.greenPrestiges, basedOnRequiredHolding: false, gainMultiplier: MultiplierRecord.greenPrestigeGain, idleGeneration: false},
     ],
     ResetKey.YELLOW,
+    ResetKey.GREEN,
     MessageStepsFactory.start(Styles.GREEN, faCloud)
       .addStep(
         'Gravity Wall',

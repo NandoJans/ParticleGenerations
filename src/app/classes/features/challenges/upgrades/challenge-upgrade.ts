@@ -8,6 +8,7 @@ import {Upgrade} from "../../upgrade";
 
 export abstract class ChallengeUpgrade extends Upgrade {
   baseCost: Num;
+  startIncrease: Num;
 
   protected constructor(
     saveName: string,
@@ -27,6 +28,7 @@ export abstract class ChallengeUpgrade extends Upgrade {
     super(saveName);
     this.baseCost = cost.copy();
     this.baseBuffer = buffer.copy();
+    this.startIncrease = increase.copy();
     this.applyDifficultyIncrease();
   }
 

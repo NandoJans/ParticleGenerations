@@ -23,6 +23,7 @@ export class MultiplyYellowKeyGainUpgrade extends YellowUpgrade {
   override oneTime: boolean = false;
   baseCost: Num = new Num(8, 0);
   override increase: Num = new Num(1, 1);
+  override startIncrease: Num = new Num(1, 1);
   override scaling: Num = new Num(1, 1);
   cost: Num = new Num(8, 0);
 }

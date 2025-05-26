@@ -21,6 +21,7 @@ export class FourthYellowGenerator extends YellowGenerator {
   baseCost: Num = new Num(1, 35);
   cost: Num = new Num(1, 35);
   increase: Num = new Num(1, 4);
+  startIncrease: Num = new Num(1, 4);
 
   multiplierUpgrade: YellowGeneratorMultiplierUpgrade = new YellowGeneratorMultiplierUpgrade(
     this.name + '.multiplierUpgrade',

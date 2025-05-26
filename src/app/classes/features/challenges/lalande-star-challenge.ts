@@ -15,8 +15,8 @@ export class LalandeStarChallenge extends YellowStarChallenge {
   name: string = 'lalande-star-challenge';
   displayName: string = 'Lalande 21185';
 
-  baseGoal: Num = new Num(1, 2700);
-  goal: Num = new Num(1, 2700);
+  baseGoal: Num = new Num(1, 2300);
+  goal: Num = new Num(1, 2300);
   override goalIncrease: Num[] = [
     new Num(1, 3300),
     new Num(1, 4300),

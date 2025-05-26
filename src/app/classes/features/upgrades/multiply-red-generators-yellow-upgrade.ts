@@ -24,6 +24,7 @@ export class MultiplyRedGeneratorsYellowUpgrade extends YellowUpgrade {
   override oneTime: boolean = false;
   baseCost: Num = new Num(1, 0);
   override increase: Num = new Num(2, 0);
+  override startIncrease: Num = new Num(2, 0);
   cost: Num = new Num(1, 0);
 
 }

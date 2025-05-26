@@ -22,6 +22,7 @@ export class IncreaseSunGoalUpgrade extends IncreaseChallengeGoalUpgrade {
   cost: Num = new Num(1, 12);
 override scaling: Num = new Num(1, 7);
   increase: Num = new Num(1, 7);
+  startIncrease: Num = new Num(1, 7);
   override limit: Num = new Num(5, 0);
   currency: Holding = HoldingRecord.yellowParticles;
   requirement: Requirement[] = [

@@ -16,6 +16,7 @@ export class FirstRedGenerator extends RedGenerator {
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED_EXTENSION, this);
   softResetId: ResetKey = ResetHelper.registerSoftReset(ResetKey.RED_EXTENSION, this);
   increase: Num = new Num(1, 2);
+  startIncrease: Num = new Num(1, 2);
   stringRank: string = 'First';
   rank: number = 1;
   override unlocked: boolean = true;

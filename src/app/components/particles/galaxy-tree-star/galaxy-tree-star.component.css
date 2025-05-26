@@ -108,10 +108,10 @@ body {
 .upgrade.star h4, .upgrade.star p {
   color: var(--rim-color);
   text-shadow:
-    -3px -3px 0 var(--background-color-2),
-    3px -3px 0 var(--background-color-2),
-    -3px 3px 0 var(--background-color-2),
-    3px 3px 0 var(--background-color-2);
+    -1px -1px 0 var(--background-color-2),
+    1px -1px 0 var(--background-color-2),
+    -1px 1px 0 var(--background-color-2),
+    1px 1px 0 var(--background-color-2);
   text-align: center;
   z-index: 5;
 }
