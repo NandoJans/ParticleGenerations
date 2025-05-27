@@ -32,8 +32,8 @@ export class LalandeStarChallenge extends YellowStarChallenge {
   currency: Holding = HoldingRecord.redParticles;
   override calculationOrder = 1000;
 
-  override buffer: Num = new Num(1.1, 0);
-  override baseBuffer: Num = new Num(1.1, 0);
+  override buffer: Num = new Num(1.05, 0);
+  override baseBuffer: Num = new Num(1.05, 0);
   override completionBuffer: Num = new Num(1.02, 0);
 
   getRewardDescription(): string {
