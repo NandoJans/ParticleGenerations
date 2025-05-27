@@ -159,7 +159,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         'sirius-generator-multiplier-upgrade',
         'Sirius fusion',
         new Num(1, 3),
-        new Num(1, 1),
+        new Num(2, 1),
         new Num(1, 1),
         new Num(1, 40),
         new Num(5, 0),
