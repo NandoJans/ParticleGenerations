@@ -30,8 +30,8 @@ export class SiriusStarChallenge extends YellowStarChallenge {
 
   currency: Holding = HoldingRecord.redParticles;
 
-  override buffer: Num = new Num(1.5, 0);
-  override baseBuffer: Num = new Num(1.5, 0);
+  override buffer: Num = new Num(.1, 0);
+  override baseBuffer: Num = new Num(.1, 0);
   override completionBuffer: Num = new Num(1.2, 0);
   override difficultyIncrease: Num[] = [
     new Num(1, 0),
@@ -54,7 +54,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
   style: Styles = Styles.SIRIUS;
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
   requirement: Requirement[] = [
-    new Requirement(HoldingRecord.redParticles, new Num(1, 12500), this)
+    new Requirement(HoldingRecord.redParticles, new Num(1, 11000), this)
   ];
 
   reward(): Num|undefined {

@@ -59,6 +59,10 @@ export class AppComponent implements OnInit{
     this.dataManagerService.save();
     this.localStorageHelper.save(this.VERSION);
 
+    // HoldingRecord.yellowParticles.amount = new Num(1, 6); // Initialize yellowPrestiges to 1e100
+    // HoldingRecord.yellowPrestiges.amount = new Num(1, 3); // Initialize yellowPrestiges to 1e100
+    // HoldingRecord.yellowKeys.amount = new Num(1, 4); // Initialize yellowPrestiges to 1e100
+
     if (!this.isTicking) {
       this.tick.startIntervals();
       this.isTicking = true;

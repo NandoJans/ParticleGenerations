@@ -15,8 +15,8 @@ export class LalandeStarChallenge extends YellowStarChallenge {
   name: string = 'lalande-star-challenge';
   displayName: string = 'Lalande 21185';
 
-  baseGoal: Num = new Num(1, 2300);
-  goal: Num = new Num(1, 2300);
+  baseGoal: Num = new Num(1, 3200);
+  goal: Num = new Num(1, 3200);
   override goalIncrease: Num[] = [
     new Num(1, 3300),
     new Num(1, 4300),
@@ -30,13 +30,14 @@ export class LalandeStarChallenge extends YellowStarChallenge {
   ];
 
   currency: Holding = HoldingRecord.redParticles;
+  override calculationOrder = 1000;
 
-  override buffer: Num = new Num(1, 0);
-  override baseBuffer: Num = new Num(1, 0);
+  override buffer: Num = new Num(1.1, 0);
+  override baseBuffer: Num = new Num(1.1, 0);
   override completionBuffer: Num = new Num(1.02, 0);
 
   getRewardDescription(): string {
-    return "Every purchase of a red generator also adds free amount to their sub-upgrades by raising their amount to ^"+this.buffer.toString(2)+".";
+    return "Every purchase of a red generator also adds free amount to their sub-upgrades by raising the amount of generator buys to ^"+this.buffer.toString(3)+".";
   }
   getDescription(): string {
     return "Lalande 21185 lacks sub upgrades for red generators. They are no where to be found.";

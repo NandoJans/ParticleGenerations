@@ -48,7 +48,7 @@ export class YellowPowerUpgrade extends Upgrade {
   currency: Holding = HoldingRecord.yellowPower;
 
   override scaling: Num = new Num(1, 10);
-  override scalingStart: Num = new Num(1, 22);
+  override scalingStart: Num = new Num(1, 25);
 
   override buffer: Num = new Num(0.2, 0);
   override baseBuffer: Num = new Num(0.2, 0);

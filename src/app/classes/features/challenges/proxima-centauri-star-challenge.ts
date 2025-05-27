@@ -14,8 +14,8 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
   name: string = 'proxima-centauri-star-challenge';
   displayName: string = 'Proxima Centauri';
 
-  baseGoal: Num = new Num(1, 3800);
-  goal: Num = new Num(1, 3800);
+  baseGoal: Num = new Num(1, 2700);
+  goal: Num = new Num(1, 2700);
   override goalIncrease: Num[] = [
     new Num(1, 13200),
     new Num(1, 20200),
@@ -30,9 +30,9 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
 
   currency: Holding = HoldingRecord.redParticles;
 
-  override buffer: Num = new Num(0.5, 0);
-  override baseBuffer: Num = new Num(0.5, 0);
-  override completionBuffer: Num = new Num(3, 0);
+  override buffer: Num = new Num(2, 0);
+  override baseBuffer: Num = new Num(2, 0);
+  override completionBuffer: Num = new Num(1.1, 0);
 
   override strongerBuffer(): Num | void {
     if (this.completed instanceof Num) {
@@ -86,7 +86,7 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
         'unlockSecondRedGenerator',
         'unlock-second-red-generator-proxima-centauri',
         'Unlock Second Red Generator',
-        new Num(1, 75),
+        new Num(1, 50),
         HoldingRecord.redParticles,
         this.style,
         GeneratorRecord.secondRedGenerator,
@@ -106,7 +106,7 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
         'unlockFourthRedGenerator',
         'unlock-fourth-red-generator-proxima-centauri',
         'Unlock Fourth Red Generator',
-        new Num(1, 1750),
+        new Num(1, 1300),
         HoldingRecord.redParticles,
         this.style,
         GeneratorRecord.fourthRedGenerator,
@@ -116,7 +116,7 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
         'unlockFifthRedGenerator',
         'unlock-fifth-red-generator-proxima-centauri',
         'Unlock Fifth Red Generator',
-        new Num(1, 140),
+        new Num(1, 118),
         HoldingRecord.redAccelerators,
         this.style,
         GeneratorRecord.fifthRedGenerator,
