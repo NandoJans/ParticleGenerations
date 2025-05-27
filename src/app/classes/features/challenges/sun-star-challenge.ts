@@ -33,9 +33,15 @@ export class SunStarChallenge extends YellowStarChallenge {
 
   currency: Holding = HoldingRecord.redParticles;
 
-  override buffer: Num = new Num(1, 1);
-  override baseBuffer: Num = new Num(1, 1);
-  override completionBuffer: Num = new Num(2, 0);
+  override buffer: Num = new Num(1, 0);
+  override baseBuffer: Num = new Num(1, 0);
+  override completionBuffer: Num = new Num(1.5, 0);
+
+  override strongerBuffer(): Num | void {
+    if (this.completed instanceof Num) {
+      this.buffer = this.baseBuffer.mul(this.completionBuffer.mul(this.completed));
+    }
+  }
 
   getRewardDescription(): string {
     return "Yellow power also boosts red accelerator generation ^"+this.buffer.toString(3)+".";

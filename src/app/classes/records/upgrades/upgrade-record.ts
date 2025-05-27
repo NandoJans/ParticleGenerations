@@ -60,6 +60,8 @@ import {
 import {
   HalfRedGeneratorIncreaseGalaxyTreeUpgrade
 } from "../../features/generators/half-red-generator-increase-galaxy-tree-upgrade";
+import {RedAcceleratorStartGalaxyTreeUpgrade} from "../../features/upgrades/red-accelerator-start-galaxy-tree-upgrade";
+import {MoreYellowKeysGalaxyTreeUpgrade} from "../../features/upgrades/more-yellow-keys-galaxy-tree-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -121,6 +123,9 @@ export class UpgradeRecord extends Record {
 
   static unlockFirstGreenGenerator: UnlockFirstGreenGeneratorGalaxyTreeUpgrade = new UnlockFirstGreenGeneratorGalaxyTreeUpgrade('unlockFirstGreenGenerator');
   static halfRedGeneratorIncrease: HalfRedGeneratorIncreaseGalaxyTreeUpgrade = new HalfRedGeneratorIncreaseGalaxyTreeUpgrade('halfRedGeneratorIncrease');
+  static redAcceleratorStart: RedAcceleratorStartGalaxyTreeUpgrade = new RedAcceleratorStartGalaxyTreeUpgrade('redAcceleratorStart');
+  static moreYellowKeys: MoreYellowKeysGalaxyTreeUpgrade = new MoreYellowKeysGalaxyTreeUpgrade('moreYellowKeys');
+
 
   static override list: Upgrade[] = [
     UpgradeRecord.redGeneratorExtension,

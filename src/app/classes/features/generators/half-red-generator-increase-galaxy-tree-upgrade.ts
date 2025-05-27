@@ -10,7 +10,9 @@ export class HalfRedGeneratorIncreaseGalaxyTreeUpgrade extends GalaxyTreeUpgrade
   }
 
   getChildren(): GalaxyTreeUpgrade[] {
-    return [];
+    return [
+      UpgradeRecord.moreYellowKeys,
+    ];
   }
 
   getParents(): GalaxyTreeUpgrade[] {
@@ -35,6 +37,6 @@ export class HalfRedGeneratorIncreaseGalaxyTreeUpgrade extends GalaxyTreeUpgrade
   style: Styles = Styles.STAR_RED
   displayName: string = "Red Generator Cost Halving";
 
-  cost: Num = new Num(2, 0);
-  baseCost: Num = new Num(2, 0);
+  cost: Num = new Num(1, 0);
+  baseCost: Num = new Num(1, 0);
 }
