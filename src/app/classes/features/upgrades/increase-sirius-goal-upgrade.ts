@@ -18,8 +18,8 @@ export class IncreaseSiriusGoalUpgrade extends IncreaseChallengeGoalUpgrade {
   style: Styles = Styles.SIRIUS;
   nav: string = 'yellow';
   subNav: string = 'yellowFusion';
-  baseCost: Num = new Num(1, 13);
-  cost: Num = new Num(1, 13);
+  baseCost: Num = new Num(1, 25);
+  cost: Num = new Num(1, 25);
 override scaling: Num = new Num(1, 8)
   increase: Num = new Num(1, 8);
   startIncrease: Num = new Num(1, 8);
