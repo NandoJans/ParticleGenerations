@@ -35,7 +35,7 @@ export class SunStarChallenge extends YellowStarChallenge {
 
   override buffer: Num = new Num(1.1, 0);
   override baseBuffer: Num = new Num(1.1, 0);
-  override completionBuffer: Num = new Num(1.5, 0);
+  override completionBuffer: Num = new Num(0.6, 0);
 
   override strongerBuffer(): Num | void {
     if (this.completed instanceof Num) {
