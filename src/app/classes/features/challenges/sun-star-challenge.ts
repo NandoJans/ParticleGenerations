@@ -27,7 +27,7 @@ export class SunStarChallenge extends YellowStarChallenge {
   ];
   override difficultyIncrease: Num[] = [
     new Num(1, 0),
-    new Num(2.1, 0),
+    new Num(2, 0),
     new Num(1.7, 0),
   ];
 
