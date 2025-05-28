@@ -110,7 +110,7 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
         HoldingRecord.redParticles,
         this.style,
         GeneratorRecord.fourthRedGenerator,
-        this.getDifficultyIncrease(new Num(0.7, 0)),
+        this.getDifficultyIncrease(new Num(1.7, 0)),
       ),
       unlockFifthRedGenerator: new YellowStarChallengeUnlockUpgrade(
         'unlockFifthRedGenerator',
@@ -120,7 +120,7 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
         HoldingRecord.redAccelerators,
         this.style,
         GeneratorRecord.fifthRedGenerator,
-        this.getDifficultyIncrease(new Num(0.65, 0)),
+        this.getDifficultyIncrease(new Num(1.6, 0)),
       ),
     }
   }
