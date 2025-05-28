@@ -20,7 +20,7 @@ export class IncreaseSunGoalUpgrade extends IncreaseChallengeGoalUpgrade {
   subNav: string = 'yellowFusion';
   baseCost: Num = new Num(1, 20);
   cost: Num = new Num(1, 20);
-override scaling: Num = new Num(1, 7);
+override scaling: Num = new Num(1, 15);
   increase: Num = new Num(1, 7);
   startIncrease: Num = new Num(1, 7);
   override limit: Num = new Num(5, 0);
