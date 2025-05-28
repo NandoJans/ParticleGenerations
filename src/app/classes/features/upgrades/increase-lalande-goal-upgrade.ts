@@ -18,8 +18,8 @@ export class IncreaseLalandeGoalUpgrade extends IncreaseChallengeGoalUpgrade {
   style: Styles = Styles.LALANDE;
   nav: string = 'yellow';
   subNav: string = 'yellowFusion';
-  baseCost: Num = new Num(1, 11);
-  cost: Num = new Num(1, 11);
+  baseCost: Num = new Num(1, 15);
+  cost: Num = new Num(1, 15);
   increase: Num = new Num(1, 6);
   startIncrease: Num = new Num(1, 6);
   override scaling: Num = new Num(1, 6);
