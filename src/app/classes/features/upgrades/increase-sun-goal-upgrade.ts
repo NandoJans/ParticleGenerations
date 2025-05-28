@@ -18,8 +18,8 @@ export class IncreaseSunGoalUpgrade extends IncreaseChallengeGoalUpgrade {
   style: Styles = Styles.SUN;
   nav: string = 'yellow';
   subNav: string = 'yellowFusion';
-  baseCost: Num = new Num(1, 12);
-  cost: Num = new Num(1, 12);
+  baseCost: Num = new Num(1, 20);
+  cost: Num = new Num(1, 20);
 override scaling: Num = new Num(1, 7);
   increase: Num = new Num(1, 7);
   startIncrease: Num = new Num(1, 7);
