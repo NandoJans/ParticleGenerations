@@ -120,7 +120,7 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
         HoldingRecord.redAccelerators,
         this.style,
         GeneratorRecord.fifthRedGenerator,
-        this.getDifficultyIncrease(new Num(0, 9)),
+        this.getDifficultyIncrease(new Num(0.9, 0)),
       ),
     }
   }
