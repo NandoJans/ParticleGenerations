@@ -19,7 +19,7 @@ export class LalandeStarChallenge extends YellowStarChallenge {
   goal: Num = new Num(1, 3200);
   override goalIncrease: Num[] = [
     new Num(1, 3300),
-    new Num(1, 8800),
+    new Num(1, 13800),
     new Num(1, 4300),
     new Num(1, 4300),
   ];
