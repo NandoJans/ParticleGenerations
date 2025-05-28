@@ -21,7 +21,7 @@ export class IncreaseProximaCentauriGoalUpgrade extends IncreaseChallengeGoalUpg
   baseCost: Num = new Num(1, 10);
   cost: Num = new Num(1, 10);
   override scaling: Num = new Num(1, 5)
-  increase: Num = new Num(1, 5);
+  increase: Num = new Num(1, 15);
   startIncrease: Num = new Num(1, 5);
   currency: Holding = HoldingRecord.yellowParticles;
   override limit: Num = new Num(5, 0)
