@@ -22,12 +22,12 @@ export class SunStarChallenge extends YellowStarChallenge {
   goal: Num = new Num(1, 6500);
   override goalIncrease: Num[] = [
     new Num(1, 15200),
-    new Num(1, 15200),
+    new Num(1, 45200),
     new Num(1, 33300),
   ];
   override difficultyIncrease: Num[] = [
     new Num(1, 0),
-    new Num(1.8, 0),
+    new Num(1.9, 0),
     new Num(1.7, 0),
   ];
 
@@ -170,7 +170,7 @@ export class SunStarChallenge extends YellowStarChallenge {
         'yellowStars',
         'sunUpgrade',
         this.challengeGenerators['sunGenerator'].globalMultiplier,
-      this.getDifficultyIncrease(new Num(0.91, 0)),
+      this.getDifficultyIncrease(new Num(0.95, 0)),
       ),
       sunGeneratorMultiplierUpgrade3: new MultiplierChallengeUpgrade(
         'sunGeneratorMultiplierUpgrade3',
@@ -187,7 +187,7 @@ export class SunStarChallenge extends YellowStarChallenge {
         'yellowStars',
         'sunUpgrade',
         this.challengeGenerators['sunGenerator'].globalMultiplier,
-        this.getDifficultyIncrease(new Num(0.86, 0)),
+        this.getDifficultyIncrease(new Num(0.9, 0)),
       ),
       strongerSunParticleEffect: new CustomChallengeUpgrade(
         'strongerSunParticleEffect',
@@ -203,7 +203,7 @@ export class SunStarChallenge extends YellowStarChallenge {
         'yellow',
         'yellowStars',
         'sunUpgrade',
-        this.getDifficultyIncrease(new Num(0.82, 0)),
+        this.getDifficultyIncrease(new Num(0.85, 0)),
       )
     }
 
