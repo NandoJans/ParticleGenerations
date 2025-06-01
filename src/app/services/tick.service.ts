@@ -19,6 +19,10 @@ import {ChallengeService} from "./interactables/challenge.service";
 import {MilestoneRecord} from "../classes/records/milestones/milestone-record";
 import {Multiplier} from "../classes/features/multiplier";
 import {HoldingRecord} from "../classes/records/holdings/holding-record";
+import {App} from "../App";
+import {ChallengeRecord} from "../classes/records/challenges/challenge-record";
+import {MultiplierRecord} from "../classes/records/multipliers/multiplier-record";
+import {UpgradeRecord} from "../classes/records/upgrades/upgrade-record";
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +54,9 @@ export class TickService {
    * Game tick function for running the game logic. The game tick is called every 50ms.
    * @param speed The speed of the game tick. This is used to slow down the game tick for testing purposes.
    */
-  gameTick(speed: Num = new Num(1, -1)) {
+  gameTick(speed: Num = new Num(1, 0)) {
+    if (!App.offlineCalculation) App.gameSpeed = speed;
+
     this.checkRequirements();
 
     this.calculationOrder.forEach((elements) => {

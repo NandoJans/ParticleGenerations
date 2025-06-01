@@ -20,9 +20,9 @@ export class IncreaseLalandeGoalUpgrade extends IncreaseChallengeGoalUpgrade {
   subNav: string = 'yellowFusion';
   baseCost: Num = new Num(1, 15);
   cost: Num = new Num(1, 15);
-  increase: Num = new Num(1, 15);
-  startIncrease: Num = new Num(1, 15);
-  override scaling: Num = new Num(1, 10);
+  increase: Num = new Num(1, 25);
+  startIncrease: Num = new Num(1, 25);
+  override scaling: Num = new Num(1, 5);
   override limit: Num = new Num(5, 0);
   currency: Holding = HoldingRecord.yellowParticles;
   requirement: Requirement[] = [

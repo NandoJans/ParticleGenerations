@@ -3,6 +3,7 @@ import {Challenge} from "../../classes/features/challenge";
 import {LocalStorageHelper} from "../../classes/helpers/local-storage-helper";
 import {ChallengeRecord} from "../../classes/records/challenges/challenge-record";
 import {ResetHelper} from "../../classes/helpers/reset-helper";
+import {Num} from "../../num";
 
 @Injectable({
   providedIn: 'root'

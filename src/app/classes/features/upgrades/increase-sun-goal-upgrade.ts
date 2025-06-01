@@ -20,9 +20,9 @@ export class IncreaseSunGoalUpgrade extends IncreaseChallengeGoalUpgrade {
   subNav: string = 'yellowFusion';
   baseCost: Num = new Num(1, 20);
   cost: Num = new Num(1, 20);
-override scaling: Num = new Num(1, 15);
-  increase: Num = new Num(1, 11);
-  startIncrease: Num = new Num(1, 11);
+override scaling: Num = new Num(1, 5);
+  increase: Num = new Num(1, 30);
+  startIncrease: Num = new Num(1, 30);
   override limit: Num = new Num(5, 0);
   currency: Holding = HoldingRecord.yellowParticles;
   requirement: Requirement[] = [
