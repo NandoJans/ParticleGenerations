@@ -24,7 +24,7 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
   override difficultyIncrease: Num[] = [
     new Num(1, 0),
     new Num(4, 0),
-    new Num(4.25, 0),
+    new Num(3.75, 0),
     new Num(2, 0),
   ];
 
