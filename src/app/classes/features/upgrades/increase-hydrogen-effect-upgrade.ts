@@ -39,6 +39,7 @@ export class IncreaseHydrogenEffectUpgrade extends Upgrade {
   }
   baseCost: Num = new Num(1, 10);
   cost: Num = new Num(1, 10);
+  override scaling: Num = new Num(2, 0);
   increase: Num = new Num(1, 2);
   startIncrease: Num = new Num(1, 2);
   bought: Num = new Num(0, 0);

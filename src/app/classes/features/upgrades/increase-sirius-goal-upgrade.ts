@@ -20,9 +20,9 @@ export class IncreaseSiriusGoalUpgrade extends IncreaseChallengeGoalUpgrade {
   subNav: string = 'yellowFusion';
   baseCost: Num = new Num(1, 30);
   cost: Num = new Num(1, 30);
-override scaling: Num = new Num(1, 15)
-  increase: Num = new Num(1, 12);
-  startIncrease: Num = new Num(1, 12);
+override scaling: Num = new Num(1, 5)
+  increase: Num = new Num(1, 35);
+  startIncrease: Num = new Num(1, 35);
   override limit: Num = new Num(5, 0);
   currency: Holding = HoldingRecord.yellowParticles;
   requirement: Requirement[] = [

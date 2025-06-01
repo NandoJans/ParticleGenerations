@@ -19,24 +19,29 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
   override goalIncrease: Num[] = [
     new Num(1, 13200),
     new Num(1, 20200),
-    new Num(1, 20200),
+    new Num(1, 50200),
   ];
   override difficultyIncrease: Num[] = [
     new Num(1, 0),
     new Num(4, 0),
     new Num(3.75, 0),
-    new Num(2, 0),
+    new Num(3.5, 0),
   ];
 
   currency: Holding = HoldingRecord.redParticles;
 
   override buffer: Num = new Num(2, 0);
   override baseBuffer: Num = new Num(2, 0);
-  override completionBuffer: Num = new Num(0.6, 0);
+  override completionBuffer: Num[] = [
+    new Num(0.6, 0),
+    new Num(0.6, 0),
+    new Num(0.35, 0),
+    new Num(0.3, 0),
+  ];
 
-  override strongerBuffer(): Num | void {
+  override strongerBuffer(completionBuffer: Num): Num | void {
     if (this.completed instanceof Num) {
-      this.buffer = this.baseBuffer.mul(this.completionBuffer.mul(this.completed));
+      this.buffer = this.baseBuffer.mul(completionBuffer.mul(this.completed));
     }
   }
 

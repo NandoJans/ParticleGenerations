@@ -24,7 +24,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
   override goalIncrease: Num[] = [
     new Num(1, 10400),
     new Num(1, 60400),
-    new Num(1, 10400),
+    new Num(1, 61000),
     new Num(1, 49400),
   ];
 
@@ -32,11 +32,15 @@ export class SiriusStarChallenge extends YellowStarChallenge {
 
   override buffer: Num = new Num(2, 0);
   override baseBuffer: Num = new Num(2, 0);
-  override completionBuffer: Num = new Num(1.1, 0);
+  override completionBuffer: Num[] = [
+    new Num(1.1, 0),
+    new Num(1.1, 0),
+    new Num(1.12, 0),
+  ];
   override difficultyIncrease: Num[] = [
     new Num(1, 0),
     new Num(1.4, 0),
-    new Num(0.87, 0),
+    new Num(0.86, 0),
     new Num(0.69, 0),
   ];
 

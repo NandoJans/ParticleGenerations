@@ -37,10 +37,8 @@ export class HydrogenGenerator extends Generator {
 
   protected override getGenerateAmount(): Num {
     let amount: Num = super.getGenerateAmount();
-    if (amount.greq(this.barrier)) {
-      const exponent = amount.log10();
-      const base = this.barrier.log10();
-      const scale = exponent.div(base);
+    if (HoldingRecord.hydrogen.amount.greq(this.barrier)) {
+      const scale = HoldingRecord.hydrogen.amount.div(this.barrier);
       amount = amount.div(new Num(2, 0).pow(scale));
     }
     return amount;

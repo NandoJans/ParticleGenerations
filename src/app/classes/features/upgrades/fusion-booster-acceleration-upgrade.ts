@@ -62,12 +62,10 @@ export class FusionBoosterAccelerationUpgrade extends Upgrade {
   override postAction() {
     let completions: Num = new Num(0, 0);
     for (const challenge of ChallengeRecord.list) {
-      if (challenge.isCompleted()) {
-        if (challenge.completed instanceof Num) {
-          completions = completions.add(challenge.completed);
-        } else {
-          completions = completions.add(new Num(1, 0));
-        }
+      if (challenge.completed instanceof Num) {
+        completions = completions.add(challenge.completed);
+      } else if (challenge.completed) {
+        completions = completions.add(new Num(1, 0));
       }
     }
     this.buffer = this.buffer.mul(completions)

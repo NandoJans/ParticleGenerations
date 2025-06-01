@@ -20,7 +20,7 @@ export class YellowFusionHolding extends Holding {
     .withEffectSuffix('')
     .build()
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED, this);
-  fusionPower: Num = new Num(2.5, -1)
+  fusionPower: Num = new Num(1, -2)
   override calculationOrder = 1200;
   getStyle(): Styles {
     return Styles.FUSION;

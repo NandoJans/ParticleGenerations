@@ -40,15 +40,15 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   goalIncrease: Num | Num[] | undefined = undefined
   buffer: Num = new Num(0, 0)
   baseBuffer: Num = new Num(0, 0)
-  completionBuffer: Num = new Num(1, 0);
+  completionBuffer: Num | Num[] = new Num(1, 0);
   override calculationOrder: number = 200;
   challengeUpgrades: {[key: string]: ChallengeUpgrade} = {};
   challengeHoldings: {[key: string]: ChallengeHolding} = {};
   challengeGenerators: {[key: string]: ChallengeGenerator} = {};
 
-  strongerBuffer(): Num | void {
+  strongerBuffer(completionBuffer: Num): Num | void {
     if (this.completed instanceof Num) {
-      this.buffer = this.baseBuffer.mul(this.completionBuffer.pow(this.completed));
+      this.buffer = this.baseBuffer.mul(completionBuffer.pow(this.completed));
     }
   }
 
@@ -100,7 +100,16 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
     this.buffer = this.baseBuffer.copy();
 
     if (this.completed instanceof Num && this.completed.greq(new Num(2, 0))) {
-      this.strongerBuffer();
+      if (this.completionBuffer instanceof Num) {
+        this.strongerBuffer(this.completionBuffer);
+      } else {
+        const index = Math.floor(this.completed.toNumber());
+        if (this.completionBuffer[index] !== undefined) {
+          this.strongerBuffer(this.completionBuffer[index]);
+        } else {
+          this.strongerBuffer(this.completionBuffer[this.completionBuffer.length - 1]);
+        }
+      }
     }
   }
 
@@ -120,7 +129,7 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
     return new Num(1, 0);
   }
 
-  tick() {
+  tick(): void {
     this.constantNerfs();
     this.runChallengeUpgrades();
   }

@@ -23,23 +23,27 @@ export class SunStarChallenge extends YellowStarChallenge {
   override goalIncrease: Num[] = [
     new Num(1, 15200),
     new Num(1, 39000),
-    new Num(1, 33300),
+    new Num(1, 53300),
   ];
   override difficultyIncrease: Num[] = [
     new Num(1, 0),
     new Num(1.95, 0),
-    new Num(1.7, 0),
+    new Num(1.55, 0),
   ];
 
   currency: Holding = HoldingRecord.redParticles;
 
   override buffer: Num = new Num(1.1, 0);
   override baseBuffer: Num = new Num(1.1, 0);
-  override completionBuffer: Num = new Num(0.6, 0);
+  override completionBuffer: Num[] = [
+    new Num(0.6, 0),
+    new Num(0.6, 0),
+    new Num(0.4, 0),
+  ];
 
-  override strongerBuffer(): Num | void {
+  override strongerBuffer(completionBuffer: Num): Num | void {
     if (this.completed instanceof Num) {
-      this.buffer = this.baseBuffer.mul(this.completionBuffer.mul(this.completed));
+      this.buffer = this.baseBuffer.mul(completionBuffer.mul(this.completed));
     }
   }
 
