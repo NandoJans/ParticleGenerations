@@ -12,6 +12,7 @@ export class HalfRedGeneratorIncreaseGalaxyTreeUpgrade extends GalaxyTreeUpgrade
   getChildren(): GalaxyTreeUpgrade[] {
     return [
       UpgradeRecord.moreYellowKeys,
+      UpgradeRecord.decreaseBoosterAccelerationScaling,
     ];
   }
 
