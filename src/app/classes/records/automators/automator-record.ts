@@ -13,6 +13,14 @@ import {
   MultiplyRedAcceleratorEffectAutomator
 } from "../../features/automators/multiply-red-accelerator-effect-automator";
 import {YellowPrestigeAutomator} from "../../features/automators/yellow-prestige-automator";
+import {MultiplyRedGeneratorsYellowAutomator} from "../../features/automators/multiply-red-generators-yellow-automator";
+import {MultiplyYellowParticlesYellowUpgrade} from "../../features/upgrades/multiply-yellow-particles-yellow-upgrade";
+import {
+  MultiplyYellowParticlesYellowAutomator
+} from "../../features/automators/multiply-yellow-particles-yellow-automator";
+import {MultiplyYellowKeysYellowAutomator} from "../../features/automators/multiply-yellow-keys-yellow-automator";
+import {YellowGeneratorAutomator} from "../../features/automators/yellow-generator-automator";
+import {FusionBoosterAccelerationAutomator} from "../../features/automators/fusion-booster-acceleration-automator";
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +45,17 @@ export class AutomatorRecord extends Record {
 
   // Yellow prestige automators
   static yellowPrestige: YellowPrestigeAutomator = new YellowPrestigeAutomator('yellowPrestige');
+  static multiplyRedGeneratorsYellow: MultiplyRedGeneratorsYellowAutomator = new MultiplyRedGeneratorsYellowAutomator('multiplyRedGeneratorsYellow');
+  static multiplyYellowParticlesYellow: MultiplyYellowParticlesYellowAutomator = new MultiplyYellowParticlesYellowAutomator('multiplyYellowParticlesYellow');
+  static multiplyYellowKeysYellow: MultiplyYellowKeysYellowAutomator = new MultiplyYellowKeysYellowAutomator('multiplyYellowKeysYellow');
+
+  static firstYellowGenerator: YellowGeneratorAutomator = new YellowGeneratorAutomator('firstYellowGenerator', GeneratorRecord.firstYellowGenerator);
+  static secondYellowGenerator: YellowGeneratorAutomator = new YellowGeneratorAutomator('secondYellowGenerator', GeneratorRecord.secondYellowGenerator);
+  static thirdYellowGenerator: YellowGeneratorAutomator = new YellowGeneratorAutomator('thirdYellowGenerator', GeneratorRecord.thirdYellowGenerator);
+  static fourthYellowGenerator: YellowGeneratorAutomator = new YellowGeneratorAutomator('fourthYellowGenerator', GeneratorRecord.fourthYellowGenerator);
+  static fifthYellowGenerator: YellowGeneratorAutomator = new YellowGeneratorAutomator('fifthYellowGenerator', GeneratorRecord.fifthYellowGenerator);
+
+  static fusionBoosterAcceleration: FusionBoosterAccelerationAutomator = new FusionBoosterAccelerationAutomator('fusionBoosterAcceleration');
 
   static override list: Automator[] = [
     AutomatorRecord.firstRedGenerator,
@@ -55,6 +74,17 @@ export class AutomatorRecord extends Record {
     AutomatorRecord.boosterAcceleration,
 
     AutomatorRecord.yellowPrestige,
+    AutomatorRecord.multiplyRedGeneratorsYellow,
+    AutomatorRecord.multiplyYellowParticlesYellow,
+    AutomatorRecord.multiplyYellowKeysYellow,
+
+    AutomatorRecord.firstYellowGenerator,
+    AutomatorRecord.secondYellowGenerator,
+    AutomatorRecord.thirdYellowGenerator,
+    AutomatorRecord.fourthYellowGenerator,
+    AutomatorRecord.fifthYellowGenerator,
+
+    AutomatorRecord.fusionBoosterAcceleration,
   ]
 
   getList(): Automator[] {

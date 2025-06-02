@@ -21,6 +21,6 @@ export class UnlockFourthYellowGeneratorUpgrade extends YellowUpgrade {
   }
 
   override limit: Num = new Num(1, 0);
-  baseCost: Num = new Num(1, 100);
-  cost: Num = new Num(1, 100);
+  baseCost: Num = new Num(1, 81);
+  cost: Num = new Num(1, 81);
 }

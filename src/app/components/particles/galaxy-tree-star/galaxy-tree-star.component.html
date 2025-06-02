@@ -27,7 +27,7 @@
 </svg>
 
 <!-- ③ render every child node ---------------------------------------->
-<div class="children" *ngIf="galaxyTreeStar.getChildren()?.length">
+<div class="children" *ngIf="displayChildren()">
   <app-galaxy-tree-star
     *ngFor="let child of galaxyTreeStar.getChildren()"
     [galaxyTreeStar]="child">

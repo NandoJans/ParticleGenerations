@@ -23,7 +23,7 @@ export class IncreaseLalandeGoalUpgrade extends IncreaseChallengeGoalUpgrade {
   increase: Num = new Num(1, 25);
   startIncrease: Num = new Num(1, 25);
   override scaling: Num = new Num(1, 5);
-  override limit: Num = new Num(5, 0);
+  override limit: Num = new Num(2, 0);
   currency: Holding = HoldingRecord.yellowParticles;
   requirement: Requirement[] = [
     new Requirement(HoldingRecord.yellowParticles, new Num(1, 10), this),

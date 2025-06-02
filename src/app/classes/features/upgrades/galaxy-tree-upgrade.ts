@@ -53,11 +53,18 @@ export abstract class GalaxyTreeUpgrade extends Upgrade {
   abstract getParents(): GalaxyTreeUpgrade[];
 
   parentsBought(): boolean {
+    if (this.getParents().length === 0) {
+      return true;
+    }
     for (const parent of this.getParents()) {
       if (parent.hasBought()) {
         return true;
       }
     }
     return false;
+  }
+
+  override isBuyable(): boolean {
+    return super.isBuyable() && this.parentsBought();
   }
 }

@@ -84,4 +84,8 @@ export class GalaxyTreeStarComponent implements OnInit {
     }
     return '';
   }
+
+  displayChildren() {
+    return this.galaxyTreeStar.getChildren()?.length && this.galaxyTreeStar.hasBought()
+  }
 }

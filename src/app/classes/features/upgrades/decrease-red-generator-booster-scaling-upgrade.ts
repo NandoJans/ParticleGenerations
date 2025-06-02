@@ -13,8 +13,8 @@ export class DecreaseRedGeneratorBoosterScalingUpgrade extends YellowUpgrade {
     ];
   }
 
-  override buffer: Num = new Num(0.9, 0);
-  override baseBuffer: Num = new Num(0.9, 0);
+  override buffer: Num = new Num(0.98, 0);
+  override baseBuffer: Num = new Num(0.98, 0);
 
   getDescription(): string {
     return "Multiply red generator booster cost scaling by " + this.buffer.toString(3) + "x.";

@@ -84,6 +84,8 @@ export class FusionBoosterAccelerationUpgrade extends Upgrade {
     const transaction = super.buy(amount);
     StatsService.addNum(UpgradeRecord.redGeneratorBooster.name, 'totalBought', this.freeBuys);
     StatsService.addNum(UpgradeRecord.redGeneratorBooster.name, 'totalBoughtAutomator', this.freeBuys);
+    StatsService.addNum(this.name, 'totalBought', transaction.amount);
+    StatsService.addNum(this.name, 'totalBoughtAutomator', transaction.amount);
     HoldingRecord.hydrogen.reset();
     HoldingRecord.yellowFusion.reset();
     return transaction;
