@@ -11,6 +11,19 @@ export class YellowAutomatorsComponent implements OnInit {
   yellowPrestigeAutomator: Automator[] = [
     AutomatorRecord.yellowPrestige
   ]
+  yellowUpgradeAutomators: Automator[] = [
+    AutomatorRecord.multiplyRedGeneratorsYellow,
+    AutomatorRecord.multiplyYellowParticlesYellow,
+    AutomatorRecord.multiplyYellowKeysYellow,
+    AutomatorRecord.fusionBoosterAcceleration
+  ];
+  yellowGeneratorAutomators: Automator[] = [
+    AutomatorRecord.firstYellowGenerator,
+    AutomatorRecord.secondYellowGenerator,
+    AutomatorRecord.thirdYellowGenerator,
+    AutomatorRecord.fourthYellowGenerator,
+    AutomatorRecord.fifthYellowGenerator,
+  ];
 
   constructor() { }
 

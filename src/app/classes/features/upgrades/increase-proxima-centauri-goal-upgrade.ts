@@ -24,7 +24,7 @@ export class IncreaseProximaCentauriGoalUpgrade extends IncreaseChallengeGoalUpg
   increase: Num = new Num(1, 20);
   startIncrease: Num = new Num(1, 20);
   currency: Holding = HoldingRecord.yellowParticles;
-  override limit: Num = new Num(5, 0)
+  override limit: Num = new Num(2, 0)
   requirement: Requirement[] = [
     new Requirement(HoldingRecord.yellowParticles, new Num(1, 10), this),
   ];

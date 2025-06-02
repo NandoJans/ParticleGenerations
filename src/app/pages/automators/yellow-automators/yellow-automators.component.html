@@ -3,3 +3,15 @@
     <app-automator *ngIf="automator.unlocked" [automator]="automator"></app-automator>
   </div>
 </div>
+<h2>Yellow Upgrade Automators</h2>
+<div class="upgrade-row">
+  <div *ngFor="let automator of yellowUpgradeAutomators">
+    <app-automator *ngIf="automator.unlocked" [automator]="automator"></app-automator>
+  </div>
+</div>
+<h2>Yellow Generator Automators</h2>
+<div class="upgrade-row">
+  <div *ngFor="let automator of yellowGeneratorAutomators">
+    <app-automator *ngIf="automator.unlocked" [automator]="automator"></app-automator>
+  </div>
+</div>

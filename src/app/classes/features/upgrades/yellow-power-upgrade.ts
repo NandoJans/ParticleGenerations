@@ -53,7 +53,7 @@ export class YellowPowerUpgrade extends Upgrade {
   override buffer: Num = new Num(0.2, 0);
   override baseBuffer: Num = new Num(0.2, 0);
 
-  override limit: Num = new Num(1, 2);
+  override limit: Num = new Num(3.5, 1);
 
   override action(): Num | undefined {
     const effect = this.buffer.mul(this.amount)
