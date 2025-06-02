@@ -11,7 +11,9 @@ export class RedAcceleratorStartGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   }
 
   getChildren(): GalaxyTreeUpgrade[] {
-    return [];
+    return [
+      UpgradeRecord.strongerRedExtensionGalaxyTree,
+    ];
   }
 
   getParents(): GalaxyTreeUpgrade[] {

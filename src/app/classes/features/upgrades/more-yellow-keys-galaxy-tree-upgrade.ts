@@ -34,9 +34,9 @@ export class MoreYellowKeysGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
     return
   }
 
-  style: Styles = Styles.STAR_RED
-  displayName: string = "Red Accelerator Start";
+  style: Styles = Styles.STAR_ORANGE
+  displayName: string = "More Yellow Keys";
 
-  cost: Num = new Num(1, 0);
-  baseCost: Num = new Num(1, 0);
+  cost: Num = new Num(2, 0);
+  baseCost: Num = new Num(2, 0);
 }

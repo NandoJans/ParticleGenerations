@@ -62,6 +62,12 @@ import {
 } from "../../features/generators/half-red-generator-increase-galaxy-tree-upgrade";
 import {RedAcceleratorStartGalaxyTreeUpgrade} from "../../features/upgrades/red-accelerator-start-galaxy-tree-upgrade";
 import {MoreYellowKeysGalaxyTreeUpgrade} from "../../features/upgrades/more-yellow-keys-galaxy-tree-upgrade";
+import {
+  StrongerRedExtensionGalaxyTreeUpgrade
+} from "../../features/automators/stronger-red-extension-galaxy-tree-upgrade";
+import {
+  DecreaseBoosterAccelerationScalingGalaxyTreeUpgrade
+} from "../../features/automators/decrease-booster-acceleration-scaling-galaxy-tree-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -125,6 +131,8 @@ export class UpgradeRecord extends Record {
   static halfRedGeneratorIncrease: HalfRedGeneratorIncreaseGalaxyTreeUpgrade = new HalfRedGeneratorIncreaseGalaxyTreeUpgrade('halfRedGeneratorIncrease');
   static redAcceleratorStart: RedAcceleratorStartGalaxyTreeUpgrade = new RedAcceleratorStartGalaxyTreeUpgrade('redAcceleratorStart');
   static moreYellowKeys: MoreYellowKeysGalaxyTreeUpgrade = new MoreYellowKeysGalaxyTreeUpgrade('moreYellowKeys');
+  static strongerRedExtensionGalaxyTree: StrongerRedExtensionGalaxyTreeUpgrade = new StrongerRedExtensionGalaxyTreeUpgrade('strongerRedExtensionGalaxyTree');
+  static decreaseBoosterAccelerationScaling: DecreaseBoosterAccelerationScalingGalaxyTreeUpgrade = new DecreaseBoosterAccelerationScalingGalaxyTreeUpgrade('decreaseBoosterAccelerationScalingGalaxyTree');
 
 
   static override list: Upgrade[] = [
@@ -181,6 +189,10 @@ export class UpgradeRecord extends Record {
 
     UpgradeRecord.unlockFirstGreenGenerator,
     UpgradeRecord.halfRedGeneratorIncrease,
+    UpgradeRecord.redAcceleratorStart,
+    UpgradeRecord.moreYellowKeys,
+    UpgradeRecord.strongerRedExtensionGalaxyTree,
+    UpgradeRecord.decreaseBoosterAccelerationScaling,
 
   ]
 
