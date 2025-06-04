@@ -16,9 +16,11 @@ import {MultiplyYellowParticlesYellowUpgrade} from "../../features/upgrades/mult
 import {
   MultiplyRedGeneratorExtensionYellowUpgrade
 } from "../../features/upgrades/multiply-red-generator-extension-yellow-upgrade";
-import {
-  RedGeneratorMultiplierYellowPrestigeYellowUpgrade
-} from "../../features/upgrades/red-generator-multiplier-yellow-prestige-yellow-upgrade";
+import {BreakYellowFusionLimitYellowUpgrade} from "../../features/upgrades/break-yellow-fusion-limit-yellow-upgrade";
+
+
+
+import { RedGeneratorMultiplierYellowPrestigeYellowUpgrade } from "../../features/upgrades/red-generator-multiplier-yellow-prestige-yellow-upgrade";
 import {StartWithMoreRedExtensionsUpgrade} from "../../features/upgrades/start-with-more-red-extensions-upgrade";
 import {NoResetRedExtensionsUpgrade} from "../../features/upgrades/no-reset-red-extensions-upgrade";
 import {
@@ -108,6 +110,7 @@ export class UpgradeRecord extends Record {
   static decreaseRedGeneratorScaling: DecreaseRedGeneratorScalingUpgrade = new DecreaseRedGeneratorScalingUpgrade('decreaseRedGeneratorScaling');
   static decreaseRedGeneratorBoosterScaling: DecreaseRedGeneratorBoosterScalingUpgrade = new DecreaseRedGeneratorBoosterScalingUpgrade('decreaseRedGeneratorBoosterScaling');
   static stopRedBoosterAccelerationReset: StopRedBoosterAccelerationResetUpgrade = new StopRedBoosterAccelerationResetUpgrade('stopRedBoosterAccelerationReset');
+static breakYellowFusionLimitYellow: BreakYellowFusionLimitYellowUpgrade = new BreakYellowFusionLimitYellowUpgrade('breakYellowFusionLimitYellow');
 
   // Yellow generator upgrades
   static yellowPower: YellowPowerUpgrade = new YellowPowerUpgrade('yellowPowerUpgrade');
@@ -168,6 +171,7 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.stopRedBoosterAccelerationReset,
     UpgradeRecord.decreaseRedGeneratorScaling,
     UpgradeRecord.decreaseRedGeneratorBoosterScaling,
+UpgradeRecord.breakYellowFusionLimitYellow, // <-- add here
 
     // Yellow generator upgrades
     UpgradeRecord.yellowPower,
