@@ -19,8 +19,8 @@ export class FusionBoosterAccelerationAutomator extends Automator {
       UpgradeRecord.fusionBoosterAcceleration
     ];
   }
-  goal: Num = new Num(1, 3);
-  goalString: string = "Buy a total of 1,000 fusion booster accelerations";
+  goal: Num = new Num(5, 2);
+  goalString: string = "Buy a total of 500 fusion booster accelerations";
   task(): Num {
     return StatsService.getNum(UpgradeRecord.fusionBoosterAcceleration.name, 'totalBoughtAutomator');
   }
