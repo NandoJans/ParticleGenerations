@@ -2,6 +2,7 @@ import {YellowUpgrade} from "./yellow-upgrade";
 import {Num} from "../../../num";
 import {Requirement} from "../interfaces/requirement";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
+import {HoldingRecord} from "../../records/holdings/holding-record";
 
 export class BreakYellowFusionLimitYellowUpgrade extends YellowUpgrade {
   displayName: string = 'Break Yellow Fusion Limit';
@@ -17,6 +18,7 @@ export class BreakYellowFusionLimitYellowUpgrade extends YellowUpgrade {
   }
 
   action(): undefined {
+HoldingRecord.yellowFusion.maxAmount = new Num(1, 1e100);
     return;
   }
 
