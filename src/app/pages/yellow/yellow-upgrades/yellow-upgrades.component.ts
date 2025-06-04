@@ -26,7 +26,7 @@ export class YellowUpgradesComponent implements OnInit {
     UpgradeRecord.decreaseRedGeneratorBoosterScaling,
     UpgradeRecord.stopRedBoosterAccelerationReset,
     UpgradeRecord.unlockFourthYellowGenerator,
-    UpgradeRecord.breakYellowFusionBarrierYellow,
+    UpgradeRecord.breakYellowFusionLimitYellow,
     UpgradeRecord.unlockFifthYellowGenerator,
     UpgradeRecord.redGeneratorMultiplierYellowPrestigeYellow,
     UpgradeRecord.multiplyRedGeneratorExtensionYellow,
