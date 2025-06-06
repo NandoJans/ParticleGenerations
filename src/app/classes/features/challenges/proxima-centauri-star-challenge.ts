@@ -34,7 +34,7 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
   override baseBuffer: Num = new Num(2, 0);
   override completionBuffer: Num[] = [
     new Num(0.6, 0),
-    new Num(0.6, 0),
+    new Num(0.65, 0),
     new Num(0.35, 0),
     new Num(0.3, 0),
   ];
