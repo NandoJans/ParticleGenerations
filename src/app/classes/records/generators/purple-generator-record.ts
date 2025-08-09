@@ -1,15 +1,11 @@
 import {Record} from "../record";
 import {Generator} from "../../features/generator";
-import {GeneratorRecord} from "./generator-record";
 
 export class PurpleGeneratorRecord extends Record {
-  static override list: Generator[] = [
-    GeneratorRecord.firstPurpleGenerator,
-    GeneratorRecord.secondPurpleGenerator,
-    GeneratorRecord.thirdPurpleGenerator,
-    GeneratorRecord.fourthPurpleGenerator,
-    GeneratorRecord.fifthPurpleGenerator,
-  ];
+  // The purple generator tier has not been implemented yet. Using an empty
+  // list here prevents the application from trying to access undefined
+  // properties on `GeneratorRecord` during startup.
+  static override list: Generator[] = [];
 
   override getList(): Generator[] {
     return PurpleGeneratorRecord.list;

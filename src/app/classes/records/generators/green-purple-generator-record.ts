@@ -1,13 +1,11 @@
 import {Record} from "../record";
 import {Generator} from "../../features/generator";
-import {GeneratorRecord} from "./generator-record";
 
 export class GreenPurpleGeneratorRecord extends Record {
-  static override list: Generator[] = [
-    GeneratorRecord.firstGreenPurpleGenerator,
-    GeneratorRecord.secondGreenPurpleGenerator,
-    GeneratorRecord.thirdGreenPurpleGenerator,
-  ];
+  // No green/purple generators have been implemented yet. Keeping the list
+  // empty avoids referencing undefined properties on `GeneratorRecord`, which
+  // caused runtime and compile time errors when this record was loaded.
+  static override list: Generator[] = [];
 
   getList(): Generator[] {
     return GreenPurpleGeneratorRecord.list;
