@@ -1,0 +1,24 @@
+/* layout for upgrade buttons */
+.upgrade-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* wrapper around the entire galaxy tree allowing scroll on small screens */
+.galaxy-tree-wrapper {
+  width: 100%;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 1rem;
+}
+
+@media (max-width: 600px) {
+  .galaxy-tree-wrapper {
+    padding-bottom: 0.5rem;
+  }
+}
+

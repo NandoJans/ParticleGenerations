@@ -11,7 +11,9 @@ export class MoreYellowKeysGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   }
 
   getChildren(): GalaxyTreeUpgrade[] {
-    return [];
+    return [
+      UpgradeRecord.enhancedDarkEnergyGalaxyTree,
+    ];
   }
 
   getParents(): GalaxyTreeUpgrade[] {
@@ -34,9 +36,10 @@ export class MoreYellowKeysGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
     return
   }
 
-  style: Styles = Styles.STAR_ORANGE
+  style: Styles = Styles.STAR_ORANGE;
   displayName: string = "More Yellow Keys";
 
   cost: Num = new Num(2, 0);
   baseCost: Num = new Num(2, 0);
 }
+
