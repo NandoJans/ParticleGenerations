@@ -9,7 +9,9 @@ export class DecreaseBoosterAccelerationScalingGalaxyTreeUpgrade extends GalaxyT
   }
 
   getChildren(): GalaxyTreeUpgrade[] {
-    return [];
+    return [
+      UpgradeRecord.boosterEfficiencyGalaxyTree,
+    ];
   }
 
   getParents(): GalaxyTreeUpgrade[] {
@@ -30,9 +32,10 @@ export class DecreaseBoosterAccelerationScalingGalaxyTreeUpgrade extends GalaxyT
   override buffer = new Num(2, 0);
   override baseBuffer = new Num(2, 0);
 
-  style: Styles = Styles.STAR_RED
+  style: Styles = Styles.STAR_RED;
   displayName: string = "2x Stronger Red Extension";
 
   cost: Num = new Num(4, 0);
   baseCost: Num = new Num(4, 0);
 }
+
