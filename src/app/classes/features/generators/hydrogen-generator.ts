@@ -33,7 +33,7 @@ export class HydrogenGenerator extends Generator {
   currency: Holding = HoldingRecord.yellowFusion;
   requirement: Requirement[] = [];
 
-  barrier: Num = new Num(3, 3);
+  barrier: Num = new Num(5, 3);
 
   protected override getGenerateAmount(): Num {
     let amount: Num = super.getGenerateAmount();
