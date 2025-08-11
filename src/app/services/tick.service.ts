@@ -54,7 +54,7 @@ export class TickService {
    * Game tick function for running the game logic. The game tick is called every 50ms.
    * @param speed The speed of the game tick. This is used to slow down the game tick for testing purposes.
    */
-  gameTick(speed: Num = new Num(1, 0)) {
+  gameTick(speed: Num = new Num(1, -1)) {
     if (!App.offlineCalculation) App.gameSpeed = speed;
 
     this.checkRequirements();
