@@ -177,3 +177,14 @@ svg.connectors{
   stroke-width:2;
   pointer-events:none;
 }
+
+@media (max-width: 600px) {
+  .children {
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  svg.connectors {
+    height: 1.5rem;
+  }
+}
