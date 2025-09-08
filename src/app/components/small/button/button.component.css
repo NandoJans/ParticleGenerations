@@ -21,3 +21,40 @@ button {
 .navigation-button:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
+
+.info-button {
+  background-color: var(--background-color-4);
+  color: var(--text-color-main);
+  border: 2px solid var(--text-color-light);
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.info-button:hover {
+  background-color: var(--background-color-light);
+  border-color: var(--text-color-main);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.exit-button {
+  background-color: var(--accent-color-red);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.exit-button:hover {
+  background-color: #c53030;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}

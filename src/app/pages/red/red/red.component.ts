@@ -22,9 +22,10 @@ export class RedComponent {
     UpgradeRecord.redGeneratorBooster,
   ];
   infoText: string[] = [
-    'Red Generators are the base of this game. The first generator generates red particles while the other generators generate generators a level below themself. For example: two generates one, three generates two, and so on.',
-    'These generators are the main focus of the game, with every upgrade eventually boosting the red generators. As the game goes on, you will understand what is meant by that.',
-    'Red extensions add up to five extra red generators. When having five generators, red extensions do not do anything. It is recommended that you wait until you are able to buy something new that boosts it effect.'
+    'Welcome to Particle Generations! This is the Red Generators tab, your starting point in the game.',
+    'Red generators form the foundation of particle production. The first generator produces red particles directly, while higher-tier generators (2nd, 3rd, etc.) produce the generators below them.',
+    'Red Extensions unlock additional generator slots. You can have up to 5 different red generators active at once. Extensions become more valuable as you progress and unlock new boosts.',
+    'Focus on balancing your generator purchases - higher tiers are more expensive but generate multiple lower-tier generators. This exponential growth is key to progression!'
   ]
   constructor() {
 
