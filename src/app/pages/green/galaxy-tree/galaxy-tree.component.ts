@@ -6,6 +6,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./galaxy-tree.component.css']
 })
 export class GalaxyTreeComponent implements OnInit {
+  infoText: string[] = [
+    'This is a placeholder page for future galaxy tree functionality.',
+    'Additional galaxy tree features and mechanics will be added here as the game expands.',
+    'Check back for updates as new content becomes available!'
+  ]
 
   constructor() { }
 
