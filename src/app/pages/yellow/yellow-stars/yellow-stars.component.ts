@@ -49,4 +49,13 @@ export class YellowStarsComponent implements OnInit {
   getStars() {
     return this.challengeService.sortByCompleted(this.stars);
   }
+  
+  infoText: string[] = [
+    'Yellow Stars represent stellar challenges that test your particle generation mastery!',
+    'Each star (Proxima Centauri, Lalande, Sun, Sirius) is a unique challenge with specific conditions and rewards.',
+    'While in a star challenge, you have access to special generators, upgrades, and mechanics.',
+    'Completing star challenges grants powerful rewards that boost your overall progression.',
+    'Stars unlock progressively - complete easier stars to access more difficult ones.',
+    'Use the "Leave challenge" button if you need to exit and return to normal gameplay.'
+  ]
 }

@@ -19,6 +19,13 @@ export class RedAcceleratorsComponent implements OnInit {
     UpgradeRecord.improveRedParticlesToAcceleratorsUpgrade
   ];
   redAccelerators: Holding = HoldingRecord.redAccelerators;
+  infoText: string[] = [
+    'Red Accelerators are an advanced resource that multiply the effect of your red generators.',
+    'To unlock accelerators, you first need to purchase the "Unlock Red Accelerators" upgrade.',
+    'Accelerators work by increasing the production rate of all your red generators based on how many accelerators you have.',
+    'The various upgrades here improve accelerator generation rate, their effectiveness, and provide new ways to convert red particles into accelerators.',
+    'Booster Acceleration upgrades create a synergy between accelerators and other game mechanics for exponential growth.'
+  ]
 
   constructor() { }
 

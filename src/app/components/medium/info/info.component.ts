@@ -27,4 +27,8 @@ export class InfoComponent {
   getHidden() {
     return this.hidden;
   }
+
+  stopClose(event: Event) {
+    event.stopPropagation();
+  }
 }

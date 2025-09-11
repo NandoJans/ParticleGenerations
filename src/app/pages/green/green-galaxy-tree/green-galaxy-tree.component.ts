@@ -18,6 +18,14 @@ export class GreenGalaxyTreeComponent implements OnInit {
     UpgradeRecord.greenParticleSacrifice,
   ];
   galaxyTreeStarRoot: GalaxyTreeUpgrade = UpgradeRecord.unlockFirstGreenGenerator;
+  infoText: string[] = [
+    'The Green Galaxy Tree represents the ultimate progression system in Particle Generations!',
+    'Dark Energy is the currency for this tree, earned through particle sacrifices.',
+    'The galaxy tree features a branching upgrade system where each node unlocks new paths and possibilities.',
+    'Particle Sacrifice upgrades convert your accumulated particles into Dark Energy for permanent benefits.',
+    'Navigate the tree strategically - each path offers different bonuses and unlocks.',
+    'This is the endgame content - master the galaxy tree to achieve maximum power!'
+  ]
 
   constructor() { }
 

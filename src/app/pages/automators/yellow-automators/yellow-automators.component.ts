@@ -24,6 +24,14 @@ export class YellowAutomatorsComponent implements OnInit {
     AutomatorRecord.fourthYellowGenerator,
     AutomatorRecord.fifthYellowGenerator,
   ];
+  infoText: string[] = [
+    'Yellow Automators manage the advanced automation for the yellow layer.',
+    'Prestige Automator automatically performs yellow prestiges when beneficial.',
+    'Yellow Upgrade Automators handle key yellow upgrades and fusion mechanics.',
+    'Yellow Generator Automators manage all five tiers of yellow generators.',
+    'These automators are essential for efficient yellow layer progression.',
+    'Configure them carefully to optimize your advanced game progression!'
+  ]
 
   constructor() { }
 

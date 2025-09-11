@@ -1,10 +1,12 @@
 <div class="holding-line">
   <app-button [style]="'info-button'" [text]="'Info'" (function)="show()"></app-button>
 </div>
-<div class="no-display pop-up-window" [id]="name" [style]="(getHidden()) ? 'display: none;' : 'display: flex;'">
-  <p class="info" *ngFor="let textPiece of infoText">{{textPiece}}</p>
-  <div class="pop-up-bottom"></div>
-  <div class="holding-line">
-    <app-button style="width: 100%" [style]="'exit-button'" [text]="'Exit'" (function)="hide()"></app-button>
+<div class="no-display pop-up-window" [id]="name" [style]="(getHidden()) ? 'display: none;' : 'display: flex;'" (click)="hide()">
+  <div class="info-container" (click)="stopClose($event)">
+    <p class="info" *ngFor="let textPiece of infoText">{{textPiece}}</p>
+    <div class="pop-up-bottom"></div>
+    <div class="holding-line">
+      <app-button style="width: 100%" [style]="'exit-button'" [text]="'Exit'" (function)="hide()"></app-button>
+    </div>
   </div>
 </div>
