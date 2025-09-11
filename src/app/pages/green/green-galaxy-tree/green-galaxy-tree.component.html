@@ -1,12 +1,25 @@
-<app-number-display [holding]="darkEnergy"></app-number-display>
-<div class="upgrade-row">
-  <div *ngFor="let upgrade of upgrades">
-    <app-upgrade [upgrade]="upgrade"></app-upgrade>
+<div class="galaxy-section">
+  <app-number-display [holding]="darkEnergy"></app-number-display>
+</div>
+
+<div class="galaxy-section">
+  <div class="galaxy-title">Galaxy Upgrades</div>
+  <div class="upgrade-row">
+    <div *ngFor="let upgrade of upgrades">
+      <app-upgrade [upgrade]="upgrade"></app-upgrade>
+    </div>
   </div>
 </div>
-<div class="galaxy-tree-wrapper">
-  <app-galaxy-tree-star
-    [galaxyTreeStar]="galaxyTreeStarRoot"
-  ></app-galaxy-tree-star>
+
+<div class="galaxy-section">
+  <div class="galaxy-title">Galaxy Tree</div>
+  <div class="galaxy-tree-wrapper">
+    <app-galaxy-tree-star
+      [galaxyTreeStar]="galaxyTreeStarRoot"
+    ></app-galaxy-tree-star>
+  </div>
 </div>
-<app-info style="width: 60%" [name]="'green-galaxy-tree-info'" [infoText]="infoText"></app-info>
+
+<div class="galaxy-section">
+  <app-info style="width: 60%" [name]="'green-galaxy-tree-info'" [infoText]="infoText"></app-info>
+</div>

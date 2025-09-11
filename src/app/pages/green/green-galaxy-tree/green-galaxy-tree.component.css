@@ -3,8 +3,13 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  background: linear-gradient(145deg, rgba(67, 224, 67, 0.05), rgba(67, 224, 67, 0.02));
+  border: 1px solid rgba(67, 224, 67, 0.2);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 8px 25px rgba(67, 224, 67, 0.1);
 }
 
 /* wrapper around the entire galaxy tree allowing scroll on small screens */
@@ -13,12 +18,49 @@
   overflow: auto;
   display: flex;
   justify-content: center;
-  padding-bottom: 1rem;
+  padding: 2rem;
+  background: linear-gradient(145deg, rgba(67, 224, 67, 0.03), rgba(67, 224, 67, 0.01));
+  border-radius: 25px;
+  margin: 20px auto;
+  border: 2px solid rgba(67, 224, 67, 0.15);
+  box-shadow: 0 10px 30px rgba(67, 224, 67, 0.15);
+  position: relative;
+}
+
+.galaxy-tree-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(67, 224, 67, 0.1) 0%, transparent 50%);
+  border-radius: 25px;
+  pointer-events: none;
+}
+
+.galaxy-section {
+  margin-bottom: 30px;
+}
+
+.galaxy-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent-color-green);
+  margin-bottom: 20px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  text-align: center;
 }
 
 @media (max-width: 600px) {
   .galaxy-tree-wrapper {
-    padding-bottom: 0.5rem;
+    padding: 1rem;
+    margin: 10px;
+  }
+  
+  .upgrade-row {
+    gap: 1rem;
+    padding: 15px;
   }
 }
 
