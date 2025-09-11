@@ -1,0 +1,81 @@
+/* Enhanced Yellow Fusion page styling */
+.fusion-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.resource-section {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.resource-card {
+  background: linear-gradient(145deg, rgba(240, 240, 27, 0.1), rgba(240, 240, 27, 0.05));
+  border: 2px solid var(--accent-color-yellow);
+  border-radius: 20px;
+  padding: 25px;
+  min-width: 250px;
+  box-shadow: 0 8px 25px rgba(240, 240, 27, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.resource-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(240, 240, 27, 0.3);
+}
+
+.resource-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--accent-color-yellow);
+  margin-bottom: 15px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.resource-amount {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-color-main);
+  margin-bottom: 10px;
+}
+
+.resource-effect {
+  font-size: 1.1rem;
+  color: var(--text-color-light);
+  opacity: 0.9;
+}
+
+.upgrades-section {
+  margin-top: 40px;
+}
+
+.upgrades-section .upgrade-row {
+  background: linear-gradient(145deg, rgba(173, 134, 51, 0.08), rgba(173, 134, 51, 0.04));
+  border: 1px solid rgba(240, 240, 27, 0.2);
+  margin-bottom: 25px;
+}
+
+.info-section {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .resource-section {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .resource-card {
+    min-width: 200px;
+    margin-bottom: 20px;
+  }
+}
