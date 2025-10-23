@@ -3,9 +3,10 @@ import {Timeline} from "../../../classes/features/timeline/timeline";
 import {TimelineService} from "../../../services/timeline.service";
 
 @Component({
-  selector: 'app-green-timeline',
-  templateUrl: './green-timeline.component.html',
-  styleUrls: ['./green-timeline.component.css']
+    selector: 'app-green-timeline',
+    templateUrl: './green-timeline.component.html',
+    styleUrls: ['./green-timeline.component.css'],
+    standalone: false
 })
 export class GreenTimelineComponent implements OnInit {
   timeline: Timeline = TimelineService.greenTimeline;

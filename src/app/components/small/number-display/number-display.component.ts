@@ -5,9 +5,10 @@ import {HoldingDisplay} from "../../../classes/displays/holding-display";
 import {HoldingDisplayLine} from "../../../interfaces/holding-display-line";
 
 @Component({
-  selector: 'app-number-display',
-  templateUrl: './number-display.component.html',
-  styleUrls: ['./number-display.component.css']
+    selector: 'app-number-display',
+    templateUrl: './number-display.component.html',
+    styleUrls: ['./number-display.component.css'],
+    standalone: false
 })
 export class NumberDisplayComponent implements OnInit {
   @Input() holding: Holding = HoldingRecord.redParticles;

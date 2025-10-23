@@ -5,9 +5,10 @@ import {AutomatorRecord} from "../../../classes/records/automators/automator-rec
 import {PrestigeAutomator} from "../../../classes/features/automators/prestige-automator";
 
 @Component({
-  selector: 'app-automator',
-  templateUrl: './automator.component.html',
-  styleUrls: ['./automator.component.css']
+    selector: 'app-automator',
+    templateUrl: './automator.component.html',
+    styleUrls: ['./automator.component.css'],
+    standalone: false
 })
 export class AutomatorComponent implements OnInit {
   @Input() automator: Automator = AutomatorRecord.firstRedGenerator;

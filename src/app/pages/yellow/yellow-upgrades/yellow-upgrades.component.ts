@@ -10,9 +10,10 @@ import {PrestigeLayer} from "../../../classes/features/prestiges/prestige-layer"
 import {PrestigeLayersService} from "../../../services/prestige-layers.service";
 
 @Component({
-  selector: 'app-yellow-upgrades',
-  templateUrl: './yellow-upgrades.component.html',
-  styleUrls: ['./yellow-upgrades.component.css']
+    selector: 'app-yellow-upgrades',
+    templateUrl: './yellow-upgrades.component.html',
+    styleUrls: ['./yellow-upgrades.component.css'],
+    standalone: false
 })
 export class YellowUpgradesComponent implements OnInit {
   yellowKeys: YellowKeyHolding = HoldingRecord.yellowKeys;

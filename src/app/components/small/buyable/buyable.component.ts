@@ -4,9 +4,10 @@ import {Num} from "../../../num";
 import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 
 @Component({
-  selector: 'app-buyable',
-  templateUrl: './buyable.component.html',
-  styleUrls: ['./buyable.component.css']
+    selector: 'app-buyable',
+    templateUrl: './buyable.component.html',
+    styleUrls: ['./buyable.component.css'],
+    standalone: false
 })
 export class BuyableComponent implements OnInit {
   @Input() name: string | undefined;

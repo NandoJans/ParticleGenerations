@@ -7,9 +7,10 @@ import {Num} from "../../../num";
 import {Milestone} from "../../../classes/features/milestone";
 
 @Component({
-  selector: 'app-timeline-event',
-  templateUrl: './timeline-event.component.html',
-  styleUrls: ['./timeline-event.component.css']
+    selector: 'app-timeline-event',
+    templateUrl: './timeline-event.component.html',
+    styleUrls: ['./timeline-event.component.css'],
+    standalone: false
 })
 export class TimelineEventComponent implements OnInit {
   @Input() timelineEvent: TimelineEvent = new TimelineEvent(

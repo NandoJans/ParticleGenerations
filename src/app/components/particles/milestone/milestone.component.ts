@@ -5,9 +5,10 @@ import {Num} from "../../../num";
 import {Styles} from "../../../classes/enums/styles";
 
 @Component({
-  selector: 'app-milestone',
-  templateUrl: './milestone.component.html',
-  styleUrls: ['./milestone.component.css']
+    selector: 'app-milestone',
+    templateUrl: './milestone.component.html',
+    styleUrls: ['./milestone.component.css'],
+    standalone: false
 })
 export class MilestoneComponent implements OnInit {
   @Input() milestone: Milestone = MilestoneRecord.keepFirstRedGenAuto;

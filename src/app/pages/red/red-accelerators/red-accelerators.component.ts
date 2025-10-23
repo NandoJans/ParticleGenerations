@@ -5,9 +5,10 @@ import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
 
 @Component({
-  selector: 'app-red-accelerators',
-  templateUrl: './red-accelerators.component.html',
-  styleUrls: ['./red-accelerators.component.css']
+    selector: 'app-red-accelerators',
+    templateUrl: './red-accelerators.component.html',
+    styleUrls: ['./red-accelerators.component.css'],
+    standalone: false
 })
 export class RedAcceleratorsComponent implements OnInit {
   unlockRedAccelerators: Upgrade = UpgradeRecord.unlockRedAccelerators;

@@ -4,9 +4,10 @@ import {EnhancementRecord} from "../../../classes/records/enhancement-record";
 import {EnhancementService} from "../../../services/enhancement.service";
 
 @Component({
-  selector: 'app-enhancement',
-  templateUrl: './enhancement.component.html',
-  styleUrls: ['./enhancement.component.css']
+    selector: 'app-enhancement',
+    templateUrl: './enhancement.component.html',
+    styleUrls: ['./enhancement.component.css'],
+    standalone: false
 })
 export class EnhancementComponent implements OnInit {
   @Input() enhancement: Enhancement = EnhancementRecord.yellow;

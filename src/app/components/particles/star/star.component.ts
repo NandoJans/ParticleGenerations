@@ -5,9 +5,10 @@ import {ChallengeService} from "../../../services/interactables/challenge.servic
 import {Num} from "../../../num";
 
 @Component({
-  selector: 'app-star',
-  templateUrl: './star.component.html',
-  styleUrls: ['./star.component.css']
+    selector: 'app-star',
+    templateUrl: './star.component.html',
+    styleUrls: ['./star.component.css'],
+    standalone: false
 })
 export class StarComponent implements OnInit {
   @Input() star: YellowStarChallenge = ChallengeRecord.proximaCentauriStar;

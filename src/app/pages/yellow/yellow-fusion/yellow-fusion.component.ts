@@ -6,9 +6,10 @@ import {Upgrade} from "../../../classes/features/upgrade";
 import {FusionBoosterAccelerationUpgrade} from "../../../classes/features/upgrades/fusion-booster-acceleration-upgrade";
 
 @Component({
-  selector: 'app-yellow-fusion',
-  templateUrl: './yellow-fusion.component.html',
-  styleUrls: ['./yellow-fusion.component.css']
+    selector: 'app-yellow-fusion',
+    templateUrl: './yellow-fusion.component.html',
+    styleUrls: ['./yellow-fusion.component.css'],
+    standalone: false
 })
 export class YellowFusionComponent implements OnInit {
   yellowFusion: Holding = HoldingRecord.yellowFusion;

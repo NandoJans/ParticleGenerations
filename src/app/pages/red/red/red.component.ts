@@ -5,9 +5,10 @@ import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
 import {RedGenerator} from "../../../classes/features/generators/red-generator";
 
 @Component({
-  selector: 'app-red',
-  templateUrl: './red.component.html',
-  styleUrls: ['./red.component.css']
+    selector: 'app-red',
+    templateUrl: './red.component.html',
+    styleUrls: ['./red.component.css'],
+    standalone: false
 })
 export class RedComponent {
   generators: RedGenerator[] = [

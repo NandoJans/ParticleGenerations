@@ -7,9 +7,10 @@ import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
 import {Upgrade} from "../../../classes/features/upgrade";
 
 @Component({
-  selector: 'app-yellow-generators',
-  templateUrl: './yellow-generators.component.html',
-  styleUrls: ['./yellow-generators.component.css']
+    selector: 'app-yellow-generators',
+    templateUrl: './yellow-generators.component.html',
+    styleUrls: ['./yellow-generators.component.css'],
+    standalone: false
 })
 export class YellowGeneratorsComponent implements OnInit {
   yellowPower: Holding = HoldingRecord.yellowPower;

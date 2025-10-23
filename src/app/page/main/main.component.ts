@@ -9,9 +9,10 @@ import {GreenPrestigeHolding} from "../../classes/features/holdings/green-presti
 import {GreenParticleHolding} from "../../classes/features/holdings/green-particle-holding";
 
 @Component({
-  selector: 'app-main',
-  templateUrl: './main.component.html',
-  styleUrls: ['./main.component.css']
+    selector: 'app-main',
+    templateUrl: './main.component.html',
+    styleUrls: ['./main.component.css'],
+    standalone: false
 })
 export class MainComponent implements OnInit {
   unlockedYellow: boolean | undefined;

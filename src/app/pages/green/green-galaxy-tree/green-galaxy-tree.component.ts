@@ -6,9 +6,10 @@ import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 import {GalaxyTreeUpgrade} from "../../../classes/features/upgrades/galaxy-tree-upgrade";
 
 @Component({
-  selector: 'app-green-galaxy-tree',
-  templateUrl: './green-galaxy-tree.component.html',
-  styleUrls: ['./green-galaxy-tree.component.css']
+    selector: 'app-green-galaxy-tree',
+    templateUrl: './green-galaxy-tree.component.html',
+    styleUrls: ['./green-galaxy-tree.component.css'],
+    standalone: false
 })
 export class GreenGalaxyTreeComponent implements OnInit {
   darkEnergy: Holding = HoldingRecord.darkEnergy;
