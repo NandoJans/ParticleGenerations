@@ -91,8 +91,6 @@ import { GreenTimelineComponent } from './pages/timeline/green-timeline/green-ti
         AppRoutingModule,
         ReactiveFormsModule,
         FormsModule,
-        MatCheckboxModule,
-        MatProgressBarModule,
         FontAwesomeModule
     ],
   providers: [],
