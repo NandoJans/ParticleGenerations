@@ -17,10 +17,10 @@ import { MilestoneComponent } from './components/particles/milestone/milestone.c
 import { ChallengeComponent } from './components/particles/challenge/challenge.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { AutomatorComponent } from './components/particles/automator/automator.component';
-import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatLegacyCheckboxModule as MatCheckboxModule} from "@angular/material/legacy-checkbox";
 import { TimelineComponent } from './components/particles/timeline/timeline.component';
 import { TimelineEventComponent } from './components/particles/timeline-event/timeline-event.component';
-import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {MatLegacyProgressBarModule as MatProgressBarModule} from "@angular/material/legacy-progress-bar";
 import { InfoComponent } from './components/medium/info/info.component';
 import { ParticleEmitterComponent } from './components/medium/particle-emitter/particle-emitter.component';
 import { OfflineComponent } from './components/medium/offline/offline.component';
