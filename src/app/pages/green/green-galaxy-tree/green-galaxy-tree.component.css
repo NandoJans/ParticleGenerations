@@ -1,20 +1,25 @@
 /* layout for upgrade buttons */
 .upgrade-row {
+  position: absolute;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 1rem;
   margin-bottom: 1rem;
+  z-index: 10;
 }
 
-/* wrapper around the entire galaxy tree allowing scroll on small screens */
 .galaxy-tree-wrapper {
+  position: absolute;
   width: 100%;
+  height: 100%;
   overflow: auto;
   display: flex;
   justify-content: center;
-  padding-bottom: 1rem;
+  padding: 100%;
+  z-index: 5;
 }
+/* wrapper around the entire galaxy tree allowing scroll on small screens */
 
 @media (max-width: 600px) {
   .galaxy-tree-wrapper {
