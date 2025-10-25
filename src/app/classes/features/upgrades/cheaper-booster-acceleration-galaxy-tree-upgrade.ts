@@ -22,7 +22,7 @@ export class CheaperBoosterAccelerationGalaxyTreeUpgrade extends GalaxyTreeUpgra
   }
 
   getDescription(): string {
-    return "Devide the cost increase of booster accelerations by 10";
+    return "Divide the cost increase of booster accelerations by 10";
   }
 
   action(): undefined {
