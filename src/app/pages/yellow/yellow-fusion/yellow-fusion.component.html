@@ -1,16 +1,33 @@
-<app-number-display [holding]="yellowFusion"></app-number-display>
-<app-number-display [holding]="hydrogen"></app-number-display>
-<div class="upgrade-row">
-  <div *ngFor="let upgrade of hydrogenUpgrades">
-    <app-upgrade *ngIf="upgrade.isUnlocked()" [upgrade]="upgrade"></app-upgrade>
+<div class="fusion-container">
+  <div class="resource-section">
+    <div class="resource-card">
+      <div class="resource-title">Yellow Fusion</div>
+      <app-number-display [holding]="yellowFusion" class="resource-amount"></app-number-display>
+    </div>
+    <div class="resource-card">
+      <div class="resource-title">Hydrogen</div>
+      <app-number-display [holding]="hydrogen" class="resource-amount"></app-number-display>
+    </div>
   </div>
-</div>
-<div class="upgrade-row">
-  <app-upgrade *ngIf="fusionBoosterAcceleration.isUnlocked()" [upgrade]="fusionBoosterAcceleration"></app-upgrade>
-</div>
-<div class="upgrade-row">
-  <div *ngFor="let upgrade of upgrades">
-    <app-upgrade *ngIf="upgrade.isUnlocked()" [upgrade]="upgrade"></app-upgrade>
+
+  <div class="upgrades-section">
+    <div class="upgrade-row">
+      <div *ngFor="let upgrade of hydrogenUpgrades">
+        <app-upgrade *ngIf="upgrade.isUnlocked()" [upgrade]="upgrade"></app-upgrade>
+      </div>
+    </div>
+    <div class="upgrade-row">
+      <app-upgrade *ngIf="fusionBoosterAcceleration.isUnlocked()" [upgrade]="fusionBoosterAcceleration"></app-upgrade>
+    </div>
+    <div class="upgrade-row">
+      <div *ngFor="let upgrade of upgrades">
+        <app-upgrade *ngIf="upgrade.isUnlocked()" [upgrade]="upgrade"></app-upgrade>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-section">
+    <app-info style="width: 60%" [name]="'yellow-fusion-info'" [infoText]="infoText"></app-info>
   </div>
 </div>
 

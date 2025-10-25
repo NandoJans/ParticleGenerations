@@ -24,6 +24,13 @@ GeneratorRecord.fifthYellowGenerator
   upgrades: Upgrade[] = [
     UpgradeRecord.yellowPower
   ]
+  infoText: string[] = [
+    'Yellow Generators represent the next evolution in your particle generation journey!',
+    'These generators produce Yellow Power, a more advanced resource that unlocks new upgrade paths and abilities.',
+    'Like red generators, yellow generators follow the same tier system - higher tiers produce lower-tier generators.',
+    'Yellow Power is used for powerful upgrades that can dramatically boost your entire production chain.',
+    'Focus on unlocking all yellow generator tiers to maximize your Yellow Power generation rate.'
+  ]
   constructor() { }
 
   ngOnInit(): void {

@@ -26,6 +26,14 @@ export class YellowFusionComponent implements OnInit {
     UpgradeRecord.increaseMaxFusionBoosterAcceleration,
   ];
   fusionBoosterAcceleration: FusionBoosterAccelerationUpgrade = UpgradeRecord.fusionBoosterAcceleration;
+  infoText: string[] = [
+    'Yellow Fusion introduces stellar mechanics to supercharge your particle generation!',
+    'Yellow Fusion accumulates automatically and powers the stellar fusion process.',
+    'Hydrogen is produced through fusion and unlocks powerful upgrades for exponential growth.',
+    'Stellar goals (Proxima Centauri, Lalande, Sun, Sirius) each provide massive bonuses when reached.',
+    'Fusion Booster Acceleration creates synergies between fusion mechanics and your accelerator systems.',
+    'This layer represents a major leap in production scaling - master fusion to unlock incredible power!'
+  ]
 
 
   constructor() { }

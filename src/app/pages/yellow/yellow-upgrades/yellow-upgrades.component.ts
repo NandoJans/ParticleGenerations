@@ -42,6 +42,14 @@ export class YellowUpgradesComponent implements OnInit {
     UpgradeRecord.breakYellowBarrier
   ];
   yellowPrestige: PrestigeLayer = PrestigeLayersService.yellowPrestigeLayer;
+  infoText: string[] = [
+    'Yellow Upgrades are powerful enhancements purchased with Yellow Keys and Yellow Prestiges.',
+    'Yellow Keys are earned through yellow prestige operations and unlock core improvements to your production.',
+    'Yellow Prestiges are a higher-tier currency that unlocks the most powerful upgrades in this section.',
+    'Many upgrades here break through previous limitations, like reducing scaling costs and unlocking new generator tiers.',
+    'The yellow enhancement system provides permanent bonuses that compound over time.',
+    'Strategic upgrade purchases here can dramatically accelerate your entire game progression!'
+  ]
 
   constructor() { }
 
