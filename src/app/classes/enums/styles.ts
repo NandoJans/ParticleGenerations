@@ -18,6 +18,7 @@ export enum Styles {
   FUSION_SUPER = "yellow fusion super color-switch",
   GREEN = "green",
   SUB_GREEN = "green sub",
+  HORIZONTAL_SUB_GREEN = "green sub horizontal",
   DARK = "green dark",
   STAR_RED = "star red",
   STAR_ORANGE = "star orange",

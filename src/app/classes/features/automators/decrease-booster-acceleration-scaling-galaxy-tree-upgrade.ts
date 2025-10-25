@@ -10,13 +10,13 @@ export class DecreaseBoosterAccelerationScalingGalaxyTreeUpgrade extends GalaxyT
 
   getChildren(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.boosterEfficiencyGalaxyTree,
+
     ];
   }
 
   getParents(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.halfRedGeneratorIncrease,
+      UpgradeRecord.increaseRedGeneratorMultiplier,
     ];
   }
 

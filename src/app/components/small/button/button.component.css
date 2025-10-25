@@ -21,3 +21,20 @@ button {
 .navigation-button:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
+
+.green {
+  color: var(--accent-color-green);
+}
+
+.card-header {
+  margin: 0;
+  height: 4rem;
+  width: 4rem;
+  background-color: var(--background-color-2);
+  font-size: 1.7rem;
+}
+
+.right {
+  border-radius: 0 5px 0 0;
+  border-left: 1px solid var(--background-color-4);
+}

@@ -15,7 +15,7 @@ export abstract class SacrificeUpgrade extends Upgrade {
   }
   type: string = 'sacrifice-upgrade';
   resetId: ResetKey;
-  style: Styles = Styles.SUB_GREEN;
+  style: Styles = Styles.HORIZONTAL_SUB_GREEN;
 
   override calculationOrder: number = 51;
 

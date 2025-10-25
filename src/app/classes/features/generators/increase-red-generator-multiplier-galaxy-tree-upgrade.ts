@@ -4,9 +4,9 @@ import {Num} from "../../../num";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {GeneratorRecord} from "../../records/generators/generator-record";
 
-export class HalfRedGeneratorIncreaseGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
+export class IncreaseRedGeneratorMultiplierGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   constructor(saveName: string) {
-    super(saveName, "half-red-generator-increase");
+    super(saveName, "better-red-generator");
   }
 
   getChildren(): GalaxyTreeUpgrade[] {
@@ -23,20 +23,23 @@ export class HalfRedGeneratorIncreaseGalaxyTreeUpgrade extends GalaxyTreeUpgrade
   }
 
   getDescription(): string {
-    return "Half all cost increase of red generators.";
+    return `Make red generator mutipliers ${this.buffer.toString(2)} stronger.`;
   }
 
   action(): undefined {
     if (this.hasBought()) {
       GeneratorRecord.redGenerators.forEach(generator => {
-        generator.increase = generator.startIncrease.div(new Num(2, 0));
+        generator.baseMulMod = generator.baseMulMod.mul(this.buffer);
       })
     }
     return
   }
 
   style: Styles = Styles.STAR_RED
-  displayName: string = "Red Generator Cost Halving";
+  displayName: string = "Better red generator multipliers";
+
+  override buffer = new Num(2, 0);
+  override baseBuffer = new Num(2, 0);
 
   cost: Num = new Num(1, 0);
   baseCost: Num = new Num(1, 0);

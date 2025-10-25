@@ -1,7 +1,14 @@
-<app-number-display [holding]="darkEnergy"></app-number-display>
-<div class="upgrade-row">
-  <div *ngFor="let upgrade of upgrades">
-    <app-upgrade [upgrade]="upgrade"></app-upgrade>
+<div [class]="'bottom-section ' + (isBottomSectionOpen() ? 'open' : 'closed')">
+  <div class="number-display">
+    <app-number-display [holding]="darkEnergy"></app-number-display>
+    <app-button [style]="'button green card-header right'" [icon]="isBottomSectionOpen() ? faArrowDown : faArrowUp" (click)="toggleBottomSection()"></app-button>
+  </div>
+  <div class="upgrade-row">
+    @for (upgrade of upgrades; track upgrade)  {
+      <app-upgrade
+        [upgrade]="upgrade"
+      ></app-upgrade>
+    }
   </div>
 </div>
 <div class="galaxy-tree-wrapper" #galaxyTreeWrapper>

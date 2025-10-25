@@ -62,11 +62,11 @@ export class PrestigeButtonComponent implements OnInit {
   }
 
   getGainAmount(): Num {
-    return this.prestigeLayer.holdingGain
+    return this.prestigeLayer.holdingGain;
   }
 
   getGainHolding(): string {
-    return this.prestigeLayer.idleGenerationHolding.displayName
+    return this.prestigeLayer.idleGenerationHolding.displayName;
   }
 
   inChallenge(): boolean {

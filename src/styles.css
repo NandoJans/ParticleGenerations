@@ -3,6 +3,7 @@
   --background-color-2: rgb(26, 26, 26);
   --background-color-3: rgb(16, 16, 16);
   --background-color-4: rgb(39, 39, 39);
+  --background-color-5: rgb(18, 18, 18);
   --background-color-light: rgb(114, 114, 114);
 
   --background-color-red: rgb(109, 48, 48);
@@ -34,6 +35,8 @@
   --sun-color: rgb(243, 211, 102);
   --sirius-color: rgb(183, 239, 235);
   --rigel-color: rgb(108, 180, 236);
+
+  --accent-color: var(--accent-color-red);
 }
 
 html, body {
@@ -45,7 +48,19 @@ html, body {
   font-size: 12px;
   height: 100%;
   width: 100%;
-  background-color: var(--background-color-2);
+  /*background:*/
+  /*  radial-gradient(*/
+  /*    circle at top left,*/
+  /*    color-mix(in srgb, var(--accent-color) 20%, transparent),*/
+  /*    transparent 60%*/
+  /*  ),*/
+  /*  radial-gradient(*/
+  /*    circle at bottom right,*/
+  /*    color-mix(in srgb, var(--accent-color) 20%, transparent),*/
+  /*    transparent 60%*/
+  /*  ),*/
+  /*  var(--background-color-3);*/
+  background: var(--background-color-5);
 }
 
 button.button {
@@ -93,6 +108,14 @@ button.button.success {
 
 .light {
   color: var(--text-color-light);
+}
+
+.generator-row .generator {
+  margin: 5px;
+}
+
+.upgrade-row .upgrade {
+  margin: 5px;
 }
 
 @keyframes gliding {

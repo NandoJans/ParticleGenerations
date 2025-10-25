@@ -15,7 +15,7 @@ export class BoosterOverdriveGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
 
   getParents(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.boosterMasteryGalaxyTree,
+
     ];
   }
 

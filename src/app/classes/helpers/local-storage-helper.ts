@@ -39,7 +39,7 @@ export class LocalStorageHelper {
 
   save(value: any, key: string = ''): void {
     if (key) {
-      if (LocalStorageHelper.STORAGE[this.category][this.key] === undefined) {
+      if (typeof LocalStorageHelper.STORAGE[this.category][this.key] !== 'object' || LocalStorageHelper.STORAGE[this.category][this.key] === null) {
         LocalStorageHelper.STORAGE[this.category][this.key] = {};
       }
       LocalStorageHelper.STORAGE[this.category][this.key][key] = value

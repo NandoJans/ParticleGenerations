@@ -1,12 +1,53 @@
 /* layout for upgrade buttons */
-.upgrade-row {
+.bottom-section {
+  width: 100%;
   position: absolute;
+  margin: 0;
+  bottom: 0;
+  z-index: 10;
+}
+
+.bottom-section.closed {
+  bottom: -20%;
+}
+
+.upgrade-row {
+  width: 90%;
+  padding: .5rem 5%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1rem;
   margin-bottom: 1rem;
   z-index: 10;
+  bottom: 0;
+  background-color: var(--background-color-1);
+  border-top: 1px solid var(--background-color-4);
+}
+
+.number-display app-number-display {
+  padding: 0.5rem;
+}
+
+.number-display {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 0.5rem 0.5rem 0 0;
+  width: fit-content;
+  margin: 0 auto;
+  background-color: var(--background-color-1);
+  border-top: 1px solid var(--background-color-4);
+  border-right: 1px solid var(--background-color-4);
+  border-left: 1px solid var(--background-color-4);
+}
+
+.upgrade-row > app-upgrade {
+  width: 100%;
+  margin: .2rem 0;
+}
+
+.upgrade-row {
+  margin: 0;
 }
 
 .galaxy-tree-wrapper {
@@ -16,7 +57,6 @@
   overflow: auto;
   display: flex;
   justify-content: center;
-  padding: 100%;
   z-index: 5;
 }
 /* wrapper around the entire galaxy tree allowing scroll on small screens */
