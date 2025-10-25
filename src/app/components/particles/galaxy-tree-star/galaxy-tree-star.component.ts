@@ -5,9 +5,10 @@ import {faStar} from "@fortawesome/free-solid-svg-icons";
 import {EnhancementService} from "../../../services/enhancement.service";
 
 @Component({
-  selector: 'app-galaxy-tree-star',
-  templateUrl: './galaxy-tree-star.component.html',
-  styleUrls: ['./galaxy-tree-star.component.css']
+    selector: 'app-galaxy-tree-star',
+    templateUrl: './galaxy-tree-star.component.html',
+    styleUrls: ['./galaxy-tree-star.component.css'],
+    standalone: false
 })
 export class GalaxyTreeStarComponent implements OnInit {
   @Input() galaxyTreeStar: GalaxyTreeUpgrade = UpgradeRecord.unlockFirstGreenGenerator

@@ -3,9 +3,10 @@ import {MessageStepsService} from "../../../services/message-steps.service";
 import {faArrowLeft, faArrowRight, faCheck, IconDefinition} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
-  selector: 'app-message-steps',
-  templateUrl: './message-steps.component.html',
-  styleUrls: ['./message-steps.component.css']
+    selector: 'app-message-steps',
+    templateUrl: './message-steps.component.html',
+    styleUrls: ['./message-steps.component.css'],
+    standalone: false
 })
 export class MessageStepsComponent implements OnInit {
   faArrowRight: IconDefinition = faArrowRight;

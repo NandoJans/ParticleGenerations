@@ -5,9 +5,10 @@ import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 import {GeneratorRecord} from "../../../classes/records/generators/generator-record";
 
 @Component({
-  selector: 'app-green-generators',
-  templateUrl: './green-generators.component.html',
-  styleUrls: ['./green-generators.component.css']
+    selector: 'app-green-generators',
+    templateUrl: './green-generators.component.html',
+    styleUrls: ['./green-generators.component.css'],
+    standalone: false
 })
 export class GreenGeneratorsComponent implements OnInit {
   generators: Generator[] = [

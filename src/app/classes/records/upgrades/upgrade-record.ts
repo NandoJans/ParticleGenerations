@@ -60,26 +60,19 @@ import {
   UnlockFirstGreenGeneratorGalaxyTreeUpgrade
 } from "../../features/upgrades/unlock-first-green-generator-galaxy-tree-upgrade";
 import {
-  HalfRedGeneratorIncreaseGalaxyTreeUpgrade
-} from "../../features/generators/half-red-generator-increase-galaxy-tree-upgrade";
+  IncreaseRedGeneratorMultiplierGalaxyTreeUpgrade
+} from "../../features/generators/increase-red-generator-multiplier-galaxy-tree-upgrade";
 import {RedAcceleratorStartGalaxyTreeUpgrade} from "../../features/upgrades/red-accelerator-start-galaxy-tree-upgrade";
 import {MoreYellowKeysGalaxyTreeUpgrade} from "../../features/upgrades/more-yellow-keys-galaxy-tree-upgrade";
 import {
   StrongerRedExtensionGalaxyTreeUpgrade
 } from "../../features/automators/stronger-red-extension-galaxy-tree-upgrade";
 import {
-  DecreaseBoosterAccelerationScalingGalaxyTreeUpgrade
-} from "../../features/automators/decrease-booster-acceleration-scaling-galaxy-tree-upgrade";
-import { EnhancedDarkEnergyGalaxyTreeUpgrade } from "../../features/upgrades/enhanced-dark-energy-galaxy-tree-upgrade";
-import { GreaterDarkEnergyGalaxyTreeUpgrade } from "../../features/upgrades/greater-dark-energy-galaxy-tree-upgrade";
-import { SuperiorDarkEnergyGalaxyTreeUpgrade } from "../../features/upgrades/superior-dark-energy-galaxy-tree-upgrade";
-import { CosmicDarkEnergyGalaxyTreeUpgrade } from "../../features/upgrades/cosmic-dark-energy-galaxy-tree-upgrade";
-import { UltimateDarkEnergyGalaxyTreeUpgrade } from "../../features/upgrades/ultimate-dark-energy-galaxy-tree-upgrade";
-import { BoosterEfficiencyGalaxyTreeUpgrade } from "../../features/upgrades/booster-efficiency-galaxy-tree-upgrade";
-import { BoosterMasteryGalaxyTreeUpgrade } from "../../features/upgrades/booster-mastery-galaxy-tree-upgrade";
-import { BoosterOverdriveGalaxyTreeUpgrade } from "../../features/upgrades/booster-overdrive-galaxy-tree-upgrade";
-import { RedExtensionMasteryGalaxyTreeUpgrade } from "../../features/upgrades/red-extension-mastery-galaxy-tree-upgrade";
-import { RedExtensionSupremacyGalaxyTreeUpgrade } from "../../features/upgrades/red-extension-supremacy-galaxy-tree-upgrade";
+  IncreaseBoosterAccelerationPowerGalaxyTreeUpgrade
+} from "../../features/automators/increase-booster-acceleration-power-galaxy-tree-upgrade";
+import {
+  CheaperBoosterAccelerationGalaxyTreeUpgrade
+} from "../../features/upgrades/cheaper-booster-acceleration-galaxy-tree-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -141,21 +134,12 @@ static breakYellowFusionLimitYellow: BreakYellowFusionLimitYellowUpgrade = new B
   static greenParticleSacrifice: GreenParticleSacrificeUpgrade = new GreenParticleSacrificeUpgrade('greenParticleSacrifice');
 
   static unlockFirstGreenGenerator: UnlockFirstGreenGeneratorGalaxyTreeUpgrade = new UnlockFirstGreenGeneratorGalaxyTreeUpgrade('unlockFirstGreenGenerator');
-  static halfRedGeneratorIncrease: HalfRedGeneratorIncreaseGalaxyTreeUpgrade = new HalfRedGeneratorIncreaseGalaxyTreeUpgrade('halfRedGeneratorIncrease');
+  static increaseRedGeneratorMultiplier: IncreaseRedGeneratorMultiplierGalaxyTreeUpgrade = new IncreaseRedGeneratorMultiplierGalaxyTreeUpgrade('halfRedGeneratorIncrease');
+  static cheaperBoosterAcceleration: CheaperBoosterAccelerationGalaxyTreeUpgrade = new CheaperBoosterAccelerationGalaxyTreeUpgrade('cheaperBoosterAcceleration');
   static redAcceleratorStart: RedAcceleratorStartGalaxyTreeUpgrade = new RedAcceleratorStartGalaxyTreeUpgrade('redAcceleratorStart');
   static moreYellowKeys: MoreYellowKeysGalaxyTreeUpgrade = new MoreYellowKeysGalaxyTreeUpgrade('moreYellowKeys');
   static strongerRedExtensionGalaxyTree: StrongerRedExtensionGalaxyTreeUpgrade = new StrongerRedExtensionGalaxyTreeUpgrade('strongerRedExtensionGalaxyTree');
-  static decreaseBoosterAccelerationScaling: DecreaseBoosterAccelerationScalingGalaxyTreeUpgrade = new DecreaseBoosterAccelerationScalingGalaxyTreeUpgrade('decreaseBoosterAccelerationScalingGalaxyTree');
-  static enhancedDarkEnergyGalaxyTree: EnhancedDarkEnergyGalaxyTreeUpgrade = new EnhancedDarkEnergyGalaxyTreeUpgrade('enhancedDarkEnergyGalaxyTree');
-  static greaterDarkEnergyGalaxyTree: GreaterDarkEnergyGalaxyTreeUpgrade = new GreaterDarkEnergyGalaxyTreeUpgrade('greaterDarkEnergyGalaxyTree');
-  static superiorDarkEnergyGalaxyTree: SuperiorDarkEnergyGalaxyTreeUpgrade = new SuperiorDarkEnergyGalaxyTreeUpgrade('superiorDarkEnergyGalaxyTree');
-  static cosmicDarkEnergyGalaxyTree: CosmicDarkEnergyGalaxyTreeUpgrade = new CosmicDarkEnergyGalaxyTreeUpgrade('cosmicDarkEnergyGalaxyTree');
-  static ultimateDarkEnergyGalaxyTree: UltimateDarkEnergyGalaxyTreeUpgrade = new UltimateDarkEnergyGalaxyTreeUpgrade('ultimateDarkEnergyGalaxyTree');
-  static boosterEfficiencyGalaxyTree: BoosterEfficiencyGalaxyTreeUpgrade = new BoosterEfficiencyGalaxyTreeUpgrade('boosterEfficiencyGalaxyTree');
-  static boosterMasteryGalaxyTree: BoosterMasteryGalaxyTreeUpgrade = new BoosterMasteryGalaxyTreeUpgrade('boosterMasteryGalaxyTree');
-  static boosterOverdriveGalaxyTree: BoosterOverdriveGalaxyTreeUpgrade = new BoosterOverdriveGalaxyTreeUpgrade('boosterOverdriveGalaxyTree');
-  static redExtensionMasteryGalaxyTree: RedExtensionMasteryGalaxyTreeUpgrade = new RedExtensionMasteryGalaxyTreeUpgrade('redExtensionMasteryGalaxyTree');
-  static redExtensionSupremacyGalaxyTree: RedExtensionSupremacyGalaxyTreeUpgrade = new RedExtensionSupremacyGalaxyTreeUpgrade('redExtensionSupremacyGalaxyTree');
+  static increaseBoosterAccelerationPower: IncreaseBoosterAccelerationPowerGalaxyTreeUpgrade = new IncreaseBoosterAccelerationPowerGalaxyTreeUpgrade('decreaseBoosterAccelerationScalingGalaxyTree');
 
 
   static override list: Upgrade[] = [
@@ -191,7 +175,7 @@ static breakYellowFusionLimitYellow: BreakYellowFusionLimitYellowUpgrade = new B
     UpgradeRecord.stopRedBoosterAccelerationReset,
     UpgradeRecord.decreaseRedGeneratorScaling,
     UpgradeRecord.decreaseRedGeneratorBoosterScaling,
-UpgradeRecord.breakYellowFusionLimitYellow, // <-- add here
+    UpgradeRecord.breakYellowFusionLimitYellow, // <-- add here
 
     // Yellow generator upgrades
     UpgradeRecord.yellowPower,
@@ -212,21 +196,12 @@ UpgradeRecord.breakYellowFusionLimitYellow, // <-- add here
     UpgradeRecord.greenParticleSacrifice,
 
     UpgradeRecord.unlockFirstGreenGenerator,
-    UpgradeRecord.halfRedGeneratorIncrease,
+    UpgradeRecord.increaseRedGeneratorMultiplier,
+    UpgradeRecord.cheaperBoosterAcceleration,
     UpgradeRecord.redAcceleratorStart,
     UpgradeRecord.moreYellowKeys,
     UpgradeRecord.strongerRedExtensionGalaxyTree,
-    UpgradeRecord.decreaseBoosterAccelerationScaling,
-    UpgradeRecord.enhancedDarkEnergyGalaxyTree,
-    UpgradeRecord.greaterDarkEnergyGalaxyTree,
-    UpgradeRecord.superiorDarkEnergyGalaxyTree,
-    UpgradeRecord.cosmicDarkEnergyGalaxyTree,
-    UpgradeRecord.ultimateDarkEnergyGalaxyTree,
-    UpgradeRecord.boosterEfficiencyGalaxyTree,
-    UpgradeRecord.boosterMasteryGalaxyTree,
-    UpgradeRecord.boosterOverdriveGalaxyTree,
-    UpgradeRecord.redExtensionMasteryGalaxyTree,
-    UpgradeRecord.redExtensionSupremacyGalaxyTree,
+    UpgradeRecord.increaseBoosterAccelerationPower,
 
   ]
 
@@ -243,6 +218,12 @@ UpgradeRecord.breakYellowFusionLimitYellow, // <-- add here
   load() {
     this.getList().forEach(upgrade => {
       upgrade.tryLoad();
+    });
+  }
+
+  init() {
+    this.getList().forEach(upgrade => {
+      upgrade.init();
     });
   }
 }

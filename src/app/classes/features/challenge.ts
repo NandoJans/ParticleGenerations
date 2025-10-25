@@ -30,7 +30,6 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   difficultyIncrease: Num|Num[] = new Num(1, 0)
   abstract reward(): Num | undefined
   constantNerfs(): void {};
-  abstract init(): void;
   abstract nerfs(): void;
   completed: boolean | Num = false
   effect: Num | undefined = undefined
@@ -144,6 +143,7 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
 
   reset(): void {
     this.completed = false;
+    this.unlocked = this.startUnlocked;
     this.getChallengeElements().forEach((challengeElement) => {
       challengeElement.reset();
     })

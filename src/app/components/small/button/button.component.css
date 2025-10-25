@@ -22,39 +22,19 @@ button {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-.info-button {
-  background-color: var(--background-color-4);
-  color: var(--text-color-main);
-  border: 2px solid var(--text-color-light);
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
+.green {
+  color: var(--accent-color-green);
 }
 
-.info-button:hover {
-  background-color: var(--background-color-light);
-  border-color: var(--text-color-main);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+.card-header {
+  margin: 0;
+  height: 4rem;
+  width: 4rem;
+  background-color: var(--background-color-2);
+  font-size: 1.7rem;
 }
 
-.exit-button {
-  background-color: var(--accent-color-red);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.exit-button:hover {
-  background-color: #c53030;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+.right {
+  border-radius: 0 5px 0 0;
+  border-left: 1px solid var(--background-color-4);
 }

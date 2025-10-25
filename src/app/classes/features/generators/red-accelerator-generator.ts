@@ -17,7 +17,7 @@ export class RedAcceleratorGenerator extends Generator {
   cost: Num = new Num(1, 1e100);
   currency: Holding = HoldingRecord.redParticles;
   displayName: string = 'Red Accelerator Generator';
-  generates: Generatable = HoldingRecord.redAccelerators;
+
   globalMultiplier: Multiplier = MultiplierRecord.redAcceleratorGenerators;
   increase: Num = new Num(1, 0);
   startIncrease: Num = new Num(1, 0);
@@ -34,6 +34,10 @@ export class RedAcceleratorGenerator extends Generator {
   subNav: string = 'none';
   type: string = 'generator';
   redParticleEffect: Num = new Num(1, -2);
+
+  override init() {
+    this.generates = HoldingRecord.redAccelerators;
+  }
 
   protected override getGenerateAmount(): Num {
     let generate: Num = super.getGenerateAmount();

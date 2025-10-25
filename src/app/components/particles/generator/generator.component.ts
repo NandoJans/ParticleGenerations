@@ -5,9 +5,10 @@ import {GeneratorRecord} from "../../../classes/records/generators/generator-rec
 import {EnhancementService} from "../../../services/enhancement.service";
 
 @Component({
-  selector: 'app-generator',
-  templateUrl: './generator.component.html',
-  styleUrls: ['./generator.component.css']
+    selector: 'app-generator',
+    templateUrl: './generator.component.html',
+    styleUrls: ['./generator.component.css'],
+    standalone: false
 })
 export class GeneratorComponent {
   @Input() generator: Generator = GeneratorRecord.firstRedGenerator;

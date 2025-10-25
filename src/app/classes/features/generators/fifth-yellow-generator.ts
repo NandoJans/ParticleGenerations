@@ -15,7 +15,7 @@ export class FifthYellowGenerator extends YellowGenerator {
     ]
   }
   displayName: string = 'Yellow Generator 5';
-  generates: Generatable = GeneratorRecord.fourthYellowGenerator;
+
   stringRank: string = '5';
   rank: number = 5;
   baseCost: Num = new Num(1, 100);
@@ -39,4 +39,8 @@ export class FifthYellowGenerator extends YellowGenerator {
     new Num(1.2, 0),
     this
   );
+
+  override init() {
+    this.generates = GeneratorRecord.fourthYellowGenerator;
+  }
 }

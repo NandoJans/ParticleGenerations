@@ -13,7 +13,6 @@ export class SecondRedGenerator extends RedGenerator {
   baseCost: Num = new Num(1, 2);
   cost: Num = new Num(1, 2);
   displayName: string = 'Red Generator 2';
-  generates: Generatable = GeneratorRecord.firstRedGenerator;
   name: string = 'red-generator-2';
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED_EXTENSION, this);
   softResetId: ResetKey = ResetHelper.registerSoftReset(ResetKey.RED_EXTENSION, this);
@@ -24,6 +23,10 @@ export class SecondRedGenerator extends RedGenerator {
   ];
   stringRank: string = 'Second';
   rank: number = 2;
+
+  override init() {
+    this.generates = GeneratorRecord.firstRedGenerator;
+  }
 
   multiplierUpgrade: RedGeneratorMultiplierUpgrade = new RedGeneratorMultiplierUpgrade(
     this.name + '.multiplierUpgrade',

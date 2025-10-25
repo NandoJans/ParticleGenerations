@@ -21,7 +21,7 @@ export class ChallengeGenerator extends Generator {
     saveName: string,
     public name: string,
     public displayName: string,
-    public generates: Generatable,
+    public override generates: Generatable,
     public baseMultiplier: Num,
     public type: string,
     public style: Styles,

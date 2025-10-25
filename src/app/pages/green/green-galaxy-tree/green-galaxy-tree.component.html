@@ -1,25 +1,18 @@
-<div class="galaxy-section">
-  <app-number-display [holding]="darkEnergy"></app-number-display>
-</div>
-
-<div class="galaxy-section">
-  <div class="galaxy-title">Galaxy Upgrades</div>
+<div [class]="'bottom-section ' + (isBottomSectionOpen() ? 'open' : 'closed')">
+  <div class="number-display">
+    <app-number-display [holding]="darkEnergy"></app-number-display>
+    <app-button [style]="'button green card-header right'" [icon]="isBottomSectionOpen() ? faArrowDown : faArrowUp" (click)="toggleBottomSection()"></app-button>
+  </div>
   <div class="upgrade-row">
-    <div *ngFor="let upgrade of upgrades">
-      <app-upgrade [upgrade]="upgrade"></app-upgrade>
-    </div>
+    @for (upgrade of upgrades; track upgrade)  {
+      <app-upgrade
+        [upgrade]="upgrade"
+      ></app-upgrade>
+    }
   </div>
 </div>
-
-<div class="galaxy-section">
-  <div class="galaxy-title">Galaxy Tree</div>
-  <div class="galaxy-tree-wrapper">
-    <app-galaxy-tree-star
-      [galaxyTreeStar]="galaxyTreeStarRoot"
-    ></app-galaxy-tree-star>
-  </div>
-</div>
-
-<div class="galaxy-section">
-  <app-info style="width: 60%" [name]="'green-galaxy-tree-info'" [infoText]="infoText"></app-info>
+<div class="galaxy-tree-wrapper" #galaxyTreeWrapper>
+  <app-galaxy-tree-star
+    [galaxyTreeStar]="galaxyTreeStarRoot"
+  ></app-galaxy-tree-star>
 </div>

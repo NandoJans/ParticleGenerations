@@ -15,7 +15,7 @@ export class BoosterOverdriveGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
 
   getParents(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.boosterMasteryGalaxyTree,
+
     ];
   }
 
@@ -24,7 +24,10 @@ export class BoosterOverdriveGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   }
 
   action(): undefined {
-    MultiplierRecord.freeRedGeneratorBoosters.correct(this.buffer);
+    if (this.hasBought() && !this.applied) {
+      MultiplierRecord.freeRedGeneratorBoosters.correct(this.buffer);
+      this.applied = true;
+    }
     return;
   }
 
@@ -36,5 +39,7 @@ export class BoosterOverdriveGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
 
   cost: Num = new Num(7, 0);
   baseCost: Num = new Num(7, 0);
+
+  private applied = false;
 }
 

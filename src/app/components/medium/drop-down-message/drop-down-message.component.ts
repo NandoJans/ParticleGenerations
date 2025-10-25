@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {DropDownMessageService} from "../../../services/visuals/drop-down-message.service";
 
 @Component({
-  selector: 'app-drop-down-message',
-  templateUrl: './drop-down-message.component.html',
-  styleUrls: ['./drop-down-message.component.css']
+    selector: 'app-drop-down-message',
+    templateUrl: './drop-down-message.component.html',
+    styleUrls: ['./drop-down-message.component.css'],
+    standalone: false
 })
 export class DropDownMessageComponent implements OnInit {
 

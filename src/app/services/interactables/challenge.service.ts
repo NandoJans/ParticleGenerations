@@ -28,6 +28,12 @@ export class ChallengeService {
     this.saveCurrentChallenges();
   }
 
+  init() {
+    this.getList().forEach((challenge) => {
+      challenge.init();
+    })
+  }
+
   private saveCurrentChallenges() {
     this.localStorageHelper.save({});
     Object.entries(ChallengeRecord.currentChallenges).forEach(([key, value]) => {

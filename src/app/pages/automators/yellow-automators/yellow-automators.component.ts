@@ -3,9 +3,10 @@ import {Automator} from "../../../classes/features/automator";
 import {AutomatorRecord} from "../../../classes/records/automators/automator-record";
 
 @Component({
-  selector: 'app-yellow-automators',
-  templateUrl: './yellow-automators.component.html',
-  styleUrls: ['./yellow-automators.component.css']
+    selector: 'app-yellow-automators',
+    templateUrl: './yellow-automators.component.html',
+    styleUrls: ['./yellow-automators.component.css'],
+    standalone: false
 })
 export class YellowAutomatorsComponent implements OnInit {
   yellowPrestigeAutomator: Automator[] = [

@@ -3,9 +3,10 @@ import {Automator} from "../../../classes/features/automator";
 import {AutomatorRecord} from "../../../classes/records/automators/automator-record";
 
 @Component({
-  selector: 'app-red-automators',
-  templateUrl: './red-automators.component.html',
-  styleUrls: ['./red-automators.component.css']
+    selector: 'app-red-automators',
+    templateUrl: './red-automators.component.html',
+    styleUrls: ['./red-automators.component.css'],
+    standalone: false
 })
 export class RedAutomatorsComponent implements OnInit {
   redGeneratorAutomators: Automator[] = [

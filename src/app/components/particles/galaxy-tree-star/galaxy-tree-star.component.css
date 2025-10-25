@@ -31,7 +31,13 @@ div.container {
   --glow-color: rgba(255, 109, 0, 0.2);
 }
 
-.star.yellow {            /* Sun-like (default) – no overrides needed */ }
+.star.yellow {
+  --star-size: 1.8rem;
+  --glow-strength: 45px;
+  --core-color: #fffffb;
+  --rim-color:  #ffd83b;
+  --glow-color: #ffc400;
+}
 
 .star.white {
   --core-color:#ffffff;

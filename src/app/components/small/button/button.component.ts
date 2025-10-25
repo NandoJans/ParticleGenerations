@@ -2,9 +2,10 @@ import {Component, EventEmitter, OnInit, Input, Output} from '@angular/core';
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
-  selector: 'app-button',
-  templateUrl: './button.component.html',
-  styleUrls: ['./button.component.css']
+    selector: 'app-button',
+    templateUrl: './button.component.html',
+    styleUrls: ['./button.component.css'],
+    standalone: false
 })
 export class ButtonComponent implements OnInit {
   @Input() object: any;

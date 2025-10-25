@@ -7,8 +7,8 @@
 </div>
 <h3 class="light">Upgrades</h3>
 <div class="upgrade-row">
-  <div *ngFor="let upgrade of upgrades">
+  @for (upgrade of upgrades; track upgrade)  {
     <app-upgrade *ngIf="upgrade.isUnlocked()" [upgrade]="upgrade"></app-upgrade>
-  </div>
+  }
 </div>
 <app-info style="width: 60%" [name]="'yellow-upgrades-info'" [infoText]="infoText"></app-info>

@@ -4,9 +4,10 @@ import {ChallengeRecord} from "../../../classes/records/challenges/challenge-rec
 import {ChallengeService} from "../../../services/interactables/challenge.service";
 
 @Component({
-  selector: 'app-yellow-stars',
-  templateUrl: './yellow-stars.component.html',
-  styleUrls: ['./yellow-stars.component.css']
+    selector: 'app-yellow-stars',
+    templateUrl: './yellow-stars.component.html',
+    styleUrls: ['./yellow-stars.component.css'],
+    standalone: false
 })
 export class YellowStarsComponent implements OnInit {
   stars: YellowStarChallenge[] = [

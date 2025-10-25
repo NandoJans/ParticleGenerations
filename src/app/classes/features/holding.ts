@@ -23,6 +23,8 @@ export abstract class Holding implements Generatable, Require, Resetable {
 
   abstract getStyle(): Styles;
 
+  init(): void {}
+
   action(): Num|undefined {
     return undefined
   }

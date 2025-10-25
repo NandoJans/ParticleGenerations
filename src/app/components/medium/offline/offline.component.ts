@@ -4,9 +4,10 @@ import {Holding} from "../../../classes/features/holding";
 import {Num} from "../../../num";
 
 @Component({
-  selector: 'app-offline',
-  templateUrl: './offline.component.html',
-  styleUrls: ['./offline.component.css']
+    selector: 'app-offline',
+    templateUrl: './offline.component.html',
+    styleUrls: ['./offline.component.css'],
+    standalone: false
 })
 export class OfflineComponent implements OnInit {
 

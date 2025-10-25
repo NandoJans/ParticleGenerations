@@ -1,7 +1,7 @@
-import { DecreaseBoosterAccelerationScalingGalaxyTreeUpgrade } from './decrease-booster-acceleration-scaling-galaxy-tree-upgrade';
+import { IncreaseBoosterAccelerationPowerGalaxyTreeUpgrade } from './increase-booster-acceleration-power-galaxy-tree-upgrade';
 
 describe('DecreaseBoosterAccelerationScalingGalaxyTreeUpgrade', () => {
   it('should create an instance', () => {
-    expect(new DecreaseBoosterAccelerationScalingGalaxyTreeUpgrade()).toBeTruthy();
+    expect(new IncreaseBoosterAccelerationPowerGalaxyTreeUpgrade()).toBeTruthy();
   });
 });

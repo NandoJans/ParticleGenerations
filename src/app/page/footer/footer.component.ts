@@ -6,9 +6,10 @@ import {Navigation} from "../../classes/features/navigation";
 import {SubNavigation} from "../../classes/features/sub-navigation";
 
 @Component({
-  selector: 'app-footer',
-  templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.css']
+    selector: 'app-footer',
+    templateUrl: './footer.component.html',
+    styleUrls: ['./footer.component.css'],
+    standalone: false
 })
 export class FooterComponent implements OnInit {
   navigations: Navigation[] = [];

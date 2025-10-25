@@ -13,7 +13,7 @@ import {Generator} from "../generator";
 export class HydrogenGenerator extends Generator {
   name: string = "hydrogen-generator";
   displayName: string = 'Hydrogen Generator';
-  generates: Generatable = HoldingRecord.hydrogen;
+
   baseMultiplier: Num = new Num(1, 0);
   type: string = "hydrogen-generator";
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
@@ -42,5 +42,9 @@ export class HydrogenGenerator extends Generator {
       amount = amount.div(new Num(2, 0).pow(scale));
     }
     return amount;
+  }
+
+  override init() {
+    this.generates = HoldingRecord.hydrogen;
   }
 }

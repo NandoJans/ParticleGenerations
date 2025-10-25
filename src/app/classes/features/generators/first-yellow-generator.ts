@@ -10,7 +10,7 @@ export class FirstYellowGenerator extends YellowGenerator {
     super(saveName, 'first-yellow-generator');
   }
   displayName: string = 'Yellow Generator 1';
-  generates: Generatable = HoldingRecord.yellowPower;
+
   stringRank: string = '1';
   rank: number = 1;
   baseCost: Num = new Num(1, 2);
@@ -33,4 +33,8 @@ export class FirstYellowGenerator extends YellowGenerator {
     new Num(1.2, 0),
     this
   );
+
+  override init() {
+    this.generates = HoldingRecord.yellowPower;
+  }
 }

@@ -11,9 +11,10 @@ import {HoldingRecord} from "./classes/records/holdings/holding-record";
 import {Num} from "./num";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.css'],
+    standalone: false
 })
 export class AppComponent implements OnInit{
   title = 'ParticleGenerations';
@@ -54,6 +55,7 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
     this.updateVersion();
+    this.dataManagerService.init();
     this.dataManagerService.load();
     this.offlineService.load();
     this.dataManagerService.save();

@@ -3,9 +3,9 @@ import {SecondRedGenerator} from "../../features/generators/second-red-generator
 import {ThirdRedGenerator} from "../../features/generators/third-red-generator";
 import {FourthRedGenerator} from "../../features/generators/fourth-red-generator";
 import {FifthRedGenerator} from "../../features/generators/fifth-red-generator";
-import { Generator } from "../../features/generator";
+import {Generator} from "../../features/generator";
 import {Record} from "../record";
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {RedAcceleratorGenerator} from "../../features/generators/red-accelerator-generator";
 import {RedGenerator} from "../../features/generators/red-generator";
 import {FirstYellowGenerator} from "../../features/generators/first-yellow-generator";
@@ -18,17 +18,18 @@ import {FourthYellowGenerator} from "../../features/generators/fourth-yellow-gen
 import {FifthYellowGenerator} from "../../features/generators/fifth-yellow-generator";
 import {FirstGreenGenerator} from "../../features/generators/first-green-generator";
 import {GreenGenerator} from "../../features/generators/green-generator";
+import {Holding} from "../../features/holding";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GeneratorRecord extends Record {
   // Red Generators
-  static firstRedGenerator: FirstRedGenerator     = new FirstRedGenerator('firstRedGenerator');
-  static secondRedGenerator: SecondRedGenerator   = new SecondRedGenerator('secondRedGenerator');
-  static thirdRedGenerator: ThirdRedGenerator     = new ThirdRedGenerator('thirdRedGenerator');
-  static fourthRedGenerator: FourthRedGenerator   = new FourthRedGenerator('fourthRedGenerator');
-  static fifthRedGenerator: FifthRedGenerator     = new FifthRedGenerator('fifthRedGenerator');
+  static firstRedGenerator: FirstRedGenerator = new FirstRedGenerator('firstRedGenerator');
+  static secondRedGenerator: SecondRedGenerator = new SecondRedGenerator('secondRedGenerator');
+  static thirdRedGenerator: ThirdRedGenerator = new ThirdRedGenerator('thirdRedGenerator');
+  static fourthRedGenerator: FourthRedGenerator = new FourthRedGenerator('fourthRedGenerator');
+  static fifthRedGenerator: FifthRedGenerator = new FifthRedGenerator('fifthRedGenerator');
 
   // Red Accelerators
   static redAcceleratorGenerator: RedAcceleratorGenerator = new RedAcceleratorGenerator('redAcceleratorGenerator');
@@ -107,6 +108,15 @@ export class GeneratorRecord extends Record {
       generator.save();
       generator.getUpgrades().forEach((upgrade) => {
         upgrade.save();
+      });
+    });
+  }
+
+  init() {
+    this.getList().forEach((generator) => {
+      generator.init();
+      generator.getUpgrades().forEach((upgrade) => {
+        upgrade.init();
       });
     });
   }

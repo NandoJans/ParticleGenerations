@@ -12,13 +12,13 @@ export class MoreYellowKeysGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
 
   getChildren(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.enhancedDarkEnergyGalaxyTree,
+
     ];
   }
 
   getParents(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.halfRedGeneratorIncrease,
+      UpgradeRecord.increaseRedGeneratorMultiplier,
     ];
   }
 

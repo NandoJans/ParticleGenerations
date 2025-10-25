@@ -4,9 +4,10 @@ import {PrestigeLayersService} from "../../../services/prestige-layers.service";
 import {Num} from "../../../num";
 
 @Component({
-  selector: 'app-fastest-prestige',
-  templateUrl: './fastest-prestige.component.html',
-  styleUrls: ['./fastest-prestige.component.css']
+    selector: 'app-fastest-prestige',
+    templateUrl: './fastest-prestige.component.html',
+    styleUrls: ['./fastest-prestige.component.css'],
+    standalone: false
 })
 export class FastestPrestigeComponent implements OnInit {
   @Input() prestige: PrestigeLayer = PrestigeLayersService.yellowPrestigeLayer;

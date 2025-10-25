@@ -6,9 +6,10 @@ import {Subscription} from "rxjs";
 import {EnhancementService} from "../../../services/enhancement.service";
 
 @Component({
-  selector: 'app-upgrade',
-  templateUrl: './upgrade.component.html',
-  styleUrls: ['./upgrade.component.css']
+    selector: 'app-upgrade',
+    templateUrl: './upgrade.component.html',
+    styleUrls: ['./upgrade.component.css'],
+    standalone: false
 })
 export class UpgradeComponent {
   @Input() upgrade: Upgrade = UpgradeRecord.redGeneratorExtension;

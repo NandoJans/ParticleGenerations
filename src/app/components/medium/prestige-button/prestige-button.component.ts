@@ -7,9 +7,10 @@ import {ChallengeService} from "../../../services/interactables/challenge.servic
 import {Challenge} from "../../../classes/features/challenge";
 
 @Component({
-  selector: 'app-prestige-button',
-  templateUrl: './prestige-button.component.html',
-  styleUrls: ['./prestige-button.component.css']
+    selector: 'app-prestige-button',
+    templateUrl: './prestige-button.component.html',
+    styleUrls: ['./prestige-button.component.css'],
+    standalone: false
 })
 export class PrestigeButtonComponent implements OnInit {
   @Input() prestigeLayer: PrestigeLayer = PrestigeLayersService.yellowPrestigeLayer;
@@ -61,11 +62,11 @@ export class PrestigeButtonComponent implements OnInit {
   }
 
   getGainAmount(): Num {
-    return this.prestigeLayer.holdingGain
+    return this.prestigeLayer.holdingGain;
   }
 
   getGainHolding(): string {
-    return this.prestigeLayer.idleGenerationHolding.displayName
+    return this.prestigeLayer.idleGenerationHolding.displayName;
   }
 
   inChallenge(): boolean {
@@ -77,10 +78,7 @@ export class PrestigeButtonComponent implements OnInit {
   }
 
   getChallenge(): Challenge|undefined {
-    if (this.challenge === undefined) {
-      this.challenge = this.challengeService.getChallenge(this.prestigeLayer.name);
-    }
-    return this.challenge;
+    return this.challengeService.getChallenge(this.prestigeLayer.name);
   }
 
   getChallengeName(): string {

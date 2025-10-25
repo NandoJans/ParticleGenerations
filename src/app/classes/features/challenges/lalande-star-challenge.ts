@@ -72,7 +72,7 @@ export class LalandeStarChallenge extends YellowStarChallenge {
     })
   }
 
-  init() {
+  override init() {
 
   }
 }

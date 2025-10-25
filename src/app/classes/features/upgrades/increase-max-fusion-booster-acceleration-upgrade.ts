@@ -50,7 +50,7 @@ export class IncreaseMaxFusionBoosterAccelerationUpgrade extends Upgrade {
   ];
 
   override effectString(): string {
-    return '+' + this.effect?.toString() ?? '0';
+    return '+' + this.effect?.toString();
   }
 
 }

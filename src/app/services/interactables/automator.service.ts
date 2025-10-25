@@ -41,6 +41,12 @@ export class AutomatorService {
     });
   }
 
+  init() {
+    this.automatorRecord.getList().forEach(automator => {
+      automator.init();
+    });
+  }
+
   getElements(): Automator[] {
     return this.automatorRecord.getList();
   }

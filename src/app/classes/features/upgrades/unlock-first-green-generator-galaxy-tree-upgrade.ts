@@ -10,8 +10,8 @@ export class UnlockFirstGreenGeneratorGalaxyTreeUpgrade extends GalaxyTreeUpgrad
 
   getChildren(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.halfRedGeneratorIncrease,
-      UpgradeRecord.redAcceleratorStart,
+      UpgradeRecord.increaseRedGeneratorMultiplier,
+      UpgradeRecord.cheaperBoosterAcceleration,
     ];
   }
 

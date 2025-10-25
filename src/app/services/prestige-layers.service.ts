@@ -112,6 +112,12 @@ export class PrestigeLayersService {
     });
   }
 
+  init(): void {
+    this.getList().forEach(layer => {
+      layer.init();
+    });
+  }
+
   prestige(prestigeLayer: PrestigeLayer) {
     if (prestigeLayer.isUnlocked() && prestigeLayer.hasReached()) {
       if (!prestigeLayer.prestigedFirstTime) {

@@ -17,10 +17,8 @@ import { MilestoneComponent } from './components/particles/milestone/milestone.c
 import { ChallengeComponent } from './components/particles/challenge/challenge.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { AutomatorComponent } from './components/particles/automator/automator.component';
-import {MatCheckboxModule} from "@angular/material/checkbox";
 import { TimelineComponent } from './components/particles/timeline/timeline.component';
 import { TimelineEventComponent } from './components/particles/timeline-event/timeline-event.component';
-import {MatProgressBarModule} from "@angular/material/progress-bar";
 import { InfoComponent } from './components/medium/info/info.component';
 import { ParticleEmitterComponent } from './components/medium/particle-emitter/particle-emitter.component';
 import { OfflineComponent } from './components/medium/offline/offline.component';
@@ -91,8 +89,6 @@ import { GreenTimelineComponent } from './pages/timeline/green-timeline/green-ti
         AppRoutingModule,
         ReactiveFormsModule,
         FormsModule,
-        MatCheckboxModule,
-        MatProgressBarModule,
         FontAwesomeModule
     ],
   providers: [],
