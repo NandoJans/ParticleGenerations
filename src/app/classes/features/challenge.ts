@@ -143,6 +143,7 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
 
   reset(): void {
     this.completed = false;
+    this.unlocked = this.startUnlocked;
     this.getChallengeElements().forEach((challengeElement) => {
       challengeElement.reset();
     })

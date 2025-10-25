@@ -78,10 +78,7 @@ export class PrestigeButtonComponent implements OnInit {
   }
 
   getChallenge(): Challenge|undefined {
-    if (this.challenge === undefined) {
-      this.challenge = this.challengeService.getChallenge(this.prestigeLayer.name);
-    }
-    return this.challenge;
+    return this.challengeService.getChallenge(this.prestigeLayer.name);
   }
 
   getChallengeName(): string {

@@ -26,7 +26,9 @@ export class BreakYellowFusionLimitYellowUpgrade extends YellowUpgrade {
   }
 
   action(): undefined {
-HoldingRecord.yellowFusion.maxAmount = new Num(1, 1e100);
+    if (this.hasBought()) {
+      HoldingRecord.yellowFusion.maxAmount = new Num(1, 1e100);
+    }
     return;
   }
 

@@ -68,8 +68,11 @@ import {
   StrongerRedExtensionGalaxyTreeUpgrade
 } from "../../features/automators/stronger-red-extension-galaxy-tree-upgrade";
 import {
-  DecreaseBoosterAccelerationScalingGalaxyTreeUpgrade
-} from "../../features/automators/decrease-booster-acceleration-scaling-galaxy-tree-upgrade";
+  IncreaseBoosterAccelerationPowerGalaxyTreeUpgrade
+} from "../../features/automators/increase-booster-acceleration-power-galaxy-tree-upgrade";
+import {
+  CheaperBoosterAccelerationGalaxyTreeUpgrade
+} from "../../features/upgrades/cheaper-booster-acceleration-galaxy-tree-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -132,10 +135,11 @@ static breakYellowFusionLimitYellow: BreakYellowFusionLimitYellowUpgrade = new B
 
   static unlockFirstGreenGenerator: UnlockFirstGreenGeneratorGalaxyTreeUpgrade = new UnlockFirstGreenGeneratorGalaxyTreeUpgrade('unlockFirstGreenGenerator');
   static increaseRedGeneratorMultiplier: IncreaseRedGeneratorMultiplierGalaxyTreeUpgrade = new IncreaseRedGeneratorMultiplierGalaxyTreeUpgrade('halfRedGeneratorIncrease');
+  static cheaperBoosterAcceleration: CheaperBoosterAccelerationGalaxyTreeUpgrade = new CheaperBoosterAccelerationGalaxyTreeUpgrade('cheaperBoosterAcceleration');
   static redAcceleratorStart: RedAcceleratorStartGalaxyTreeUpgrade = new RedAcceleratorStartGalaxyTreeUpgrade('redAcceleratorStart');
   static moreYellowKeys: MoreYellowKeysGalaxyTreeUpgrade = new MoreYellowKeysGalaxyTreeUpgrade('moreYellowKeys');
   static strongerRedExtensionGalaxyTree: StrongerRedExtensionGalaxyTreeUpgrade = new StrongerRedExtensionGalaxyTreeUpgrade('strongerRedExtensionGalaxyTree');
-  static decreaseBoosterAccelerationScaling: DecreaseBoosterAccelerationScalingGalaxyTreeUpgrade = new DecreaseBoosterAccelerationScalingGalaxyTreeUpgrade('decreaseBoosterAccelerationScalingGalaxyTree');
+  static increaseBoosterAccelerationPower: IncreaseBoosterAccelerationPowerGalaxyTreeUpgrade = new IncreaseBoosterAccelerationPowerGalaxyTreeUpgrade('decreaseBoosterAccelerationScalingGalaxyTree');
 
 
   static override list: Upgrade[] = [
@@ -193,10 +197,11 @@ static breakYellowFusionLimitYellow: BreakYellowFusionLimitYellowUpgrade = new B
 
     UpgradeRecord.unlockFirstGreenGenerator,
     UpgradeRecord.increaseRedGeneratorMultiplier,
+    UpgradeRecord.cheaperBoosterAcceleration,
     UpgradeRecord.redAcceleratorStart,
     UpgradeRecord.moreYellowKeys,
     UpgradeRecord.strongerRedExtensionGalaxyTree,
-    UpgradeRecord.decreaseBoosterAccelerationScaling,
+    UpgradeRecord.increaseBoosterAccelerationPower,
 
   ]
 
