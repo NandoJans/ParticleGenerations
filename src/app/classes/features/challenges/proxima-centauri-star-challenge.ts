@@ -66,7 +66,7 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
 
   override effectString(): string {
     if (this.effect) {
-      return this.effect.toString(2)+"x" ?? "";
+      return this.effect.toString(2)+"x";
     }
     return "";
   }
@@ -85,7 +85,7 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
     ResetHelper.softReset(ResetKey.RED_EXTENSION);
   }
 
-  init() {
+  override init() {
     this.challengeUpgrades = {
       unlockSecondRedGenerator: new YellowStarChallengeUnlockUpgrade(
         'unlockSecondRedGenerator',

@@ -30,7 +30,6 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   difficultyIncrease: Num|Num[] = new Num(1, 0)
   abstract reward(): Num | undefined
   constantNerfs(): void {};
-  abstract init(): void;
   abstract nerfs(): void;
   completed: boolean | Num = false
   effect: Num | undefined = undefined

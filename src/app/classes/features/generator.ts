@@ -17,7 +17,7 @@ import {EnhancementRecord} from "../records/enhancement-record";
 
 export abstract class Generator extends Buyable implements Generatable, Storable, Resetable, Require, Enhancable {
   abstract displayName: string
-  abstract generates: Generatable
+  generates!: Generatable;
   baseMulMod: Num = new Num(1, 0);
   abstract baseMultiplier: Num;
   multiplier: Num = new Num(1, 0);

@@ -7,7 +7,7 @@ import {HoldingRecord} from "../../records/holdings/holding-record";
 
 export class FirstGreenGenerator extends GreenGenerator {
   displayName: string = 'First Green Generator';
-  generates: Generatable = HoldingRecord.darkMatter;
+
   stringRank: string = '1';
   rank: number = 1;
   baseCost: Num = new Num(1, 0);
@@ -23,4 +23,7 @@ export class FirstGreenGenerator extends GreenGenerator {
     ];
   }
 
+  override init() {
+    this.generates = HoldingRecord.darkMatter;
+  }
 }

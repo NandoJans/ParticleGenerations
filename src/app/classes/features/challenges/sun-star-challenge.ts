@@ -98,7 +98,7 @@ export class SunStarChallenge extends YellowStarChallenge {
     this.applyRequirementNerf(UpgradeRecord.unlockRedAccelerators);
   }
 
-  init() {
+  override init() {
     this.challengeHoldings = {
       sunParticle: new ChallengeHolding(
         'sunParticle',

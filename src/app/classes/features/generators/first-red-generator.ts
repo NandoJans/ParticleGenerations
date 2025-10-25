@@ -6,12 +6,12 @@ import {RedGeneratorBuyMultiplierUpgrade} from "../upgrades/red-generator-buy-mu
 import {RedGeneratorMultiplierUpgrade} from "../upgrades/red-generator-multiplier-upgrade";
 import {ResetKey} from "../../enums/reset-key";
 import {ResetHelper} from "../../helpers/reset-helper";
+import {GeneratorRecord} from "../../records/generators/generator-record";
 
 export class FirstRedGenerator extends RedGenerator {
   baseCost: Num = new Num(1, 1);
   cost: Num = new Num(1, 1);
   displayName: string = 'Red Generator 1';
-  generates: Generatable = HoldingRecord.redParticles;
   name: string = 'red-generator-1';
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED_EXTENSION, this);
   softResetId: ResetKey = ResetHelper.registerSoftReset(ResetKey.RED_EXTENSION, this);
@@ -21,6 +21,10 @@ export class FirstRedGenerator extends RedGenerator {
   rank: number = 1;
   override unlocked: boolean = true;
   override startUnlocked: boolean = true;
+
+  override init() {
+    this.generates = HoldingRecord.redParticles;
+  }
 
   multiplierUpgrade: RedGeneratorMultiplierUpgrade = new RedGeneratorMultiplierUpgrade(
     this.name + '.multiplierUpgrade',

@@ -7,9 +7,16 @@ export class UnlockFourthYellowGeneratorUpgrade extends YellowUpgrade {
   displayName: string = 'Unlock Fourth Yellow Generator';
   constructor(name: string) {
     super(name, 'unlock-fourth-yellow-generator', true);
-    this.requirement = [
-      new Requirement(UpgradeRecord.breakYellowBarrier, new Num(1, 0), this),
-    ];
+    this.requirement = [];
+  }
+
+  override tryLoad(): void {
+    if (!this.requirement || this.requirement.length === 0) {
+      this.requirement = [
+        new Requirement(UpgradeRecord.breakYellowBarrier, new Num(1, 0), this),
+      ];
+    }
+    super.tryLoad();
   }
 
   getDescription(): string {

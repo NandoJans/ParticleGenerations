@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Upgrade} from "../../../classes/features/upgrade";
 import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
 import {Holding} from "../../../classes/features/holding";
@@ -20,7 +20,7 @@ export class GreenGalaxyTreeComponent implements OnInit {
   ];
   galaxyTreeStarRoot: GalaxyTreeUpgrade = UpgradeRecord.unlockFirstGreenGenerator;
 
-  @viewChild('galaxyTreeWrapper') galaxyTreeWrapper!: ElementRef;
+  @ViewChild('galaxyTreeWrapper') galaxyTreeWrapper!: ElementRef;
 
   constructor() { }
 

@@ -149,4 +149,10 @@ export class TimelineService {
       timeline.tryLoad();
     })
   }
+
+  init() {
+    this.getList().forEach(timeline => {
+      timeline.init();
+    })
+  }
 }

@@ -55,6 +55,7 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
     this.updateVersion();
+    this.dataManagerService.init();
     this.dataManagerService.load();
     this.offlineService.load();
     this.dataManagerService.save();

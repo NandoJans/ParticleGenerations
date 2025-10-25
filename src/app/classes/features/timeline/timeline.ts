@@ -52,6 +52,8 @@ export class Timeline {
     })
   }
 
+  init() {}
+
   getNext(event: TimelineEvent) {
     const index = this.events.indexOf(event);
     if (index > -1 && index < this.events.length) {

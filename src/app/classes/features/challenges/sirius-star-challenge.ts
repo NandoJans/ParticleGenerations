@@ -114,7 +114,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
     })
   }
 
-  init() {
+  override init() {
     this.challengeHoldings = {
       siriusParticle: new ChallengeHolding(
         'siriusParticle',

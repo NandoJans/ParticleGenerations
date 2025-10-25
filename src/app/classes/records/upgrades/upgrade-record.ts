@@ -245,4 +245,10 @@ UpgradeRecord.breakYellowFusionLimitYellow, // <-- add here
       upgrade.tryLoad();
     });
   }
+
+  init() {
+    this.getList().forEach(upgrade => {
+      upgrade.init();
+    });
+  }
 }

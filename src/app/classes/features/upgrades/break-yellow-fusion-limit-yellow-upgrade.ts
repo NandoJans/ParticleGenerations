@@ -8,9 +8,17 @@ export class BreakYellowFusionLimitYellowUpgrade extends YellowUpgrade {
   displayName: string = 'Break Yellow Fusion Limit';
   constructor(name: string) {
     super(name, 'break-yellow-fusion-limit-yellow-upgrade', true);
-    this.requirement = [
-      new Requirement(UpgradeRecord.breakYellowBarrier, new Num(1, 0), this),
-    ];
+    this.requirement = [];
+  }
+
+  override tryLoad(): void {
+    // Lazily set requirement once UpgradeRecord is fully initialized
+    if (!this.requirement || this.requirement.length === 0) {
+      this.requirement = [
+        new Requirement(UpgradeRecord.breakYellowBarrier, new Num(1, 0), this),
+      ];
+    }
+    super.tryLoad();
   }
 
   getDescription(): string {

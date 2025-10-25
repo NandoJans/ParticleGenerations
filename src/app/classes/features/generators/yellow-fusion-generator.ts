@@ -13,7 +13,7 @@ import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 export class YellowFusionGenerator extends Generator {
   name: string = "yellow-fusion-generator";
   displayName: string = 'Yellow Fusion Generator';
-  generates: Generatable = HoldingRecord.yellowFusion;
+
   baseMultiplier: Num = new Num(1, 0);
   type: string = "yellow-fusion-generator";
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
@@ -32,4 +32,8 @@ export class YellowFusionGenerator extends Generator {
   requirement: Requirement[] = [
     new Requirement(HoldingRecord.hydrogen, new Num(1, 0), this)
   ];
+
+  override init() {
+    this.generates = HoldingRecord.yellowFusion;
+  }
 }

@@ -71,6 +71,12 @@ export class HoldingRecord {
     })
   }
 
+  init() {
+    this.getList().forEach((holding: Holding) => {
+      holding.init()
+    })
+  }
+
   action() {
     this.getList().forEach((holding: Holding) => {
       holding.effect = holding.action()

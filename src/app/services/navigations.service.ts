@@ -115,6 +115,12 @@ export class NavigationsService {
     });
   }
 
+  init(): void {
+    this.getAllNavigations().forEach((navigation: Navigation|SubNavigation) => {
+      navigation.init();
+    });
+  }
+
   getLocation(subNavigation: SubNavigation) {
     this.selectedSubNavigation = subNavigation;
     this.selectedNavigation = subNavigation.parent;

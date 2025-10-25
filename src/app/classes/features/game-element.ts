@@ -12,6 +12,8 @@ export abstract class GameElement {
   abstract name: string
   saveName: string
 
+  init() {}
+
   constructor(saveName: string) {
     this.saveName = saveName;
   }

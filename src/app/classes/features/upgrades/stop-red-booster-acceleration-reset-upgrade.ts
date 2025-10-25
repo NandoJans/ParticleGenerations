@@ -8,9 +8,17 @@ export class StopRedBoosterAccelerationResetUpgrade extends YellowUpgrade {
   displayName: string = 'Red Booster Acceleration Reset';
   constructor(name: string) {
     super(name, 'stop-red-booster-acceleration-reset', true);
-    this.requirement = [
-      new Requirement(UpgradeRecord.breakYellowBarrier, new Num(1, 0), this),
-    ];
+    this.requirement = [];
+  }
+
+  override tryLoad(): void {
+    // Lazily set requirement once UpgradeRecord is fully initialized
+    if (!this.requirement || this.requirement.length === 0) {
+      this.requirement = [
+        new Requirement(UpgradeRecord.breakYellowBarrier, new Num(1, 0), this),
+      ];
+    }
+    super.tryLoad();
   }
 
   getDescription(): string {

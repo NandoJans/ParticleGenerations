@@ -64,6 +64,19 @@ export class DataManagerService {
     this.challengeService.applyCurrentChallengeNerfs();
   }
 
+  init() {
+    console.log('Initializing data...');
+    this.holdingRecord.init();
+    this.generatorRecord.init();
+    this.upgradeRecord.init();
+    this.navigationsService.init();
+    this.automatorService.init();
+    this.prestigeLayersService.init();
+    this.timelineService.init();
+    this.milestoneRecord.init();
+    this.challengeService.init();
+  }
+
   setLastSave(): void {
     if (!App.offlineCalculation) {
       this.localStorageHelper.save(new Date().toISOString());
