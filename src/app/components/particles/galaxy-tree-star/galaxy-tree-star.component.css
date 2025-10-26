@@ -15,12 +15,30 @@ div.container {
 /* ────────────────────────────────────────────────
    2.  COLOUR SCHEMES (realistic spectral classes)
    ──────────────────────────────────────────────── */
+
+.star {
+  cursor: pointer;
+  z-index: 1;
+  width: 10rem;
+  height: 10rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
 .star.red {
   --star-size:      1.2rem;   /* larger disc for red stars         */
   --glow-strength: 35px;      /* larger halo for red stars         */
   --core-color: #ffc7c7;
   --rim-color: #e83b1d;
   --glow-color: rgba(255, 57, 0, 0.2);
+}
+
+.star.red:hover {
+  --core-color: #ffe0e0;
+  --rim-color: #ff0000;
+  --glow-color: rgba(255, 57, 0, 0.3);
 }
 
 .star.orange {
@@ -31,31 +49,56 @@ div.container {
   --glow-color: rgba(255, 109, 0, 0.2);
 }
 
+.star.orange:hover {
+  --core-color: #fff2e0;
+  --rim-color: #ff7f00;
+  --glow-color: rgba(255, 109, 0, 0.3);
+}
+
 .star.yellow {
   --star-size: 1.8rem;
   --glow-strength: 45px;
   --core-color: #fffffb;
   --rim-color:  #ffd83b;
-  --glow-color: #ffc400;
+  --glow-color: rgba(255, 216, 59, 0.2);
+}
+
+.star.yellow:hover {
+  --core-color: #fffbf0;
+  --rim-color: #ffcc00;
+  --glow-color: rgba(255, 216, 59, 0.3);
 }
 
 .star.white {
+  --star-size: 1.8rem;
   --core-color:#ffffff;
   --rim-color: #aab5ff;
   --glow-color: rgba(245, 246, 255, 0.2);
 }
 
+.star.white:hover {
+  --core-color:#f5f6ff;
+  --rim-color: #7b8dff;
+  --glow-color: rgba(245, 246, 255, 0.3);
+}
+
 .star.blue {
+  --star-size: 1.8rem;
   --core-color:#f1f4ff;
   --rim-color: #5c83ff;
   --glow-color: rgba(45, 107, 255, 0.2);
+}
+
+.star.blue:hover {
+  --core-color:#e0e7ff;
+  --rim-color: #3366ff;
+  --glow-color: rgba(45, 107, 255, 0.3);
 }
 
 .star.buyable {
   --core-color: #d4fdc9; /* bright yellow core */
   --rim-color: #86ff3a;
   --glow-color: rgba(64, 255, 0, 0.2);
-  cursor: pointer;
 }
 
 .upgrade.star.buyable:hover {
@@ -75,6 +118,7 @@ body {
   justify-content:center;
   margin:0;
   font-family:system-ui, sans-serif;
+  overflow: hidden;
 }
 
 /* ────────────────────────────────────────────────
@@ -99,12 +143,26 @@ body {
   animation:pulse 6s ease-in-out infinite;
 }
 
-/* The visible stellar surface */
-.upgrade:not(.maxed):not(.buyable) .star.icon {
+.upgrade:not(.maxed):not(.buyable) {
   --core-color: #888888;
   --rim-color: #505050;
   --glow-color: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+.upgrade:not(.maxed):not(.buyable):hover {
+  --glow-color: rgba(66, 66, 66, 0.2);
+}
+
+/* The visible stellar surface */
+.upgrade:not(.maxed):not(.buyable) .star.icon {
   box-shadow: none;
+}
+
+h4, p {
+  margin: 0;
+  padding: 0;
+  height: 2rem;
 }
 
 .upgrade:not(.maxed):not(.buyable) h4, .upgrade:not(.maxed):not(.buyable) p {
@@ -119,7 +177,7 @@ body {
     -1px 1px 0 var(--background-color-2),
     1px 1px 0 var(--background-color-2);
   text-align: center;
-  z-index: 5;
+  z-index: 10;
 }
 
 .star.icon {
@@ -174,15 +232,19 @@ body {
   margin-top:2.5rem;      /* vertical distance from parent        */
 }
 
-/* thin connectors */
-svg.connectors{
-  position:absolute;
-  top:100%; left:0; right:0;
-  width:100%; height:2.5rem;
-  stroke:var(--glow-color);
-  stroke-width:2;
-  pointer-events:none;
+/* The overlay follows the same stacking/transform as your nodes */
+.connectors {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
 }
+
+.connector-line {
+  stroke: rgba(255,255,255,.3);
+  stroke-width: 2;
+}
+
 
 @media (max-width: 600px) {
   .children {

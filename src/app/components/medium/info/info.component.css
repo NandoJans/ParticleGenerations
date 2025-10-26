@@ -10,7 +10,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 50;
+  z-index: 500;
   animation: fadeIn 0.3s ease-out;
 }
 
@@ -35,7 +35,7 @@
   width: 60%;
   max-width: 700px;
   max-height: 80%;
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  background: var(--background-color-1);
   backdrop-filter: blur(20px);
   border-radius: 20px;
   border: 2px solid rgba(255, 255, 255, 0.2);
@@ -82,7 +82,7 @@
     max-height: 85%;
     padding: 15px;
   }
-  
+
   .info {
     font-size: 1.1rem;
   }

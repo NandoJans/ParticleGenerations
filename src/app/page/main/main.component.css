@@ -1,8 +1,8 @@
 .holding-section {
   padding: 1rem 0;
-  margin: 0 0 1rem 0;
   background-color: var(--background-color-2);
   border-bottom: 1px solid var(--background-color-4);
+  height: 10vh;
 }
 
 div.action-message {
@@ -14,5 +14,11 @@ div.action-message {
 }
 
 .page {
+  height: 100%;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
   height: 100%;
 }

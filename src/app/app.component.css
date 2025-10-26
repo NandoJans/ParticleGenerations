@@ -7,31 +7,20 @@ header {
   position: absolute;
   top: 0;
   width: 100%;
-  height: 10%;
+  height: var(--header-height);
   z-index: 100;
 }
 
 main {
   position: relative;
   min-height: 75%;
-  margin: 0 20px;
-  border-radius: 20px;
-  overflow: hidden;
-  position: relative;
-}
-
-main.game-card {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.005));
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 footer {
   bottom: 0;
   display: flex;
   width: 100%;
-  height: 15%;
+  height: var(--footer-height);
   z-index: 100;
 }
 
@@ -44,7 +33,7 @@ main.proxima-centauri {
     rgb(255, 198, 132) 0%,
     var(--proxima-centauri-color) 7.5%,
     rgba(218, 72, 43, 0.5) 7.5%,
-    var(--background-color-2) 10%
+    var(--background-color-3) 10%
   ) no-repeat center center fixed;
 }
 
@@ -54,7 +43,7 @@ main.lalande {
     rgb(255, 217, 165) 0%,
     var(--lalande-color) 11%,
     rgba(215, 103, 34, 0.5) 11.1%,
-    var(--background-color-2) 25%
+    var(--background-color-3) 25%
   ) no-repeat center center fixed;
 }
 
@@ -65,7 +54,7 @@ main.sun {
     var(--sun-color) 13%,
     rgb(217, 199, 91) 13%,
     rgba(243, 211, 102, 0.5) 15%,
-    var(--background-color-2) 25%
+    var(--background-color-3) 25%
   ) no-repeat fixed center center;
 }
 
@@ -76,6 +65,6 @@ main.sirius {
     var(--sirius-color) 16%,
     rgba(183, 239, 235, 0.84) 16%,
     rgba(183, 239, 235, 0.5) 19%,
-    var(--background-color-2) 30%
+    var(--background-color-3) 30%
   ) no-repeat fixed center center;
 }

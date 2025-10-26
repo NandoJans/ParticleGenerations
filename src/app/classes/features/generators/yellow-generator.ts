@@ -14,22 +14,28 @@ import {ResetKey} from "../../enums/reset-key";
 
 export abstract class YellowGenerator extends Generator {
   type: string = 'yellow-generator';
-  requirement: Requirement[];
+  requirement: Requirement[] = [];
   name: string;
   override unlocked: boolean = false;
+
+  private readonly isBreak: boolean = false;
 
   protected constructor(saveName: string, name: string, isBreak: boolean = false) {
     super(saveName);
     this.name = name;
-    if (!isBreak) {
+    this.isBreak = isBreak;
+    this.resetId = ResetHelper.registerReset(ResetKey.YELLOW, this);
+    this.softResetId = ResetHelper.registerSoftReset(ResetKey.RED, this);
+  }
+
+  override init() {
+    if (!this.isBreak) {
       this.requirement = [
         new Requirement(HoldingRecord.yellowPrestiges, new Num(5, 2), this)
       ];
     } else {
       this.requirement = [];
     }
-    this.resetId = ResetHelper.registerReset(ResetKey.YELLOW, this);
-    this.softResetId = ResetHelper.registerSoftReset(ResetKey.RED, this);
   }
 
   resetId: ResetKey;

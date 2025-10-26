@@ -24,9 +24,7 @@ export class RedAcceleratorGenerator extends Generator {
   name: string = 'redAcceleratorGenerator';
   nav: string = 'none';
   rank: number = 1;
-  requirement: Requirement[] = [
-    new Requirement(UpgradeRecord.unlockRedAccelerators, new Num(1, 0), this),
-  ];
+  requirement: Requirement[] = [];
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED_BOOSTER_ACCELERATION, this);
   softResetId: ResetKey = ResetHelper.registerReset(ResetKey.RED_EXTENSION, this);
   stringRank: string = '1';
@@ -37,6 +35,9 @@ export class RedAcceleratorGenerator extends Generator {
 
   override init() {
     this.generates = HoldingRecord.redAccelerators;
+    this.requirement = [
+      new Requirement(UpgradeRecord.unlockRedAccelerators, new Num(1, 0), this)
+    ]
   }
 
   protected override getGenerateAmount(): Num {

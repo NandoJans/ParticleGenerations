@@ -1,14 +1,15 @@
 /* layout for upgrade buttons */
 .bottom-section {
   width: 100%;
-  position: absolute;
+  position: fixed;
   margin: 0;
-  bottom: 0;
+  bottom: var(--footer-height);
   z-index: 10;
+  overflow: hidden;
 }
 
 .bottom-section.closed {
-  bottom: -20%;
+  bottom: 0;
 }
 
 .upgrade-row {
@@ -43,23 +44,131 @@
 
 .upgrade-row > app-upgrade {
   width: 100%;
-  margin: .2rem 0;
 }
 
 .upgrade-row {
+  padding-top: 0;
+  padding-bottom: 0;
   margin: 0;
 }
 
-.galaxy-tree-wrapper {
-  position: absolute;
+.tree-viewport {
+  position: relative;
   width: 100%;
-  height: 100%;
-  overflow: auto;
-  display: flex;
-  justify-content: center;
-  z-index: 5;
+  height: 64.5dvh;
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, #0a0f14 0%, #05080b 100%);
+  /* Critical for pointer gestures on mobile */
+  touch-action: none;     /* disables browser panning/zoom so our handlers work */
+}
+
+.tree-canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 10000px;          /* your world size */
+  height: 10000px;
+  transform-origin: 0 0;  /* we handle the math; origin stays at top-left */
+  user-select: none;
+  -webkit-user-drag: none;
 }
 /* wrapper around the entire galaxy tree allowing scroll on small screens */
+
+.star-overlay {
+  position: absolute;
+  width: 100%;
+  overflow: auto;
+  z-index: 10;
+}
+
+.star-details {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 50rem;
+  z-index: 10;
+  background-color: var(--background-color-1);
+  border-radius: 0 0 0.5rem 0.5rem;
+  border: 1px solid var(--background-color-4);
+  border-top: none;
+}
+
+.star-details.red .star-name {
+  color: var(--red-star-color);
+}
+
+.star-details.yellow .star-name {
+  color: var(--yellow-star-color);
+}
+
+.star-details.orange .star-name {
+  color: var(--orange-star-color);
+}
+
+.star-details.white .star-name {
+  color: var(--white-star-color);
+}
+
+.star-details.blue .star-name {
+  color: var(--blue-star-color);
+}
+
+.star-node {
+  position: absolute;
+  width: 10rem;
+  transform: translate(-50%, -50%);
+}
+
+.connectors {
+  position: absolute;
+  inset: 0;
+  left: -5000px;
+  top: -5000px;
+  width: 10000px;
+  height: 10000px;
+  pointer-events: none;
+  display: block;
+}
+
+.respec-button {
+  position: absolute;
+  left: .1rem;
+  margin: 1rem;
+  z-index: 5;
+}
+
+.recenter-button {
+  position: absolute;
+  right: .1rem;
+  margin: 1rem;
+  z-index: 5;
+}
+
+.confirm-respec {
+  background-color: var(--background-color-1);
+  border-radius: 0.5rem;
+  border: 1px solid var(--background-color-4);
+  padding: 1rem;
+  text-align: center;
+}
+
+.confirm-respec .buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.confirm-respec-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+}
 
 @media (max-width: 600px) {
   .galaxy-tree-wrapper {

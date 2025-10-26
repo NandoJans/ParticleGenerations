@@ -7,6 +7,12 @@ import {Num} from "../../../num";
 import {Holding} from "../holding";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 
+export enum RequireParent {
+  NONE = 'NONE',
+  ALL = 'ALL',
+  ANY = 'ANY'
+}
+
 export abstract class GalaxyTreeUpgrade extends Upgrade {
   name: string;
   type: string = 'galaxy-tree-upgrade';
@@ -20,6 +26,17 @@ export abstract class GalaxyTreeUpgrade extends Upgrade {
   override oneTime: boolean = true;
   allowedEnhancements: any[] = [];
   override calculationOrder: number = 51;
+  requireParent: RequireParent = RequireParent.ANY;
+
+  // Coordinates
+  worldX: number = 0;
+  worldY: number = 0;
+
+  setPos(x: number, y: number) {
+    this.worldX = x;
+    this.worldY = y;
+  }
+
   enhancementString(enhancement: any): string {
     return '';
   }
