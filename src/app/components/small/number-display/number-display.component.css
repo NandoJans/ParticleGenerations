@@ -4,19 +4,7 @@ div span {
   align-items: baseline;
   justify-content: center;
   font-size: 1.1rem;
-  color: var(--text-color-darkened);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
   border-radius: 12px;
-  padding: 10px 15px;
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
-}
-
-div span:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 div span p.effect {
@@ -37,33 +25,15 @@ div span p {
 
 .red {
   color: var(--text-color-red);
-  box-shadow: 0 4px 15px rgba(224, 67, 67, 0.2);
-  border-color: rgba(224, 67, 67, 0.3);
-}
-
-.red:hover {
-  box-shadow: 0 6px 20px rgba(224, 67, 67, 0.3);
 }
 
 .yellow {
   color: var(--text-color-yellow);
-  box-shadow: 0 4px 15px rgba(240, 240, 27, 0.2);
-  border-color: rgba(240, 240, 27, 0.3);
-}
-
-.yellow:hover {
-  box-shadow: 0 6px 20px rgba(240, 240, 27, 0.3);
 }
 
 .green {
   color: var(--text-color-green);
   --accent-color: var(--text-color-green);
-  box-shadow: 0 4px 15px rgba(67, 224, 67, 0.2);
-  border-color: rgba(67, 224, 67, 0.3);
-}
-
-.green:hover {
-  box-shadow: 0 6px 20px rgba(67, 224, 67, 0.3);
 }
 
 .dark {

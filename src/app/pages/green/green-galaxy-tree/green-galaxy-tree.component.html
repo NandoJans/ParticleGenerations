@@ -1,3 +1,19 @@
+<div
+  class="galaxy-tree-wrapper tree-viewport"
+  #galaxyTreeWrapper
+  (wheel)="$event.preventDefault(); onWheel($event)"
+  (pointerdown)="onPointerDown($event)"
+  (pointermove)="onPointerMove($event)"
+  (pointerup)="onPointerUp($event)"
+  (pointercancel)="onPointerUp($event)"
+  (pointerleave)="onPointerUp($event)"
+>
+  <div class="tree-canvas" [style.transform]="transform" [style.touchAction]="'none'">
+    <app-galaxy-tree-star
+      [galaxyTreeStar]="galaxyTreeStarRoot"
+    ></app-galaxy-tree-star>
+  </div>
+</div>
 <div [class]="'bottom-section ' + (isBottomSectionOpen() ? 'open' : 'closed')">
   <div class="number-display">
     <app-number-display [holding]="darkEnergy"></app-number-display>
@@ -10,9 +26,4 @@
       ></app-upgrade>
     }
   </div>
-</div>
-<div class="galaxy-tree-wrapper" #galaxyTreeWrapper>
-  <app-galaxy-tree-star
-    [galaxyTreeStar]="galaxyTreeStarRoot"
-  ></app-galaxy-tree-star>
 </div>

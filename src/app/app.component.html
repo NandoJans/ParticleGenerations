@@ -4,13 +4,16 @@
 <header>
   <app-header style="width: 100%; height: 100%;"></app-header>
 </header>
-<div style="height: 10%; width: 100%"></div>
+<div style="height: var(--header-height); width: 100%"></div>
 <main [class]="getActiveChallengeStyle()" class="game-card">
-  <app-main style="width: 100%; height: 100%;"></app-main>
+  <app-main style="width: 100%; var(--main-height);"></app-main>
   <app-message-steps *ngIf="showMessageSteps()"></app-message-steps>
-  <app-offline *ngIf="offlineCalculating()"></app-offline>
 </main>
-<div style="height: 15%; width: 100%"></div>
+<div style="height: var(--footer-height); width: 100%"></div>
 <footer>
   <app-footer style="width: 100%; height: 100%;"></app-footer>
 </footer>
+
+@if (offlineCalculating()) {
+  <app-offline></app-offline>
+}

@@ -1,0 +1,10 @@
+.resource-card {
+  width: 75%;
+  margin: 10px auto;
+}
+
+@media (max-width: 768px) {
+  .resource-card {
+    width: 80%;
+  }
+}

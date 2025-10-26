@@ -1,4 +1,6 @@
-<app-number-display [holding]="darkMatter"></app-number-display>
+<div class="resource-card">
+  <app-number-display [holding]="darkMatter"></app-number-display>
+</div>
 <div class="generator" *ngFor="let generator of generators">
   <app-generator *ngIf="generator.unlocked" [generator]="generator"></app-generator>
 <!--  <app-upgrade *ngIf="generator.unlocked" [upgrade]="generator.multiplierUpgrade"></app-upgrade>-->
