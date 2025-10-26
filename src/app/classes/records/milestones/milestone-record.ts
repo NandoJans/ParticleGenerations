@@ -170,8 +170,8 @@ export class MilestoneRecord extends Record {
   static breakYellowBarrier: BreakYellowBarrierMilestone = new BreakYellowBarrierMilestone('breakYellowBarrier');
 
   static keepAllRedAutomators: ChangeResetKeyGreenMilestone = new ChangeResetKeyGreenMilestone(
-    'keepBoosterAccelerationAuto',
-    'Keep Better Red Particle to Accelerator Effect Automator',
+    'keepAllRedAutomators',
+    'Keep All Red Automators',
     new Num(1, 0),
     [
       AutomatorRecord.firstRedGenerator,
@@ -188,6 +188,16 @@ export class MilestoneRecord extends Record {
       AutomatorRecord.boosterAcceleration,
     ],
     'red phase automators'
+  );
+
+  static keepYellowPrestigeAutomator: ChangeResetKeyGreenMilestone = new ChangeResetKeyGreenMilestone(
+    'keepBoosterAccelerationAuto',
+    'Keep Yellow Prestige Automator',
+    new Num(2, 0),
+    [
+      AutomatorRecord.yellowPrestige,
+    ],
+    'yellow prestige automator'
   );
 
   // Green Phase

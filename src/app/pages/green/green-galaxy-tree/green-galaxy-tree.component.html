@@ -1,3 +1,15 @@
+@if (isConfirmingRespec()) {
+  <div class="confirm-respec-overlay" (click)="toggleConfirmRespec()">
+    <div class="confirm-respec">
+      <p>Are you sure you want to respec?</p>
+      <div class="buttons">
+        <app-button [text]="'Yes'" [style]="'button green'" (function)="respecGalaxyTree()"></app-button>
+        <app-button [text]="'No'" [style]="'button red'" (function)="toggleConfirmRespec()"></app-button>
+      </div>
+    </div>
+  </div>
+}
+<app-button class="respec-button" [text]="'Respec'" [style]="'button green'" (function)="toggleConfirmRespec()"></app-button>
 @if (isStarSelected()) {
   <div class="star-overlay">
     <div [class]="'star-details ' + getSelectedStarStyle()">
@@ -20,6 +32,7 @@
     </div>
   </div>
 }
+<app-button class="recenter-button" [text]="'Recenter'" [style]="'button green'" (function)="recenterGalaxyTree()"></app-button>
 <div
   class="galaxy-tree-wrapper tree-viewport"
   #galaxyTreeWrapper
@@ -31,9 +44,58 @@
   (pointerleave)="onPointerUp($event)"
 >
   <div class="tree-canvas" [style.transform]="transform" [style.touchAction]="'none'">
-    <app-galaxy-tree-star
-      [galaxyTreeStar]="galaxyTreeStarRoot"
-    ></app-galaxy-tree-star>
+    @for (star of getStars(); track star) {
+      @if (star.getChildren()?.length && star.hasBought()) {
+        <svg
+          class="connectors"
+          [attr.viewBox]="'0 0 ' + canvasW + ' ' + canvasH"
+          [attr.width]="canvasW"
+          [attr.height]="canvasH"
+          preserveAspectRatio="none"
+        >
+          <defs>
+            @for (child of star.getChildren(); track child) {
+              @if (child.hasBought()) {
+                <linearGradient
+                  [attr.id]="'grad-' + star.name + '-' + child.name"
+                  gradientUnits="userSpaceOnUse"
+                  [attr.x1]="star.worldX + 5000"
+                  [attr.y1]="star.worldY + 5000"
+                  [attr.x2]="child.worldX + 5000"
+                  [attr.y2]="child.worldY + 5000"
+                >
+                  <stop offset="0%"  [attr.stop-color]="resolveColor(star)" />
+                  <stop offset="100%" [attr.stop-color]="resolveColor(child)" />
+                </linearGradient>
+              }
+            }
+          </defs>
+
+          @for (child of star.getChildren(); track child) {
+            @if (child.hasBought()) {
+              <line
+                [style.z-index]="5"
+                [attr.x1]="star.worldX + 5000"
+                [attr.y1]="star.worldY + 5000"
+                [attr.x2]="child.worldX + 5000"
+                [attr.y2]="child.worldY + 5000"
+                [attr.stroke]="'url(#grad-' + star.name + '-' + child.name + ')'"
+                [attr.stroke-width]="3"
+                [attr.stroke-opacity]="0.75"
+                stroke-linecap="round"
+              />
+            }
+          }
+        </svg>
+      }
+
+      <app-galaxy-tree-star
+        class="star-node"
+        [galaxyTreeStar]="star"
+        [style.left.px]="star.worldX"
+        [style.top.px]="star.worldY"
+      ></app-galaxy-tree-star>
+    }
   </div>
 </div>
 <div [class]="'bottom-section ' + (isBottomSectionOpen() ? 'open' : 'closed')">

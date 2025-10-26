@@ -1,42 +1,47 @@
-<div
-  #starEl
-  [id]="'buyable-'+galaxyTreeStar.name"
-  [class]="'upgrade '+galaxyTreeStar.style+' '
+@if (!isHidden() || true) {
+  <div
+    #starEl
+    [id]="'buyable-'+galaxyTreeStar.name"
+    [class]="'upgrade '+galaxyTreeStar.style+' '
   +((getIsBuyable()) ? 'buyable' : '')+' '
   +((getIsMaxed()) ? 'maxed' : '')+' '
   +((isEnhancing()) ? 'enhancing enhancing-' + getEnhancementStyle() : '')+' '
   +((isEnhanced()) ? 'enhanced enhanced-' + getEnhancedStyle() : '')+' '
 "
-  (click)="openStarDetails()"
->
-  <h4 *ngIf="getDisplayName() !== ''">{{ getDisplayName() }}</h4>
+    (click)="openStarDetails()"
+  >
+    <h4>{{ getDisplayName() }}</h4>
     <div class="star icon">
     </div>
-  <p *ngIf="isEnhancing()">{{ getEnhancementString() }}</p>
-  <p *ngIf="getEffect()" class="effect">{{ getEffect() }}</p>
-  <p *ngIf="!getIsMaxed()" class="cost">Cost: {{ getCost() }} {{ getCurrencyAbbreviation() }}</p>
-  <div class="challenge-disabled" style="display: none;">
-    <h2>Challenge Disabled</h2>
+    @if (getIsMaxed()) {
+      <p class="cost"></p>
+    } @else {
+      <p class="cost">Cost: {{ getCost() }} {{ getCurrencyAbbreviation() }}</p>
+    }
+    <div class="challenge-disabled" style="display: none;">
+      <h2>Challenge Disabled</h2>
+    </div>
   </div>
-</div>
 
-<!-- ② lines to children (SVG) ---------------------------------------->
-<svg
-  class="connectors"
-  *ngIf="childLines.length"
-  width="100%" height="100%"
-  preserveAspectRatio="none"
->
-  <line *ngFor="let L of childLines"
-        [attr.x1]="L.x1" [attr.y1]="L.y1"
-        [attr.x2]="L.x2" [attr.y2]="L.y2"
-        class="connector-line"/>
-</svg>
+  <!-- ② lines to children (SVG) ---------------------------------------->
+  <svg
+    class="connectors"
+    *ngIf="childLines.length"
+    width="100%" height="100%"
+    preserveAspectRatio="none"
+  >
+    <line *ngFor="let L of childLines"
+          [attr.x1]="L.x1" [attr.y1]="L.y1"
+          [attr.x2]="L.x2" [attr.y2]="L.y2"
+          class="connector-line"/>
+  </svg>
+}
+
 
 <!-- ③ render every child node ---------------------------------------->
-<div class="children" *ngIf="displayChildren()">
-  <app-galaxy-tree-star
-    *ngFor="let child of galaxyTreeStar.getChildren()"
-    [galaxyTreeStar]="child">
-  </app-galaxy-tree-star>
-</div>
+<!--<div class="children" *ngIf="displayChildren()">-->
+<!--  <app-galaxy-tree-star-->
+<!--    *ngFor="let child of galaxyTreeStar.getChildren()"-->
+<!--    [galaxyTreeStar]="child">-->
+<!--  </app-galaxy-tree-star>-->
+<!--</div>-->

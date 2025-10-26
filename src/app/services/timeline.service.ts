@@ -119,6 +119,7 @@ export class TimelineService {
       new Num(1, 0)
     )
     .addMilestone(MilestoneRecord.keepAllRedAutomators)
+    .addMilestone(MilestoneRecord.keepYellowPrestigeAutomator)
     .build()
     .build()
 

@@ -73,6 +73,16 @@ import {
 import {
   CheaperBoosterAccelerationGalaxyTreeUpgrade
 } from "../../features/upgrades/cheaper-booster-acceleration-galaxy-tree-upgrade";
+import {
+  FasterHydrogenGenerationGalaxyTreeUpgrade
+} from "../../features/upgrades/faster-hydrogen-generation-galaxy-tree-upgrade";
+import {StrongerYellowPowerGalaxyTreeUpgrade} from "../../features/upgrades/stronger-yellow-power-galaxy-tree-upgrade";
+import {GalaxyTreeUpgrade} from "../../features/upgrades/galaxy-tree-upgrade";
+import {StrongerHydrogenGalaxyTreeUpgrade} from "../../features/upgrades/stronger-hydrogen-galaxy-tree-upgrade";
+import {ImproveYellowFusionGalaxyTreeUpgrade} from "../../features/upgrades/improve-yellow-fusion-galaxy-tree-upgrade";
+import {
+  YellowFusionBoostRedAcceleratorsGalaxyTreeUpgrade
+} from "../../features/upgrades/yellow-fusion-boost-red-accelerators-galaxy-tree-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -134,13 +144,42 @@ static breakYellowFusionLimitYellow: BreakYellowFusionLimitYellowUpgrade = new B
   static greenParticleSacrifice: GreenParticleSacrificeUpgrade = new GreenParticleSacrificeUpgrade('greenParticleSacrifice');
 
   static unlockFirstGreenGenerator: UnlockFirstGreenGeneratorGalaxyTreeUpgrade = new UnlockFirstGreenGeneratorGalaxyTreeUpgrade('unlockFirstGreenGenerator');
+  // Children: increaseRedGeneratorMultiplier, cheaperBoosterAcceleration, fasterHydrogenGeneration, strongerYellowPower
+
   static increaseRedGeneratorMultiplier: IncreaseRedGeneratorMultiplierGalaxyTreeUpgrade = new IncreaseRedGeneratorMultiplierGalaxyTreeUpgrade('halfRedGeneratorIncrease');
-  static cheaperBoosterAcceleration: CheaperBoosterAccelerationGalaxyTreeUpgrade = new CheaperBoosterAccelerationGalaxyTreeUpgrade('cheaperBoosterAcceleration');
-  static redAcceleratorStart: RedAcceleratorStartGalaxyTreeUpgrade = new RedAcceleratorStartGalaxyTreeUpgrade('redAcceleratorStart');
+  // Children: redAcceleratorStart, increaseBoosterAccelerationPower
   static moreYellowKeys: MoreYellowKeysGalaxyTreeUpgrade = new MoreYellowKeysGalaxyTreeUpgrade('moreYellowKeys');
-  static strongerRedExtensionGalaxyTree: StrongerRedExtensionGalaxyTreeUpgrade = new StrongerRedExtensionGalaxyTreeUpgrade('strongerRedExtensionGalaxyTree');
   static increaseBoosterAccelerationPower: IncreaseBoosterAccelerationPowerGalaxyTreeUpgrade = new IncreaseBoosterAccelerationPowerGalaxyTreeUpgrade('decreaseBoosterAccelerationScalingGalaxyTree');
 
+  static cheaperBoosterAcceleration: CheaperBoosterAccelerationGalaxyTreeUpgrade = new CheaperBoosterAccelerationGalaxyTreeUpgrade('cheaperBoosterAcceleration');
+  // Children: redAcceleratorStart, strongerRedExtensionGalaxyTree
+  static redAcceleratorStart: RedAcceleratorStartGalaxyTreeUpgrade = new RedAcceleratorStartGalaxyTreeUpgrade('redAcceleratorStart');
+  // Children: yellowFusionBoostRedAccelerators
+  static strongerRedExtensionGalaxyTree: StrongerRedExtensionGalaxyTreeUpgrade = new StrongerRedExtensionGalaxyTreeUpgrade('strongerRedExtensionGalaxyTree');
+
+  static fasterHydrogenGeneration: FasterHydrogenGenerationGalaxyTreeUpgrade = new FasterHydrogenGenerationGalaxyTreeUpgrade('fasterHydrogenGeneration');
+  // Children: strongerHydrogenGalaxyTree, improveYellowFusion
+  static strongerHydrogenGalaxyTree: StrongerHydrogenGalaxyTreeUpgrade = new StrongerHydrogenGalaxyTreeUpgrade('strongerHydrogenGalaxyTree');
+  static improveYellowFusion: ImproveYellowFusionGalaxyTreeUpgrade = new ImproveYellowFusionGalaxyTreeUpgrade('improveYellowFusion');
+  // Children: yellowFusionBoostRedAccelerators
+  static yellowFusionBoostRedAccelerators: YellowFusionBoostRedAcceleratorsGalaxyTreeUpgrade = new YellowFusionBoostRedAcceleratorsGalaxyTreeUpgrade('yellowFusionBoostRedAccelerators');
+
+  static strongerYellowPower: StrongerYellowPowerGalaxyTreeUpgrade = new StrongerYellowPowerGalaxyTreeUpgrade('strongerYellowPower');
+
+  static galaxyTreeUpgradeList: GalaxyTreeUpgrade[] = [
+    UpgradeRecord.unlockFirstGreenGenerator,
+    UpgradeRecord.increaseRedGeneratorMultiplier,
+    UpgradeRecord.cheaperBoosterAcceleration,
+    UpgradeRecord.redAcceleratorStart,
+    UpgradeRecord.moreYellowKeys,
+    UpgradeRecord.strongerRedExtensionGalaxyTree,
+    UpgradeRecord.increaseBoosterAccelerationPower,
+    UpgradeRecord.fasterHydrogenGeneration,
+    UpgradeRecord.strongerYellowPower,
+    UpgradeRecord.strongerHydrogenGalaxyTree,
+    UpgradeRecord.improveYellowFusion,
+    UpgradeRecord.yellowFusionBoostRedAccelerators,
+  ]
 
   static override list: Upgrade[] = [
     UpgradeRecord.redGeneratorExtension,
@@ -195,13 +234,7 @@ static breakYellowFusionLimitYellow: BreakYellowFusionLimitYellowUpgrade = new B
     UpgradeRecord.yellowParticleSacrifice,
     UpgradeRecord.greenParticleSacrifice,
 
-    UpgradeRecord.unlockFirstGreenGenerator,
-    UpgradeRecord.increaseRedGeneratorMultiplier,
-    UpgradeRecord.cheaperBoosterAcceleration,
-    UpgradeRecord.redAcceleratorStart,
-    UpgradeRecord.moreYellowKeys,
-    UpgradeRecord.strongerRedExtensionGalaxyTree,
-    UpgradeRecord.increaseBoosterAccelerationPower,
+    ...UpgradeRecord.galaxyTreeUpgradeList,
 
   ]
 

@@ -1,17 +1,16 @@
 import {GalaxyTreeUpgrade} from "./galaxy-tree-upgrade";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
-import {Num} from "../../../num";
 import {Styles} from "../../enums/styles";
+import {Num} from "../../../num";
 
-export class CheaperBoosterAccelerationGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
+export class StrongerYellowPowerGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   constructor(saveName: string) {
-    super(saveName, "cheaper-booster-acceleration");
+    super(saveName, "stronger-yellow-power");
   }
 
   getChildren(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.redAcceleratorStart,
-      UpgradeRecord.increaseBoosterAccelerationPower,
+      UpgradeRecord.strongerHydrogenGalaxyTree,
     ];
   }
 
@@ -22,18 +21,21 @@ export class CheaperBoosterAccelerationGalaxyTreeUpgrade extends GalaxyTreeUpgra
   }
 
   getDescription(): string {
-    return "Decrease the cost scaling of booster accelerators from 1.000 to 250";
+    return `Increase the power of yellow power upgrade by ${this.buffer.toString(2)}x.`;
   }
 
   action(): undefined {
     if (this.hasBought()) {
-      UpgradeRecord.boosterAccelerationUpgrade.scaling = new Num(2.5, 2);
+      UpgradeRecord.strongerYellowPower.buffer = UpgradeRecord.strongerYellowPower.buffer.mul(this.buffer);
     }
     return
   }
 
   style: Styles = Styles.STAR_ORANGE
-  displayName: string = "Cheaper Booster Acceleration";
+  displayName: string = "Stronger yellow power";
+
+  override buffer: Num = new Num(1.1, 0);
+  override baseBuffer: Num = new Num(1.1, 0);
 
   cost: Num = new Num(1, 0);
   baseCost: Num = new Num(1, 0);

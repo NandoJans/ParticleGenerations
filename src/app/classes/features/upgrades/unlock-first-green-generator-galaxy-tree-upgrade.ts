@@ -2,6 +2,7 @@ import {GalaxyTreeUpgrade} from "./galaxy-tree-upgrade";
 import {Styles} from "../../enums/styles";
 import {Num} from "../../../num";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
+import {GeneratorRecord} from "../../records/generators/generator-record";
 
 export class UnlockFirstGreenGeneratorGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   constructor(saveName: string) {
@@ -12,6 +13,8 @@ export class UnlockFirstGreenGeneratorGalaxyTreeUpgrade extends GalaxyTreeUpgrad
     return [
       UpgradeRecord.increaseRedGeneratorMultiplier,
       UpgradeRecord.cheaperBoosterAcceleration,
+      UpgradeRecord.fasterHydrogenGeneration,
+      UpgradeRecord.strongerYellowPower,
     ];
   }
 
@@ -23,7 +26,17 @@ export class UnlockFirstGreenGeneratorGalaxyTreeUpgrade extends GalaxyTreeUpgrad
     return "Unlocks the first green generator.";
   }
 
-  action(): undefined {return}
+  action(): undefined {
+    if (this.hasBought()) {
+      if (
+        GeneratorRecord.firstGreenGenerator.bought.lt(new Num(1, 0)) ||
+        GeneratorRecord.firstGreenGenerator.amount.lt(new Num(1, 0))
+      ) {
+        GeneratorRecord.firstGreenGenerator.bought = new Num(1, 0);
+        GeneratorRecord.firstGreenGenerator.amount = new Num(1, 0);
+      }
+    }
+  }
 
   style: Styles = Styles.STAR_RED
   displayName: string = "Unlock First Green Generator";

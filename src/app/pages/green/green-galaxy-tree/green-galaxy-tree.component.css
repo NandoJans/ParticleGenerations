@@ -66,6 +66,8 @@
   position: absolute;
   left: 0;
   top: 0;
+  width: 10000px;          /* your world size */
+  height: 10000px;
   transform-origin: 0 0;  /* we handle the math; origin stays at top-left */
   user-select: none;
   -webkit-user-drag: none;
@@ -109,6 +111,63 @@
 
 .star-details.blue .star-name {
   color: var(--blue-star-color);
+}
+
+.star-node {
+  position: absolute;
+  width: 10rem;
+  transform: translate(-50%, -50%);
+}
+
+.connectors {
+  position: absolute;
+  inset: 0;
+  left: -5000px;
+  top: -5000px;
+  width: 10000px;
+  height: 10000px;
+  pointer-events: none;
+  display: block;
+}
+
+.respec-button {
+  position: absolute;
+  left: .1rem;
+  margin: 1rem;
+  z-index: 5;
+}
+
+.recenter-button {
+  position: absolute;
+  right: .1rem;
+  margin: 1rem;
+  z-index: 5;
+}
+
+.confirm-respec {
+  background-color: var(--background-color-1);
+  border-radius: 0.5rem;
+  border: 1px solid var(--background-color-4);
+  padding: 1rem;
+  text-align: center;
+}
+
+.confirm-respec .buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.confirm-respec-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+  z-index: 1000;
 }
 
 @media (max-width: 600px) {

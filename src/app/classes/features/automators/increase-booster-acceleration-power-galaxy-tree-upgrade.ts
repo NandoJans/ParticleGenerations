@@ -35,7 +35,7 @@ export class IncreaseBoosterAccelerationPowerGalaxyTreeUpgrade extends GalaxyTre
   override baseBuffer = new Num(1.2, 0);
 
   style: Styles = Styles.STAR_YELLOW;
-  displayName: string = "1.2x Stronger Red Extension";
+  displayName: string = "Stronger Booster Acceleration";
 
   cost: Num = new Num(4, 0);
   baseCost: Num = new Num(4, 0);

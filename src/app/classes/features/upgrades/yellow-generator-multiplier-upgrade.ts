@@ -21,6 +21,7 @@ export class YellowGeneratorMultiplierUpgrade extends YellowGeneratorUpgrade {
       new Requirement(generator, new Num(generator.rank, 0), this),
     ];
   }
+
   name: string;
   resetId: ResetKey;
   requirement: Requirement[];

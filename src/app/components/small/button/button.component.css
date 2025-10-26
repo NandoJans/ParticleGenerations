@@ -28,6 +28,10 @@ button {
   color: var(--accent-color-green);
 }
 
+.red {
+  color: var(--accent-color-red);
+}
+
 .card-header {
   margin: 0;
   height: 4rem;

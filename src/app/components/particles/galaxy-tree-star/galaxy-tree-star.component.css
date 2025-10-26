@@ -19,6 +19,12 @@ div.container {
 .star {
   cursor: pointer;
   z-index: 1;
+  width: 10rem;
+  height: 10rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .star.red {
@@ -151,6 +157,12 @@ body {
 /* The visible stellar surface */
 .upgrade:not(.maxed):not(.buyable) .star.icon {
   box-shadow: none;
+}
+
+h4, p {
+  margin: 0;
+  padding: 0;
+  height: 2rem;
 }
 
 .upgrade:not(.maxed):not(.buyable) h4, .upgrade:not(.maxed):not(.buyable) p {

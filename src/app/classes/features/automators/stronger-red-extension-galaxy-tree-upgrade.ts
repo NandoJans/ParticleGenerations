@@ -16,7 +16,7 @@ export class StrongerRedExtensionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
 
   getParents(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.unlockFirstGreenGenerator,
+      UpgradeRecord.increaseRedGeneratorMultiplier,
     ];
   }
 
@@ -33,7 +33,7 @@ export class StrongerRedExtensionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   override baseBuffer = new Num(2, 0);
 
   style: Styles = Styles.STAR_ORANGE;
-  displayName: string = "2x Stronger Red Extension";
+  displayName: string = "Stronger Red Extension";
 
   cost: Num = new Num(3, 0);
   baseCost: Num = new Num(3, 0);

@@ -7,13 +7,13 @@ import {GalaxyTreeUpgrade} from "../../../classes/features/upgrades/galaxy-tree-
 import {faArrowDown, faArrowUp, faWindowClose} from "@fortawesome/free-solid-svg-icons";
 import {LocalStorageHelper} from "../../../classes/helpers/local-storage-helper";
 import {GalaxyTreeService} from "../../../services/galaxy-tree.service";
-import {faCross} from "@fortawesome/free-solid-svg-icons/faCross";
+import {Styles} from "../../../classes/enums/styles";
 
 @Component({
-    selector: 'app-green-galaxy-tree',
-    templateUrl: './green-galaxy-tree.component.html',
-    styleUrls: ['./green-galaxy-tree.component.css'],
-    standalone: false
+  selector: 'app-green-galaxy-tree',
+  templateUrl: './green-galaxy-tree.component.html',
+  styleUrls: ['./green-galaxy-tree.component.css'],
+  standalone: false
 })
 export class GreenGalaxyTreeComponent implements OnInit {
   darkEnergy: Holding = HoldingRecord.darkEnergy;
@@ -31,15 +31,14 @@ export class GreenGalaxyTreeComponent implements OnInit {
     'Navigate the tree strategically - each path offers different bonuses and unlocks.',
     'This is the endgame content - master the galaxy tree to achieve maximum power!'
   ]
-
   @ViewChild('galaxyTreeWrapper') galaxyTreeWrapper!: ElementRef;
 
   bottomSectionOpen: boolean = true;
+
   localStorageHelper: LocalStorageHelper = new LocalStorageHelper('pages', 'green-galaxy-tree');
-
   protected readonly faArrowUp = faArrowUp;
-  protected readonly faArrowDown = faArrowDown;
 
+  protected readonly faArrowDown = faArrowDown;
   constructor(
     public galaxyTreeService: GalaxyTreeService,
   ) {
@@ -56,6 +55,37 @@ export class GreenGalaxyTreeComponent implements OnInit {
       this.scale = this.clamp(saved.scale, this.minScale, this.maxScale);
       this.updateTransform();
     }
+
+    this.setPositions();
+  }
+
+  getStars(): GalaxyTreeUpgrade[] {
+    return this.galaxyTreeService.getStars();
+  }
+
+  private setPositions() {
+    UpgradeRecord.unlockFirstGreenGenerator.setPos(0, 0);
+    // Children are increaseRedGeneratorMultiplier, cheaperBoosterAcceleration, fasterHydrogenGeneration
+
+    UpgradeRecord.increaseRedGeneratorMultiplier.setPos(125, 0);
+    // Children are strongerRedExtensionGalaxyTree
+    UpgradeRecord.strongerRedExtensionGalaxyTree.setPos(225, -75);
+
+    UpgradeRecord.cheaperBoosterAcceleration.setPos(-125, 0);
+    // Children are redAcceleratorStart, increaseBoosterAccelerationPower
+    UpgradeRecord.redAcceleratorStart.setPos(-225, 75);
+    UpgradeRecord.increaseBoosterAccelerationPower.setPos(-225, -50);
+
+    UpgradeRecord.fasterHydrogenGeneration.setPos(0, 125);
+    // Children are strongerHydrogenPower, improveYellowFusion
+    UpgradeRecord.strongerHydrogenGalaxyTree.setPos(75, 225);
+    UpgradeRecord.improveYellowFusion.setPos(-75, 225);
+    // Children are yellowFusionBoostRedAccelerators
+    UpgradeRecord.yellowFusionBoostRedAccelerators.setPos(-200, 200);
+
+    UpgradeRecord.strongerYellowPower.setPos(0, -125);
+    // Children are moreYellowKeys
+    UpgradeRecord.moreYellowKeys.setPos(75, -225);
   }
 
   isBottomSectionOpen() {
@@ -77,7 +107,7 @@ export class GreenGalaxyTreeComponent implements OnInit {
   ty = 0; // translateY
   transform = 'translate(0px, 0px) scale(1)';
 
-  private pointers = new Map<number, {x:number, y:number}>();
+  private pointers = new Map<number, { x: number, y: number }>();
   private isPanning = false;
   private lastPan = {x: 0, y: 0};
 
@@ -85,7 +115,7 @@ export class GreenGalaxyTreeComponent implements OnInit {
   private dragThreshold = 5; // px
   private maybePan = false;
   private dragged = false;
-  private downPos = { x: 0, y: 0 };
+  private downPos = {x: 0, y: 0};
 
   // Pinch state
   private pinchStart = {
@@ -111,11 +141,11 @@ export class GreenGalaxyTreeComponent implements OnInit {
   }
 
   onPointerDown(e: PointerEvent) {
-    this.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    this.pointers.set(e.pointerId, {x: e.clientX, y: e.clientY});
     this.maybePan = true;
     this.dragged = false;
-    this.downPos = { x: e.clientX, y: e.clientY };
-    this.lastPan = { x: e.clientX, y: e.clientY };
+    this.downPos = {x: e.clientX, y: e.clientY};
+    this.lastPan = {x: e.clientX, y: e.clientY};
   }
 
   onPointerMove(e: PointerEvent) {
@@ -160,7 +190,7 @@ export class GreenGalaxyTreeComponent implements OnInit {
     if (this.isPanning) {
       const dx = e.clientX - this.lastPan.x;
       const dy = e.clientY - this.lastPan.y;
-      this.lastPan = { x: e.clientX, y: e.clientY };
+      this.lastPan = {x: e.clientX, y: e.clientY};
 
       this.tx += dx;
       this.ty += dy;
@@ -178,7 +208,10 @@ export class GreenGalaxyTreeComponent implements OnInit {
     }
 
     if (this.isPanning) {
-      try { this.galaxyTreeWrapper.nativeElement.releasePointerCapture(e.pointerId); } catch {}
+      try {
+        this.galaxyTreeWrapper.nativeElement.releasePointerCapture(e.pointerId);
+      } catch {
+      }
       this.isPanning = false;
 
       // Prevent the synthetic 'click' that follows pointerup
@@ -216,7 +249,7 @@ export class GreenGalaxyTreeComponent implements OnInit {
     };
   }
 
-  private distance(a: {x:number,y:number}, b: {x:number,y:number}) {
+  private distance(a: { x: number, y: number }, b: { x: number, y: number }) {
     const dx = a.x - b.x;
     const dy = a.y - b.y;
     return Math.hypot(dx, dy);
@@ -278,5 +311,62 @@ export class GreenGalaxyTreeComponent implements OnInit {
 
   buySelectedStar(): void {
     this.galaxyTreeService.getSelectedGalaxyStar()?.buy();
+  }
+
+  canvasW = 10000;  // must match .tree-canvas size
+  canvasH = 10000;
+
+  resolveColor(star: GalaxyTreeUpgrade): string {
+    switch (star.style) {
+      case Styles.STAR_RED:
+        return '#e83b1d';
+      case Styles.STAR_ORANGE:
+        return '#ff9633';
+      case Styles.STAR_YELLOW:
+        return '#ffd83b';
+      case Styles.STAR_WHITE:
+        return '#aab5ff';
+      case Styles.STAR_BLUE:
+        return '#5c83ff';
+      default:
+        return '#7a7a7a';
+    }
+  }
+
+  respecGalaxyTree() {
+    this.galaxyTreeService.respec()
+  }
+
+  confirmingRespec: boolean = false;
+
+  isConfirmingRespec(): boolean {
+    return this.confirmingRespec;
+  }
+
+  toggleConfirmRespec(): void {
+    this.confirmingRespec = !this.confirmingRespec;
+  }
+
+  recenterGalaxyTree(): void {
+    const wrapper = this.galaxyTreeWrapper.nativeElement;
+    const rect = wrapper.getBoundingClientRect();
+
+    // viewport center (in screen coordinates)
+    const viewportCX = rect.width / 2;
+    const viewportCY = rect.height / 2;
+
+    // world coordinates of the root star
+    const root = this.galaxyTreeStarRoot;
+    const rootX = root.worldX;
+    const rootY = root.worldY;
+
+    // reset zoom
+    this.scale = 1;
+
+    // translation that brings root to the center of the viewport
+    this.tx = viewportCX - rootX * this.scale;
+    this.ty = viewportCY - rootY * this.scale;
+
+    this.snapUpdate();
   }
 }

@@ -11,8 +11,7 @@ export class IncreaseRedGeneratorMultiplierGalaxyTreeUpgrade extends GalaxyTreeU
 
   getChildren(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.moreYellowKeys,
-      UpgradeRecord.increaseBoosterAccelerationPower,
+      UpgradeRecord.strongerRedExtensionGalaxyTree,
     ];
   }
 
@@ -23,7 +22,7 @@ export class IncreaseRedGeneratorMultiplierGalaxyTreeUpgrade extends GalaxyTreeU
   }
 
   getDescription(): string {
-    return `Make red generator mutipliers ${this.buffer.toString(2)} stronger.`;
+    return `Make red generator multipliers ${this.buffer.toString(2)}x stronger.`;
   }
 
   action(): undefined {

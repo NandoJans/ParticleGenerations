@@ -9,7 +9,7 @@ import {
   ViewChild,
   HostListener
 } from '@angular/core';
-import {GalaxyTreeUpgrade} from "../../../classes/features/upgrades/galaxy-tree-upgrade";
+import {GalaxyTreeUpgrade, RequireParent} from "../../../classes/features/upgrades/galaxy-tree-upgrade";
 import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
 import {faStar} from "@fortawesome/free-solid-svg-icons";
 import {EnhancementService} from "../../../services/enhancement.service";
@@ -163,5 +163,16 @@ export class GalaxyTreeStarComponent implements OnInit, AfterViewInit {
   openStarDetails() {
     console.log('openStarDetails');
     this.galaxyTreeService.setSelectedGalaxyStar(this.galaxyTreeStar);
+  }
+
+  isHidden() {
+    // Returns true if one parent or every parent has been bought
+    if (this.galaxyTreeStar.requireParent === RequireParent.ANY) {
+      return this.galaxyTreeStar.getParents()?.some(p => !p.hasBought())
+    } else if (this.galaxyTreeStar.requireParent === RequireParent.ALL) {
+      return this.galaxyTreeStar.getParents()?.every(p => !p.hasBought())
+    } else {
+      return false;
+    }
   }
 }
