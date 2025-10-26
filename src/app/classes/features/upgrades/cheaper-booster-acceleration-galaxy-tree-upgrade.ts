@@ -26,15 +26,13 @@ export class CheaperBoosterAccelerationGalaxyTreeUpgrade extends GalaxyTreeUpgra
   }
 
   action(): undefined {
-    if (this.hasBought()) {
-      UpgradeRecord.boosterAccelerationUpgrade.scaling = new Num(2.5, 2);
-    }
+    UpgradeRecord.boosterAccelerationUpgrade.increase = UpgradeRecord.boosterAccelerationUpgrade.startIncrease.div(new Num(1, 1));
     return
   }
 
   style: Styles = Styles.STAR_ORANGE
   displayName: string = "Cheaper Booster Acceleration";
 
-  cost: Num = new Num(1, 0);
-  baseCost: Num = new Num(1, 0);
+  cost: Num = new Num(2, 0);
+  baseCost: Num = new Num(2, 0);
 }
