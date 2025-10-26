@@ -7,7 +7,7 @@ import {GeneratorRecord} from "../../records/generators/generator-record";
 
 export class SecondYellowGenerator extends YellowGenerator {
   constructor(saveName: string) {
-    super(saveName, 'second-yellow-generator');
+    super(saveName, 'second-yellow-generator', true);
   }
   displayName: string = 'Yellow Generator 2';
 
@@ -36,6 +36,7 @@ export class SecondYellowGenerator extends YellowGenerator {
   );
 
   override init() {
+    super.init();
     this.generates = GeneratorRecord.firstYellowGenerator;
   }
 }

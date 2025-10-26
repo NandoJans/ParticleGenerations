@@ -7,7 +7,7 @@ import {YellowGeneratorBuyMultiplierUpgrade} from "../upgrades/yellow-generator-
 
 export class FirstYellowGenerator extends YellowGenerator {
   constructor(saveName: string) {
-    super(saveName, 'first-yellow-generator');
+    super(saveName, 'first-yellow-generator', true);
   }
   displayName: string = 'Yellow Generator 1';
 
@@ -35,6 +35,7 @@ export class FirstYellowGenerator extends YellowGenerator {
   );
 
   override init() {
+    super.init();
     this.generates = HoldingRecord.yellowPower;
   }
 }
