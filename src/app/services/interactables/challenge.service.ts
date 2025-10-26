@@ -9,7 +9,7 @@ import {Num} from "../../num";
   providedIn: 'root'
 })
 export class ChallengeService {
-  localStorageHelper: LocalStorageHelper = new LocalStorageHelper('challenge', 'currentChallenge');
+  static localStorageHelper: LocalStorageHelper = new LocalStorageHelper('challenge', 'currentChallenge');
 
   getList(): Challenge[] {
     return ChallengeRecord.list;
@@ -34,11 +34,15 @@ export class ChallengeService {
     })
   }
 
-  private saveCurrentChallenges() {
-    this.localStorageHelper.save({});
+  private static saveCurrentChallenges() {
+    ChallengeService.localStorageHelper.save({});
     Object.entries(ChallengeRecord.currentChallenges).forEach(([key, value]) => {
-      this.localStorageHelper.save(value.saveName, key);
+      ChallengeService.localStorageHelper.save(value.saveName, key);
     })
+  }
+
+  private saveCurrentChallenges() {
+    ChallengeService.saveCurrentChallenges();
   }
 
   load() {
@@ -50,7 +54,7 @@ export class ChallengeService {
   }
 
   private loadCurrentChallenges() {
-    const loaded = this.localStorageHelper.load({});
+    const loaded = ChallengeService.localStorageHelper.load({});
     // const loaded = {};
     Object.entries(loaded).forEach(([key, value]) => {
       if (typeof value === 'string') {
@@ -127,6 +131,7 @@ export class ChallengeService {
     if (challenge) {
       challenge.end();
       delete ChallengeRecord.currentChallenges[prestigeLayer];
+      ChallengeService.saveCurrentChallenges();
       ResetHelper.reset(challenge.prestige);
     }
   }

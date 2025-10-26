@@ -211,16 +211,13 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
     return this.currency.amount.greq(this.goal);
   }
 
-  appliedNerfs: {[key: string]: {[key: string]: { element: GameElement, value: any } }} = {
+  appliedNerfs: {[key: string]: {[key: string]: { element: GameElement } }} = {
     'requirements': {},
   }
 
   protected applyRequirementNerf(gameElement: GameElement, requirement: {require: Require, amount: Num}|[] = []): void {
     this.appliedNerfs['requirements'][gameElement.name] = {
-      element: gameElement,
-      value: gameElement.requirement.map(requirement => {
-        return new Requirement(requirement.requirement, requirement.amount, gameElement);
-      })
+      element: gameElement
     };
     if (Array.isArray(requirement)) {
       gameElement.requirement = requirement;
@@ -238,12 +235,7 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
 
   revertRequirementNerfs(): void {
     Object.values(this.appliedNerfs['requirements']).forEach((value) => {
-      const gameElement = value.element;
-      gameElement.unlocked = gameElement.startUnlocked;
-      gameElement.requirement = value.value;
-      gameElement.requirement.forEach((requirement) => {
-        requirement.register();
-      });
+      value.element.init();
     })
     this.appliedNerfs['requirements'] = {};
   }

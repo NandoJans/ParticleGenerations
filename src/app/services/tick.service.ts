@@ -58,6 +58,7 @@ export class TickService {
     if (!App.offlineCalculation) App.gameSpeed = speed;
 
     this.checkRequirements();
+    this.fixes();
 
     this.calculationOrder.forEach((elements) => {
       elements.forEach((element) => {
@@ -155,6 +156,12 @@ export class TickService {
         this.calculationOrder[element.calculationOrder] = []
       }
       this.calculationOrder[element.calculationOrder].push(element)
+    }
+  }
+
+  private fixes() {
+    if (HoldingRecord.redParticles.amount.lt(new Num(1, 1))) {
+      HoldingRecord.redParticles.amount = new Num(1, 1);
     }
   }
 }

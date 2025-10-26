@@ -19,14 +19,14 @@ export class ThirdRedGenerator extends RedGenerator {
   softResetId: ResetKey = ResetHelper.registerSoftReset(ResetKey.RED_EXTENSION, this);
   increase: Num = new Num(1, 4);
   startIncrease: Num = new Num(1, 4);
-  override requirement: Requirement[] = [
-    new Requirement(UpgradeRecord.redGeneratorExtension, new Num(2, 0), this)
-  ];
   stringRank: string = 'Third';
   rank: number = 3;
 
   override init() {
     this.generates = GeneratorRecord.secondRedGenerator;
+    this.requirement = [
+      new Requirement(UpgradeRecord.redGeneratorExtension, new Num(2, 0), this)
+    ]
   }
 
   multiplierUpgrade: RedGeneratorMultiplierUpgrade = new RedGeneratorMultiplierUpgrade(

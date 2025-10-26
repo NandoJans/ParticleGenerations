@@ -1,4 +1,5 @@
 <div
+  #starEl
   [id]="'buyable-'+galaxyTreeStar.name"
   [class]="'upgrade '+galaxyTreeStar.style+' '
   +((getIsBuyable()) ? 'buyable' : '')+' '
@@ -6,7 +7,7 @@
   +((isEnhancing()) ? 'enhancing enhancing-' + getEnhancementStyle() : '')+' '
   +((isEnhanced()) ? 'enhanced enhanced-' + getEnhancedStyle() : '')+' '
 "
-  (click)="buy()"
+  (click)="openStarDetails()"
 >
   <h4 *ngIf="getDisplayName() !== ''">{{ getDisplayName() }}</h4>
     <div class="star icon">
@@ -20,10 +21,16 @@
 </div>
 
 <!-- ② lines to children (SVG) ---------------------------------------->
-<svg *ngIf="galaxyTreeStar.getChildren()?.length"
-     class="connectors"
-     [attr.viewBox]="'0 0 100 50'">
-  <line x1="50" y1="0"  x2="50"  y2="50"/>
+<svg
+  class="connectors"
+  *ngIf="childLines.length"
+  width="100%" height="100%"
+  preserveAspectRatio="none"
+>
+  <line *ngFor="let L of childLines"
+        [attr.x1]="L.x1" [attr.y1]="L.y1"
+        [attr.x2]="L.x2" [attr.y2]="L.y2"
+        class="connector-line"/>
 </svg>
 
 <!-- ③ render every child node ---------------------------------------->

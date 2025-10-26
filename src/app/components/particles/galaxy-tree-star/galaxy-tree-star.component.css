@@ -175,15 +175,18 @@ body {
   margin-top:2.5rem;      /* vertical distance from parent        */
 }
 
-/* thin connectors */
-svg.connectors{
-  position:absolute;
-  top:100%; left:0; right:0;
-  width:100%; height:2.5rem;
-  stroke:var(--glow-color);
-  stroke-width:2;
-  pointer-events:none;
+/* The overlay follows the same stacking/transform as your nodes */
+.connectors {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 }
+
+.connector-line {
+  stroke: rgba(255,255,255,.3);
+  stroke-width: 2;
+}
+
 
 @media (max-width: 600px) {
   .children {

@@ -15,15 +15,16 @@ export class FirstGreenGenerator extends GreenGenerator {
   increase: Num = new Num(2, 0);
   startIncrease: Num = new Num(2, 0);
 
-  requirement: Requirement[];
+  requirement: Requirement[] = [];
+
   constructor(saveName: string) {
-    super(saveName, 'First Green Generator');
-    this.requirement = [
-      new Requirement(UpgradeRecord.unlockFirstGreenGenerator, new Num(1, 0), this)
-    ];
+    super(saveName, "first-green-generator");
   }
 
   override init() {
     this.generates = HoldingRecord.darkMatter;
+    this.requirement = [
+      new Requirement(UpgradeRecord.unlockFirstGreenGenerator, new Num(1, 0), this)
+    ];
   }
 }

@@ -29,11 +29,12 @@ export class YellowFusionGenerator extends Generator {
   increase: Num = new Num(1, 1);
   startIncrease: Num = new Num(1, 1);
   currency: Holding = HoldingRecord.yellowFusion;
-  requirement: Requirement[] = [
-    new Requirement(HoldingRecord.hydrogen, new Num(1, 0), this)
-  ];
+  requirement: Requirement[] = []
 
   override init() {
     this.generates = HoldingRecord.yellowFusion;
+    this.requirement = [
+      new Requirement(HoldingRecord.hydrogen, new Num(1, 0), this)
+    ];
   }
 }

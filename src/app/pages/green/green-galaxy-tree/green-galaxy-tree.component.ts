@@ -6,6 +6,7 @@ import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 import {GalaxyTreeUpgrade} from "../../../classes/features/upgrades/galaxy-tree-upgrade";
 import {faArrowDown, faArrowUp} from "@fortawesome/free-solid-svg-icons";
 import {LocalStorageHelper} from "../../../classes/helpers/local-storage-helper";
+import {GalaxyTreeService} from "../../../services/galaxy-tree.service";
 
 @Component({
     selector: 'app-green-galaxy-tree',
@@ -38,7 +39,9 @@ export class GreenGalaxyTreeComponent implements OnInit {
   protected readonly faArrowUp = faArrowUp;
   protected readonly faArrowDown = faArrowDown;
 
-  constructor() {
+  constructor(
+    public galaxyTreeService: GalaxyTreeService,
+  ) {
 
   }
 
@@ -220,5 +223,9 @@ export class GreenGalaxyTreeComponent implements OnInit {
     this.updateTransform();
     // Persist
     this.localStorageHelper.save({x: this.tx, y: this.ty, scale: this.scale}, 'viewport');
+  }
+
+  isStarSelected(): boolean {
+    return this.galaxyTreeService.hasSelectedGalaxyStar();
   }
 }
