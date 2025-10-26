@@ -158,16 +158,18 @@ button.enhancing.enhancing-yellow {
 }
 
 button.enhanced {
-  background: linear-gradient(to bottom right,
-  var(--linear-gradient-to) 19%,
-  var(--linear-gradient-from) 20%,
-  var(--linear-gradient-from) 30%,
-  var(--linear-gradient-to) 31%,
-  var(--linear-gradient-to) 69%,
-  var(--linear-gradient-from) 70%,
-  var(--linear-gradient-from) 80%,
-  var(--linear-gradient-to) 81%
-  );
+  background:
+    radial-gradient(
+      circle at top left,
+      color-mix(in srgb, var(--linear-gradient-from) 30%, transparent) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      color-mix(in srgb, var(--linear-gradient-from) 30%, transparent) 0%,
+      transparent 60%
+    ),
+    var(--linear-gradient-to);
 }
 
 button.enhanced.enhanced-yellow {
