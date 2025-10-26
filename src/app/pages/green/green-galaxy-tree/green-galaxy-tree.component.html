@@ -1,6 +1,23 @@
 @if (isStarSelected()) {
-  <div class="star-details">
-
+  <div class="star-overlay">
+    <div [class]="'star-details ' + getSelectedStarStyle()">
+      <app-button [text]="'Close'" [style]="'button horizontal exit'" (function)="closeStarDetails()"></app-button>
+      <div class="name-description">
+        <h4 class="star-name">{{ getSelectedStarName() }}</h4>
+        <p class="star-description">{{ getSelectedStarDescription() }}</p>
+      </div>
+      <div>{{ getSelectedStarEffect() }}</div>
+      <app-button
+        [text]="
+      (isSelectedStarMaxed()) ? 'Bought' : getSelectedStarCost()
+"
+        [style]="'button horizontal '
+      + (isSelectedStarBuyable() ? 'buyable green ' : 'disabled ')
+      + (isSelectedStarMaxed() ? 'maxed ' : '')
+"
+        (function)="buySelectedStar()"
+      ></app-button>
+    </div>
   </div>
 }
 <div

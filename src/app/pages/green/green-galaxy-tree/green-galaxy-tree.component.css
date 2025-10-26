@@ -72,6 +72,45 @@
 }
 /* wrapper around the entire galaxy tree allowing scroll on small screens */
 
+.star-overlay {
+  position: absolute;
+  width: 100%;
+  overflow: auto;
+  z-index: 10;
+}
+
+.star-details {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 50rem;
+  z-index: 10;
+  background-color: var(--background-color-1);
+  border-radius: 0 0 0.5rem 0.5rem;
+  border: 1px solid var(--background-color-4);
+  border-top: none;
+}
+
+.star-details.red .star-name {
+  color: var(--red-star-color);
+}
+
+.star-details.yellow .star-name {
+  color: var(--yellow-star-color);
+}
+
+.star-details.orange .star-name {
+  color: var(--orange-star-color);
+}
+
+.star-details.white .star-name {
+  color: var(--white-star-color);
+}
+
+.star-details.blue .star-name {
+  color: var(--blue-star-color);
+}
+
 @media (max-width: 600px) {
   .galaxy-tree-wrapper {
     padding-bottom: 0.5rem;

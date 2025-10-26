@@ -16,4 +16,12 @@ export class GalaxyTreeService {
   hasSelectedGalaxyStar(): boolean {
     return this.selectedGalaxyStar !== undefined;
   }
+
+  getSelectedGalaxyStar(): GalaxyTreeUpgrade | undefined {
+    return this.selectedGalaxyStar;
+  }
+
+  clearSelectedGalaxyStar() {
+    this.selectedGalaxyStar = undefined;
+  }
 }

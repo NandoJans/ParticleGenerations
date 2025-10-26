@@ -33,6 +33,6 @@ export class CheaperBoosterAccelerationGalaxyTreeUpgrade extends GalaxyTreeUpgra
   style: Styles = Styles.STAR_ORANGE
   displayName: string = "Cheaper Booster Acceleration";
 
-  cost: Num = new Num(2, 0);
-  baseCost: Num = new Num(2, 0);
+  cost: Num = new Num(1, 0);
+  baseCost: Num = new Num(1, 0);
 }

@@ -38,6 +38,12 @@
 
   --accent-color: var(--accent-color-red);
 
+  --red-star-color: #e83b1d;
+  --orange-star-color: #ff9633;
+  --yellow-star-color: #ffd83b;
+  --white-star-color: #aab5ff;
+  --blue-star-color: #5c83ff;
+
   --footer-height: 150px;
   --header-height: 100px;
   --main-height: calc(100vh - var(--header-height) - var(--footer-height));
@@ -73,12 +79,12 @@ button.button {
   border-radius: 5px;
   padding: 10px;
   font-size: 1.2rem;
-  cursor: pointer;
   font-weight: bold;
 }
 
-button.button:hover {
+button.button:not(.disabled):not(.maxed):hover {
   box-shadow: 0 0 1000px rgba(255, 255, 255, 0.2) inset;
+  cursor: pointer;
 }
 
 button.button.success {

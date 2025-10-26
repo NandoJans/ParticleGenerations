@@ -4,9 +4,10 @@ import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
 import {Holding} from "../../../classes/features/holding";
 import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 import {GalaxyTreeUpgrade} from "../../../classes/features/upgrades/galaxy-tree-upgrade";
-import {faArrowDown, faArrowUp} from "@fortawesome/free-solid-svg-icons";
+import {faArrowDown, faArrowUp, faWindowClose} from "@fortawesome/free-solid-svg-icons";
 import {LocalStorageHelper} from "../../../classes/helpers/local-storage-helper";
 import {GalaxyTreeService} from "../../../services/galaxy-tree.service";
+import {faCross} from "@fortawesome/free-solid-svg-icons/faCross";
 
 @Component({
     selector: 'app-green-galaxy-tree',
@@ -80,6 +81,12 @@ export class GreenGalaxyTreeComponent implements OnInit {
   private isPanning = false;
   private lastPan = {x: 0, y: 0};
 
+  // add fields
+  private dragThreshold = 5; // px
+  private maybePan = false;
+  private dragged = false;
+  private downPos = { x: 0, y: 0 };
+
   // Pinch state
   private pinchStart = {
     scale: 1,
@@ -104,46 +111,18 @@ export class GreenGalaxyTreeComponent implements OnInit {
   }
 
   onPointerDown(e: PointerEvent) {
-    this.galaxyTreeWrapper.nativeElement.setPointerCapture(e.pointerId);
-    this.pointers.set(e.pointerId, {x: e.clientX, y: e.clientY});
-
-    if (this.pointers.size === 1) {
-      // Begin panning
-      this.isPanning = true;
-      this.lastPan = {x: e.clientX, y: e.clientY};
-    } else if (this.pointers.size === 2) {
-      // Begin pinch
-      const [p1, p2] = Array.from(this.pointers.values());
-      const rect = this.galaxyTreeWrapper.nativeElement.getBoundingClientRect();
-      const midX = ((p1.x + p2.x) / 2) - rect.left;
-      const midY = ((p1.y + p2.y) / 2) - rect.top;
-
-      this.pinchStart.scale = this.scale;
-      this.pinchStart.tx = this.tx;
-      this.pinchStart.ty = this.ty;
-      this.pinchStart.dist = this.distance(p1, p2);
-
-      // Convert midpoint to content space (so we can keep it stable)
-      const content = this.screenToContent(midX, midY);
-      this.pinchStart.cx = content.x;
-      this.pinchStart.cy = content.y;
-    }
+    this.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    this.maybePan = true;
+    this.dragged = false;
+    this.downPos = { x: e.clientX, y: e.clientY };
+    this.lastPan = { x: e.clientX, y: e.clientY };
   }
 
   onPointerMove(e: PointerEvent) {
     if (!this.pointers.has(e.pointerId)) return;
     this.pointers.set(e.pointerId, {x: e.clientX, y: e.clientY});
 
-    if (this.pointers.size === 1 && this.isPanning) {
-      // Pan with single finger / mouse drag
-      const dx = e.clientX - this.lastPan.x;
-      const dy = e.clientY - this.lastPan.y;
-      this.lastPan = {x: e.clientX, y: e.clientY};
-
-      this.tx += dx;
-      this.ty += dy;
-      this.snapUpdate();
-    } else if (this.pointers.size === 2) {
+    if (this.pointers.size === 2) {
       // Pinch-zoom
       const [p1, p2] = Array.from(this.pointers.values());
       const newDist = this.distance(p1, p2);
@@ -163,6 +142,29 @@ export class GreenGalaxyTreeComponent implements OnInit {
       this.ty = midY - this.pinchStart.cy * this.scale;
 
       this.snapUpdate();
+      return;
+    }
+
+    // Single pointer: decide when to start panning
+    if (this.maybePan && !this.isPanning) {
+      const dx0 = e.clientX - this.downPos.x;
+      const dy0 = e.clientY - this.downPos.y;
+      if (Math.hypot(dx0, dy0) >= this.dragThreshold) {
+        // Now we *start* panning
+        this.galaxyTreeWrapper.nativeElement.setPointerCapture(e.pointerId);
+        this.isPanning = true;
+        this.dragged = true;
+      }
+    }
+
+    if (this.isPanning) {
+      const dx = e.clientX - this.lastPan.x;
+      const dy = e.clientY - this.lastPan.y;
+      this.lastPan = { x: e.clientX, y: e.clientY };
+
+      this.tx += dx;
+      this.ty += dy;
+      this.snapUpdate();
     }
   }
 
@@ -174,9 +176,18 @@ export class GreenGalaxyTreeComponent implements OnInit {
       // end pinch
       this.pinchStart.dist = 0;
     }
-    if (this.pointers.size === 0) {
+
+    if (this.isPanning) {
+      try { this.galaxyTreeWrapper.nativeElement.releasePointerCapture(e.pointerId); } catch {}
       this.isPanning = false;
+
+      // Prevent the synthetic 'click' that follows pointerup
+      e.preventDefault();
+      e.stopPropagation();
     }
+
+    // If we never started panning (no movement), allow the click to bubble
+    this.maybePan = false;
   }
 
   /* ---------- helpers ---------- */
@@ -227,5 +238,45 @@ export class GreenGalaxyTreeComponent implements OnInit {
 
   isStarSelected(): boolean {
     return this.galaxyTreeService.hasSelectedGalaxyStar();
+  }
+
+  getSelectedStarName(): string {
+    return this.galaxyTreeService.getSelectedGalaxyStar()?.displayName ?? 'None';
+  }
+
+  getSelectedStarDescription(): string {
+    return this.galaxyTreeService.getSelectedGalaxyStar()?.getDescription() ?? 'None';
+  }
+
+  closeStarDetails() {
+    this.galaxyTreeService.clearSelectedGalaxyStar();
+  }
+
+  getSelectedStarEffect() {
+    return this.galaxyTreeService.getSelectedGalaxyStar()?.getEffectDisplay() ?? 'None';
+  }
+
+  getSelectedStarStyle(): string {
+    return this.galaxyTreeService.getSelectedGalaxyStar()?.style ?? 'None';
+  }
+
+  protected readonly faWindowClose = faWindowClose;
+
+  isSelectedStarBuyable(): boolean {
+    return this.galaxyTreeService.getSelectedGalaxyStar()?.isBuyable() ?? false;
+  }
+
+  getSelectedStarCost(): string {
+    const cost = this.galaxyTreeService.getSelectedGalaxyStar()?.cost.toString() ?? '0';
+    const costHolding = this.galaxyTreeService.getSelectedGalaxyStar()?.currency.abbreviation ?? '';
+    return `${cost} ${costHolding}`;
+  }
+
+  isSelectedStarMaxed(): boolean {
+    return this.galaxyTreeService.getSelectedGalaxyStar()?.isMaxed() ?? false;
+  }
+
+  buySelectedStar(): void {
+    this.galaxyTreeService.getSelectedGalaxyStar()?.buy();
   }
 }
