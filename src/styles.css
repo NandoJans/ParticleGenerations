@@ -64,7 +64,7 @@ html, body {
   /*    transparent 60%*/
   /*  ),*/
   /*  var(--background-color-3);*/
-  background: var(--background-color-5);
+  background: var(--background-color-3);
 }
 
 button.button {

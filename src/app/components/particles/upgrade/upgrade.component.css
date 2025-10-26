@@ -161,12 +161,12 @@ button.enhanced {
   background:
     radial-gradient(
       circle at top left,
-      color-mix(in srgb, var(--linear-gradient-from) 30%, transparent) 0%,
+      color-mix(in srgb, var(--linear-gradient-from) 40%, transparent) 0%,
       transparent 60%
     ),
     radial-gradient(
       circle at bottom right,
-      color-mix(in srgb, var(--linear-gradient-from) 30%, transparent) 0%,
+      color-mix(in srgb, var(--linear-gradient-from) 40%, transparent) 0%,
       transparent 60%
     ),
     var(--linear-gradient-to);
