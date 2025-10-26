@@ -29,12 +29,10 @@ export abstract class YellowGenerator extends Generator {
   }
 
   override init() {
-    if (!this.isBreak) {
+    if (this.isBreak) {
       this.requirement = [
         new Requirement(HoldingRecord.yellowPrestiges, new Num(5, 2), this)
       ];
-    } else {
-      this.requirement = [];
     }
   }
 

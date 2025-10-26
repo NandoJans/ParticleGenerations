@@ -9,10 +9,7 @@ import {Requirement} from "../interfaces/requirement";
 
 export class FifthYellowGenerator extends YellowGenerator {
   constructor(saveName: string) {
-    super(saveName, 'fifth-yellow-generator', true);
-    this.requirement = [
-      new Requirement(UpgradeRecord.unlockFifthYellowGenerator, new Num(1, 0), this),
-    ]
+    super(saveName, 'fifth-yellow-generator');
   }
   displayName: string = 'Yellow Generator 5';
 
@@ -41,6 +38,10 @@ export class FifthYellowGenerator extends YellowGenerator {
   );
 
   override init() {
+    super.init();
     this.generates = GeneratorRecord.fourthYellowGenerator;
+    this.requirement = [
+      new Requirement(UpgradeRecord.unlockFifthYellowGenerator, new Num(1, 0), this),
+    ]
   }
 }

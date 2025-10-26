@@ -20,9 +20,6 @@ import {MilestoneRecord} from "../classes/records/milestones/milestone-record";
 import {Multiplier} from "../classes/features/multiplier";
 import {HoldingRecord} from "../classes/records/holdings/holding-record";
 import {App} from "../App";
-import {ChallengeRecord} from "../classes/records/challenges/challenge-record";
-import {MultiplierRecord} from "../classes/records/multipliers/multiplier-record";
-import {UpgradeRecord} from "../classes/records/upgrades/upgrade-record";
 
 @Injectable({
   providedIn: 'root'

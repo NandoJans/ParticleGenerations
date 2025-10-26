@@ -9,10 +9,7 @@ import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 
 export class FourthYellowGenerator extends YellowGenerator {
   constructor(saveName: string) {
-    super(saveName, 'fourth-yellow-generator', true);
-    this.requirement = [
-      new Requirement(UpgradeRecord.unlockFourthYellowGenerator, new Num(1, 0), this),
-    ]
+    super(saveName, 'fourth-yellow-generator');
   }
   displayName: string = 'Yellow Generator 4';
 
@@ -41,6 +38,10 @@ export class FourthYellowGenerator extends YellowGenerator {
   );
 
   override init() {
+    super.init();
     this.generates = GeneratorRecord.thirdYellowGenerator;
+    this.requirement = [
+      new Requirement(UpgradeRecord.unlockFourthYellowGenerator, new Num(1, 0), this),
+    ]
   }
 }
