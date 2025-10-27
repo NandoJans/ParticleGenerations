@@ -1,17 +1,17 @@
 <div>
-  <span>
-    <p>{{ holdingDisplay.getAmountPrefix() }}</p>
-    <p [class]="'holding ' + holding.getStyle()">{{ getHoldingAmount() }}</p>
-    <p>{{ holdingDisplay.getAmountSuffix() }}</p>
-  </span>
-  <span *ngIf="hasHoldingEffect()">
+  <p>
+    {{ holdingDisplay.getAmountPrefix() }}
+    <span [class]="'holding ' + holding.getStyle()">{{ getHoldingAmount() }}</span>
+    {{ holdingDisplay.getAmountSuffix() }}
+  </p>
+  <p *ngIf="hasHoldingEffect()">
     {{ holdingDisplay.getEffectPrefix() }}
-    <p [class]="'effect ' + holding.getStyle()">{{ getHoldingEffect() }}</p>
+    <span [class]="'effect ' + holding.getStyle()">{{ getHoldingEffect() }}</span>
     {{ holdingDisplay.getEffectSuffix() }}
-  </span>
-  <span *ngFor="let line of getLines()">
+  </p>
+  <p *ngFor="let line of getLines()">
     {{ line.prefix }}
-    <p [class]="'effect ' + holding.getStyle()">{{ line.valueFunction() }}</p>
+    <span [class]="'effect ' + holding.getStyle()">{{ line.valueFunction() }}</span>
     {{ line.suffix }}
-  </span>
+  </p>
 </div>
