@@ -53,6 +53,12 @@ button.sub {
   width: 13rem;
 }
 
+button.small {
+  padding: 0.1rem;
+  margin: 0.1rem;
+  width: 10rem;
+}
+
 button.sub p.description {
   font-weight: bold;
 }

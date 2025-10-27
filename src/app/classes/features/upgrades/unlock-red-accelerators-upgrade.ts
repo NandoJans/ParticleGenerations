@@ -29,6 +29,12 @@ export class UnlockRedAcceleratorsUpgrade extends Upgrade {
   type: string = 'unlock';
   override oneTime: boolean = true;
 
+  override init() {
+    this.requirement = [
+      new Requirement(HoldingRecord.redParticles, new Num(1, 75), this),
+    ];
+  }
+
   action(): undefined {
     if (this.hasBought()) {
       GeneratorRecord.redAcceleratorGenerator.amount = new Num(1, 0);

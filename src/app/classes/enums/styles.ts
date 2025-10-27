@@ -19,6 +19,7 @@ export enum Styles {
   GREEN = "green",
   SUB_GREEN = "green sub",
   HORIZONTAL_SUB_GREEN = "green sub horizontal",
+  SMALL_SUB_GREEN = "green sub small",
   DARK = "green dark",
   STAR_RED = "star red",
   STAR_ORANGE = "star orange",

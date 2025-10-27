@@ -32,6 +32,10 @@
 
 /* Responsive design */
 @media (max-width: 768px) {
+  .fusion-container {
+    padding: 10px;
+  }
+
   .resource-section {
     flex-direction: column;
     align-items: center;

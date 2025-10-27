@@ -40,4 +40,6 @@ export class StrongerYellowPowerGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
 
   cost: Num = new Num(1, 0);
   baseCost: Num = new Num(1, 0);
+
+  override calculationOrder: number = 450;
 }

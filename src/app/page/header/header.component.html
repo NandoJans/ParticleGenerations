@@ -1,6 +1,10 @@
 <div class="items">
-  <app-prestige-button [prestigeLayer]="yellowPrestigeLayer"></app-prestige-button>
-  <app-prestige-button [prestigeLayer]="greenPrestigeLayer"></app-prestige-button>
+  @if (yellowPrestigeLayer.prestigedFirstTime || yellowPrestigeLayer.hasReached()) {
+    <app-prestige-button [prestigeLayer]="yellowPrestigeLayer"></app-prestige-button>
+  }
+  @if (greenPrestigeLayer.prestigedFirstTime || greenPrestigeLayer.hasReached()) {
+    <app-prestige-button [prestigeLayer]="greenPrestigeLayer"></app-prestige-button>
+  }
 </div>
 
 

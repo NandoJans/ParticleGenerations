@@ -22,16 +22,16 @@ export class FifthYellowGenerator extends YellowGenerator {
 
   multiplierUpgrade: YellowGeneratorMultiplierUpgrade = new YellowGeneratorMultiplierUpgrade(
     this.name + '.multiplierUpgrade',
-    new Num(2, 7),
-    new Num(1, 1),
+    new Num(1, 110),
+    new Num(1, 5),
     new Num(1, 1),
     new Num(5, 0),
     this
   );
   buyMultiplierUpgrade: YellowGeneratorBuyMultiplierUpgrade = new YellowGeneratorBuyMultiplierUpgrade(
     this.name + '.buyMultiplierUpgrade',
-    new Num(1, 8),
-    new Num(1, 2),
+    new Num(1, 115),
+    new Num(1, 6),
     new Num(1, 1),
     new Num(1.2, 0),
     this
