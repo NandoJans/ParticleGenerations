@@ -386,5 +386,8 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         this.getDifficultyIncrease(new Num(1.6, 0)),
       ),
     }
+this.requirement = [
+    new Requirement(HoldingRecord.redParticles, new Num(1, 11000), this)
+  ];
   }
 }
