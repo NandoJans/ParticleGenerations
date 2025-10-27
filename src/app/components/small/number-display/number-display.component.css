@@ -1,4 +1,4 @@
-div span {
+div p {
   display: flex;
   flex-direction: row;
   align-items: baseline;
@@ -7,13 +7,13 @@ div span {
   border-radius: 12px;
 }
 
-div span p.effect {
+div p span.effect {
   font-size: 1.3rem;
   font-weight: bold;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-div span p {
+div p span {
   margin: 0 8px;
 }
 
