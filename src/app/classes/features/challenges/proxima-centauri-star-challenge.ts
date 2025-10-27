@@ -128,5 +128,8 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
         this.getDifficultyIncrease(new Num(0.9, 0)),
       ),
     }
+this.requirement = [
+    new Requirement(HoldingRecord.yellowPrestiges, new Num(1, 3), this)
+  ];
   }
 }
