@@ -228,5 +228,8 @@ export class SunStarChallenge extends YellowStarChallenge {
         return undefined;
       });
     }
+this.requirement = [
+    new Requirement(HoldingRecord.redParticles, new Num(1, 8500), this)
+  ];
   }
 }
