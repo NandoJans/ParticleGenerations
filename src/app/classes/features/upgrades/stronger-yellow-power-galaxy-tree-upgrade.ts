@@ -1,5 +1,5 @@
 import {GalaxyTreeUpgrade} from "./galaxy-tree-upgrade";
-import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
+import {HoldingRecord} from "../../records/holdings/holding-record";
 import {Styles} from "../../enums/styles";
 import {Num} from "../../../num";
 
