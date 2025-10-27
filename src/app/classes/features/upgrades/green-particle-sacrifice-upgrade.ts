@@ -9,7 +9,7 @@ export class GreenParticleSacrificeUpgrade extends SacrificeUpgrade {
     super(saveName, "green-particle-sacrifice-upgrade");
   }
 
-  displayName: string = "Green Particle Sacrifice Upgrade";
+  displayName: string = "Green Particle Sacrifice";
   baseCost: Num = new Num(2, 0);
   cost: Num = new Num(2, 0);
   increase: Num = new Num(2, 0);

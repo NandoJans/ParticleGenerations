@@ -16,6 +16,13 @@ export abstract class RedAcceleratorUpgrade extends Upgrade {
     ];
     this.resetId = ResetHelper.registerReset(ResetKey.RED_BOOSTER_ACCELERATION, this);
   }
+
+  override init() {
+    this.requirement = [
+      new Requirement(HoldingRecord.redParticles, new Num(1, 75), this, false)
+    ];
+  }
+
   name: string;
   requirement: Requirement[];
   resetId: ResetKey;

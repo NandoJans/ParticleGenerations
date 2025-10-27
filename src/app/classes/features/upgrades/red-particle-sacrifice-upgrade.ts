@@ -9,7 +9,7 @@ export class RedParticleSacrificeUpgrade extends SacrificeUpgrade {
     super(saveName, "red-particle-sacrifice-upgrade");
   }
 
-  displayName: string = "Red Particle Sacrifice Upgrade";
+  displayName: string = "Red Particle Sacrifice";
   baseCost: Num = new Num(1, 2);
   cost: Num = new Num(1, 2);
   increase: Num = new Num(1, 10000);

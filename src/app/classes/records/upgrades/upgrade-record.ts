@@ -123,7 +123,7 @@ export class UpgradeRecord extends Record {
   static decreaseRedGeneratorScaling: DecreaseRedGeneratorScalingUpgrade = new DecreaseRedGeneratorScalingUpgrade('decreaseRedGeneratorScaling');
   static decreaseRedGeneratorBoosterScaling: DecreaseRedGeneratorBoosterScalingUpgrade = new DecreaseRedGeneratorBoosterScalingUpgrade('decreaseRedGeneratorBoosterScaling');
   static stopRedBoosterAccelerationReset: StopRedBoosterAccelerationResetUpgrade = new StopRedBoosterAccelerationResetUpgrade('stopRedBoosterAccelerationReset');
-static breakYellowFusionLimitYellow: BreakYellowFusionLimitYellowUpgrade = new BreakYellowFusionLimitYellowUpgrade('breakYellowFusionLimitYellow');
+  static breakYellowFusionLimitYellow: BreakYellowFusionLimitYellowUpgrade = new BreakYellowFusionLimitYellowUpgrade('breakYellowFusionLimitYellow');
 
   // Yellow generator upgrades
   static yellowPower: YellowPowerUpgrade = new YellowPowerUpgrade('yellowPowerUpgrade');

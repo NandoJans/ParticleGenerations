@@ -22,7 +22,7 @@ export class FastestPrestigeComponent implements OnInit {
   }
 
   getHoldingDisplayName() {
-    return this.prestige.idleGenerationHolding.displayName;
+    return this.prestige.idleGenerationHolding.abbreviation;
   }
 
   getStyle() {

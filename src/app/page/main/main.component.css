@@ -1,8 +1,8 @@
 .holding-section {
-  padding: 1rem 0;
+  padding: 0.2rem 0;
   background-color: var(--background-color-2);
   border-bottom: 1px solid var(--background-color-4);
-  height: 10vh;
+  min-height: 10vh;
 }
 
 div.action-message {

@@ -5,6 +5,10 @@ button {
   border-radius: 5px;
 }
 
+h3, p {
+  margin: 0;
+}
+
 button.yellow {
   color: var(--background-color-yellow);
   border: 2px solid var(--background-color-yellow);
