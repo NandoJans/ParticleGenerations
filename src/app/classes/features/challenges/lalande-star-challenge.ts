@@ -73,6 +73,8 @@ export class LalandeStarChallenge extends YellowStarChallenge {
   }
 
   override init() {
-
+    this.requirement = [
+    new Requirement(HoldingRecord.redParticles, new Num(1, 4100), this)
+  ];
   }
 }
