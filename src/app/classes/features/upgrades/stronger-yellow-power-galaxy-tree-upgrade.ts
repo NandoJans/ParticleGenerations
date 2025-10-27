@@ -26,7 +26,7 @@ export class StrongerYellowPowerGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
 
   action(): undefined {
     if (this.hasBought()) {
-      UpgradeRecord.strongerYellowPower.buffer = UpgradeRecord.strongerYellowPower.buffer.mul(this.buffer);
+      HoldingRecord.yellowPower.yellowPower = HoldingRecord.yellowPower.yellowPower.mul(this.buffer);
     }
     return
   }
