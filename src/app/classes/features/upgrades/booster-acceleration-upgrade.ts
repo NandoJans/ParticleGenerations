@@ -42,6 +42,12 @@ export class BoosterAccelerationUpgrade extends Upgrade {
   override noMax: boolean = true;
   override resets: ResetKey = ResetKey.RED_BOOSTER_ACCELERATION;
 
+  override init() {
+    this.requirement = [
+      new Requirement(HoldingRecord.redParticles, new Num(1, 75), this)
+    ]
+  }
+
   action(): Num {
     const effect: Num = this.buffer.mul(this.amount);
     const effect2: Num = this.freeBuys.mul(this.amount);

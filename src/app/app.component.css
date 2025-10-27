@@ -4,7 +4,7 @@ header, footer {
 }
 
 header {
-  position: absolute;
+  position: sticky;
   top: 0;
   width: 100%;
   height: var(--header-height);

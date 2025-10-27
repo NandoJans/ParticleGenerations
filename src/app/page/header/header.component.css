@@ -9,7 +9,7 @@ p {
 }
 
 div.items {
-  position: relative;
+  position: absolute;
   display: flex;
   flex-direction: row;
   width: 100%;
