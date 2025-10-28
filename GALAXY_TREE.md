@@ -47,7 +47,7 @@ The galaxy tree has been split into 4 main sections, each targeting a different 
 - `strongerYellowPower` - Increases yellow power upgrade by 1.1x (Cost: 1 Dark Energy)
   - Parent: unlockFirstGreenGenerator
   - Children: strongerHydrogenGalaxyTree, betterYellowParticles
-- `betterYellowParticles` - Yellow particle generation is 2.5x stronger (Cost: 3 Dark Energy)
+- `betterYellowParticles` - Yellow generator buy-multipliers are 2.5x stronger (Cost: 3 Dark Energy)
   - Parent: strongerYellowPower
   - Children: none
 - `moreYellowKeys` - More yellow keys (Cost: 2 Dark Energy)
