@@ -1,8 +1,6 @@
 import {GalaxyTreeUpgrade} from "./galaxy-tree-upgrade";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {Num} from "../../../num";
-import {Requirement} from "../interfaces/requirement";
-import {HoldingRecord} from "../../records/holdings/holding-record";
 import {Styles} from "../../enums/styles";
 
 export class MoreYellowKeysGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
@@ -24,21 +22,22 @@ export class MoreYellowKeysGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   }
 
   getDescription(): string {
-    return "Halves all cost increase of red generators.";
+    return `Yellow key gain upgrade is ${this.buffer.toString(2)}x stronger.`;
   }
 
   action(): undefined {
     if (this.hasBought()) {
-      UpgradeRecord.unlockRedAccelerators.bought = new Num(1, 0);
-      UpgradeRecord.unlockRedAccelerators.requirement = [
-        new Requirement(HoldingRecord.redParticles, new Num(1, 1), UpgradeRecord.unlockRedAccelerators),
-      ];
+      UpgradeRecord.multiplyYellowKeyGain.buffer = 
+        UpgradeRecord.multiplyYellowKeyGain.buffer.mul(this.buffer);
     }
     return
   }
 
   style: Styles = Styles.STAR_ORANGE;
-  displayName: string = "More Yellow Keys";
+  displayName: string = "Better Yellow Key Gain";
+
+  override buffer = new Num(1.5, 0);
+  override baseBuffer = new Num(1.5, 0);
 
   cost: Num = new Num(2, 0);
   baseCost: Num = new Num(2, 0);

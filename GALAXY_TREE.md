@@ -20,7 +20,7 @@ The galaxy tree has been split into 4 main sections, each targeting a different 
 - `strongerRedExtensionGalaxyTree` - Stronger red extension effect (Cost: 3 Dark Energy)
   - Parent: increaseRedGeneratorMultiplier (via cheaperBoosterAcceleration)
   - Children: cheaperRedGenerators
-- `cheaperRedGenerators` - Red generator costs are divided by 1.5 (Cost: 3 Dark Energy)
+- `cheaperRedGenerators` - Red generator sub-multiplier upgrade is 1.5x stronger (Cost: 3 Dark Energy)
   - Parent: strongerRedExtensionGalaxyTree
   - Children: none
 
@@ -50,7 +50,7 @@ The galaxy tree has been split into 4 main sections, each targeting a different 
 - `betterYellowParticles` - Yellow generator buy-multipliers are 2.5x stronger (Cost: 3 Dark Energy)
   - Parent: strongerYellowPower
   - Children: none
-- `moreYellowKeys` - More yellow keys (Cost: 2 Dark Energy)
+- `moreYellowKeys` - Yellow key gain upgrade is 1.5x stronger (Cost: 2 Dark Energy)
   - Parent: strongerYellowPower
   - Children: strongerYellowGenerators, moreYellowKeysGain
 - `strongerYellowGenerators` - Yellow generators are 2x more powerful (Cost: 4 Dark Energy)

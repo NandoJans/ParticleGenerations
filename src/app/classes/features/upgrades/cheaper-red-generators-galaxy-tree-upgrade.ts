@@ -2,7 +2,6 @@ import {GalaxyTreeUpgrade} from "./galaxy-tree-upgrade";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {Num} from "../../../num";
 import {Styles} from "../../enums/styles";
-import {GeneratorRecord} from "../../records/generators/generator-record";
 
 export class CheaperRedGeneratorsGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   constructor(saveName: string) {
@@ -20,20 +19,19 @@ export class CheaperRedGeneratorsGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   }
 
   getDescription(): string {
-    return `Red generator costs are divided by ${this.buffer.toString(2)}.`;
+    return `Red generator sub-multiplier upgrade is ${this.buffer.toString(2)}x stronger.`;
   }
 
   action(): undefined {
     if (this.hasBought()) {
-      GeneratorRecord.redGenerators.forEach(generator => {
-        generator.increase = generator.increase.div(this.buffer);
-      });
+      UpgradeRecord.increaseRedGeneratorSubMultipliers.buffer = 
+        UpgradeRecord.increaseRedGeneratorSubMultipliers.buffer.mul(this.buffer);
     }
     return;
   }
 
   style: Styles = Styles.STAR_RED;
-  displayName: string = "Cheaper Red Generators";
+  displayName: string = "Better Red Sub-Multipliers";
 
   override buffer = new Num(1.5, 0);
   override baseBuffer = new Num(1.5, 0);
