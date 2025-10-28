@@ -2,7 +2,6 @@ import {GalaxyTreeUpgrade} from "./galaxy-tree-upgrade";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {Num} from "../../../num";
 import {Styles} from "../../enums/styles";
-import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 
 export class RedGeneratorEfficiencyGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   constructor(saveName: string) {
@@ -20,21 +19,22 @@ export class RedGeneratorEfficiencyGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   }
 
   getDescription(): string {
-    return `Red generators are ${this.buffer.toString(2)}x more efficient.`;
+    return `Red generator booster upgrade is ${this.buffer.toString(2)}x stronger.`;
   }
 
   action(): undefined {
     if (this.hasBought()) {
-      MultiplierRecord.redParticleGenerators.correct(this.buffer);
+      UpgradeRecord.redGeneratorBooster.buffer = 
+        UpgradeRecord.redGeneratorBooster.buffer.mul(this.buffer);
     }
     return;
   }
 
   style: Styles = Styles.STAR_RED;
-  displayName: string = "Red Generator Efficiency";
+  displayName: string = "Better Red Booster";
 
-  override buffer = new Num(3, 0);
-  override baseBuffer = new Num(3, 0);
+  override buffer = new Num(1.1, 0);
+  override baseBuffer = new Num(1.1, 0);
 
   cost: Num = new Num(4, 0);
   baseCost: Num = new Num(4, 0);

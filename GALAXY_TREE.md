@@ -14,7 +14,7 @@ The galaxy tree has been split into 4 main sections, each targeting a different 
 - `increaseRedGeneratorMultiplier` - Makes red generator multipliers 2x stronger (Cost: 1 Dark Energy)
   - Parent: unlockFirstGreenGenerator
   - Children: moreYellowKeys, increaseBoosterAccelerationPower, redGeneratorEfficiency
-- `redGeneratorEfficiency` - Red generators are 3x more efficient (Cost: 4 Dark Energy)
+- `redGeneratorEfficiency` - Red generator booster upgrade is 1.1x stronger (Cost: 4 Dark Energy)
   - Parent: increaseRedGeneratorMultiplier
   - Children: none
 - `strongerRedExtensionGalaxyTree` - Stronger red extension effect (Cost: 3 Dark Energy)
@@ -53,7 +53,7 @@ The galaxy tree has been split into 4 main sections, each targeting a different 
 - `moreYellowKeys` - Yellow key gain upgrade is 1.5x stronger (Cost: 2 Dark Energy)
   - Parent: strongerYellowPower
   - Children: strongerYellowGenerators, moreYellowKeysGain
-- `strongerYellowGenerators` - Yellow generators are 2x more powerful (Cost: 4 Dark Energy)
+- `strongerYellowGenerators` - Yellow generator multiplier upgrades are 2x stronger (Cost: 4 Dark Energy)
   - Parent: moreYellowKeys
   - Children: none
 - `moreYellowKeysGain` - Yellow key gain is 1.75x higher (Cost: 5 Dark Energy)

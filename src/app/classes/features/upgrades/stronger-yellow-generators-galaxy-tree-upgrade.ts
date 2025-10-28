@@ -20,20 +20,20 @@ export class StrongerYellowGeneratorsGalaxyTreeUpgrade extends GalaxyTreeUpgrade
   }
 
   getDescription(): string {
-    return `Yellow generators are ${this.buffer.toString(2)}x more powerful.`;
+    return `Yellow generator multiplier upgrades are ${this.buffer.toString(2)}x stronger.`;
   }
 
   action(): undefined {
     if (this.hasBought()) {
       GeneratorRecord.yellowGenerators.forEach(generator => {
-        generator.baseMulMod = generator.baseMulMod.mul(this.buffer);
+        generator.multiplierUpgrade.buffer = generator.multiplierUpgrade.buffer.mul(this.buffer);
       });
     }
     return;
   }
 
   style: Styles = Styles.STAR_YELLOW;
-  displayName: string = "Stronger Yellow Generators";
+  displayName: string = "Better Yellow Multipliers";
 
   override buffer = new Num(2, 0);
   override baseBuffer = new Num(2, 0);
