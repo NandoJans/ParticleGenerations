@@ -12,6 +12,7 @@ export class StrongerYellowPowerGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   getChildren(): GalaxyTreeUpgrade[] {
     return [
       UpgradeRecord.strongerHydrogenGalaxyTree,
+      UpgradeRecord.betterYellowParticles,
     ];
   }
 

@@ -83,6 +83,21 @@ import {ImproveYellowFusionGalaxyTreeUpgrade} from "../../features/upgrades/impr
 import {
   YellowFusionBoostRedAcceleratorsGalaxyTreeUpgrade
 } from "../../features/upgrades/yellow-fusion-boost-red-accelerators-galaxy-tree-upgrade";
+import {
+  RedGeneratorEfficiencyGalaxyTreeUpgrade
+} from "../../features/upgrades/red-generator-efficiency-galaxy-tree-upgrade";
+import {
+  CheaperRedGeneratorsGalaxyTreeUpgrade
+} from "../../features/upgrades/cheaper-red-generators-galaxy-tree-upgrade";
+import {
+  BetterYellowParticlesGalaxyTreeUpgrade
+} from "../../features/upgrades/better-yellow-particles-galaxy-tree-upgrade";
+import {
+  StrongerYellowGeneratorsGalaxyTreeUpgrade
+} from "../../features/upgrades/stronger-yellow-generators-galaxy-tree-upgrade";
+import {
+  MoreYellowKeysGainGalaxyTreeUpgrade
+} from "../../features/upgrades/more-yellow-keys-gain-galaxy-tree-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -166,6 +181,15 @@ export class UpgradeRecord extends Record {
 
   static strongerYellowPower: StrongerYellowPowerGalaxyTreeUpgrade = new StrongerYellowPowerGalaxyTreeUpgrade('strongerYellowPower');
 
+  // New red generator upgrades
+  static redGeneratorEfficiency: RedGeneratorEfficiencyGalaxyTreeUpgrade = new RedGeneratorEfficiencyGalaxyTreeUpgrade('redGeneratorEfficiency');
+  static cheaperRedGenerators: CheaperRedGeneratorsGalaxyTreeUpgrade = new CheaperRedGeneratorsGalaxyTreeUpgrade('cheaperRedGenerators');
+
+  // New yellow upgrades/generators upgrades
+  static betterYellowParticles: BetterYellowParticlesGalaxyTreeUpgrade = new BetterYellowParticlesGalaxyTreeUpgrade('betterYellowParticles');
+  static strongerYellowGenerators: StrongerYellowGeneratorsGalaxyTreeUpgrade = new StrongerYellowGeneratorsGalaxyTreeUpgrade('strongerYellowGenerators');
+  static moreYellowKeysGain: MoreYellowKeysGainGalaxyTreeUpgrade = new MoreYellowKeysGainGalaxyTreeUpgrade('moreYellowKeysGain');
+
   static galaxyTreeUpgradeList: GalaxyTreeUpgrade[] = [
     UpgradeRecord.unlockFirstGreenGenerator,
     UpgradeRecord.increaseRedGeneratorMultiplier,
@@ -179,6 +203,11 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.strongerHydrogenGalaxyTree,
     UpgradeRecord.improveYellowFusion,
     UpgradeRecord.yellowFusionBoostRedAccelerators,
+    UpgradeRecord.redGeneratorEfficiency,
+    UpgradeRecord.cheaperRedGenerators,
+    UpgradeRecord.betterYellowParticles,
+    UpgradeRecord.strongerYellowGenerators,
+    UpgradeRecord.moreYellowKeysGain,
   ]
 
   static override list: Upgrade[] = [
