@@ -65,17 +65,24 @@ export class GreenGalaxyTreeComponent implements OnInit {
 
   private setPositions() {
     UpgradeRecord.unlockFirstGreenGenerator.setPos(0, 0);
-    // Children are increaseRedGeneratorMultiplier, cheaperBoosterAcceleration, fasterHydrogenGeneration
+    // Children are increaseRedGeneratorMultiplier, cheaperBoosterAcceleration, fasterHydrogenGeneration, strongerYellowPower
 
+    // Red Generators Section
     UpgradeRecord.increaseRedGeneratorMultiplier.setPos(125, 0);
-    // Children are strongerRedExtensionGalaxyTree
+    // Children are moreYellowKeys, increaseBoosterAccelerationPower, redGeneratorEfficiency
+    UpgradeRecord.redGeneratorEfficiency.setPos(225, 0);
+    
     UpgradeRecord.strongerRedExtensionGalaxyTree.setPos(225, -75);
+    // Children are cheaperRedGenerators
+    UpgradeRecord.cheaperRedGenerators.setPos(325, -75);
 
+    // Red Accelerators Section
     UpgradeRecord.cheaperBoosterAcceleration.setPos(-125, 0);
     // Children are redAcceleratorStart, increaseBoosterAccelerationPower
     UpgradeRecord.redAcceleratorStart.setPos(-225, 75);
     UpgradeRecord.increaseBoosterAccelerationPower.setPos(-225, -50);
 
+    // Yellow Fusion Section
     UpgradeRecord.fasterHydrogenGeneration.setPos(0, 125);
     // Children are strongerHydrogenPower, improveYellowFusion
     UpgradeRecord.strongerHydrogenGalaxyTree.setPos(75, 225);
@@ -83,9 +90,15 @@ export class GreenGalaxyTreeComponent implements OnInit {
     // Children are yellowFusionBoostRedAccelerators
     UpgradeRecord.yellowFusionBoostRedAccelerators.setPos(-200, 200);
 
+    // Yellow Upgrades/Generators Section
     UpgradeRecord.strongerYellowPower.setPos(0, -125);
-    // Children are moreYellowKeys
+    // Children are moreYellowKeys, betterYellowParticles
+    UpgradeRecord.betterYellowParticles.setPos(-75, -225);
+    
     UpgradeRecord.moreYellowKeys.setPos(75, -225);
+    // Children are strongerYellowGenerators, moreYellowKeysGain
+    UpgradeRecord.strongerYellowGenerators.setPos(150, -300);
+    UpgradeRecord.moreYellowKeysGain.setPos(75, -325);
   }
 
   isBottomSectionOpen() {
