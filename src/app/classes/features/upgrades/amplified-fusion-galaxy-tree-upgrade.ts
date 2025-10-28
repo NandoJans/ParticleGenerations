@@ -2,8 +2,10 @@ import {GalaxyTreeUpgrade, RequireParent} from "./galaxy-tree-upgrade";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {Num} from "../../../num";
 import {Styles} from "../../enums/styles";
+import {HoldingRecord} from "../../records/holdings/holding-record";
+import {GeneratorRecord} from "../../records/generators/generator-record";
 
-export class RedGeneratorsBoostYellowFusionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
+export class AmplifiedFusionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   constructor(saveName: string) {
     super(saveName, "red-generators-boost-yellow-fusion-galaxy-tree-upgrade");
   }
@@ -14,18 +16,20 @@ export class RedGeneratorsBoostYellowFusionGalaxyTreeUpgrade extends GalaxyTreeU
 
   getParents(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.increaseRedGeneratorMultiplier,
-      UpgradeRecord.fasterHydrogenGeneration,
+      UpgradeRecord.strongerHydrogenGalaxyTree,
+      UpgradeRecord.betterRedBoosterGalaxyTree,
     ];
   }
 
   getDescription(): string {
-    return `Red generators amplify hydrogen generation by ${this.buffer.toString(2)}x.`;
+    return `Increase yellow fusion barrier by ${this.buffer.toString(2)}^fifth red generators bought.`;
   }
 
-  action(): undefined {
+  action(): Num | undefined {
     if (this.hasBought()) {
-      UpgradeRecord.increaseHydrogen.buffer = UpgradeRecord.increaseHydrogen.buffer.mul(this.buffer);
+      const effect = (this.buffer).pow(GeneratorRecord.fifthRedGenerator.bought);
+      HoldingRecord.yellowFusion.maxAmount = HoldingRecord.yellowFusion.maxAmount.mul(effect);
+      return effect;
     }
     return;
   }
@@ -35,8 +39,8 @@ export class RedGeneratorsBoostYellowFusionGalaxyTreeUpgrade extends GalaxyTreeU
   style: Styles = Styles.STAR_ORANGE;
   displayName: string = "Amplified Fusion";
 
-  override buffer = new Num(1.4, 0);
-  override baseBuffer = new Num(1.4, 0);
+  override buffer = new Num(1, 1);
+  override baseBuffer = new Num(1, 1);
 
   cost: Num = new Num(2, 1);
   baseCost: Num = new Num(2, 1);

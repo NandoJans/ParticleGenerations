@@ -12,15 +12,15 @@ export class StrongerYellowPowerGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   getChildren(): GalaxyTreeUpgrade[] {
     return [
       UpgradeRecord.strongerHydrogenGalaxyTree,
-      UpgradeRecord.betterYellowParticles,
-      UpgradeRecord.redGeneratorsBoostYellowUpgrades,
-      UpgradeRecord.redAcceleratorsBoostYellowUpgrades,
+      UpgradeRecord.betterYellowGeneratorsGalaxyTree,
+      UpgradeRecord.synergizedPowerGalaxyTree,
+      UpgradeRecord.powerAccelerationGalaxyTree,
     ];
   }
 
   getParents(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.unlockFirstGreenGenerator,
+      UpgradeRecord.unlockFirstGreenGeneratorGalaxyTree,
     ];
   }
 

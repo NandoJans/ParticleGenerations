@@ -2,10 +2,12 @@ import {GalaxyTreeUpgrade} from "./galaxy-tree-upgrade";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {Num} from "../../../num";
 import {Styles} from "../../enums/styles";
+import {GeneratorRecord} from "../../records/generators/generator-record";
+import {Upgrade} from "../upgrade";
 
-export class CheaperRedGeneratorsGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
+export class BetterRedSubMultipliersGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   constructor(saveName: string) {
-    super(saveName, "cheaper-red-generators-galaxy-tree-upgrade");
+    super(saveName, "better-red-sub-multipliers-galaxy-tree-upgrade");
   }
 
   getChildren(): GalaxyTreeUpgrade[] {
@@ -24,8 +26,9 @@ export class CheaperRedGeneratorsGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
 
   action(): undefined {
     if (this.hasBought()) {
-      UpgradeRecord.increaseRedGeneratorSubMultipliers.buffer = 
-        UpgradeRecord.increaseRedGeneratorSubMultipliers.buffer.mul(this.buffer);
+      GeneratorRecord.redGenerators.forEach(generator => {
+        generator.multiplierUpgrade.buffer = generator.multiplierUpgrade.buffer.mul(this.buffer);
+      })
     }
     return;
   }

@@ -1,7 +1,7 @@
-import {RedGeneratorsBoostYellowUpgradesGalaxyTreeUpgrade} from "./red-generators-boost-yellow-upgrades-galaxy-tree-upgrade";
+import {SynergizedPowerGalaxyTreeUpgrade} from "./synergized-power-galaxy-tree-upgrade";
 
 describe('RedGeneratorsBoostYellowUpgradesGalaxyTreeUpgrade', () => {
   it('should create an instance', () => {
-    expect(new RedGeneratorsBoostYellowUpgradesGalaxyTreeUpgrade('test')).toBeTruthy();
+    expect(new SynergizedPowerGalaxyTreeUpgrade('test')).toBeTruthy();
   });
 });

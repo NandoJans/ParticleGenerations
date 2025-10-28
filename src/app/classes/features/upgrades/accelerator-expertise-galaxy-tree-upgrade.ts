@@ -3,7 +3,7 @@ import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {Num} from "../../../num";
 import {Styles} from "../../enums/styles";
 
-export class RedAcceleratorsBoostGeneratorsGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
+export class AcceleratorExpertiseGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   constructor(saveName: string) {
     super(saveName, "red-accelerators-boost-generators-galaxy-tree-upgrade");
   }
@@ -14,7 +14,7 @@ export class RedAcceleratorsBoostGeneratorsGalaxyTreeUpgrade extends GalaxyTreeU
 
   getParents(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.increaseBoosterAccelerationPower,
+      UpgradeRecord.strongerBoosterAccelerationGalaxyTree,
     ];
   }
 
@@ -24,13 +24,13 @@ export class RedAcceleratorsBoostGeneratorsGalaxyTreeUpgrade extends GalaxyTreeU
 
   action(): undefined {
     if (this.hasBought()) {
-      UpgradeRecord.increaseRedGeneratorMultiplier.buffer = 
-        UpgradeRecord.increaseRedGeneratorMultiplier.buffer.mul(this.buffer);
+      UpgradeRecord.betterRedGeneratorsMultiplierGalaxyTree.buffer =
+        UpgradeRecord.betterRedGeneratorsMultiplierGalaxyTree.buffer.mul(this.buffer);
     }
     return;
   }
 
-  style: Styles = Styles.STAR_RED;
+  style: Styles = Styles.STAR_WHITE;
   displayName: string = "Accelerator Expertise";
 
   override buffer = new Num(1.4, 0);

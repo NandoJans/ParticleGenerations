@@ -1,7 +1,7 @@
-import {RedGeneratorsBoostYellowFusionGalaxyTreeUpgrade} from "./red-generators-boost-yellow-fusion-galaxy-tree-upgrade";
+import {AmplifiedFusionGalaxyTreeUpgrade} from "./amplified-fusion-galaxy-tree-upgrade";
 
 describe('RedGeneratorsBoostYellowFusionGalaxyTreeUpgrade', () => {
   it('should create an instance', () => {
-    expect(new RedGeneratorsBoostYellowFusionGalaxyTreeUpgrade('test')).toBeTruthy();
+    expect(new AmplifiedFusionGalaxyTreeUpgrade('test')).toBeTruthy();
   });
 });

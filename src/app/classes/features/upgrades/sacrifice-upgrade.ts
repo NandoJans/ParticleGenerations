@@ -44,6 +44,10 @@ export abstract class SacrificeUpgrade extends Upgrade {
   requirement: Requirement[];
   name: string;
 
+  override getCostString(): string {
+    return this.cost.toString();
+  }
+
   constructor(saveName: string, name: string) {
     super(saveName);
     this.name = name;

@@ -17,7 +17,7 @@ export class EnhancedDarkEnergyGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
 
   getParents(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.moreYellowKeys,
+      UpgradeRecord.betterYellowKeyGainGalaxyTree,
     ];
   }
 

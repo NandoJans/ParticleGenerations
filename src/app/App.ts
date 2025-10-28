@@ -15,6 +15,9 @@ export class App {
     }, 50);
   });
   static offlineCalculation: boolean;
+  static isDev(): boolean {
+    return window.location.href.includes('localhost') || window.location.href.includes('127.0.0.1');
+  };
 
   static startHaltNuclearDecay() {
     this.haltNuclearDecay = true;

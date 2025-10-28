@@ -4,7 +4,7 @@ import {Num} from "../../../num";
 import {Styles} from "../../enums/styles";
 import {GeneratorRecord} from "../../records/generators/generator-record";
 
-export class StrongerYellowGeneratorsGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
+export class BetterYellowMultipliersGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   constructor(saveName: string) {
     super(saveName, "stronger-yellow-generators-galaxy-tree-upgrade");
   }
@@ -15,7 +15,7 @@ export class StrongerYellowGeneratorsGalaxyTreeUpgrade extends GalaxyTreeUpgrade
 
   getParents(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.moreYellowKeys,
+      UpgradeRecord.betterYellowMultipliersGalaxyTree,
     ];
   }
 
@@ -38,6 +38,6 @@ export class StrongerYellowGeneratorsGalaxyTreeUpgrade extends GalaxyTreeUpgrade
   override buffer = new Num(2, 0);
   override baseBuffer = new Num(2, 0);
 
-  cost: Num = new Num(4, 0);
-  baseCost: Num = new Num(4, 0);
+  cost: Num = new Num(2, 1);
+  baseCost: Num = new Num(2, 1);
 }

@@ -5,7 +5,7 @@ import {Styles} from "../../enums/styles";
 import {Num} from "../../../num";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 
-export class YellowFusionBoostRedAcceleratorsGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
+export class FusedAccelerationGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   constructor(saveName: string) {
     super(saveName, "yellow-fusion-boost-red-accelerators-galaxy-tree-upgrade");
   }
@@ -18,8 +18,8 @@ export class YellowFusionBoostRedAcceleratorsGalaxyTreeUpgrade extends GalaxyTre
 
   getParents(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.redAcceleratorStart,
-      UpgradeRecord.improveYellowFusion,
+      UpgradeRecord.redAcceleratorStartGalaxyTree,
+      UpgradeRecord.strongerYellowFusionGalaxyTree,
     ];
   }
 

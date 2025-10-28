@@ -2,8 +2,10 @@ import {GalaxyTreeUpgrade, RequireParent} from "./galaxy-tree-upgrade";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {Num} from "../../../num";
 import {Styles} from "../../enums/styles";
+import {HoldingRecord} from "../../records/holdings/holding-record";
+import {GeneratorRecord} from "../../records/generators/generator-record";
 
-export class RedGeneratorsBoostYellowUpgradesGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
+export class SynergizedPowerGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   constructor(saveName: string) {
     super(saveName, "red-generators-boost-yellow-upgrades-galaxy-tree-upgrade");
   }
@@ -14,18 +16,20 @@ export class RedGeneratorsBoostYellowUpgradesGalaxyTreeUpgrade extends GalaxyTre
 
   getParents(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.increaseRedGeneratorMultiplier,
-      UpgradeRecord.strongerYellowPower,
+      UpgradeRecord.strongerRedExtensionGalaxyTree,
+      UpgradeRecord.betterYellowKeyGainGalaxyTree,
     ];
   }
 
   getDescription(): string {
-    return `Red generator efficiency boosts yellow power upgrade by ${this.buffer.toString(2)}x.`;
+    return `Yellow Power boost the first generator ^${this.buffer.toString(2)}.`;
   }
 
-  action(): undefined {
+  action(): Num | undefined {
     if (this.hasBought()) {
-      UpgradeRecord.yellowPower.buffer = UpgradeRecord.yellowPower.buffer.mul(this.buffer);
+      const effect = HoldingRecord.yellowPower.effect
+      GeneratorRecord.firstRedGenerator.multiplier = GeneratorRecord.firstRedGenerator.multiplier.mul(this.buffer);
+      return effect;
     }
     return;
   }
@@ -35,8 +39,8 @@ export class RedGeneratorsBoostYellowUpgradesGalaxyTreeUpgrade extends GalaxyTre
   style: Styles = Styles.STAR_ORANGE;
   displayName: string = "Synergized Power";
 
-  override buffer = new Num(1.5, 0);
-  override baseBuffer = new Num(1.5, 0);
+  override buffer = new Num(1.2, 0);
+  override baseBuffer = new Num(1.2, 0);
 
   cost: Num = new Num(1.5, 1);
   baseCost: Num = new Num(1.5, 1);

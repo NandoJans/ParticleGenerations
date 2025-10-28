@@ -24,7 +24,7 @@ type Line = { x1:number; y1:number; x2:number; y2:number };
     standalone: false
 })
 export class GalaxyTreeStarComponent implements OnInit, AfterViewInit {
-  @Input() galaxyTreeStar: GalaxyTreeUpgrade = UpgradeRecord.unlockFirstGreenGenerator
+  @Input() galaxyTreeStar: GalaxyTreeUpgrade = UpgradeRecord.unlockFirstGreenGeneratorGalaxyTree
   @ViewChild('starEl', { static: true }) starEl!: ElementRef<HTMLElement>;
   /** All descendant components (children are a subset) */
   @ViewChildren(GalaxyTreeStarComponent) descendantComps!: QueryList<GalaxyTreeStarComponent>;

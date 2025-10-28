@@ -93,4 +93,8 @@ export class UpgradeComponent {
     }
     return '';
   }
+
+  getCostString() {
+    return this.upgrade.getCostString();
+  }
 }

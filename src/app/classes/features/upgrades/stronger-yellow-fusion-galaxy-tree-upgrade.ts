@@ -4,20 +4,20 @@ import {HoldingRecord} from "../../records/holdings/holding-record";
 import {Styles} from "../../enums/styles";
 import {Num} from "../../../num";
 
-export class ImproveYellowFusionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
+export class StrongerYellowFusionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   constructor(saveName: string) {
     super(saveName, "improve-yellow-fusion-galaxy-tree-upgrade");
   }
 
   getChildren(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.yellowFusionBoostRedAccelerators,
+      UpgradeRecord.fusedAccelerationGalaxyTree,
     ];
   }
 
   getParents(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.fasterHydrogenGeneration,
+      UpgradeRecord.fasterHydrogenGenerationGalaxyTree,
     ];
   }
 

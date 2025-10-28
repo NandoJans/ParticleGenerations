@@ -1,7 +1,7 @@
-import {YellowFusionBoostUpgradesGalaxyTreeUpgrade} from "./yellow-fusion-boost-upgrades-galaxy-tree-upgrade";
+import {YellowFusionExpertiseGalaxyTreeUpgrade} from "./fusion-expertise-galaxy-tree-upgrade";
 
 describe('YellowFusionBoostUpgradesGalaxyTreeUpgrade', () => {
   it('should create an instance', () => {
-    expect(new YellowFusionBoostUpgradesGalaxyTreeUpgrade('test')).toBeTruthy();
+    expect(new YellowFusionExpertiseGalaxyTreeUpgrade('test')).toBeTruthy();
   });
 });

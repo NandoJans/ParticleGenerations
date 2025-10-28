@@ -1,7 +1,7 @@
-import {RedAcceleratorsBoostYellowUpgradesGalaxyTreeUpgrade} from "./red-accelerators-boost-yellow-upgrades-galaxy-tree-upgrade";
+import {PowerAccelerationGalaxyTreeUpgrade} from "./power-acceleration-galaxy-tree-upgrade";
 
 describe('RedAcceleratorsBoostYellowUpgradesGalaxyTreeUpgrade', () => {
   it('should create an instance', () => {
-    expect(new RedAcceleratorsBoostYellowUpgradesGalaxyTreeUpgrade('test')).toBeTruthy();
+    expect(new PowerAccelerationGalaxyTreeUpgrade('test')).toBeTruthy();
   });
 });
