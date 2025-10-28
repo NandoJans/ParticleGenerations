@@ -98,6 +98,27 @@ import {
 import {
   MoreYellowKeysGainGalaxyTreeUpgrade
 } from "../../features/upgrades/more-yellow-keys-gain-galaxy-tree-upgrade";
+import {
+  RedGeneratorsBoostYellowUpgradesGalaxyTreeUpgrade
+} from "../../features/upgrades/red-generators-boost-yellow-upgrades-galaxy-tree-upgrade";
+import {
+  RedGeneratorsBoostYellowFusionGalaxyTreeUpgrade
+} from "../../features/upgrades/red-generators-boost-yellow-fusion-galaxy-tree-upgrade";
+import {
+  RedAcceleratorsBoostYellowUpgradesGalaxyTreeUpgrade
+} from "../../features/upgrades/red-accelerators-boost-yellow-upgrades-galaxy-tree-upgrade";
+import {
+  RedGeneratorsBoostAcceleratorsGalaxyTreeUpgrade
+} from "../../features/upgrades/red-generators-boost-accelerators-galaxy-tree-upgrade";
+import {
+  RedAcceleratorsBoostGeneratorsGalaxyTreeUpgrade
+} from "../../features/upgrades/red-accelerators-boost-generators-galaxy-tree-upgrade";
+import {
+  YellowUpgradesBoostFusionGalaxyTreeUpgrade
+} from "../../features/upgrades/yellow-upgrades-boost-fusion-galaxy-tree-upgrade";
+import {
+  YellowFusionBoostUpgradesGalaxyTreeUpgrade
+} from "../../features/upgrades/yellow-fusion-boost-upgrades-galaxy-tree-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -190,6 +211,17 @@ export class UpgradeRecord extends Record {
   static strongerYellowGenerators: StrongerYellowGeneratorsGalaxyTreeUpgrade = new StrongerYellowGeneratorsGalaxyTreeUpgrade('strongerYellowGenerators');
   static moreYellowKeysGain: MoreYellowKeysGainGalaxyTreeUpgrade = new MoreYellowKeysGainGalaxyTreeUpgrade('moreYellowKeysGain');
 
+  // Mix-upgrades between sections (10-25 Dark Energy)
+  static redGeneratorsBoostYellowUpgrades: RedGeneratorsBoostYellowUpgradesGalaxyTreeUpgrade = new RedGeneratorsBoostYellowUpgradesGalaxyTreeUpgrade('redGeneratorsBoostYellowUpgrades');
+  static redGeneratorsBoostYellowFusion: RedGeneratorsBoostYellowFusionGalaxyTreeUpgrade = new RedGeneratorsBoostYellowFusionGalaxyTreeUpgrade('redGeneratorsBoostYellowFusion');
+  static redAcceleratorsBoostYellowUpgrades: RedAcceleratorsBoostYellowUpgradesGalaxyTreeUpgrade = new RedAcceleratorsBoostYellowUpgradesGalaxyTreeUpgrade('redAcceleratorsBoostYellowUpgrades');
+
+  // Cross-section boost upgrades (25-100 Dark Energy)
+  static redGeneratorsBoostAccelerators: RedGeneratorsBoostAcceleratorsGalaxyTreeUpgrade = new RedGeneratorsBoostAcceleratorsGalaxyTreeUpgrade('redGeneratorsBoostAccelerators');
+  static redAcceleratorsBoostGenerators: RedAcceleratorsBoostGeneratorsGalaxyTreeUpgrade = new RedAcceleratorsBoostGeneratorsGalaxyTreeUpgrade('redAcceleratorsBoostGenerators');
+  static yellowUpgradesBoostFusion: YellowUpgradesBoostFusionGalaxyTreeUpgrade = new YellowUpgradesBoostFusionGalaxyTreeUpgrade('yellowUpgradesBoostFusion');
+  static yellowFusionBoostUpgrades: YellowFusionBoostUpgradesGalaxyTreeUpgrade = new YellowFusionBoostUpgradesGalaxyTreeUpgrade('yellowFusionBoostUpgrades');
+
   static galaxyTreeUpgradeList: GalaxyTreeUpgrade[] = [
     UpgradeRecord.unlockFirstGreenGenerator,
     UpgradeRecord.increaseRedGeneratorMultiplier,
@@ -208,6 +240,15 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.betterYellowParticles,
     UpgradeRecord.strongerYellowGenerators,
     UpgradeRecord.moreYellowKeysGain,
+    // Mix-upgrades between sections
+    UpgradeRecord.redGeneratorsBoostYellowUpgrades,
+    UpgradeRecord.redGeneratorsBoostYellowFusion,
+    UpgradeRecord.redAcceleratorsBoostYellowUpgrades,
+    // Cross-section boost upgrades
+    UpgradeRecord.redGeneratorsBoostAccelerators,
+    UpgradeRecord.redAcceleratorsBoostGenerators,
+    UpgradeRecord.yellowUpgradesBoostFusion,
+    UpgradeRecord.yellowFusionBoostUpgrades,
   ]
 
   static override list: Upgrade[] = [

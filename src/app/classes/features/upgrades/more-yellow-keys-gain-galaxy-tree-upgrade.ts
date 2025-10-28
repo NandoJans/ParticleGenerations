@@ -10,7 +10,9 @@ export class MoreYellowKeysGainGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   }
 
   getChildren(): GalaxyTreeUpgrade[] {
-    return [];
+    return [
+      UpgradeRecord.yellowUpgradesBoostFusion,
+    ];
   }
 
   getParents(): GalaxyTreeUpgrade[] {

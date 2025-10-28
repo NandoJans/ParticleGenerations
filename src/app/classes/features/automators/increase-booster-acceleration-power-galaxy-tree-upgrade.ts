@@ -10,7 +10,7 @@ export class IncreaseBoosterAccelerationPowerGalaxyTreeUpgrade extends GalaxyTre
 
   getChildren(): GalaxyTreeUpgrade[] {
     return [
-
+      UpgradeRecord.redAcceleratorsBoostGenerators,
     ];
   }
 

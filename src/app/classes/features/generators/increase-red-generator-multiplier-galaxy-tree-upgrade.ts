@@ -14,6 +14,8 @@ export class IncreaseRedGeneratorMultiplierGalaxyTreeUpgrade extends GalaxyTreeU
       UpgradeRecord.moreYellowKeys,
       UpgradeRecord.increaseBoosterAccelerationPower,
       UpgradeRecord.redGeneratorEfficiency,
+      UpgradeRecord.redGeneratorsBoostYellowUpgrades,
+      UpgradeRecord.redGeneratorsBoostYellowFusion,
     ];
   }
 

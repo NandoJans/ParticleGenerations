@@ -11,7 +11,9 @@ export class FasterHydrogenGenerationGalaxyTreeUpgrade extends GalaxyTreeUpgrade
 
   getChildren(): GalaxyTreeUpgrade[] {
     return [
-
+      UpgradeRecord.strongerHydrogenGalaxyTree,
+      UpgradeRecord.improveYellowFusion,
+      UpgradeRecord.redGeneratorsBoostYellowFusion,
     ];
   }
 
