@@ -13,9 +13,12 @@ The galaxy tree has been split into 4 main sections, each targeting a different 
 **Current Upgrades:**
 - `increaseRedGeneratorMultiplier` - Makes red generator multipliers 2x stronger (Cost: 1 Dark Energy)
   - Parent: unlockFirstGreenGenerator
-  - Children: moreYellowKeys, increaseBoosterAccelerationPower, redGeneratorEfficiency
+  - Children: moreYellowKeys, increaseBoosterAccelerationPower, redGeneratorEfficiency, redGeneratorsBoostYellowUpgrades, redGeneratorsBoostYellowFusion
 - `redGeneratorEfficiency` - Red generator booster upgrade is 1.1x stronger (Cost: 4 Dark Energy)
   - Parent: increaseRedGeneratorMultiplier
+  - Children: redGeneratorsBoostAccelerators
+- `redGeneratorsBoostAccelerators` - Red generator mastery empowers cheaper booster acceleration by 1.5x (Cost: 40 Dark Energy)
+  - Parent: redGeneratorEfficiency
   - Children: none
 - `strongerRedExtensionGalaxyTree` - Stronger red extension effect (Cost: 3 Dark Energy)
   - Parent: increaseRedGeneratorMultiplier (via cheaperBoosterAcceleration)
@@ -34,9 +37,12 @@ The galaxy tree has been split into 4 main sections, each targeting a different 
   - Children: redAcceleratorStart, strongerRedExtensionGalaxyTree
 - `redAcceleratorStart` - Halves all cost increase of red generators, unlocks red accelerators early (Cost: 1 Dark Energy)
   - Parent: cheaperBoosterAcceleration
-  - Children: yellowFusionBoostRedAccelerators
+  - Children: yellowFusionBoostRedAccelerators, redAcceleratorsBoostYellowUpgrades
 - `increaseBoosterAccelerationPower` - Increases booster acceleration power (Cost: varies)
   - Parent: increaseRedGeneratorMultiplier
+  - Children: redAcceleratorsBoostGenerators
+- `redAcceleratorsBoostGenerators` - Red accelerator expertise enhances red generator multipliers by 1.4x (Cost: 35 Dark Energy)
+  - Parent: increaseBoosterAccelerationPower
   - Children: none
 
 ### 3. Yellow Upgrades and Generators Section
@@ -46,7 +52,7 @@ The galaxy tree has been split into 4 main sections, each targeting a different 
 **Current Upgrades:**
 - `strongerYellowPower` - Increases yellow power upgrade by 1.1x (Cost: 1 Dark Energy)
   - Parent: unlockFirstGreenGenerator
-  - Children: strongerHydrogenGalaxyTree, betterYellowParticles
+  - Children: strongerHydrogenGalaxyTree, betterYellowParticles, redGeneratorsBoostYellowUpgrades, redAcceleratorsBoostYellowUpgrades
 - `betterYellowParticles` - Yellow generator buy-multipliers are 2.5x stronger (Cost: 3 Dark Energy)
   - Parent: strongerYellowPower
   - Children: none
@@ -58,24 +64,45 @@ The galaxy tree has been split into 4 main sections, each targeting a different 
   - Children: none
 - `moreYellowKeysGain` - Yellow key gain is 1.75x higher (Cost: 5 Dark Energy)
   - Parent: moreYellowKeys
+  - Children: yellowUpgradesBoostFusion
+- `yellowUpgradesBoostFusion` - Yellow power mastery strengthens yellow fusion effect by 1.5x (Cost: 50 Dark Energy)
+  - Parent: moreYellowKeysGain
   - Children: none
 
 ### 4. Yellow Fusion Section
 **Color:** Orange stars (Styles.STAR_ORANGE)
 **Focus:** Upgrades that improve yellow fusion mechanics and hydrogen generation
 
-**Current Upgrades (COMPLETE):**
+**Current Upgrades:**
 - `fasterHydrogenGeneration` - Generate hydrogen 2.5x faster (Cost: 2 Dark Energy)
   - Parent: unlockFirstGreenGenerator
-  - Children: strongerHydrogenGalaxyTree, improveYellowFusion
+  - Children: strongerHydrogenGalaxyTree, improveYellowFusion, redGeneratorsBoostYellowFusion
 - `strongerHydrogenGalaxyTree` - Stronger hydrogen effect (Cost: varies)
   - Parents: fasterHydrogenGeneration, strongerYellowPower
+  - Children: yellowFusionBoostUpgrades
+- `yellowFusionBoostUpgrades` - Hydrogen mastery amplifies yellow power by 1.6x (Cost: 45 Dark Energy)
+  - Parent: strongerHydrogenGalaxyTree
   - Children: none
 - `improveYellowFusion` - Yellow fusion effect is 1.25x stronger (Cost: 3 Dark Energy)
   - Parent: fasterHydrogenGeneration
   - Children: yellowFusionBoostRedAccelerators
 - `yellowFusionBoostRedAccelerators` - Yellow fusion boosts red accelerators (Cost: varies)
   - Parents: improveYellowFusion, redAcceleratorStart
+  - Children: none
+
+### 5. Mix-Upgrades (Cross-Section Synergies)
+**Color:** Orange/Yellow stars (Styles.STAR_ORANGE, Styles.STAR_YELLOW)
+**Focus:** Upgrades that bridge different sections, requiring BOTH parents
+
+**Current Upgrades:**
+- `redGeneratorsBoostYellowUpgrades` - Red generator efficiency boosts yellow power upgrade by 1.5x (Cost: 15 Dark Energy)
+  - Parents: increaseRedGeneratorMultiplier, strongerYellowPower (requires BOTH)
+  - Children: none
+- `redGeneratorsBoostYellowFusion` - Red generators amplify hydrogen generation by 1.4x (Cost: 20 Dark Energy)
+  - Parents: increaseRedGeneratorMultiplier, fasterHydrogenGeneration (requires BOTH)
+  - Children: none
+- `redAcceleratorsBoostYellowUpgrades` - Red accelerators enhance yellow key gain by 1.3x (Cost: 12 Dark Energy)
+  - Parents: redAcceleratorStart, strongerYellowPower (requires BOTH)
   - Children: none
 
 ### Root Node
