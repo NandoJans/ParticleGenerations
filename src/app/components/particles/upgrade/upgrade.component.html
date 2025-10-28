@@ -12,7 +12,7 @@
   <p class="description" *ngIf="getDescription() !== '' && !isEnhancing()">{{ getDescription() }}</p>
   <p *ngIf="isEnhancing()">{{ getEnhancementString() }}</p>
   <p *ngIf="getEffect()" class="effect">{{ getEffect() }}</p>
-  <p *ngIf="!getIsMaxed()" class="cost">Cost: {{ getCost() }} {{ getCurrencyAbbreviation() }}</p>
+  <p *ngIf="!getIsMaxed()" class="cost">{{ getCostString() }}</p>
   <div class="challenge-disabled" style="display: none;">
     <h2>Challenge Disabled</h2>
   </div>

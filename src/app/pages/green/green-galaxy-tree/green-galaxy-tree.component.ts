@@ -22,7 +22,7 @@ export class GreenGalaxyTreeComponent implements OnInit {
     UpgradeRecord.yellowParticleSacrifice,
     UpgradeRecord.greenParticleSacrifice,
   ];
-  galaxyTreeStarRoot: GalaxyTreeUpgrade = UpgradeRecord.unlockFirstGreenGenerator;
+  galaxyTreeStarRoot: GalaxyTreeUpgrade = UpgradeRecord.unlockFirstGreenGeneratorGalaxyTree;
   infoText: string[] = [
     'The Green Galaxy Tree represents the ultimate progression system in Particle Generations!',
     'Dark Energy is the currency for this tree, earned through particle sacrifices.',
@@ -64,41 +64,50 @@ export class GreenGalaxyTreeComponent implements OnInit {
   }
 
   private setPositions() {
-    UpgradeRecord.unlockFirstGreenGenerator.setPos(0, 0);
+    UpgradeRecord.unlockFirstGreenGeneratorGalaxyTree.setPos(0, 0);
     // Children are increaseRedGeneratorMultiplier, cheaperBoosterAcceleration, fasterHydrogenGeneration, strongerYellowPower
 
     // Red Generators Section
-    UpgradeRecord.increaseRedGeneratorMultiplier.setPos(125, 0);
+    UpgradeRecord.betterRedGeneratorsMultiplierGalaxyTree.setPos(125, 0);
     // Children are moreYellowKeys, increaseBoosterAccelerationPower, redGeneratorEfficiency
-    UpgradeRecord.redGeneratorEfficiency.setPos(225, 0);
-    
+    UpgradeRecord.betterRedBoosterGalaxyTree.setPos(225, 75);
+    UpgradeRecord.redExpertiseGalaxyTree.setPos(325, 0);
+
     UpgradeRecord.strongerRedExtensionGalaxyTree.setPos(225, -75);
     // Children are cheaperRedGenerators
-    UpgradeRecord.cheaperRedGenerators.setPos(325, -75);
+    UpgradeRecord.betterRedSubMultipliersGalaxyTree.setPos(325, -125);
 
     // Red Accelerators Section
-    UpgradeRecord.cheaperBoosterAcceleration.setPos(-125, 0);
+    UpgradeRecord.cheaperBoosterAccelerationGalaxyTree.setPos(-125, 0);
     // Children are redAcceleratorStart, increaseBoosterAccelerationPower
-    UpgradeRecord.redAcceleratorStart.setPos(-225, 75);
-    UpgradeRecord.increaseBoosterAccelerationPower.setPos(-225, -50);
+    UpgradeRecord.redAcceleratorStartGalaxyTree.setPos(-225, 75);
+    UpgradeRecord.strongerBoosterAccelerationGalaxyTree.setPos(-225, -50);
+    UpgradeRecord.acceleratorExpertiseGalaxyTree.setPos(-325, 0);
 
     // Yellow Fusion Section
-    UpgradeRecord.fasterHydrogenGeneration.setPos(0, 125);
+    UpgradeRecord.fasterHydrogenGenerationGalaxyTree.setPos(0, 125);
     // Children are strongerHydrogenPower, improveYellowFusion
     UpgradeRecord.strongerHydrogenGalaxyTree.setPos(75, 225);
-    UpgradeRecord.improveYellowFusion.setPos(-75, 225);
+    UpgradeRecord.fusionExpertiseGalaxyTree.setPos(0, 325);
+    UpgradeRecord.strongerYellowFusionGalaxyTree.setPos(-75, 225);
     // Children are yellowFusionBoostRedAccelerators
-    UpgradeRecord.yellowFusionBoostRedAccelerators.setPos(-200, 200);
+    UpgradeRecord.fusedAccelerationGalaxyTree.setPos(-200, 200);
 
     // Yellow Upgrades/Generators Section
-    UpgradeRecord.strongerYellowPower.setPos(0, -125);
+    UpgradeRecord.strongerYellowPowerGalaxyTree.setPos(0, -125);
     // Children are moreYellowKeys, betterYellowParticles
-    UpgradeRecord.betterYellowParticles.setPos(-75, -225);
-    
-    UpgradeRecord.moreYellowKeys.setPos(75, -225);
+    UpgradeRecord.betterYellowGeneratorsGalaxyTree.setPos(-75, -225);
+
+    UpgradeRecord.betterYellowKeyGainGalaxyTree.setPos(75, -225);
     // Children are strongerYellowGenerators, moreYellowKeysGain
-    UpgradeRecord.strongerYellowGenerators.setPos(150, -300);
-    UpgradeRecord.moreYellowKeysGain.setPos(75, -325);
+    UpgradeRecord.betterYellowMultipliersGalaxyTree.setPos(-125, -325);
+    UpgradeRecord.amplifiedYellowKeysGalaxyTree.setPos(125, -325);
+    UpgradeRecord.yellowExpertiseGalaxyTree.setPos(0, -325);
+
+    // Mix-upgrades between sections
+    UpgradeRecord.synergizedPowerGalaxyTree.setPos(200, -200);
+    UpgradeRecord.amplifiedFusionGalaxyTree.setPos(200, 200);
+    UpgradeRecord.powerAccelerationGalaxyTree.setPos(-200, -200);
   }
 
   isBottomSectionOpen() {

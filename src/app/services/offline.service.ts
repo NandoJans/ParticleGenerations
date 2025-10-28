@@ -104,7 +104,7 @@ export class OfflineService {
 
   load(): void {
     const lastSave = this.localStorageHelper.load(null);
-    if (lastSave) {
+    if (lastSave && !App.isDev()) {
       this.done = false;
       this.closed = false;
       this.ticksDone = 0;

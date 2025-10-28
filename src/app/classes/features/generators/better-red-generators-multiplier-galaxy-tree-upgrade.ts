@@ -4,22 +4,24 @@ import {Num} from "../../../num";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {GeneratorRecord} from "../../records/generators/generator-record";
 
-export class IncreaseRedGeneratorMultiplierGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
+export class BetterRedGeneratorsMultiplierGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   constructor(saveName: string) {
     super(saveName, "better-red-generator");
   }
 
   getChildren(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.moreYellowKeys,
-      UpgradeRecord.increaseBoosterAccelerationPower,
-      UpgradeRecord.redGeneratorEfficiency,
+      UpgradeRecord.betterYellowKeyGainGalaxyTree,
+      UpgradeRecord.strongerBoosterAccelerationGalaxyTree,
+      UpgradeRecord.betterRedBoosterGalaxyTree,
+      UpgradeRecord.synergizedPowerGalaxyTree,
+      UpgradeRecord.amplifiedFusionGalaxyTree,
     ];
   }
 
   getParents(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.unlockFirstGreenGenerator,
+      UpgradeRecord.unlockFirstGreenGeneratorGalaxyTree,
     ];
   }
 

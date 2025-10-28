@@ -4,18 +4,20 @@ import {Num} from "../../../num";
 import {Styles} from "../../enums/styles";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 
-export class MoreYellowKeysGainGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
+export class AmplifiedYellowKeysGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   constructor(saveName: string) {
     super(saveName, "more-yellow-keys-gain-galaxy-tree-upgrade");
   }
 
   getChildren(): GalaxyTreeUpgrade[] {
-    return [];
+    return [
+      UpgradeRecord.yellowExpertiseGalaxyTree,
+    ];
   }
 
   getParents(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.moreYellowKeys,
+      UpgradeRecord.betterYellowKeyGainGalaxyTree,
     ];
   }
 
@@ -30,12 +32,12 @@ export class MoreYellowKeysGainGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
     return;
   }
 
-  style: Styles = Styles.STAR_YELLOW;
+  style: Styles = Styles.STAR_RED;
   displayName: string = "Amplified Yellow Keys";
 
-  override buffer = new Num(1.75, 0);
-  override baseBuffer = new Num(1.75, 0);
+  override buffer = new Num(1, 1);
+  override baseBuffer = new Num(1, 1);
 
-  cost: Num = new Num(5, 0);
-  baseCost: Num = new Num(5, 0);
+  cost: Num = new Num(1, 1);
+  baseCost: Num = new Num(1, 1);
 }

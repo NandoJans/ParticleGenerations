@@ -10,13 +10,13 @@ export class StrongerRedExtensionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
 
   getChildren(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.cheaperRedGenerators,
+      UpgradeRecord.betterRedSubMultipliersGalaxyTree,
     ];
   }
 
   getParents(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.increaseRedGeneratorMultiplier,
+      UpgradeRecord.betterRedGeneratorsMultiplierGalaxyTree,
     ];
   }
 

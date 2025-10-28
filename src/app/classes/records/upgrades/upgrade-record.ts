@@ -60,16 +60,16 @@ import {
   UnlockFirstGreenGeneratorGalaxyTreeUpgrade
 } from "../../features/upgrades/unlock-first-green-generator-galaxy-tree-upgrade";
 import {
-  IncreaseRedGeneratorMultiplierGalaxyTreeUpgrade
-} from "../../features/generators/increase-red-generator-multiplier-galaxy-tree-upgrade";
+  BetterRedGeneratorsMultiplierGalaxyTreeUpgrade
+} from "../../features/generators/better-red-generators-multiplier-galaxy-tree-upgrade";
 import {RedAcceleratorStartGalaxyTreeUpgrade} from "../../features/upgrades/red-accelerator-start-galaxy-tree-upgrade";
-import {MoreYellowKeysGalaxyTreeUpgrade} from "../../features/upgrades/more-yellow-keys-galaxy-tree-upgrade";
+import {BetterYellowKeyGalaxyTreeUpgrade} from "../../features/upgrades/better-yellow-key-galaxy-tree-upgrade";
 import {
   StrongerRedExtensionGalaxyTreeUpgrade
 } from "../../features/automators/stronger-red-extension-galaxy-tree-upgrade";
 import {
-  IncreaseBoosterAccelerationPowerGalaxyTreeUpgrade
-} from "../../features/automators/increase-booster-acceleration-power-galaxy-tree-upgrade";
+  StrongerBoosterAccelerationPowerGalaxyTreeUpgrade
+} from "../../features/automators/stronger-booster-acceleration-power-galaxy-tree-upgrade";
 import {
   CheaperBoosterAccelerationGalaxyTreeUpgrade
 } from "../../features/upgrades/cheaper-booster-acceleration-galaxy-tree-upgrade";
@@ -79,25 +79,44 @@ import {
 import {StrongerYellowPowerGalaxyTreeUpgrade} from "../../features/upgrades/stronger-yellow-power-galaxy-tree-upgrade";
 import {GalaxyTreeUpgrade} from "../../features/upgrades/galaxy-tree-upgrade";
 import {StrongerHydrogenGalaxyTreeUpgrade} from "../../features/upgrades/stronger-hydrogen-galaxy-tree-upgrade";
-import {ImproveYellowFusionGalaxyTreeUpgrade} from "../../features/upgrades/improve-yellow-fusion-galaxy-tree-upgrade";
+import {StrongerYellowFusionGalaxyTreeUpgrade} from "../../features/upgrades/stronger-yellow-fusion-galaxy-tree-upgrade";
 import {
-  YellowFusionBoostRedAcceleratorsGalaxyTreeUpgrade
-} from "../../features/upgrades/yellow-fusion-boost-red-accelerators-galaxy-tree-upgrade";
+  FusedAccelerationGalaxyTreeUpgrade
+} from "../../features/upgrades/fused-acceleration-galaxy-tree-upgrade";
 import {
-  RedGeneratorEfficiencyGalaxyTreeUpgrade
-} from "../../features/upgrades/red-generator-efficiency-galaxy-tree-upgrade";
+  BetterRedBoosterGalaxyTreeUpgrade
+} from "../../features/upgrades/better-red-booster-galaxy-tree-upgrade";
 import {
-  CheaperRedGeneratorsGalaxyTreeUpgrade
-} from "../../features/upgrades/cheaper-red-generators-galaxy-tree-upgrade";
+  BetterRedSubMultipliersGalaxyTreeUpgrade
+} from "../../features/upgrades/better-red-sub-multipliers-galaxy-tree-upgrade";
 import {
-  BetterYellowParticlesGalaxyTreeUpgrade
-} from "../../features/upgrades/better-yellow-particles-galaxy-tree-upgrade";
+  BetterYellowGeneratorsGalaxyTreeUpgrade
+} from "../../features/upgrades/better-yellow-generators-galaxy-tree-upgrade";
 import {
-  StrongerYellowGeneratorsGalaxyTreeUpgrade
-} from "../../features/upgrades/stronger-yellow-generators-galaxy-tree-upgrade";
+  BetterYellowMultipliersGalaxyTreeUpgrade
+} from "../../features/upgrades/better-yellow-multipliers-galaxy-tree-upgrade";
 import {
-  MoreYellowKeysGainGalaxyTreeUpgrade
-} from "../../features/upgrades/more-yellow-keys-gain-galaxy-tree-upgrade";
+  AmplifiedYellowKeysGalaxyTreeUpgrade
+} from "../../features/upgrades/amplified-yellow-keys-galaxy-tree-upgrade";
+import {
+  SynergizedPowerGalaxyTreeUpgrade
+} from "../../features/upgrades/synergized-power-galaxy-tree-upgrade";
+import {
+  AmplifiedFusionGalaxyTreeUpgrade
+} from "../../features/upgrades/amplified-fusion-galaxy-tree-upgrade";
+import {
+  PowerAccelerationGalaxyTreeUpgrade
+} from "../../features/upgrades/power-acceleration-galaxy-tree-upgrade";
+import {
+  RedExpertiseGalaxyTreeUpgrade
+} from "../../features/upgrades/red-expertise-galaxy-tree-upgrade";
+import {
+  AcceleratorExpertiseGalaxyTreeUpgrade
+} from "../../features/upgrades/accelerator-expertise-galaxy-tree-upgrade";
+import {
+  YellowExpertiseGalaxyTreeUpgrade
+} from "../../features/upgrades/yellow-expertise-galaxy-tree-upgrade";
+import {FusionExpertiseGalaxyTreeUpgrade} from "../../features/upgrades/fusion-expertise-galaxy-tree-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -158,56 +177,76 @@ export class UpgradeRecord extends Record {
   static yellowParticleSacrifice: YellowParticleSacrificeUpgrade = new YellowParticleSacrificeUpgrade('yellowParticleSacrifice');
   static greenParticleSacrifice: GreenParticleSacrificeUpgrade = new GreenParticleSacrificeUpgrade('greenParticleSacrifice');
 
-  static unlockFirstGreenGenerator: UnlockFirstGreenGeneratorGalaxyTreeUpgrade = new UnlockFirstGreenGeneratorGalaxyTreeUpgrade('unlockFirstGreenGenerator');
+  static unlockFirstGreenGeneratorGalaxyTree: UnlockFirstGreenGeneratorGalaxyTreeUpgrade = new UnlockFirstGreenGeneratorGalaxyTreeUpgrade('unlockFirstGreenGenerator');
   // Children: increaseRedGeneratorMultiplier, cheaperBoosterAcceleration, fasterHydrogenGeneration, strongerYellowPower
 
-  static increaseRedGeneratorMultiplier: IncreaseRedGeneratorMultiplierGalaxyTreeUpgrade = new IncreaseRedGeneratorMultiplierGalaxyTreeUpgrade('halfRedGeneratorIncrease');
+  static betterRedGeneratorsMultiplierGalaxyTree: BetterRedGeneratorsMultiplierGalaxyTreeUpgrade = new BetterRedGeneratorsMultiplierGalaxyTreeUpgrade('halfRedGeneratorIncrease');
   // Children: redAcceleratorStart, increaseBoosterAccelerationPower
-  static moreYellowKeys: MoreYellowKeysGalaxyTreeUpgrade = new MoreYellowKeysGalaxyTreeUpgrade('moreYellowKeys');
-  static increaseBoosterAccelerationPower: IncreaseBoosterAccelerationPowerGalaxyTreeUpgrade = new IncreaseBoosterAccelerationPowerGalaxyTreeUpgrade('decreaseBoosterAccelerationScalingGalaxyTree');
+  static betterYellowKeyGainGalaxyTree: BetterYellowKeyGalaxyTreeUpgrade = new BetterYellowKeyGalaxyTreeUpgrade('moreYellowKeys');
+  static strongerBoosterAccelerationGalaxyTree: StrongerBoosterAccelerationPowerGalaxyTreeUpgrade = new StrongerBoosterAccelerationPowerGalaxyTreeUpgrade('decreaseBoosterAccelerationScalingGalaxyTree');
 
-  static cheaperBoosterAcceleration: CheaperBoosterAccelerationGalaxyTreeUpgrade = new CheaperBoosterAccelerationGalaxyTreeUpgrade('cheaperBoosterAcceleration');
+  static cheaperBoosterAccelerationGalaxyTree: CheaperBoosterAccelerationGalaxyTreeUpgrade = new CheaperBoosterAccelerationGalaxyTreeUpgrade('cheaperBoosterAcceleration');
   // Children: redAcceleratorStart, strongerRedExtensionGalaxyTree
-  static redAcceleratorStart: RedAcceleratorStartGalaxyTreeUpgrade = new RedAcceleratorStartGalaxyTreeUpgrade('redAcceleratorStart');
+  static redAcceleratorStartGalaxyTree: RedAcceleratorStartGalaxyTreeUpgrade = new RedAcceleratorStartGalaxyTreeUpgrade('redAcceleratorStart');
   // Children: yellowFusionBoostRedAccelerators
   static strongerRedExtensionGalaxyTree: StrongerRedExtensionGalaxyTreeUpgrade = new StrongerRedExtensionGalaxyTreeUpgrade('strongerRedExtensionGalaxyTree');
 
-  static fasterHydrogenGeneration: FasterHydrogenGenerationGalaxyTreeUpgrade = new FasterHydrogenGenerationGalaxyTreeUpgrade('fasterHydrogenGeneration');
+  static fasterHydrogenGenerationGalaxyTree: FasterHydrogenGenerationGalaxyTreeUpgrade = new FasterHydrogenGenerationGalaxyTreeUpgrade('fasterHydrogenGeneration');
   // Children: strongerHydrogenGalaxyTree, improveYellowFusion
   static strongerHydrogenGalaxyTree: StrongerHydrogenGalaxyTreeUpgrade = new StrongerHydrogenGalaxyTreeUpgrade('strongerHydrogenGalaxyTree');
-  static improveYellowFusion: ImproveYellowFusionGalaxyTreeUpgrade = new ImproveYellowFusionGalaxyTreeUpgrade('improveYellowFusion');
+  static strongerYellowFusionGalaxyTree: StrongerYellowFusionGalaxyTreeUpgrade = new StrongerYellowFusionGalaxyTreeUpgrade('improveYellowFusion');
   // Children: yellowFusionBoostRedAccelerators
-  static yellowFusionBoostRedAccelerators: YellowFusionBoostRedAcceleratorsGalaxyTreeUpgrade = new YellowFusionBoostRedAcceleratorsGalaxyTreeUpgrade('yellowFusionBoostRedAccelerators');
+  static fusedAccelerationGalaxyTree: FusedAccelerationGalaxyTreeUpgrade = new FusedAccelerationGalaxyTreeUpgrade('yellowFusionBoostRedAccelerators');
 
-  static strongerYellowPower: StrongerYellowPowerGalaxyTreeUpgrade = new StrongerYellowPowerGalaxyTreeUpgrade('strongerYellowPower');
+  static strongerYellowPowerGalaxyTree: StrongerYellowPowerGalaxyTreeUpgrade = new StrongerYellowPowerGalaxyTreeUpgrade('strongerYellowPower');
 
   // New red generator upgrades
-  static redGeneratorEfficiency: RedGeneratorEfficiencyGalaxyTreeUpgrade = new RedGeneratorEfficiencyGalaxyTreeUpgrade('redGeneratorEfficiency');
-  static cheaperRedGenerators: CheaperRedGeneratorsGalaxyTreeUpgrade = new CheaperRedGeneratorsGalaxyTreeUpgrade('cheaperRedGenerators');
+  static betterRedBoosterGalaxyTree: BetterRedBoosterGalaxyTreeUpgrade = new BetterRedBoosterGalaxyTreeUpgrade('redGeneratorEfficiency');
+  static betterRedSubMultipliersGalaxyTree: BetterRedSubMultipliersGalaxyTreeUpgrade = new BetterRedSubMultipliersGalaxyTreeUpgrade('cheaperRedGenerators');
 
   // New yellow upgrades/generators upgrades
-  static betterYellowParticles: BetterYellowParticlesGalaxyTreeUpgrade = new BetterYellowParticlesGalaxyTreeUpgrade('betterYellowParticles');
-  static strongerYellowGenerators: StrongerYellowGeneratorsGalaxyTreeUpgrade = new StrongerYellowGeneratorsGalaxyTreeUpgrade('strongerYellowGenerators');
-  static moreYellowKeysGain: MoreYellowKeysGainGalaxyTreeUpgrade = new MoreYellowKeysGainGalaxyTreeUpgrade('moreYellowKeysGain');
+  static betterYellowGeneratorsGalaxyTree: BetterYellowGeneratorsGalaxyTreeUpgrade = new BetterYellowGeneratorsGalaxyTreeUpgrade('betterYellowParticles');
+  static betterYellowMultipliersGalaxyTree: BetterYellowMultipliersGalaxyTreeUpgrade = new BetterYellowMultipliersGalaxyTreeUpgrade('strongerYellowGenerators');
+  static amplifiedYellowKeysGalaxyTree: AmplifiedYellowKeysGalaxyTreeUpgrade = new AmplifiedYellowKeysGalaxyTreeUpgrade('moreYellowKeysGain');
+
+  // Mix-upgrades between sections (10-25 Dark Energy)
+  static synergizedPowerGalaxyTree: SynergizedPowerGalaxyTreeUpgrade = new SynergizedPowerGalaxyTreeUpgrade('redGeneratorsBoostYellowUpgrades');
+  static amplifiedFusionGalaxyTree: AmplifiedFusionGalaxyTreeUpgrade = new AmplifiedFusionGalaxyTreeUpgrade('redGeneratorsBoostYellowFusion');
+  static powerAccelerationGalaxyTree: PowerAccelerationGalaxyTreeUpgrade = new PowerAccelerationGalaxyTreeUpgrade('redAcceleratorsBoostYellowUpgrades');
+
+  // Cross-section boost upgrades (25-100 Dark Energy)
+  static redExpertiseGalaxyTree: RedExpertiseGalaxyTreeUpgrade = new RedExpertiseGalaxyTreeUpgrade('redGeneratorsBoostAccelerators');
+  static acceleratorExpertiseGalaxyTree: AcceleratorExpertiseGalaxyTreeUpgrade = new AcceleratorExpertiseGalaxyTreeUpgrade('redAcceleratorsBoostGenerators');
+  static yellowExpertiseGalaxyTree: YellowExpertiseGalaxyTreeUpgrade = new YellowExpertiseGalaxyTreeUpgrade('yellowUpgradesBoostFusion');
+  static fusionExpertiseGalaxyTree: FusionExpertiseGalaxyTreeUpgrade = new FusionExpertiseGalaxyTreeUpgrade('yellowFusionBoostUpgrades');
 
   static galaxyTreeUpgradeList: GalaxyTreeUpgrade[] = [
-    UpgradeRecord.unlockFirstGreenGenerator,
-    UpgradeRecord.increaseRedGeneratorMultiplier,
-    UpgradeRecord.cheaperBoosterAcceleration,
-    UpgradeRecord.redAcceleratorStart,
-    UpgradeRecord.moreYellowKeys,
+    UpgradeRecord.unlockFirstGreenGeneratorGalaxyTree,
+    UpgradeRecord.betterRedGeneratorsMultiplierGalaxyTree,
+    UpgradeRecord.cheaperBoosterAccelerationGalaxyTree,
+    UpgradeRecord.redAcceleratorStartGalaxyTree,
+    UpgradeRecord.betterYellowKeyGainGalaxyTree,
     UpgradeRecord.strongerRedExtensionGalaxyTree,
-    UpgradeRecord.increaseBoosterAccelerationPower,
-    UpgradeRecord.fasterHydrogenGeneration,
-    UpgradeRecord.strongerYellowPower,
+    UpgradeRecord.strongerBoosterAccelerationGalaxyTree,
+    UpgradeRecord.fasterHydrogenGenerationGalaxyTree,
+    UpgradeRecord.strongerYellowPowerGalaxyTree,
     UpgradeRecord.strongerHydrogenGalaxyTree,
-    UpgradeRecord.improveYellowFusion,
-    UpgradeRecord.yellowFusionBoostRedAccelerators,
-    UpgradeRecord.redGeneratorEfficiency,
-    UpgradeRecord.cheaperRedGenerators,
-    UpgradeRecord.betterYellowParticles,
-    UpgradeRecord.strongerYellowGenerators,
-    UpgradeRecord.moreYellowKeysGain,
+    UpgradeRecord.strongerYellowFusionGalaxyTree,
+    UpgradeRecord.fusedAccelerationGalaxyTree,
+    UpgradeRecord.betterRedBoosterGalaxyTree,
+    UpgradeRecord.betterRedSubMultipliersGalaxyTree,
+    UpgradeRecord.betterYellowGeneratorsGalaxyTree,
+    UpgradeRecord.betterYellowMultipliersGalaxyTree,
+    UpgradeRecord.amplifiedYellowKeysGalaxyTree,
+    // Mix-upgrades between sections
+    UpgradeRecord.synergizedPowerGalaxyTree,
+    UpgradeRecord.amplifiedFusionGalaxyTree,
+    UpgradeRecord.powerAccelerationGalaxyTree,
+    // Cross-section boost upgrades
+    UpgradeRecord.redExpertiseGalaxyTree,
+    UpgradeRecord.acceleratorExpertiseGalaxyTree,
+    UpgradeRecord.yellowExpertiseGalaxyTree,
+    UpgradeRecord.fusionExpertiseGalaxyTree,
   ]
 
   static override list: Upgrade[] = [

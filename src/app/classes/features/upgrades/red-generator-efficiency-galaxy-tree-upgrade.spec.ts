@@ -1,7 +1,7 @@
-import { RedGeneratorEfficiencyGalaxyTreeUpgrade } from './red-generator-efficiency-galaxy-tree-upgrade';
+import { BetterRedBoosterGalaxyTreeUpgrade } from './better-red-booster-galaxy-tree-upgrade';
 
 describe('RedGeneratorEfficiencyGalaxyTreeUpgrade', () => {
   it('should create an instance', () => {
-    expect(new RedGeneratorEfficiencyGalaxyTreeUpgrade('testSave')).toBeTruthy();
+    expect(new BetterRedBoosterGalaxyTreeUpgrade('testSave')).toBeTruthy();
   });
 });

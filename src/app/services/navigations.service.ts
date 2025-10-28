@@ -57,7 +57,7 @@ export class NavigationsService {
       {requirement: HoldingRecord.greenPrestiges, amount: new Num(1, 0)},
     ], false),
     greenGenerators: new SubNavigation('greenGenerators', faIndustry, 'greenGenerators', this.navigations['green'], [
-      {requirement: UpgradeRecord.unlockFirstGreenGenerator, amount: new Num(1, 0)},
+      {requirement: UpgradeRecord.unlockFirstGreenGeneratorGalaxyTree, amount: new Num(1, 0)},
     ], false),
 
     // Automators

@@ -4,7 +4,7 @@ import {Num} from "../../../num";
 import {Styles} from "../../enums/styles";
 import {GeneratorRecord} from "../../records/generators/generator-record";
 
-export class BetterYellowParticlesGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
+export class BetterYellowGeneratorsGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   constructor(saveName: string) {
     super(saveName, "better-yellow-particles-galaxy-tree-upgrade");
   }
@@ -15,7 +15,7 @@ export class BetterYellowParticlesGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
 
   getParents(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.strongerYellowPower,
+      UpgradeRecord.strongerYellowPowerGalaxyTree,
     ];
   }
 

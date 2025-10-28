@@ -3,21 +3,21 @@ import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {Num} from "../../../num";
 import {Styles} from "../../enums/styles";
 
-export class MoreYellowKeysGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
+export class BetterYellowKeyGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   constructor(saveName: string) {
     super(saveName, "more-yellow-keys");
   }
 
   getChildren(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.strongerYellowGenerators,
-      UpgradeRecord.moreYellowKeysGain,
+      UpgradeRecord.betterYellowMultipliersGalaxyTree,
+      UpgradeRecord.amplifiedYellowKeysGalaxyTree,
     ];
   }
 
   getParents(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.strongerYellowPower,
+      UpgradeRecord.strongerYellowPowerGalaxyTree,
     ];
   }
 
@@ -27,7 +27,7 @@ export class MoreYellowKeysGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
 
   action(): undefined {
     if (this.hasBought()) {
-      UpgradeRecord.multiplyYellowKeyGain.buffer = 
+      UpgradeRecord.multiplyYellowKeyGain.buffer =
         UpgradeRecord.multiplyYellowKeyGain.buffer.mul(this.buffer);
     }
     return

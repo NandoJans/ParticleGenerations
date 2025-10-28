@@ -36,7 +36,7 @@ export class GalaxyTreeService {
   respec() {
     ResetHelper.reset(ResetKey.YELLOW);
     this.stars.forEach(star => {
-      if (star !== UpgradeRecord.unlockFirstGreenGenerator) {
+      if (star !== UpgradeRecord.unlockFirstGreenGeneratorGalaxyTree) {
         star.reset();
       }
     })

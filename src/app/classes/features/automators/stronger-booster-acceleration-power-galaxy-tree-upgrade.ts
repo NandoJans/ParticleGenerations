@@ -3,21 +3,21 @@ import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {Num} from "../../../num";
 import {Styles} from "../../enums/styles";
 
-export class IncreaseBoosterAccelerationPowerGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
+export class StrongerBoosterAccelerationPowerGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   constructor(saveName: string) {
     super(saveName, "increase-booster-acceleration-power");
   }
 
   getChildren(): GalaxyTreeUpgrade[] {
     return [
-
+      UpgradeRecord.acceleratorExpertiseGalaxyTree,
     ];
   }
 
   getParents(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.increaseRedGeneratorMultiplier,
-      UpgradeRecord.cheaperBoosterAcceleration,
+      UpgradeRecord.betterRedGeneratorsMultiplierGalaxyTree,
+      UpgradeRecord.cheaperBoosterAccelerationGalaxyTree,
     ];
   }
 

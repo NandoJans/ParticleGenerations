@@ -10,14 +10,14 @@ export class CheaperBoosterAccelerationGalaxyTreeUpgrade extends GalaxyTreeUpgra
 
   getChildren(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.redAcceleratorStart,
-      UpgradeRecord.increaseBoosterAccelerationPower,
+      UpgradeRecord.redAcceleratorStartGalaxyTree,
+      UpgradeRecord.strongerBoosterAccelerationGalaxyTree,
     ];
   }
 
   getParents(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.unlockFirstGreenGenerator,
+      UpgradeRecord.unlockFirstGreenGeneratorGalaxyTree,
     ];
   }
 

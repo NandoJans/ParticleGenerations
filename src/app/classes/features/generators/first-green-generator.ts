@@ -24,7 +24,7 @@ export class FirstGreenGenerator extends GreenGenerator {
   override init() {
     this.generates = HoldingRecord.darkMatter;
     this.requirement = [
-      new Requirement(UpgradeRecord.unlockFirstGreenGenerator, new Num(1, 0), this)
+      new Requirement(UpgradeRecord.unlockFirstGreenGeneratorGalaxyTree, new Num(1, 0), this)
     ];
   }
 }

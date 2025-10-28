@@ -1,7 +1,7 @@
-import { BetterYellowParticlesGalaxyTreeUpgrade } from './better-yellow-particles-galaxy-tree-upgrade';
+import { BetterYellowGeneratorsGalaxyTreeUpgrade } from './better-yellow-generators-galaxy-tree-upgrade';
 
 describe('BetterYellowParticlesGalaxyTreeUpgrade', () => {
   it('should create an instance', () => {
-    expect(new BetterYellowParticlesGalaxyTreeUpgrade('testSave')).toBeTruthy();
+    expect(new BetterYellowGeneratorsGalaxyTreeUpgrade('testSave')).toBeTruthy();
   });
 });

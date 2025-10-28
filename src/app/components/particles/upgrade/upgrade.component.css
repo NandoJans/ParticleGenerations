@@ -24,6 +24,7 @@ button.maxed {
 
 button p.cost, button p.effect {
   margin: 0.5rem 0 0 0;
+  word-break: break-all;
 }
 
 button.sub p.cost, button.sub p.effect {
@@ -56,7 +57,7 @@ button.sub {
 button.small {
   padding: 0.1rem;
   margin: 0.1rem;
-  width: 10rem;
+  width: 8rem;
 }
 
 button.sub p.description {
