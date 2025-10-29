@@ -16,6 +16,7 @@ export class YellowGeneratorBuyMultiplierUpgrade extends YellowGeneratorUpgrade 
     generator: YellowGenerator,
   ) {
     super(saveName, cost, increase, scaling, buffer, generator);
+    this.displayName = `Yellow Generator ${generator.rank} Buy Multiplier`;
     this.name = `yellow-generator-buy-multiplier-upgrade-${generator.rank}`;
     this.resetId = ResetHelper.registerReset(ResetKey.YELLOW, this);
     this.requirement = [

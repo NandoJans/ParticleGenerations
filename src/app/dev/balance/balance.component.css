@@ -1,0 +1,48 @@
+table {
+  width: 80%;
+  margin: auto;
+  border: 1px solid var(--background-color-4);
+}
+
+thead {
+  font-weight: bold;
+  text-align: left;
+  font-size: 1.2rem;
+}
+
+tr {
+  border: 1px solid var(--background-color-4);
+  height: 30px;
+}
+
+tr:nth-child(even) {
+  background-color: var(--background-color-1);
+}
+
+td {
+
+}
+
+.name {
+  font-weight: bold;
+}
+
+.red {
+  color: var(--text-color-red);
+}
+
+.yellow {
+  color: var(--text-color-yellow);
+}
+
+.green {
+  color: var(--text-color-green);
+}
+
+.blue {
+  color: var(--text-color-blue);
+}
+
+.purple {
+  color: var(--text-color-purple);
+}

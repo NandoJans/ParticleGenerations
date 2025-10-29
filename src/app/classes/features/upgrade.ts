@@ -127,4 +127,8 @@ export abstract class Upgrade extends Buyable implements Storable, Require, Rese
   abstract enhancementString(enhancement:Enhancement): string;
   abstract canEnhance(): boolean;
   abstract enhance(): void;
+
+  getDisplayName() {
+    return this.displayName;
+  }
 }

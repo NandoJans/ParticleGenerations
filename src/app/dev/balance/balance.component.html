@@ -1,0 +1,18 @@
+<app-button [style]="'button green'" (click)="start()" [text]="'Start'"></app-button>
+
+<table class="results">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Reach time</th>
+      <th>Total time</th>
+    </tr>
+  </thead>
+  @for (result of getResults(); track result) {
+    <tr>
+      <td [class]="result.style+' name'">{{ result.element }}</td>
+      <td [style.color]="getColorCode(result.timeBetween)">{{ formatTime(result.timeBetween) }}</td>
+      <td>{{ formatTime(result.time) }}</td>
+    </tr>
+  }
+</table>

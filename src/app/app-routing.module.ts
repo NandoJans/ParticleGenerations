@@ -13,6 +13,7 @@ import {YellowFusionComponent} from "./pages/yellow/yellow-fusion/yellow-fusion.
 import {GreenGalaxyTreeComponent} from "./pages/green/green-galaxy-tree/green-galaxy-tree.component";
 import {GreenGeneratorsComponent} from "./pages/green/green-generators/green-generators.component";
 import {GreenTimelineComponent} from "./pages/timeline/green-timeline/green-timeline.component";
+import {BalanceComponent} from "./dev/balance/balance.component";
 
 const routes: Routes = [
   { path: '', component: RedComponent },
@@ -34,6 +35,9 @@ const routes: Routes = [
   { path: 'timeline/red', component: RedTimelineComponent },
   { path: 'timeline/yellow', component: YellowTimelineComponent },
   { path: 'timeline/green', component: GreenTimelineComponent },
+
+  // Dev
+  { path: 'dev/balance', component: BalanceComponent },
 ];
 
 @NgModule({
