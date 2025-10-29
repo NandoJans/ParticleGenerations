@@ -33,7 +33,7 @@ export class BetterYellowKeyGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
     return
   }
 
-  style: Styles = Styles.STAR_ORANGE;
+  style: Styles = Styles.STAR_RED;
   displayName: string = "Better Yellow Key Gain";
 
   override buffer = new Num(1.5, 0);

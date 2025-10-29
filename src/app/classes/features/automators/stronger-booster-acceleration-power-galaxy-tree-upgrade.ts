@@ -37,7 +37,7 @@ export class StrongerBoosterAccelerationPowerGalaxyTreeUpgrade extends GalaxyTre
   style: Styles = Styles.STAR_YELLOW;
   displayName: string = "Stronger Booster Acceleration";
 
-  cost: Num = new Num(4, 0);
-  baseCost: Num = new Num(4, 0);
+  cost: Num = new Num(9, 0);
+  baseCost: Num = new Num(9, 0);
 }
 

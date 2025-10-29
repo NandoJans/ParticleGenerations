@@ -23,7 +23,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
   goal: Num = new Num(1, 10400);
   override goalIncrease: Num[] = [
     new Num(1, 10400),
-    new Num(1, 60400),
+    new Num(1, 40400),
     new Num(1, 61000),
     new Num(1, 49400),
   ];
@@ -353,7 +353,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         this.challengeHoldings['siriusParticle'],
         this.style,
         UpgradeRecord.multiplyRedAcceleratorEffectUpgrade,
-        this.getDifficultyIncrease(new Num(1.55, 0)),
+        this.getDifficultyIncrease(new Num(1.5, 0)),
       ),
       unlockImproveRedAcceleratorsEffect: new YellowStarChallengeUnlockUpgrade(
         'unlockImproveRedAcceleratorsEffect',
@@ -363,7 +363,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         this.challengeHoldings['siriusParticle'],
         this.style,
         UpgradeRecord.improveRedAcceleratorsEffect,
-        this.getDifficultyIncrease(new Num(1.6, 0)),
+        this.getDifficultyIncrease(new Num(1.5, 0)),
       ),
       unlockImproveRedParticlesToAcceleratorsUpgrade: new YellowStarChallengeUnlockUpgrade(
         'unlockImproveRedParticlesToAcceleratorsUpgrade',
@@ -373,7 +373,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         this.challengeHoldings['siriusParticle'],
         this.style,
         UpgradeRecord.improveRedParticlesToAcceleratorsUpgrade,
-        this.getDifficultyIncrease(new Num(1.6, 0)),
+        this.getDifficultyIncrease(new Num(1.43, 0)),
       ),
       unlockBoosterAccelerationUpgrade: new YellowStarChallengeUnlockUpgrade(
         'unlockBoosterAccelerationUpgrade',
@@ -383,7 +383,10 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         this.challengeHoldings['siriusParticle'],
         this.style,
         UpgradeRecord.boosterAccelerationUpgrade,
-        this.getDifficultyIncrease(new Num(1.6, 0)),
+        [
+          this.getDifficultyIncrease(new Num(1.42, 0))
+        ],
+        this.getCompletions().toNumber()
       ),
     }
 this.requirement = [

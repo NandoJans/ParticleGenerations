@@ -35,6 +35,7 @@ export class AppComponent implements OnInit{
     })
 
     window.onfocus = () => {
+      if (App.isDev()) return;
       this.localStorageHelper.save(this.VERSION);
       this.dataManagerService.load();
       this.offlineService.load();
@@ -43,6 +44,7 @@ export class AppComponent implements OnInit{
     }
 
     window.onblur = () => {
+      if (App.isDev()) return;
       this.tick.clearIntervals();
       this.localStorageHelper.save(this.VERSION);
       this.dataManagerService.save();

@@ -57,9 +57,13 @@ export class Num {
   toString(decimals: number = 0, exponentDecimals: number = 2): string {
     if (this.mantissa === 0) return "0";
     // scientific if too big or too small
-    if (this.exponent >= 6 || this.exponent <= -4) {
+    if (this.exponent >= 6) {
       const exponent = this.exponent.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       return `${this.mantissa.toFixed(exponentDecimals)}e${exponent}`;
+    }
+
+    if (this.exponent <= -6) {
+      return `0`;
     }
     // otherwise full number with commas
     const str = (decimals === 0) ? Math.floor(this.toNumber()).toString() : this.toNumber().toFixed(decimals);

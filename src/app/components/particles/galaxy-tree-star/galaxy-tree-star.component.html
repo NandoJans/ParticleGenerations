@@ -1,4 +1,4 @@
-@if (!isHidden() || true) {
+@if (!isHidden()) {
   <div
     #starEl
     [id]="'buyable-'+galaxyTreeStar.name"
@@ -9,6 +9,7 @@
   +((isEnhanced()) ? 'enhanced enhanced-' + getEnhancedStyle() : '')+' '
 "
     (click)="openStarDetails()"
+    (dblclick)="buy()"
   >
     <h4>{{ getDisplayName() }}</h4>
     <div class="star icon">
