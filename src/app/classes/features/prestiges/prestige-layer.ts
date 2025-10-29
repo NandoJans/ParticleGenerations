@@ -79,6 +79,7 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     console.log('prestige layer reset', this.name);
     this.reached = false;
     this.highestGenerationPerTick = new Num(0, 0);
+    this.bestPrestige = new Num(0, 0);
     this.requirement.forEach(requirement => {
       requirement.register();
     })

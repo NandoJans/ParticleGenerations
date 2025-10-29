@@ -15,6 +15,8 @@ import {EnhancementService} from "../enhancement.service";
 import {App} from "../../App";
 import {PrestigeLayer} from "../../classes/features/prestiges/prestige-layer";
 import {Holding} from "../../classes/features/holding";
+import {ChallengeService} from "../interactables/challenge.service";
+import {ChallengeRecord} from "../../classes/records/challenges/challenge-record";
 
 @Injectable({
   providedIn: 'root'
@@ -46,7 +48,8 @@ export class BalanceService {
     private tickService: TickService,
     private dataManagerService: DataManagerService,
     private prestigeLayerService: PrestigeLayersService,
-    private enhancementService: EnhancementService
+    private enhancementService: EnhancementService,
+    private challengeService: ChallengeService,
   ) { }
 
   start(settings: { [key: string]: any } = {}) {
@@ -60,6 +63,9 @@ export class BalanceService {
     this.dataManagerService.save();
 
     this.fullReset();
+    // Ensure no lingering challenges from previous sessions
+    ChallengeRecord.currentChallenges = {};
+
     App.gameSpeed = new Num(this.settings.speed, 0);
     App.offlineCalculation = true;
 
@@ -71,11 +77,32 @@ export class BalanceService {
     this.totalElapsedTime += this.settings.speed * 5;
     this.elapsedSincePrevious += this.settings.speed * 5;
 
+    // Run active challenges so their elements progress
+    this.challengeService.tick();
+
+    // Ensure automators are disabled during balance run
     AutomatorRecord.list.forEach(automator => {
       automator.disable();
     })
 
-    UpgradeRecord.list.forEach(upgrade => {
+    // Auto start/complete challenges per prestige layer
+    this.handleChallenges();
+
+    // Auto-buy challenge-specific upgrades and generators
+    Object.values(ChallengeRecord.currentChallenges).forEach(challenge => {
+      challenge.getUpgrades().forEach(upg => {
+        this.checkBuyable(upg);
+        this.checkEnhancement(upg);
+      });
+      challenge.getGenerators().forEach(gen => {
+        this.checkBuyable(gen);
+        this.checkEnhancement(gen);
+      });
+    });
+
+    [
+      ...UpgradeRecord.list
+    ].forEach(upgrade => {
       this.checkBuyable(upgrade);
       this.checkEnhancement(upgrade);
     });
@@ -118,8 +145,57 @@ export class BalanceService {
     }
   }
 
+  private handleChallenges() {
+    // Iterate through prestige layers to manage challenges per layer
+    this.prestigeLayerService.getList().forEach(layer => {
+      const layerKey = layer.name;
+
+      if (this.challengeService.inChallenge(layerKey)) {
+        // If the active challenge goal is reached, complete it
+        if (this.challengeService.challengeGoalReached(layerKey)) {
+          const active = this.challengeService.getChallenge(layerKey);
+          if (active) {
+            const resultKey = active.name + '_complete';
+            if (!this.results[resultKey]) {
+              this.results[resultKey] = {
+                element: active.displayName + ' Completed',
+                time: this.totalElapsedTime,
+                timeBetween: this.elapsedSincePrevious,
+                style: active.style,
+              };
+            }
+            this.elapsedSincePrevious = 0;
+          }
+          this.challengeService.completeChallenge(layerKey);
+        }
+      } else {
+        // Find the next eligible challenge for this layer
+        const next = ChallengeRecord.list.find(ch =>
+          ch.prestigeLayer === layerKey &&
+          ch.requirementsMet() &&
+          !ch.isCompleted()
+        );
+        if (next) {
+          this.challengeService.startChallenge(next);
+          const resultKey = next.name + '_start';
+          if (!this.results[resultKey]) {
+            this.results[resultKey] = {
+              element: 'Start ' + next.displayName,
+              time: this.totalElapsedTime,
+              timeBetween: this.elapsedSincePrevious,
+              style: next.style,
+            };
+          }
+          this.elapsedSincePrevious = 0;
+        }
+      }
+    });
+  }
+
   private isWorthPrestiging(prestigeLayer: PrestigeLayer, holding: Holding): boolean {
-    return prestigeLayer.holdingGain.greq(prestigeLayer.highestGenerationPerTick.pow(this.settings.higherPrestige))
+    // First check the time inside the prestige layer, should not be higher than 1 minute
+    if (Date.now() - prestigeLayer.prestigeStarted.getTime() > 1000) return true;
+    return prestigeLayer.holdingGain.greq(prestigeLayer.bestPrestige.pow(this.settings.higherPrestige))
   }
 
   private checkBuyable(buyable: Generator | Upgrade) {
@@ -204,6 +280,7 @@ export class BalanceService {
       ...AutomatorRecord.list,
       ...EnhancementRecord.list,
       ...PrestigeLayersService.list,
+      ...ChallengeRecord.list,
     ].forEach(upgrade => {
       upgrade.reset();
     })
