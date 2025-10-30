@@ -66,7 +66,8 @@ export class YellowStarsComponent implements OnInit {
     const req = nextStar.requirement[0];
     if (!req) return '';
     
-    return `Next: ${nextStar.displayName} unlocks at ${req.amount.toString()} ${req.require.displayName}`;
+    const requirementHolding = req.requirement as any;
+    return `Next: ${nextStar.displayName} unlocks at ${req.amount.toString()} ${requirementHolding.displayName || 'requirement'}`;
   }
 
   infoText: string[] = [
