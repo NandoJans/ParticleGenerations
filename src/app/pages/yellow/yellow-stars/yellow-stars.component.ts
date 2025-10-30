@@ -51,6 +51,24 @@ export class YellowStarsComponent implements OnInit {
     return this.challengeService.sortByCompleted(this.stars);
   }
 
+  getNextLockedStar() {
+    return this.stars.find(star => !star.isUnlocked());
+  }
+
+  hasNextLockedStar(): boolean {
+    return this.getNextLockedStar() !== undefined;
+  }
+
+  getNextStarRequirementText(): string {
+    const nextStar = this.getNextLockedStar();
+    if (!nextStar) return '';
+    
+    const req = nextStar.requirement[0];
+    if (!req) return '';
+    
+    return `Next: ${nextStar.displayName} unlocks at ${req.amount.toString()} ${req.require.displayName}`;
+  }
+
   infoText: string[] = [
     'Yellow Stars represent stellar challenges that test your particle generation mastery!',
     'Each star (Proxima Centauri, Lalande, Sun, Sirius) is a unique challenge with specific conditions and rewards.',
