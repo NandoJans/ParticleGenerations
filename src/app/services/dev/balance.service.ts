@@ -22,6 +22,8 @@ import {ChallengeRecord} from "../../classes/records/challenges/challenge-record
   providedIn: 'root'
 })
 export class BalanceService {
+  private readonly PRESTIGE_TIMEOUT_MS = 60000; // 1 minute
+  
   settings: {
     speed: number,
     maxTime: number,
@@ -201,7 +203,7 @@ export class BalanceService {
 
   private isWorthPrestiging(prestigeLayer: PrestigeLayer, holding: Holding): boolean {
     // First check the time inside the prestige layer, should not be higher than 1 minute
-    if (Date.now() - prestigeLayer.prestigeStarted.getTime() > 60000) return true;
+    if (Date.now() - prestigeLayer.prestigeStarted.getTime() > this.PRESTIGE_TIMEOUT_MS) return true;
     return prestigeLayer.holdingGain.greq(prestigeLayer.bestPrestige.pow(this.settings.higherPrestige))
   }
 
