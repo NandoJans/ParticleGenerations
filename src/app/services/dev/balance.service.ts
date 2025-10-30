@@ -22,7 +22,7 @@ import {ChallengeRecord} from "../../classes/records/challenges/challenge-record
   providedIn: 'root'
 })
 export class BalanceService {
-  private readonly PRESTIGE_TIMEOUT_MS = 60000; // 1 minute
+  private readonly PRESTIGE_TIMEOUT_SECONDS = 5; // 5 seconds of simulated game time
   
   settings: {
     speed: number,
@@ -46,6 +46,7 @@ export class BalanceService {
   totalElapsedTime: number = 0;
   elapsedSincePrevious: number = 0;
   newResultsThisLoop: boolean = false;
+  prestigeStartTimes: Map<string, number> = new Map(); // Track when each prestige layer was last prestiged
 
   constructor(
     private tickService: TickService,
@@ -68,6 +69,9 @@ export class BalanceService {
     this.fullReset();
     // Ensure no lingering challenges from previous sessions
     ChallengeRecord.currentChallenges = {};
+    
+    // Clear prestige timing tracker
+    this.prestigeStartTimes.clear();
 
     App.gameSpeed = new Num(this.settings.speed, 0);
     App.offlineCalculation = true;
@@ -123,6 +127,7 @@ export class BalanceService {
     this.prestigeLayerService.getList().forEach(prestigeLayer => {
       if (prestigeLayer.limitPhaseBelow && prestigeLayer.requirementsMet()) {
         prestigeLayer.prestige();
+        this.prestigeStartTimes.set(prestigeLayer.name, this.totalElapsedTime);
 
         if (!this.results[prestigeLayer.name]) {
           this.results[prestigeLayer.name] = {
@@ -140,6 +145,7 @@ export class BalanceService {
           this.isWorthPrestiging(prestigeLayer, particleHolding.holding)
         ) {
           prestigeLayer.prestige();
+          this.prestigeStartTimes.set(prestigeLayer.name, this.totalElapsedTime);
         }
       }
     })
@@ -202,8 +208,30 @@ export class BalanceService {
   }
 
   private isWorthPrestiging(prestigeLayer: PrestigeLayer, holding: Holding): boolean {
-    // First check the time inside the prestige layer, should not be higher than 1 minute
-    if (Date.now() - prestigeLayer.prestigeStarted.getTime() > this.PRESTIGE_TIMEOUT_MS) return true;
+    // Get time since last prestige for this layer (in milliseconds, since totalElapsedTime is in ms)
+    const lastPrestigeTime = this.prestigeStartTimes.get(prestigeLayer.name) || 0;
+    const timeSincePrestige = this.totalElapsedTime - lastPrestigeTime;
+    
+    // Check if yellow fusion has been reached
+    const hasReachedYellowFusion = HoldingRecord.yellowFusion.amount.greq(new Num(1, 0));
+    
+    if (!hasReachedYellowFusion) {
+      // Before yellow fusion is reached, use 5 second timeout
+      if (timeSincePrestige > this.PRESTIGE_TIMEOUT_SECONDS * 1000) return true;
+    } else {
+      // After yellow fusion is reached, check if both yellow fusion and fusion booster are at max
+      const yellowFusionAtMax = HoldingRecord.yellowFusion.amount.greq(HoldingRecord.yellowFusion.maxAmount);
+      const fusionBoosterAtMax = UpgradeRecord.fusionBoosterAcceleration.amount.greq(
+        UpgradeRecord.fusionBoosterAcceleration.limit || new Num(0, 0)
+      );
+      
+      if (yellowFusionAtMax && fusionBoosterAtMax) {
+        // Both at max, prestige is worth it
+        return true;
+      }
+    }
+    
+    // Fallback: check if the prestige gain is worth it
     return prestigeLayer.holdingGain.greq(prestigeLayer.bestPrestige.pow(this.settings.higherPrestige))
   }
 
@@ -279,6 +307,7 @@ export class BalanceService {
     this.tickService.startIntervals()
     this.elapsedSincePrevious = 0;
     this.totalElapsedTime = 0;
+    this.prestigeStartTimes.clear();
   }
 
   fullReset = () => {
