@@ -1,6 +1,5 @@
 <div class="resource-card">
-  <p>Current star: <div [class]="getCurrentStarStyle()">{{ getCurrentStar() }}</div>
-  </p>
+  <p>Current star: <span [class]="getCurrentStarStyle()">{{ getCurrentStar() }}</span></p>
   <p *ngIf="hasNextLockedStar()" class="next-unlock">{{ getNextStarRequirementText() }}</p>
 </div>
 <button *ngIf="inChallenge()" class="button" (click)="leaveChallenge()">Leave challenge</button>
