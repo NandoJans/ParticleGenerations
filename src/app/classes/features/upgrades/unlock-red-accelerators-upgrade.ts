@@ -11,9 +11,9 @@ import { Enhancement } from "../enhancements/enhancement";
 import {EnhancementRecord} from "../../records/enhancement-record";
 
 export class UnlockRedAcceleratorsUpgrade extends Upgrade {
-  baseCost: Num = new Num(1, 75);
+  baseCost: Num = new Num(5, 74);  // Reduced from 1e75 to 5e74 (~50% cost reduction for faster unlock)
   bought: Num = new Num(0, 0);
-  cost: Num = new Num(1, 75);
+  cost: Num = new Num(5, 74);
   currency: Holding = HoldingRecord.redParticles;
   displayName: string = 'Unlock Red Accelerators';
   increase: Num = new Num(1, 0);
@@ -21,7 +21,7 @@ export class UnlockRedAcceleratorsUpgrade extends Upgrade {
   name: string = 'Unlock Red Accelerators';
   nav: string = 'red';
   requirement: Requirement[] = [
-    new Requirement(HoldingRecord.redParticles, new Num(1, 75), this),
+    new Requirement(HoldingRecord.redParticles, new Num(5, 74), this),
   ];
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED_BOOSTER_ACCELERATION, this);
   style: Styles =  Styles.RED_ACCELERATOR_UNLOCK;
@@ -31,7 +31,7 @@ export class UnlockRedAcceleratorsUpgrade extends Upgrade {
 
   override init() {
     this.requirement = [
-      new Requirement(HoldingRecord.redParticles, new Num(1, 75), this),
+      new Requirement(HoldingRecord.redParticles, new Num(5, 74), this),
     ];
   }
 

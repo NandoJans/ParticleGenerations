@@ -476,26 +476,68 @@ export class BalanceService {
     }
   }
 
+  /**
+   * Intelligent buying strategy: avoid buying upgrades that reset progress
+   * when it would hurt yellow prestige gain rate (below 1000 yellow prestiges)
+   */
   private shouldSkipBuyable(buyable: Generator | Upgrade): boolean {
-    // Skip if the yellow prestige amount is between 100 and 1000 to reach faster prestige rate
-    if (
-      HoldingRecord.yellowPrestiges.amount.greq(new Num(1, 2)) &&
-      HoldingRecord.yellowPrestiges.amount.lt(new Num(1, 3))
-    ) {
-      if (
-        !UpgradeRecord.noResetRedExtension.hasBought() &&
-        buyable === UpgradeRecord.redGeneratorExtension &&
-        buyable.amount.lt(new Num(5, 0))
-      ) {
-        return true;
-      }
-      if (
-        buyable === UpgradeRecord.boosterAccelerationUpgrade &&
-        buyable.amount.lt(new Num(3, 0))
-      ) {
-        return true;
+    const yellowPrestiges = HoldingRecord.yellowPrestiges.amount;
+    
+    // Only apply intelligent buying when below 1000 yellow prestiges
+    if (yellowPrestiges.lt(new Num(1, 3))) {
+      // Check if this is a reset-causing upgrade
+      const isRedExtension = buyable === UpgradeRecord.redGeneratorExtension;
+      const isBoosterAccel = buyable === UpgradeRecord.boosterAccelerationUpgrade;
+      
+      if (isRedExtension || isBoosterAccel) {
+        // If we have "No Reset Red Extensions" upgrade, extensions don't reset anymore
+        const extensionWontReset = isRedExtension && UpgradeRecord.noResetRedExtension.hasBought();
+        
+        if (extensionWontReset) {
+          return false; // Safe to buy, won't reset
+        }
+        
+        // Check current yellow prestige gain rate
+        const yellowLayer = this.prestigeLayerService.getList().find(layer => layer.name === 'yellow');
+        if (!yellowLayer) return false;
+        
+        const currentGain = yellowLayer.holdingGain;
+        const bestPrestige = yellowLayer.bestPrestige;
+        
+        // If we haven't reached yellow yet, don't skip
+        if (bestPrestige.equals(new Num(0, 0))) {
+          return false;
+        }
+        
+        // Calculate how close we are to a good prestige
+        const gainRatio = currentGain.div(bestPrestige);
+        const isCloseToGoodPrestige = gainRatio.greq(new Num(1.5, 0)); // 1.5x or better
+        
+        // Strategy: Skip buying reset-causing upgrades if:
+        // 1. We're below 1000 yellow prestiges AND
+        // 2. We're close to a good prestige (1.5x+ current best) AND
+        // 3. For Red Extension: below level 5 AND no-reset not bought
+        // 4. For Booster Accel: below level 3
+        
+        if (isRedExtension) {
+          const extensionLevel = buyable.amount.toNumber();
+          // Skip if below level 5, close to good prestige, and no-reset not available
+          if (extensionLevel < 5 && isCloseToGoodPrestige) {
+            return true;
+          }
+        }
+        
+        if (isBoosterAccel) {
+          const boosterLevel = buyable.amount.toNumber();
+          // Skip if below level 3 and close to good prestige
+          // Booster Accel is more important, so be less restrictive
+          if (boosterLevel < 3 && isCloseToGoodPrestige && gainRatio.greq(new Num(2, 0))) {
+            return true;
+          }
+        }
       }
     }
+    
     return false;
   }
 
