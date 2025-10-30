@@ -26,6 +26,7 @@ export class BalanceService {
   private readonly PRESTIGE_TIMEOUT_SECONDS = 5; // 5 seconds of simulated game time
   private readonly LOOK_AHEAD_SECONDS = 10; // How far ahead to predict for optimization
   private readonly PRESTIGE_EFFICIENCY_THRESHOLD = 0.8; // Prestige when efficiency drops below 80%
+  private readonly YELLOW_PRESTIGE_MIN_GAIN = 2.0; // For yellow prestige, wait for at least 2x gain (more star particles)
   
   settings: {
     speed: number,
@@ -424,13 +425,23 @@ export class BalanceService {
     // Check if yellow fusion has been reached
     const hasReachedYellowFusion = HoldingRecord.yellowFusion.amount.greq(new Num(1, 0));
     
+    // Special handling for yellow prestige - be much more conservative with star particles
+    const isYellowPrestige = prestigeLayer.name === 'yellow';
+    
     if (!hasReachedYellowFusion) {
       // Before yellow fusion is reached, use timeout with efficiency check
       if (timeSincePrestige > this.PRESTIGE_TIMEOUT_SECONDS * 1000) {
         return true;
       }
       
-      // Also check efficiency - if we're not gaining much by waiting, prestige now
+      // For yellow prestige, be more conservative - only check efficiency, not the fallback
+      if (isYellowPrestige) {
+        const efficiency = this.calculatePrestigeEfficiency(prestigeLayer);
+        // Much higher threshold for yellow - only prestige if efficiency is very high (90%+)
+        return efficiency >= 0.9;
+      }
+      
+      // For other prestiges, use normal efficiency check
       const efficiency = this.calculatePrestigeEfficiency(prestigeLayer);
       if (efficiency >= this.PRESTIGE_EFFICIENCY_THRESHOLD) {
         return true;
@@ -447,14 +458,27 @@ export class BalanceService {
         return true;
       }
       
-      // Even after yellow fusion, check efficiency
+      // For yellow prestige after fusion, still be conservative
+      if (isYellowPrestige) {
+        const efficiency = this.calculatePrestigeEfficiency(prestigeLayer);
+        // Higher threshold for yellow even after fusion - wait for 90%+ efficiency
+        return efficiency >= 0.9;
+      }
+      
+      // For other prestiges, use normal efficiency check
       const efficiency = this.calculatePrestigeEfficiency(prestigeLayer);
       if (efficiency >= this.PRESTIGE_EFFICIENCY_THRESHOLD) {
         return true;
       }
     }
     
-    // Fallback: check if the prestige gain is worth it based on exponential threshold
+    // Fallback: check if the prestige gain is worth it
+    // For yellow prestige, require much higher gain (2x minimum)
+    if (isYellowPrestige) {
+      return prestigeLayer.holdingGain.greq(prestigeLayer.bestPrestige.mul(new Num(this.YELLOW_PRESTIGE_MIN_GAIN, 0)));
+    }
+    
+    // For other prestiges, use the standard threshold
     return prestigeLayer.holdingGain.greq(prestigeLayer.bestPrestige.pow(this.settings.higherPrestige))
   }
 
