@@ -43,6 +43,7 @@ export class BalanceService {
 
   totalElapsedTime: number = 0;
   elapsedSincePrevious: number = 0;
+  newResultsThisLoop: boolean = false;
 
   constructor(
     private tickService: TickService,
@@ -73,6 +74,7 @@ export class BalanceService {
   }
 
   loop() {
+    this.newResultsThisLoop = false;
     this.tickService.gameTick(new Num(this.settings.speed, 0));
     this.totalElapsedTime += this.settings.speed * 5;
     this.elapsedSincePrevious += this.settings.speed * 5;
@@ -127,7 +129,7 @@ export class BalanceService {
             timeBetween: this.elapsedSincePrevious,
             style: prestigeLayer.style,
           }
-          this.elapsedSincePrevious = 0;
+          this.newResultsThisLoop = true;
         }
       } else if (prestigeLayer.requirementsMet()) {
         const particleHolding = prestigeLayer.gainHoldings.find(holding => holding.basedOnRequiredHolding);
@@ -139,6 +141,11 @@ export class BalanceService {
         }
       }
     })
+
+    // Reset elapsed time counter if we added any new results this loop
+    if (this.newResultsThisLoop) {
+      this.elapsedSincePrevious = 0;
+    }
 
     if (this.elapsedSincePrevious > this.settings.maxTime) {
       this.done();
@@ -163,8 +170,8 @@ export class BalanceService {
                 timeBetween: this.elapsedSincePrevious,
                 style: active.style,
               };
+              this.newResultsThisLoop = true;
             }
-            this.elapsedSincePrevious = 0;
           }
           this.challengeService.completeChallenge(layerKey);
         }
@@ -185,8 +192,8 @@ export class BalanceService {
               timeBetween: this.elapsedSincePrevious,
               style: next.style,
             };
+            this.newResultsThisLoop = true;
           }
-          this.elapsedSincePrevious = 0;
         }
       }
     });
@@ -211,7 +218,7 @@ export class BalanceService {
           timeBetween: this.elapsedSincePrevious,
           style: buyable.style,
         }
-        this.elapsedSincePrevious = 0;
+        this.newResultsThisLoop = true;
       }
     }
   }
@@ -256,7 +263,7 @@ export class BalanceService {
           style: enhancement.style,
         }
         this.enhancementService.stopEnhancing();
-        this.elapsedSincePrevious = 0;
+        this.newResultsThisLoop = true;
       }
     })
   }
