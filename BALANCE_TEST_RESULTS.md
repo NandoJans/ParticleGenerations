@@ -83,8 +83,8 @@ Comprehensive testing of the Balance Tool has been completed with the following 
 
 ### For Balance Tuning
 - First prestige: Target < 1 hour (green)
-- Major milestones: 30 min - 2 hours apart
-- Upgrade levels: Progressive scaling (15 min to 4 hours)
+- Major milestones: 30 minutes - 2 hours apart
+- Upgrade levels: Progressive scaling (15 minutes to 4 hours)
 
 ## Documentation
 Complete documentation available in:
