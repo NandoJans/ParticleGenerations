@@ -23,6 +23,8 @@ import {ChallengeRecord} from "../../classes/records/challenges/challenge-record
 })
 export class BalanceService {
   private readonly PRESTIGE_TIMEOUT_SECONDS = 5; // 5 seconds of simulated game time
+  private readonly LOOK_AHEAD_SECONDS = 10; // How far ahead to predict for optimization
+  private readonly PRESTIGE_EFFICIENCY_THRESHOLD = 0.8; // Prestige when efficiency drops below 80%
   
   settings: {
     speed: number,
@@ -47,6 +49,7 @@ export class BalanceService {
   elapsedSincePrevious: number = 0;
   newResultsThisLoop: boolean = false;
   prestigeStartTimes: Map<string, number> = new Map(); // Track when each prestige layer was last prestiged
+  prestigeGainHistory: Map<string, Array<{time: number, gain: Num}>> = new Map(); // Track prestige gain over time
 
   constructor(
     private tickService: TickService,
@@ -70,8 +73,9 @@ export class BalanceService {
     // Ensure no lingering challenges from previous sessions
     ChallengeRecord.currentChallenges = {};
     
-    // Clear prestige timing tracker
+    // Clear prestige timing tracker and history
     this.prestigeStartTimes.clear();
+    this.prestigeGainHistory.clear();
 
     App.gameSpeed = new Num(this.settings.speed, 0);
     App.offlineCalculation = true;
@@ -207,8 +211,98 @@ export class BalanceService {
     });
   }
 
+  /**
+   * Track prestige gain for analysis
+   */
+  private trackPrestigeGain(prestigeLayer: PrestigeLayer): void {
+    const layerName = prestigeLayer.name;
+    if (!this.prestigeGainHistory.has(layerName)) {
+      this.prestigeGainHistory.set(layerName, []);
+    }
+    
+    const history = this.prestigeGainHistory.get(layerName)!;
+    history.push({
+      time: this.totalElapsedTime,
+      gain: prestigeLayer.holdingGain.copy()
+    });
+    
+    // Keep only recent history (last 10 entries)
+    if (history.length > 10) {
+      history.shift();
+    }
+  }
+  
+  /**
+   * Calculate the gain rate (gain per millisecond) based on recent history
+   */
+  private calculateGainRate(prestigeLayer: PrestigeLayer): Num {
+    const history = this.prestigeGainHistory.get(prestigeLayer.name);
+    if (!history || history.length < 2) {
+      return new Num(0, 0);
+    }
+    
+    // Use the last two data points to calculate rate
+    const last = history[history.length - 1];
+    const prev = history[history.length - 2];
+    
+    const timeDiff = last.time - prev.time;
+    if (timeDiff === 0) return new Num(0, 0);
+    
+    const gainDiff = last.gain.sub(prev.gain);
+    return gainDiff.div(new Num(timeDiff, 0));
+  }
+  
+  /**
+   * Predict future gain after waiting additional time
+   */
+  private predictFutureGain(prestigeLayer: PrestigeLayer, waitTimeMs: number): Num {
+    const currentGain = prestigeLayer.holdingGain.copy();
+    const gainRate = this.calculateGainRate(prestigeLayer);
+    
+    // Predict gain = current + (rate * time)
+    // Note: This is a linear approximation. Real growth may be exponential.
+    const additionalGain = gainRate.mul(new Num(waitTimeMs, 0));
+    return currentGain.add(additionalGain);
+  }
+  
+  /**
+   * Calculate efficiency score: how much benefit we get from prestiging now vs waiting
+   * Returns a value between 0 and 1, where 1 means maximum efficiency
+   */
+  private calculatePrestigeEfficiency(prestigeLayer: PrestigeLayer): number {
+    const currentGain = prestigeLayer.holdingGain;
+    const bestPrestige = prestigeLayer.bestPrestige;
+    
+    // If we've never prestiged, efficiency is 1
+    if (bestPrestige.equals(new Num(0, 0))) {
+      return 1.0;
+    }
+    
+    // Calculate the marginal benefit of waiting
+    const futureGain = this.predictFutureGain(prestigeLayer, this.LOOK_AHEAD_SECONDS * 1000);
+    const currentBenefit = currentGain.div(bestPrestige);
+    const futureBenefit = futureGain.div(bestPrestige);
+    
+    // If future benefit isn't much better, efficiency is high (should prestige now)
+    if (futureBenefit.lt(currentBenefit.mul(new Num(1.2, 0)))) {
+      return 1.0;
+    }
+    
+    // Calculate efficiency as the ratio of current to future improvement
+    // Higher efficiency means we should prestige sooner
+    const currentImprovement = currentBenefit.toNumber();
+    const futureImprovement = futureBenefit.toNumber();
+    
+    if (futureImprovement === 0) return 1.0;
+    
+    return Math.min(1.0, currentImprovement / futureImprovement);
+  }
+
   private isWorthPrestiging(prestigeLayer: PrestigeLayer, holding: Holding): boolean {
-    // Get time since last prestige for this layer (in milliseconds, since totalElapsedTime is in ms)
+    // Track current prestige gain for analysis
+    this.trackPrestigeGain(prestigeLayer);
+    
+    // Get time since last prestige for this layer
     const lastPrestigeTime = this.prestigeStartTimes.get(prestigeLayer.name) || 0;
     const timeSincePrestige = this.totalElapsedTime - lastPrestigeTime;
     
@@ -216,8 +310,16 @@ export class BalanceService {
     const hasReachedYellowFusion = HoldingRecord.yellowFusion.amount.greq(new Num(1, 0));
     
     if (!hasReachedYellowFusion) {
-      // Before yellow fusion is reached, use 5 second timeout
-      if (timeSincePrestige > this.PRESTIGE_TIMEOUT_SECONDS * 1000) return true;
+      // Before yellow fusion is reached, use timeout with efficiency check
+      if (timeSincePrestige > this.PRESTIGE_TIMEOUT_SECONDS * 1000) {
+        return true;
+      }
+      
+      // Also check efficiency - if we're not gaining much by waiting, prestige now
+      const efficiency = this.calculatePrestigeEfficiency(prestigeLayer);
+      if (efficiency >= this.PRESTIGE_EFFICIENCY_THRESHOLD) {
+        return true;
+      }
     } else {
       // After yellow fusion is reached, check if both yellow fusion and fusion booster are at max
       const yellowFusionAtMax = HoldingRecord.yellowFusion.amount.greq(HoldingRecord.yellowFusion.maxAmount);
@@ -229,9 +331,15 @@ export class BalanceService {
         // Both at max, prestige is worth it
         return true;
       }
+      
+      // Even after yellow fusion, check efficiency
+      const efficiency = this.calculatePrestigeEfficiency(prestigeLayer);
+      if (efficiency >= this.PRESTIGE_EFFICIENCY_THRESHOLD) {
+        return true;
+      }
     }
     
-    // Fallback: check if the prestige gain is worth it
+    // Fallback: check if the prestige gain is worth it based on exponential threshold
     return prestigeLayer.holdingGain.greq(prestigeLayer.bestPrestige.pow(this.settings.higherPrestige))
   }
 
@@ -308,6 +416,7 @@ export class BalanceService {
     this.elapsedSincePrevious = 0;
     this.totalElapsedTime = 0;
     this.prestigeStartTimes.clear();
+    this.prestigeGainHistory.clear();
   }
 
   fullReset = () => {
