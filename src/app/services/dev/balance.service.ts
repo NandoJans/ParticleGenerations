@@ -23,7 +23,7 @@ import {MilestoneRecord} from "../../classes/records/milestones/milestone-record
   providedIn: 'root'
 })
 export class BalanceService {
-  private readonly PRESTIGE_TIMEOUT_SECONDS = 5; // 5 seconds of simulated game time
+  private readonly PRESTIGE_TIMEOUT_SECONDS = 300; // 5 minutes (300 seconds) of simulated game time - allow longer runs to reach high values
   private readonly LOOK_AHEAD_SECONDS = 10; // How far ahead to predict for optimization
   private readonly PRESTIGE_EFFICIENCY_THRESHOLD = 0.8; // Prestige when efficiency drops below 80%
   private readonly YELLOW_PRESTIGE_MIN_GAIN = 2.0; // For yellow prestige, wait for at least 2x gain (more star particles)
