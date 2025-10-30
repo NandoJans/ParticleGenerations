@@ -17,6 +17,7 @@ import {PrestigeLayer} from "../../classes/features/prestiges/prestige-layer";
 import {Holding} from "../../classes/features/holding";
 import {ChallengeService} from "../interactables/challenge.service";
 import {ChallengeRecord} from "../../classes/records/challenges/challenge-record";
+import {MilestoneRecord} from "../../classes/records/milestones/milestone-record";
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +51,8 @@ export class BalanceService {
   newResultsThisLoop: boolean = false;
   prestigeStartTimes: Map<string, number> = new Map(); // Track when each prestige layer was last prestiged
   prestigeGainHistory: Map<string, Array<{time: number, gain: Num}>> = new Map(); // Track prestige gain over time
+  trackedMilestones: Set<string> = new Set(); // Track which milestones have been reached
+  trackedUpgradeLevels: Map<string, Set<number>> = new Map(); // Track specific upgrade levels
 
   constructor(
     private tickService: TickService,
@@ -76,6 +79,8 @@ export class BalanceService {
     // Clear prestige timing tracker and history
     this.prestigeStartTimes.clear();
     this.prestigeGainHistory.clear();
+    this.trackedMilestones.clear();
+    this.trackedUpgradeLevels.clear();
 
     App.gameSpeed = new Num(this.settings.speed, 0);
     App.offlineCalculation = true;
@@ -127,6 +132,12 @@ export class BalanceService {
         this.checkEnhancement(upgrade);
       })
     })
+
+    // Check for milestone unlocks
+    this.checkMilestones();
+    
+    // Check for specific upgrade level milestones
+    this.checkUpgradeLevels();
 
     this.prestigeLayerService.getList().forEach(prestigeLayer => {
       if (prestigeLayer.limitPhaseBelow && prestigeLayer.requirementsMet()) {
@@ -209,6 +220,110 @@ export class BalanceService {
         }
       }
     });
+  }
+
+  /**
+   * Check and track milestone unlocks
+   */
+  private checkMilestones(): void {
+    MilestoneRecord.list.forEach(milestone => {
+      if (milestone.unlocked && !this.trackedMilestones.has(milestone.name)) {
+        this.trackedMilestones.add(milestone.name);
+        
+        if (!this.results[milestone.name]) {
+          this.results[milestone.name] = {
+            element: milestone.displayName,
+            time: this.totalElapsedTime,
+            timeBetween: this.elapsedSincePrevious,
+            style: milestone.style,
+          }
+          this.newResultsThisLoop = true;
+        }
+      }
+    });
+  }
+
+  /**
+   * Check and track specific upgrade levels (Red Generator Extension 1-5, Booster Acceleration 1-5, Fusion Booster Acceleration 1-5)
+   */
+  private checkUpgradeLevels(): void {
+    // Track Red Generator Extension levels 1-5
+    const extensionUpgrade = UpgradeRecord.redGeneratorExtension;
+    const extensionLevel = extensionUpgrade.amount.toNumber();
+    
+    if (!this.trackedUpgradeLevels.has('redGeneratorExtension')) {
+      this.trackedUpgradeLevels.set('redGeneratorExtension', new Set());
+    }
+    const trackedExtensionLevels = this.trackedUpgradeLevels.get('redGeneratorExtension')!;
+    
+    for (let level = 1; level <= 5; level++) {
+      if (extensionLevel >= level && !trackedExtensionLevels.has(level)) {
+        trackedExtensionLevels.add(level);
+        
+        const resultKey = `redGeneratorExtension_${level}`;
+        if (!this.results[resultKey]) {
+          this.results[resultKey] = {
+            element: `Red Generator Extension ${level}`,
+            time: this.totalElapsedTime,
+            timeBetween: this.elapsedSincePrevious,
+            style: extensionUpgrade.style,
+          }
+          this.newResultsThisLoop = true;
+        }
+      }
+    }
+    
+    // Track Booster Acceleration (Red Accelerators) levels 1-5
+    const redBoosterAccelUpgrade = UpgradeRecord.boosterAccelerationUpgrade;
+    const redBoosterAccelLevel = redBoosterAccelUpgrade.amount.toNumber();
+    
+    if (!this.trackedUpgradeLevels.has('boosterAccelerationUpgrade')) {
+      this.trackedUpgradeLevels.set('boosterAccelerationUpgrade', new Set());
+    }
+    const trackedRedBoosterAccelLevels = this.trackedUpgradeLevels.get('boosterAccelerationUpgrade')!;
+    
+    for (let level = 1; level <= 5; level++) {
+      if (redBoosterAccelLevel >= level && !trackedRedBoosterAccelLevels.has(level)) {
+        trackedRedBoosterAccelLevels.add(level);
+        
+        const resultKey = `boosterAccelerationUpgrade_${level}`;
+        if (!this.results[resultKey]) {
+          this.results[resultKey] = {
+            element: `Booster Acceleration ${level}`,
+            time: this.totalElapsedTime,
+            timeBetween: this.elapsedSincePrevious,
+            style: redBoosterAccelUpgrade.style,
+          }
+          this.newResultsThisLoop = true;
+        }
+      }
+    }
+    
+    // Track Fusion Booster Acceleration levels 1-5
+    const fusionBoosterAccelUpgrade = UpgradeRecord.fusionBoosterAcceleration;
+    const fusionBoosterAccelLevel = fusionBoosterAccelUpgrade.amount.toNumber();
+    
+    if (!this.trackedUpgradeLevels.has('fusionBoosterAcceleration')) {
+      this.trackedUpgradeLevels.set('fusionBoosterAcceleration', new Set());
+    }
+    const trackedFusionBoosterAccelLevels = this.trackedUpgradeLevels.get('fusionBoosterAcceleration')!;
+    
+    for (let level = 1; level <= 5; level++) {
+      if (fusionBoosterAccelLevel >= level && !trackedFusionBoosterAccelLevels.has(level)) {
+        trackedFusionBoosterAccelLevels.add(level);
+        
+        const resultKey = `fusionBoosterAcceleration_${level}`;
+        if (!this.results[resultKey]) {
+          this.results[resultKey] = {
+            element: `Fusion Booster Acceleration ${level}`,
+            time: this.totalElapsedTime,
+            timeBetween: this.elapsedSincePrevious,
+            style: fusionBoosterAccelUpgrade.style,
+          }
+          this.newResultsThisLoop = true;
+        }
+      }
+    }
   }
 
   /**
