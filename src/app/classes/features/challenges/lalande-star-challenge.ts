@@ -46,7 +46,7 @@ export class LalandeStarChallenge extends YellowStarChallenge {
   style: Styles = Styles.LALANDE;
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
   requirement: Requirement[] = [
-    new Requirement(HoldingRecord.redParticles, new Num(1, 4100), this)
+    new Requirement(HoldingRecord.redParticles, new Num(1, 400), this)
   ];
 
   reward(): undefined {
@@ -74,7 +74,7 @@ export class LalandeStarChallenge extends YellowStarChallenge {
 
   override init() {
     this.requirement = [
-    new Requirement(HoldingRecord.redParticles, new Num(1, 4100), this)
+    new Requirement(HoldingRecord.redParticles, new Num(1, 400), this)
   ];
   }
 }
