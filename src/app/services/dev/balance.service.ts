@@ -201,7 +201,7 @@ export class BalanceService {
 
   private isWorthPrestiging(prestigeLayer: PrestigeLayer, holding: Holding): boolean {
     // First check the time inside the prestige layer, should not be higher than 1 minute
-    if (Date.now() - prestigeLayer.prestigeStarted.getTime() > 1000) return true;
+    if (Date.now() - prestigeLayer.prestigeStarted.getTime() > 60000) return true;
     return prestigeLayer.holdingGain.greq(prestigeLayer.bestPrestige.pow(this.settings.higherPrestige))
   }
 
