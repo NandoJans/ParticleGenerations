@@ -28,6 +28,8 @@ export class BalanceService {
   private readonly PRESTIGE_EFFICIENCY_THRESHOLD = 0.8; // Prestige when efficiency drops below 80%
   private readonly YELLOW_PRESTIGE_MIN_GAIN = 2.0; // For yellow prestige, wait for at least 2x gain (more star particles)
   private readonly YELLOW_PRESTIGE_MIN_GAIN_AFTER_FUSION = 3.0; // After yellow fusion, wait for 3x gain minimum (even more patient)
+  private readonly MIN_HISTORY_LENGTH = 3; // Minimum number of history entries needed for plateau detection
+  private readonly PLATEAU_THRESHOLD_PERCENT = 100; // Gain rate below 1% (currentGain/100) indicates plateau
   
   settings: {
     speed: number,
@@ -444,7 +446,7 @@ export class BalanceService {
     
     // Get gain history to detect if we've reached peak
     const history = this.prestigeGainHistory.get(prestigeLayer.name);
-    const hasEnoughHistory = history && history.length >= 3;
+    const hasEnoughHistory = history && history.length >= this.MIN_HISTORY_LENGTH;
     
     // STEP 1: Wait until we've reached a reasonable gain threshold (at least reached previous best)
     // OR wait until we have evidence that gain is plateauing even if below best
@@ -453,8 +455,10 @@ export class BalanceService {
     if (!hasReachedBestGain && hasEnoughHistory) {
       // Check if gain is plateauing (not increasing much anymore)
       // If gain stopped growing significantly, it might be worth prestiging even if below historical best
+      // Plateau detection: gain rate is calculated between last two history entries
+      // and compared to 1% of current gain (PLATEAU_THRESHOLD_PERCENT = 100)
       const gainRate = this.calculateGainRate(prestigeLayer);
-      const isGainPlateauing = gainRate.lt(currentGain.div(new Num(100, 0))); // Less than 1% per tracked interval
+      const isGainPlateauing = gainRate.lt(currentGain.div(new Num(this.PLATEAU_THRESHOLD_PERCENT, 0)));
       
       if (!isGainPlateauing) {
         // Gain is still growing, wait for it to reach best or plateau
