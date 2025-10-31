@@ -437,26 +437,38 @@ export class BalanceService {
       return true;
     }
     
-    // STEP 1: Wait until we've reached the best holding gain (or better)
-    // This ensures we don't prestige too early before we've accumulated good gains
-    const hasReachedBestGain = currentGain.greq(bestPrestige);
-    
-    if (!hasReachedBestGain) {
-      // Haven't reached our best yet, but check timeout to avoid getting stuck
-      if (timeSincePrestige > this.PRESTIGE_TIMEOUT_SECONDS * 1000) {
-        return true;
-      }
-      return false; // Keep waiting to reach best gain
+    // Safety timeout to avoid getting stuck
+    if (timeSincePrestige > this.PRESTIGE_TIMEOUT_SECONDS * 1000) {
+      return true;
     }
     
-    // STEP 2: We've reached best gain, now wait some time to accumulate more potential gains
-    // Check how much gain we're getting by looking at efficiency
-    if (!hasReachedYellowFusion) {
-      // Before yellow fusion is reached, use timeout with efficiency check
-      if (timeSincePrestige > this.PRESTIGE_TIMEOUT_SECONDS * 1000) {
-        return true;
-      }
+    // Get gain history to detect if we've reached peak
+    const history = this.prestigeGainHistory.get(prestigeLayer.name);
+    const hasEnoughHistory = history && history.length >= 3;
+    
+    // STEP 1: Wait until we've reached a reasonable gain threshold (at least reached previous best)
+    // OR wait until we have evidence that gain is plateauing even if below best
+    const hasReachedBestGain = currentGain.greq(bestPrestige);
+    
+    if (!hasReachedBestGain && hasEnoughHistory) {
+      // Check if gain is plateauing (not increasing much anymore)
+      // If gain stopped growing significantly, it might be worth prestiging even if below historical best
+      const gainRate = this.calculateGainRate(prestigeLayer);
+      const isGainPlateauing = gainRate.lt(currentGain.div(new Num(100, 0))); // Less than 1% per tracked interval
       
+      if (!isGainPlateauing) {
+        // Gain is still growing, wait for it to reach best or plateau
+        return false;
+      }
+      // If plateauing below best, continue to efficiency check
+    } else if (!hasReachedBestGain) {
+      // Not enough history yet, wait to gather more data
+      return false;
+    }
+    
+    // STEP 2: We've reached a good gain point, now wait for the best moment (when efficiency drops)
+    // This ensures we don't prestige too early when gains are still increasing rapidly
+    if (!hasReachedYellowFusion) {
       // For yellow prestige, be more conservative - only check efficiency, not the fallback
       if (isYellowPrestige) {
         const efficiency = this.calculatePrestigeEfficiency(prestigeLayer);
