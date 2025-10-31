@@ -429,6 +429,28 @@ export class BalanceService {
     // Special handling for yellow prestige - be much more conservative with star particles
     const isYellowPrestige = prestigeLayer.name === 'yellow';
     
+    const currentGain = prestigeLayer.holdingGain;
+    const bestPrestige = prestigeLayer.bestPrestige;
+    
+    // First prestige - always worth it if we can prestige
+    if (bestPrestige.equals(new Num(0, 0))) {
+      return true;
+    }
+    
+    // STEP 1: Wait until we've reached the best holding gain (or better)
+    // This ensures we don't prestige too early before we've accumulated good gains
+    const hasReachedBestGain = currentGain.greq(bestPrestige);
+    
+    if (!hasReachedBestGain) {
+      // Haven't reached our best yet, but check timeout to avoid getting stuck
+      if (timeSincePrestige > this.PRESTIGE_TIMEOUT_SECONDS * 1000) {
+        return true;
+      }
+      return false; // Keep waiting to reach best gain
+    }
+    
+    // STEP 2: We've reached best gain, now wait some time to accumulate more potential gains
+    // Check how much gain we're getting by looking at efficiency
     if (!hasReachedYellowFusion) {
       // Before yellow fusion is reached, use timeout with efficiency check
       if (timeSincePrestige > this.PRESTIGE_TIMEOUT_SECONDS * 1000) {
