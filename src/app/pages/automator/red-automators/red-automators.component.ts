@@ -41,4 +41,27 @@ export class RedAutomatorsComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  getToggleAllText() {
+    if (this.oneIsActive()) {
+      return "Deactivate All"
+    } else {
+      return "Activate All"
+    }
+  }
+
+  private oneIsActive() {
+    return AutomatorRecord.redAutomators.some(automator => automator.active)
+  }
+
+  toggleAll() {
+    if (this.oneIsActive()) {
+      AutomatorRecord.redAutomators.forEach(automator => automator.disable())
+    } else {
+      AutomatorRecord.redAutomators.forEach(automator => automator.enable())
+    }
+  }
+
+  getToggleColor() {
+    return this.oneIsActive() ? "red" : "green"
+  }
 }

@@ -73,8 +73,8 @@ export class SiriusStarChallenge extends YellowStarChallenge {
     this.challengeGenerators['siriusGenerator'].amount = new Num(1, 0);
     this.challengeGenerators['siriusGenerator'].bought = new Num(1, 0);
 
-    this.siriusGeneratorMultiplier = HoldingRecord.redParticles.amount.pow(new Num(1, -3)).mul(this.challengeUpgrades['siriusGeneratorMultiplierUpgrade'].effect ?? new Num(1, 0));
-    this.challengeGenerators['siriusGenerator'].multiplier = this.siriusGeneratorMultiplier.copy();
+    this.siriusGeneratorMultiplier = HoldingRecord.redParticles.amount.pow(new Num(2, -4)).mul(this.challengeUpgrades['siriusGeneratorMultiplierUpgrade'].effect ?? new Num(1, 0));
+    this.challengeGenerators['siriusGenerator'].baseMulMod = this.siriusGeneratorMultiplier.copy();
 
     const sunParticleEffect: Num = this.challengeHoldings['siriusParticle'].amount.pow(new Num(4, 0)).floor();
     this.challengeHoldings['siriusParticle'].effect = sunParticleEffect;
@@ -108,7 +108,6 @@ export class SiriusStarChallenge extends YellowStarChallenge {
     ];
     elementsToDisable.forEach(element => {
       element.unlocked = false;
-      element.startUnlocked = false;
       element.bought = new Num(0, 0);
       this.applyRequirementNerf(element);
     })

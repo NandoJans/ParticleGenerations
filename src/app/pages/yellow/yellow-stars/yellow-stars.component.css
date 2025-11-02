@@ -10,13 +10,13 @@ button.button {
 
 .resource-card {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: baseline;
   gap: 4px;
   margin: 10px auto;
   width: fit-content;
-  padding: 5px;
+  padding: 5px 10px;
   font-size: 1.2rem;
 }
 

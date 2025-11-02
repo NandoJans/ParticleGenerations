@@ -1,18 +1,16 @@
 import {YellowUpgrade} from "./yellow-upgrade";
-import {Num} from "../../../num";
 import {Requirement} from "../interfaces/requirement";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
-import {HoldingRecord} from "../../records/holdings/holding-record";
+import {Num} from "../../../num";
 
-export class BreakYellowFusionLimitYellowUpgrade extends YellowUpgrade {
-  displayName: string = 'Break Yellow Fusion Limit';
+export class EmpoweredBoosterAccelerationUpgrade extends YellowUpgrade {
+  displayName: string = 'Empowered Booster Acceleration Upgrade';
   constructor(name: string) {
-    super(name, 'break-yellow-fusion-limit-yellow-upgrade', true);
+    super(name, 'empowered-booster-acceleration-upgrade', true);
     this.requirement = [];
   }
 
   override tryLoad(): void {
-    // Lazily set requirement once UpgradeRecord is fully initialized
     if (!this.requirement || this.requirement.length === 0) {
       this.requirement = [
         new Requirement(UpgradeRecord.breakYellowBarrier, new Num(1, 0), this),
@@ -22,17 +20,21 @@ export class BreakYellowFusionLimitYellowUpgrade extends YellowUpgrade {
   }
 
   getDescription(): string {
-    return "Breaks the yellow fusion barrier of 1e1000.";
+    return "Increases the power of booster accelerations by 50%";
   }
 
   action(): undefined {
     if (this.hasBought()) {
-      HoldingRecord.yellowFusion.maxAmount = new Num(1, 1e100);
+      UpgradeRecord.boosterAccelerationUpgrade.buffer = UpgradeRecord.boosterAccelerationUpgrade.buffer.mul(this.buffer);
     }
     return;
   }
 
   override limit: Num = new Num(1, 0);
-  baseCost: Num = new Num(1, 215);
-  cost: Num = new Num(1, 215);
+  baseCost: Num = new Num(1, 12);
+  cost: Num = new Num(1, 12);
+
+  override buffer: Num = new Num(1.5, 0);
+  override baseBuffer: Num = new Num(1.5, 0);
+
 }

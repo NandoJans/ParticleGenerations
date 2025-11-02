@@ -20,7 +20,8 @@ export class MultiplierChallengeUpgrade extends ChallengeUpgrade {
     subNav: string,
     type: string,
     public multiplier: Multiplier,
-    difficultyIncrease: Num
+    difficultyIncrease: Num | Num[],
+    difficulty = 0,
   ) {
     super(
       saveName,
@@ -35,7 +36,8 @@ export class MultiplierChallengeUpgrade extends ChallengeUpgrade {
       nav,
       subNav,
       type,
-      difficultyIncrease
+      difficultyIncrease,
+      difficulty
     );
     this.scalingStart = scalingStart;
   }

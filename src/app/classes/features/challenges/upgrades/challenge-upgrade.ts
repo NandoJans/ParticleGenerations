@@ -43,6 +43,7 @@ export abstract class ChallengeUpgrade extends Upgrade {
       }
       this.baseCost = this.baseCost.pow(this.difficultyIncrease[this.difficulty]);
     }
+    console.log(this.name, this.difficultyIncrease, this.difficulty, this.baseCost);
   }
 
   override tryLoad() {

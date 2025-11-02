@@ -11,6 +11,7 @@ import {YellowGeneratorMultiplierUpgrade} from "../upgrades/yellow-generator-mul
 import {YellowGeneratorBuyMultiplierUpgrade} from "../upgrades/yellow-generator-buy-multiplier-upgrade";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {ResetKey} from "../../enums/reset-key";
+import {Enhancement} from "../enhancements/enhancement";
 
 export abstract class YellowGenerator extends Generator {
   type: string = 'yellow-generator';
@@ -49,6 +50,8 @@ export abstract class YellowGenerator extends Generator {
 
   abstract multiplierUpgrade: YellowGeneratorMultiplierUpgrade;
   abstract buyMultiplierUpgrade: YellowGeneratorBuyMultiplierUpgrade;
+
+  override allowedEnhancements: Enhancement[] = [];
 
 
   override getUpgrades(): Upgrade[] {

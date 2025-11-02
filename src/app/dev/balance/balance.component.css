@@ -1,7 +1,6 @@
 table {
   width: 80%;
   margin: auto;
-  border: 1px solid var(--background-color-4);
 }
 
 thead {
@@ -45,4 +44,29 @@ td {
 
 .purple {
   color: var(--text-color-purple);
+}
+
+.proxima-centauri {
+  color: var(--proxima-centauri-color);
+}
+
+.lalande {
+  color: var(--lalande-color);
+}
+
+.sun {
+  color: var(--sun-color);
+}
+
+.sirius {
+  color: var(--sirius-color);
+}
+
+.actions {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
 }

@@ -14,16 +14,16 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
   name: string = 'proxima-centauri-star-challenge';
   displayName: string = 'Proxima Centauri';
 
-  baseGoal: Num = new Num(1, 2700);
-  goal: Num = new Num(1, 2700);
+  baseGoal: Num = new Num(1, 2750);
+  goal: Num = new Num(1, 2750);
   override goalIncrease: Num[] = [
     new Num(1, 13200),
-    new Num(1, 20200),
-    new Num(1, 50200),
+    new Num(1, 32250),
+    new Num(1, 41625),
   ];
   override difficultyIncrease: Num[] = [
     new Num(1, 0),
-    new Num(4, 0),
+    new Num(5, 0),
     new Num(3.75, 0),
     new Num(3.5, 0),
   ];
@@ -36,7 +36,7 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
     new Num(0.6, 0),
     new Num(0.65, 0),
     new Num(0.35, 0),
-    new Num(0.3, 0),
+    new Num(0.35, 0),
   ];
 
   override strongerBuffer(completionBuffer: Num): Num | void {
@@ -58,8 +58,13 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
     new Requirement(HoldingRecord.yellowPrestiges, new Num(1, 3), this)
   ];
 
+  override maxEffect = new Num(1, 200);
+
   reward(): Num {
-    const effect = HoldingRecord.yellowParticles.amount.pow(this.buffer);
+    let effect = HoldingRecord.yellowParticles.amount.pow(this.buffer);
+    if (effect.greq(this.maxEffect)) {
+      effect = this.maxEffect.copy();
+    }
     MultiplierRecord.yellowGenerators.correct(effect);
     return effect;
   }
@@ -91,11 +96,16 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
         'unlockSecondRedGenerator',
         'unlock-second-red-generator-proxima-centauri',
         'Unlock Second Red Generator',
-        new Num(1, 50),
+        new Num(1, 45),
         HoldingRecord.redParticles,
         this.style,
         GeneratorRecord.secondRedGenerator,
-        this.getDifficultyIncrease(new Num(1.6, 0)),
+        [
+          this.getDifficultyIncrease(new Num(1.6, 1)),
+          this.getDifficultyIncrease(new Num(1, 1)),
+          this.getDifficultyIncrease(new Num(1.5, 1)),
+        ],
+        this.getCompletions().toNumber()
       ),
       unlockThirdRedGenerator: new YellowStarChallengeUnlockUpgrade(
         'unlockThirdRedGenerator',
@@ -105,27 +115,42 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
         HoldingRecord.redAccelerators,
         this.style,
         GeneratorRecord.thirdRedGenerator,
-        this.getDifficultyIncrease(new Num(1.8, 0)),
+        [
+          this.getDifficultyIncrease(new Num(1.6, 1)),
+          this.getDifficultyIncrease(new Num(1.1, 1)),
+          this.getDifficultyIncrease(new Num(1.5, 1)),
+        ],
+        this.getCompletions().toNumber()
       ),
       unlockFourthRedGenerator: new YellowStarChallengeUnlockUpgrade(
         'unlockFourthRedGenerator',
         'unlock-fourth-red-generator-proxima-centauri',
         'Unlock Fourth Red Generator',
-        new Num(1, 1300),
+        new Num(1, 1400),
         HoldingRecord.redParticles,
         this.style,
         GeneratorRecord.fourthRedGenerator,
-        this.getDifficultyIncrease(new Num(0.8, 0)),
+        [
+          this.getDifficultyIncrease(new Num(1.6, 1)),
+          this.getDifficultyIncrease(new Num(1.8, 0)),
+          this.getDifficultyIncrease(new Num(2.5, 0)),
+        ],
+        this.getCompletions().toNumber()
       ),
       unlockFifthRedGenerator: new YellowStarChallengeUnlockUpgrade(
         'unlockFifthRedGenerator',
         'unlock-fifth-red-generator-proxima-centauri',
         'Unlock Fifth Red Generator',
-        new Num(1, 118),
+        new Num(1, 130),
         HoldingRecord.redAccelerators,
         this.style,
         GeneratorRecord.fifthRedGenerator,
-        this.getDifficultyIncrease(new Num(0.9, 0)),
+        [
+          this.getDifficultyIncrease(new Num(1.6, 1)),
+          this.getDifficultyIncrease(new Num(3, 0)),
+          this.getDifficultyIncrease(new Num(5, 0)),
+        ],
+        this.getCompletions().toNumber()
       ),
     }
 this.requirement = [

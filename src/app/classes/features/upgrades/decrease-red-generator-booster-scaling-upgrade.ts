@@ -40,6 +40,6 @@ export class DecreaseRedGeneratorBoosterScalingUpgrade extends YellowUpgrade {
   override scaling: Num = new Num(1, 3);
   override increase: Num = new Num(1, 25);
   override startIncrease: Num = new Num(1, 25);
-  baseCost: Num = new Num(1, 75);
-  cost: Num = new Num(1, 75);
+  baseCost: Num = new Num(1, 25);
+  cost: Num = new Num(1, 25);
 }

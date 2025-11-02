@@ -117,6 +117,7 @@ import {
   YellowExpertiseGalaxyTreeUpgrade
 } from "../../features/upgrades/yellow-expertise-galaxy-tree-upgrade";
 import {FusionExpertiseGalaxyTreeUpgrade} from "../../features/upgrades/fusion-expertise-galaxy-tree-upgrade";
+import {EmpoweredBoosterAccelerationUpgrade} from "../../features/upgrades/empowered-booster-acceleration-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -152,6 +153,7 @@ export class UpgradeRecord extends Record {
   static breakYellowBarrier: BreakYellowBarrierUpgrade = new BreakYellowBarrierUpgrade('breakYellowBarrier');
 
   // Break upgrades
+  static empoweredBoosterAcceleration: EmpoweredBoosterAccelerationUpgrade = new EmpoweredBoosterAccelerationUpgrade('empoweredBoosterAcceleration');
   static unlockFourthYellowGenerator: UnlockFourthYellowGeneratorUpgrade = new UnlockFourthYellowGeneratorUpgrade('unlockFourthYellowGenerator');
   static unlockFifthYellowGenerator: UnlockFifthYellowGeneratorUpgrade = new UnlockFifthYellowGeneratorUpgrade('unlockFifthYellowGenerator');
   static decreaseRedGeneratorScaling: DecreaseRedGeneratorScalingUpgrade = new DecreaseRedGeneratorScalingUpgrade('decreaseRedGeneratorScaling');
@@ -277,6 +279,7 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.breakYellowBarrier,
 
     // Yellow break upgrades
+    UpgradeRecord.empoweredBoosterAcceleration,
     UpgradeRecord.unlockFourthYellowGenerator,
     UpgradeRecord.unlockFifthYellowGenerator,
     UpgradeRecord.stopRedBoosterAccelerationReset,

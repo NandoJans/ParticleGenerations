@@ -41,13 +41,13 @@ export abstract class Generator extends Buyable implements Generatable, Storable
   }
 
   override run(speed: Num): any {
-    if (this.isUnlocked()) {
-      this.generates.generate(this.getGenerateAmount().mul(speed) as Num)
-    }
     this.multiplier = this.baseMultiplier
       .mul(this.baseMulMod)
       .pow(this.bought)
       .mul(this.globalMultiplier.getNum()) as Num
+    if (this.isUnlocked()) {
+      this.generates.generate(this.getGenerateAmount().mul(speed) as Num)
+    }
     this.baseMulMod = new Num(1, 0)
     this.correctCost();
   }
@@ -131,9 +131,7 @@ export abstract class Generator extends Buyable implements Generatable, Storable
     return [];
   }
 
-  allowedEnhancements: Enhancement[] = [
-    EnhancementRecord.yellow
-  ];
+  allowedEnhancements: Enhancement[] = [];
   enhancement: Enhancement | null = null;
 
   canEnhance(): boolean {

@@ -57,6 +57,21 @@ export class AutomatorRecord extends Record {
 
   static fusionBoosterAcceleration: FusionBoosterAccelerationAutomator = new FusionBoosterAccelerationAutomator('fusionBoosterAcceleration');
 
+  static redAutomators: Automator[] = [
+    AutomatorRecord.firstRedGenerator,
+    AutomatorRecord.secondRedGenerator,
+    AutomatorRecord.thirdRedGenerator,
+    AutomatorRecord.fourthRedGenerator,
+    AutomatorRecord.fifthRedGenerator,
+    AutomatorRecord.redGeneratorExtension,
+    AutomatorRecord.redGeneratorBooster,
+    AutomatorRecord.multiplyRedAccelerationGeneration,
+    AutomatorRecord.multiplyRedAcceleratorEffect,
+    AutomatorRecord.improveRedAcceleratorsEffect,
+    AutomatorRecord.improveRedParticlesToAccelerators,
+    AutomatorRecord.boosterAcceleration,
+  ];
+
   static override list: Automator[] = [
     AutomatorRecord.firstRedGenerator,
     AutomatorRecord.secondRedGenerator,

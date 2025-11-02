@@ -9,6 +9,8 @@ import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 import {RedGeneratorMultiplierUpgrade} from "../upgrades/red-generator-multiplier-upgrade";
 import {RedGeneratorBuyMultiplierUpgrade} from "../upgrades/red-generator-buy-multiplier-upgrade";
 import {Upgrade} from "../upgrade";
+import {Enhancement} from "../enhancements/enhancement";
+import {EnhancementRecord} from "../../records/enhancement-record";
 
 export abstract class RedGenerator extends Generator {
   type: string = 'red-particle-generator';
@@ -25,6 +27,10 @@ export abstract class RedGenerator extends Generator {
 
   abstract multiplierUpgrade: RedGeneratorMultiplierUpgrade;
   abstract buyMultiplierUpgrade: RedGeneratorBuyMultiplierUpgrade;
+
+  override allowedEnhancements: Enhancement[] = [
+    EnhancementRecord.yellow
+  ];
 
   override getUpgrades(): Upgrade[] {
     return [

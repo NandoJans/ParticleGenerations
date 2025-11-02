@@ -1,3 +1,5 @@
+<br/>
+<app-button [text]="getToggleAllText()" [style]="'button '+getToggleColor()" (function)="toggleAll()"></app-button>
 <h2>Red Generators Automators</h2>
 <div class="upgrade-row">
     <div *ngFor="let automator of redGeneratorAutomators">

@@ -19,7 +19,12 @@ describe('BalanceService', () => {
   beforeEach(() => {
     // Create spy objects for dependencies
     const tickServiceSpy = jasmine.createSpyObj('TickService', ['gameTick', 'clearIntervals', 'startIntervals']);
-    const dataManagerServiceSpy = jasmine.createSpyObj('DataManagerService', ['save', 'load']);
+    const dataManagerServiceSpy = jasmine.createSpyObj('DataManagerService', [
+      'save', 'load',
+      'enableSimulation', 'disableSimulation',
+      'clearSim', 'saveSim', 'loadSim',
+      'saveSimSnapshot', 'listSimSnapshots', 'loadSimSnapshot', 'deleteSimSnapshot'
+    ]);
     const prestigeLayerServiceSpy = jasmine.createSpyObj('PrestigeLayersService', ['getList']);
     const enhancementServiceSpy = jasmine.createSpyObj('EnhancementService', ['canEnhance', 'startEnhancing', 'enhance', 'stopEnhancing']);
     const challengeServiceSpy = jasmine.createSpyObj('ChallengeService', ['tick', 'inChallenge', 'challengeGoalReached', 'getChallenge', 'completeChallenge', 'startChallenge']);
@@ -101,9 +106,9 @@ describe('BalanceService', () => {
       service.prestigeStartTimes.set('test', 100);
       service.prestigeGainHistory.set('test', []);
       service.trackedMilestones.add('milestone1');
-      
+
       service.start();
-      
+
       expect(service.prestigeStartTimes.size).toBe(0);
       expect(service.prestigeGainHistory.size).toBe(0);
       expect(service.trackedMilestones.size).toBe(0);
@@ -125,9 +130,9 @@ describe('BalanceService', () => {
     it('should reset elapsed times when done', () => {
       service.totalElapsedTime = 1000;
       service.elapsedSincePrevious = 500;
-      
+
       service.done();
-      
+
       expect(service.totalElapsedTime).toBe(0);
       expect(service.elapsedSincePrevious).toBe(0);
     });
@@ -135,9 +140,9 @@ describe('BalanceService', () => {
     it('should clear prestige timing trackers when done', () => {
       service.prestigeStartTimes.set('test', 100);
       service.prestigeGainHistory.set('test', []);
-      
+
       service.done();
-      
+
       expect(service.prestigeStartTimes.size).toBe(0);
       expect(service.prestigeGainHistory.size).toBe(0);
     });
@@ -158,7 +163,7 @@ describe('BalanceService', () => {
           style: 'test-style'
         }
       };
-      
+
       const results = service.getResults();
       expect(results['testResult']).toBeDefined();
       expect(results['testResult'].element).toBe('Test Element');
@@ -171,7 +176,7 @@ describe('BalanceService', () => {
   describe('Result Tracking', () => {
     it('should track new results during loop', () => {
       expect(service.newResultsThisLoop).toBe(false);
-      
+
       service.results['newItem'] = {
         element: 'New Item',
         time: 100,
@@ -179,19 +184,19 @@ describe('BalanceService', () => {
         style: 'style1'
       };
       service.newResultsThisLoop = true;
-      
+
       expect(service.newResultsThisLoop).toBe(true);
     });
 
     it('should reset elapsed time counter when new results are added', () => {
       service.elapsedSincePrevious = 1000;
       service.newResultsThisLoop = true;
-      
+
       // Manually simulate what happens in loop after new results
       if (service.newResultsThisLoop) {
         service.elapsedSincePrevious = 0;
       }
-      
+
       expect(service.elapsedSincePrevious).toBe(0);
     });
   });
@@ -210,7 +215,7 @@ describe('BalanceService', () => {
     it('should track prestige start times', () => {
       service.totalElapsedTime = 1000;
       service.prestigeStartTimes.set('red', 1000);
-      
+
       expect(service.prestigeStartTimes.get('red')).toBe(1000);
     });
   });
@@ -224,7 +229,7 @@ describe('BalanceService', () => {
     it('should track milestone unlocks', () => {
       service.trackedMilestones.add('milestone1');
       service.trackedMilestones.add('milestone2');
-      
+
       expect(service.trackedMilestones.has('milestone1')).toBe(true);
       expect(service.trackedMilestones.has('milestone2')).toBe(true);
       expect(service.trackedMilestones.has('milestone3')).toBe(false);
@@ -239,7 +244,7 @@ describe('BalanceService', () => {
 
     it('should track upgrade levels per upgrade', () => {
       service.trackedUpgradeLevels.set('upgrade1', new Set([1, 2, 3]));
-      
+
       expect(service.trackedUpgradeLevels.has('upgrade1')).toBe(true);
       expect(service.trackedUpgradeLevels.get('upgrade1')?.has(2)).toBe(true);
     });

@@ -18,25 +18,49 @@ import {Holding} from "../../classes/features/holding";
 import {ChallengeService} from "../interactables/challenge.service";
 import {ChallengeRecord} from "../../classes/records/challenges/challenge-record";
 import {MilestoneRecord} from "../../classes/records/milestones/milestone-record";
+import {Challenge} from "../../classes/features/challenge";
+import {LocalStorageHelper} from "../../classes/helpers/local-storage-helper";
+import { ChallengeHelperService } from './helpers/challenge-helper.service';
+import { MilestoneHelperService } from './helpers/milestone-helper.service';
+import { UpgradeHelperService } from './helpers/upgrade-helper.service';
+import { PrestigeHelperService } from './helpers/prestige-helper.service';
+import { BuyableHelperService } from './helpers/buyable-helper.service';
+import { EnhancementHelperService } from './helpers/enhancement-helper.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BalanceService {
-  private readonly PRESTIGE_TIMEOUT_SECONDS = 300; // 5 minutes (300 seconds) of simulated game time when no yellow fusion
-  private readonly WAIT_AFTER_BEST_SECONDS = 5; // Wait 5 seconds after reaching best gain before prestiging
+  private readonly PRESTIGE_TIMEOUT_SECONDS = 3000; // 5 minutes (300 seconds) of simulated game time when no yellow fusion
+  private readonly PRESTIGE_TIMEOUT_FUSION_SECONDS = 1; // Wait 5 seconds after reaching best gain before prestiging
+  private readonly WAIT_AFTER_BEST_SECONDS = 0.2; // Wait 5 seconds after reaching best gain before prestiging
   private readonly YELLOW_PRESTIGES_IMMEDIATE_THRESHOLD = 1000; // Below 1000 yellow prestiges, prestige immediately
   private readonly STAR_PARTICLES_LOW_THRESHOLD = new Num(1, 10); // 1e10 star particles threshold
-  private readonly STAR_PARTICLES_HIGH_MULTIPLIER = 1.05; // Above threshold, wait for bestPrestige^1.05
-  
+  private readonly STAR_PARTICLES_HIGH_POWER = 1.05; // Above threshold, wait for bestPrestige^1.05
+  private readonly STAR_PARTICLES_HIGH_MULTIPLIER = 0.75; // Above threshold, wait for bestPrestige^1.05
+
+  // Persist balance results across reloads (separate from sim save data)
+  private readonly RESULTS_STORAGE_KEY = 'particleGenerations-balance-results';
+
   settings: {
     speed: number,
     maxTime: number,
     higherPrestige: Num
+    initial: () => void,
   } = {
     speed: 10,
     maxTime: 1000000,
     higherPrestige: new Num(1.01, 0),
+    initial: () => {
+      return;
+      HoldingRecord.yellowPrestiges.amount = new Num(2, 3);
+      HoldingRecord.yellowKeys.amount = new Num(1, 5);
+      HoldingRecord.yellowParticles.amount = new Num(5, 60);
+      ChallengeRecord.proximaCentauriStar.completed = new Num(3, 0);
+      ChallengeRecord.lalandeStar.completed = new Num(3, 0);
+      ChallengeRecord.sunStar.completed = new Num(3, 0);
+      ChallengeRecord.siriusStar.completed = new Num(2, 0);
+    }
   };
 
   loopTimeout: any;
@@ -46,6 +70,7 @@ export class BalanceService {
     time: number,
     timeBetween: number,
     style: string,
+    snapshotId?: string,
   }} = {};
 
   totalElapsedTime: number = 0;
@@ -63,40 +88,60 @@ export class BalanceService {
     private prestigeLayerService: PrestigeLayersService,
     private enhancementService: EnhancementService,
     private challengeService: ChallengeService,
-  ) { }
+    private challengeHelper: ChallengeHelperService,
+    private milestoneHelper: MilestoneHelperService,
+    private upgradeHelper: UpgradeHelperService,
+    private prestigeHelper: PrestigeHelperService,
+    private buyableHelper: BuyableHelperService,
+    private enhancementHelper: EnhancementHelperService,
+  ) {
+    // Load persisted results (if any) on service creation
+    this.loadResults();
+  }
 
   start(settings: { [key: string]: any } = {}) {
     Object.assign(this.settings, settings);
 
+    // Clear previous run results when starting a new simulation
+    this.clearResults();
+
     // Stop any existing loops
     clearInterval(this.loopTimeout);
 
-    // Stop the real game tick
+    // Stop the real game tick and save real state
     this.tickService.clearIntervals();
     this.dataManagerService.save();
 
+    // Switch to simulation storage and initialize a clean sim state
+    this.dataManagerService.enableSimulation();
+
+    this.dataManagerService.clearSim();
     this.fullReset();
     // Ensure no lingering challenges from previous sessions
+
     ChallengeRecord.currentChallenges = {};
-    
     // Clear prestige timing tracker and history
     this.prestigeStartTimes.clear();
     this.prestigeGainHistory.clear();
-    this.prestigeBestReachedTimes.clear();
     this.trackedMilestones.clear();
     this.trackedUpgradeLevels.clear();
+
+    // Create an initial snapshot (baseline)
+    this.dataManagerService.saveSim();
+    this.dataManagerService.saveSimSnapshot({ type: 'start', label: 'Start', elapsed: 0 });
 
     App.gameSpeed = new Num(this.settings.speed, 0);
     App.offlineCalculation = true;
 
-    this.loopTimeout = setInterval(this.loop.bind(this), 5);
+    this.settings.initial();
+    this.loopTimeout = setInterval(this.loop.bind(this), 1);
   }
 
   loop() {
     this.newResultsThisLoop = false;
     this.tickService.gameTick(new Num(this.settings.speed, 0));
-    this.totalElapsedTime += this.settings.speed * 5;
-    this.elapsedSincePrevious += this.settings.speed * 5;
+    this.totalElapsedTime += this.settings.speed / 2;
+    this.elapsedSincePrevious += this.settings.speed / 2;
 
     // Run active challenges so their elements progress
     this.challengeService.tick();
@@ -128,18 +173,30 @@ export class BalanceService {
       this.checkEnhancement(upgrade);
     });
 
+    GeneratorRecord.redGenerators.map(gen => gen.buyMultiplierUpgrade).forEach(upgrade => {
+      this.checkBuyable(upgrade);
+      this.checkEnhancement(upgrade);
+    });
+
     GeneratorRecord.list.forEach(generator => {
       this.checkBuyable(generator);
       this.checkEnhancement(generator);
-      generator.getUpgrades().forEach(upgrade => {
-        this.checkBuyable(upgrade);
-        this.checkEnhancement(upgrade);
-      })
-    })
+      if (generator.type !== 'red-particle-generator') {
+        generator.getUpgrades().forEach(upgrade => {
+          this.checkBuyable(upgrade);
+          this.checkEnhancement(upgrade);
+        })
+      }
+    });
+
+    GeneratorRecord.redGenerators.map(gen => gen.multiplierUpgrade).forEach(upgrade => {
+      this.checkBuyable(upgrade);
+      this.checkEnhancement(upgrade);
+    });
 
     // Check for milestone unlocks
     this.checkMilestones();
-    
+
     // Check for specific upgrade level milestones
     this.checkUpgradeLevels();
 
@@ -147,7 +204,6 @@ export class BalanceService {
       if (prestigeLayer.limitPhaseBelow && prestigeLayer.requirementsMet()) {
         prestigeLayer.prestige();
         this.prestigeStartTimes.set(prestigeLayer.name, this.totalElapsedTime);
-        this.prestigeBestReachedTimes.delete(prestigeLayer.name); // Reset best reached timer
 
         if (!this.results[prestigeLayer.name]) {
           this.results[prestigeLayer.name] = {
@@ -166,7 +222,6 @@ export class BalanceService {
         ) {
           prestigeLayer.prestige();
           this.prestigeStartTimes.set(prestigeLayer.name, this.totalElapsedTime);
-          this.prestigeBestReachedTimes.delete(prestigeLayer.name); // Reset best reached timer
         }
       }
     })
@@ -174,6 +229,8 @@ export class BalanceService {
     // Reset elapsed time counter if we added any new results this loop
     if (this.newResultsThisLoop) {
       this.elapsedSincePrevious = 0;
+      // Persist results whenever new entries were added this loop
+      this.saveResults();
     }
 
     if (this.elapsedSincePrevious > this.settings.maxTime) {
@@ -182,70 +239,50 @@ export class BalanceService {
   }
 
   private handleChallenges() {
-    // Iterate through prestige layers to manage challenges per layer
-    this.prestigeLayerService.getList().forEach(layer => {
-      const layerKey = layer.name;
-
-      if (this.challengeService.inChallenge(layerKey)) {
-        // If the active challenge goal is reached, complete it
-        if (this.challengeService.challengeGoalReached(layerKey)) {
-          const active = this.challengeService.getChallenge(layerKey);
-          if (active) {
-            const resultKey = active.name + '_complete';
-            if (!this.results[resultKey]) {
-              this.results[resultKey] = {
-                element: active.displayName + ' Completed',
-                time: this.totalElapsedTime,
-                timeBetween: this.elapsedSincePrevious,
-                style: active.style,
-              };
-              this.newResultsThisLoop = true;
-            }
-          }
-          this.challengeService.completeChallenge(layerKey);
-        }
-      } else {
-        // Find the next eligible challenge for this layer
-        const next = ChallengeRecord.list.find(ch =>
-          ch.prestigeLayer === layerKey &&
-          ch.requirementsMet() &&
-          !ch.isCompleted()
-        );
-        if (next) {
-          this.challengeService.startChallenge(next);
-          const resultKey = next.name + '_start';
-          if (!this.results[resultKey]) {
-            this.results[resultKey] = {
-              element: 'Start ' + next.displayName,
-              time: this.totalElapsedTime,
-              timeBetween: this.elapsedSincePrevious,
-              style: next.style,
-            };
-            this.newResultsThisLoop = true;
-          }
-        }
-      }
+    this.challengeHelper.handleChallenges({
+      results: this.results,
+      totalElapsedTime: this.totalElapsedTime,
+      elapsedSincePrevious: this.elapsedSincePrevious,
+      markNew: () => { this.newResultsThisLoop = true; },
+      checkEnhancement: (x: any) => this.checkEnhancement(x),
     });
+  }
+
+  private shouldStartChallenge(challenge: Challenge) {
+    switch (challenge) {
+      case ChallengeRecord.lalandeStar:
+        return GeneratorRecord.thirdYellowGenerator.hasBought();
+      default:
+        return true;
+    }
+  }
+
+  private prepareChallengeStart(challenge: Challenge) {
+    switch (challenge) {
+      case ChallengeRecord.lalandeStar:
+        this.enhancementService.respecEnhancement(EnhancementRecord.yellow)
+        GeneratorRecord.redGenerators.forEach(gen => this.checkEnhancement(gen));
+        break;
+    }
+  }
+
+  private completeChallenge(challenge: Challenge) {
+    switch (challenge) {
+      case ChallengeRecord.lalandeStar:
+        this.enhancementService.respecEnhancement(EnhancementRecord.yellow)
+    }
   }
 
   /**
    * Check and track milestone unlocks
    */
   private checkMilestones(): void {
-    MilestoneRecord.list.forEach(milestone => {
-      if (milestone.unlocked && !this.trackedMilestones.has(milestone.name)) {
-        this.trackedMilestones.add(milestone.name);
-        
-        if (!this.results[milestone.name]) {
-          this.results[milestone.name] = {
-            element: milestone.displayName,
-            time: this.totalElapsedTime,
-            timeBetween: this.elapsedSincePrevious,
-            style: milestone.style,
-          }
-          this.newResultsThisLoop = true;
-        }
-      }
+    this.milestoneHelper.checkMilestones({
+      trackedMilestones: this.trackedMilestones,
+      results: this.results,
+      totalElapsedTime: this.totalElapsedTime,
+      elapsedSincePrevious: this.elapsedSincePrevious,
+      markNew: () => { this.newResultsThisLoop = true; },
     });
   }
 
@@ -253,204 +290,38 @@ export class BalanceService {
    * Check and track specific upgrade levels (Red Generator Extension 1-5, Booster Acceleration 1-5, Fusion Booster Acceleration 1-5)
    */
   private checkUpgradeLevels(): void {
-    // Track Red Generator Extension levels 1-5
-    const extensionUpgrade = UpgradeRecord.redGeneratorExtension;
-    const extensionLevel = extensionUpgrade.amount.toNumber();
-    
-    if (!this.trackedUpgradeLevels.has('redGeneratorExtension')) {
-      this.trackedUpgradeLevels.set('redGeneratorExtension', new Set());
-    }
-    const trackedExtensionLevels = this.trackedUpgradeLevels.get('redGeneratorExtension')!;
-    
-    for (let level = 1; level <= 5; level++) {
-      if (extensionLevel >= level && !trackedExtensionLevels.has(level)) {
-        trackedExtensionLevels.add(level);
-        
-        const resultKey = `redGeneratorExtension_${level}`;
-        if (!this.results[resultKey]) {
-          this.results[resultKey] = {
-            element: `Red Generator Extension ${level}`,
-            time: this.totalElapsedTime,
-            timeBetween: this.elapsedSincePrevious,
-            style: extensionUpgrade.style,
-          }
-          this.newResultsThisLoop = true;
-        }
-      }
-    }
-    
-    // Track Booster Acceleration (Red Accelerators) levels 1-5
-    const redBoosterAccelUpgrade = UpgradeRecord.boosterAccelerationUpgrade;
-    const redBoosterAccelLevel = redBoosterAccelUpgrade.amount.toNumber();
-    
-    if (!this.trackedUpgradeLevels.has('boosterAccelerationUpgrade')) {
-      this.trackedUpgradeLevels.set('boosterAccelerationUpgrade', new Set());
-    }
-    const trackedRedBoosterAccelLevels = this.trackedUpgradeLevels.get('boosterAccelerationUpgrade')!;
-    
-    for (let level = 1; level <= 5; level++) {
-      if (redBoosterAccelLevel >= level && !trackedRedBoosterAccelLevels.has(level)) {
-        trackedRedBoosterAccelLevels.add(level);
-        
-        const resultKey = `boosterAccelerationUpgrade_${level}`;
-        if (!this.results[resultKey]) {
-          this.results[resultKey] = {
-            element: `Booster Acceleration ${level}`,
-            time: this.totalElapsedTime,
-            timeBetween: this.elapsedSincePrevious,
-            style: redBoosterAccelUpgrade.style,
-          }
-          this.newResultsThisLoop = true;
-        }
-      }
-    }
-    
-    // Track Fusion Booster Acceleration levels 1-5
-    const fusionBoosterAccelUpgrade = UpgradeRecord.fusionBoosterAcceleration;
-    const fusionBoosterAccelLevel = fusionBoosterAccelUpgrade.amount.toNumber();
-    
-    if (!this.trackedUpgradeLevels.has('fusionBoosterAcceleration')) {
-      this.trackedUpgradeLevels.set('fusionBoosterAcceleration', new Set());
-    }
-    const trackedFusionBoosterAccelLevels = this.trackedUpgradeLevels.get('fusionBoosterAcceleration')!;
-    
-    for (let level = 1; level <= 5; level++) {
-      if (fusionBoosterAccelLevel >= level && !trackedFusionBoosterAccelLevels.has(level)) {
-        trackedFusionBoosterAccelLevels.add(level);
-        
-        const resultKey = `fusionBoosterAcceleration_${level}`;
-        if (!this.results[resultKey]) {
-          this.results[resultKey] = {
-            element: `Fusion Booster Acceleration ${level}`,
-            time: this.totalElapsedTime,
-            timeBetween: this.elapsedSincePrevious,
-            style: fusionBoosterAccelUpgrade.style,
-          }
-          this.newResultsThisLoop = true;
-        }
-      }
-    }
+    this.upgradeHelper.checkUpgradeLevels({
+      trackedUpgradeLevels: this.trackedUpgradeLevels,
+      results: this.results,
+      totalElapsedTime: this.totalElapsedTime,
+      elapsedSincePrevious: this.elapsedSincePrevious,
+      markNew: () => { this.newResultsThisLoop = true; },
+    });
   }
 
-  /**
-   * Track prestige gain for analysis
-   */
-  private trackPrestigeGain(prestigeLayer: PrestigeLayer): void {
-    const layerName = prestigeLayer.name;
-    if (!this.prestigeGainHistory.has(layerName)) {
-      this.prestigeGainHistory.set(layerName, []);
-    }
-    
-    const history = this.prestigeGainHistory.get(layerName)!;
-    history.push({
-      time: this.totalElapsedTime,
-      gain: prestigeLayer.holdingGain.copy()
-    });
-    
-    // Keep only recent history (last 10 entries)
-    if (history.length > 10) {
-      history.shift();
-    }
-  }
-  
-  
   private isWorthPrestiging(prestigeLayer: PrestigeLayer, holding: Holding): boolean {
-    // Track current prestige gain for analysis
-    this.trackPrestigeGain(prestigeLayer);
-    
-    // Get time since last prestige for this layer
-    const lastPrestigeTime = this.prestigeStartTimes.get(prestigeLayer.name) || 0;
-    const timeSincePrestige = this.totalElapsedTime - lastPrestigeTime;
-    
-    // Check if yellow fusion has been reached
-    const hasReachedYellowFusion = HoldingRecord.yellowFusion.amount.greq(new Num(1, 0));
-    
-    // Identify prestige layer types
-    const isYellowPrestige = prestigeLayer.name === 'yellow';
-    const isGreenPrestige = prestigeLayer.name === 'green';
-    
-    const currentGain = prestigeLayer.holdingGain;
-    const bestPrestige = prestigeLayer.bestPrestige;
-    
-    // First prestige - always worth it if we can prestige
-    if (bestPrestige.equals(new Num(0, 0))) {
-      return true;
-    }
-    
-    // GREEN PRESTIGE: Always prestige immediately (nothing breaks its barrier yet)
-    if (isGreenPrestige) {
-      return true;
-    }
-    
-    // YELLOW PRESTIGE LOGIC
-    if (isYellowPrestige) {
-      // Get current yellow prestiges count
-      const yellowPrestiges = HoldingRecord.yellowPrestiges.amount;
-      
-      // BELOW 1000 YELLOW PRESTIGES: Prestige immediately to increase gain
-      if (yellowPrestiges.lt(new Num(this.YELLOW_PRESTIGES_IMMEDIATE_THRESHOLD, 0))) {
-        return true;
-      }
-      
-      // Get current star particles (yellow particles)
-      const starParticles = HoldingRecord.yellowParticles.amount;
-      
-      // Safety timeout - only when no yellow fusion (5 minutes max)
-      if (!hasReachedYellowFusion && timeSincePrestige > this.PRESTIGE_TIMEOUT_SECONDS * 1000) {
-        return true;
-      }
-      
-      // Determine target gain based on star particle count
-      let targetGain: Num;
-      if (starParticles.lt(this.STAR_PARTICLES_LOW_THRESHOLD)) {
-        // BELOW 1e10 STAR PARTICLES: Wait for best gain
-        targetGain = bestPrestige;
-      } else {
-        // ABOVE 1e10 STAR PARTICLES: Wait for best gain^1.05
-        targetGain = bestPrestige.pow(new Num(this.STAR_PARTICLES_HIGH_MULTIPLIER, 0));
-      }
-      
-      // Check if we've reached the target gain
-      if (currentGain.greq(targetGain)) {
-        // Track when we first reached the target
-        const layerName = prestigeLayer.name;
-        if (!this.prestigeBestReachedTimes.has(layerName)) {
-          this.prestigeBestReachedTimes.set(layerName, this.totalElapsedTime);
-        }
-        
-        // Wait 5 seconds after reaching target before prestiging
-        const timeSinceReachedBest = this.totalElapsedTime - (this.prestigeBestReachedTimes.get(layerName) || this.totalElapsedTime);
-        if (timeSinceReachedBest >= this.WAIT_AFTER_BEST_SECONDS * 1000) {
-          return true;
-        }
-      } else {
-        // Haven't reached target yet, reset the timer
-        this.prestigeBestReachedTimes.delete(prestigeLayer.name);
-      }
-      
-      return false;
-    }
-    
-    // For other prestige layers (if any are added), use a simple best prestige check
-    return currentGain.greq(bestPrestige);
+    return this.prestigeHelper.isWorthPrestiging({
+      totalElapsedTime: this.totalElapsedTime,
+      prestigeStartTimes: this.prestigeStartTimes,
+      prestigeGainHistory: this.prestigeGainHistory,
+      prestigeBestReachedTimes: this.prestigeBestReachedTimes,
+      YELLOW_PRESTIGES_IMMEDIATE_THRESHOLD: this.YELLOW_PRESTIGES_IMMEDIATE_THRESHOLD,
+      STAR_PARTICLES_LOW_THRESHOLD: this.STAR_PARTICLES_LOW_THRESHOLD,
+      STAR_PARTICLES_HIGH_POWER: this.STAR_PARTICLES_HIGH_POWER,
+      STAR_PARTICLES_HIGH_MULTIPLIER: this.STAR_PARTICLES_HIGH_MULTIPLIER,
+      PRESTIGE_TIMEOUT_SECONDS: this.PRESTIGE_TIMEOUT_SECONDS,
+      WAIT_AFTER_BEST_SECONDS: this.WAIT_AFTER_BEST_SECONDS,
+      PRESTIGE_TIMEOUT_FUSION_SECONDS: this.PRESTIGE_TIMEOUT_FUSION_SECONDS,
+    }, prestigeLayer, holding);
   }
 
   private checkBuyable(buyable: Generator | Upgrade) {
-    if (this.shouldSkipBuyable(buyable)) return;
-
-    if (buyable.unlocked && buyable.isBuyable()) {
-      buyable.buy();
-
-      if (!this.results[buyable.name]) {
-        this.results[buyable.name] = {
-          element: buyable.displayName,
-          time: this.totalElapsedTime,
-          timeBetween: this.elapsedSincePrevious,
-          style: buyable.style,
-        }
-        this.newResultsThisLoop = true;
-      }
-    }
+    this.buyableHelper.checkBuyable({
+      results: this.results,
+      totalElapsedTime: this.totalElapsedTime,
+      elapsedSincePrevious: this.elapsedSincePrevious,
+      markNew: () => { this.newResultsThisLoop = true; },
+    }, buyable);
   }
 
   /**
@@ -458,92 +329,26 @@ export class BalanceService {
    * when it would hurt yellow prestige gain rate (below 1000 yellow prestiges)
    */
   private shouldSkipBuyable(buyable: Generator | Upgrade): boolean {
-    const yellowPrestiges = HoldingRecord.yellowPrestiges.amount;
-    
-    // Only apply intelligent buying when below 1000 yellow prestiges
-    if (yellowPrestiges.lt(new Num(1, 3))) {
-      // Check if this is a reset-causing upgrade
-      const isRedExtension = buyable === UpgradeRecord.redGeneratorExtension;
-      const isBoosterAccel = buyable === UpgradeRecord.boosterAccelerationUpgrade;
-      
-      if (isRedExtension || isBoosterAccel) {
-        // If we have "No Reset Red Extensions" upgrade, extensions don't reset anymore
-        const extensionWontReset = isRedExtension && UpgradeRecord.noResetRedExtension.hasBought();
-        
-        if (extensionWontReset) {
-          return false; // Safe to buy, won't reset
-        }
-        
-        // Check current yellow prestige gain rate
-        const yellowLayer = this.prestigeLayerService.getList().find(layer => layer.name === 'yellow');
-        if (!yellowLayer) return false;
-        
-        const currentGain = yellowLayer.holdingGain;
-        const bestPrestige = yellowLayer.bestPrestige;
-        
-        // If we haven't reached yellow yet, don't skip
-        if (bestPrestige.equals(new Num(0, 0))) {
-          return false;
-        }
-        
-        // Calculate how close we are to a good prestige
-        const gainRatio = currentGain.div(bestPrestige);
-        const isCloseToGoodPrestige = gainRatio.greq(new Num(1.5, 0)); // 1.5x or better
-        
-        // Strategy: Skip buying reset-causing upgrades if:
-        // 1. We're below 1000 yellow prestiges AND
-        // 2. We're close to a good prestige (1.5x+ current best) AND
-        // 3. For Red Extension: below level 5 AND no-reset not bought
-        // 4. For Booster Accel: below level 3
-        
-        if (isRedExtension) {
-          const extensionLevel = buyable.amount.toNumber();
-          // Skip if below level 5, close to good prestige, and no-reset not available
-          if (extensionLevel < 5 && isCloseToGoodPrestige) {
-            return true;
-          }
-        }
-        
-        if (isBoosterAccel) {
-          const boosterLevel = buyable.amount.toNumber();
-          // Skip if below level 3 and close to good prestige
-          // Booster Accel is more important, so be less restrictive
-          if (boosterLevel < 3 && isCloseToGoodPrestige && gainRatio.greq(new Num(2, 0))) {
-            return true;
-          }
-        }
-      }
-    }
-    
-    return false;
+    return this.buyableHelper.shouldSkipBuyable(buyable);
   }
 
   private checkEnhancement(enhancable: Upgrade|Generator) {
-    if (!enhancable.canEnhance()) return;
-
-    EnhancementRecord.list.forEach(enhancement => {
-      if (
-        enhancable.enhancement !== enhancement &&
-        this.enhancementService.canEnhance(enhancement)
-      ) {
-        this.enhancementService.startEnhancing(enhancement);
-        this.enhancementService.enhance(enhancable);
-        this.results[enhancement.name+enhancable.name] = {
-          element: `${enhancement.displayName} - ${enhancable.displayName}`,
-          time: this.totalElapsedTime,
-          timeBetween: this.elapsedSincePrevious,
-          style: enhancement.style,
-        }
-        this.enhancementService.stopEnhancing();
-        this.newResultsThisLoop = true;
-      }
-    })
+    this.enhancementHelper.checkEnhancement({
+      results: this.results,
+      totalElapsedTime: this.totalElapsedTime,
+      elapsedSincePrevious: this.elapsedSincePrevious,
+      markNew: () => { this.newResultsThisLoop = true; },
+    }, enhancable);
   }
 
   done() {
     App.gameSpeed = new Num(1, -1);
     App.offlineCalculation = false;
     clearInterval(this.loopTimeout);
+
+    // Return to real game storage before loading the real save
+    this.dataManagerService.disableSimulation();
+
     this.dataManagerService.load();
     this.tickService.clearIntervals()
     this.tickService.startIntervals()
@@ -551,11 +356,19 @@ export class BalanceService {
     this.totalElapsedTime = 0;
     this.prestigeStartTimes.clear();
     this.prestigeGainHistory.clear();
-    this.prestigeBestReachedTimes.clear();
-    this.prestigeBestReachedTimes.clear();
+
+    // Persist whatever results we have at the end of a run
+    AutomatorRecord.list.forEach(automator => {
+      automator.enable();
+    })
+    this.saveResults();
   }
 
   fullReset = () => {
+    PrestigeLayersService.list.forEach(prestigeLayer => {
+      this.challengeService.leaveChallenge(prestigeLayer.name);
+    });
+
     [
       ...UpgradeRecord.list,
       ...GeneratorRecord.list,
@@ -564,6 +377,7 @@ export class BalanceService {
       ...EnhancementRecord.list,
       ...PrestigeLayersService.list,
       ...ChallengeRecord.list,
+      ...MilestoneRecord.list,
     ].forEach(upgrade => {
       upgrade.reset();
     })
@@ -571,5 +385,135 @@ export class BalanceService {
 
   getResults() {
     return this.results;
+  }
+
+  // List available simulation snapshots
+  getSnapshots(): any[] {
+    try {
+      return this.dataManagerService.listSimSnapshots();
+    } catch {
+      return [];
+    }
+  }
+
+  // Backtrack to a given snapshot id and resume simulation from there
+  backtrackTo(id: string): boolean {
+    try {
+      // Pause current loop
+      clearInterval(this.loopTimeout);
+
+      // Ensure we are in simulation storage and load the snapshot storage
+      const ok = this.dataManagerService.loadSimSnapshot(id);
+      if (!ok) {
+        return false;
+      }
+
+      // Load all services/entities from the snapshot storage
+      this.dataManagerService.loadSim();
+
+      // Reset trackers and timing based on snapshot metadata
+      const snap = this.getSnapshots().find(s => s.id === id);
+      this.totalElapsedTime = snap?.elapsed ?? 0;
+      this.elapsedSincePrevious = 0;
+      this.prestigeStartTimes.clear();
+      this.prestigeGainHistory.clear();
+      this.trackedMilestones.clear();
+      this.trackedUpgradeLevels.clear();
+
+      // Keep App in offline fast mode
+      App.gameSpeed = new Num(this.settings.speed, 0);
+      App.offlineCalculation = true;
+
+      // Resume loop
+      this.loopTimeout = setInterval(this.loop.bind(this), 1);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  // Start the real-time game from a given snapshot (loads it into real save and resumes live play)
+  startRealFromSnapshot(id: string): boolean {
+    try {
+      // Stop simulation loop if running
+      clearInterval(this.loopTimeout);
+
+      // Fetch the snapshot (may be metadata-only if quota pruning happened)
+      const snap = LocalStorageHelper.getSnapshot(id);
+      if (!snap || !snap.storage) {
+        return false; // Cannot start real game without a storage payload
+      }
+
+      // Switch to REAL storage and inject snapshot storage
+      this.dataManagerService.disableSimulation();
+      LocalStorageHelper.setSimulationMode(false);
+      LocalStorageHelper.setRawStorage(snap.storage || {});
+
+      // Persist to browser storage to make it durable
+      try {
+        const helper = new LocalStorageHelper('app', 'lastSave');
+        helper.store();
+      } catch {}
+
+      // Load the real game state from injected storage and start live ticking
+      this.dataManagerService.load();
+      App.gameSpeed = new Num(1, -1);
+      App.offlineCalculation = false;
+      this.tickService.clearIntervals();
+      this.tickService.startIntervals();
+
+      // Reset internal tracking for simulation bookkeeping
+      this.elapsedSincePrevious = 0;
+      this.totalElapsedTime = 0;
+      this.prestigeStartTimes.clear();
+      this.prestigeGainHistory.clear();
+
+      AutomatorRecord.list.forEach(automator => {
+        automator.disable();
+      })
+
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  // Optional: save a manual snapshot with a label
+  saveSnapshot(label: string): string | null {
+    try {
+      this.dataManagerService.saveSim();
+      return this.dataManagerService.saveSimSnapshot({ type: 'manual', label, elapsed: this.totalElapsedTime });
+    } catch {
+      return null;
+    }
+  }
+
+  // --- Persistent results helpers ---
+  private loadResults(): void {
+    try {
+      const raw = localStorage[this.RESULTS_STORAGE_KEY];
+      const parsed = raw ? JSON.parse(raw) : {};
+      // Ensure object shape
+      this.results = (parsed && typeof parsed === 'object') ? parsed : {};
+    } catch {
+      this.results = {};
+    }
+  }
+
+  private saveResults(): void {
+    try {
+      localStorage[this.RESULTS_STORAGE_KEY] = JSON.stringify(this.results || {});
+    } catch {
+      // ignore storage errors
+    }
+  }
+
+  private clearResults(): void {
+    this.results = {};
+    try {
+      localStorage.removeItem(this.RESULTS_STORAGE_KEY);
+    } catch {
+      // ignore
+    }
   }
 }

@@ -18,7 +18,24 @@ export class BalanceComponent {
   }
 
   getResults() {
-    return Object.values(this.balanceService.getResults());
+    return Object.values(this.balanceService.getResults()).reverse();
+  }
+
+  // --- Snapshots UI helpers ---
+  getSnapshots() {
+    return this.balanceService.getSnapshots()?.slice().reverse();
+  }
+
+  backtrackTo(id: string) {
+    this.balanceService.backtrackTo(id);
+  }
+
+  playFrom(id: string) {
+    this.balanceService.startRealFromSnapshot(id);
+  }
+
+  saveSnapshot(label: string = 'Manual') {
+    this.balanceService.saveSnapshot(label);
   }
 
   getColorCode(timeBetween: number) {

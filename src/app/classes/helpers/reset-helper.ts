@@ -2,6 +2,7 @@ import {ResetKey} from "../enums/reset-key";
 import {Resetable} from "../features/interfaces/resetable";
 import {Storable} from "../features/interfaces/storable";
 import {MultiplierRecord} from "../records/multipliers/multiplier-record";
+import {App} from "../../App";
 
 export class ResetHelper {
 

@@ -52,7 +52,10 @@ export class FusionBoosterAccelerationUpgrade extends Upgrade {
     this.hydrogenBuffer = new Num(1.2, 0);
     UpgradeRecord.redGeneratorBooster.buffer = UpgradeRecord.redGeneratorBooster.buffer.add(effect);
     UpgradeRecord.redGeneratorBooster.amount = UpgradeRecord.redGeneratorBooster.amount.add(effect2);
-    MultiplierRecord.hydrogenGenerators.correct(effect3);
+
+    if (HoldingRecord.yellowFusion.amount.lt(new Num(1, 1000))) {
+      MultiplierRecord.hydrogenGenerators.correct(effect3);
+    }
 
     this.totalHydrogenBuff = effect3.copy();
     this.totalFreeBuys = effect2.copy();
@@ -97,12 +100,9 @@ export class FusionBoosterAccelerationUpgrade extends Upgrade {
 
   allowedEnhancements: Enhancement[] = [];
   canEnhance(): boolean {
-    return true;
+    return false;
   }
   enhance(): void {
-    const enhancement = this.enhancement?.getAddition().mul(new Num(5, -3));
-    if (enhancement) {
-      this.buffer = this.buffer.add(enhancement) as Num;
-    }
+
   }
 }

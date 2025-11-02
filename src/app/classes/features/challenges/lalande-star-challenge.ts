@@ -15,13 +15,12 @@ export class LalandeStarChallenge extends YellowStarChallenge {
   name: string = 'lalande-star-challenge';
   displayName: string = 'Lalande 21185';
 
-  baseGoal: Num = new Num(1, 3200);
-  goal: Num = new Num(1, 3200);
+  baseGoal: Num = new Num(1, 3000);
+  goal: Num = new Num(1, 3000);
   override goalIncrease: Num[] = [
     new Num(1, 3300),
-    new Num(1, 13800),
-    new Num(1, 25000),
-    new Num(1, 4300),
+    new Num(1, 12000),
+    new Num(1, 20000),
   ];
   override difficultyIncrease: Num[] = [
     new Num(1, 0),
@@ -32,9 +31,14 @@ export class LalandeStarChallenge extends YellowStarChallenge {
   currency: Holding = HoldingRecord.redParticles;
   override calculationOrder = 1000;
 
-  override buffer: Num = new Num(1.05, 0);
-  override baseBuffer: Num = new Num(1.05, 0);
-  override completionBuffer: Num = new Num(1.02, 0);
+  override buffer: Num = new Num(1.04, 0);
+  override baseBuffer: Num = new Num(1.04, 0);
+  override completionBuffer: Num[] = [
+    new Num(1.02, 0),
+    new Num(1.02, 0),
+    new Num(1.02, 0),
+    new Num(1.015, 0),
+  ];
 
   getRewardDescription(): string {
     return "Every purchase of a red generator also adds free amount to their sub-upgrades by raising the amount of generator buys to ^"+this.buffer.toString(3)+".";
