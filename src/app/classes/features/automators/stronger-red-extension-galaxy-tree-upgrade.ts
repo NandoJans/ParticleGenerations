@@ -35,7 +35,7 @@ export class StrongerRedExtensionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   style: Styles = Styles.STAR_ORANGE;
   displayName: string = "Stronger Red Extension";
 
-  cost: Num = new Num(4, 0);
-  baseCost: Num = new Num(4, 0);
+  cost: Num = new Num(8, 0);
+  baseCost: Num = new Num(8, 0);
 }
 

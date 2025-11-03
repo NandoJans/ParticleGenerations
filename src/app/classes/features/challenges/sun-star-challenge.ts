@@ -56,7 +56,8 @@ export class SunStarChallenge extends YellowStarChallenge {
   }
 
   override effectString(): string {
-    return super.effectString()+"x";
+    const effectString = super.effectString();
+    return (effectString) ? effectString+"x" : "";
   }
 
   style: Styles = Styles.SUN;
@@ -147,7 +148,7 @@ export class SunStarChallenge extends YellowStarChallenge {
         'sunGeneratorMultiplierUpgrade1',
         'sun-generator-multiplier-upgrade-1',
         'Sun fusion',
-        new Num(1, 8),
+        new Num(1, 7),
         new Num(1, 4),
         new Num(1.2, 0),
         undefined,
@@ -169,7 +170,7 @@ export class SunStarChallenge extends YellowStarChallenge {
         'sunGeneratorMultiplierUpgrade2',
         'sun-generator-multiplier-upgrade-2',
         'Sun mass',
-        new Num(1, 9),
+        new Num(1, 8),
         new Num(1, 4),
         new Num(1.2, 0),
         undefined,
@@ -191,7 +192,7 @@ export class SunStarChallenge extends YellowStarChallenge {
         'sunGeneratorMultiplierUpgrade3',
         'sun-generator-multiplier-upgrade-3',
         'Sun hydrogen',
-        new Num(1, 10),
+        new Num(1, 9),
         new Num(1, 4),
         new Num(1.2, 0),
         undefined,
@@ -213,7 +214,7 @@ export class SunStarChallenge extends YellowStarChallenge {
         'strongerSunParticleEffect',
         'stronger-sun-particle-effect',
         'Supernova',
-        new Num(1, 11),
+        new Num(1, 10),
         new Num(1, 6),
         new Num(1, 1),
         undefined,

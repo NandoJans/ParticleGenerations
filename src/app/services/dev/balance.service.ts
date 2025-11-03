@@ -35,7 +35,7 @@ import {CompressionService} from "../compression.service";
 export class BalanceService {
   private readonly PRESTIGE_TIMEOUT_SECONDS = 3000; // 5 minutes (300 seconds) of simulated game time when no yellow fusion
   private readonly PRESTIGE_TIMEOUT_FUSION_SECONDS = 1; // Wait 5 seconds after reaching best gain before prestiging
-  private readonly WAIT_AFTER_BEST_SECONDS = 0.2; // Wait 5 seconds after reaching best gain before prestiging
+  private readonly WAIT_AFTER_BEST_SECONDS = 1; // Wait 5 seconds after reaching best gain before prestiging
   private readonly YELLOW_PRESTIGES_IMMEDIATE_THRESHOLD = 1000; // Below 1000 yellow prestiges, prestige immediately
   private readonly STAR_PARTICLES_LOW_THRESHOLD = new Num(1, 10); // 1e10 star particles threshold
   private readonly STAR_PARTICLES_HIGH_POWER = 1.05; // Above threshold, wait for bestPrestige^1.05
@@ -54,13 +54,8 @@ export class BalanceService {
     maxTime: 1000000,
     higherPrestige: new Num(1.01, 0),
     initial: () => {
-      HoldingRecord.yellowPrestiges.amount = new Num(2, 3);
-      HoldingRecord.yellowKeys.amount = new Num(1, 5);
-      HoldingRecord.yellowParticles.amount = new Num(5, 400);
-      ChallengeRecord.proximaCentauriStar.completed = new Num(3, 0);
-      ChallengeRecord.lalandeStar.completed = new Num(3, 0);
-      ChallengeRecord.sunStar.completed = new Num(3, 0);
-      ChallengeRecord.siriusStar.completed = new Num(3, 0);
+      HoldingRecord.greenPrestiges.amount = new Num(1, 0);
+      HoldingRecord.greenParticles.amount = new Num(1, 0);
     }
   };
 
