@@ -21,7 +21,6 @@ import {Multiplier} from "../classes/features/multiplier";
 import {HoldingRecord} from "../classes/records/holdings/holding-record";
 import {App} from "../App";
 import {CompressionService} from "./compression.service";
-import {UpgradeRecord} from "../classes/records/upgrades/upgrade-record";
 
 @Injectable({
   providedIn: 'root'
