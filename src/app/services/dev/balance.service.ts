@@ -33,7 +33,7 @@ import {CompressionService} from "../compression.service";
   providedIn: 'root'
 })
 export class BalanceService {
-  private readonly PRESTIGE_TIMEOUT_SECONDS = 3000; // 5 minutes (300 seconds) of simulated game time when no yellow fusion
+  private readonly PRESTIGE_TIMEOUT_SECONDS = 3000; // 50 minutes (3000 seconds) of simulated game time when no yellow fusion
   private readonly PRESTIGE_TIMEOUT_FUSION_SECONDS = 1; // Wait 5 seconds after reaching best gain before prestiging
   private readonly WAIT_AFTER_BEST_SECONDS = 1; // Wait 5 seconds after reaching best gain before prestiging
   private readonly YELLOW_PRESTIGES_IMMEDIATE_THRESHOLD = 1000; // Below 1000 yellow prestiges, prestige immediately
