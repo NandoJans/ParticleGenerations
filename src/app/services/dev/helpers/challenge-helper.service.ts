@@ -46,7 +46,7 @@ export class ChallengeHelperService {
           }
           this.challengeService.completeChallenge(layerKey);
           if (active) {
-            this.completeChallenge(active)
+            this.completeChallenge(active);
           }
         }
       } else {
@@ -86,7 +86,7 @@ export class ChallengeHelperService {
   private prepareChallengeStart(challenge: Challenge, ctx: ChallengeCtx) {
     switch (challenge) {
       case ChallengeRecord.lalandeStar:
-        this.enhancementService.respecEnhancement(EnhancementRecord.yellow)
+        this.enhancementService.respecEnhancement(EnhancementRecord.yellow);
         GeneratorRecord.redGenerators.forEach(gen => ctx.checkEnhancement(gen));
         break;
     }
@@ -95,7 +95,7 @@ export class ChallengeHelperService {
   private completeChallenge(challenge: Challenge) {
     switch (challenge) {
       case ChallengeRecord.lalandeStar:
-        this.enhancementService.respecEnhancement(EnhancementRecord.yellow)
+        this.enhancementService.respecEnhancement(EnhancementRecord.yellow);
     }
   }
 }
