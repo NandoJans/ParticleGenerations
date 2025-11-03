@@ -9,7 +9,6 @@ import {HoldingRecord} from "../../classes/records/holdings/holding-record";
 import {AutomatorRecord} from "../../classes/records/automators/automator-record";
 import {Generator} from "../../classes/features/generator";
 import {Upgrade} from "../../classes/features/upgrade";
-import {generate} from "rxjs";
 import {EnhancementRecord} from "../../classes/records/enhancement-record";
 import {EnhancementService} from "../enhancement.service";
 import {App} from "../../App";
