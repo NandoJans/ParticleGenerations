@@ -7,7 +7,6 @@ import {ResetKey} from "../classes/enums/reset-key";
 import {Resetable} from "../classes/features/interfaces/resetable";
 import {UpgradeRecord} from "../classes/records/upgrades/upgrade-record";
 import {MultiplierRecord} from "../classes/records/multipliers/multiplier-record";
-import {Require} from "../classes/features/interfaces/require";
 
 @Injectable({
   providedIn: 'root'
