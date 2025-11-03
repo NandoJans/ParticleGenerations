@@ -12,6 +12,7 @@ import {GreenParticleHolding} from "../../features/holdings/green-particle-holdi
 import {GreenPrestigeHolding} from "../../features/holdings/green-prestige-holding";
 import {DarkEnergyHolding} from "../../features/holdings/dark-energy-holding";
 import {DarkMatterHolding} from "../../features/holdings/dark-matter-holding";
+import {StarKeyHolding} from "../../features/holdings/star-key-holding";
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,7 @@ export class HoldingRecord {
   static yellowPower: YellowPowerHolding = new YellowPowerHolding();
   static yellowFusion: YellowFusionHolding = new YellowFusionHolding();
   static hydrogen: HydrogenHolding = new HydrogenHolding();
+  static starKeys: StarKeyHolding = new StarKeyHolding();
 
   // Green Phase
   static greenParticles: GreenParticleHolding = new GreenParticleHolding();
@@ -47,6 +49,7 @@ export class HoldingRecord {
       HoldingRecord.yellowPower,
       HoldingRecord.yellowFusion,
       HoldingRecord.hydrogen,
+      HoldingRecord.starKeys,
 
       HoldingRecord.greenParticles,
       HoldingRecord.greenPrestiges,

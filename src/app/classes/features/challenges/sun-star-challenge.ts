@@ -18,12 +18,12 @@ export class SunStarChallenge extends YellowStarChallenge {
   name: string = 'sun-star-challenge';
   displayName: string = 'Sun';
 
-  baseGoal: Num = new Num(1, 6500);
-  goal: Num = new Num(1, 6500);
+  baseGoal: Num = new Num(1, 22000);
+  goal: Num = new Num(1, 22000);
   override goalIncrease: Num[] = [
     new Num(1, 15200),
-    new Num(1, 39000),
-    new Num(1, 53300),
+    new Num(1, 46000),
+    new Num(1, 50300),
   ];
   override difficultyIncrease: Num[] = [
     new Num(1, 0),
@@ -36,9 +36,10 @@ export class SunStarChallenge extends YellowStarChallenge {
   override buffer: Num = new Num(1.1, 0);
   override baseBuffer: Num = new Num(1.1, 0);
   override completionBuffer: Num[] = [
-    new Num(0.9, 0),
-    new Num(0.8, 0),
-    new Num(0.5, 0),
+    new Num(1, 0),
+    new Num(1, 0),
+    new Num(0.7, 0),
+    new Num(0.6, 0),
   ];
 
   override strongerBuffer(completionBuffer: Num): Num | void {
@@ -55,7 +56,8 @@ export class SunStarChallenge extends YellowStarChallenge {
   }
 
   override effectString(): string {
-    return super.effectString()+"x";
+    const effectString = super.effectString();
+    return (effectString) ? effectString+"x" : "";
   }
 
   style: Styles = Styles.SUN;
@@ -84,9 +86,9 @@ export class SunStarChallenge extends YellowStarChallenge {
     const resetUpgradePower = this.challengeUpgrades['strongerSunParticleEffect'].buffer
       .pow(this.challengeUpgrades['strongerSunParticleEffect'].amount);
 
-    this.sunParticleGeneration = HoldingRecord.redParticles.amount.pow(new Num(1, -3))
+    this.sunParticleGeneration = HoldingRecord.redParticles.amount.pow(new Num(7, -4))
       .mul(this.challengeGenerators['sunGenerator'].globalMultiplier.getNum());
-    this.challengeGenerators['sunGenerator'].multiplier = this.sunParticleGeneration;
+    this.challengeGenerators['sunGenerator'].baseMulMod = this.sunParticleGeneration;
     // this.challengeHoldings['sunParticle'].amount = new Num(1, 8);
     const sunParticleEffect: Num = this.challengeHoldings['sunParticle'].amount.pow(new Num(1.5, 0).mul(resetUpgradePower)).floor();
     this.challengeHoldings['sunParticle'].effect = sunParticleEffect;
@@ -146,8 +148,8 @@ export class SunStarChallenge extends YellowStarChallenge {
         'sunGeneratorMultiplierUpgrade1',
         'sun-generator-multiplier-upgrade-1',
         'Sun fusion',
-        new Num(1, 8),
-        new Num(1, 3),
+        new Num(1, 7),
+        new Num(1, 4),
         new Num(1.2, 0),
         undefined,
         new Num(3, 0),
@@ -157,14 +159,19 @@ export class SunStarChallenge extends YellowStarChallenge {
         'yellowStars',
         'sunUpgrade',
         this.challengeGenerators['sunGenerator'].globalMultiplier,
-        this.getDifficultyIncrease(),
+        [
+          this.getDifficultyIncrease(),
+          this.getDifficultyIncrease(new Num(1.1, 0)),
+          this.getDifficultyIncrease(new Num(1.1, 0)),
+        ],
+        this.getCompletions().toNumber()
       ),
       sunGeneratorMultiplierUpgrade2: new MultiplierChallengeUpgrade(
         'sunGeneratorMultiplierUpgrade2',
         'sun-generator-multiplier-upgrade-2',
         'Sun mass',
-        new Num(1, 9),
-        new Num(1, 3),
+        new Num(1, 8),
+        new Num(1, 4),
         new Num(1.2, 0),
         undefined,
         new Num(5, 0),
@@ -174,14 +181,19 @@ export class SunStarChallenge extends YellowStarChallenge {
         'yellowStars',
         'sunUpgrade',
         this.challengeGenerators['sunGenerator'].globalMultiplier,
-      this.getDifficultyIncrease(new Num(0.97, 0)),
+        [
+          this.getDifficultyIncrease(),
+          this.getDifficultyIncrease(new Num(1.1, 0)),
+          this.getDifficultyIncrease(new Num(2.1, 0)),
+        ],
+        this.getCompletions().toNumber()
       ),
       sunGeneratorMultiplierUpgrade3: new MultiplierChallengeUpgrade(
         'sunGeneratorMultiplierUpgrade3',
         'sun-generator-multiplier-upgrade-3',
         'Sun hydrogen',
-        new Num(1, 10),
-        new Num(1, 3),
+        new Num(1, 9),
+        new Num(1, 4),
         new Num(1.2, 0),
         undefined,
         new Num(9, 0),
@@ -191,14 +203,19 @@ export class SunStarChallenge extends YellowStarChallenge {
         'yellowStars',
         'sunUpgrade',
         this.challengeGenerators['sunGenerator'].globalMultiplier,
-        this.getDifficultyIncrease(new Num(0.96, 0)),
+        [
+          this.getDifficultyIncrease(),
+          this.getDifficultyIncrease(new Num(1.1, 0)),
+          this.getDifficultyIncrease(new Num(2.1, 0)),
+        ],
+        this.getCompletions().toNumber()
       ),
       strongerSunParticleEffect: new CustomChallengeUpgrade(
         'strongerSunParticleEffect',
         'stronger-sun-particle-effect',
         'Supernova',
-        new Num(1, 11),
-        new Num(1, 4),
+        new Num(1, 10),
+        new Num(1, 6),
         new Num(1, 1),
         undefined,
         new Num(2, 0),
@@ -207,7 +224,12 @@ export class SunStarChallenge extends YellowStarChallenge {
         'yellow',
         'yellowStars',
         'sunUpgrade',
-        this.getDifficultyIncrease(new Num(0.95, 0)),
+        [
+          this.getDifficultyIncrease(),
+          this.getDifficultyIncrease(new Num(1.2, 0)),
+          this.getDifficultyIncrease(new Num(2, 0)),
+        ],
+        this.getCompletions().toNumber()
       )
     }
 
@@ -228,7 +250,8 @@ export class SunStarChallenge extends YellowStarChallenge {
         return undefined;
       });
     }
-this.requirement = [
+
+  this.requirement = [
     new Requirement(HoldingRecord.redParticles, new Num(1, 8500), this)
   ];
   }

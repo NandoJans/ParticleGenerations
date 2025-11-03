@@ -201,3 +201,21 @@ button.button.success {
     background-position: 0 0;
   }
 }
+
+@keyframes background-position-y-animation {
+  0% {
+    background-position-y: 0;
+  }
+  100% {
+    background-position-y: var(--max-background-y);
+  }
+}
+
+@keyframes background-position-x-animation {
+  0% {
+    background-position-x: 0;
+  }
+  100% {
+    background-position-x: var(--max-background-x);
+  }
+}

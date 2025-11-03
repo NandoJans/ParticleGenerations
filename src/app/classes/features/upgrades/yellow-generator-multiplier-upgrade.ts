@@ -15,6 +15,7 @@ export class YellowGeneratorMultiplierUpgrade extends YellowGeneratorUpgrade {
     generator: YellowGenerator,
   ) {
     super(saveName, cost, increase, scaling, buffer, generator);
+    this.displayName = `Yellow generator ${generator.rank} Multiplier`;
     this.name = `yellow-generator-multiplier-upgrade-${generator.rank}`;
     this.resetId = ResetHelper.registerReset(ResetKey.YELLOW, this);
     this.requirement = [
@@ -30,7 +31,7 @@ export class YellowGeneratorMultiplierUpgrade extends YellowGeneratorUpgrade {
 
   action(): Num {
     const buff: Num = this.buffer.pow(this.amount);
-    this.generator.multiplier = this.generator.multiplier.mul(buff);
+    this.generator.mulMod = this.generator.mulMod.mul(buff);
     return buff;
   }
 

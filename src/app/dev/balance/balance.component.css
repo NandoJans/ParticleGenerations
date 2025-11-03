@@ -1,0 +1,72 @@
+table {
+  width: 80%;
+  margin: auto;
+}
+
+thead {
+  font-weight: bold;
+  text-align: left;
+  font-size: 1.2rem;
+}
+
+tr {
+  border: 1px solid var(--background-color-4);
+  height: 30px;
+}
+
+tr:nth-child(even) {
+  background-color: var(--background-color-1);
+}
+
+td {
+
+}
+
+.name {
+  font-weight: bold;
+}
+
+.red {
+  color: var(--text-color-red);
+}
+
+.yellow {
+  color: var(--text-color-yellow);
+}
+
+.green {
+  color: var(--text-color-green);
+}
+
+.blue {
+  color: var(--text-color-blue);
+}
+
+.purple {
+  color: var(--text-color-purple);
+}
+
+.proxima-centauri {
+  color: var(--proxima-centauri-color);
+}
+
+.lalande {
+  color: var(--lalande-color);
+}
+
+.sun {
+  color: var(--sun-color);
+}
+
+.sirius {
+  color: var(--sirius-color);
+}
+
+.actions {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+}

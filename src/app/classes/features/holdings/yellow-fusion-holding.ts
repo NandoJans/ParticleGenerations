@@ -6,6 +6,7 @@ import {ResetKey} from "../../enums/reset-key";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {Styles} from "../../enums/styles";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {App} from "../../../App";
 
 export class YellowFusionHolding extends Holding {
   name: string = 'yellow-fusion-holding';

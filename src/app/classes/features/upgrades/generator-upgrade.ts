@@ -23,6 +23,10 @@ export abstract class GeneratorUpgrade extends Upgrade {
     this.baseBuffer = buffer.copy();
   }
 
+  override getDisplayName(): string {
+    return '';
+  }
+
   override init() {
     this.requirement = [
       new Requirement(this.generator, new Num(this.generator.rank, 0), this),

@@ -30,6 +30,43 @@
   justify-content: center;
 }
 
+.fusion-booster-acceleration-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+.fusion-booster-acceleration {
+  margin: 0 10px;
+  font-size: 3rem;
+  font-weight: 700;
+  --color-gradient-1: var(--proxima-centauri-color);
+  --color-gradient-2: var(--lalande-color);
+  --color-gradient-3: var(--sun-color);
+  --color-gradient-4: var(--sirius-color);
+  animation: color-gradient 10s infinite;
+}
+
+@keyframes color-gradient {
+  0% {
+    color: var(--color-gradient-1);
+  }
+  25% {
+    color: var(--color-gradient-2);
+  }
+  50% {
+    color: var(--color-gradient-3);
+  }
+  75% {
+    color: var(--color-gradient-4);
+  }
+  100% {
+    color: var(--color-gradient-1);
+  }
+}
+
+
 /* Responsive design */
 @media (max-width: 768px) {
   .fusion-container {

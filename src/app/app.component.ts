@@ -25,16 +25,9 @@ export class AppComponent implements OnInit{
     private offlineService: OfflineService,
     private messageStepsService: MessageStepsService,
   ) {
-    App.subscribe().subscribe((data) => {
-      if (data) {
-        setTimeout(() => {
-          this.isTicking = false;
-          this.ngOnInit();
-        }, 50)
-      }
-    })
 
     window.onfocus = () => {
+      if (App.isDev()) return;
       this.localStorageHelper.save(this.VERSION);
       this.dataManagerService.load();
       this.offlineService.load();
@@ -43,6 +36,7 @@ export class AppComponent implements OnInit{
     }
 
     window.onblur = () => {
+      if (App.isDev()) return;
       this.tick.clearIntervals();
       this.localStorageHelper.save(this.VERSION);
       this.dataManagerService.save();

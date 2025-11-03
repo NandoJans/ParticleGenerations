@@ -14,7 +14,8 @@ export class YellowStarChallengeUnlockUpgrade extends UnlockUpgrade {
     currency: Holding,
     style: Styles,
     public unlockable: GameElement,
-    difficultyIncrease: Num
+    difficultyIncrease: Num | Num[],
+    difficulty = 0
   ) {
     super(
       saveName,
@@ -29,7 +30,8 @@ export class YellowStarChallengeUnlockUpgrade extends UnlockUpgrade {
       'yellow',
       'yellowChallenges',
       'yellowStarChallengeUnlockUpgrade',
-      difficultyIncrease
+      difficultyIncrease,
+      difficulty
     )
   }
 

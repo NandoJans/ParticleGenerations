@@ -36,6 +36,6 @@ export class AcceleratorExpertiseGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   override buffer = new Num(1.4, 0);
   override baseBuffer = new Num(1.4, 0);
 
-  cost: Num = new Num(3.5, 1);
-  baseCost: Num = new Num(3.5, 1);
+  cost: Num = new Num(1, 2);
+  baseCost: Num = new Num(1, 2);
 }

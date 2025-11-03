@@ -5,6 +5,7 @@ export class App {
   static shouldReload: boolean = false;
   static haltNuclearDecay: boolean = false;
   static purplePhase: boolean = false;
+  static halting: boolean = false;
 
   static gameSpeed: Num = new Num(1, -1);
 
@@ -40,5 +41,17 @@ export class App {
 
   static getSpeed() {
     return this.gameSpeed.copy();
+  }
+
+  static haltTicking(): boolean {
+    return this.halting = true;
+  }
+
+  static resumeTicking(): boolean {
+    return this.halting = false;
+  }
+
+  static isHalting(): boolean {
+    return this.halting;
   }
 }

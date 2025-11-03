@@ -33,6 +33,6 @@ export class BreakYellowFusionLimitYellowUpgrade extends YellowUpgrade {
   }
 
   override limit: Num = new Num(1, 0);
-  baseCost: Num = new Num(1, 300);
-  cost: Num = new Num(1, 300);
+  baseCost: Num = new Num(1, 215);
+  cost: Num = new Num(1, 215);
 }

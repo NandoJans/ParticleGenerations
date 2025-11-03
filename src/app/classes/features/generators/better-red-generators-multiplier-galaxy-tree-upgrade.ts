@@ -11,11 +11,8 @@ export class BetterRedGeneratorsMultiplierGalaxyTreeUpgrade extends GalaxyTreeUp
 
   getChildren(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.betterYellowKeyGainGalaxyTree,
-      UpgradeRecord.strongerBoosterAccelerationGalaxyTree,
+      UpgradeRecord.strongerRedExtensionGalaxyTree,
       UpgradeRecord.betterRedBoosterGalaxyTree,
-      UpgradeRecord.synergizedPowerGalaxyTree,
-      UpgradeRecord.amplifiedFusionGalaxyTree,
     ];
   }
 

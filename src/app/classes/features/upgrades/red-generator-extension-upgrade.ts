@@ -13,7 +13,7 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
   cost: Num = new Num(1, 3)
   startBought: Num = new Num(0, 0);
   bought: Num = new Num(0, 0);
-  override scaling: Num = new Num(1, 2);
+  override scaling: Num = new Num(7.5, 1);  // Reduced from 1e2 to 7.5e1 (~25% cost reduction for smoother progression)
 
   override buffer: Num = new Num(2, 0);
   override baseBuffer: Num = new Num(2, 0);
@@ -43,7 +43,7 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
       const compare = new Num(index, 0);
       if (this.amount.greq(compare)) {
         const buff: Num = this.buffer.pow(this.amount.sub(compare));
-        generator.multiplier = generator.multiplier.mul(buff);
+        generator.mulMod = generator.mulMod.mul(buff);
       }
     });
     return this.buffer.pow(this.amount);
@@ -89,5 +89,11 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
   override reset() {
     super.reset();
     this.bought = this.startBought.copy();
+    // Force unlock check for red generators
+    GeneratorRecord.redGenerators.forEach((generator) => {
+      if (generator.requirementsMet()) {
+        generator.unlocked = true;
+      }
+    });
   }
 }

@@ -73,12 +73,13 @@ export abstract class GalaxyTreeUpgrade extends Upgrade {
     if (this.getParents().length === 0) {
       return true;
     }
-    for (const parent of this.getParents()) {
-      if (parent.hasBought()) {
-        return true;
-      }
+    if (this.requireParent === RequireParent.ANY) {
+      return this.getParents()?.some(p => p.hasBought())
+    } else if (this.requireParent === RequireParent.ALL) {
+      return this.getParents()?.every(p => p.hasBought())
+    } else {
+      return false;
     }
-    return false;
   }
 
   override isBuyable(): boolean {

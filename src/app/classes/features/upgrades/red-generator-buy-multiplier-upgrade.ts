@@ -17,6 +17,7 @@ export class RedGeneratorBuyMultiplierUpgrade extends RedGeneratorUpgrade {
     generator: RedGenerator,
   ) {
     super(saveName, cost, increase, scaling, buffer, generator);
+    this.displayName = `Red Generator ${generator.rank} Buy Multiplier`;
     this.name = `red-generator-buy-multiplier-upgrade-${generator.rank}`;
     this.resetId = ResetHelper.registerReset(ResetKey.RED_EXTENSION, this);
     this.requirement = [
@@ -28,7 +29,6 @@ export class RedGeneratorBuyMultiplierUpgrade extends RedGeneratorUpgrade {
   name: string;
   resetId: ResetKey;
   override calculationOrder: number = 1005;
-
 
   action(): Num {
     const buff: Num = this.buffer.pow(this.amount);

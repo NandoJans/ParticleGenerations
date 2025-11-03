@@ -42,6 +42,8 @@ import { GreenGalaxyTreeComponent } from './pages/green/green-galaxy-tree/green-
 import { GalaxyTreeStarComponent } from './components/particles/galaxy-tree-star/galaxy-tree-star.component';
 import { GreenGeneratorsComponent } from './pages/green/green-generators/green-generators.component';
 import { GreenTimelineComponent } from './pages/timeline/green-timeline/green-timeline.component';
+import {BalanceComponent} from "./dev/balance/balance.component";
+import {YellowStarKeysPageComponent} from "./pages/yellow/yellow-star-keys-page/yellow-star-keys-page.component";
 
 @NgModule({
   declarations: [
@@ -83,15 +85,21 @@ import { GreenTimelineComponent } from './pages/timeline/green-timeline/green-ti
     GalaxyTreeStarComponent,
     GreenGeneratorsComponent,
     GreenTimelineComponent,
+    BalanceComponent,
+    YellowStarKeysPageComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        FormsModule,
-        FontAwesomeModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    FontAwesomeModule
+  ],
   providers: [],
+    exports: [
+        ButtonComponent,
+        NumberDisplayComponent
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

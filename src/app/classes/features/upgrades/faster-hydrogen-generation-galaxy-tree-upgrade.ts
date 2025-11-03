@@ -37,8 +37,8 @@ export class FasterHydrogenGenerationGalaxyTreeUpgrade extends GalaxyTreeUpgrade
   style: Styles = Styles.STAR_ORANGE
   displayName: string = "Faster Hydrogen Generation";
 
-  override buffer: Num = new Num(2.5, 0);
-  override baseBuffer: Num = new Num(2.5, 0);
+  override buffer: Num = new Num(5, 0);
+  override baseBuffer: Num = new Num(5, 0);
 
   cost: Num = new Num(2, 0);
   baseCost: Num = new Num(2, 0);

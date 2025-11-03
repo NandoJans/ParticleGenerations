@@ -50,7 +50,7 @@ export class UpgradeComponent {
   }
 
   getDisplayName() {
-    return this.upgrade.displayName;
+    return this.upgrade.getDisplayName();
   }
 
   getIsBuyable(): boolean {

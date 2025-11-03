@@ -39,6 +39,6 @@ export class BetterRedSubMultipliersGalaxyTreeUpgrade extends GalaxyTreeUpgrade 
   override buffer = new Num(1.5, 0);
   override baseBuffer = new Num(1.5, 0);
 
-  cost: Num = new Num(3, 0);
-  baseCost: Num = new Num(3, 0);
+  cost: Num = new Num(3, 1);
+  baseCost: Num = new Num(3, 1);
 }

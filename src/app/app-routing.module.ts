@@ -13,6 +13,8 @@ import {YellowFusionComponent} from "./pages/yellow/yellow-fusion/yellow-fusion.
 import {GreenGalaxyTreeComponent} from "./pages/green/green-galaxy-tree/green-galaxy-tree.component";
 import {GreenGeneratorsComponent} from "./pages/green/green-generators/green-generators.component";
 import {GreenTimelineComponent} from "./pages/timeline/green-timeline/green-timeline.component";
+import {BalanceComponent} from "./dev/balance/balance.component";
+import {YellowStarKeysPageComponent} from "./pages/yellow/yellow-star-keys-page/yellow-star-keys-page.component";
 
 const routes: Routes = [
   { path: '', component: RedComponent },
@@ -24,6 +26,7 @@ const routes: Routes = [
   { path: 'yellow/generators', component: YellowGeneratorsComponent },
   { path: 'yellow/stars', component: YellowStarsComponent },
   { path: 'yellow/fusion', component: YellowFusionComponent },
+  { path: 'yellow/starKeys', component: YellowStarKeysPageComponent },
   // Green
   { path: 'green/galaxyTree', component: GreenGalaxyTreeComponent },
   { path: 'green/greenGenerators', component: GreenGeneratorsComponent },
@@ -34,6 +37,9 @@ const routes: Routes = [
   { path: 'timeline/red', component: RedTimelineComponent },
   { path: 'timeline/yellow', component: YellowTimelineComponent },
   { path: 'timeline/green', component: GreenTimelineComponent },
+
+  // Dev
+  { path: 'dev/balance', component: BalanceComponent },
 ];
 
 @NgModule({

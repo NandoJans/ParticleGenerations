@@ -64,6 +64,14 @@ div p span.effect {
   animation: color-switch 5s infinite;
 }
 
+.key {
+  --color-gradient-1: var(--proxima-centauri-color);
+  --color-gradient-2: var(--lalande-color);
+  --color-gradient-3: var(--sun-color);
+  --color-gradient-4: var(--sirius-color);
+  animation: color-gradient 10s infinite;
+}
+
 @keyframes color-switch {
   0% {
     color: var(--color-switch-1);
@@ -73,5 +81,23 @@ div p span.effect {
   }
   100% {
     color: var(--color-switch-1);
+  }
+}
+
+@keyframes color-gradient {
+  0% {
+    color: var(--color-gradient-1);
+  }
+  25% {
+    color: var(--color-gradient-2);
+  }
+  50% {
+    color: var(--color-gradient-3);
+  }
+  75% {
+    color: var(--color-gradient-4);
+  }
+  100% {
+    color: var(--color-gradient-1);
   }
 }

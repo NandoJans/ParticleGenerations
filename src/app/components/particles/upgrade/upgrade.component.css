@@ -187,6 +187,76 @@ button.enhance.buyable.enhanced-yellow {
   --linear-gradient-from: var(--background-color-yellow-dark);
 }
 
+.star.key {
+  --color-gradient-1: var(--proxima-centauri-color);
+  --color-gradient-2: var(--lalande-color);
+  --color-gradient-3: var(--sun-color);
+  --color-gradient-4: var(--sirius-color);
+
+  animation: border-color-gradient 10s infinite;
+}
+
+.star.key.buyable {
+  animation: color-gradient 10s infinite;
+}
+
+.star.key.maxed {
+  background: linear-gradient(
+    to bottom,
+    var(--proxima-centauri-color),
+    var(--lalande-color),
+    var(--sun-color),
+    var(--sirius-color),
+    var(--sun-color),
+    var(--lalande-color),
+    var(--proxima-centauri-color)
+  ) repeat;
+  background-size: 100% 500%;
+  --max-background-y: 500%;
+  animation: background-position-y-animation 60s infinite linear;
+}
+
+@keyframes color-gradient {
+  0% {
+    color: var(--color-gradient-1);
+    border-color: var(--color-gradient-1);
+  }
+  25% {
+    color: var(--color-gradient-2);
+    border-color: var(--color-gradient-2);
+  }
+  50% {
+    color: var(--color-gradient-3);
+    border-color: var(--color-gradient-3);
+  }
+  75% {
+    color: var(--color-gradient-4);
+    border-color: var(--color-gradient-4);
+  }
+  100% {
+    color: var(--color-gradient-1);
+    border-color: var(--color-gradient-1);
+  }
+}
+
+@keyframes border-color-gradient {
+  0% {
+    border-color: var(--color-gradient-1);
+  }
+  25% {
+    border-color: var(--color-gradient-2);
+  }
+  50% {
+    border-color: var(--color-gradient-3);
+  }
+  75% {
+    border-color: var(--color-gradient-4);
+  }
+  100% {
+    border-color: var(--color-gradient-1);
+  }
+}
+
 @keyframes color-switch {
   0% {
     color: var(--color-switch-1);

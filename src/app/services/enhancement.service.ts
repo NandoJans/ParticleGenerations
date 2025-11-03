@@ -45,7 +45,7 @@ export class EnhancementService {
   }
 
   enhance(enhancable: Enhancable) {
-    if (this.enhancing) {
+    if (this.enhancing && enhancable.allowedEnhancements.includes(this.enhancing)) {
       this.enhancing.holding.amount = this.enhancing.holding.amount.sub(this.enhancing.getRequirement());
       enhancable.enhancement = this.enhancing;
       this.enhancing.add(enhancable);

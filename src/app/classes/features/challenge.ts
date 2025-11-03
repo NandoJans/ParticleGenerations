@@ -235,6 +235,7 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
 
   revertRequirementNerfs(): void {
     Object.values(this.appliedNerfs['requirements']).forEach((value) => {
+      value.element.unlocked = value.element.startUnlocked;
       value.element.init();
     })
     this.appliedNerfs['requirements'] = {};
@@ -249,6 +250,7 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   }
 
   start(): void {
+    this.init();
     this.nerfs()
     this.getChallengeElements().forEach((value: ChallengeGenerator | ChallengeUpgrade | ChallengeHolding) => {
       if (!(value instanceof Holding)) {
@@ -301,6 +303,16 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
       this.completed = this.completed.add(new Num(1, 0));
     } else {
       this.completed = true;
+    }
+  }
+
+  getCompletions(): Num {
+    if (this.completed instanceof Num) {
+      return this.completed;
+    } else if (this.completed) {
+      return new Num(1, 0);
+    } else {
+      return new Num(0, 0);
     }
   }
 }

@@ -5,15 +5,16 @@ import {Navigation} from "../classes/features/navigation";
 import {SubNavigation} from "../classes/features/sub-navigation";
 import {
   faArrowUp,
-  faAtom, faCalendar,
-  faCogs, faFire,
+  faAtom, faBalanceScale, faCalendar,
+  faCogs, faExclamation, faFire,
   faForward,
-  faIndustry,
+  faIndustry, faKey,
   faMountain, faStar, faSun
 } from "@fortawesome/free-solid-svg-icons";
 import {HoldingRecord} from "../classes/records/holdings/holding-record";
 import {Num} from "../num";
 import {UpgradeRecord} from "../classes/records/upgrades/upgrade-record";
+import {App} from "../App";
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,7 @@ export class NavigationsService {
       {requirement: HoldingRecord.greenPrestiges, amount: new Num(1, 0)},
     ], 'galaxy', false),
     automators: new Navigation('automators', faCogs, 'automators', [], 'red', true),
-    timeline: new Navigation('timeline', faCalendar, 'timeline', [], 'red', true),
+    timeline: new Navigation('timeline', faCalendar, 'timeline', [], 'red', true)
 }
 
   subNavigations: {[key: string]: SubNavigation} = {
@@ -50,6 +51,9 @@ export class NavigationsService {
     ], false),
     yellowFusion: new SubNavigation('yellowFusion', faFire, 'fusion', this.navigations['yellow'], [
       {requirement: HoldingRecord.yellowParticles, amount: new Num(1, 10)},
+    ], false),
+    yellowStarKeys: new SubNavigation('yellowStarKeys', faKey, 'starKeys', this.navigations['yellow'], [
+      {requirement: HoldingRecord.yellowParticles, amount: new Num(1, 400)},
     ], false),
 
     // Green
@@ -84,8 +88,17 @@ export class NavigationsService {
   constructor(
     private router: Router
   ) {
+    if (App.isDev()) {
+      this.setDevRoutes();
+    }
+
     this.load();
     console.log('Navigations loaded:', this.navigations, this.subNavigations);
+  }
+
+  private setDevRoutes() {
+    this.navigations['dev'] = new Navigation('dev', faExclamation, 'dev', [], 'balance', true);
+    this.subNavigations['devBalance'] = new SubNavigation('devBalance', faBalanceScale, 'balance', this.navigations['dev'], [], true);
   }
 
   getAllNavigations(): (Navigation|SubNavigation)[] {

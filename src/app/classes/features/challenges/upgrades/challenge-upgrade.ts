@@ -23,17 +23,26 @@ export abstract class ChallengeUpgrade extends Upgrade {
     public nav: string,
     public subNav: string,
     public type: string,
-    public difficultyIncrease: Num,
+    public difficultyIncrease: Num | Num[],
+    public difficulty: number = 0
   ) {
     super(saveName);
     this.baseCost = cost.copy();
     this.baseBuffer = buffer.copy();
     this.startIncrease = increase.copy();
     this.applyDifficultyIncrease();
+    this.difficulty = Math.round(difficulty);
   }
 
   applyDifficultyIncrease(): void {
-    this.baseCost = this.baseCost.pow(this.difficultyIncrease);
+    if (this.difficultyIncrease instanceof Num) {
+      this.baseCost = this.baseCost.pow(this.difficultyIncrease);
+    } else {
+      if (this.difficulty >= this.difficultyIncrease.length) {
+        this.difficulty = this.difficultyIncrease.length - 1;
+      }
+      this.baseCost = this.baseCost.pow(this.difficultyIncrease[this.difficulty]);
+    }
   }
 
   override tryLoad() {

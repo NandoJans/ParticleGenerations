@@ -11,6 +11,7 @@ import {MilestoneRecord} from "../classes/records/milestones/milestone-record";
 import {Num} from "../num";
 import {ChallengeService} from "./interactables/challenge.service";
 import {App} from "../App";
+import {CompressionService} from "./compression.service";
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,65 @@ export class DataManagerService {
     private prestigeLayersService: PrestigeLayersService,
     private challengeService: ChallengeService,
     private timelineService: TimelineService,
+    private compressionService: CompressionService,
   ) {}
+
+  // --- Simulation mode management ---
+  enableSimulation(): void {
+    LocalStorageHelper.setSimulationMode(true);
+  }
+
+  disableSimulation(): void {
+    LocalStorageHelper.setSimulationMode(false);
+  }
+
+  // Save/load specifically while in simulation mode (just proxies to save/load)
+  saveSim(): void {
+    this.save();
+  }
+
+  loadSim(): void {
+    this.load();
+  }
+
+  clearSim(): void {
+    // Reset in-memory storage for simulation and persist
+    LocalStorageHelper.setRawStorage({});
+    this.save();
+  }
+
+  // --- Simulation snapshots ---
+  saveSimSnapshot(meta: { id?: string, label?: string, type?: string, elapsed?: number, extra?: any } = {}): string {
+    const id = meta.id || `snap_${Date.now()}_${Math.floor(Math.random()*100000)}`;
+    const label = meta.label || 'Snapshot';
+    const snapshot = {
+      id,
+      label,
+      type: meta.type || 'milestone',
+      elapsed: meta.elapsed ?? 0,
+      date: new Date().toISOString(),
+      storage: LocalStorageHelper.getRawStorage(),
+      extra: meta.extra || {},
+    };
+    LocalStorageHelper.addSnapshot(snapshot);
+    return id;
+  }
+
+  listSimSnapshots(): any[] {
+    return LocalStorageHelper.loadSnapshots();
+  }
+
+  loadSimSnapshot(id: string): boolean {
+    const snap = LocalStorageHelper.getSnapshot(id);
+    if (!snap) return false;
+    LocalStorageHelper.setSimulationMode(true);
+    LocalStorageHelper.setRawStorage(snap.storage || {});
+    return true;
+  }
+
+  deleteSimSnapshot(id: string): void {
+    LocalStorageHelper.deleteSnapshot(id);
+  }
 
   save() {
     // return;
@@ -42,6 +101,7 @@ export class DataManagerService {
     this.timelineService.save();
     this.milestoneRecord.save();
     this.challengeService.save();
+    this.compressionService.save();
 
     this.setLastSave();
     this.localStorageHelper.store();
@@ -58,6 +118,7 @@ export class DataManagerService {
     this.timelineService.load();
     this.milestoneRecord.load();
     this.challengeService.load();
+    this.compressionService.load();
 
     // Run milestones
     this.milestoneRecord.run();
