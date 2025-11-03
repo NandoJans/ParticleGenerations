@@ -25,14 +25,6 @@ export class AppComponent implements OnInit{
     private offlineService: OfflineService,
     private messageStepsService: MessageStepsService,
   ) {
-    // App.subscribe().subscribe((data) => {
-    //   if (data) {
-    //     setTimeout(() => {
-    //       this.isTicking = false;
-    //       this.ngOnInit();
-    //     }, 50)
-    //   }
-    // })
 
     window.onfocus = () => {
       if (App.isDev()) return;
