@@ -20,7 +20,6 @@ export class YellowTimelineComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.timeline)
   }
 
 }
