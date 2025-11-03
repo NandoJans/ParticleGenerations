@@ -43,6 +43,7 @@ import { GalaxyTreeStarComponent } from './components/particles/galaxy-tree-star
 import { GreenGeneratorsComponent } from './pages/green/green-generators/green-generators.component';
 import { GreenTimelineComponent } from './pages/timeline/green-timeline/green-timeline.component';
 import {BalanceComponent} from "./dev/balance/balance.component";
+import {YellowStarKeysPageComponent} from "./pages/yellow/yellow-star-keys-page/yellow-star-keys-page.component";
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import {BalanceComponent} from "./dev/balance/balance.component";
     GalaxyTreeStarComponent,
     GreenGeneratorsComponent,
     GreenTimelineComponent,
-    BalanceComponent
+    BalanceComponent,
+    YellowStarKeysPageComponent
   ],
   imports: [
     BrowserModule,
@@ -94,9 +96,10 @@ import {BalanceComponent} from "./dev/balance/balance.component";
     FontAwesomeModule
   ],
   providers: [],
-  exports: [
-    ButtonComponent
-  ],
+    exports: [
+        ButtonComponent,
+        NumberDisplayComponent
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

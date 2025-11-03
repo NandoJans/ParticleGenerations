@@ -1,0 +1,41 @@
+@if (!this.compressionUnlocked()) {
+  <p>You need to unlock the Compression Upgrade to start compressing Yellow Keys.</p>
+  <app-upgrade [upgrade]="unlockCompressionUpgrade"></app-upgrade>
+} @else {
+  <div class="resource-card">
+    <fa-icon [icon]="faKey" class="key-icon"></fa-icon>
+    <app-number-display [holding]="yellowStarKeys"></app-number-display>
+    <app-number-display [holding]="yellowKeys"></app-number-display>
+  </div>
+  <br/>
+  <div class="upgrade-row">
+    @for (upgrade of subUpgrades; track upgrade)  {
+      @if (upgrade.isUnlocked()) {
+        <app-upgrade [upgrade]="upgrade"></app-upgrade>
+      }
+    }
+  </div>
+  @if (!this.isCompressing() && canCompressKeys()) {
+    <app-button (function)="startCompression()" [style]="'button green'" [text]="'Start'"></app-button>
+  } @else if (!this.isCompressing()) {
+    <p>You need at least <span class="requirement">{{ getKeysNeededForCompression() }}</span> Yellow Keys to start compression.</p>
+  }
+  <div class="progress-bar-wrapper">
+    <div class="progress-bar" [style.width]="getPercentage() + '%'">
+
+    </div>
+    <div class="progress-text">
+      @if (this.isCompressing()) {
+        <p><span class="percentage">{{ getPercentage().toFixed(2) }}%</span></p>
+        <p><span class="percentage">{{ getCompletionTime() }}</span></p>
+      }
+    </div>
+  </div>
+  <div class="upgrade-row">
+    @for (upgrade of upgrades; track upgrade)  {
+      @if (upgrade.isUnlocked()) {
+        <app-upgrade [upgrade]="upgrade"></app-upgrade>
+      }
+    }
+  </div>
+}

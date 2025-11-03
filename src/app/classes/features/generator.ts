@@ -21,6 +21,7 @@ export abstract class Generator extends Buyable implements Generatable, Storable
   baseMulMod: Num = new Num(1, 0);
   abstract baseMultiplier: Num;
   multiplier: Num = new Num(1, 0);
+  mulMod: Num = new Num(1, 0);
   amount: Num = new Num(0, 0)
   bought: Num = new Num(0, 0)
   abstract type: string
@@ -44,11 +45,13 @@ export abstract class Generator extends Buyable implements Generatable, Storable
     this.multiplier = this.baseMultiplier
       .mul(this.baseMulMod)
       .pow(this.bought)
+      .mul(this.mulMod)
       .mul(this.globalMultiplier.getNum()) as Num
     if (this.isUnlocked()) {
       this.generates.generate(this.getGenerateAmount().mul(speed) as Num)
     }
     this.baseMulMod = new Num(1, 0)
+    this.mulMod = new Num(1, 0)
     this.correctCost();
   }
 

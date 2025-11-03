@@ -20,6 +20,8 @@ import {MilestoneRecord} from "../classes/records/milestones/milestone-record";
 import {Multiplier} from "../classes/features/multiplier";
 import {HoldingRecord} from "../classes/records/holdings/holding-record";
 import {App} from "../App";
+import {CompressionService} from "./compression.service";
+import {UpgradeRecord} from "../classes/records/upgrades/upgrade-record";
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +47,7 @@ export class TickService {
     private dropDownMessageService: DropDownMessageService,
     private milestoneRecord: MilestoneRecord,
     private challengeService: ChallengeService,
+    private compressionService: CompressionService,
   ) {}
 
   /**
@@ -81,6 +84,7 @@ export class TickService {
     this.challengeService.tick();
     this.timelineService.tick();
     this.enhancementService.tick();
+    this.compressionService.tick(speed);
     this.componentService.reloadComponents();
     this.firstTick = false;
   }

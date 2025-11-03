@@ -64,6 +64,7 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
     let effect = HoldingRecord.yellowParticles.amount.pow(this.buffer);
     if (effect.greq(this.maxEffect)) {
       effect = this.maxEffect.copy();
+      this.maxEffect = new Num(1, 200);
     }
     MultiplierRecord.yellowGenerators.correct(effect);
     return effect;

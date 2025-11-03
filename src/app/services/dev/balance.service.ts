@@ -26,6 +26,8 @@ import { UpgradeHelperService } from './helpers/upgrade-helper.service';
 import { PrestigeHelperService } from './helpers/prestige-helper.service';
 import { BuyableHelperService } from './helpers/buyable-helper.service';
 import { EnhancementHelperService } from './helpers/enhancement-helper.service';
+import {TimelineService} from "../timeline.service";
+import {CompressionService} from "../compression.service";
 
 @Injectable({
   providedIn: 'root'
@@ -52,14 +54,13 @@ export class BalanceService {
     maxTime: 1000000,
     higherPrestige: new Num(1.01, 0),
     initial: () => {
-      return;
       HoldingRecord.yellowPrestiges.amount = new Num(2, 3);
       HoldingRecord.yellowKeys.amount = new Num(1, 5);
-      HoldingRecord.yellowParticles.amount = new Num(5, 60);
+      HoldingRecord.yellowParticles.amount = new Num(5, 400);
       ChallengeRecord.proximaCentauriStar.completed = new Num(3, 0);
       ChallengeRecord.lalandeStar.completed = new Num(3, 0);
       ChallengeRecord.sunStar.completed = new Num(3, 0);
-      ChallengeRecord.siriusStar.completed = new Num(2, 0);
+      ChallengeRecord.siriusStar.completed = new Num(3, 0);
     }
   };
 
@@ -94,6 +95,8 @@ export class BalanceService {
     private prestigeHelper: PrestigeHelperService,
     private buyableHelper: BuyableHelperService,
     private enhancementHelper: EnhancementHelperService,
+    private timelineService: TimelineService,
+    private compressionService: CompressionService,
   ) {
     // Load persisted results (if any) on service creation
     this.loadResults();
@@ -378,6 +381,7 @@ export class BalanceService {
       ...PrestigeLayersService.list,
       ...ChallengeRecord.list,
       ...MilestoneRecord.list,
+      ...TimelineService.list,
     ].forEach(upgrade => {
       upgrade.reset();
     })

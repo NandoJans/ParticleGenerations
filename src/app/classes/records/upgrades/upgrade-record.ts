@@ -118,6 +118,29 @@ import {
 } from "../../features/upgrades/yellow-expertise-galaxy-tree-upgrade";
 import {FusionExpertiseGalaxyTreeUpgrade} from "../../features/upgrades/fusion-expertise-galaxy-tree-upgrade";
 import {EmpoweredBoosterAccelerationUpgrade} from "../../features/upgrades/empowered-booster-acceleration-upgrade";
+import {UltraRedExtensionStarKeyUpgrade} from "../../features/upgrades/ultra-red-extension-star-key-upgrade";
+import {DelayedBoosterScalingStarKeyUpgrade} from "../../features/upgrades/delayed-booster-scaling-star-key-upgrade";
+import {
+  UltraBoosterAccelerationStarKeyUpgrade
+} from "../../features/upgrades/ultra-booster-acceleration-star-key-upgrade";
+import {UltraYellowPowerStarKeyUpgrade} from "../../features/upgrades/ultra-yellow-power-star-key-upgrade";
+import {StarKeyUpgrade} from "../../features/upgrades/star-key-upgrade";
+import {IncreaseKeyAmountStarKeySubUpgrade} from "../../features/upgrades/increase-key-amount-star-key-sub-upgrade";
+import {
+  IncreaseCompressionSpeedStarKeySubUpgrade
+} from "../../features/upgrades/increase-compression-speed-star-key-sub-upgrade";
+import {
+  DecreaseMultiplyYellowKeysScalingStarKeySubUpgrade
+} from "../../features/upgrades/decrease-multiply-yellow-keys-scaling-star-key-sub-upgrade";
+import {UltraMultiplyRedGeneratorsStarKeyUpgrade} from "../../features/upgrades/ultra-multiply-red-generators-star-key-upgrade";
+import {
+  UltraFusionBoosterAccelerationStarKeyUpgrade
+} from "../../features/upgrades/ultra-fusion-booster-acceleration-star-key-upgrade";
+import {
+  UltraYellowPrestigeBoostStarKeyUpgrade
+} from "../../features/upgrades/ultra-yellow-prestige-boost-star-key-upgrade";
+import {GreaterProximaCentauriStarKeyUpgrade} from "../../features/upgrades/greater-proxima-centauri-star-key-upgrade";
+import {UnlockStarKeyCompressionUpgrade} from "../../features/upgrades/unlock-star-key-compression-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -174,6 +197,21 @@ export class UpgradeRecord extends Record {
   static fusionBoosterAcceleration: FusionBoosterAccelerationUpgrade = new FusionBoosterAccelerationUpgrade('fusionBoosterAcceleration');
   static increaseMaxFusionBoosterAcceleration: IncreaseMaxFusionBoosterAccelerationUpgrade = new IncreaseMaxFusionBoosterAccelerationUpgrade('increaseMaxFusionBoosterAcceleration');
 
+  // Star key upgrades
+  static increaseKeyAmountStarKeySub: IncreaseKeyAmountStarKeySubUpgrade = new IncreaseKeyAmountStarKeySubUpgrade('increaseKeyAmountStarKeySub');
+  static compressionSpeedStarKeySub: IncreaseCompressionSpeedStarKeySubUpgrade = new IncreaseCompressionSpeedStarKeySubUpgrade('compressionSpeedStarKeySub');
+  static decreaseMultiplyYellowKeysScalingStarKeySub: DecreaseMultiplyYellowKeysScalingStarKeySubUpgrade = new DecreaseMultiplyYellowKeysScalingStarKeySubUpgrade('decreaseMultiplyYellowKeysScalingStarKeySub');
+
+  static ultraRedExtensionStarKey: UltraRedExtensionStarKeyUpgrade = new UltraRedExtensionStarKeyUpgrade('ultraRedExtensionStarKey');
+  static delayedBoosterScalingStarKey: DelayedBoosterScalingStarKeyUpgrade = new DelayedBoosterScalingStarKeyUpgrade('delayedBoosterScalingStarKey');
+  static ultraBoosterAccelerationStarKey: UltraBoosterAccelerationStarKeyUpgrade = new UltraBoosterAccelerationStarKeyUpgrade('ultraBoosterAccelerationStarKey');
+  static ultraYellowPowerStarKey: UltraYellowPowerStarKeyUpgrade = new UltraYellowPowerStarKeyUpgrade('ultraYellowPowerStarKey');
+  static multiplyRedGeneratorsStarKey: UltraMultiplyRedGeneratorsStarKeyUpgrade = new UltraMultiplyRedGeneratorsStarKeyUpgrade('multiplyRedGeneratorsStarKey');
+  static ultraFusionBoosterAccelerationStarKey: UltraFusionBoosterAccelerationStarKeyUpgrade = new UltraFusionBoosterAccelerationStarKeyUpgrade('ultraFusionBoosterAccelerationStarKey');
+  static ultraYellowPrestigeBoostStarKey: UltraYellowPrestigeBoostStarKeyUpgrade = new UltraYellowPrestigeBoostStarKeyUpgrade('ultraYellowPrestigeBoostStarKey');
+  static greaterProximaCentauriStarKey: GreaterProximaCentauriStarKeyUpgrade = new GreaterProximaCentauriStarKeyUpgrade('greaterProximaCentauriStarKey');
+  static unlockStarKeyCompression: UnlockStarKeyCompressionUpgrade = new UnlockStarKeyCompressionUpgrade('unlockStarKeyCompression');
+
   // green galaxy tree upgrades
   static redParticleSacrifice: RedParticleSacrificeUpgrade = new RedParticleSacrificeUpgrade('redParticleSacrifice');
   static yellowParticleSacrifice: YellowParticleSacrificeUpgrade = new YellowParticleSacrificeUpgrade('yellowParticleSacrifice');
@@ -221,6 +259,17 @@ export class UpgradeRecord extends Record {
   static acceleratorExpertiseGalaxyTree: AcceleratorExpertiseGalaxyTreeUpgrade = new AcceleratorExpertiseGalaxyTreeUpgrade('redAcceleratorsBoostGenerators');
   static yellowExpertiseGalaxyTree: YellowExpertiseGalaxyTreeUpgrade = new YellowExpertiseGalaxyTreeUpgrade('yellowUpgradesBoostFusion');
   static fusionExpertiseGalaxyTree: FusionExpertiseGalaxyTreeUpgrade = new FusionExpertiseGalaxyTreeUpgrade('yellowFusionBoostUpgrades');
+
+  static starKeyUpgradeList: StarKeyUpgrade[] = [
+    UpgradeRecord.ultraRedExtensionStarKey,
+    UpgradeRecord.delayedBoosterScalingStarKey,
+    UpgradeRecord.ultraBoosterAccelerationStarKey,
+    UpgradeRecord.ultraYellowPowerStarKey,
+    UpgradeRecord.multiplyRedGeneratorsStarKey,
+    UpgradeRecord.ultraFusionBoosterAccelerationStarKey,
+    UpgradeRecord.ultraYellowPrestigeBoostStarKey,
+    UpgradeRecord.greaterProximaCentauriStarKey,
+  ]
 
   static galaxyTreeUpgradeList: GalaxyTreeUpgrade[] = [
     UpgradeRecord.unlockFirstGreenGeneratorGalaxyTree,
@@ -299,6 +348,13 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.increaseSiriusGoal,
     UpgradeRecord.increaseMaxFusionBoosterAcceleration,
     UpgradeRecord.fusionBoosterAcceleration,
+
+    // Star key upgrades
+    UpgradeRecord.increaseKeyAmountStarKeySub,
+    UpgradeRecord.compressionSpeedStarKeySub,
+    UpgradeRecord.decreaseMultiplyYellowKeysScalingStarKeySub,
+    UpgradeRecord.unlockStarKeyCompression,
+    ...UpgradeRecord.starKeyUpgradeList,
 
     // Green galaxy tree upgrades
     UpgradeRecord.redParticleSacrifice,

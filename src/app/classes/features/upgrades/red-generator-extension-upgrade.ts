@@ -43,7 +43,7 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
       const compare = new Num(index, 0);
       if (this.amount.greq(compare)) {
         const buff: Num = this.buffer.pow(this.amount.sub(compare));
-        generator.multiplier = generator.multiplier.mul(buff);
+        generator.mulMod = generator.mulMod.mul(buff);
       }
     });
     return this.buffer.pow(this.amount);
@@ -89,5 +89,11 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
   override reset() {
     super.reset();
     this.bought = this.startBought.copy();
+    // Force unlock check for red generators
+    GeneratorRecord.redGenerators.forEach((generator) => {
+      if (generator.requirementsMet()) {
+        generator.unlocked = true;
+      }
+    });
   }
 }

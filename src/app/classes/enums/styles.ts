@@ -26,4 +26,6 @@ export enum Styles {
   STAR_YELLOW = "star yellow",
   STAR_WHITE = "star white",
   STAR_BLUE = "star blue",
+  STAR_KEY = "star key",
+  SUB_STAR_KEY = "star key sub",
 }

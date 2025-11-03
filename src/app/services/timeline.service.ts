@@ -103,6 +103,14 @@ export class TimelineService {
       new Num(1, 10)
     )
     .build()
+    .addTimelineEvent(
+      'yellow-star-keys',
+      'Yellow Star Keys',
+      'Unlocking greater star-power',
+      HoldingRecord.yellowParticles,
+      new Num(1, 350)
+    )
+    .build()
     .build()
 
   static greenTimeline: Timeline = TimelineFactory.start(
@@ -154,6 +162,12 @@ export class TimelineService {
   init() {
     this.getList().forEach(timeline => {
       timeline.init();
+    })
+  }
+
+  reset() {
+    this.getList().forEach(timeline => {
+      timeline.reset();
     })
   }
 }

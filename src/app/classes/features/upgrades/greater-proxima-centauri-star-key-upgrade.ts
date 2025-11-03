@@ -1,0 +1,29 @@
+import {StarKeyUpgrade} from "./star-key-upgrade";
+import {Num} from "../../../num";
+import {ChallengeRecord} from "../../records/challenges/challenge-record";
+
+export class GreaterProximaCentauriStarKeyUpgrade extends StarKeyUpgrade {
+  override displayName: string = "Greater Proxima Centauri";
+  constructor(saveName: string) {
+    super(
+      saveName,
+      'greater-proxima-centauri-star-key-upgrade',
+    );
+  }
+
+  override calculationOrder: number = 1000;
+
+  override buffer: Num = new Num(1, 100);
+  override baseBuffer: Num = new Num(1, 100);
+
+  override getDescription(): string {
+    return `Increase effect cap of proxima centauri by ${this.buffer.toString(2)}`;
+  }
+
+  override action(): Num | undefined {
+    if (this.hasBought()) {
+      ChallengeRecord.proximaCentauriStar.maxEffect = ChallengeRecord.proximaCentauriStar.maxEffect.mul(this.buffer);
+    }
+    return
+  }
+}

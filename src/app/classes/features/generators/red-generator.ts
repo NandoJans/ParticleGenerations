@@ -11,6 +11,7 @@ import {RedGeneratorBuyMultiplierUpgrade} from "../upgrades/red-generator-buy-mu
 import {Upgrade} from "../upgrade";
 import {Enhancement} from "../enhancements/enhancement";
 import {EnhancementRecord} from "../../records/enhancement-record";
+import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 
 export abstract class RedGenerator extends Generator {
   type: string = 'red-particle-generator';
@@ -31,6 +32,15 @@ export abstract class RedGenerator extends Generator {
   override allowedEnhancements: Enhancement[] = [
     EnhancementRecord.yellow
   ];
+
+  override reset() {
+    super.reset();
+    if (UpgradeRecord.startWithMoreRedExtensionsUpgrade.bought.greq(new Num(this.rank - 1, 0))) {
+      this.unlocked = true;
+      this.multiplierUpgrade.unlocked = true;
+      this.buyMultiplierUpgrade.unlocked = true;
+    }
+  }
 
   override getUpgrades(): Upgrade[] {
     return [

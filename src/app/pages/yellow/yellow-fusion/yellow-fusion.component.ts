@@ -4,6 +4,7 @@ import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
 import {Upgrade} from "../../../classes/features/upgrade";
 import {FusionBoosterAccelerationUpgrade} from "../../../classes/features/upgrades/fusion-booster-acceleration-upgrade";
+import {Num} from "../../../num";
 
 @Component({
     selector: 'app-yellow-fusion',
@@ -41,4 +42,7 @@ export class YellowFusionComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  getFusionBoosterAccelerationAmount(): Num {
+    return UpgradeRecord.fusionBoosterAcceleration.amount;
+  }
 }

@@ -11,6 +11,7 @@ import {MilestoneRecord} from "../classes/records/milestones/milestone-record";
 import {Num} from "../num";
 import {ChallengeService} from "./interactables/challenge.service";
 import {App} from "../App";
+import {CompressionService} from "./compression.service";
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,7 @@ export class DataManagerService {
     private prestigeLayersService: PrestigeLayersService,
     private challengeService: ChallengeService,
     private timelineService: TimelineService,
+    private compressionService: CompressionService,
   ) {}
 
   // --- Simulation mode management ---
@@ -99,6 +101,7 @@ export class DataManagerService {
     this.timelineService.save();
     this.milestoneRecord.save();
     this.challengeService.save();
+    this.compressionService.save();
 
     this.setLastSave();
     this.localStorageHelper.store();
@@ -115,6 +118,7 @@ export class DataManagerService {
     this.timelineService.load();
     this.milestoneRecord.load();
     this.challengeService.load();
+    this.compressionService.load();
 
     // Run milestones
     this.milestoneRecord.run();

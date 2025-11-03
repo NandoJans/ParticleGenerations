@@ -32,7 +32,7 @@ export class RedGeneratorMultiplierUpgrade extends RedGeneratorUpgrade {
 
   action(): Num {
     const buff: Num = this.buffer.pow(this.amount);
-    this.generator.multiplier = this.generator.multiplier.mul(buff);
+    this.generator.mulMod = this.generator.mulMod.mul(buff);
     return buff;
   }
 

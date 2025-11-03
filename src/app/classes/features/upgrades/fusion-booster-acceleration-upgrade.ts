@@ -33,7 +33,7 @@ export class FusionBoosterAccelerationUpgrade extends Upgrade {
   name: string = "fusion-booster-acceleration-upgrade";
   nav: string = "yellow";
   requirement: Requirement[] = [
-    new Requirement(HoldingRecord.redParticles, new Num(1, 75), this)
+    new Requirement(HoldingRecord.yellowParticles, new Num(1, 10), this)
   ];
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED, this);
   style: Styles = Styles.FUSION_SUPER;

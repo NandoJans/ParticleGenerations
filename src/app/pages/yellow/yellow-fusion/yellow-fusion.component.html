@@ -14,6 +14,9 @@
         <app-upgrade *ngIf="upgrade.isUnlocked()" [upgrade]="upgrade"></app-upgrade>
       </div>
     </div>
+    <div class="resource-card fusion-booster-acceleration-card" [style.margin]="'0 auto'">
+      <p>You have </p><span class="fusion-booster-acceleration">{{ getFusionBoosterAccelerationAmount() }}</span><p> Fusion booster accelerations</p>
+    </div>
     <div class="upgrade-row">
       <app-upgrade *ngIf="fusionBoosterAcceleration.isUnlocked()" [upgrade]="fusionBoosterAcceleration"></app-upgrade>
     </div>

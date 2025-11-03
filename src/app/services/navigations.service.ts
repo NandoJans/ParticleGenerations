@@ -8,7 +8,7 @@ import {
   faAtom, faBalanceScale, faCalendar,
   faCogs, faExclamation, faFire,
   faForward,
-  faIndustry,
+  faIndustry, faKey,
   faMountain, faStar, faSun
 } from "@fortawesome/free-solid-svg-icons";
 import {HoldingRecord} from "../classes/records/holdings/holding-record";
@@ -51,6 +51,9 @@ export class NavigationsService {
     ], false),
     yellowFusion: new SubNavigation('yellowFusion', faFire, 'fusion', this.navigations['yellow'], [
       {requirement: HoldingRecord.yellowParticles, amount: new Num(1, 10)},
+    ], false),
+    yellowStarKeys: new SubNavigation('yellowStarKeys', faKey, 'starKeys', this.navigations['yellow'], [
+      {requirement: HoldingRecord.yellowParticles, amount: new Num(1, 400)},
     ], false),
 
     // Green
