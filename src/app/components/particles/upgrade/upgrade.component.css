@@ -1,14 +1,13 @@
 button {padding: 1rem;border-radius: .5rem;height: 12rem;width: 13rem;font-size: 1rem;--linear-gradient-to: var(--background-color-light);background-color: var(--background-color-light);border: 1px solid var(--accent-color)}
 button.buyable {--linear-gradient-to: var(--background-color-3);background-color: var(--background-color-3);color: var(--text-color)}
 button.maxed {--linear-gradient-to: var(--accent-color);background-color: var(--accent-color);border-color: var(--background-color);color: var(--background-color-1)}
-button p.cost,button p.effect {margin: .5rem 0 0;word-break: break-all}
+button p.cost,button p.effect {margin: .5rem 0 0}
 button.sub p.cost,button.sub p.effect {margin: 0}
 button p {margin: 0}
 button h4 {margin: 0 0 .5rem}
 button.unlock {margin: 3rem;height: 10rem;width: 20rem}
 button.unlock h4 {font-size: 2rem}
 button.sub {height: 5.5rem;width: 13rem}
-button.small {padding: .1rem;margin: .1rem;width: 8rem}
 button.sub p.description {font-weight: bold}
 button.horizontal {width: 100%;height: initial;display: flex;flex-direction: row;justify-content: space-between}
 button.horizontal>h4 {margin: 0}
@@ -29,13 +28,10 @@ button.color-switch.maxed {animation: background-color-switch 10s infinite}
 button.fusion {--color-switch-1: var(--proxima-centauri-color);--color-switch-2: var(--sun-color)}
 button.hydrogen {--color-switch-1: var(--rigel-color);--color-switch-2: var(--sirius-color)}
 button.enhancing:hover {box-shadow: 0 0 1e4px rgba(255,255,255,.1) inset;cursor: pointer}
-button.enhancing.enhancing-yellow {background-color: var(--background-color-3);border: 1px solid var(--accent-color-yellow);color: var(--text-color-yellow)}
-button.enhanced {background:radial-gradient(at 0 0,color-mix(in srgb,var(--linear-gradient-from) 40%,transparent),transparent),radial-gradient(at 100% 100%,color-mix(in srgb,var(--linear-gradient-from) 40%,transparent),transparent),var(--linear-gradient-to)}
-button.enhanced.enhanced-yellow {--linear-gradient-from: var(--background-color-yellow)}
-button.enhance.buyable.enhanced-yellow {--linear-gradient-from: var(--background-color-yellow-dark)}
+button.enhanced {background:radial-gradient(at 0 0,#0004,#0000),radial-gradient(at 100% 100%,#0004,#0000),var(--linear-gradient-to)}
 .star.key {--color-gradient-1: var(--proxima-centauri-color);--color-gradient-2: var(--lalande-color);--color-gradient-3: var(--sun-color);--color-gradient-4: var(--sirius-color);animation: border-color-gradient 10s infinite}
 .star.key.buyable {animation: color-gradient 10s infinite}
-.star.key.maxed {background: linear-gradient(var(--proxima-centauri-color),var(--lalande-color),var(--sun-color),var(--sirius-color),var(--sun-color),var(--lalande-color),var(--proxima-centauri-color))repeat;background-size: 100% 500%;--max-background-y: 500%;animation: background-position-y-animation 60s infinite linear}
+.star.key.maxed {background: linear-gradient(var(--proxima-centauri-color),var(--lalande-color),var(--sun-color),var(--sirius-color))repeat;background-size: 100% 500%;--max-background-y: 500%;animation: background-position-y-animation 60s infinite}
 @keyframes color-gradient {0%,100%{color:var(--color-gradient-1);border-color:var(--color-gradient-1)}25%{color:var(--color-gradient-2);border-color:var(--color-gradient-2)}50%{color:var(--color-gradient-3);border-color:var(--color-gradient-3)}75%{color:var(--color-gradient-4);border-color:var(--color-gradient-4)}}
 @keyframes border-color-gradient {0%,100%{border-color:var(--color-gradient-1)}25%{border-color:var(--color-gradient-2)}50%{border-color:var(--color-gradient-3)}75%{border-color:var(--color-gradient-4)}}
 @keyframes color-switch {0%,100%{color:var(--color-switch-1);border-color:var(--color-switch-1)}50%{color:var(--color-switch-2);border-color:var(--color-switch-2)}}
