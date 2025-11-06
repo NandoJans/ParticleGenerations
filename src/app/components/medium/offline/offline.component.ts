@@ -57,7 +57,6 @@ export class OfflineComponent implements OnInit {
   toggleAutoFullscreen() {
     this.autoFullscreenEnabled = !this.autoFullscreenEnabled;
     this.localStorageHelper.save(this.autoFullscreenEnabled);
-    this.localStorageHelper.store();
   }
 
   isDone() {
