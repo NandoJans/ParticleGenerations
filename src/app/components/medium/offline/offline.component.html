@@ -15,6 +15,12 @@
         <p class="holding-generated">{{ generatedHolding.generated.toString() }}</p>
       </div>
     </div>
+    <div *ngIf="isDone()" class="checkbox-container">
+      <label class="checkbox-label">
+        <input type="checkbox" [checked]="autoFullscreenEnabled" (change)="toggleAutoFullscreen()">
+        <span>Automatically enter fullscreen</span>
+      </label>
+    </div>
     <button *ngIf="isDone()" class="button success" (click)="close()">
       Close
     </button>
