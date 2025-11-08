@@ -23,7 +23,7 @@ export class BetterRedGeneratorsMultiplierGalaxyTreeUpgrade extends GalaxyTreeUp
   }
 
   getDescription(): string {
-    return `Make red generator multipliers ${this.buffer.toString(2)}x stronger.`;
+    return `Make red generator buy multipliers ${this.buffer.toString(2)}x stronger.`;
   }
 
   action(): undefined {
