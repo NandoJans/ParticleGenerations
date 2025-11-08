@@ -70,7 +70,6 @@ export class SiriusStarChallenge extends YellowStarChallenge {
   siriusGeneratorMultiplier: Num = new Num(1, 0);
 
   override constantNerfs() {
-    this.challengeGenerators['siriusGenerator'].amount = new Num(1, 0);
     this.challengeGenerators['siriusGenerator'].bought = new Num(1, 0);
 
     this.siriusGeneratorMultiplier = HoldingRecord.redParticles.amount.pow(new Num(2, -4)).mul(this.challengeUpgrades['siriusGeneratorMultiplierUpgrade'].effect ?? new Num(1, 0));

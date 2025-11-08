@@ -121,8 +121,8 @@ export class DataManagerService {
     this.compressionService.load();
 
     // Run milestones
-    this.milestoneRecord.run();
     this.challengeService.applyCurrentChallengeNerfs();
+    this.milestoneRecord.run();
   }
 
   init() {

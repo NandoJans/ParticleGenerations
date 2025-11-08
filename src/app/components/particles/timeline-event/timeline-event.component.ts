@@ -121,8 +121,15 @@ export class TimelineEventComponent implements OnInit {
     return this.milestone?.displayName ?? "";
   }
 
-  getMilestoneDescription(): string {
-    return this.milestone?.getDescription() ?? "";
+  getMilestoneDescription(): string[] {
+    const description = this.milestone?.getDescription();
+    if (description === undefined) {
+      return [];
+    } else if (typeof description === "string") {
+      return [description];
+    } else {
+      return description;
+    }
   }
 
   getMilestoneGoal(): string {

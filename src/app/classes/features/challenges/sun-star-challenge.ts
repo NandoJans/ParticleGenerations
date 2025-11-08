@@ -80,7 +80,6 @@ export class SunStarChallenge extends YellowStarChallenge {
     HoldingRecord.redAccelerators.amount = new Num(1, 0);
     UpgradeRecord.unlockRedAccelerators.bought = new Num(0, 0);
 
-    this.challengeGenerators['sunGenerator'].amount = new Num(1, 0);
     this.challengeGenerators['sunGenerator'].bought = new Num(1, 0);
 
     const resetUpgradePower = this.challengeUpgrades['strongerSunParticleEffect'].buffer
@@ -96,6 +95,7 @@ export class SunStarChallenge extends YellowStarChallenge {
   }
 
   nerfs(): void {
+    this.challengeGenerators['sunGenerator'].amount = new Num(1, 0);
     UpgradeRecord.unlockRedAccelerators.unlocked = false;
     this.applyRequirementNerf(UpgradeRecord.unlockRedAccelerators);
   }

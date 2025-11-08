@@ -10,7 +10,7 @@ import {Require} from "./interfaces/require";
 
 export abstract class Milestone extends GameElement implements Resetable, Storable, Require {
   abstract displayName: string
-  abstract getDescription(): string
+  abstract getDescription(): string|string[]
   abstract type: string
   abstract style: Styles
   abstract goal: Num

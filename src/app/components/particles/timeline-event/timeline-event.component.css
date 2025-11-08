@@ -87,8 +87,14 @@ div.milestone-details p {
   font-weight: bold;
 }
 
-div.milestone-details p.description {
-  margin: 0.5rem 0;
+div.milestone-details div.description {
+  margin: 0.2rem 0;
+  font-size: 0.8rem;
+  font-weight: normal;
+}
+
+div.milestone-details div.description p.description-piece {
+  margin: 0;
   font-size: 0.8rem;
   font-weight: normal;
 }
