@@ -15,4 +15,12 @@
     <app-automator *ngIf="automator.unlocked" [automator]="automator"></app-automator>
   </div>
 </div>
+<h2>Star challenge automators</h2>
+<div class="upgrade-row">
+  @for (automator of yellowStarChallengeAutomators; track automator.name) {
+    @if (automator.unlocked) {
+      <app-automator [automator]="automator"></app-automator>
+    }
+  }
+</div>
 <app-info style="width: 60%" [name]="'yellow-automators-info'" [infoText]="infoText"></app-info>

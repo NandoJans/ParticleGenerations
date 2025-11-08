@@ -67,11 +67,14 @@ export abstract class Automator extends GameElement implements Storable, Resetab
           buyable.buy();
         }
       })
+      this.action();
     } else if (!this.completed) {
       return this.checkTask();
     }
     return false
   }
+
+  action() {}
 
   localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey());
 

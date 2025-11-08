@@ -12,8 +12,9 @@ import {ChallengeUpgrade} from "./challenges/upgrades/challenge-upgrade";
 import {App} from "../../App";
 import {ChallengeHolding} from "./challenges/holdings/challenge-holding";
 import {ChallengeGenerator} from "./challenges/generators/challenge-generator";
+import {StatsService} from "../../services/stats.service";
 
-export abstract class Challenge extends GameElement implements Resetable, Storable {
+export abstract class Challenge extends GameElement implements Resetable, Storable, Require {
   abstract displayName: string
   abstract baseGoal: Num
   abstract goal: Num
@@ -172,7 +173,7 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
       this.localStorageHelper.save(this.completed, "completed");
     }
 
-    this.saveChallengeUpgrades();
+    this.saveChallengeElements();
   }
 
   tryLoad(): void {
@@ -191,17 +192,16 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
       }
     }
 
-    this.init();
-    this.tryLoadChallengeUpgrades();
+    this.tryLoadChallengeElements();
   }
 
-  saveChallengeUpgrades(): void {
+  saveChallengeElements(): void {
     this.getChallengeElements().forEach((value) => {
       value.save()
     })
   }
 
-  tryLoadChallengeUpgrades() {
+  tryLoadChallengeElements() {
     this.getChallengeElements().forEach((value) => {
       value.tryLoad()
     })
@@ -249,8 +249,10 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
     ];
   }
 
-  start(): void {
-    this.init();
+  start(callInit: boolean = true): void {
+    if (callInit) {
+      this.init();
+    }
     this.nerfs()
     this.getChallengeElements().forEach((value: ChallengeGenerator | ChallengeUpgrade | ChallengeHolding) => {
       if (!(value instanceof Holding)) {
@@ -299,11 +301,19 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   }
 
   complete(): void {
-    if (this.completed instanceof Num) {
-      this.completed = this.completed.add(new Num(1, 0));
-    } else {
-      this.completed = true;
+    if (!this.isCompleted()) {
+      StatsService.addNum(this.name, 'totalCompletions', new Num(1, 0));
+
+      if (this.completed instanceof Num) {
+        this.completed = this.completed.add(new Num(1, 0));
+      } else {
+        this.completed = true;
+      }
     }
+  }
+
+  requirementSatisfied(amount: Num): boolean {
+    return amount.greq(this.getCompletions());
   }
 
   getCompletions(): Num {

@@ -38,8 +38,8 @@ export class BetterRedGeneratorsMultiplierGalaxyTreeUpgrade extends GalaxyTreeUp
   style: Styles = Styles.STAR_RED
   displayName: string = "Better red generator multipliers";
 
-  override buffer = new Num(2, 0);
-  override baseBuffer = new Num(2, 0);
+  override buffer = new Num(5, 0);
+  override baseBuffer = new Num(5, 0);
 
   cost: Num = new Num(1, 0);
   baseCost: Num = new Num(1, 0);

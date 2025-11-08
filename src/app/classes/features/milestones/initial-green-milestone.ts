@@ -4,15 +4,13 @@ import {Num} from "../../../num";
 
 export class InitialGreenMilestone extends ChangeResetKeyGreenMilestone {
 
-  override action() {
+  override tick() {
     const currentYellowChallenge = ChallengeRecord.currentChallenges['yellow'];
     if (currentYellowChallenge) {
-      console.log(currentYellowChallenge.getGenerators());
       for (const gen of currentYellowChallenge.getGenerators()) {
         gen.amount = new Num(1, 1);
       }
     }
-    super.action();
   }
 
   override getDescription(): string[] {

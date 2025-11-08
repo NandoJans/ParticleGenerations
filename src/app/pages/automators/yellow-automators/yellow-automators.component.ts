@@ -25,6 +25,12 @@ export class YellowAutomatorsComponent implements OnInit {
     AutomatorRecord.fourthYellowGenerator,
     AutomatorRecord.fifthYellowGenerator,
   ];
+  yellowStarChallengeAutomators: Automator[] = [
+    AutomatorRecord.proximaCentauriStarChallenge,
+    AutomatorRecord.lalandeStarChallenge,
+    AutomatorRecord.sunStarChallenge,
+    AutomatorRecord.siriusStarChallenge,
+  ]
   infoText: string[] = [
     'Yellow Automators manage the advanced automation for the yellow layer.',
     'Prestige Automator automatically performs yellow prestiges when beneficial.',

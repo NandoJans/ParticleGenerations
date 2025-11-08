@@ -1,6 +1,5 @@
 import {Automator} from "../automator";
 import {Num} from "../../../num";
-import {RedGenerator} from "../generators/red-generator";
 import {Styles} from "../../enums/styles";
 import {ResetKey} from "../../enums/reset-key";
 import {Requirement} from "../interfaces/requirement";
