@@ -130,6 +130,14 @@ export class TimelineService {
     .addMilestone(MilestoneRecord.keepYellowPrestigeAutomator)
     .addMilestone(MilestoneRecord.breakGreenBarrier)
     .build()
+    .addTimelineEvent(
+      'green-dark-galaxy',
+      'Dark galaxy',
+      'After a great galaxy comes a dark one',
+      HoldingRecord.greenParticles,
+      new Num(1, 2)
+    )
+    .build()
     .build()
 
   static list: Timeline[] = [
