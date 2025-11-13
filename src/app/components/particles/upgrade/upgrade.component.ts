@@ -97,4 +97,8 @@ export class UpgradeComponent {
   getCostString() {
     return this.upgrade.getCostString();
   }
+
+  isEnabled() {
+    return this.upgrade.isEnabled();
+  }
 }

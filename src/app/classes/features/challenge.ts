@@ -13,6 +13,7 @@ import {App} from "../../App";
 import {ChallengeHolding} from "./challenges/holdings/challenge-holding";
 import {ChallengeGenerator} from "./challenges/generators/challenge-generator";
 import {StatsService} from "../../services/stats.service";
+import {ChallengeRecord} from "../records/challenges/challenge-record";
 
 export abstract class Challenge extends GameElement implements Resetable, Storable, Require {
   abstract displayName: string
@@ -211,8 +212,9 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
     return this.currency.amount.greq(this.goal);
   }
 
-  appliedNerfs: {[key: string]: {[key: string]: { element: GameElement } }} = {
+  appliedNerfs: {[key: string]: {[key: string]: { element: GameElement, initial?: any } }} = {
     'requirements': {},
+    'disabled': {}
   }
 
   protected applyRequirementNerf(gameElement: GameElement, requirement: {require: Require, amount: Num}|[] = []): void {
@@ -229,8 +231,31 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
     }
   }
 
+  protected applyDisableNerf(gameElement: GameElement | GameElement[], enabled: boolean = false): void {
+    if (Array.isArray(gameElement)) {
+      for (const element of gameElement) {
+        this.applyDisableNerfSingle(element, enabled);
+      }
+    } else {
+      this.applyDisableNerfSingle(gameElement, enabled);
+    }
+  }
+
+  private applyDisableNerfSingle(gameElement: GameElement, enabled: boolean = false): void {
+    this.appliedNerfs['disabled'][gameElement.name] = {
+      element: gameElement,
+      initial: gameElement.enabled,
+    };
+    if (enabled) {
+      gameElement.enable();
+    } else {
+      gameElement.disable();
+    }
+  }
+
   revert() {
     this.revertRequirementNerfs();
+    this.revertDisableNerfs();
   }
 
   revertRequirementNerfs(): void {
@@ -241,6 +266,13 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
     this.appliedNerfs['requirements'] = {};
   }
 
+  revertDisableNerfs(): void {
+    Object.values(this.appliedNerfs['disabled']).forEach((value) => {
+      value.element.enabled = value.initial;
+    })
+    this.appliedNerfs['disabled'] = {};
+  }
+
   getChallengeElements(): (ChallengeGenerator | ChallengeUpgrade | ChallengeHolding)[] {
     return [
       ...Object.values(this.challengeGenerators),
@@ -249,10 +281,9 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
     ];
   }
 
-  start(callInit: boolean = true): void {
-    if (callInit) {
-      this.init();
-    }
+  start(): void {
+    this.init();
+    this.tryLoadChallengeElements();
     this.nerfs()
     this.getChallengeElements().forEach((value: ChallengeGenerator | ChallengeUpgrade | ChallengeHolding) => {
       if (!(value instanceof Holding)) {

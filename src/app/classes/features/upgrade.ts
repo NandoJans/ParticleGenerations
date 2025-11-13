@@ -33,7 +33,7 @@ export abstract class Upgrade extends Buyable implements Storable, Require, Rese
 
   override run(): Num | undefined {
     let effect = undefined;
-    if (this.isUnlocked()) {
+    if (this.isUnlocked() && this.isEnabled()) {
       effect = this.action();
       if (effect) {
         this.effect = effect;

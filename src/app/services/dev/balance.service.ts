@@ -54,8 +54,13 @@ export class BalanceService {
     maxTime: 1000000,
     higherPrestige: new Num(1.01, 0),
     initial: () => {
-      HoldingRecord.greenPrestiges.amount = new Num(1, 0);
-      HoldingRecord.greenParticles.amount = new Num(1, 0);
+      HoldingRecord.yellowParticles.amount = new Num(5, 28);
+      HoldingRecord.yellowPrestiges.amount = new Num(1, 4);
+      HoldingRecord.yellowKeys.amount = new Num(1, 6);
+      ChallengeRecord.proximaCentauriStar.completed = new Num(2, 0);
+      ChallengeRecord.lalandeStar.completed = new Num(2, 0);
+      ChallengeRecord.sunStar.completed = new Num(2, 0);
+      ChallengeRecord.siriusStar.completed = new Num(1, 0);
     }
   };
 
@@ -146,7 +151,7 @@ export class BalanceService {
 
     // Ensure automators are disabled during balance run
     AutomatorRecord.list.forEach(automator => {
-      automator.disable();
+      automator.deactivate();
     })
 
     // Auto start/complete challenges per prestige layer
@@ -357,7 +362,7 @@ export class BalanceService {
 
     // Persist whatever results we have at the end of a run
     AutomatorRecord.list.forEach(automator => {
-      automator.enable();
+      automator.activate();
     })
     this.saveResults();
   }
@@ -468,7 +473,7 @@ export class BalanceService {
       this.prestigeGainHistory.clear();
 
       AutomatorRecord.list.forEach(automator => {
-        automator.disable();
+        automator.deactivate();
       })
 
       return true;

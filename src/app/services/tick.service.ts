@@ -57,6 +57,8 @@ export class TickService {
   gameTick(speed: Num = new Num(1, -1)) {
     if (App.isHalting()) return;
 
+    // HoldingRecord.yellowFusion.amount = new Num(1, 1000)
+
     if (!App.offlineCalculation) App.gameSpeed = speed;
 
     this.checkRequirements();

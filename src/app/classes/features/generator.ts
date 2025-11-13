@@ -47,7 +47,7 @@ export abstract class Generator extends Buyable implements Generatable, Storable
       .pow(this.bought)
       .mul(this.mulMod)
       .mul(this.globalMultiplier.getNum()) as Num
-    if (this.isUnlocked()) {
+    if (this.isUnlocked() && this.isEnabled()) {
       this.generates.generate(this.getGenerateAmount().mul(speed) as Num)
     }
     this.baseMulMod = new Num(1, 0)

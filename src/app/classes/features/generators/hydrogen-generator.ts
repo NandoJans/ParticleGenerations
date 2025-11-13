@@ -14,7 +14,7 @@ export class HydrogenGenerator extends Generator {
   name: string = "hydrogen-generator";
   displayName: string = 'Hydrogen Generator';
 
-  baseMultiplier: Num = new Num(1, 0);
+  baseMultiplier: Num = new Num(5, 0);
   type: string = "hydrogen-generator";
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
   softResetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
@@ -37,10 +37,26 @@ export class HydrogenGenerator extends Generator {
 
   protected override getGenerateAmount(): Num {
     let amount: Num = super.getGenerateAmount();
-    if (HoldingRecord.hydrogen.amount.greq(this.barrier)) {
-      const scale = HoldingRecord.hydrogen.amount.div(this.barrier);
+
+    const hydrogenAmount = HoldingRecord.hydrogen.amount
+
+    if (hydrogenAmount.greq(this.barrier)) {
+
+      const scale = hydrogenAmount.div(this.barrier);
       amount = amount.div(new Num(2, 0).pow(scale));
+
+    } else if (hydrogenAmount.add(amount).greq(this.barrier)) {
+      //    diff = 5.000 - hydrogen
+      const diff = this.barrier.sub(hydrogenAmount);
+      //    amount - diff
+      amount = amount.sub(diff);
+      //    Scaling berekenen op amount
+      const scale = amount.div(this.barrier);
+      amount = amount.div(new Num(2, 0).pow(scale));
+      //    amount + diff
+      amount = amount.add(diff);
     }
+
     return amount;
   }
 

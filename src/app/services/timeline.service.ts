@@ -128,6 +128,7 @@ export class TimelineService {
     )
     .addMilestone(MilestoneRecord.initialGreenMilestone)
     .addMilestone(MilestoneRecord.keepYellowPrestigeAutomator)
+    .addMilestone(MilestoneRecord.breakGreenBarrier)
     .build()
     .build()
 

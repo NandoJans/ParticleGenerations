@@ -13,7 +13,7 @@ export class YellowStarChallengeUnlockUpgrade extends UnlockUpgrade {
     cost: Num,
     currency: Holding,
     style: Styles,
-    public unlockable: GameElement,
+    public unlockable: GameElement|GameElement[],
     difficultyIncrease: Num | Num[],
     difficulty = 0
   ) {
@@ -37,7 +37,15 @@ export class YellowStarChallengeUnlockUpgrade extends UnlockUpgrade {
 
   action(): undefined {
     if (this.hasBought()) {
-      this.unlockable.unlocked = true;
+      if (this.unlockable instanceof GameElement) {
+        this.unlockable.unlocked = true;
+        this.unlockable.enable();
+      } else {
+        this.unlockable.forEach(unlockable => {
+          unlockable.unlocked = true;
+          unlockable.enable();
+        })
+      }
     }
     return;
   }

@@ -19,4 +19,9 @@
   <div class="challenge-disabled" style="display: none;">
     <h2>Challenge Disabled</h2>
   </div>
+  @if (!isEnabled()) {
+    <div class="disabled-overlay">
+
+    </div>
+  }
 </button>

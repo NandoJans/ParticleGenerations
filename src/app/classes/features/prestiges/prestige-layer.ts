@@ -80,6 +80,7 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     this.reached = false;
     this.highestGenerationPerTick = new Num(0, 0);
     this.bestPrestige = new Num(0, 0);
+    this.limitPhaseBelow = true;
     this.requirement.forEach(requirement => {
       requirement.register();
     })

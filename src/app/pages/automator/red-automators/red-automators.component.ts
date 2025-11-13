@@ -55,9 +55,9 @@ export class RedAutomatorsComponent implements OnInit {
 
   toggleAll() {
     if (this.oneIsActive()) {
-      AutomatorRecord.redAutomators.forEach(automator => automator.disable())
+      AutomatorRecord.redAutomators.forEach(automator => automator.deactivate())
     } else {
-      AutomatorRecord.redAutomators.forEach(automator => automator.enable())
+      AutomatorRecord.redAutomators.forEach(automator => automator.activate())
     }
   }
 

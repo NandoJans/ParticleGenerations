@@ -18,8 +18,8 @@ export class SunStarChallenge extends YellowStarChallenge {
   name: string = 'sun-star-challenge';
   displayName: string = 'Sun';
 
-  baseGoal: Num = new Num(1, 22000);
-  goal: Num = new Num(1, 22000);
+  baseGoal: Num = new Num(1, 17000);
+  goal: Num = new Num(1, 17000);
   override goalIncrease: Num[] = [
     new Num(1, 15200),
     new Num(1, 46000),
@@ -161,8 +161,8 @@ export class SunStarChallenge extends YellowStarChallenge {
         this.challengeGenerators['sunGenerator'].globalMultiplier,
         [
           this.getDifficultyIncrease(),
-          this.getDifficultyIncrease(new Num(1.1, 0)),
-          this.getDifficultyIncrease(new Num(1.1, 0)),
+          this.getDifficultyIncrease(new Num(.9, 0)),
+          this.getDifficultyIncrease(new Num(.9, 0)),
         ],
         this.getCompletions().toNumber()
       ),
@@ -183,8 +183,8 @@ export class SunStarChallenge extends YellowStarChallenge {
         this.challengeGenerators['sunGenerator'].globalMultiplier,
         [
           this.getDifficultyIncrease(),
-          this.getDifficultyIncrease(new Num(1.1, 0)),
-          this.getDifficultyIncrease(new Num(2.1, 0)),
+          this.getDifficultyIncrease(new Num(.9, 0)),
+          this.getDifficultyIncrease(new Num(.9, 0)),
         ],
         this.getCompletions().toNumber()
       ),
@@ -205,8 +205,8 @@ export class SunStarChallenge extends YellowStarChallenge {
         this.challengeGenerators['sunGenerator'].globalMultiplier,
         [
           this.getDifficultyIncrease(),
-          this.getDifficultyIncrease(new Num(1.1, 0)),
-          this.getDifficultyIncrease(new Num(2.1, 0)),
+          this.getDifficultyIncrease(new Num(.9, 0)),
+          this.getDifficultyIncrease(new Num(.9, 0)),
         ],
         this.getCompletions().toNumber()
       ),
@@ -226,8 +226,8 @@ export class SunStarChallenge extends YellowStarChallenge {
         'sunUpgrade',
         [
           this.getDifficultyIncrease(),
-          this.getDifficultyIncrease(new Num(1.2, 0)),
-          this.getDifficultyIncrease(new Num(2, 0)),
+          this.getDifficultyIncrease(new Num(1, 0)),
+          this.getDifficultyIncrease(new Num(1, 0)),
         ],
         this.getCompletions().toNumber()
       )

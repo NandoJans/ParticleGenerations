@@ -10,8 +10,8 @@ export class RedParticleSacrificeUpgrade extends SacrificeUpgrade {
   }
 
   displayName: string = "Red particle sacrifice";
-  baseCost: Num = new Num(1, 500_000);
-  cost: Num = new Num(1, 500_000);
+  baseCost: Num = new Num(1, 0);
+  cost: Num = new Num(1, 0);
   increase: Num = new Num(1, 500_000);
   startIncrease: Num = new Num(1, 500_000);
   currency: Holding = HoldingRecord.redParticles;

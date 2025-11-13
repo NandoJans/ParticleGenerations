@@ -73,7 +73,7 @@ export class ChallengeService {
 
   applyCurrentChallengeNerfs() {
     Object.values(ChallengeRecord.currentChallenges).forEach((challenge) => {
-      challenge.start(false);
+      challenge.start();
     });
   }
 

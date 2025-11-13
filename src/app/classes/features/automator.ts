@@ -102,7 +102,7 @@ export abstract class Automator extends GameElement implements Storable, Resetab
     }
   }
 
-  enable(): void {
+  activate(): void {
     if (this.completed) {
       this.active = true;
       this.save();
@@ -112,7 +112,7 @@ export abstract class Automator extends GameElement implements Storable, Resetab
     }
   }
 
-  disable(): void {
+  deactivate(): void {
     this.active = false;
     this.save();
     this.buyables().forEach(buyable => {

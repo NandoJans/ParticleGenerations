@@ -89,11 +89,5 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
   override reset() {
     super.reset();
     this.bought = this.startBought.copy();
-    // Force unlock check for red generators
-    GeneratorRecord.redGenerators.forEach((generator) => {
-      if (generator.requirementsMet()) {
-        generator.unlocked = true;
-      }
-    });
   }
 }

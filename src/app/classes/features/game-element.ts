@@ -7,7 +7,7 @@ export abstract class GameElement {
   startUnlocked: boolean = false
   abstract requirement: Requirement[]
   hidden: boolean = false
-  disabled: boolean = false
+  enabled: boolean = true
   calculationOrder: number|undefined = undefined
   abstract name: string
   saveName: string
@@ -40,5 +40,17 @@ export abstract class GameElement {
 
   run(speed: Num): void {
 
+  }
+
+  isEnabled(): boolean {
+    return this.enabled;
+  }
+
+  enable(): void {
+    this.enabled = true;
+  }
+
+  disable(): void {
+    this.enabled = false;
   }
 }

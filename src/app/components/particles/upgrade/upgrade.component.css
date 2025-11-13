@@ -1,4 +1,5 @@
 button {
+  position: relative;
   padding: 1rem;
   border-radius: 0.5rem;
   height: 12rem;
@@ -214,6 +215,10 @@ button.enhance.buyable.enhanced-yellow {
   background-size: 100% 500%;
   --max-background-y: 500%;
   animation: background-position-y-animation 60s infinite linear;
+}
+
+div.disabled-overlay {
+  border-radius: 0.5rem;
 }
 
 @keyframes color-gradient {
