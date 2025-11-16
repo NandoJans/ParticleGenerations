@@ -10,7 +10,7 @@ export abstract class RedGeneratorUpgrade extends GeneratorUpgrade {
   bought: Num = new Num(0, 0);
   currency: Holding = HoldingRecord.redParticles;
   nav: string = "red";
-  style: Styles = Styles.SUB_RED;
+  style: Styles = Styles.RED_GENERATOR_UPGRADE;
   subNav: string = "redParticles";
   type: string = "red-particles";
   override effect: Num = new Num(1, 0);

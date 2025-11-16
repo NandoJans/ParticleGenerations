@@ -221,6 +221,13 @@ div.disabled-overlay {
   border-radius: 0.5rem;
 }
 
+button.generator-upgrade {
+  border-radius: 0;
+  border-top: none;
+  padding: 0.5rem;
+  width: 100%;
+}
+
 @keyframes color-gradient {
   0% {
     color: var(--color-gradient-1);

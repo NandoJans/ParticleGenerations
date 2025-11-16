@@ -113,15 +113,11 @@ button.button.success {
   justify-content: center;
   flex-wrap: wrap;
   align-items: center;
-  padding: 10px;
+  gap: 10px;
 }
 
 .light {
   color: var(--text-color-light);
-}
-
-.generator-row .generator {
-  margin: 5px;
 }
 
 .upgrade-row .upgrade {
@@ -168,6 +164,23 @@ span.effect {
   --color-switch-1: var(--proxima-centauri-color);
   --color-switch-2: var(--sun-color);
   animation: color-switch 10s infinite;
+}
+
+.generator-card {
+  width: 100%;
+}
+
+.generator-card .upgrades {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.generator-card .upgrades > * {
+  flex: 1;
+  min-width: 0;
 }
 
 @media (max-width: 768px) {
