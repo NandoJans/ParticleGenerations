@@ -8,6 +8,8 @@ import {Resetable} from "../classes/features/interfaces/resetable";
 import {UpgradeRecord} from "../classes/records/upgrades/upgrade-record";
 import {MultiplierRecord} from "../classes/records/multipliers/multiplier-record";
 import {Require} from "../classes/features/interfaces/require";
+import {StatsService} from "./stats.service";
+import {AutomatorRecord} from "../classes/records/automators/automator-record";
 
 @Injectable({
   providedIn: 'root'
@@ -135,6 +137,11 @@ export class CompressionService implements Resetable {
       if (this.progress >= this.goal && this.goal > 0) {
         this.complete();
       }
+    } else if (
+      AutomatorRecord.starKeyCompression.isActive() &&
+      this.canCompressKeys()
+    ) {
+      this.startCompressing();
     }
     this.correctStarKeyAmount();
   }
@@ -145,6 +152,12 @@ export class CompressionService implements Resetable {
   }
 
   complete() {
+    // Update stats and record completion time
+    const compressionTime = this.started ? (Date.now() - this.started) : 0;
+    if (StatsService.get('compression', 'fastestTime') !== undefined && compressionTime < StatsService.get('compression', 'fastestTime')) {
+      StatsService.set('compression', 'fastestTime', compressionTime);
+    }
+
     this.compressing = false;
     this.percentage = 0;
     this.started = undefined;

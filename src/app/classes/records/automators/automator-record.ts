@@ -23,6 +23,7 @@ import {YellowGeneratorAutomator} from "../../features/automators/yellow-generat
 import {FusionBoosterAccelerationAutomator} from "../../features/automators/fusion-booster-acceleration-automator";
 import {StarChallengeAutomator} from "../../features/automators/star-challenge-automator";
 import {ChallengeRecord} from "../challenges/challenge-record";
+import {StarKeyCompressionAutomator} from "../../features/automators/star-key-compression-automator";
 
 @Injectable({
   providedIn: 'root'
@@ -63,6 +64,8 @@ export class AutomatorRecord extends Record {
   static siriusStarChallenge: StarChallengeAutomator = new StarChallengeAutomator('siriusStarChallenge', ChallengeRecord.siriusStar);
 
   static fusionBoosterAcceleration: FusionBoosterAccelerationAutomator = new FusionBoosterAccelerationAutomator('fusionBoosterAcceleration');
+
+  static starKeyCompression: StarKeyCompressionAutomator = new StarKeyCompressionAutomator('starKeyCompression');
 
   static redAutomators: Automator[] = [
     AutomatorRecord.firstRedGenerator,
@@ -112,6 +115,7 @@ export class AutomatorRecord extends Record {
     AutomatorRecord.siriusStarChallenge,
 
     AutomatorRecord.fusionBoosterAcceleration,
+    AutomatorRecord.starKeyCompression,
   ]
 
   getList(): Automator[] {

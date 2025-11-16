@@ -19,8 +19,8 @@ export class StarKeyHolding extends Holding {
     .withEffectPrefix('They apply')
     .withEffectSuffix(' to red generator multipliers')
     .build()
-  buffer: Num = new Num(0.01, 0);
-  baseBuffer: Num = new Num(0.01, 0);
+  buffer: Num = new Num(0.03, 0);
+  baseBuffer: Num = new Num(0.03, 0);
   starKeyUpgradesBought: Num = new Num(0, 0);
   hasBoughtTotal: boolean = false;
   totalUpgrades: Num = new Num(8, 0);

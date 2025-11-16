@@ -14,6 +14,7 @@ import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
 import {faStar} from "@fortawesome/free-solid-svg-icons";
 import {EnhancementService} from "../../../services/enhancement.service";
 import {GalaxyTreeService} from "../../../services/galaxy-tree.service";
+import {App} from "../../../App";
 
 type Line = { x1:number; y1:number; x2:number; y2:number };
 
@@ -174,5 +175,9 @@ export class GalaxyTreeStarComponent implements OnInit, AfterViewInit {
     } else {
       return false;
     }
+  }
+
+  isDev() {
+    return App.isDev();
   }
 }

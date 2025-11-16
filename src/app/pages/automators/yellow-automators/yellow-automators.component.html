@@ -23,4 +23,20 @@
     }
   }
 </div>
+<h2>Yellow fusion automators</h2>
+<div class="upgrade-row">
+  @for (automator of yellowFusionAutomators; track automator.name) {
+    @if (automator.unlocked) {
+      <app-automator [automator]="automator"></app-automator>
+    }
+  }
+</div>
+<h2>Star key automators</h2>
+<div class="upgrade-row">
+  @for (automator of yellowStarKeyAutomators; track automator.name) {
+    @if (automator.unlocked) {
+      <app-automator [automator]="automator"></app-automator>
+    }
+  }
+</div>
 <app-info style="width: 60%" [name]="'yellow-automators-info'" [infoText]="infoText"></app-info>

@@ -38,6 +38,6 @@ export class BetterYellowGeneratorsGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   override buffer = new Num(2.5, 0);
   override baseBuffer = new Num(2.5, 0);
 
-  cost: Num = new Num(6, 0);
-  baseCost: Num = new Num(6, 0);
+  cost: Num = new Num(3, 0);
+  baseCost: Num = new Num(3, 0);
 }

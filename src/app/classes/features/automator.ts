@@ -138,4 +138,8 @@ export abstract class Automator extends GameElement implements Storable, Resetab
     }
     return true
   }
+
+  isActive(): boolean {
+    return this.completed && this.active;
+  }
 }
