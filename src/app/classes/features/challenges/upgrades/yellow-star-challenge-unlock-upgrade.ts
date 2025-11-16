@@ -38,11 +38,11 @@ export class YellowStarChallengeUnlockUpgrade extends UnlockUpgrade {
   action(): undefined {
     if (this.hasBought()) {
       if (this.unlockable instanceof GameElement) {
-        this.unlockable.unlocked = true;
+        this.unlockable.unlock();
         this.unlockable.enable();
       } else {
         this.unlockable.forEach(unlockable => {
-          unlockable.unlocked = true;
+          unlockable.unlock();
           unlockable.enable();
         })
       }

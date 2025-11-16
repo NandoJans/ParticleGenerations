@@ -19,9 +19,9 @@
   <div class="challenge-disabled" style="display: none;">
     <h2>Challenge Disabled</h2>
   </div>
-  @if (!isEnabled()) {
+  @if (!isEnabled() || !isUnlocked()) {
     <div class="disabled-overlay">
-
+      <fa-icon [icon]="faLock"></fa-icon>
     </div>
   }
 </button>

@@ -15,7 +15,7 @@
   <p *ngIf="!getIsMaxed()" class="cost">{{ getCostString() }}</p>
   @if (!isEnabled()) {
     <div class="disabled-overlay">
-
+      <fa-icon [icon]="faLock"></fa-icon>
     </div>
   }
 </button>

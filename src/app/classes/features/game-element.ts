@@ -3,6 +3,7 @@ import {GameElementHelper} from "../helpers/game-element-helper";
 import {Num} from "../../num";
 
 export abstract class GameElement {
+  firstUnlock: boolean = false
   unlocked: boolean = false
   startUnlocked: boolean = false
   abstract requirement: Requirement[]
@@ -32,6 +33,11 @@ export abstract class GameElement {
 
   unlock(): void|{title: string, message: string} {
     this.unlocked = true;
+    this.firstUnlock = true;
+  }
+
+  lock(): void {
+    this.unlocked = false;
   }
 
   protected getGameElementHelper(): GameElementHelper {

@@ -238,11 +238,11 @@ export class SunStarChallenge extends YellowStarChallenge {
         this.challengeHoldings['sunParticle'].reset();
         this.challengeGenerators['sunGenerator'].globalMultiplier.reset();
         this.challengeUpgrades['sunGeneratorMultiplierUpgrade1'].reset();
-        this.challengeUpgrades['sunGeneratorMultiplierUpgrade1'].unlocked = true
+        this.challengeUpgrades['sunGeneratorMultiplierUpgrade1'].unlock()
         this.challengeUpgrades['sunGeneratorMultiplierUpgrade2'].reset()
-        this.challengeUpgrades['sunGeneratorMultiplierUpgrade2'].unlocked = true
+        this.challengeUpgrades['sunGeneratorMultiplierUpgrade2'].unlock()
         this.challengeUpgrades['sunGeneratorMultiplierUpgrade3'].reset();
-        this.challengeUpgrades['sunGeneratorMultiplierUpgrade3'].unlocked = true
+        this.challengeUpgrades['sunGeneratorMultiplierUpgrade3'].unlock()
         return undefined;
       });
     }

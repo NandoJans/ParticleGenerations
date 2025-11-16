@@ -86,6 +86,7 @@ export abstract class Upgrade extends Buyable implements Storable, Require, Rese
     this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey())
     this.localStorageHelper.saveNum(this.amount, 'amount')
     this.localStorageHelper.saveNum(this.bought, 'bought')
+    this.localStorageHelper.save(this.firstUnlock, "firstUnlock");
     this.localStorageHelper.save(this.unlocked, 'unlocked')
     this.localStorageHelper.save(this.auto, 'auto')
     this.localStorageHelper.save(
@@ -98,6 +99,7 @@ export abstract class Upgrade extends Buyable implements Storable, Require, Rese
     this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey())
     this.amount = this.localStorageHelper.loadNum(this.amount, 'amount')
     this.bought = this.localStorageHelper.loadNum(this.bought, 'bought')
+    this.firstUnlock = this.localStorageHelper.load(this.firstUnlock, 'firstUnlock')
     this.unlocked = this.localStorageHelper.load(this.unlocked, 'unlocked')
     this.auto = this.localStorageHelper.load(this.auto, 'auto')
 

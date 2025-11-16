@@ -3,6 +3,7 @@ import {Num} from "../../../num";
 import {Generator} from "../../../classes/features/generator";
 import {GeneratorRecord} from "../../../classes/records/generators/generator-record";
 import {EnhancementService} from "../../../services/enhancement.service";
+import {faLock} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
     selector: 'app-generator',
@@ -85,4 +86,10 @@ export class GeneratorComponent {
   isEnabled() {
     return this.generator.isEnabled();
   }
+
+  isUnlocked() {
+    return this.generator.isUnlocked();
+  }
+
+  protected readonly faLock = faLock;
 }

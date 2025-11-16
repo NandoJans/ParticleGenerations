@@ -29,7 +29,7 @@ export class IncreaseHydrogenHoldingUpgrade extends Upgrade {
       if (this.hasBought()) {
         GeneratorRecord.hydrogenGenerator.amount = new Num(1, 0);
         GeneratorRecord.hydrogenGenerator.bought = new Num(1, 0);
-        GeneratorRecord.hydrogenGenerator.unlocked = true;
+        GeneratorRecord.hydrogenGenerator.unlock();
       }
       return effect;
     }

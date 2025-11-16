@@ -18,6 +18,7 @@ export class Navigation extends GameElement {
     this.name = name;
     this.displayIcon = displayIcon;
     this.location = location;
+    this.firstUnlock = unlocked;
     this.unlocked = unlocked;
     this.requirement = requirement.map((req) => {
       return new Requirement(req.requirement, req.amount, this, unlocked);
@@ -27,17 +28,20 @@ export class Navigation extends GameElement {
   }
 
   save() {
+    this.localStorageHelper.save(this.firstUnlock, "firstUnlock");
     this.localStorageHelper.save(this.unlocked, 'unlocked');
     this.localStorageHelper.save(this.wasOn, 'wasOn');
   }
 
   tryLoad() {
     this.wasOn = this.localStorageHelper.load(this.wasOn, 'wasOn');
+    this.firstUnlock = this.localStorageHelper.load(this.firstUnlock, 'firstUnlock');
     this.unlocked = this.localStorageHelper.load(this.unlocked, 'unlocked');
   }
 
   override unlock(): {title: string, message: string} {
     this.unlocked = true;
+    this.firstUnlock = true;
     return {
       title: 'Navigation Unlocked',
       message: `You have unlocked the ${this.name} navigation!`

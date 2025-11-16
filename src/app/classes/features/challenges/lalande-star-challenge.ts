@@ -68,6 +68,7 @@ export class LalandeStarChallenge extends YellowStarChallenge {
     GeneratorRecord.redGenerators.forEach((generator: RedGenerator) => {
       generator.getUpgrades().forEach((upgrade: Upgrade) => {
         upgrade.unlocked = false;
+        upgrade.firstUnlock = false;
         this.applyRequirementNerf(upgrade)
       })
     })

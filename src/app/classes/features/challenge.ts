@@ -168,6 +168,7 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   save(): void {
     this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey())
 
+    this.localStorageHelper.save(this.firstUnlock, "firstUnlock");
     this.localStorageHelper.save(this.unlocked, "unlocked");
     if (this.completed instanceof Num) {
       this.localStorageHelper.saveNum(this.completed, "completed");
@@ -180,6 +181,7 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
 
   tryLoad(): void {
     this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey())
+    this.firstUnlock = this.localStorageHelper.load(this.firstUnlock, "firstUnlock");
     this.unlocked = this.localStorageHelper.load(this.unlocked, "unlocked");
     if (this.completed instanceof Num) {
 
@@ -288,7 +290,7 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
     this.nerfs()
     this.getChallengeElements().forEach((value: ChallengeGenerator | ChallengeUpgrade | ChallengeHolding) => {
       if (!(value instanceof Holding)) {
-        value.unlocked = true;
+        value.unlock();
       }
     })
   }

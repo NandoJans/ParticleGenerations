@@ -23,20 +23,24 @@ export class SubNavigation extends GameElement {
     this.requirement = requirement.map((req) => {
       return new Requirement(req.requirement, req.amount, this, unlocked);
     });
+    this.firstUnlock = unlocked;
     this.unlocked = unlocked;
     this.localStorageHelper = new LocalStorageHelper('navigations', name);
   }
 
   save() {
+    this.localStorageHelper.save(this.firstUnlock, "firstUnlock");
     this.localStorageHelper.save(this.unlocked, 'unlocked');
   }
 
   tryLoad() {
+    this.firstUnlock = this.localStorageHelper.load(this.firstUnlock, 'firstUnlock')
     this.unlocked = this.localStorageHelper.load(this.unlocked, 'unlocked');
   }
 
   override unlock(): {title: string, message: string} {
     this.unlocked = true;
+    this.firstUnlock = true;
     return {
       title: 'Sub Navigation Unlocked',
       message: `You have unlocked the ${this.name} navigation!`

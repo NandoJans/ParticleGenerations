@@ -68,7 +68,7 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
   }
 
   override unlock(): void | { title: string; message: string } {
-    this.unlocked = true;
+    this.unlock();
     this.reached = true;
   }
 
@@ -115,6 +115,7 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
   tryLoad(): void {
     const localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey());
     this.reached = localStorageHelper.load(this.reached, 'reached');
+    this.firstUnlock = localStorageHelper.load(this.firstUnlock, 'firstUnlock');
     this.unlocked = localStorageHelper.load(this.unlocked, 'unlocked');
     this.prestigedFirstTime = localStorageHelper.load(this.prestigedFirstTime, 'prestigedFirstTime');
     this.prestigeStarted = new Date(localStorageHelper.load(this.prestigeStarted.toISOString(), 'prestigeStarted'));

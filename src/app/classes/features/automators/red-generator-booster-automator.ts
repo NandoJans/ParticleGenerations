@@ -12,6 +12,7 @@ export class RedGeneratorBoosterAutomator extends Automator {
   goalString: string = 'Have a total multiplier of 10x';
   name: string = 'red-generator-booster-automator';
   style: Styles = Styles.RED_AUTOMATOR;
+  override firstUnlock: boolean = true;
   override unlocked: boolean = true;
   override startUnlocked: boolean = true;
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED, this);

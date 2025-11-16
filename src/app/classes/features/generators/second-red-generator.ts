@@ -21,6 +21,10 @@ export class SecondRedGenerator extends RedGenerator {
   stringRank: string = 'Second';
   rank: number = 2;
 
+  override run(speed: Num): any {
+    return super.run(speed);
+  }
+
   override init() {
     this.generates = GeneratorRecord.firstRedGenerator;
     this.requirement = [
