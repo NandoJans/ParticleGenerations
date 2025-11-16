@@ -3,6 +3,7 @@ import {Buyable} from "../buyable";
 import {PrestigeLayer} from "../prestiges/prestige-layer";
 import {Num} from "../../../num";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {ChallengeRecord} from "../../records/challenges/challenge-record";
 
 export abstract class PrestigeAutomator extends Automator {
   modes: {[key: string]: {setting: Num, action: Function, prestigeStatus: Function}} = {
@@ -76,7 +77,11 @@ export abstract class PrestigeAutomator extends Automator {
 
   override run(): boolean {
     if (this.completed && this.active) {
-      this.runMode();
+      if (ChallengeRecord.currentChallenges[this.prestigeLayer.name] && this.prestigeLayer.hasReached()) {
+        this.prestigeLayer.prestige();
+      } else {
+        this.runMode();
+      }
     } else if (!this.completed) {
       return this.checkTask();
     }
