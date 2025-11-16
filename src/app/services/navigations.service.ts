@@ -53,7 +53,7 @@ export class NavigationsService {
       {requirement: HoldingRecord.yellowParticles, amount: new Num(1, 10)},
     ], false),
     yellowStarKeys: new SubNavigation('yellowStarKeys', faKey, 'starKeys', this.navigations['yellow'], [
-      {requirement: HoldingRecord.yellowParticles, amount: new Num(1, 400)},
+      {requirement: HoldingRecord.yellowParticles, amount: new Num(1, 350)},
     ], false),
 
     // Green

@@ -39,8 +39,8 @@ export class PowerAccelerationGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   style: Styles = Styles.STAR_YELLOW;
   displayName: string = "Power acceleration";
 
-  override buffer = new Num(2, -1);
-  override baseBuffer = new Num(2, -1);
+  override buffer = new Num(2, -3);
+  override baseBuffer = new Num(2, -3);
 
   cost: Num = new Num(1.2, 1);
   baseCost: Num = new Num(1.2, 1);
