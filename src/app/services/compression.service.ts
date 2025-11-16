@@ -111,7 +111,6 @@ export class CompressionService implements Resetable {
   }
 
   tick(speed: Num) {
-    this.compressions = new Num(9, 0);
     if (this.compressing && this.started) {
       const now = Date.now();
       // Initialize lastUpdate if missing (e.g., after load)
