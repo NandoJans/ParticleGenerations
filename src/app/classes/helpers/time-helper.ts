@@ -1,23 +1,27 @@
 export class TimeHelper {
-  static formatDuration(seconds: number, format: string): string {
-    const total = Math.floor(seconds);
+  static formatDuration(milliseconds: number, format: string): string {
+    const total = Math.floor(milliseconds / 1000);
 
     const days = Math.floor(total / 86400);
     const hours = Math.floor((total % 86400) / 3600);
     const minutes = Math.floor((total % 3600) / 60);
     const secs = total % 60;
 
-    const dd = days.toString().padStart(2, "0");
-    const hh = hours.toString().padStart(2, "0");
-    const mm = minutes.toString().padStart(2, "0");
-    const ss = secs.toString().padStart(2, "0");
-    const SSS = (seconds % 1).toFixed(3).slice(1);
+    let dd: string;
+    if (days === 1) dd = "1d";
+    else if (days > 1) dd = `${days}d`;
+    else dd = "";
+
+    let hh = hours.toString().padStart(2, "0");
+    let mm = minutes.toString().padStart(2, "0");
+    let ss = secs.toString().padStart(2, "0");
+    let ms = Math.floor((milliseconds / 1000 - total) * 1000).toString().padStart(4, "0");
 
     return format
       .replace("dd", dd)
       .replace("hh", hh)
       .replace("mm", mm)
       .replace("ss", ss)
-      .replace("SSS", SSS);
+      .replace("ms", ms);
   }
 }

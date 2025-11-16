@@ -21,32 +21,26 @@ export class StarKeyCompressionAutomator extends Automator {
   goal: Num = new Num(1, 3);
   goalString: string = "Compress a star key in less then 1 second";
   task(): Num {
-    const fastestTime = StatsService.get('compression', 'fastestTime') as Num | null;
-    if (!fastestTime || fastestTime.lte(Num.ZERO)) {
+    const fastestTime = StatsService.get('compression', 'fastestTime');
+    if (!fastestTime || fastestTime < 0) {
       return new Num(0, 0);
     }
 
-    const t = fastestTime.toNumber(); // or whatever converts Num -> number
-
-    if (t <= 0) {
+    if (fastestTime <= 0) {
       return new Num(0, 0);
     }
 
-    // For times <= 1s we can keep the simple inverse (and optionally cap it)
-    if (t <= 1) {
-      // 1 / t, but don’t let it explode too much if someone has 0.001s
-      const multiplier = Math.min(5, 1 / t); // max 5× over-completion, tweak as you like
-      return this.goal.mul(new Num(multiplier, 0));
-    }
-
-    // Logarithmic decay for slower-than-goal times
+    const t = Math.max(1, fastestTime / 1000);
     const factor = 1 / (1 + Math.log2(t));
     return this.goal.mul(new Num(factor, 0));
   }
 
   override taskString(): string {
     const fastestTime = StatsService.get('compression', 'fastestTime');
-    return TimeHelper.formatDuration(fastestTime, 'dd hh:mm:ss.SSS');
+    if (!fastestTime || fastestTime < 0) {
+      return 'No time set';
+    }
+    return TimeHelper.formatDuration(fastestTime, 'dd hh:mm:ss.ms');
   }
 
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);

@@ -154,7 +154,7 @@ export class CompressionService implements Resetable {
   complete() {
     // Update stats and record completion time
     const compressionTime = this.started ? (Date.now() - this.started) : 0;
-    if (StatsService.get('compression', 'fastestTime') !== undefined && compressionTime < StatsService.get('compression', 'fastestTime')) {
+    if (StatsService.get('compression', 'fastestTime') === null || compressionTime < StatsService.get('compression', 'fastestTime')) {
       StatsService.set('compression', 'fastestTime', compressionTime);
     }
 
