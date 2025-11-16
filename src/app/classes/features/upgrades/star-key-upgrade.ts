@@ -23,6 +23,13 @@ export abstract class StarKeyUpgrade extends Upgrade {
     this.resetId = ResetHelper.registerReset(ResetKey.YELLOW, this);
   }
 
+  override run(): Num | undefined {
+    if (this.hasBought() && this.currency === HoldingRecord.starKeys) {
+      HoldingRecord.starKeys.starKeyUpgradesBought = HoldingRecord.starKeys.starKeyUpgradesBought.add(new Num(1, 0));
+    }
+    return super.run();
+  }
+
   style: Styles = Styles.STAR_KEY;
   nav: string = "yellow";
   subNav: string = "yellowStarKeys";

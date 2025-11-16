@@ -158,6 +158,18 @@ button.button.success {
   backdrop-filter: blur(2px);
 }
 
+span.effect {
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.fusion {
+  --color-switch-1: var(--proxima-centauri-color);
+  --color-switch-2: var(--sun-color);
+  animation: color-switch 10s infinite;
+}
+
 @media (max-width: 768px) {
   .resource-card {
     min-width: 200px;
@@ -167,6 +179,18 @@ button.button.success {
 
   .resource-card p {
     margin: 0;
+  }
+}
+
+@keyframes color-switch {
+  0% {
+    color: var(--color-switch-1);
+  }
+  50% {
+    color: var(--color-switch-2);
+  }
+  100% {
+    color: var(--color-switch-1);
   }
 }
 

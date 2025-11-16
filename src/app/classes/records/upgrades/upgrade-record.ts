@@ -141,6 +141,9 @@ import {
 } from "../../features/upgrades/ultra-yellow-prestige-boost-star-key-upgrade";
 import {GreaterProximaCentauriStarKeyUpgrade} from "../../features/upgrades/greater-proxima-centauri-star-key-upgrade";
 import {UnlockStarKeyCompressionUpgrade} from "../../features/upgrades/unlock-star-key-compression-upgrade";
+import {
+  ImproveFusionCompressionGalaxyTreeUpgrade
+} from "../../features/upgrades/improve-fusion-compression-galaxy-tree-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -260,6 +263,8 @@ export class UpgradeRecord extends Record {
   static yellowExpertiseGalaxyTree: YellowExpertiseGalaxyTreeUpgrade = new YellowExpertiseGalaxyTreeUpgrade('yellowUpgradesBoostFusion');
   static fusionExpertiseGalaxyTree: FusionExpertiseGalaxyTreeUpgrade = new FusionExpertiseGalaxyTreeUpgrade('yellowFusionBoostUpgrades');
 
+  static improveFusionCompressionGalaxyTree: ImproveFusionCompressionGalaxyTreeUpgrade = new ImproveFusionCompressionGalaxyTreeUpgrade('improveFusionCompression');
+
   static starKeyUpgradeList: StarKeyUpgrade[] = [
     UpgradeRecord.ultraRedExtensionStarKey,
     UpgradeRecord.delayedBoosterScalingStarKey,
@@ -298,6 +303,8 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.acceleratorExpertiseGalaxyTree,
     UpgradeRecord.yellowExpertiseGalaxyTree,
     UpgradeRecord.fusionExpertiseGalaxyTree,
+
+    UpgradeRecord.improveFusionCompressionGalaxyTree,
   ]
 
   static override list: Upgrade[] = [

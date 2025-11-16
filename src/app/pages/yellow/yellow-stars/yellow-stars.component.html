@@ -1,6 +1,18 @@
 <div class="resource-card">
-  <p>Current star: <span [class]="getCurrentStarStyle()">{{ getCurrentStar() }}</span></p>
-  <p *ngIf="hasNextLockedStar()" class="next-unlock">{{ getNextStarRequirementText() }}</p>
+  @if (getCurrentStar()) {
+    <p>Current star: <span [class]="getCurrentStarStyle()">{{ getCurrentStar() }}</span></p>
+  } @else {
+    <p>No current star</p>
+  }
+  @if (hasNextLockedStar()) {
+    <p class="next-unlock">
+      Next:
+      <span [class]="getNextLockedStarStyle()">{{ getNextLockedStar()?.displayName }}</span>
+      unlocked at
+      <span [class]="getNextLockedRequirementStyle()">{{ getNextLockedRequirementAmount() }}</span>
+      {{ getNextLockedRequirementName() }}
+    </p>
+  }
 </div>
 <button *ngIf="inChallenge()" class="button" (click)="leaveChallenge()">Leave challenge</button>
 <div *ngIf="inChallenge()">

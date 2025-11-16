@@ -31,8 +31,6 @@ export class SunStarChallenge extends YellowStarChallenge {
     new Num(1.55, 0),
   ];
 
-  currency: Holding = HoldingRecord.redParticles;
-
   override buffer: Num = new Num(1.1, 0);
   override baseBuffer: Num = new Num(1.1, 0);
   override completionBuffer: Num[] = [
@@ -62,9 +60,7 @@ export class SunStarChallenge extends YellowStarChallenge {
 
   style: Styles = Styles.SUN;
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
-  requirement: Requirement[] = [
-    new Requirement(HoldingRecord.redParticles, new Num(1, 8500), this)
-  ];
+  requirement: Requirement[] = [];
 
   reward(): Num {
     const effect = HoldingRecord.yellowPower.effect?.pow(this.buffer) ?? new Num(1, 0)

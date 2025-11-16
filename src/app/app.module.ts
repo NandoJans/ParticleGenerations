@@ -44,6 +44,7 @@ import { GreenGeneratorsComponent } from './pages/green/green-generators/green-g
 import { GreenTimelineComponent } from './pages/timeline/green-timeline/green-timeline.component';
 import {BalanceComponent} from "./dev/balance/balance.component";
 import {YellowStarKeysPageComponent} from "./pages/yellow/yellow-star-keys-page/yellow-star-keys-page.component";
+import {GreenDarkGalaxyPageComponent} from "./pages/green/green-dark-galaxy-page/green-dark-galaxy-page.component";
 
 @NgModule({
   declarations: [
@@ -86,7 +87,8 @@ import {YellowStarKeysPageComponent} from "./pages/yellow/yellow-star-keys-page/
     GreenGeneratorsComponent,
     GreenTimelineComponent,
     BalanceComponent,
-    YellowStarKeysPageComponent
+    YellowStarKeysPageComponent,
+    GreenDarkGalaxyPageComponent
   ],
   imports: [
     BrowserModule,
@@ -98,7 +100,8 @@ import {YellowStarKeysPageComponent} from "./pages/yellow/yellow-star-keys-page/
   providers: [],
     exports: [
         ButtonComponent,
-        NumberDisplayComponent
+        NumberDisplayComponent,
+        ChallengeComponent
     ],
   bootstrap: [AppComponent]
 })

@@ -28,4 +28,8 @@ export class Multiplier {
   getNum(): Num {
     return this.num
   }
+
+  power(effect: Num) {
+    this.num = this.num.pow(effect)
+  }
 }

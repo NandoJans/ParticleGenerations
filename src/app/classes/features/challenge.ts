@@ -19,7 +19,6 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   abstract displayName: string
   abstract baseGoal: Num
   abstract goal: Num
-  abstract currency: Holding
   abstract prestige: ResetKey
   abstract prestigeLayer: string;
   abstract getRewardDescription(): string
@@ -46,6 +45,8 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   challengeUpgrades: {[key: string]: ChallengeUpgrade} = {};
   challengeHoldings: {[key: string]: ChallengeHolding} = {};
   challengeGenerators: {[key: string]: ChallengeGenerator} = {};
+
+  abstract getCurrency(): Holding;
 
   strongerBuffer(completionBuffer: Num): Num | void {
     if (this.completed instanceof Num) {
@@ -209,7 +210,7 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   }
 
   reached(): boolean {
-    return this.currency.amount.greq(this.goal);
+    return this.getCurrency().amount.greq(this.goal);
   }
 
   appliedNerfs: {[key: string]: {[key: string]: { element: GameElement, initial?: any } }} = {

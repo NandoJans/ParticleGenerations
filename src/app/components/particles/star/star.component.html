@@ -1,6 +1,8 @@
 <div class="challenge {{ star.style }}">
-  <div class="star">
+  <div class="star-wrapper">
+    <div class="star">
 
+    </div>
   </div>
   <div class="details">
     <div class="name">
@@ -16,7 +18,7 @@
       <p>{{ star.getEffectDisplay() }}</p>
     </div>
     <div class="goal">
-      <p>Reach {{ star.goal.toString() }} {{ star.currency.displayName }}</p>
+      <p>Reach {{ star.goal.toString() }} {{ star.getCurrency().displayName }}</p>
     </div>
     <div *ngIf="hasMultipleCompletions()" class="completions">
       <p>{{ star.completed }} / {{ star.maxCompletions }} Completions</p>

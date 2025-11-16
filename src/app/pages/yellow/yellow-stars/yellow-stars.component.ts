@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {YellowStarChallenge} from "../../../classes/features/challenges/yellow-star-challenge";
 import {ChallengeRecord} from "../../../classes/records/challenges/challenge-record";
 import {ChallengeService} from "../../../services/interactables/challenge.service";
+import {Holding} from "../../../classes/features/holding";
 
 @Component({
     selector: 'app-yellow-stars',
@@ -59,17 +60,6 @@ export class YellowStarsComponent implements OnInit {
     return this.getNextLockedStar() !== undefined;
   }
 
-  getNextStarRequirementText(): string {
-    const nextStar = this.getNextLockedStar();
-    if (!nextStar) return '';
-    
-    const req = nextStar.requirement[0];
-    if (!req) return '';
-    
-    const requirementHolding = req.requirement as any;
-    return `Next: ${nextStar.displayName} unlocks at ${req.amount.toString()} ${requirementHolding.displayName || 'requirement'}`;
-  }
-
   infoText: string[] = [
     'Yellow Stars represent stellar challenges that test your particle generation mastery!',
     'Each star (Proxima Centauri, Lalande, Sun, Sirius) is a unique challenge with specific conditions and rewards.',
@@ -81,5 +71,41 @@ export class YellowStarsComponent implements OnInit {
 
   getCurrentStarStyle() {
     return ChallengeRecord.currentChallenges['yellow']?.style ?? 'none';
+  }
+
+  getNextLockedStarStyle() {
+    return this.getNextLockedStar()?.style ?? 'none';
+  }
+
+  getNextLockedRequirement() {
+    const requirement = this.getNextLockedStar()?.requirement
+    if (requirement) {
+      return requirement[0];
+    }
+    return null;
+  }
+
+  getNextLockedRequirementAmount() {
+    return this.getNextLockedRequirement()?.amount ?? 0;
+  }
+
+  getNextLockedRequirementRequire() {
+    return this.getNextLockedRequirement()?.requirement ?? 0;
+  }
+
+  getNextLockedRequirementStyle() {
+    const require = this.getNextLockedRequirementRequire();
+    if (require instanceof Holding) {
+      return require.getStyle().toString();
+    }
+    return '';
+  }
+
+  getNextLockedRequirementName() {
+    const require = this.getNextLockedRequirementRequire();
+    if (require instanceof Holding) {
+      return require.displayName;
+    }
+    return '';
   }
 }

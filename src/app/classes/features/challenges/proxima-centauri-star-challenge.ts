@@ -1,7 +1,6 @@
 import { Num } from "src/app/num";
 import { ResetKey } from "../../enums/reset-key";
 import { Styles } from "../../enums/styles";
-import { Holding } from "../holding";
 import { Requirement } from "../interfaces/requirement";
 import {YellowStarChallenge} from "./yellow-star-challenge";
 import {HoldingRecord} from "../../records/holdings/holding-record";
@@ -28,8 +27,6 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
     new Num(3.5, 0),
   ];
 
-  currency: Holding = HoldingRecord.redParticles;
-
   override buffer: Num = new Num(2, 0);
   override baseBuffer: Num = new Num(2, 0);
   override completionBuffer: Num[] = [
@@ -54,9 +51,7 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
 
   style: Styles = Styles.PROXIMA_CENTAURI;
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
-  requirement: Requirement[] = [
-    new Requirement(HoldingRecord.yellowPrestiges, new Num(1, 3), this)
-  ];
+  requirement: Requirement[] = [];
 
   override maxEffect = new Num(1, 200);
 
@@ -167,8 +162,8 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
         this.getCompletions().toNumber()
       ),
     }
-this.requirement = [
-    new Requirement(HoldingRecord.yellowPrestiges, new Num(1, 3), this)
-  ];
+    this.requirement = [
+      new Requirement(HoldingRecord.yellowPrestiges, new Num(1, 3), this)
+    ];
   }
 }

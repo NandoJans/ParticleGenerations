@@ -31,6 +31,9 @@
       }
     </div>
   </div>
+  <div class="holding-line">
+    <p>Yellow fusion multiplies compression speed by <span class="effect fusion">{{ getYellowFusionCompressionEffect().toString(2) }}x</span></p>
+  </div>
   <div class="upgrade-row">
     @for (upgrade of upgrades; track upgrade)  {
       @if (upgrade.isUnlocked()) {

@@ -17,7 +17,7 @@ export class NumberDisplayComponent implements OnInit {
   constructor(
     protected holdingRecord: HoldingRecord
   ) {
-    this.holdingDisplay = this.holding.holdingDisplay;
+    this.holdingDisplay = this.holding.getHoldingDisplay();
   }
 
   getHoldingAmount(): string {
@@ -37,6 +37,6 @@ export class NumberDisplayComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.holdingDisplay = this.holding.holdingDisplay;
+    this.holdingDisplay = this.holding.getHoldingDisplay();
   }
 }

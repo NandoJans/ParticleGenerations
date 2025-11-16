@@ -86,19 +86,32 @@ export class CompressionService implements Resetable {
     return 1000 * Math.pow(2, count);
   }
 
+  private yellowFusionCompressionEffect: Num = new Num(1, 0);
+
   // Calculate progress rate per millisecond based on yellow fusion and compression speed
   private getProgressPerMs(): number {
-    const exponent = HoldingRecord.yellowFusion.amount.exponent;
-    const log = Math.log10(Math.max(exponent, 1)); // avoid negative/NaN
+    let effect;
+    if (UpgradeRecord.improveFusionCompressionGalaxyTree.hasBought()) {
+      const power = HoldingRecord.yellowFusion.amount.pow(UpgradeRecord.improveFusionCompressionGalaxyTree.buffer);
+      this.yellowFusionCompressionEffect = power;
+      effect = power.toNumber();
+    } else {
+      const exponent = HoldingRecord.yellowFusion.amount.exponent;
+      const log = Math.log10(Math.max(exponent, 1)); // avoid negative/NaN
+      effect = Math.max(log, 0); // no negative contribution
+      this.yellowFusionCompressionEffect = new Num(effect, 0);
+    }
+
     const speed = Math.max(MultiplierRecord.starKeyCompressionSpeed.num.toNumber(), 1);
-    const effectiveLog = Math.max(log, 0); // no negative contribution
+
     // Prior formula had an extra *1000 in time; so per-ms rate = (log * speed) / 1000
-    const rate = (effectiveLog * speed) / 1000;
+    const rate = (effect * speed) / 1000;
     // Ensure a tiny positive rate to progress if both are zero (prevents freeze and div-by-zero)
     return rate > 0 ? rate : 0;
   }
 
   tick(speed: Num) {
+    this.compressions = new Num(9, 0);
     if (this.compressing && this.started) {
       const now = Date.now();
       // Initialize lastUpdate if missing (e.g., after load)
@@ -207,5 +220,9 @@ export class CompressionService implements Resetable {
 
   compressionUnlocked(): boolean {
     return UpgradeRecord.unlockStarKeyCompression.hasBought();
+  }
+
+  getYellowFusionCompressionEffect() {
+    return this.yellowFusionCompressionEffect;
   }
 }

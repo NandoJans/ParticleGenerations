@@ -59,4 +59,8 @@ export class YellowStarKeysPageComponent {
   compressionUnlocked(): boolean {
     return this.compressionService.compressionUnlocked();
   }
+
+  getYellowFusionCompressionEffect() {
+    return this.compressionService.getYellowFusionCompressionEffect();
+  }
 }

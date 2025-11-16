@@ -20,7 +20,7 @@ export class EnhancementService {
     Object.entries(enhancement.enhancables).forEach(([key, enhancable]) => {
       enhancable.enhancement = null;
       delete enhancement.enhancables[key];
-      enhancement.holding.amount = enhancement.holding.amount.add(returnHolding);
+      enhancement.getHolding().amount = enhancement.getHolding().amount.add(returnHolding);
       returnHolding = returnHolding.mul(new Num(2, 0));
     })
     ResetHelper.reset(enhancement.respecResetKey);
@@ -46,7 +46,7 @@ export class EnhancementService {
 
   enhance(enhancable: Enhancable) {
     if (this.enhancing && enhancable.allowedEnhancements.includes(this.enhancing)) {
-      this.enhancing.holding.amount = this.enhancing.holding.amount.sub(this.enhancing.getRequirement());
+      this.enhancing.getHolding().amount = this.enhancing.getHolding().amount.sub(this.enhancing.getRequirement());
       enhancable.enhancement = this.enhancing;
       this.enhancing.add(enhancable);
 

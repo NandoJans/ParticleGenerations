@@ -34,6 +34,8 @@ export class DecreaseMultiplyYellowKeysScalingStarKeySubUpgrade extends StarKeyS
   override buffer: Num = new Num(1.3, 0);
   override baseBuffer: Num = new Num(1.3, 0);
 
+  override limit: Num = new Num(5, 0);
+
   override baseCost: Num = new Num(1, 9);
   override cost: Num = new Num(1, 9);
   override increase: Num = new Num(1, 3);

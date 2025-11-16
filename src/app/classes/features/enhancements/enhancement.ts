@@ -7,7 +7,6 @@ import {Num} from "../../../num";
 
 export abstract class Enhancement implements Resetable {
   abstract style: Styles;
-  abstract holding: Holding;
   saveName: string
 
   constructor(saveName: string) {
@@ -55,5 +54,7 @@ export abstract class Enhancement implements Resetable {
   add(enhancable: Enhancable) {
     this.enhancables[enhancable.name] = enhancable;
   }
+
+  abstract getHolding(): Holding;
 }
 

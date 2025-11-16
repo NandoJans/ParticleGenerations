@@ -28,8 +28,6 @@ export class SiriusStarChallenge extends YellowStarChallenge {
     new Num(1, 49400),
   ];
 
-  currency: Holding = HoldingRecord.redParticles;
-
   override buffer: Num = new Num(2, 0);
   override baseBuffer: Num = new Num(2, 0);
   override completionBuffer: Num[] = [
@@ -57,9 +55,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
 
   style: Styles = Styles.SIRIUS;
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
-  requirement: Requirement[] = [
-    new Requirement(HoldingRecord.redParticles, new Num(1, 11000), this)
-  ];
+  requirement: Requirement[] = [];
 
   reward(): Num|undefined {
     const effect = this.buffer.pow(UpgradeRecord.redGeneratorExtension.amount);

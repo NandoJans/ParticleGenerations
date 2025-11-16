@@ -41,7 +41,7 @@ div p span.effect {
     -1px -1px 0 var(--accent-color),
     1px 1px 0 var(--accent-color),
     -1px 1px 0 var(--accent-color),
-    1px -1px 0 var(--accent-color);
+    1px -1px 0 var(--accent-color) !important;
 }
 
 .sun {
@@ -50,12 +50,6 @@ div p span.effect {
 
 .sirius {
   color: var(--sirius-color);
-}
-
-.fusion {
-  --color-switch-1: var(--proxima-centauri-color);
-  --color-switch-2: var(--sun-color);
-  animation: color-switch 10s infinite;
 }
 
 .hydrogen {
@@ -70,18 +64,6 @@ div p span.effect {
   --color-gradient-3: var(--sun-color);
   --color-gradient-4: var(--sirius-color);
   animation: color-gradient 10s infinite;
-}
-
-@keyframes color-switch {
-  0% {
-    color: var(--color-switch-1);
-  }
-  50% {
-    color: var(--color-switch-2);
-  }
-  100% {
-    color: var(--color-switch-1);
-  }
 }
 
 @keyframes color-gradient {
