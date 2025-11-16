@@ -26,14 +26,6 @@ export class StarKeyHolding extends Holding {
   totalUpgrades: Num = new Num(8, 0);
 
 
-  override getHoldingDisplay(): HoldingDisplay {
-    // When all star key upgrades have been bought, star keys give an effect themselves.
-    if (this.hasBoughtTotal) {
-
-    }
-    return super.getHoldingDisplay();
-  }
-
   override action(): Num|undefined {
     this.hasBoughtTotal = this.starKeyUpgradesBought.greq(this.totalUpgrades);
     this.starKeyUpgradesBought = new Num(0, 0);
