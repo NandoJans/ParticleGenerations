@@ -13,7 +13,7 @@
   <p *ngIf="isEnhancing()">{{ getEnhancementString() }}</p>
   <p *ngIf="getEffect()" class="effect">{{ getEffect() }}</p>
   <p *ngIf="!getIsMaxed()" class="cost">{{ getCostString() }}</p>
-  @if (!isEnabled()) {
+  @if (!isEnabled() || !isUnlocked()) {
     <div class="disabled-overlay">
       <fa-icon [icon]="faLock"></fa-icon>
     </div>

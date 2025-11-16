@@ -18,6 +18,7 @@ export class UnlockRedAcceleratorsUpgrade extends Upgrade {
   displayName: string = 'Unlock Red Accelerators';
   increase: Num = new Num(1, 0);
   startIncrease: Num = new Num(1, 0);
+  override limit: Num = new Num(1, 0);
   name: string = 'Unlock Red Accelerators';
   nav: string = 'red';
   requirement: Requirement[] = [

@@ -31,6 +31,10 @@ export abstract class GameElement {
     return this.unlocked;
   }
 
+  isFirstUnlocked(): boolean {
+    return this.firstUnlock;
+  }
+
   unlock(): void|{title: string, message: string} {
     this.unlocked = true;
     this.firstUnlock = true;

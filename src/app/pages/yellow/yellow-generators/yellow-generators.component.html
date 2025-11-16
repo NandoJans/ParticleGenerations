@@ -3,10 +3,10 @@
 </div>
 <div class="generator-row">
   <div class="generator-card" *ngFor="let generator of generators">
-    <app-generator *ngIf="generator.unlocked" [generator]="generator"></app-generator>
+    <app-generator *ngIf="generator.isFirstUnlocked()" [generator]="generator"></app-generator>
     <div class="upgrades">
-      <app-upgrade *ngIf="generator.unlocked" [upgrade]="generator.multiplierUpgrade"></app-upgrade>
-      <app-upgrade *ngIf="generator.unlocked" [upgrade]="generator.buyMultiplierUpgrade"></app-upgrade>
+      <app-upgrade *ngIf="generator.multiplierUpgrade.isFirstUnlocked()" [upgrade]="generator.multiplierUpgrade"></app-upgrade>
+      <app-upgrade *ngIf="generator.buyMultiplierUpgrade.isFirstUnlocked()" [upgrade]="generator.buyMultiplierUpgrade"></app-upgrade>
     </div>
   </div>
 </div>

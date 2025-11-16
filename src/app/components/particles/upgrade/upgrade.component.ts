@@ -104,4 +104,8 @@ export class UpgradeComponent {
   }
 
   protected readonly faLock = faLock;
+
+  isUnlocked() {
+    return this.upgrade.isUnlocked();
+  }
 }

@@ -1,24 +1,24 @@
 <div class="upgrade-row">
   <div *ngFor="let automator of yellowPrestigeAutomator">
-    <app-automator *ngIf="automator.unlocked" [automator]="automator"></app-automator>
+    <app-automator *ngIf="automator.isUnlocked()" [automator]="automator"></app-automator>
   </div>
 </div>
 <h2>Yellow Upgrade Automators</h2>
 <div class="upgrade-row">
   <div *ngFor="let automator of yellowUpgradeAutomators">
-    <app-automator *ngIf="automator.unlocked" [automator]="automator"></app-automator>
+    <app-automator *ngIf="automator.isUnlocked()" [automator]="automator"></app-automator>
   </div>
 </div>
 <h2>Yellow Generator Automators</h2>
 <div class="upgrade-row">
   <div *ngFor="let automator of yellowGeneratorAutomators">
-    <app-automator *ngIf="automator.unlocked" [automator]="automator"></app-automator>
+    <app-automator *ngIf="automator.isUnlocked()" [automator]="automator"></app-automator>
   </div>
 </div>
 <h2>Star challenge automators</h2>
 <div class="upgrade-row">
   @for (automator of yellowStarChallengeAutomators; track automator.name) {
-    @if (automator.unlocked) {
+    @if (automator.isUnlocked()) {
       <app-automator [automator]="automator"></app-automator>
     }
   }
@@ -26,7 +26,7 @@
 <h2>Yellow fusion automators</h2>
 <div class="upgrade-row">
   @for (automator of yellowFusionAutomators; track automator.name) {
-    @if (automator.unlocked) {
+    @if (automator.isUnlocked()) {
       <app-automator [automator]="automator"></app-automator>
     }
   }
@@ -34,7 +34,7 @@
 <h2>Star key automators</h2>
 <div class="upgrade-row">
   @for (automator of yellowStarKeyAutomators; track automator.name) {
-    @if (automator.unlocked) {
+    @if (automator.isUnlocked()) {
       <app-automator [automator]="automator"></app-automator>
     }
   }

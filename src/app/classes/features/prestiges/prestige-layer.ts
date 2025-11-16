@@ -68,7 +68,7 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
   }
 
   override unlock(): void | { title: string; message: string } {
-    this.unlock();
+    super.unlock();
     this.reached = true;
   }
 
