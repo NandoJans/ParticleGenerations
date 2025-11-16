@@ -35,8 +35,8 @@ export class BetterRedBoosterGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   style: Styles = Styles.STAR_RED;
   displayName: string = "Better Red Booster";
 
-  override buffer = new Num(1.1, 0);
-  override baseBuffer = new Num(1.1, 0);
+  override buffer = new Num(1.5, 0);
+  override baseBuffer = new Num(1.5, 0);
 
   cost: Num = new Num(3, 0);
   baseCost: Num = new Num(3, 0);

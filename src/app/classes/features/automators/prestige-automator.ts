@@ -2,6 +2,7 @@ import {Automator} from "../automator";
 import {Buyable} from "../buyable";
 import {PrestigeLayer} from "../prestiges/prestige-layer";
 import {Num} from "../../../num";
+import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 
 export abstract class PrestigeAutomator extends Automator {
   modes: {[key: string]: {setting: Num, action: Function, prestigeStatus: Function}} = {

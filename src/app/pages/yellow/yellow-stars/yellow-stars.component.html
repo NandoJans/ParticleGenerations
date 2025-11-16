@@ -6,9 +6,8 @@
   }
   @if (hasNextLockedStar()) {
     <p class="next-unlock">
-      Next:
       <span [class]="getNextLockedStarStyle()">{{ getNextLockedStar()?.displayName }}</span>
-      unlocked at
+      unlocks at
       <span [class]="getNextLockedRequirementStyle()">{{ getNextLockedRequirementAmount() }}</span>
       {{ getNextLockedRequirementName() }}
     </p>

@@ -3,6 +3,7 @@ import {Generator} from "../../../classes/features/generator";
 import {Holding} from "../../../classes/features/holding";
 import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 import {GeneratorRecord} from "../../../classes/records/generators/generator-record";
+import {GreenGenerator} from "../../../classes/features/generators/green-generator";
 
 @Component({
     selector: 'app-green-generators',
@@ -11,8 +12,10 @@ import {GeneratorRecord} from "../../../classes/records/generators/generator-rec
     standalone: false
 })
 export class GreenGeneratorsComponent implements OnInit {
-  generators: Generator[] = [
+  generators: GreenGenerator[] = [
     GeneratorRecord.firstGreenGenerator,
+    GeneratorRecord.secondGreenGenerator,
+    GeneratorRecord.thirdGreenGenerator,
   ];
   darkMatter: Holding = HoldingRecord.darkMatter;
   infoText: string[] = [

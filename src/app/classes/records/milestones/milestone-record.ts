@@ -346,12 +346,6 @@ export class MilestoneRecord extends Record {
     })
   }
 
-  run() {
-    this.getList().forEach((milestone: Milestone) => {
-      milestone.run()
-    })
-  }
-
   tick() {
     this.getList().forEach((milestone: Milestone) => {
       milestone.tick()

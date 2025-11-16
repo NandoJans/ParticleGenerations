@@ -128,7 +128,7 @@ button.button.success {
 .resource-card {
   background: var(--background-color-1);
   border: 2px solid var(--background-color-4);
-  border-radius: 20px;
+  border-radius: 10px;
   width: 25rem;
   padding: 25px;
   min-width: 250px;

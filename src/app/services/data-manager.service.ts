@@ -122,7 +122,7 @@ export class DataManagerService {
 
     // Run milestones
     this.challengeService.applyCurrentChallengeNerfs();
-    this.milestoneRecord.run();
+    this.milestoneRecord.init();
   }
 
   init() {
@@ -134,7 +134,6 @@ export class DataManagerService {
     this.automatorService.init();
     this.prestigeLayersService.init();
     this.timelineService.init();
-    this.milestoneRecord.init();
     this.challengeService.init();
   }
 

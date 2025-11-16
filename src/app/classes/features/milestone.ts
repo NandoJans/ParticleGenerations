@@ -28,9 +28,16 @@ export abstract class Milestone extends GameElement implements Resetable, Storab
   action(): void {}
   tick(): void {}
 
-  override run(): void {
+  override init(): void {
     if (this.goalReached()) {
       this.action()
+    }
+    super.init();
+  }
+
+  override run(): void {
+    if (this.goalReached()) {
+      this.tick()
     }
   }
 
