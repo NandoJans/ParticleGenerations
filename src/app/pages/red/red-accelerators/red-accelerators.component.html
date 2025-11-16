@@ -1,21 +1,25 @@
-@if (boughtUnlockRedAccelerators()) {
-  <div class="resource-card">
-    <app-number-display [holding]="redAccelerators"></app-number-display>
-  </div>
-}
-<div *ngIf="boughtUnlockRedAccelerators()" class="upgrade-row">
-  <div *ngFor="let upgrade of upgrades">
-    <app-upgrade *ngIf="upgrade.isUnlocked()" [upgrade]="upgrade"></app-upgrade>
+<div class="resource-card">
+  <app-number-display [holding]="redAccelerators"></app-number-display>
+</div>
+<div class="upgrade-row">
+  @for (upgrade of upgrades; track upgrade)  {
+    @if (upgrade.isFirstUnlocked()) {
+      <app-upgrade [upgrade]="upgrade"></app-upgrade>
+    }
+  }
+</div>
+<div class="upgrade-row">
+  <div>
+    @if (boosterAccelerationUpgrade.isFirstUnlocked()) {
+      <app-upgrade [upgrade]="boosterAccelerationUpgrade"></app-upgrade>
+    }
   </div>
 </div>
-<div *ngIf="!boughtUnlockRedAccelerators()" class="upgrade-row">
+<div class="upgrade-row">
   <div>
-    <app-upgrade *ngIf="unlockRedAccelerators.isUnlocked()" [upgrade]="unlockRedAccelerators"></app-upgrade>
-  </div>
-</div>
-<div *ngIf="boughtUnlockRedAccelerators() || boughtBoosterAcceleration()" class="upgrade-row">
-  <div>
-    <app-upgrade *ngIf="boosterAccelerationUpgrade.isUnlocked()" [upgrade]="boosterAccelerationUpgrade"></app-upgrade>
+    @if (unlockRedAccelerators.isFirstUnlocked()) {
+      <app-upgrade [upgrade]="unlockRedAccelerators"></app-upgrade>
+    }
   </div>
 </div>
 <app-info style="width: 60%" [name]="'red-accelerators-info'" [infoText]="infoText"></app-info>

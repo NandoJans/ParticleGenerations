@@ -28,7 +28,6 @@ export class LalandeStarChallenge extends YellowStarChallenge {
     new Num(1.7, 0),
   ];
 
-  currency: Holding = HoldingRecord.redParticles;
   override calculationOrder = 1000;
 
   override buffer: Num = new Num(1.04, 0);
@@ -49,9 +48,7 @@ export class LalandeStarChallenge extends YellowStarChallenge {
 
   style: Styles = Styles.LALANDE;
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
-  requirement: Requirement[] = [
-    new Requirement(HoldingRecord.redParticles, new Num(1, 4100), this)
-  ];
+  requirement: Requirement[] = [];
 
   reward(): undefined {
     GeneratorRecord.redGenerators.forEach((generator: RedGenerator) => {
@@ -71,6 +68,7 @@ export class LalandeStarChallenge extends YellowStarChallenge {
     GeneratorRecord.redGenerators.forEach((generator: RedGenerator) => {
       generator.getUpgrades().forEach((upgrade: Upgrade) => {
         upgrade.unlocked = false;
+        upgrade.firstUnlock = false;
         this.applyRequirementNerf(upgrade)
       })
     })

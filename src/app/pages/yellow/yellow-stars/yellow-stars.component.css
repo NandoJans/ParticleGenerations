@@ -12,7 +12,6 @@ button.button {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: baseline;
   gap: 4px;
   margin: 10px auto;
   width: fit-content;
@@ -20,23 +19,31 @@ button.button {
   font-size: 1.2rem;
 }
 
-.resource-card div {
+.resource-card span {
   font-weight: bold;
   font-size: 1.5rem;
 }
 
-.resource-card div.proxima-centauri {
+.resource-card span.proxima-centauri {
   color: var(--proxima-centauri-color);
 }
 
-.resource-card div.lalande {
+.resource-card span.lalande {
   color: var(--lalande-color);
 }
 
-.resource-card div.sun {
+.resource-card span.sun {
   color: var(--sun-color);
 }
 
-.resource-card div.sirius {
+.resource-card span.sirius {
   color: var(--sirius-color);
+}
+
+.red {
+  color: var(--text-color-red);
+}
+
+.next-unlock {
+  color: var(--text-color-darkened);
 }

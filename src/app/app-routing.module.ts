@@ -15,6 +15,7 @@ import {GreenGeneratorsComponent} from "./pages/green/green-generators/green-gen
 import {GreenTimelineComponent} from "./pages/timeline/green-timeline/green-timeline.component";
 import {BalanceComponent} from "./dev/balance/balance.component";
 import {YellowStarKeysPageComponent} from "./pages/yellow/yellow-star-keys-page/yellow-star-keys-page.component";
+import {GreenDarkGalaxyPageComponent} from "./pages/green/green-dark-galaxy-page/green-dark-galaxy-page.component";
 
 const routes: Routes = [
   { path: '', component: RedComponent },
@@ -29,7 +30,8 @@ const routes: Routes = [
   { path: 'yellow/starKeys', component: YellowStarKeysPageComponent },
   // Green
   { path: 'green/galaxyTree', component: GreenGalaxyTreeComponent },
-  { path: 'green/greenGenerators', component: GreenGeneratorsComponent },
+  { path: 'green/generators', component: GreenGeneratorsComponent },
+  { path: 'green/darkGalaxy', component: GreenDarkGalaxyPageComponent },
   // Automators
   { path: 'automators/red' , component: RedAutomatorsComponent },
   { path: 'automators/yellow' , component: YellowAutomatorsComponent },

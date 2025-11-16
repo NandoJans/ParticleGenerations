@@ -30,8 +30,8 @@ export abstract class ChallengeUpgrade extends Upgrade {
     this.baseCost = cost.copy();
     this.baseBuffer = buffer.copy();
     this.startIncrease = increase.copy();
-    this.applyDifficultyIncrease();
     this.difficulty = Math.round(difficulty);
+    this.applyDifficultyIncrease();
   }
 
   applyDifficultyIncrease(): void {

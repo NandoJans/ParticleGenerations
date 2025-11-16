@@ -18,8 +18,8 @@ export class SunStarChallenge extends YellowStarChallenge {
   name: string = 'sun-star-challenge';
   displayName: string = 'Sun';
 
-  baseGoal: Num = new Num(1, 22000);
-  goal: Num = new Num(1, 22000);
+  baseGoal: Num = new Num(1, 17000);
+  goal: Num = new Num(1, 17000);
   override goalIncrease: Num[] = [
     new Num(1, 15200),
     new Num(1, 46000),
@@ -30,8 +30,6 @@ export class SunStarChallenge extends YellowStarChallenge {
     new Num(1.95, 0),
     new Num(1.55, 0),
   ];
-
-  currency: Holding = HoldingRecord.redParticles;
 
   override buffer: Num = new Num(1.1, 0);
   override baseBuffer: Num = new Num(1.1, 0);
@@ -62,9 +60,7 @@ export class SunStarChallenge extends YellowStarChallenge {
 
   style: Styles = Styles.SUN;
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
-  requirement: Requirement[] = [
-    new Requirement(HoldingRecord.redParticles, new Num(1, 8500), this)
-  ];
+  requirement: Requirement[] = [];
 
   reward(): Num {
     const effect = HoldingRecord.yellowPower.effect?.pow(this.buffer) ?? new Num(1, 0)
@@ -80,7 +76,6 @@ export class SunStarChallenge extends YellowStarChallenge {
     HoldingRecord.redAccelerators.amount = new Num(1, 0);
     UpgradeRecord.unlockRedAccelerators.bought = new Num(0, 0);
 
-    this.challengeGenerators['sunGenerator'].amount = new Num(1, 0);
     this.challengeGenerators['sunGenerator'].bought = new Num(1, 0);
 
     const resetUpgradePower = this.challengeUpgrades['strongerSunParticleEffect'].buffer
@@ -96,6 +91,7 @@ export class SunStarChallenge extends YellowStarChallenge {
   }
 
   nerfs(): void {
+    this.challengeGenerators['sunGenerator'].amount = new Num(1, 0);
     UpgradeRecord.unlockRedAccelerators.unlocked = false;
     this.applyRequirementNerf(UpgradeRecord.unlockRedAccelerators);
   }
@@ -161,8 +157,8 @@ export class SunStarChallenge extends YellowStarChallenge {
         this.challengeGenerators['sunGenerator'].globalMultiplier,
         [
           this.getDifficultyIncrease(),
-          this.getDifficultyIncrease(new Num(1.1, 0)),
-          this.getDifficultyIncrease(new Num(1.1, 0)),
+          this.getDifficultyIncrease(new Num(.9, 0)),
+          this.getDifficultyIncrease(new Num(.9, 0)),
         ],
         this.getCompletions().toNumber()
       ),
@@ -183,8 +179,8 @@ export class SunStarChallenge extends YellowStarChallenge {
         this.challengeGenerators['sunGenerator'].globalMultiplier,
         [
           this.getDifficultyIncrease(),
-          this.getDifficultyIncrease(new Num(1.1, 0)),
-          this.getDifficultyIncrease(new Num(2.1, 0)),
+          this.getDifficultyIncrease(new Num(.9, 0)),
+          this.getDifficultyIncrease(new Num(.9, 0)),
         ],
         this.getCompletions().toNumber()
       ),
@@ -205,8 +201,8 @@ export class SunStarChallenge extends YellowStarChallenge {
         this.challengeGenerators['sunGenerator'].globalMultiplier,
         [
           this.getDifficultyIncrease(),
-          this.getDifficultyIncrease(new Num(1.1, 0)),
-          this.getDifficultyIncrease(new Num(2.1, 0)),
+          this.getDifficultyIncrease(new Num(.9, 0)),
+          this.getDifficultyIncrease(new Num(.9, 0)),
         ],
         this.getCompletions().toNumber()
       ),
@@ -226,8 +222,8 @@ export class SunStarChallenge extends YellowStarChallenge {
         'sunUpgrade',
         [
           this.getDifficultyIncrease(),
-          this.getDifficultyIncrease(new Num(1.2, 0)),
-          this.getDifficultyIncrease(new Num(2, 0)),
+          this.getDifficultyIncrease(new Num(1, 0)),
+          this.getDifficultyIncrease(new Num(1, 0)),
         ],
         this.getCompletions().toNumber()
       )
@@ -242,11 +238,11 @@ export class SunStarChallenge extends YellowStarChallenge {
         this.challengeHoldings['sunParticle'].reset();
         this.challengeGenerators['sunGenerator'].globalMultiplier.reset();
         this.challengeUpgrades['sunGeneratorMultiplierUpgrade1'].reset();
-        this.challengeUpgrades['sunGeneratorMultiplierUpgrade1'].unlocked = true
+        this.challengeUpgrades['sunGeneratorMultiplierUpgrade1'].unlock()
         this.challengeUpgrades['sunGeneratorMultiplierUpgrade2'].reset()
-        this.challengeUpgrades['sunGeneratorMultiplierUpgrade2'].unlocked = true
+        this.challengeUpgrades['sunGeneratorMultiplierUpgrade2'].unlock()
         this.challengeUpgrades['sunGeneratorMultiplierUpgrade3'].reset();
-        this.challengeUpgrades['sunGeneratorMultiplierUpgrade3'].unlocked = true
+        this.challengeUpgrades['sunGeneratorMultiplierUpgrade3'].unlock()
         return undefined;
       });
     }

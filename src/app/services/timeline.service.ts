@@ -126,8 +126,23 @@ export class TimelineService {
       HoldingRecord.greenPrestiges,
       new Num(1, 0)
     )
-    .addMilestone(MilestoneRecord.keepAllRedAutomators)
+    .addMilestone(MilestoneRecord.initialGreenMilestone)
     .addMilestone(MilestoneRecord.keepYellowPrestigeAutomator)
+    .addMilestone(MilestoneRecord.breakGreenBarrier)
+    .addMilestone(MilestoneRecord.keepRepeatableYellowUpgradeAutomators)
+    .addMilestone(MilestoneRecord.keepFirstYellowAutomator)
+    .addMilestone(MilestoneRecord.keepSecondYellowAutomator)
+    .addMilestone(MilestoneRecord.keepThirdYellowAutomator)
+    .addMilestone(MilestoneRecord.keepFourthYellowAutomator)
+    .addMilestone(MilestoneRecord.keepFifthYellowAutomator)
+    .build()
+    .addTimelineEvent(
+      'green-dark-galaxy',
+      'Dark galaxy',
+      'After a great galaxy comes a dark one',
+      HoldingRecord.greenParticles,
+      new Num(1, 2)
+    )
     .build()
     .build()
 

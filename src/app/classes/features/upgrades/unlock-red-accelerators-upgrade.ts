@@ -18,6 +18,7 @@ export class UnlockRedAcceleratorsUpgrade extends Upgrade {
   displayName: string = 'Unlock Red Accelerators';
   increase: Num = new Num(1, 0);
   startIncrease: Num = new Num(1, 0);
+  override limit: Num = new Num(1, 0);
   name: string = 'Unlock Red Accelerators';
   nav: string = 'red';
   requirement: Requirement[] = [
@@ -39,7 +40,7 @@ export class UnlockRedAcceleratorsUpgrade extends Upgrade {
     if (this.hasBought()) {
       GeneratorRecord.redAcceleratorGenerator.amount = new Num(1, 0);
       GeneratorRecord.redAcceleratorGenerator.bought = new Num(1, 0);
-      GeneratorRecord.redAcceleratorGenerator.unlocked = true;
+      GeneratorRecord.redAcceleratorGenerator.unlock()
     } else {
       HoldingRecord.redAccelerators.amount = new Num(1, 0);
       HoldingRecord.redAccelerators.mulEffect = new Num(1, 0);

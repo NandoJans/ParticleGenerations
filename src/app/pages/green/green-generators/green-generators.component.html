@@ -1,9 +1,14 @@
 <div class="resource-card">
   <app-number-display [holding]="darkMatter"></app-number-display>
 </div>
-<div class="generator" *ngFor="let generator of generators">
-  <app-generator *ngIf="generator.unlocked" [generator]="generator"></app-generator>
-<!--  <app-upgrade *ngIf="generator.unlocked" [upgrade]="generator.multiplierUpgrade"></app-upgrade>-->
-<!--  <app-upgrade *ngIf="generator.unlocked" [upgrade]="generator.buyMultiplierUpgrade"></app-upgrade>-->
+<div class="generator-card">
+  <div class="generator" *ngFor="let generator of generators">
+    <app-generator *ngIf="generator.isUnlocked()" [generator]="generator"></app-generator>
+    <div class="upgrades">
+      <app-upgrade *ngIf="generator.isUnlocked()" [upgrade]="generator.multiplierUpgrade"></app-upgrade>
+      <app-upgrade *ngIf="generator.isUnlocked()" [upgrade]="generator.buyMultiplierUpgrade"></app-upgrade>
+      <app-upgrade *ngIf="generator.isUnlocked()" [upgrade]="generator.costDivisorUpgrade"></app-upgrade>
+    </div>
+  </div>
 </div>
 <app-info style="width: 60%" [name]="'green-generators-info'" [infoText]="infoText"></app-info>

@@ -9,6 +9,9 @@ import {MultiplierRecord} from "../multipliers/multiplier-record";
 import {BreakYellowBarrierMilestone} from "../../features/milestones/break-yellow-barrier-milestone";
 import {ChangeResetKeyGreenMilestone} from "../../features/milestones/change-reset-key-green-milestone";
 import {GeneratorRecord} from "../generators/generator-record";
+import {InitialGreenMilestone} from "../../features/milestones/initial-green-milestone";
+import {BreakGreenBarrierMilestone} from "../../features/milestones/break-green-barrier-milestone";
+import {Automator} from "../../features/automator";
 
 @Injectable({
   providedIn: 'root'
@@ -88,7 +91,7 @@ export class MilestoneRecord extends Record {
   )
   static keepBoosterAccelerationAuto: ChangeResetKeyYellowMilestone = new ChangeResetKeyYellowMilestone(
     'keepBoosterAccelerationAuto',
-    'Keep Better Red Particle to Accelerator Effect Automator',
+    'Keep Booster Acceleration Automator',
     new Num(2.7, 1),
     AutomatorRecord.boosterAcceleration
   )
@@ -169,9 +172,9 @@ export class MilestoneRecord extends Record {
   // Break yellow barrier
   static breakYellowBarrier: BreakYellowBarrierMilestone = new BreakYellowBarrierMilestone('breakYellowBarrier');
 
-  static keepAllRedAutomators: ChangeResetKeyGreenMilestone = new ChangeResetKeyGreenMilestone(
-    'keepAllRedAutomators',
-    'Keep All Red Automators',
+  static initialGreenMilestone: InitialGreenMilestone = new InitialGreenMilestone(
+    'initialGreenMilestone',
+    'Initial Green Milestone',
     new Num(1, 0),
     [
       AutomatorRecord.firstRedGenerator,
@@ -188,10 +191,10 @@ export class MilestoneRecord extends Record {
       AutomatorRecord.boosterAcceleration,
     ],
     'red phase automators'
-  );
+  )
 
   static keepYellowPrestigeAutomator: ChangeResetKeyGreenMilestone = new ChangeResetKeyGreenMilestone(
-    'keepBoosterAccelerationAuto',
+    'keepYellowPrestigeAutomator',
     'Keep Yellow Prestige Automator',
     new Num(2, 0),
     [
@@ -200,7 +203,76 @@ export class MilestoneRecord extends Record {
     'yellow prestige automator'
   );
 
+  static breakGreenBarrier: BreakGreenBarrierMilestone = new BreakGreenBarrierMilestone('breakGreenBarrier');
+
   // Green Phase
+  static keepRepeatableYellowUpgradeAutomators: ChangeResetKeyGreenMilestone = new ChangeResetKeyGreenMilestone(
+    'keepRepeatableYellowUpgradeAutomators',
+    'Keep repeatable yellow upgrade automators',
+    new Num(4, 0),
+    [
+      AutomatorRecord.multiplyRedGeneratorsYellow,
+      AutomatorRecord.multiplyYellowParticlesYellow,
+      AutomatorRecord.multiplyYellowKeysYellow,
+    ],
+    'repeatable yellow upgrade automators'
+  )
+
+  static keepFirstYellowAutomator: ChangeResetKeyGreenMilestone = new ChangeResetKeyGreenMilestone(
+    'keepFirstYellowAutomator',
+    'Keep first yellow generator automator',
+    new Num(5, 0),
+    [
+      AutomatorRecord.firstYellowGenerator
+    ],
+    'first yellow generator automator'
+  )
+
+  static keepSecondYellowAutomator: ChangeResetKeyGreenMilestone = new ChangeResetKeyGreenMilestone(
+    'keepSecondYellowAutomator',
+    'Keep second yellow generator automator',
+    new Num(6, 0),
+    [
+      AutomatorRecord.secondYellowGenerator
+    ],
+    'second yellow generator automator'
+  )
+
+  static keepThirdYellowAutomator: ChangeResetKeyGreenMilestone = new ChangeResetKeyGreenMilestone(
+    'keepThirdYellowAutomator',
+    'Keep third yellow generator automator',
+    new Num(7, 0),
+    [
+      AutomatorRecord.thirdYellowGenerator
+    ],
+    'third yellow generator automator'
+  )
+
+  static keepFourthYellowAutomator: ChangeResetKeyGreenMilestone = new ChangeResetKeyGreenMilestone(
+    'keepFourthYellowAutomator',
+    'Keep fourth yellow generator automator',
+    new Num(8, 0),
+    [
+      AutomatorRecord.fourthYellowGenerator
+    ],
+    'fourth yellow generator automator'
+  )
+
+  static keepFifthYellowAutomator: ChangeResetKeyGreenMilestone = new ChangeResetKeyGreenMilestone(
+    'keepFifthYellowAutomator',
+    'Keep fifth yellow generator automator',
+    new Num(9, 0),
+    [
+      AutomatorRecord.fifthYellowGenerator
+    ],
+    'fifth yellow generator automator'
+  )
+
+
+
+
+
+
 
   // Blue Phase
 
@@ -241,8 +313,15 @@ export class MilestoneRecord extends Record {
     MilestoneRecord.breakYellowBarrier,
 
     // Keep all red automators
-    MilestoneRecord.keepAllRedAutomators,
-
+    MilestoneRecord.initialGreenMilestone,
+    MilestoneRecord.keepYellowPrestigeAutomator,
+    MilestoneRecord.breakGreenBarrier,
+    MilestoneRecord.keepRepeatableYellowUpgradeAutomators,
+    MilestoneRecord.keepFirstYellowAutomator,
+    MilestoneRecord.keepSecondYellowAutomator,
+    MilestoneRecord.keepThirdYellowAutomator,
+    MilestoneRecord.keepFourthYellowAutomator,
+    MilestoneRecord.keepFifthYellowAutomator,
   ];
 
   getList(): Milestone[] {
@@ -264,12 +343,6 @@ export class MilestoneRecord extends Record {
   init() {
     this.getList().forEach((milestone: Milestone) => {
       milestone.init()
-    })
-  }
-
-  run() {
-    this.getList().forEach((milestone: Milestone) => {
-      milestone.run()
     })
   }
 

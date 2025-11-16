@@ -36,9 +36,9 @@ export abstract class RedGenerator extends Generator {
   override reset() {
     super.reset();
     if (UpgradeRecord.startWithMoreRedExtensionsUpgrade.bought.greq(new Num(this.rank - 1, 0))) {
-      this.unlocked = true;
-      this.multiplierUpgrade.unlocked = true;
-      this.buyMultiplierUpgrade.unlocked = true;
+      this.unlock();
+      this.multiplierUpgrade.unlock();
+      this.buyMultiplierUpgrade.unlock();
     }
   }
 

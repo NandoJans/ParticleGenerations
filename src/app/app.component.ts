@@ -49,6 +49,7 @@ export class AppComponent implements OnInit{
     this.updateVersion();
     this.dataManagerService.init();
     this.dataManagerService.load();
+
     this.offlineService.load();
     this.dataManagerService.save();
     this.localStorageHelper.save(this.VERSION);

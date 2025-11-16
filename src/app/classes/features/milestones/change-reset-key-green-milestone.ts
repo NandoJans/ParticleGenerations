@@ -26,7 +26,7 @@ export class ChangeResetKeyGreenMilestone extends GreenMilestone {
     }
   }
 
-  override getDescription(): string {
+  override getDescription(): string|string[] {
     return "Stop resetting "+this.groupName+" on yellow prestige.";
   }
 }

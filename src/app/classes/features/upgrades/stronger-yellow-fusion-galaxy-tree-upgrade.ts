@@ -38,6 +38,6 @@ export class StrongerYellowFusionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   override buffer = new Num(1.25, 0);
   override baseBuffer = new Num(1.25, 0);
 
-  cost: Num = new Num(9, 0);
-  baseCost: Num = new Num(9, 0);
+  cost: Num = new Num(4, 0);
+  baseCost: Num = new Num(4, 0);
 }

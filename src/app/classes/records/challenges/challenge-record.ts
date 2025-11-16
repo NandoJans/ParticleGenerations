@@ -4,6 +4,7 @@ import { ProximaCentauriStarChallenge } from "../../features/challenges/proxima-
 import {LalandeStarChallenge} from "../../features/challenges/lalande-star-challenge";
 import {SunStarChallenge} from "../../features/challenges/sun-star-challenge";
 import {SiriusStarChallenge} from "../../features/challenges/sirius-star-challenge";
+import {DarkGalaxyChallenge} from "../../features/challenges/dark-galaxy-challenge";
 
 export class ChallengeRecord extends Record {
   // Yellow phase 1
@@ -12,11 +13,15 @@ export class ChallengeRecord extends Record {
   static sunStar: SunStarChallenge = new SunStarChallenge('sunStar');
   static siriusStar: SiriusStarChallenge = new SiriusStarChallenge('siriusStar');
 
+  // Dark galaxy challenge
+  static darkGalaxy: DarkGalaxyChallenge = new DarkGalaxyChallenge('darkGalaxy');
+
   static override list: Challenge[] = [
     ChallengeRecord.proximaCentauriStar,
     ChallengeRecord.lalandeStar,
     ChallengeRecord.sunStar,
     ChallengeRecord.siriusStar,
+    ChallengeRecord.darkGalaxy,
   ];
 
   static currentChallenges: {[key: string]: Challenge} = {};

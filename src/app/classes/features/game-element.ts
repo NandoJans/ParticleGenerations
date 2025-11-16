@@ -3,11 +3,12 @@ import {GameElementHelper} from "../helpers/game-element-helper";
 import {Num} from "../../num";
 
 export abstract class GameElement {
+  firstUnlock: boolean = false
   unlocked: boolean = false
   startUnlocked: boolean = false
   abstract requirement: Requirement[]
   hidden: boolean = false
-  disabled: boolean = false
+  enabled: boolean = true
   calculationOrder: number|undefined = undefined
   abstract name: string
   saveName: string
@@ -30,8 +31,17 @@ export abstract class GameElement {
     return this.unlocked;
   }
 
+  isFirstUnlocked(): boolean {
+    return this.firstUnlock;
+  }
+
   unlock(): void|{title: string, message: string} {
     this.unlocked = true;
+    this.firstUnlock = true;
+  }
+
+  lock(): void {
+    this.unlocked = false;
   }
 
   protected getGameElementHelper(): GameElementHelper {
@@ -40,5 +50,17 @@ export abstract class GameElement {
 
   run(speed: Num): void {
 
+  }
+
+  isEnabled(): boolean {
+    return this.enabled;
+  }
+
+  enable(): void {
+    this.enabled = true;
+  }
+
+  disable(): void {
+    this.enabled = false;
   }
 }

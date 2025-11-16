@@ -13,6 +13,7 @@ export class RedGeneratorExtensionAutomator extends Automator {
   goalString: string = 'Reset red generators a total of 100 times';
   name: string = 'red-generator-extension-automator';
   style: Styles = Styles.RED_AUTOMATOR;
+  override firstUnlock: boolean = true;
   override unlocked: boolean = true;
   override startUnlocked: boolean = true;
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED, this);

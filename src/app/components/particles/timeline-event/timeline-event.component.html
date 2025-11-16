@@ -16,7 +16,11 @@
   </div>
   <div class="milestone-details" *ngIf="hasMilestones() && milestone">
     <h3>{{ getMilestoneName() }}</h3>
-    <p class="description">{{ getMilestoneDescription() }}</p>
+    <div class="description">
+      @for (descriptionPiece of getMilestoneDescription(); track descriptionPiece) {
+        <p class="description-piece">{{ descriptionPiece }}</p>
+      }
+    </div>
     <p>{{ getMilestoneGoal() }} {{ getMilestoneHoldingAbbreviation() }}</p>
   </div>
   <div class="milestone-details" *ngIf="hasMilestones() && !milestone">

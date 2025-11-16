@@ -10,7 +10,7 @@ div.container {
 }
 
 div.container.open {
-  top: 20px;
+  top: 100px;
 }
 
 div.container.closed {

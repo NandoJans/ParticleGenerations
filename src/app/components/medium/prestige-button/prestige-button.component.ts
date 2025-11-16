@@ -90,6 +90,6 @@ export class PrestigeButtonComponent implements OnInit {
   }
 
   getCompletionHolding(): string {
-    return this.getChallenge()?.currency.displayName ?? '';
+    return this.getChallenge()?.getCurrency().displayName ?? '';
   }
 }

@@ -12,12 +12,13 @@ import {ChallengeUpgrade} from "./challenges/upgrades/challenge-upgrade";
 import {App} from "../../App";
 import {ChallengeHolding} from "./challenges/holdings/challenge-holding";
 import {ChallengeGenerator} from "./challenges/generators/challenge-generator";
+import {StatsService} from "../../services/stats.service";
+import {ChallengeRecord} from "../records/challenges/challenge-record";
 
-export abstract class Challenge extends GameElement implements Resetable, Storable {
+export abstract class Challenge extends GameElement implements Resetable, Storable, Require {
   abstract displayName: string
   abstract baseGoal: Num
   abstract goal: Num
-  abstract currency: Holding
   abstract prestige: ResetKey
   abstract prestigeLayer: string;
   abstract getRewardDescription(): string
@@ -44,6 +45,8 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   challengeUpgrades: {[key: string]: ChallengeUpgrade} = {};
   challengeHoldings: {[key: string]: ChallengeHolding} = {};
   challengeGenerators: {[key: string]: ChallengeGenerator} = {};
+
+  abstract getCurrency(): Holding;
 
   strongerBuffer(completionBuffer: Num): Num | void {
     if (this.completed instanceof Num) {
@@ -165,6 +168,7 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   save(): void {
     this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey())
 
+    this.localStorageHelper.save(this.firstUnlock, "firstUnlock");
     this.localStorageHelper.save(this.unlocked, "unlocked");
     if (this.completed instanceof Num) {
       this.localStorageHelper.saveNum(this.completed, "completed");
@@ -172,11 +176,12 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
       this.localStorageHelper.save(this.completed, "completed");
     }
 
-    this.saveChallengeUpgrades();
+    this.saveChallengeElements();
   }
 
   tryLoad(): void {
     this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey())
+    this.firstUnlock = this.localStorageHelper.load(this.firstUnlock, "firstUnlock");
     this.unlocked = this.localStorageHelper.load(this.unlocked, "unlocked");
     if (this.completed instanceof Num) {
 
@@ -191,28 +196,28 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
       }
     }
 
-    this.init();
-    this.tryLoadChallengeUpgrades();
+    this.tryLoadChallengeElements();
   }
 
-  saveChallengeUpgrades(): void {
+  saveChallengeElements(): void {
     this.getChallengeElements().forEach((value) => {
       value.save()
     })
   }
 
-  tryLoadChallengeUpgrades() {
+  tryLoadChallengeElements() {
     this.getChallengeElements().forEach((value) => {
       value.tryLoad()
     })
   }
 
   reached(): boolean {
-    return this.currency.amount.greq(this.goal);
+    return this.getCurrency().amount.greq(this.goal);
   }
 
-  appliedNerfs: {[key: string]: {[key: string]: { element: GameElement } }} = {
+  appliedNerfs: {[key: string]: {[key: string]: { element: GameElement, initial?: any } }} = {
     'requirements': {},
+    'disabled': {}
   }
 
   protected applyRequirementNerf(gameElement: GameElement, requirement: {require: Require, amount: Num}|[] = []): void {
@@ -229,8 +234,31 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
     }
   }
 
+  protected applyDisableNerf(gameElement: GameElement | GameElement[], enabled: boolean = false): void {
+    if (Array.isArray(gameElement)) {
+      for (const element of gameElement) {
+        this.applyDisableNerfSingle(element, enabled);
+      }
+    } else {
+      this.applyDisableNerfSingle(gameElement, enabled);
+    }
+  }
+
+  private applyDisableNerfSingle(gameElement: GameElement, enabled: boolean = false): void {
+    this.appliedNerfs['disabled'][gameElement.name] = {
+      element: gameElement,
+      initial: gameElement.enabled,
+    };
+    if (enabled) {
+      gameElement.enable();
+    } else {
+      gameElement.disable();
+    }
+  }
+
   revert() {
     this.revertRequirementNerfs();
+    this.revertDisableNerfs();
   }
 
   revertRequirementNerfs(): void {
@@ -239,6 +267,13 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
       value.element.init();
     })
     this.appliedNerfs['requirements'] = {};
+  }
+
+  revertDisableNerfs(): void {
+    Object.values(this.appliedNerfs['disabled']).forEach((value) => {
+      value.element.enabled = value.initial;
+    })
+    this.appliedNerfs['disabled'] = {};
   }
 
   getChallengeElements(): (ChallengeGenerator | ChallengeUpgrade | ChallengeHolding)[] {
@@ -251,10 +286,11 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
 
   start(): void {
     this.init();
+    this.tryLoadChallengeElements();
     this.nerfs()
     this.getChallengeElements().forEach((value: ChallengeGenerator | ChallengeUpgrade | ChallengeHolding) => {
       if (!(value instanceof Holding)) {
-        value.unlocked = true;
+        value.unlock();
       }
     })
   }
@@ -299,11 +335,19 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   }
 
   complete(): void {
-    if (this.completed instanceof Num) {
-      this.completed = this.completed.add(new Num(1, 0));
-    } else {
-      this.completed = true;
+    if (!this.isCompleted()) {
+      StatsService.addNum(this.name, 'totalCompletions', new Num(1, 0));
+
+      if (this.completed instanceof Num) {
+        this.completed = this.completed.add(new Num(1, 0));
+      } else {
+        this.completed = true;
+      }
     }
+  }
+
+  requirementSatisfied(amount: Num): boolean {
+    return amount.greq(this.getCompletions());
   }
 
   getCompletions(): Num {

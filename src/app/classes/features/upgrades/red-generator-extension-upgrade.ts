@@ -27,6 +27,7 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
   override subNav: string = 'redParticles';
   override requirement: Requirement[] = [];
   override resets: ResetKey = ResetKey.RED_EXTENSION;
+  override firstUnlock: boolean = true;
   override unlocked: boolean = true;
   override startUnlocked: boolean = true;
   override calculationOrder = 1001;
@@ -89,11 +90,5 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
   override reset() {
     super.reset();
     this.bought = this.startBought.copy();
-    // Force unlock check for red generators
-    GeneratorRecord.redGenerators.forEach((generator) => {
-      if (generator.requirementsMet()) {
-        generator.unlocked = true;
-      }
-    });
   }
 }

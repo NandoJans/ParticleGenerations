@@ -17,7 +17,7 @@ export class NumberDisplayComponent implements OnInit {
   constructor(
     protected holdingRecord: HoldingRecord
   ) {
-    this.holdingDisplay = this.holding.holdingDisplay;
+    this.holdingDisplay = this.holding.getHoldingDisplay();
   }
 
   getHoldingAmount(): string {
@@ -25,11 +25,11 @@ export class NumberDisplayComponent implements OnInit {
   }
 
   getHoldingEffect() {
-    return this.holding.getEffectDisplay()
+    return this.holding.getEffectDisplay() || "-"
   }
 
   hasHoldingEffect() {
-    return this.holding.hasEffect()
+    return this.holding.hasEffect() || this.holdingDisplay.getEffectPrefix() || this.holdingDisplay.getEffectSuffix();
   }
 
   getLines(): HoldingDisplayLine[] {
@@ -37,6 +37,6 @@ export class NumberDisplayComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.holdingDisplay = this.holding.holdingDisplay;
+    this.holdingDisplay = this.holding.getHoldingDisplay();
   }
 }

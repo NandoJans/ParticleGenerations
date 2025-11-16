@@ -19,6 +19,8 @@ import {FifthYellowGenerator} from "../../features/generators/fifth-yellow-gener
 import {FirstGreenGenerator} from "../../features/generators/first-green-generator";
 import {GreenGenerator} from "../../features/generators/green-generator";
 import {Holding} from "../../features/holding";
+import {SecondGreenGenerator} from "../../features/generators/second-green-generator";
+import {ThirdGreenGenerator} from "../../features/generators/third-green-generator";
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +49,8 @@ export class GeneratorRecord extends Record {
 
   // Green Generators
   static firstGreenGenerator: FirstGreenGenerator = new FirstGreenGenerator('firstGreenGenerator');
+  static secondGreenGenerator: SecondGreenGenerator = new SecondGreenGenerator('secondGreenGenerator');
+  static thirdGreenGenerator: ThirdGreenGenerator = new ThirdGreenGenerator('thirdGreenGenerator');
 
 
   static override list: Generator[] = [

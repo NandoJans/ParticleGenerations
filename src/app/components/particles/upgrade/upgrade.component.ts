@@ -4,6 +4,7 @@ import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
 import {ComponentService} from "../../../services/component.service";
 import {Subscription} from "rxjs";
 import {EnhancementService} from "../../../services/enhancement.service";
+import {faLock} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
     selector: 'app-upgrade',
@@ -96,5 +97,15 @@ export class UpgradeComponent {
 
   getCostString() {
     return this.upgrade.getCostString();
+  }
+
+  isEnabled() {
+    return this.upgrade.isEnabled();
+  }
+
+  protected readonly faLock = faLock;
+
+  isUnlocked() {
+    return this.upgrade.isUnlocked();
   }
 }

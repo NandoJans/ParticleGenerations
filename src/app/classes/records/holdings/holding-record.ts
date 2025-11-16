@@ -13,6 +13,7 @@ import {GreenPrestigeHolding} from "../../features/holdings/green-prestige-holdi
 import {DarkEnergyHolding} from "../../features/holdings/dark-energy-holding";
 import {DarkMatterHolding} from "../../features/holdings/dark-matter-holding";
 import {StarKeyHolding} from "../../features/holdings/star-key-holding";
+import {DarkStarHolding} from "../../features/holdings/dark-star-holding";
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,7 @@ export class HoldingRecord {
   static greenPrestiges: GreenPrestigeHolding = new GreenPrestigeHolding();
   static darkEnergy: DarkEnergyHolding = new DarkEnergyHolding();
   static darkMatter: DarkMatterHolding = new DarkMatterHolding();
+  static darkStarHolding: DarkStarHolding = new DarkStarHolding();
 
   static getList(): Holding[] {
     return [
@@ -55,6 +57,7 @@ export class HoldingRecord {
       HoldingRecord.greenPrestiges,
       HoldingRecord.darkEnergy,
       HoldingRecord.darkMatter,
+      HoldingRecord.darkStarHolding,
     ]
   }
 

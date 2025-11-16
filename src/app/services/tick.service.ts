@@ -22,6 +22,8 @@ import {HoldingRecord} from "../classes/records/holdings/holding-record";
 import {App} from "../App";
 import {CompressionService} from "./compression.service";
 import {UpgradeRecord} from "../classes/records/upgrades/upgrade-record";
+import {MilestoneService} from "./interactables/milestone.service";
+import {Milestone} from "../classes/features/milestone";
 
 @Injectable({
   providedIn: 'root'
@@ -48,6 +50,7 @@ export class TickService {
     private milestoneRecord: MilestoneRecord,
     private challengeService: ChallengeService,
     private compressionService: CompressionService,
+    private milestoneService: MilestoneService,
   ) {}
 
   /**
@@ -57,6 +60,8 @@ export class TickService {
   gameTick(speed: Num = new Num(1, -1)) {
     if (App.isHalting()) return;
 
+    // HoldingRecord.greenParticles.amount = new Num(1, 0);
+
     if (!App.offlineCalculation) App.gameSpeed = speed;
 
     this.checkRequirements();
@@ -64,7 +69,9 @@ export class TickService {
 
     this.calculationOrder.forEach((elements) => {
       elements.forEach((element) => {
-        if (element instanceof Holding) {
+        if (element instanceof Milestone) {
+          element.run();
+        } else if (element instanceof Holding) {
           element.run();
         } else if (element instanceof Multiplier) {
           element.reset();
@@ -79,7 +86,6 @@ export class TickService {
     });
     // HoldingRecord.yellowFusion.amount = new Num(1, 1000);
 
-    this.milestoneRecord.tick();
     this.prestigeLayersService.tick(speed);
     this.challengeService.tick();
     this.timelineService.tick();
@@ -138,7 +144,8 @@ export class TickService {
       this.holdingService,
       this.generatorService,
       this.challengeService,
-      this.multiplierService
+      this.multiplierService,
+      this.milestoneService,
     ];
 
     services.forEach(service => {
@@ -148,7 +155,7 @@ export class TickService {
     });
   }
 
-  private pushToCalculationOrder(element: GameElement|Holding|Multiplier) {
+  private pushToCalculationOrder(element: GameElement|Holding|Multiplier|Milestone) {
     if (element.calculationOrder == undefined) {
       if (this.calculationOrder[4] == undefined) {
         this.calculationOrder[4] = []

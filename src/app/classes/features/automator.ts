@@ -67,11 +67,14 @@ export abstract class Automator extends GameElement implements Storable, Resetab
           buyable.buy();
         }
       })
+      this.action();
     } else if (!this.completed) {
       return this.checkTask();
     }
     return false
   }
+
+  action() {}
 
   localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey());
 
@@ -99,7 +102,7 @@ export abstract class Automator extends GameElement implements Storable, Resetab
     }
   }
 
-  enable(): void {
+  activate(): void {
     if (this.completed) {
       this.active = true;
       this.save();
@@ -109,7 +112,7 @@ export abstract class Automator extends GameElement implements Storable, Resetab
     }
   }
 
-  disable(): void {
+  deactivate(): void {
     this.active = false;
     this.save();
     this.buyables().forEach(buyable => {
@@ -134,5 +137,9 @@ export abstract class Automator extends GameElement implements Storable, Resetab
       }
     }
     return true
+  }
+
+  isActive(): boolean {
+    return this.completed && this.active;
   }
 }

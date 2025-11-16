@@ -47,7 +47,7 @@ export abstract class Generator extends Buyable implements Generatable, Storable
       .pow(this.bought)
       .mul(this.mulMod)
       .mul(this.globalMultiplier.getNum()) as Num
-    if (this.isUnlocked()) {
+    if (this.isUnlocked() && this.isEnabled()) {
       this.generates.generate(this.getGenerateAmount().mul(speed) as Num)
     }
     this.baseMulMod = new Num(1, 0)
@@ -71,6 +71,7 @@ export abstract class Generator extends Buyable implements Generatable, Storable
     this.localStorageHelper = new LocalStorageHelper('generators', this.getSaveKey())
     this.localStorageHelper.saveNum(this.bought, 'bought')
     this.localStorageHelper.saveNum(this.amount, 'amount')
+    this.localStorageHelper.save(this.firstUnlock, "firstUnlock");
     this.localStorageHelper.save(this.unlocked, 'unlocked')
     this.localStorageHelper.save(this.auto, 'auto')
     this.localStorageHelper.save(
@@ -83,6 +84,7 @@ export abstract class Generator extends Buyable implements Generatable, Storable
     this.localStorageHelper = new LocalStorageHelper('generators', this.getSaveKey())
     this.bought = this.localStorageHelper.loadNum(this.bought, 'bought')
     this.amount = this.localStorageHelper.loadNum(this.amount, 'amount')
+    this.firstUnlock = this.localStorageHelper.load(this.firstUnlock, 'firstUnlock')
     this.unlocked = this.localStorageHelper.load(this.unlocked, 'unlocked')
     this.auto = this.localStorageHelper.load(this.auto, 'auto')
 

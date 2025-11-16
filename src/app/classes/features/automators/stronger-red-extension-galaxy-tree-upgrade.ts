@@ -21,7 +21,7 @@ export class StrongerRedExtensionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   }
 
   getDescription(): string {
-    return "Increases the power of red extensions by 2x";
+    return `Increases the power of red extensions by ${this.buffer.toString(2)}x`;
   }
 
   action(): undefined {
@@ -29,13 +29,13 @@ export class StrongerRedExtensionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
     return
   }
 
-  override buffer = new Num(2, 0);
-  override baseBuffer = new Num(2, 0);
+  override buffer = new Num(5, 0);
+  override baseBuffer = new Num(5, 0);
 
   style: Styles = Styles.STAR_ORANGE;
   displayName: string = "Stronger Red Extension";
 
-  cost: Num = new Num(8, 0);
-  baseCost: Num = new Num(8, 0);
+  cost: Num = new Num(2, 0);
+  baseCost: Num = new Num(2, 0);
 }
 

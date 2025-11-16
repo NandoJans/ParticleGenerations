@@ -1,5 +1,4 @@
 <button
-  *ngIf="isVisible()"
   [id]="'buyable-'+generator.name"
   [class]="'generator '
   +generator.style+' '
@@ -19,4 +18,9 @@
   <div class="challenge-disabled" style="display: none;">
     <h2>Challenge Disabled</h2>
   </div>
+  @if (!isEnabled() || !isUnlocked()) {
+    <div class="disabled-overlay">
+      <fa-icon [icon]="faLock"></fa-icon>
+    </div>
+  }
 </button>

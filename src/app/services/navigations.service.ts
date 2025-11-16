@@ -6,7 +6,7 @@ import {SubNavigation} from "../classes/features/sub-navigation";
 import {
   faArrowUp,
   faAtom, faBalanceScale, faCalendar,
-  faCogs, faExclamation, faFire,
+  faCogs, faCompactDisc, faExclamation, faFire,
   faForward,
   faIndustry, faKey,
   faMountain, faStar, faSun
@@ -60,8 +60,11 @@ export class NavigationsService {
     greenGalaxyTree: new SubNavigation('greenGalaxyTree', faStar, 'galaxyTree', this.navigations['green'], [
       {requirement: HoldingRecord.greenPrestiges, amount: new Num(1, 0)},
     ], false),
-    greenGenerators: new SubNavigation('greenGenerators', faIndustry, 'greenGenerators', this.navigations['green'], [
+    greenGenerators: new SubNavigation('greenGenerators', faIndustry, 'generators', this.navigations['green'], [
       {requirement: UpgradeRecord.unlockFirstGreenGeneratorGalaxyTree, amount: new Num(1, 0)},
+    ], false),
+    greenDarkGalaxy: new SubNavigation('greenDarkGalaxy', faCompactDisc, 'darkGalaxy', this.navigations['green'], [
+      {requirement: HoldingRecord.greenParticles, amount: new Num(1, 10)},
     ], false),
 
     // Automators

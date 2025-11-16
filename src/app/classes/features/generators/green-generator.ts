@@ -9,6 +9,9 @@ import {Multiplier} from "../multiplier";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 import {Styles} from "../../enums/styles";
 import {Generator} from "../generator";
+import {GreenGeneratorMultiplierUpgrade} from "../upgrades/green-generator-multiplier-upgrade";
+import {GreenGeneratorBuyMultiplierUpgrade} from "../upgrades/green-generator-buy-multiplier-upgrade";
+import {GreenGeneratorCostDivisorUpgrade} from "../upgrades/green-generator-cost-divisor-upgrade";
 
 export abstract class GreenGenerator extends Generator {
   type: string = 'green-generator';
@@ -33,11 +36,15 @@ export abstract class GreenGenerator extends Generator {
   style: Styles = Styles.GREEN;
   subNav: string = 'greenGenerators';
 
-  // abstract multiplierUpgrade: YellowGeneratorMultiplierUpgrade;
-  // abstract buyMultiplierUpgrade: YellowGeneratorBuyMultiplierUpgrade;
-
+  abstract multiplierUpgrade: GreenGeneratorMultiplierUpgrade;
+  abstract buyMultiplierUpgrade: GreenGeneratorBuyMultiplierUpgrade;
+  abstract costDivisorUpgrade: GreenGeneratorCostDivisorUpgrade;
 
   override getUpgrades(): Upgrade[] {
-    return [];
+    return [
+      this.multiplierUpgrade,
+      this.buyMultiplierUpgrade,
+      this.costDivisorUpgrade,
+    ];
   }
 }

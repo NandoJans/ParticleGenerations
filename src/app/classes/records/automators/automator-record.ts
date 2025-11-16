@@ -21,6 +21,9 @@ import {
 import {MultiplyYellowKeysYellowAutomator} from "../../features/automators/multiply-yellow-keys-yellow-automator";
 import {YellowGeneratorAutomator} from "../../features/automators/yellow-generator-automator";
 import {FusionBoosterAccelerationAutomator} from "../../features/automators/fusion-booster-acceleration-automator";
+import {StarChallengeAutomator} from "../../features/automators/star-challenge-automator";
+import {ChallengeRecord} from "../challenges/challenge-record";
+import {StarKeyCompressionAutomator} from "../../features/automators/star-key-compression-automator";
 
 @Injectable({
   providedIn: 'root'
@@ -55,7 +58,14 @@ export class AutomatorRecord extends Record {
   static fourthYellowGenerator: YellowGeneratorAutomator = new YellowGeneratorAutomator('fourthYellowGenerator', GeneratorRecord.fourthYellowGenerator);
   static fifthYellowGenerator: YellowGeneratorAutomator = new YellowGeneratorAutomator('fifthYellowGenerator', GeneratorRecord.fifthYellowGenerator);
 
+  static proximaCentauriStarChallenge: StarChallengeAutomator = new StarChallengeAutomator('proximaCentauriStarChallenge', ChallengeRecord.proximaCentauriStar);
+  static lalandeStarChallenge: StarChallengeAutomator = new StarChallengeAutomator('lalandeStarChallenge', ChallengeRecord.lalandeStar);
+  static sunStarChallenge: StarChallengeAutomator = new StarChallengeAutomator('sunStarChallenge', ChallengeRecord.sunStar);
+  static siriusStarChallenge: StarChallengeAutomator = new StarChallengeAutomator('siriusStarChallenge', ChallengeRecord.siriusStar);
+
   static fusionBoosterAcceleration: FusionBoosterAccelerationAutomator = new FusionBoosterAccelerationAutomator('fusionBoosterAcceleration');
+
+  static starKeyCompression: StarKeyCompressionAutomator = new StarKeyCompressionAutomator('starKeyCompression');
 
   static redAutomators: Automator[] = [
     AutomatorRecord.firstRedGenerator,
@@ -99,7 +109,13 @@ export class AutomatorRecord extends Record {
     AutomatorRecord.fourthYellowGenerator,
     AutomatorRecord.fifthYellowGenerator,
 
+    AutomatorRecord.proximaCentauriStarChallenge,
+    AutomatorRecord.lalandeStarChallenge,
+    AutomatorRecord.sunStarChallenge,
+    AutomatorRecord.siriusStarChallenge,
+
     AutomatorRecord.fusionBoosterAcceleration,
+    AutomatorRecord.starKeyCompression,
   ]
 
   getList(): Automator[] {

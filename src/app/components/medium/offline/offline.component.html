@@ -11,7 +11,7 @@
         <h3>Generated Holdings</h3>
       </div>
       <div *ngFor="let generatedHolding of getGeneratedHoldings()" class="holdings-value {{ generatedHolding.holding.getStyle() }}">
-        <p class="holding-name">{{ generatedHolding.holding.holdingDisplay.getAmountSuffix() }}</p>
+        <p class="holding-name">{{ generatedHolding.holding.getHoldingDisplay().getAmountSuffix() }}</p>
         <p class="holding-generated">{{ generatedHolding.generated.toString() }}</p>
       </div>
     </div>

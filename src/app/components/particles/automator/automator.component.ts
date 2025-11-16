@@ -72,9 +72,9 @@ export class AutomatorComponent implements OnInit {
 
   setActive(event: any) {
     if (event.target.checked) {
-      this.automator.enable();
+      this.automator.activate();
     } else {
-      this.automator.disable();
+      this.automator.deactivate();
     }
   }
 

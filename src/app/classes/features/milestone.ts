@@ -10,7 +10,7 @@ import {Require} from "./interfaces/require";
 
 export abstract class Milestone extends GameElement implements Resetable, Storable, Require {
   abstract displayName: string
-  abstract getDescription(): string
+  abstract getDescription(): string|string[]
   abstract type: string
   abstract style: Styles
   abstract goal: Num
@@ -28,9 +28,16 @@ export abstract class Milestone extends GameElement implements Resetable, Storab
   action(): void {}
   tick(): void {}
 
-  override run(): void {
+  override init(): void {
     if (this.goalReached()) {
       this.action()
+    }
+    super.init();
+  }
+
+  override run(): void {
+    if (this.goalReached()) {
+      this.tick()
     }
   }
 
@@ -59,11 +66,13 @@ export abstract class Milestone extends GameElement implements Resetable, Storab
 
   save(): void {
     this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey());
+    this.localStorageHelper.save(this.firstUnlock, "firstUnlock");
     this.localStorageHelper.save(this.unlocked, 'unlocked');
   }
 
   tryLoad() {
     this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey());
+    this.firstUnlock = this.localStorageHelper.load(this.firstUnlock, 'firstUnlock')
     this.unlocked = this.localStorageHelper.load(this.unlocked, 'unlocked');
   }
 

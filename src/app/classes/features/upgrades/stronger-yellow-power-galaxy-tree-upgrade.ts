@@ -34,10 +34,10 @@ export class StrongerYellowPowerGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   }
 
   style: Styles = Styles.STAR_ORANGE
-  displayName: string = "Stronger yellow power";
+  displayName: string = "Stronger Yellow Power";
 
-  override buffer: Num = new Num(1.1, 0);
-  override baseBuffer: Num = new Num(1.1, 0);
+  override buffer: Num = new Num(1.25, 0);
+  override baseBuffer: Num = new Num(1.25, 0);
 
   cost: Num = new Num(1, 0);
   baseCost: Num = new Num(1, 0);

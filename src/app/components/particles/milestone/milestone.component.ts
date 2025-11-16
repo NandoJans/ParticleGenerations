@@ -33,12 +33,4 @@ export class MilestoneComponent implements OnInit {
   isUnlocked(): boolean {
     return this.milestone.unlocked;
   }
-
-  getDisplayName(): string {
-    return this.milestone.displayName;
-  }
-
-  getDescription(): string {
-    return this.milestone.getDescription();
-  }
 }
