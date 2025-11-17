@@ -13,7 +13,7 @@ export class DarkStarHolding extends Holding {
   holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
     .withAmountPrefix('You have')
     .withAmountSuffix(' Dark Stars')
-    .withEffectPrefix('They multiply green generators by')
+    .withEffectPrefix('They multiply all generators by')
     .withEffectSuffix('')
     .addLine('By raising ', () => {
       return this.buffer.toString(2)
@@ -27,6 +27,8 @@ export class DarkStarHolding extends Holding {
 
   override action(): Num {
     const effect = this.buffer.pow(this.amount);
+    MultiplierRecord.redParticleGenerators.correct(effect);
+    MultiplierRecord.yellowGenerators.correct(effect);
     MultiplierRecord.greenGenerators.correct(effect);
     return effect;
   }
