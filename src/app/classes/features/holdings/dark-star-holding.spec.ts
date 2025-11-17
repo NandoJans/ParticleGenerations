@@ -18,38 +18,49 @@ describe('DarkStarHolding', () => {
     expect(holding).toBeTruthy();
   });
 
-  it('should have buffer of 2', () => {
-    expect(holding.buffer.toNumber()).toBe(2);
+  it('should have separate buffers for each generator type', () => {
+    expect(holding.redBuffer.toNumber()).toBe(10);
+    expect(holding.yellowBuffer.toNumber()).toBe(3);
+    expect(holding.greenBuffer.toNumber()).toBe(2);
   });
 
-  it('should multiply all generators by 2^amount', () => {
-    holding.amount = new Num(3, 0);
+  it('should multiply red generators by 10^amount', () => {
+    holding.amount = new Num(2, 0);
     const effect = holding.action();
     
-    // Effect should be 2^3 = 8
-    expect(effect.toNumber()).toBe(8);
+    // Red effect should be 10^2 = 100
+    expect(effect.toNumber()).toBe(100);
   });
 
-  it('should boost red generators', () => {
+  it('should boost red generators more than yellow generators', () => {
     holding.amount = new Num(2, 0);
     holding.action();
     
-    // Should have corrected red particle generators multiplier
-    // The actual value depends on how multipliers accumulate
+    // Red: 10^2 = 100x
+    // Yellow: 3^2 = 9x
+    // Green: 2^2 = 4x
+    const redBoost = holding.redBuffer.pow(holding.amount);
+    const yellowBoost = holding.yellowBuffer.pow(holding.amount);
+    
+    expect(redBoost.toNumber()).toBeGreaterThan(yellowBoost.toNumber());
+  });
+
+  it('should boost yellow generators more than green generators', () => {
+    holding.amount = new Num(2, 0);
+    holding.action();
+    
+    const yellowBoost = holding.yellowBuffer.pow(holding.amount);
+    const greenBoost = holding.greenBuffer.pow(holding.amount);
+    
+    expect(yellowBoost.toNumber()).toBeGreaterThan(greenBoost.toNumber());
+  });
+
+  it('should boost all three generator types', () => {
+    holding.amount = new Num(2, 0);
+    holding.action();
+    
     expect(MultiplierRecord.redParticleGenerators.getNum().toNumber()).toBeGreaterThan(1);
-  });
-
-  it('should boost yellow generators', () => {
-    holding.amount = new Num(2, 0);
-    holding.action();
-    
     expect(MultiplierRecord.yellowGenerators.getNum().toNumber()).toBeGreaterThan(1);
-  });
-
-  it('should boost green generators', () => {
-    holding.amount = new Num(2, 0);
-    holding.action();
-    
     expect(MultiplierRecord.greenGenerators.getNum().toNumber()).toBeGreaterThan(1);
   });
 });
