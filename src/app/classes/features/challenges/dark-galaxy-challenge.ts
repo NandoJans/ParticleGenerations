@@ -24,7 +24,7 @@ export class DarkGalaxyChallenge extends Challenge {
     nerfPower: Num = new Num(5, -1)
 
     override getRewardDescription(): string {
-      return "Gather dark stars"
+      return "Gather dark stars (1 per 1e1000 yellow particles)"
     }
 
     override getDescription(): string {
@@ -35,7 +35,7 @@ export class DarkGalaxyChallenge extends Challenge {
     resetId: ResetKey = ResetHelper.registerReset(ResetKey.GREEN, this);
 
     override reward(): Num | undefined {
-        throw new Error("Method not implemented.");
+        return HoldingRecord.darkStarHolding.amount;
     }
 
     override nerfs(): void {
@@ -47,6 +47,25 @@ export class DarkGalaxyChallenge extends Challenge {
       super.end();
       // Clear global hook when leaving the challenge
       Multiplier.globalGetHook = undefined;
+    }
+
+    override tick(): void {
+      super.tick();
+      // Award dark stars for every 1e1000 yellow particles
+      this.updateDarkStars();
+    }
+
+    private updateDarkStars(): void {
+      const yellowParticles = HoldingRecord.yellowParticles.amount;
+      const milestone = new Num(1, 1000);
+      
+      // Calculate how many dark stars should be earned based on yellow particles
+      const darkStarsEarned = yellowParticles.div(milestone).floor();
+      
+      // Update dark star holding if we've earned more
+      if (darkStarsEarned.gt(HoldingRecord.darkStarHolding.amount)) {
+        HoldingRecord.darkStarHolding.amount = darkStarsEarned;
+      }
     }
 
     requirement: Requirement[] = [];
