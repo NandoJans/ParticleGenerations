@@ -21,7 +21,7 @@ export class DarkStarHolding extends Holding {
     .build();
   name: string = 'dark-star-holding';
   displayName: string = 'Dark Stars';
-  resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
+  resetId: ResetKey = ResetHelper.registerReset(ResetKey.GREEN, this);
   startAmount: Num = new Num(0, 0);
   buffer: Num = new Num(2, 0);
 
