@@ -1,0 +1,43 @@
+<div class="challenge {{ challenge.style }}">
+  <div class="galaxy-wrapper">
+    <div class="galaxy-nebula"></div>
+
+    <div class="galaxy-stars">
+      @for (star of stars; track star.id) {
+        <div
+          class="star"
+          [style.top]="star.top"
+          [style.left]="star.left"
+          [style.width.px]="star.size"
+          [style.height.px]="star.size"
+          [style.animationDuration]="star.duration + 's'"
+          [style.animationDelay]="star.delay + 's'">
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="details">
+    <div class="name">
+      <h2>{{ challenge.displayName }}</h2>
+    </div>
+    <div class="description">
+      <p>{{ challenge.getDescription() }}</p>
+    </div>
+    <div class="reward">
+      <p>{{ challenge.getRewardDescription() }}</p>
+    </div>
+    <div class="effect">
+      <p>{{ challenge.getEffectDisplay() }}</p>
+    </div>
+    <div class="goal">
+      <p>Reach {{ challenge.goal.toString() }} {{ challenge.getCurrency().displayName }}</p>
+    </div>
+    <div class="completions">
+      <p>{{ challenge.completed }} / {{ challenge.maxCompletions }} Completions</p>
+    </div>
+    <div class="start">
+      <button [class]="'button '+((challenge.isCompleted()) ? 'completed' : '')" (click)="startChallenge()">{{ getButtonText() }}</button>
+    </div>
+  </div>
+</div>

@@ -6,6 +6,8 @@ import {Holding} from "../holding";
 import {Requirement} from "../interfaces/requirement";
 import {HoldingRecord} from "../../records/holdings/holding-record";
 import {ResetHelper} from "../../helpers/reset-helper";
+import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {Multiplier} from "../multiplier";
 
 export class DarkGalaxyChallenge extends Challenge {
     displayName: string = "Dark Galaxy Challenge";
@@ -19,7 +21,7 @@ export class DarkGalaxyChallenge extends Challenge {
     prestige: ResetKey = ResetKey.YELLOW
     prestigeLayer: string = 'green';
 
-    nerfPower: Num = new Num(1, -1)
+    nerfPower: Num = new Num(5, -1)
 
     override getRewardDescription(): string {
       return "Gather dark stars"
@@ -31,12 +33,22 @@ export class DarkGalaxyChallenge extends Challenge {
     style: Styles = Styles.DARK_GALAXY;
     type: string = 'darkGalaxy';
     resetId: ResetKey = ResetHelper.registerReset(ResetKey.GREEN, this);
+
     override reward(): Num | undefined {
         throw new Error("Method not implemented.");
     }
+
     override nerfs(): void {
-        throw new Error("Method not implemented.");
+      // Install a global multiplier retrieval hook that applies the nerf power
+      Multiplier.globalGetHook = (value: Num, _ctx) => value.pow(this.nerfPower);
     }
+
+    override end(): void {
+      super.end();
+      // Clear global hook when leaving the challenge
+      Multiplier.globalGetHook = undefined;
+    }
+
     requirement: Requirement[] = [];
     name: string = "dark-galaxy-challenge";
 

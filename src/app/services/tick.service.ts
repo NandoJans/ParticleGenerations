@@ -60,7 +60,6 @@ export class TickService {
   gameTick(speed: Num = new Num(1, -1)) {
     if (App.isHalting()) return;
 
-    // HoldingRecord.greenParticles.amount = new Num(1, 0);
 
     if (!App.offlineCalculation) App.gameSpeed = speed;
 

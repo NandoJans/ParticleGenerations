@@ -45,6 +45,7 @@ import { GreenTimelineComponent } from './pages/timeline/green-timeline/green-ti
 import {BalanceComponent} from "./dev/balance/balance.component";
 import {YellowStarKeysPageComponent} from "./pages/yellow/yellow-star-keys-page/yellow-star-keys-page.component";
 import {GreenDarkGalaxyPageComponent} from "./pages/green/green-dark-galaxy-page/green-dark-galaxy-page.component";
+import {DarkGalaxyComponent} from "./components/particles/dark-galaxy/dark-galaxy.component";
 
 @NgModule({
   declarations: [
@@ -95,7 +96,8 @@ import {GreenDarkGalaxyPageComponent} from "./pages/green/green-dark-galaxy-page
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    DarkGalaxyComponent
   ],
   providers: [],
     exports: [

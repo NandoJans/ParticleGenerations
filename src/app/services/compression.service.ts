@@ -104,7 +104,7 @@ export class CompressionService implements Resetable {
       this.yellowFusionCompressionEffect = new Num(effect, 0);
     }
 
-    const speed = Math.max(MultiplierRecord.starKeyCompressionSpeed.num.toNumber(), 1);
+    const speed = Math.max(MultiplierRecord.starKeyCompressionSpeed.getNum().toNumber(), 1);
 
     // Prior formula had an extra *1000 in time; so per-ms rate = (log * speed) / 1000
     const rate = (effect * speed) / 1000;
