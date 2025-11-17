@@ -37,7 +37,7 @@ export class RedGeneratorDarkStarCharger extends DarkStarCharger {
   applyTierDrawback(chargeValue: Num): Num {
     // TODO: Implement tier-based drawback
     // For now, simple division by tier
-    if (this.tier.eq(new Num(0, 0))) {
+    if (this.tier.equals(new Num(0, 0))) {
       return chargeValue;
     }
     return chargeValue.div(this.tier);
