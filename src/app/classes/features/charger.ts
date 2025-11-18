@@ -12,6 +12,12 @@ export abstract class Charger extends GameElement implements Resetable, Storable
   amount: Num = new Num(0, 0);
   startAmount: Num = new Num(0, 0);
   speed: Num = new Num(1, 0);
+  abstract max: Num;
+  charging: boolean = false;
+  abstract getNerfDescription(): string;
+  abstract getChargeDescription(): string;
+  abstract getRewardDescription(): string;
+  abstract getEffectBreakdown(): {formula: string, effects: string[]};
 
   localStorageHelper: LocalStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey());
 

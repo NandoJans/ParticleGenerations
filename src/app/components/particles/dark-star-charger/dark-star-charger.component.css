@@ -1,0 +1,181 @@
+.charger-container {
+  display: flex;
+  flex-direction: column;
+  background: var(--background-color-4);
+  border-radius: 10px;
+  border: 3px solid var(--background-color-3);
+  padding: 1rem;
+  margin: 1rem;
+  min-width: 300px;
+}
+
+/* Header */
+.charger-header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--background-color-3);
+}
+
+.toggle-button {
+  background: var(--background-color-3);
+  border: 2px solid var(--accent-color, var(--text-color));
+  border-radius: 5px;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--text-color);
+  transition: all 0.2s;
+}
+
+.toggle-button:hover {
+  background: var(--accent-color, var(--text-color));
+  color: var(--background-color-1);
+}
+
+.charger-name {
+  margin: 0;
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--text-color);
+}
+
+.effect-breakdown {
+  text-align: right;
+  font-size: 0.9rem;
+}
+
+.formula {
+  margin: 0 0 0.25rem 0;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.effects {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.effect-item {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--text-color-light);
+}
+
+/* Progress Bar */
+.progress-bar-container {
+  margin: 1rem 0;
+}
+
+.progress-bar {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  background-color: var(--background-color-3);
+  border-radius: 5px;
+  overflow: hidden;
+  border: 2px solid var(--background-color-1);
+}
+
+.progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-color, var(--text-color)) 0%, var(--accent-color, var(--text-color)) 100%);
+  transition: width 0.3s ease;
+}
+
+/* Charging animation - gradient moves to the right */
+.progress-bar.charging .progress-fill {
+  background: linear-gradient(
+    90deg,
+    var(--accent-color, var(--text-color)) 0%,
+    color-mix(in srgb, var(--accent-color, var(--text-color)) 60%, white) 25%,
+    var(--accent-color, var(--text-color)) 50%,
+    color-mix(in srgb, var(--accent-color, var(--text-color)) 60%, white) 75%,
+    var(--accent-color, var(--text-color)) 100%
+  );
+  background-size: 200% 100%;
+  animation: charging-animation 2s linear infinite;
+}
+
+@keyframes charging-animation {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 200% 0%;
+  }
+}
+
+.amount-display {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  font-weight: bold;
+  font-size: 1rem;
+  color: var(--background-color-1);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+/* Footer */
+.charger-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 0.5rem;
+  border-top: 2px solid var(--background-color-3);
+}
+
+.description-section {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.description-label {
+  margin: 0;
+  font-weight: bold;
+  min-width: 80px;
+  color: var(--text-color);
+}
+
+.description-text {
+  margin: 0;
+  color: var(--text-color-light);
+  flex: 1;
+}
+
+/* Color variants */
+.charger-container.red {
+  --accent-color: var(--accent-color-red);
+  --text-color: var(--text-color-red);
+}
+
+.charger-container.yellow {
+  --accent-color: var(--accent-color-yellow);
+  --text-color: var(--text-color-yellow);
+}
+
+.charger-container.green {
+  --accent-color: var(--accent-color-green);
+  --text-color: var(--text-color-green);
+}
+
+.charger-container.blue {
+  --accent-color: var(--accent-color-blue);
+  --text-color: var(--text-color-blue);
+}
+
+.charger-container.purple {
+  --accent-color: var(--accent-color-purple);
+  --text-color: var(--text-color-purple);
+}

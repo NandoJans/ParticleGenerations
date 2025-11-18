@@ -3,7 +3,7 @@ import {Charger} from "../../features/charger";
 import {RedGeneratorDarkStarCharger} from "../../features/chargers/red-generator-dark-star-charger";
 
 export class ChargerRecord extends Record {
-  static redGeneratorDarkCharger: RedGeneratorDarkStarCharger = new RedGeneratorDarkStarCharger();
+  static redGeneratorDarkCharger: RedGeneratorDarkStarCharger = new RedGeneratorDarkStarCharger("redGeneratorDarkStarCharger");
 
   static override list: Charger[] = [];
 

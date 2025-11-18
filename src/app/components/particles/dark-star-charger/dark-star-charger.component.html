@@ -1,1 +1,39 @@
-<p>dark-star-charger works!</p>
+<div class="charger-container">
+  <!-- Header -->
+  <div class="charger-header">
+    <button class="toggle-button" (click)="toggleCharging()">
+      {{ isCharging() ? '⏸' : '▶' }}
+    </button>
+    <h3 class="charger-name">{{ getDisplayName() }}</h3>
+    <div class="effect-breakdown">
+      <p class="formula">{{ getEffectBreakdown().formula }}</p>
+      <div class="effects">
+        <p *ngFor="let effect of getEffectBreakdown().effects" class="effect-item">{{ effect }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="progress-bar-container">
+    <div class="progress-bar" [class.charging]="isCharging()">
+      <div class="progress-fill" [style.width.%]="getProgress()"></div>
+      <p class="amount-display">{{ getAmountDisplay() }}</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="charger-footer">
+    <div class="description-section">
+      <p class="description-label">Nerf:</p>
+      <p class="description-text">{{ getNerfDescription() }}</p>
+    </div>
+    <div class="description-section">
+      <p class="description-label">Charge:</p>
+      <p class="description-text">{{ getChargeDescription() }}</p>
+    </div>
+    <div class="description-section">
+      <p class="description-label">Reward:</p>
+      <p class="description-text">{{ getRewardDescription() }}</p>
+    </div>
+  </div>
+</div>
