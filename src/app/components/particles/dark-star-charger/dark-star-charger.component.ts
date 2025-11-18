@@ -33,6 +33,14 @@ export class DarkStarChargerComponent {
     this.charger.charging = !this.charger.charging;
   }
 
+  toggleCollapsed() {
+    this.charger.collapsed = !this.charger.collapsed;
+  }
+
+  isCollapsed(): boolean {
+    return this.charger.collapsed;
+  }
+
   getProgress(): number {
     if (this.charger.amount.lte(new Num(0, 0))) {
       return 0;

@@ -14,6 +14,7 @@ export abstract class Charger extends GameElement implements Resetable, Storable
   speed: Num = new Num(1, 0);
   abstract max: Num;
   charging: boolean = false;
+  collapsed: boolean = false;
   abstract getNerfDescription(): string;
   abstract getChargeDescription(): string;
   abstract getRewardDescription(): string;
