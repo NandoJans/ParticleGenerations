@@ -34,10 +34,10 @@ export class DarkStarChargerComponent {
   }
 
   getProgress(): number {
-    if (this.charger.amount.leq(new Num(0, 0))) {
+    if (this.charger.amount.lte(new Num(0, 0))) {
       return 0;
     }
-    if (this.charger.amount.geq(this.charger.max)) {
+    if (this.charger.amount.greq(this.charger.max)) {
       return 100;
     }
     
