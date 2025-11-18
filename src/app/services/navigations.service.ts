@@ -91,9 +91,8 @@ export class NavigationsService {
   constructor(
     private router: Router
   ) {
-    if (App.isDev()) {
-      this.setDevRoutes();
-    }
+    // Always add dev routes so they're accessible
+    this.setDevRoutes();
 
     this.load();
     console.log('Navigations loaded:', this.navigations, this.subNavigations);
