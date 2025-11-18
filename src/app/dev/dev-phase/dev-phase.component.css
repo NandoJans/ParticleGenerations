@@ -5,12 +5,12 @@
 }
 
 h1 {
-  color: #333;
+  color: var(--text-color-main);
   margin-bottom: 10px;
 }
 
 .description {
-  color: #666;
+  color: var(--text-color-light);
   margin-bottom: 30px;
   font-size: 14px;
 }
@@ -24,7 +24,7 @@ h1 {
 
 .phase-selector label {
   font-weight: bold;
-  color: #444;
+  color: var(--text-color-main);
 }
 
 .phase-dropdown {
@@ -32,37 +32,38 @@ h1 {
   max-width: 400px;
   padding: 10px;
   font-size: 16px;
-  border: 2px solid #ddd;
+  border: 2px solid var(--background-color-4);
   border-radius: 5px;
-  background-color: white;
+  background-color: var(--background-color-1);
+  color: var(--text-color-main);
   cursor: pointer;
   transition: border-color 0.3s;
 }
 
 .phase-dropdown:hover {
-  border-color: #888;
+  border-color: var(--background-color-light);
 }
 
 .phase-dropdown:focus {
   outline: none;
-  border-color: #4CAF50;
+  border-color: var(--accent-color-green);
 }
 
 .phase-info {
-  background-color: #f5f5f5;
+  background-color: var(--background-color-2);
   padding: 20px;
   border-radius: 5px;
   margin-bottom: 20px;
-  border-left: 4px solid #4CAF50;
+  border-left: 4px solid var(--accent-color-green);
 }
 
 .phase-info h2 {
   margin-top: 0;
-  color: #333;
+  color: var(--text-color-main);
 }
 
 .phase-description {
-  color: #555;
+  color: var(--text-color-light);
   font-size: 14px;
   margin-bottom: 0;
 }
@@ -72,8 +73,8 @@ h1 {
 }
 
 .warning {
-  background-color: #fff3cd;
-  border: 1px solid #ffc107;
+  background-color: var(--background-color-yellow);
+  border: 1px solid var(--accent-color-yellow);
   border-radius: 5px;
   padding: 15px;
   margin-bottom: 30px;
@@ -81,19 +82,19 @@ h1 {
 
 .warning p {
   margin: 0;
-  color: #856404;
+  color: var(--text-color-main);
 }
 
 .phase-list {
-  background-color: #f9f9f9;
+  background-color: var(--background-color-2);
   padding: 20px;
   border-radius: 5px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--background-color-4);
 }
 
 .phase-list h3 {
   margin-top: 0;
-  color: #333;
+  color: var(--text-color-main);
 }
 
 .phase-list ul {
@@ -104,11 +105,11 @@ h1 {
 .phase-list li {
   padding: 10px;
   margin-bottom: 8px;
-  background-color: white;
+  background-color: var(--background-color-1);
   border-radius: 3px;
-  border-left: 3px solid #4CAF50;
+  border-left: 3px solid var(--accent-color-green);
 }
 
 .phase-list li strong {
-  color: #4CAF50;
+  color: var(--accent-color-green);
 }
