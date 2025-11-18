@@ -7,7 +7,7 @@ import {
   faArrowUp,
   faAtom, faBalanceScale, faCalendar,
   faCogs, faCompactDisc, faExclamation, faFire,
-  faForward,
+  faForward, faFlask,
   faIndustry, faKey,
   faMountain, faStar, faSun
 } from "@fortawesome/free-solid-svg-icons";
@@ -91,9 +91,8 @@ export class NavigationsService {
   constructor(
     private router: Router
   ) {
-    if (App.isDev()) {
-      this.setDevRoutes();
-    }
+    // Always add dev routes so they're accessible
+    this.setDevRoutes();
 
     this.load();
     console.log('Navigations loaded:', this.navigations, this.subNavigations);
@@ -102,6 +101,7 @@ export class NavigationsService {
   private setDevRoutes() {
     this.navigations['dev'] = new Navigation('dev', faExclamation, 'dev', [], 'balance', true);
     this.subNavigations['devBalance'] = new SubNavigation('devBalance', faBalanceScale, 'balance', this.navigations['dev'], [], true);
+    this.subNavigations['devPhase'] = new SubNavigation('devPhase', faFlask, 'phase', this.navigations['dev'], [], true);
   }
 
   getAllNavigations(): (Navigation|SubNavigation)[] {
