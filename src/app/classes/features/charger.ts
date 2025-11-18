@@ -27,7 +27,24 @@ export abstract class Charger extends GameElement implements Resetable, Storable
   }
 
   override run() {
+    // Only charge when the charger is enabled (charging = true) and we're in the dark galaxy challenge
+    if (this.charging && this.shouldCharge()) {
+      const chargeAmount = this.getChargeAmount();
+      this.applyCharge(chargeAmount);
+      
+      // Cap at max
+      if (this.amount.greq(this.max)) {
+        this.amount = this.max.copy();
+      }
+    }
+  }
 
+  /**
+   * Override this method in subclasses to determine when the charger should charge
+   * By default, returns true (always charge when enabled)
+   */
+  protected shouldCharge(): boolean {
+    return true;
   }
 
   abstract getChargeAmount(): Num;
@@ -51,11 +68,17 @@ export abstract class Charger extends GameElement implements Resetable, Storable
   }
 
   tryLoad(): void {
-    throw new Error("Method not implemented.");
+    this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey());
+    this.amount = this.localStorageHelper.loadNum(this.amount, 'amount');
+    this.charging = this.localStorageHelper.load(this.charging, 'charging');
+    this.collapsed = this.localStorageHelper.load(this.collapsed, 'collapsed');
   }
 
   save(): void {
-    throw new Error("Method not implemented.");
+    this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey());
+    this.localStorageHelper.saveNum(this.amount, 'amount');
+    this.localStorageHelper.save(this.charging, 'charging');
+    this.localStorageHelper.save(this.collapsed, 'collapsed');
   }
 
 }

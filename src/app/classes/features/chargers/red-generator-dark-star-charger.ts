@@ -15,6 +15,7 @@ export class RedGeneratorDarkStarCharger extends DarkStarCharger {
   }
 
   override getChargeAmount(): Num {
+    // Charge by 1 per tick (50ms), so it takes 50 seconds to fully charge at 1000 max
     return new Num(1, 0);
   }
 }

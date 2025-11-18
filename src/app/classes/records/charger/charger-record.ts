@@ -5,7 +5,9 @@ import {RedGeneratorDarkStarCharger} from "../../features/chargers/red-generator
 export class ChargerRecord extends Record {
   static redGeneratorDarkCharger: RedGeneratorDarkStarCharger = new RedGeneratorDarkStarCharger("redGeneratorDarkStarCharger");
 
-  static override list: Charger[] = [];
+  static override list: Charger[] = [
+    ChargerRecord.redGeneratorDarkCharger,
+  ];
 
   getList(): Charger[] {
     return ChargerRecord.list;

@@ -4,6 +4,7 @@ import {Holding} from "../../../classes/features/holding";
 import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 import {DarkGalaxyChallenge} from "../../../classes/features/challenges/dark-galaxy-challenge";
 import {ChallengeRecord} from "../../../classes/records/challenges/challenge-record";
+import {ChargerRecord} from "../../../classes/records/charger/charger-record";
 
 @Component({
   selector: 'app-green-dark-galaxy-page',
@@ -14,4 +15,5 @@ import {ChallengeRecord} from "../../../classes/records/challenges/challenge-rec
 export class GreenDarkGalaxyPageComponent {
   darkStarHolding: Holding = HoldingRecord.darkStarHolding;
   darkGalaxy: DarkGalaxyChallenge = ChallengeRecord.darkGalaxy;
+  charger = ChargerRecord.redGeneratorDarkCharger;
 }

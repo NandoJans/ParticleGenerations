@@ -6,6 +6,7 @@ import {Holding} from "../holding";
 import {Requirement} from "../interfaces/requirement";
 import {HoldingRecord} from "../../records/holdings/holding-record";
 import {ResetHelper} from "../../helpers/reset-helper";
+import {ChargerRecord} from "../../records/charger/charger-record";
 
 export class DarkGalaxyChallenge extends Challenge {
     displayName: string = "Dark Galaxy Challenge";
@@ -26,8 +27,28 @@ export class DarkGalaxyChallenge extends Challenge {
     }
 
     override getDescription(): string {
-      return `In the dark galaxy, all multipliers are ^${this.nerfPower.toString(2)}`;
+      return `In the dark galaxy, all multipliers are ^${this.getNerfPower().toString(2)}`;
     }
+    
+    /**
+     * Get the nerf power, modified by the charger if it's enabled
+     */
+    getNerfPower(): Num {
+      const baseNerf = this.nerfPower;
+      const charger = ChargerRecord.redGeneratorDarkCharger;
+      
+      // If charger is enabled (charging), it increases the nerf
+      if (charger.charging && charger.amount.greq(new Num(1, 0))) {
+        // The more charged, the stronger the nerf (lower power)
+        // For example, at max charge, nerf could be 0.05 instead of 0.1
+        const chargeRatio = charger.amount.div(charger.max);
+        const nerfIncrease = chargeRatio.mul(new Num(5, -2)); // Max 0.05 additional nerf
+        return baseNerf.sub(nerfIncrease);
+      }
+      
+      return baseNerf;
+    }
+    
     style: Styles = Styles.DARK_GALAXY;
     type: string = 'darkGalaxy';
     resetId: ResetKey = ResetHelper.registerReset(ResetKey.GREEN, this);

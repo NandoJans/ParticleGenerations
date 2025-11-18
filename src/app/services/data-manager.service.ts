@@ -12,6 +12,7 @@ import {Num} from "../num";
 import {ChallengeService} from "./interactables/challenge.service";
 import {App} from "../App";
 import {CompressionService} from "./compression.service";
+import {ChargerService} from "./interactables/charger.service";
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,7 @@ export class DataManagerService {
     private challengeService: ChallengeService,
     private timelineService: TimelineService,
     private compressionService: CompressionService,
+    private chargerService: ChargerService,
   ) {}
 
   // --- Simulation mode management ---
@@ -102,6 +104,7 @@ export class DataManagerService {
     this.milestoneRecord.save();
     this.challengeService.save();
     this.compressionService.save();
+    this.chargerService.save();
 
     this.setLastSave();
     this.localStorageHelper.store();
@@ -119,6 +122,7 @@ export class DataManagerService {
     this.milestoneRecord.load();
     this.challengeService.load();
     this.compressionService.load();
+    this.chargerService.load();
 
     // Run milestones
     this.challengeService.applyCurrentChallengeNerfs();
@@ -135,6 +139,7 @@ export class DataManagerService {
     this.prestigeLayersService.init();
     this.timelineService.init();
     this.challengeService.init();
+    this.chargerService.init();
   }
 
   setLastSave(): void {

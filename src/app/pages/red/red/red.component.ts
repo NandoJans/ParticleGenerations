@@ -3,7 +3,6 @@ import {GeneratorRecord} from "../../../classes/records/generators/generator-rec
 import {Upgrade} from "../../../classes/features/upgrade";
 import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
 import {RedGenerator} from "../../../classes/features/generators/red-generator";
-import {ChargerRecord} from "../../../classes/records/charger/charger-record";
 
 @Component({
     selector: 'app-red',
@@ -23,7 +22,6 @@ export class RedComponent {
     UpgradeRecord.redGeneratorExtension,
     UpgradeRecord.redGeneratorBooster,
   ];
-  charger = ChargerRecord.redGeneratorDarkCharger;
   infoText: string[] = [
     'Welcome to Particle Generations! This is the Red Generators tab, your starting point in the game.',
     'Red generators form the foundation of particle production. The first generator produces red particles directly, while higher-tier generators (2nd, 3rd, etc.) produce the generators below them.',
