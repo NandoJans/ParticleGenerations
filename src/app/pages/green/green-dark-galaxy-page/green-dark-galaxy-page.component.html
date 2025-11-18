@@ -7,3 +7,12 @@
 <div class="upgrade-row">
   <app-dark-galaxy [challenge]="darkGalaxy"></app-dark-galaxy>
 </div>
+
+<div class="chargers-section">
+  <h3>Dark Star Chargers</h3>
+  <div class="chargers-grid">
+    @for (charger of chargers; track charger.name) {
+      <app-dark-star-charger [charger]="charger"></app-dark-star-charger>
+    }
+  </div>
+</div>
