@@ -30,7 +30,13 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   instantComplete: boolean = false
   difficultyIncrease: Num|Num[] = new Num(1, 0)
   abstract reward(): Num | undefined
-  constantNerfs(): void {};
+  nerfFunctions: {[key: string]: () => void} = {};
+  constantNerfs(): void {
+    // Call all registered nerf functions
+    Object.values(this.nerfFunctions).forEach(nerfFunction => {
+      nerfFunction();
+    });
+  };
   abstract nerfs(): void;
   completed: boolean | Num = false
   effect: Num | undefined = undefined
@@ -358,5 +364,29 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
     } else {
       return new Num(0, 0);
     }
+  }
+
+  /**
+   * Register a nerf function that will be called during constantNerfs()
+   * @param key Unique identifier for the nerf function
+   * @param nerfFunction The function to call
+   */
+  registerNerfFunction(key: string, nerfFunction: () => void): void {
+    this.nerfFunctions[key] = nerfFunction;
+  }
+
+  /**
+   * Unregister a specific nerf function
+   * @param key The identifier of the nerf function to remove
+   */
+  unregisterNerfFunction(key: string): void {
+    delete this.nerfFunctions[key];
+  }
+
+  /**
+   * Unregister all nerf functions
+   */
+  unregisterAllNerfFunctions(): void {
+    this.nerfFunctions = {};
   }
 }
