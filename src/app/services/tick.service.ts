@@ -24,7 +24,7 @@ import {CompressionService} from "./compression.service";
 import {UpgradeRecord} from "../classes/records/upgrades/upgrade-record";
 import {MilestoneService} from "./interactables/milestone.service";
 import {Milestone} from "../classes/features/milestone";
-
+import {ChargerService} from "./interactables/charger.service";
 @Injectable({
   providedIn: 'root'
 })
@@ -51,6 +51,7 @@ export class TickService {
     private challengeService: ChallengeService,
     private compressionService: CompressionService,
     private milestoneService: MilestoneService,
+    private chargerService: ChargerService,
   ) {}
 
   /**
@@ -146,6 +147,7 @@ export class TickService {
       this.challengeService,
       this.multiplierService,
       this.milestoneService,
+      this.chargerService,
     ];
 
     services.forEach(service => {

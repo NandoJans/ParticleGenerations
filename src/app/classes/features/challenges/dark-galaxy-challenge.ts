@@ -28,6 +28,7 @@ export class DarkGalaxyChallenge extends Challenge {
     override getDescription(): string {
       return `In the dark galaxy, all multipliers are ^${this.nerfPower.toString(2)}`;
     }
+    
     style: Styles = Styles.DARK_GALAXY;
     type: string = 'darkGalaxy';
     resetId: ResetKey = ResetHelper.registerReset(ResetKey.GREEN, this);
