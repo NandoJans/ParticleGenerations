@@ -2,7 +2,6 @@ import {Styles} from "../../enums/styles";
 import {Buyable} from "../buyable";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {Num} from "../../../num";
-import {EnhancementRecord} from "../../records/enhancement-record";
 import {ResetKey} from "../../enums/reset-key";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {Requirement} from "../interfaces/requirement";
