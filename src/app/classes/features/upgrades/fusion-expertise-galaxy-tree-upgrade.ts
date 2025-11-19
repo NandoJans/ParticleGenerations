@@ -14,15 +14,15 @@ export class FusionExpertiseGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
 
   getParents(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.strongerYellowFusionGalaxyTree,
-      UpgradeRecord.strongerHydrogenGalaxyTree,
+      UpgradeRecord.betterYellowKeyGainGalaxyTree,
+      UpgradeRecord.betterYellowGeneratorsGalaxyTree,
     ];
   }
 
   override requireParent: RequireParent = RequireParent.ALL;
 
   getDescription(): string {
-    return `Increase other fusion upgrade power by ${this.buffer.toString(2)}x.`;
+    return `Fusion expertise enhances the power of faster hydrogen generation, stronger hydrogen and stronger yellow fusion by ${this.buffer.toString(2)}x.`;
   }
 
   action(): undefined {

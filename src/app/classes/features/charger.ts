@@ -9,18 +9,25 @@ export abstract class Charger extends GameElement implements Resetable, Storable
   abstract displayName: string;
   softResetId: ResetKey = ResetKey.NONE;
   abstract resetId: ResetKey;
-  
+
   // Charge tracking
   charge: Num = new Num(0, 0);
   startCharge: Num = new Num(0, 0);
-  
+
   // Tier system
   tier: Num = new Num(0, 0);
   startTier: Num = new Num(0, 0);
   abstract maxCharge: Num;
   abstract maxTier: Num | undefined;
   abstract canInfiniteChargeAtMaxTier: boolean;
-  
+
+  charging: boolean = false;
+  collapsed: boolean = false;
+  abstract getNerfDescription(): string;
+  abstract getChargeDescription(): string;
+  abstract getRewardDescription(): string;
+  abstract getEffectBreakdown(): {formula: string, effects: string[]};
+
   // Effect tracking
   effect: Num = new Num(0, 0);
 
@@ -34,26 +41,24 @@ export abstract class Charger extends GameElement implements Resetable, Storable
    * Main run loop - handles charging logic
    */
   override run(speed: Num): void {
-    if (this.shouldCharge()) {
-      const chargeAmount = this.getChargeAmount().mul(speed);
+    if (this.charging && this.shouldCharge()) {
+      const chargeAmount = this.getChargeAmount();
       this.applyCharge(chargeAmount);
-      
-      // Check if we've reached max charge and should tier up
-      if (this.canTierUp()) {
-        this.tierUp();
+
+      // Cap at max
+      if (this.charge.greq(this.maxCharge)) {
+        this.charge = this.maxCharge.copy();
       }
     }
-    
-    // Run the action function to calculate and apply effects
-    this.action();
   }
 
   /**
    * Determines if the charger should charge
    * Must be overridden by subclasses to implement specific charging conditions
    */
-  abstract shouldCharge(): boolean;
-
+  protected shouldCharge(): boolean {
+    return true;
+  }
   /**
    * Returns the amount of charge to add per tick
    * Must be overridden by subclasses to implement specific charge calculation
@@ -77,7 +82,7 @@ export abstract class Charger extends GameElement implements Resetable, Storable
    */
   protected applyCharge(amount: Num): void {
     this.charge = this.charge.add(amount);
-    
+
     // Cap charge at max if at max tier and can't infinite charge
     if (this.isAtMaxTier() && !this.canInfiniteChargeAtMaxTier) {
       if (this.charge.gt(this.maxCharge)) {
@@ -94,7 +99,7 @@ export abstract class Charger extends GameElement implements Resetable, Storable
     if (this.isAtMaxTier()) {
       return false;
     }
-    
+
     // Can tier up if charge meets or exceeds max charge
     return this.charge.greq(this.maxCharge);
   }
@@ -148,6 +153,8 @@ export abstract class Charger extends GameElement implements Resetable, Storable
     this.tier = this.localStorageHelper.loadNum(this.startTier, "tier");
     this.unlocked = this.localStorageHelper.load(this.unlocked, "unlocked");
     this.firstUnlock = this.localStorageHelper.load(this.firstUnlock, "firstUnlock");
+    this.charging = this.localStorageHelper.load(this.charging, 'charging');
+    this.collapsed = this.localStorageHelper.load(this.collapsed, 'collapsed');
   }
 
   save(): void {
@@ -156,6 +163,8 @@ export abstract class Charger extends GameElement implements Resetable, Storable
     this.localStorageHelper.saveNum(this.tier, "tier");
     this.localStorageHelper.save(this.unlocked, "unlocked");
     this.localStorageHelper.save(this.firstUnlock, "firstUnlock");
+    this.localStorageHelper.save(this.charging, 'charging');
+    this.localStorageHelper.save(this.collapsed, 'collapsed');
   }
 
 }

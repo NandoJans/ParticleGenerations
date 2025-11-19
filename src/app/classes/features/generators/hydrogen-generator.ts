@@ -1,4 +1,3 @@
-import {Generatable} from "../interfaces/generatable";
 import {HoldingRecord} from "../../records/holdings/holding-record";
 import {Num} from "../../../num";
 import {ResetKey} from "../../enums/reset-key";
@@ -35,29 +34,50 @@ export class HydrogenGenerator extends Generator {
 
   barrier: Num = new Num(5, 3);
 
+  speed: Num = new Num(1, -1);
+
+  override run(speed: Num): any {
+    this.speed = speed;
+    return super.run(speed);
+  }
+
   protected override getGenerateAmount(): Num {
     let amount: Num = super.getGenerateAmount();
 
-    const hydrogenAmount = HoldingRecord.hydrogen.amount
+    const speed   = this.speed;           // bv. 0.1 (Num)
+    const barrier = this.barrier;         // bv. 5000 (Num)
+    const hydrogen = HoldingRecord.hydrogen.amount;
 
-    if (hydrogenAmount.greq(this.barrier)) {
-
-      const scale = hydrogenAmount.div(this.barrier);
-      amount = amount.div(new Num(2, 0).pow(scale));
-
-    } else if (hydrogenAmount.add(amount).greq(this.barrier)) {
-      //    diff = 5.000 - hydrogen
-      const diff = this.barrier.sub(hydrogenAmount);
-      //    amount - diff
-      amount = amount.sub(diff);
-      //    Scaling berekenen op amount
-      const scale = amount.div(this.barrier);
-      amount = amount.div(new Num(2, 0).pow(scale));
-      //    amount + diff
-      amount = amount.add(diff);
+    // 1) Ruwe effectieve gain dit tick
+    let gain = amount.mul(speed);
+    if (gain.mantissa === 0) {
+      return amount;
     }
 
-    return amount;
+    // 2) DYNAMISCHE HARD CAP op basis van power-transform
+    //    cap = barrier * (gain / barrier)^p  (alleen als gain > barrier)
+    const one = Num.ONE;
+    const p = 0.05; // tunen: 0.3 ≈ 1e6→~24k, 1e7→~49k bij barrier=5000
+
+    if (gain.gt(barrier)) {
+      const ratio = gain.div(barrier);      // >= 1
+      const ratioPow = ratio.pow(p);        // (gain/barrier)^p
+      const dynCap = barrier.mul(ratioPow); // dynamische cap
+
+      if (gain.gt(dynCap)) {
+        gain = dynCap;
+      }
+    }
+
+    // 3) Per-barrier-halving: gain / 2^(hydrogen/barrier)
+    const depth = hydrogen.div(barrier);        // hydrogen / barrier
+    const exponent = depth.toNumber();          // normaal klein genoeg
+    const factor = Num.TWO.pow(exponent);       // 2^(hydrogen/barrier)
+
+    const softGain = gain.div(factor);
+
+    // 4) Terug naar pre-speed space
+    return softGain.div(speed);
   }
 
   override init() {

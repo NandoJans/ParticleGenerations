@@ -42,6 +42,6 @@ export class AmplifiedFusionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   override buffer = new Num(1, 1);
   override baseBuffer = new Num(1, 1);
 
-  cost: Num = new Num(2, 1);
-  baseCost: Num = new Num(2, 1);
+  cost: Num = new Num(3, 1);
+  baseCost: Num = new Num(3, 1);
 }

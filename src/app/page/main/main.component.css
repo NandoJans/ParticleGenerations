@@ -8,9 +8,21 @@
 div.action-message {
   position: fixed;
   top: 150px;
+  left: 40%;
+  width: 20%;
+  margin: 0 auto;
+  padding: 0.5%;
   z-index: 500;
-  width: 100%;
   border-radius: 5px;
+  background-color: var(--background-color-3);
+}
+
+div.action-message h2 {
+  margin: 0.5rem 0;
+}
+
+div.action-message.yellow {
+  border: 2px solid var(--accent-color-yellow);
 }
 
 .page {

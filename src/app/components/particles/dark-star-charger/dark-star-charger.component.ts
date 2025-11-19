@@ -1,10 +1,10 @@
 import {ChangeDetectorRef, Component, Input} from '@angular/core';
-import {DarkStarCharger} from '../../../classes/features/chargers/dark-star-charger';
 import {ComponentService} from '../../../services/component.service';
 import {Subscription} from 'rxjs';
-import {faLock} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
-import {Styles} from "../../../classes/enums/styles";
+import {Charger} from "../../../classes/features/charger";
+import {RedGeneratorDarkStarCharger} from "../../../classes/features/chargers/red-generator-dark-star-charger";
+import {Num} from "../../../num";
 
 @Component({
   selector: 'app-dark-star-charger',
@@ -15,7 +15,7 @@ import {Styles} from "../../../classes/enums/styles";
   styleUrl: './dark-star-charger.component.css',
 })
 export class DarkStarChargerComponent {
-  @Input() charger!: DarkStarCharger;
+  @Input() charger: Charger = new RedGeneratorDarkStarCharger("redGeneratorDarkStarCharger");
   private sub: Subscription;
 
   constructor(
@@ -31,74 +31,70 @@ export class DarkStarChargerComponent {
     this.sub.unsubscribe();
   }
 
-  toggleNerf() {
-    if (this.charger.isUnlocked()) {
-      this.charger.toggleNerf();
+  toggleCharging() {
+    this.charger.charging = !this.charger.charging;
+  }
+
+  toggleCollapsed() {
+    this.charger.collapsed = !this.charger.collapsed;
+  }
+
+  isCollapsed(): boolean {
+    return this.charger.collapsed;
+  }
+
+  getProgress(): number {
+    if (this.charger.charge.lte(new Num(0, 0))) {
+      return 0;
     }
+    if (this.charger.charge.greq(this.charger.maxCharge)) {
+      return 100;
+    }
+
+    // Logarithmic scaling
+    const start = new Num(1, 0);
+    const goal = this.charger.maxCharge.div(start);
+    const progress = this.charger.charge.div(start);
+
+    const percentage = progress.log(10)
+      .div(goal.log(10))
+      .mul(new Num(1, 2))
+      .toNumber();
+
+    if (percentage > 100) {
+      return 100;
+    } else if (percentage < 0) {
+      return 0;
+    } else {
+      return percentage;
+    }
+  }
+
+  getAmountDisplay(): string {
+    return `${this.charger.charge.toString()}/${this.charger.maxCharge.toString()}`;
   }
 
   getDisplayName(): string {
     return this.charger.displayName;
   }
 
+  isCharging(): boolean {
+    return this.charger.charging;
+  }
+
   getNerfDescription(): string {
     return this.charger.getNerfDescription();
   }
 
-  getEffectDescription(): string {
-    return this.charger.getEffectDescription();
+  getChargeDescription(): string {
+    return this.charger.getChargeDescription();
   }
 
-  getCharge(): string {
-    return this.charger.charge.toString();
+  getRewardDescription(): string {
+    return this.charger.getRewardDescription();
   }
 
-  getTier(): string {
-    return this.charger.tier.toString();
-  }
-
-  getMaxCharge(): string {
-    return this.charger.maxCharge.toString();
-  }
-
-  isActive(): boolean {
-    return this.charger.isActive();
-  }
-
-  isUnlocked(): boolean {
-    return this.charger.isUnlocked();
-  }
-
-  protected readonly faLock = faLock;
-
-  private getRequirement() {
-    return this.charger.requirement.length > 0 ? this.charger.requirement[0] : undefined;
-  }
-
-  getRequirementStyle() {
-    const requirement = this.getRequirement();
-    if (requirement && 'getStyle' in requirement.requirement && requirement.requirement.getStyle instanceof Function) {
-      return requirement.requirement.getStyle().toString();
-    } else {
-      return '';
-    }
-  }
-
-  getRequirementAmount() {
-    const requirement = this.getRequirement();
-    if (requirement) {
-      return requirement.amount.toString();
-    } else {
-      return '';
-    }
-  }
-
-  getRequirementString() {
-    const requirement = this.getRequirement();
-    if (requirement && 'displayName' in requirement.requirement) {
-      return requirement.requirement.displayName;
-    } else {
-      return '';
-    }
+  getEffectBreakdown(): {formula: string, effects: string[]} {
+    return this.charger.getEffectBreakdown();
   }
 }

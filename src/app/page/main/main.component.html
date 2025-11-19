@@ -10,8 +10,11 @@
       [holding]="holdingRecord.getRedParticles()"
     ></app-number-display>
   </div>
-  <div *ngFor="let enhancement of getEnhancements()" class="action-message">
+  <div *ngFor="let enhancement of getEnhancements()" class="action-message {{ enhancement.style }}">
     <h2>{{ enhancement.actionMessage }}</h2>
+    @if (canEnhanceAll(enhancement)) {
+      <app-button [style]="'button '+enhancement.style" (function)="enhanceAll(enhancement)" [text]="'Enhance all'"></app-button>
+    }
   </div>
   <div class="page">
     <router-outlet></router-outlet>

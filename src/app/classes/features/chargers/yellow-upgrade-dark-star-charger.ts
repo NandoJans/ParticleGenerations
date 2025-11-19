@@ -6,7 +6,7 @@ import {HoldingRecord} from "../../records/holdings/holding-record";
 
 /**
  * Yellow Upgrade Dark Star Charger
- * 
+ *
  * Nerfs: All yellow upgrades are disabled.
  * Charge: is gained based on yellow particles amount
  * Amplifies: Gain green keys, which can enhance yellow upgrades and generators.
@@ -26,7 +26,6 @@ export class YellowUpgradeDarkStarCharger extends DarkStarCharger {
     const chargeAmount = yellowParticles.amount.log10();
     return chargeAmount.gt(new Num(0, 0)) ? chargeAmount : new Num(0, 0);
   }
-
   action(): void {
     // Calculate green keys gained based on effective charge
     const effectiveCharge = this.getEffectiveCharge();
@@ -52,6 +51,14 @@ export class YellowUpgradeDarkStarCharger extends DarkStarCharger {
 
   getNerfDescription(): string {
     return 'All yellow upgrades are disabled.';
+  }
+
+  getChargeDescription(): string {
+    return 'Charges based on the amount of yellow particles you have.';
+  }
+
+  getRewardDescription(): string {
+    return 'Increases green key gain, which enhances yellow upgrades and generators.';
   }
 
   getEffectDescription(): string {

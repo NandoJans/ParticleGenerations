@@ -13,6 +13,8 @@ import {ChallengeService} from "./interactables/challenge.service";
 import {App} from "../App";
 import {CompressionService} from "./compression.service";
 import {ChargerRecord} from "../classes/records/charger/charger-record";
+import {EnhancementRecord} from "../classes/records/enhancement-record";
+import {EnhancementService} from "./enhancement.service";
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +34,7 @@ export class DataManagerService {
     private challengeService: ChallengeService,
     private timelineService: TimelineService,
     private compressionService: CompressionService,
+    private enhancementService: EnhancementService,
   ) {}
 
   // --- Simulation mode management ---
@@ -140,6 +143,7 @@ export class DataManagerService {
     this.prestigeLayersService.init();
     this.timelineService.init();
     this.challengeService.init();
+    this.enhancementService.init();
   }
 
   setLastSave(): void {

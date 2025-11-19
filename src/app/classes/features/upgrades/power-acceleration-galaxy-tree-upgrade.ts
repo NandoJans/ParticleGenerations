@@ -22,7 +22,7 @@ export class PowerAccelerationGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   }
 
   getDescription(): string {
-    return `Red accelerators boost the power of yellow upgrades by ^${this.buffer.toString(2)}`;
+    return `Red accelerators boost the power of yellow upgrades by ^${this.buffer.toString(3)}`;
   }
 
   action(): Num | undefined {
@@ -42,6 +42,6 @@ export class PowerAccelerationGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   override buffer = new Num(2, -3);
   override baseBuffer = new Num(2, -3);
 
-  cost: Num = new Num(1.2, 1);
-  baseCost: Num = new Num(1.2, 1);
+  cost: Num = new Num(2.5, 1);
+  baseCost: Num = new Num(2.5, 1);
 }

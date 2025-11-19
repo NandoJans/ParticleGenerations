@@ -18,6 +18,7 @@ export class BreakGreenBarrierMilestone extends GreenMilestone {
 
   override action() {
     PrestigeLayersService.greenPrestigeLayer.limitPhaseBelow = false;
+    PrestigeLayersService.yellowPrestigeLayer.limitPhaseBelow = false;
     UpgradeRecord.breakYellowBarrier.unlock();
     UpgradeRecord.breakYellowBarrier.bought = new Num(1, 0);
     UpgradeRecord.breakYellowBarrier.amount = new Num(1, 0);

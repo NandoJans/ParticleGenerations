@@ -7,6 +7,9 @@ import {Injectable} from "@angular/core";
 })
 export class EnhancementRecord {
 
+  constructor() {}
+
+
   static yellow: YellowEnhancement = new YellowEnhancement('yellow');
 
   static list: Enhancement[] = [

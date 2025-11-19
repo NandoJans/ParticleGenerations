@@ -1,11 +1,11 @@
 import { ResetKey } from "src/app/classes/enums/reset-key";
 import { Styles } from "src/app/classes/enums/styles";
 import { Num } from "src/app/num";
-import {Generator} from "../../generator";
 import {Holding} from "../../holding";
 import {Generatable} from "../../interfaces/generatable";
 import {Requirement} from "../../interfaces/requirement";
 import {Multiplier} from "../../multiplier";
+import {Generator} from "../../generator";
 
 export class ChallengeGenerator extends Generator {
   globalMultiplier: Multiplier;
