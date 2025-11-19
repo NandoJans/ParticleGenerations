@@ -44,25 +44,25 @@ export class HydrogenGenerator extends Generator {
   protected override getGenerateAmount(): Num {
     let amount: Num = super.getGenerateAmount();
 
-    const speed   = this.speed;           // bv. 0.1 (Num)
-    const barrier = this.barrier;         // bv. 5000 (Num)
+    const speed   = this.speed;           // e.g. 0.1 (Num)
+    const barrier = this.barrier;         // e.g. 5000 (Num)
     const hydrogen = HoldingRecord.hydrogen.amount;
 
-    // 1) Ruwe effectieve gain dit tick
+    // 1) Raw effective gain this tick
     let gain = amount.mul(speed);
     if (gain.mantissa === 0) {
       return amount;
     }
 
-    // 2) DYNAMISCHE HARD CAP op basis van power-transform
-    //    cap = barrier * (gain / barrier)^p  (alleen als gain > barrier)
+    // 2) DYNAMIC HARD CAP based on power-transform
+    //    cap = barrier * (gain / barrier)^p  (only if gain > barrier)
     const one = Num.ONE;
-    const p = 0.05; // tunen: 0.3 ≈ 1e6→~24k, 1e7→~49k bij barrier=5000
+    const p = 0.05; // tuning: 0.3 ≈ 1e6→~24k, 1e7→~49k at barrier=5000
 
     if (gain.gt(barrier)) {
       const ratio = gain.div(barrier);      // >= 1
       const ratioPow = ratio.pow(p);        // (gain/barrier)^p
-      const dynCap = barrier.mul(ratioPow); // dynamische cap
+      const dynCap = barrier.mul(ratioPow); // dynamic cap
 
       if (gain.gt(dynCap)) {
         gain = dynCap;
@@ -71,12 +71,12 @@ export class HydrogenGenerator extends Generator {
 
     // 3) Per-barrier-halving: gain / 2^(hydrogen/barrier)
     const depth = hydrogen.div(barrier);        // hydrogen / barrier
-    const exponent = depth.toNumber();          // normaal klein genoeg
+    const exponent = depth.toNumber();          // normally small enough
     const factor = Num.TWO.pow(exponent);       // 2^(hydrogen/barrier)
 
     const softGain = gain.div(factor);
 
-    // 4) Terug naar pre-speed space
+    // 4) Back to pre-speed space
     return softGain.div(speed);
   }
 
