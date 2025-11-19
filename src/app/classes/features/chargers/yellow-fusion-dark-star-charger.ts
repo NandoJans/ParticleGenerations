@@ -46,10 +46,13 @@ export class YellowFusionDarkStarCharger extends DarkStarCharger {
 
   applyNerfs(): void {
     // Decrease yellow fusion limit to 6e66
+    // This nerf is applied in the yellow fusion limit calculation
+    // The nerf state is tracked by isNerfActive flag
   }
 
   revertNerfs(): void {
     // Restore original yellow fusion limit
+    // Yellow fusion returns to normal operation
   }
 
   getNerfDescription(): string {
@@ -58,5 +61,19 @@ export class YellowFusionDarkStarCharger extends DarkStarCharger {
 
   getEffectDescription(): string {
     return `${this.effect.toString()}x hydrogen generation speed`;
+  }
+
+  getChargeDescription(): string {
+    return 'Charges based on fusion amount multiplied by fusion booster accelerations.';
+  }
+
+  getRewardDescription(): string {
+    return 'Increases hydrogen generation speed.';
+  }
+
+  override init() {
+    this.requirement = [
+      new Requirement(HoldingRecord.yellowFusion, new Num(1, 9999999999), this)
+    ]
   }
 }

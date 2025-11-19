@@ -3,6 +3,7 @@ import {Num} from "../../../num";
 import {ResetKey} from "../../enums/reset-key";
 import {Requirement} from "../interfaces/requirement";
 import {ChargerRecord} from "../../records/charger/charger-record";
+import {HoldingRecord} from "../../records/holdings/holding-record";
 
 /**
  * Combine Dark Star Charger
@@ -65,6 +66,14 @@ export class CombineDarkStarCharger extends DarkStarCharger {
     return `${this.effect.toString()}x amplification to other charger effects`;
   }
 
+  getChargeDescription(): string {
+    return 'Charges based on the total charge from all active chargers raised to the power of active chargers.';
+  }
+
+  getRewardDescription(): string {
+    return 'Amplifies the effects of all other active chargers.';
+  }
+
   override shouldCharge(): boolean {
     // Check if enough chargers are active based on tier
     const requiredChargers = new Num(2, 0).add(this.tier);
@@ -100,5 +109,11 @@ export class CombineDarkStarCharger extends DarkStarCharger {
       }
     });
     return total;
+  }
+
+  override init() {
+    this.requirement = [
+      new Requirement(HoldingRecord.greenParticles, new Num(1, 9999999999), this)
+    ]
   }
 }

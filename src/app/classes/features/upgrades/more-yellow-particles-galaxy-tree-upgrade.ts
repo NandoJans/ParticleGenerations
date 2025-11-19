@@ -38,6 +38,6 @@ export class MoreYellowParticlesGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   override buffer = new Num(1, 5);
   override baseBuffer = new Num(1, 5);
 
-  cost: Num = new Num(7, 0);
-  baseCost: Num = new Num(7, 0);
+  cost: Num = new Num(1, 1);
+  baseCost: Num = new Num(1, 1);
 }

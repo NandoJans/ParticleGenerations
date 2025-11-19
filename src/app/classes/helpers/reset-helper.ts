@@ -5,6 +5,7 @@ import {MultiplierRecord} from "../records/multipliers/multiplier-record";
 import {App} from "../../App";
 
 export class ResetHelper {
+  static resetListeners: { [key: string]: (resetKey: ResetKey) => void} = {};
 
   static resetList: {[key: string]: {[key: string]: Resetable}} = {
 
@@ -80,6 +81,7 @@ export class ResetHelper {
         break;
       }
     }
+    this.runResetListeners(resetKey);
     this.softReset(resetKey);
   }
 
@@ -99,6 +101,23 @@ export class ResetHelper {
       }
     }
     MultiplierRecord.reset();
+  }
+
+  static registerResetListener(name: string, listener: (resetKey: ResetKey) => void): void {
+    this.resetListeners[name] = listener;
+  }
+
+  static unregisterResetListener(name: string): void {
+    delete this.resetListeners[name];
+  }
+
+  static listenerExists(name: string): boolean {
+    return this.resetListeners[name] !== undefined;
+  }
+
+  private static runResetListeners(resetKey: ResetKey): void {
+    console.log("Running reset listeners for key: " + resetKey + "", this.resetListeners)
+    Object.values(this.resetListeners).forEach(listener => listener(resetKey));
   }
 
   static setResetId(resetable: Resetable, resetKey: ResetKey) {

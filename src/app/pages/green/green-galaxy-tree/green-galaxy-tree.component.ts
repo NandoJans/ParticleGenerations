@@ -88,7 +88,7 @@ export class GreenGalaxyTreeComponent implements OnInit {
     UpgradeRecord.fasterHydrogenGenerationGalaxyTree.setPos(0, 125);
     // Children are strongerHydrogenPower, improveYellowFusion
     UpgradeRecord.strongerHydrogenGalaxyTree.setPos(75, 225);
-    UpgradeRecord.fusionExpertiseGalaxyTree.setPos(0, 325);
+    UpgradeRecord.fusionExpertiseGalaxyTree.setPos(0, -325);
     UpgradeRecord.strongerYellowFusionGalaxyTree.setPos(-75, 225);
     // Children are yellowFusionBoostRedAccelerators
     UpgradeRecord.fusedAccelerationGalaxyTree.setPos(-200, 200);
@@ -102,7 +102,7 @@ export class GreenGalaxyTreeComponent implements OnInit {
     // Children are strongerYellowGenerators, moreYellowKeysGain
     UpgradeRecord.betterYellowMultipliersGalaxyTree.setPos(-75, -425);
     UpgradeRecord.amplifiedYellowKeysGalaxyTree.setPos(125, -325);
-    UpgradeRecord.yellowExpertiseGalaxyTree.setPos(0, -325);
+    UpgradeRecord.yellowExpertiseGalaxyTree.setPos(0, 325);
 
     // Mix-upgrades between sections
     UpgradeRecord.synergizedPowerGalaxyTree.setPos(200, -200);

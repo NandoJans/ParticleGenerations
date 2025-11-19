@@ -76,7 +76,6 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
   softResetId: ResetKey = ResetKey.NONE;
 
   reset(): void {
-    console.log('prestige layer reset', this.name);
     this.reached = false;
     this.highestGenerationPerTick = new Num(0, 0);
     this.bestPrestige = new Num(0, 0);

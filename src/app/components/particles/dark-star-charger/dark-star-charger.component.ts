@@ -1,22 +1,29 @@
 import {ChangeDetectorRef, Component, Input} from '@angular/core';
-import {DarkStarCharger} from '../../../classes/features/chargers/dark-star-charger';
 import {ComponentService} from '../../../services/component.service';
 import {Subscription} from 'rxjs';
-import {faLock} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
-import {Styles} from "../../../classes/enums/styles";
+import {CommonModule} from '@angular/common';
+import {Charger} from "../../../classes/features/charger";
+import {RedGeneratorDarkStarCharger} from "../../../classes/features/chargers/red-generator-dark-star-charger";
+import {Num} from "../../../num";
+import {faPlay, faPause, faLock} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-dark-star-charger',
   imports: [
-    FontAwesomeModule
+    FontAwesomeModule,
+    CommonModule
   ],
   templateUrl: './dark-star-charger.component.html',
   styleUrl: './dark-star-charger.component.css',
 })
 export class DarkStarChargerComponent {
-  @Input() charger!: DarkStarCharger;
+  @Input() charger: Charger = new RedGeneratorDarkStarCharger("redGeneratorDarkStarCharger");
   private sub: Subscription;
+
+  // FontAwesome icons
+  faPlay = faPlay;
+  faPause = faPause;
 
   constructor(
     public cd: ChangeDetectorRef,
@@ -31,42 +38,90 @@ export class DarkStarChargerComponent {
     this.sub.unsubscribe();
   }
 
-  toggleNerf() {
-    if (this.charger.isUnlocked()) {
-      this.charger.toggleNerf();
+  toggleCharging() {
+    this.charger.charging = !this.charger.charging;
+  }
+
+  toggleCollapsed() {
+    this.charger.collapsed = !this.charger.collapsed;
+  }
+
+  isCollapsed(): boolean {
+    return this.charger.collapsed;
+  }
+
+  getProgress(): number {
+    if (this.charger.charge.lte(new Num(0, 0))) {
+      return 0;
     }
+    if (this.charger.charge.greq(this.charger.maxCharge)) {
+      return 100;
+    }
+
+    // Logarithmic scaling
+    const start = new Num(1, 0);
+    const goal = this.charger.maxCharge.div(start);
+    const progress = this.charger.charge.div(start);
+
+    const percentage = progress.log(10)
+      .div(goal.log(10))
+      .mul(new Num(1, 2))
+      .toNumber();
+
+    if (percentage > 100) {
+      return 100;
+    } else if (percentage < 0) {
+      return 0;
+    } else {
+      return percentage;
+    }
+  }
+
+  getAmountDisplay(): string {
+    return `${this.charger.charge.toString()}/${this.charger.maxCharge.toString()}`;
   }
 
   getDisplayName(): string {
     return this.charger.displayName;
   }
 
+  isCharging(): boolean {
+    return this.charger.charging;
+  }
+
   getNerfDescription(): string {
     return this.charger.getNerfDescription();
   }
 
-  getEffectDescription(): string {
-    return this.charger.getEffectDescription();
+  getChargeDescription(): string {
+    return this.charger.getChargeDescription();
   }
 
-  getCharge(): string {
-    return this.charger.charge.toString();
+  getRewardDescription(): string {
+    return this.charger.getRewardDescription();
   }
 
-  getTier(): string {
-    return this.charger.tier.toString();
+  getEffectBreakdown(): {formula: string, effects: string[]} {
+    return this.charger.getEffectBreakdown();
   }
 
-  getMaxCharge(): string {
-    return this.charger.maxCharge.toString();
+  getChargerType(): string {
+    // Extract the type from the charger name (e.g., "red-generator-dark-star-charger" -> "red")
+    const name = this.charger.saveName || this.charger.name || '';
+    if (name.startsWith('red')) return 'red';
+    if (name.startsWith('yellow')) return 'yellow';
+    if (name.startsWith('star')) return 'star';
+    if (name.startsWith('combine')) return 'combine';
+    return 'default';
   }
 
-  isActive(): boolean {
-    return this.charger.isActive();
+  getCollapsedEffectDisplay(): string {
+    const breakdown = this.getEffectBreakdown();
+    return breakdown.effects.length > 0 ? breakdown.effects[0] : '';
   }
 
-  isUnlocked(): boolean {
-    return this.charger.isUnlocked();
+  isFirstUnlocked(): boolean {
+    return this.charger.isFirstUnlocked();
   }
 
   protected readonly faLock = faLock;

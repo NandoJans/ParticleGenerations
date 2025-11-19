@@ -15,17 +15,20 @@ export class RedExpertiseGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   getParents(): GalaxyTreeUpgrade[] {
     return [
       UpgradeRecord.betterRedBoosterGalaxyTree,
+      UpgradeRecord.strongerRedExtensionGalaxyTree,
     ];
   }
 
   getDescription(): string {
-    return `Red generator mastery empowers cheaper booster acceleration by ${this.buffer.toString(2)}x.`;
+    return `Red generator mastery empowers cheaper booster acceleration and stronger booster acceleration by ${this.buffer.toString(2)}x.`;
   }
 
   action(): undefined {
     if (this.hasBought()) {
       UpgradeRecord.cheaperBoosterAccelerationGalaxyTree.buffer =
         UpgradeRecord.cheaperBoosterAccelerationGalaxyTree.buffer.mul(this.buffer);
+      UpgradeRecord.strongerBoosterAccelerationGalaxyTree.buffer =
+        UpgradeRecord.strongerBoosterAccelerationGalaxyTree.buffer.mul(this.buffer);
     }
     return;
   }

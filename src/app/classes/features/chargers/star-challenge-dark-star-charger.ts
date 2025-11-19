@@ -46,13 +46,17 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
   }
 
   applyNerfs(): void {
-    // Make star challenges harder without rewards
-    // Prevent sun and sirius particles from being generated
+    // Nerfs applied:
+    // 1. Make star challenges way harder without rewards
+    // 2. Prevent sun and sirius particles from being generated
+    // These nerfs are applied in the star challenge and particle generation logic
+    // The nerf state is tracked by isNerfActive flag
   }
 
   revertNerfs(): void {
     // Restore star challenge difficulty and rewards
     // Re-enable sun and sirius particle generation
+    // Challenges return to normal operation
   }
 
   getNerfDescription(): string {
@@ -61,5 +65,19 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
 
   getEffectDescription(): string {
     return `Rigel challenge max completions: +${this.effect.toString()}`;
+  }
+
+  getChargeDescription(): string {
+    return 'Charges based on total completions and red particles gained in Sirius star challenge.';
+  }
+
+  getRewardDescription(): string {
+    return 'Unlocks or increases max completions of the Rigel star challenge.';
+  }
+
+  override init() {
+    this.requirement = [
+      new Requirement(HoldingRecord.redParticles, new Num(1, 9999999999), this)
+    ]
   }
 }

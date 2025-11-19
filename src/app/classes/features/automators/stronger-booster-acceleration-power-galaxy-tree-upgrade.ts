@@ -26,8 +26,9 @@ export class StrongerBoosterAccelerationPowerGalaxyTreeUpgrade extends GalaxyTre
   }
 
   action(): undefined {
-    UpgradeRecord.boosterAccelerationUpgrade.buffer = UpgradeRecord.boosterAccelerationUpgrade.buffer.mul(this.buffer);
-    UpgradeRecord.boosterAccelerationUpgrade.freeBuys = UpgradeRecord.boosterAccelerationUpgrade.freeBuys.mul(this.buffer);
+    if (this.hasBought()) {
+      UpgradeRecord.boosterAccelerationUpgrade.buffer = UpgradeRecord.boosterAccelerationUpgrade.buffer.mul(this.buffer);
+    }
     return
   }
 

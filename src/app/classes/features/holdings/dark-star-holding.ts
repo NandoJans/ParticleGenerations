@@ -16,32 +16,37 @@ export class DarkStarHolding extends Holding {
     .withEffectPrefix('Red generators: ')
     .withEffectSuffix('')
     .addLine('Yellow generators: ', () => {
-      const yellowEffect = this.yellowBuffer.pow(this.amount);
-      return yellowEffect.toString(2) + 'x';
+      return (this.yellowEffect) ? this.yellowEffect.toString(2) + 'x' : '-';
     }, '')
     .addLine('Green generators: ', () => {
-      const greenEffect = this.greenBuffer.pow(this.amount);
-      return greenEffect.toString(2) + 'x';
+      return (this.greenEffect) ? this.greenEffect.toString(2) + 'x' : '-';
     }, '')
     .build();
   name: string = 'dark-star-holding';
   displayName: string = 'Dark Stars';
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.GREEN, this);
   startAmount: Num = new Num(0, 0);
-  redBuffer: Num = new Num(10, 0);      // Red gets 10x per dark star
-  yellowBuffer: Num = new Num(3, 0);    // Yellow gets 3x per dark star
-  greenBuffer: Num = new Num(2, 0);     // Green gets 2x per dark star
+  redBuffer: Num = new Num(1, 100);      // Red gets 1e100x per dark star
+  yellowBuffer: Num = new Num(1, 5);    // Yellow gets 1e5x per dark star
+  greenBuffer: Num = new Num(5, 0);     // Green gets 5x per dark star
+
+  yellowEffect: Num|undefined = new Num(1, 100);
+  greenEffect: Num|undefined = new Num(1, 100);
 
   override action(): Num {
     const redEffect = this.redBuffer.pow(this.amount);
-    const yellowEffect = this.yellowBuffer.pow(this.amount);
-    const greenEffect = this.greenBuffer.pow(this.amount);
-    
+    this.yellowEffect = this.yellowBuffer.pow(this.amount);
+    this.greenEffect = this.greenBuffer.pow(this.amount);
+
     MultiplierRecord.redParticleGenerators.correct(redEffect);
-    MultiplierRecord.yellowGenerators.correct(yellowEffect);
-    MultiplierRecord.greenGenerators.correct(greenEffect);
-    
+    MultiplierRecord.yellowGenerators.correct(this.yellowEffect);
+    MultiplierRecord.greenGenerators.correct(this.greenEffect);
+
     return redEffect;  // Return red effect as the primary effect
+  }
+
+  override effectString(effect: Num): string {
+    return super.effectString(effect) + 'x';
   }
 
   getStyle(): Styles {

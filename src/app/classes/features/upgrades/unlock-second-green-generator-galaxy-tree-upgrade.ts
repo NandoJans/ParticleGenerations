@@ -39,6 +39,6 @@ export class UnlockSecondGreenGeneratorGalaxyTreeUpgrade extends GalaxyTreeUpgra
   style: Styles = Styles.STAR_ORANGE
   displayName: string = "Unlock Second Green Generator";
 
-  cost: Num = new Num(7, 0);
-  baseCost: Num = new Num(7, 0);
+  cost: Num = new Num(5, 1);
+  baseCost: Num = new Num(5, 1);
 }

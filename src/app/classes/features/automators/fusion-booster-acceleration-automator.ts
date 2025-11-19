@@ -23,7 +23,13 @@ export class FusionBoosterAccelerationAutomator extends Automator {
   task(): Num {
     return StatsService.getNum(UpgradeRecord.fusionBoosterAcceleration.name, 'totalBoughtAutomator');
   }
-  resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
+
+  override reset() {
+    return StatsService.getNum(UpgradeRecord.fusionBoosterAcceleration.name, 'totalBoughtAutomator');
+    super.reset();
+  }
+
+  resetId: ResetKey = ResetHelper.registerReset(ResetKey.GREEN, this);
   override requirement: Requirement[] = [
     new Requirement(HoldingRecord.yellowParticles, new Num(1, 10), this),
   ];

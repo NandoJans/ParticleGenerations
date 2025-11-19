@@ -62,11 +62,16 @@ export class SunStarChallenge extends YellowStarChallenge {
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
   requirement: Requirement[] = [];
 
+  rewardSoftCap: Num = new Num(1, 300_000)
+
   reward(): Num {
     const effect = HoldingRecord.yellowPower.effect?.pow(this.buffer) ?? new Num(1, 0)
-    MultiplierRecord.redAcceleratorGenerators.correct(
-      effect
-    );
+    if (effect.gt(this.rewardSoftCap)) {
+      // Calculate the cap of the reward.
+      const cappedEffect = effect.div(this.rewardSoftCap);
+        return this.rewardSoftCap.mul(cappedEffect.sqrt());
+    }
+    MultiplierRecord.redAcceleratorGenerators.correct(effect);
     return effect;
   }
 

@@ -12,6 +12,12 @@ import {GeneratorRecord} from "../generators/generator-record";
 import {InitialGreenMilestone} from "../../features/milestones/initial-green-milestone";
 import {BreakGreenBarrierMilestone} from "../../features/milestones/break-green-barrier-milestone";
 import {Automator} from "../../features/automator";
+import {
+  StartWithHoldingAmountGreenMilestone
+} from "../../features/milestones/start-with-holding-amount-green-milestone";
+import {HoldingRecord} from "../holdings/holding-record";
+import {ResetHelper} from "../../helpers/reset-helper";
+import {UpgradeRecord} from "../upgrades/upgrade-record";
 
 @Injectable({
   providedIn: 'root'
@@ -268,11 +274,24 @@ export class MilestoneRecord extends Record {
     'fifth yellow generator automator'
   )
 
+  static startWith100YellowPrestiges: StartWithHoldingAmountGreenMilestone = new StartWithHoldingAmountGreenMilestone(
+    'startWith100YellowPrestiges',
+    'Start with 100 Yellow Prestiges',
+    new Num(1, 1),
+    [
+      HoldingRecord.yellowPrestiges,
+    ],
+    new Num(1, 2),
+    'yellow prestiges'
+  )
 
-
-
-
-
+  static keepAllYellowUpgrades: ChangeResetKeyGreenMilestone = new ChangeResetKeyGreenMilestone(
+    'keepAllYellowUpgrades',
+    'Keep all yellow upgrades',
+    new Num(1.1, 1),
+    UpgradeRecord.yellowUpgradeList,
+    'all yellow upgrades',
+  )
 
   // Blue Phase
 
@@ -322,6 +341,8 @@ export class MilestoneRecord extends Record {
     MilestoneRecord.keepThirdYellowAutomator,
     MilestoneRecord.keepFourthYellowAutomator,
     MilestoneRecord.keepFifthYellowAutomator,
+    MilestoneRecord.startWith100YellowPrestiges,
+    MilestoneRecord.keepAllYellowUpgrades,
   ];
 
   getList(): Milestone[] {
@@ -344,6 +365,12 @@ export class MilestoneRecord extends Record {
     this.getList().forEach((milestone: Milestone) => {
       milestone.init()
     })
+
+    if (!ResetHelper.listenerExists('MilestoneRecord.init')) {
+      ResetHelper.registerResetListener('MilestoneRecord.init', (resetKey) => {
+        this.init();
+      })
+    }
   }
 
   tick() {

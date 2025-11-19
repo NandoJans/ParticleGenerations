@@ -123,6 +123,7 @@ export class ChallengeService {
   }
 
   completeChallenge(prestigeLayer: string): void {
+    console.log('complete challenge', prestigeLayer);
     ChallengeService.completeChallenge(prestigeLayer);
   }
 

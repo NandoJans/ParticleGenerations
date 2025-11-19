@@ -42,14 +42,17 @@ export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
   }
 
   applyNerfs(): void {
-    // Raise yellow generator multipliers to ^0.5
-    // Decrease active generators based on tier
-    // Starting with 5 active generators, decrease by 1 per tier
+    // Nerfs applied:
+    // 1. Raise yellow generator multipliers to ^0.5
+    // 2. Decrease active generators based on tier, starting with 5
+    // These nerfs are applied in the yellow generator calculation logic
+    // The nerf state is tracked by isNerfActive flag
   }
 
   revertNerfs(): void {
     // Revert yellow generator multiplier nerf
     // Restore full active generator count
+    // Yellow generators return to normal operation
   }
 
   getNerfDescription(): string {
@@ -60,5 +63,19 @@ export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
 
   getEffectDescription(): string {
     return `${this.effect.toString()}x multiplier to yellow generators`;
+  }
+
+  getChargeDescription(): string {
+    return 'Charges based on the amount of yellow power you have.';
+  }
+
+  getRewardDescription(): string {
+    return 'Provides a massive static multiplier to yellow generators.';
+  }
+
+  override init() {
+    this.requirement = [
+      new Requirement(HoldingRecord.yellowPower, new Num(1, 9999999999), this)
+    ]
   }
 }

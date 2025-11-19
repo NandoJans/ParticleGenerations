@@ -17,7 +17,7 @@ export class GreenGeneratorCostDivisorUpgrade extends GreenGeneratorUpgrade {
     super(saveName, cost, increase, scaling, buffer, generator);
     this.displayName = `Green Generator ${generator.rank} Cost Divisor`;
     this.name = `green-generator-cost-divisor-upgrade-${generator.rank}`;
-    this.resetId = ResetHelper.registerReset(ResetKey.YELLOW, this);
+    this.resetId = ResetHelper.registerReset(ResetKey.GREEN, this);
     this.requirement = [
       new Requirement(generator, new Num(generator.rank, 0), this),
     ];

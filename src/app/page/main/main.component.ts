@@ -52,4 +52,13 @@ export class MainComponent implements OnInit {
     }
     return enhancements;
   }
+
+  canEnhanceAll(enhancement: Enhancement): boolean {
+    return this.enhancementService.canEnhanceAll(enhancement);
+  }
+
+  enhanceAll(enhancement: Enhancement): void {
+    this.enhancementService.enhanceAll(enhancement);
+    this.enhancementService.stopEnhancing();
+  }
 }

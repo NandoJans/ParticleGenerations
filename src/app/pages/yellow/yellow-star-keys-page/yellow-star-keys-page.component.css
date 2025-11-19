@@ -69,21 +69,3 @@ p {
 .requirement {
   color: var(--text-color-yellow);
 }
-
-@keyframes color-gradient {
-  0% {
-    color: var(--color-gradient-1);
-  }
-  25% {
-    color: var(--color-gradient-2);
-  }
-  50% {
-    color: var(--color-gradient-3);
-  }
-  75% {
-    color: var(--color-gradient-4);
-  }
-  100% {
-    color: var(--color-gradient-1);
-  }
-}

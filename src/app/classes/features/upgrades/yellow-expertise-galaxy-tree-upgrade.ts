@@ -14,15 +14,15 @@ export class YellowExpertiseGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
 
   getParents(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.amplifiedYellowKeysGalaxyTree,
-      UpgradeRecord.betterYellowMultipliersGalaxyTree,
+      UpgradeRecord.strongerYellowFusionGalaxyTree,
+      UpgradeRecord.strongerHydrogenGalaxyTree,
     ];
   }
 
   override requireParent: RequireParent = RequireParent.ALL;
 
   getDescription(): string {
-    return `Yellow power mastery strengthens yellow fusion effect by ${this.buffer.toString(2)}x.`;
+    return `Yellow expertise enhances the power of stronger yellow power, better yellow key gain and better yellow generators by ${this.buffer.toString(2)}x.`;
   }
 
   action(): undefined {

@@ -1,6 +1,7 @@
 import {Charger} from "../charger";
 import {Num} from "../../../num";
 import {GameElement} from "../game-element";
+import {ChallengeRecord} from "../../records/challenges/challenge-record";
 
 /**
  * DarkStarCharger is a special type of charger that only charges when its related nerf is active.
@@ -14,7 +15,7 @@ export abstract class DarkStarCharger extends Charger {
    * DarkStarChargers only charge when their nerf is enabled
    */
   override shouldCharge(): boolean {
-    return this.isNerfActive && this.isUnlocked() && this.isEnabled();
+    return this.isNerfActive && this.isUnlocked() && this.isEnabled() && ChallengeRecord.currentChallenges['green'] === ChallengeRecord.darkGalaxy;
   }
 
   /**
@@ -63,10 +64,23 @@ export abstract class DarkStarCharger extends Charger {
    */
   abstract revertNerfs(): void;
 
-  /**
-   * Get a description of the nerfs applied by this charger
-   */
-  abstract getNerfDescription(): string;
+  override getEffectBreakdown(): {formula: string, effects: string[]} {
+    const effects: string[] = [];
+
+    if (this.charge.greq(new Num(1, 0))) {
+      const chargeRatio = this.charge.div(this.maxCharge);
+      const nerfIncrease = chargeRatio.mul(new Num(5, -2));
+      effects.push(`Charge level: ${chargeRatio.mul(new Num(1, 2)).toString(1)}%`);
+      effects.push(`Nerf increase: ${nerfIncrease.toString(3)}`);
+    } else {
+      effects.push("No charge accumulated yet");
+    }
+
+    return {
+      formula: "0.1 - (charge% × 0.05)",
+      effects: effects
+    };
+  }
 
   /**
    * Get a description of the effect/amplification provided by this charger
@@ -86,7 +100,7 @@ export abstract class DarkStarCharger extends Charger {
   override tryLoad(): void {
     super.tryLoad();
     this.isNerfActive = this.localStorageHelper.load(this.isNerfActive, "isNerfActive");
-    
+
     // Reapply nerfs if the charger was active when saved
     if (this.isNerfActive) {
       this.applyNerfs();
