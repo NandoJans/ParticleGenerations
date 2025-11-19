@@ -15,7 +15,7 @@ export class BetterYellowMultipliersGalaxyTreeUpgrade extends GalaxyTreeUpgrade 
 
   getParents(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.betterYellowMultipliersGalaxyTree,
+      UpgradeRecord.moreYellowParticlesGalaxyTree,
     ];
   }
 

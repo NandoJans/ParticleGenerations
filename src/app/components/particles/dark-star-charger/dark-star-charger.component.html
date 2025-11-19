@@ -1,28 +1,29 @@
 <div class="charger" [class.active]="isActive()" [class.locked]="!isUnlocked()">
   <div class="charger-header">
     <h4>{{ getDisplayName() }}</h4>
-    <button 
-      class="toggle-btn" 
+    <button
+      class="toggle-btn"
       (click)="toggleNerf()"
       [disabled]="!isUnlocked()"
     >
       {{ isActive() ? 'Deactivate' : 'Activate' }}
     </button>
   </div>
-  
+
   <div class="charger-info">
     <p class="tier">Tier: {{ getTier() }}</p>
     <p class="charge">Charge: {{ getCharge() }} / {{ getMaxCharge() }}</p>
   </div>
-  
+
   <div class="charger-descriptions">
     <p class="nerf-description"><strong>Nerf:</strong> {{ getNerfDescription() }}</p>
     <p class="effect-description"><strong>Effect:</strong> {{ getEffectDescription() }}</p>
   </div>
-  
+
   @if (!isUnlocked()) {
     <div class="locked-overlay">
-      <p>Locked</p>
+      <fa-icon [icon]="faLock"></fa-icon>
+      <p>Reach <span [class]="getRequirementStyle()">{{ getRequirementAmount() }}</span> {{ getRequirementString() }}</p>
     </div>
   }
 </div>

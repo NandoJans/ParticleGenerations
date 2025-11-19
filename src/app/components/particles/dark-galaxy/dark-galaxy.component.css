@@ -1,10 +1,11 @@
 div.challenge {
+  position: relative;
   background-color: var(--background-color-1);
   border: 5px solid var(--background-color-2);
   border-radius: 10px;
   width: 26rem;
   margin: 1rem;
-  height: 38rem;
+  height: 24rem;
 }
 
 div.details {
@@ -14,13 +15,29 @@ div.details {
   flex-direction: column;
   justify-content: space-between;
   width: 90%;
-  height: 53%;
+  height: 25%;
   padding: 5%;
   border-radius: 0 0 5px 5px;
 }
 
 div.details p, button {
   margin: 0.2rem;
+}
+
+div.name {
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  left: 0;
+}
+
+div.name h2 {
+  margin: 0.5rem auto;
+  text-align: center;
+  width: 50%;
+  background-color: var(--background-color-2);
+  border-radius: 5px;
+  border: 2px solid var(--background-color-4);
 }
 
 div.start button {
@@ -39,13 +56,10 @@ div.start button.completed {
   border: 2px solid var(--accent-color-green);
 }
 
-
-
-
 .galaxy-wrapper {
   position: relative;
   width: 100%;
-  height: 40%;
+  height: 65%;
   overflow: hidden;
   background: radial-gradient(circle at 50% 50%, #050b08 0%, #000 65%, #000 100%);
 }

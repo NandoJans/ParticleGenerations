@@ -1,21 +1,6 @@
 <br/>
 <app-button [text]="getToggleAllText()" [style]="'button '+getToggleColor()" (function)="toggleAll()"></app-button>
-<h2>Red Generators Automators</h2>
-<div class="upgrade-row">
-    <div *ngFor="let automator of redGeneratorAutomators">
-      <app-automator *ngIf="automator.isUnlocked()" [automator]="automator"></app-automator>
-    </div>
-</div>
-<h2>Red Upgrade Automators</h2>
-<div class="upgrade-row">
-  <div *ngFor="let automator of redUpgradeAutomators">
-    <app-automator *ngIf="automator.isUnlocked()" [automator]="automator"></app-automator>
-  </div>
-</div>
-<h2>Red Accelerators Automators</h2>
-<div class="upgrade-row">
-  <div *ngFor="let automator of redAcceleratorAutomators">
-    <app-automator *ngIf="automator.isUnlocked()" [automator]="automator"></app-automator>
-  </div>
-</div>
+<app-automator-section [automators]="redGeneratorAutomators" [title]="'Red Generators Automators'" [name]="'redGeneratorAutomators'"></app-automator-section>
+<app-automator-section [automators]="redUpgradeAutomators" [title]="'Red Upgrade Automators'" [name]="'redUpgradeAutomators'"></app-automator-section>
+<app-automator-section [automators]="redAcceleratorAutomators" [title]="'Red Accelerators Automators'" [name]="'redAcceleratorAutomators'"></app-automator-section>
 <app-info style="width: 60%" [name]="'red-automators-info'" [infoText]="infoText"></app-info>

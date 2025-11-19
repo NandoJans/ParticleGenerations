@@ -2,11 +2,12 @@ import {DarkStarCharger} from "./dark-star-charger";
 import {Num} from "../../../num";
 import {ResetKey} from "../../enums/reset-key";
 import {Requirement} from "../interfaces/requirement";
+import {HoldingRecord} from "../../records/holdings/holding-record";
 
 /**
  * Red Generator Dark Star Charger
- * 
- * Nerfs: The multipliers of red generators are raised to another ^0.5. 
+ *
+ * Nerfs: The multipliers of red generators are raised to another ^0.5.
  *        Every tier disables one extra generator, starting with all generators.
  * Charge: Is gained by getting more red particles.
  * Amplifies: Gives a static multiplier to red generators with the function: 10^CHARGE.
@@ -30,7 +31,7 @@ export class RedGeneratorDarkStarCharger extends DarkStarCharger {
     // Calculate effect: 10^CHARGE
     const effectiveCharge = this.getEffectiveCharge();
     this.effect = new Num(10, 0).pow(effectiveCharge);
-    
+
     // TODO: Apply multiplier to red generators
   }
 
@@ -58,5 +59,11 @@ export class RedGeneratorDarkStarCharger extends DarkStarCharger {
 
   getEffectDescription(): string {
     return `${this.effect.toString()}x multiplier to red generators`;
+  }
+
+  override init() {
+    this.requirement = [
+      new Requirement(HoldingRecord.redParticles, new Num(1, 9999999999), this)
+    ]
   }
 }

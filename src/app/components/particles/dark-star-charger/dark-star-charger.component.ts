@@ -2,10 +2,15 @@ import {ChangeDetectorRef, Component, Input} from '@angular/core';
 import {DarkStarCharger} from '../../../classes/features/chargers/dark-star-charger';
 import {ComponentService} from '../../../services/component.service';
 import {Subscription} from 'rxjs';
+import {faLock} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {Styles} from "../../../classes/enums/styles";
 
 @Component({
   selector: 'app-dark-star-charger',
-  imports: [],
+  imports: [
+    FontAwesomeModule
+  ],
   templateUrl: './dark-star-charger.component.html',
   styleUrl: './dark-star-charger.component.css',
 })
@@ -62,5 +67,38 @@ export class DarkStarChargerComponent {
 
   isUnlocked(): boolean {
     return this.charger.isUnlocked();
+  }
+
+  protected readonly faLock = faLock;
+
+  private getRequirement() {
+    return this.charger.requirement.length > 0 ? this.charger.requirement[0] : undefined;
+  }
+
+  getRequirementStyle() {
+    const requirement = this.getRequirement();
+    if (requirement && 'getStyle' in requirement.requirement && requirement.requirement.getStyle instanceof Function) {
+      return requirement.requirement.getStyle().toString();
+    } else {
+      return '';
+    }
+  }
+
+  getRequirementAmount() {
+    const requirement = this.getRequirement();
+    if (requirement) {
+      return requirement.amount.toString();
+    } else {
+      return '';
+    }
+  }
+
+  getRequirementString() {
+    const requirement = this.getRequirement();
+    if (requirement && 'displayName' in requirement.requirement) {
+      return requirement.requirement.displayName;
+    } else {
+      return '';
+    }
   }
 }

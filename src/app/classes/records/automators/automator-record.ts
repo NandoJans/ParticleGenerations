@@ -24,6 +24,8 @@ import {FusionBoosterAccelerationAutomator} from "../../features/automators/fusi
 import {StarChallengeAutomator} from "../../features/automators/star-challenge-automator";
 import {ChallengeRecord} from "../challenges/challenge-record";
 import {StarKeyCompressionAutomator} from "../../features/automators/star-key-compression-automator";
+import {YellowFusionUpgradesAutomator} from "../../features/automators/yellow-fusion-upgrades-automator";
+import {StarKeyUpgradesAutomator} from "../../features/automators/star-key-upgrades-automator";
 
 @Injectable({
   providedIn: 'root'
@@ -63,7 +65,11 @@ export class AutomatorRecord extends Record {
   static sunStarChallenge: StarChallengeAutomator = new StarChallengeAutomator('sunStarChallenge', ChallengeRecord.sunStar);
   static siriusStarChallenge: StarChallengeAutomator = new StarChallengeAutomator('siriusStarChallenge', ChallengeRecord.siriusStar);
 
+  static yellowFusionUpgrades: YellowFusionUpgradesAutomator = new YellowFusionUpgradesAutomator('yellowFusionUpgrades');
+
   static fusionBoosterAcceleration: FusionBoosterAccelerationAutomator = new FusionBoosterAccelerationAutomator('fusionBoosterAcceleration');
+
+  static starKeyUpgrades: StarKeyUpgradesAutomator = new StarKeyUpgradesAutomator('starKeyUpgrades');
 
   static starKeyCompression: StarKeyCompressionAutomator = new StarKeyCompressionAutomator('starKeyCompression');
 
@@ -81,6 +87,26 @@ export class AutomatorRecord extends Record {
     AutomatorRecord.improveRedParticlesToAccelerators,
     AutomatorRecord.boosterAcceleration,
   ];
+
+  static yellowAutomators: Automator[] = [
+    AutomatorRecord.yellowPrestige,
+    AutomatorRecord.multiplyRedGeneratorsYellow,
+    AutomatorRecord.multiplyYellowParticlesYellow,
+    AutomatorRecord.multiplyYellowKeysYellow,
+    AutomatorRecord.firstYellowGenerator,
+    AutomatorRecord.secondYellowGenerator,
+    AutomatorRecord.thirdYellowGenerator,
+    AutomatorRecord.fourthYellowGenerator,
+    AutomatorRecord.fifthYellowGenerator,
+    AutomatorRecord.proximaCentauriStarChallenge,
+    AutomatorRecord.lalandeStarChallenge,
+    AutomatorRecord.sunStarChallenge,
+    AutomatorRecord.siriusStarChallenge,
+    AutomatorRecord.yellowFusionUpgrades,
+    AutomatorRecord.fusionBoosterAcceleration,
+    AutomatorRecord.starKeyCompression,
+    AutomatorRecord.starKeyUpgrades,
+  ]
 
   static override list: Automator[] = [
     AutomatorRecord.firstRedGenerator,
@@ -116,6 +142,8 @@ export class AutomatorRecord extends Record {
 
     AutomatorRecord.fusionBoosterAcceleration,
     AutomatorRecord.starKeyCompression,
+    AutomatorRecord.yellowFusionUpgrades,
+    AutomatorRecord.starKeyUpgrades,
   ]
 
   getList(): Automator[] {

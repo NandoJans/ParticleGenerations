@@ -3,12 +3,13 @@ import {Num} from "../../../num";
 import {Automator} from "../../../classes/features/automator";
 import {AutomatorRecord} from "../../../classes/records/automators/automator-record";
 import {PrestigeAutomator} from "../../../classes/features/automators/prestige-automator";
+import {faLock} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
-    selector: 'app-automator',
-    templateUrl: './automator.component.html',
-    styleUrls: ['./automator.component.css'],
-    standalone: false
+  selector: 'app-automator',
+  templateUrl: './automator.component.html',
+  styleUrls: ['./automator.component.css'],
+  standalone: false
 })
 export class AutomatorComponent implements OnInit {
   @Input() automator: Automator = AutomatorRecord.firstRedGenerator;
@@ -133,5 +134,11 @@ export class AutomatorComponent implements OnInit {
       return this.automator.getPrestigeStatus();
     }
     return "";
+  }
+
+  protected readonly faLock = faLock;
+
+  isUnlocked() {
+    return this.automator.isUnlocked();
   }
 }

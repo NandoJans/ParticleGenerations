@@ -36,7 +36,6 @@ export abstract class PrestigeAutomator extends Automator {
     afterXTimesBest: {
       setting: new Num(1, 0),
       action: (prestigeLayer: PrestigeLayer, setting: Num) => {
-        console.log(prestigeLayer.bestPrestige)
         const bestTimesHighest = prestigeLayer.bestPrestige.mul(setting);
         return prestigeLayer.holdingGain.greq(bestTimesHighest);
       },
