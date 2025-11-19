@@ -12,7 +12,7 @@ import {GeneratorRecord} from "../classes/records/generators/generator-record";
 })
 export class EnhancementService {
   enhancing: Enhancement|null = null;
-  enhancementToEnhancables: { [key: string]: Enhancable[] } = {}
+  enhancementToEnhancables: { [key: string]: Enhancable[] } = {};
 
   constructor(
     private enhancementRecord: EnhancementRecord,
@@ -56,7 +56,7 @@ export class EnhancementService {
       this.enhancing.add(enhancable);
 
       if (!this.enhancing.canEnhance()) {
-        this.stopEnhancing()
+        this.stopEnhancing();
       }
     }
   }
@@ -72,7 +72,7 @@ export class EnhancementService {
   canEnhanceAll(enhancement: Enhancement): boolean {
     const enhancableCount = this.getUnenhanced(enhancement).length;
     const requiredAmount = new Num(2, 0).pow(new Num(enhancableCount + 1, 0)).sub(Num.ONE);
-    return enhancement.getHolding().amount.greq(requiredAmount)
+    return enhancement.getHolding().amount.greq(requiredAmount);
   }
 
   private getUnenhanced(enhancement: Enhancement): Enhancable[] {
