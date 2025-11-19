@@ -8,6 +8,7 @@ import {HoldingRecord} from "../../records/holdings/holding-record";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {Multiplier} from "../multiplier";
 import {PrestigeLayersService} from "../../../services/prestige-layers.service";
+import {PrestigeLayer} from "../prestiges/prestige-layer";
 
 export class DarkGalaxyChallenge extends Challenge {
     displayName: string = "Dark Galaxy";
@@ -21,7 +22,7 @@ export class DarkGalaxyChallenge extends Challenge {
     prestige: ResetKey = ResetKey.YELLOW
     prestigeLayer: string = 'green';
 
-    nerfPower: Num = new Num(4, -1)
+    nerfPower: Num = new Num(4.5, -1)
 
     override getRewardDescription(): string {
       return "Gather dark stars"
@@ -54,7 +55,7 @@ export class DarkGalaxyChallenge extends Challenge {
     private awardDarkStars(): void {
       // Update dark star holding if we've earned more
       if (this.currentDarkStarGain.gt(HoldingRecord.darkStarHolding.amount)) {
-        HoldingRecord.darkStarHolding.amount.add(this.currentDarkStarGain);
+        HoldingRecord.darkStarHolding.amount = HoldingRecord.darkStarHolding.amount.add(this.currentDarkStarGain.floor());
       }
     }
 
@@ -79,12 +80,14 @@ export class DarkGalaxyChallenge extends Challenge {
       `Award ${this.currentDarkStarGain.toString(2)} Dark Stars`
     ]
 
+    PrestigeLayersService.greenPrestigeLayer.reached = true;
+
     return true;
   }
 
   override reached(): boolean {
     // If dark star gain is above 1
-    return this.currentDarkStarGain.gt(new Num(1, 0));
+    return this.currentDarkStarGain.greq(Num.ONE);
   }
 
   override save() {

@@ -26,6 +26,7 @@ import {ChallengeRecord} from "../challenges/challenge-record";
 import {StarKeyCompressionAutomator} from "../../features/automators/star-key-compression-automator";
 import {YellowFusionUpgradesAutomator} from "../../features/automators/yellow-fusion-upgrades-automator";
 import {StarKeyUpgradesAutomator} from "../../features/automators/star-key-upgrades-automator";
+import {IncreaseYellowPowerUpgradeAutomator} from "../../features/automators/increase-yellow-power-upgrade-automator";
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +60,8 @@ export class AutomatorRecord extends Record {
   static thirdYellowGenerator: YellowGeneratorAutomator = new YellowGeneratorAutomator('thirdYellowGenerator', GeneratorRecord.thirdYellowGenerator);
   static fourthYellowGenerator: YellowGeneratorAutomator = new YellowGeneratorAutomator('fourthYellowGenerator', GeneratorRecord.fourthYellowGenerator);
   static fifthYellowGenerator: YellowGeneratorAutomator = new YellowGeneratorAutomator('fifthYellowGenerator', GeneratorRecord.fifthYellowGenerator);
+
+  static increaseYellowPowerUpgrade: IncreaseYellowPowerUpgradeAutomator = new IncreaseYellowPowerUpgradeAutomator('increaseYellowPowerUpgrade');
 
   static proximaCentauriStarChallenge: StarChallengeAutomator = new StarChallengeAutomator('proximaCentauriStarChallenge', ChallengeRecord.proximaCentauriStar);
   static lalandeStarChallenge: StarChallengeAutomator = new StarChallengeAutomator('lalandeStarChallenge', ChallengeRecord.lalandeStar);
@@ -134,6 +137,7 @@ export class AutomatorRecord extends Record {
     AutomatorRecord.thirdYellowGenerator,
     AutomatorRecord.fourthYellowGenerator,
     AutomatorRecord.fifthYellowGenerator,
+    AutomatorRecord.increaseYellowPowerUpgrade,
 
     AutomatorRecord.proximaCentauriStarChallenge,
     AutomatorRecord.lalandeStarChallenge,

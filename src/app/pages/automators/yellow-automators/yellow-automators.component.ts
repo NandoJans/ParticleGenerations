@@ -24,6 +24,7 @@ export class YellowAutomatorsComponent implements OnInit {
     AutomatorRecord.thirdYellowGenerator,
     AutomatorRecord.fourthYellowGenerator,
     AutomatorRecord.fifthYellowGenerator,
+    AutomatorRecord.increaseYellowPowerUpgrade,
   ];
   yellowStarChallengeAutomators: Automator[] = [
     AutomatorRecord.proximaCentauriStarChallenge,

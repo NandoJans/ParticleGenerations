@@ -34,6 +34,12 @@
         </div>
       </div>
     </div>
+    @if (!isFirstUnlocked()) {
+      <div class="disabled-overlay">
+        <fa-icon [icon]="faLock"></fa-icon>
+        <p>Reach <span [class]="getRequirementStyle()">{{ getRequirementAmount() }}</span> {{ getRequirementString() }}</p>
+      </div>
+    }
   </div>
 
   <!-- Footer -->

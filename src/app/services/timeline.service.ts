@@ -135,6 +135,8 @@ export class TimelineService {
     .addMilestone(MilestoneRecord.keepThirdYellowAutomator)
     .addMilestone(MilestoneRecord.keepFourthYellowAutomator)
     .addMilestone(MilestoneRecord.keepFifthYellowAutomator)
+    .addMilestone(MilestoneRecord.startWith100YellowPrestiges)
+    .addMilestone(MilestoneRecord.keepAllYellowUpgrades)
     .build()
     .addTimelineEvent(
       'green-dark-galaxy',

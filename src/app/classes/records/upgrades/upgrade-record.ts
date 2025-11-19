@@ -148,6 +148,7 @@ import {
   UnlockSecondGreenGeneratorGalaxyTreeUpgrade
 } from "../../features/upgrades/unlock-second-green-generator-galaxy-tree-upgrade";
 import {MoreYellowParticlesGalaxyTreeUpgrade} from "../../features/upgrades/more-yellow-particles-galaxy-tree-upgrade";
+import {YellowUpgrade} from "../../features/upgrades/yellow-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -272,6 +273,19 @@ export class UpgradeRecord extends Record {
 
   static moreYellowParticlesGalaxyTree: MoreYellowParticlesGalaxyTreeUpgrade = new MoreYellowParticlesGalaxyTreeUpgrade('moreYellowParticlesGalaxyTree');
 
+  static yellowUpgradeList: YellowUpgrade[] = [
+    UpgradeRecord.redGeneratorMultiplierYellowPrestigeYellow,
+    UpgradeRecord.multiplyRedGeneratorExtensionYellow,
+    UpgradeRecord.startWithMoreRedExtensionsUpgrade,
+    UpgradeRecord.increaseRedGeneratorSubMultipliers,
+    UpgradeRecord.increaseRedGeneratorBuyMultipliers,
+    UpgradeRecord.noResetRedExtension,
+    UpgradeRecord.improveFasterAccelerationYellow,
+    UpgradeRecord.improveMultiplyAcceleratorEffectYellow,
+    UpgradeRecord.improveBetterAccelerationYellow,
+    UpgradeRecord.improveBetterParticleEffectYellow,
+  ]
+
   static starKeyUpgradeList: StarKeyUpgrade[] = [
     UpgradeRecord.ultraRedExtensionStarKey,
     UpgradeRecord.delayedBoosterScalingStarKey,
@@ -330,17 +344,8 @@ export class UpgradeRecord extends Record {
     // Yellow Upgrades
     UpgradeRecord.multiplyRedGeneratorsYellow,
     UpgradeRecord.multiplyYellowParticlesYellow,
-    UpgradeRecord.redGeneratorMultiplierYellowPrestigeYellow,
-    UpgradeRecord.multiplyRedGeneratorExtensionYellow,
-    UpgradeRecord.startWithMoreRedExtensionsUpgrade,
-    UpgradeRecord.increaseRedGeneratorSubMultipliers,
-    UpgradeRecord.increaseRedGeneratorBuyMultipliers,
-    UpgradeRecord.noResetRedExtension,
     UpgradeRecord.multiplyYellowKeyGain,
-    UpgradeRecord.improveFasterAccelerationYellow,
-    UpgradeRecord.improveMultiplyAcceleratorEffectYellow,
-    UpgradeRecord.improveBetterAccelerationYellow,
-    UpgradeRecord.improveBetterParticleEffectYellow,
+    ...UpgradeRecord.yellowUpgradeList,
     UpgradeRecord.breakYellowBarrier,
 
     // Yellow break upgrades

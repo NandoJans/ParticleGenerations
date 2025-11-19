@@ -6,7 +6,7 @@ import {CommonModule} from '@angular/common';
 import {Charger} from "../../../classes/features/charger";
 import {RedGeneratorDarkStarCharger} from "../../../classes/features/chargers/red-generator-dark-star-charger";
 import {Num} from "../../../num";
-import {faPlay, faPause} from '@fortawesome/free-solid-svg-icons';
+import {faPlay, faPause, faLock} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-dark-star-charger',
@@ -20,7 +20,7 @@ import {faPlay, faPause} from '@fortawesome/free-solid-svg-icons';
 export class DarkStarChargerComponent {
   @Input() charger: Charger = new RedGeneratorDarkStarCharger("redGeneratorDarkStarCharger");
   private sub: Subscription;
-  
+
   // FontAwesome icons
   faPlay = faPlay;
   faPause = faPause;
@@ -118,5 +118,42 @@ export class DarkStarChargerComponent {
   getCollapsedEffectDisplay(): string {
     const breakdown = this.getEffectBreakdown();
     return breakdown.effects.length > 0 ? breakdown.effects[0] : '';
+  }
+
+  isFirstUnlocked(): boolean {
+    return this.charger.isFirstUnlocked();
+  }
+
+  protected readonly faLock = faLock;
+
+  private getRequirement() {
+    return this.charger.requirement.length > 0 ? this.charger.requirement[0] : undefined;
+  }
+
+  getRequirementStyle() {
+    const requirement = this.getRequirement();
+    if (requirement && 'getStyle' in requirement.requirement && requirement.requirement.getStyle instanceof Function) {
+      return requirement.requirement.getStyle().toString();
+    } else {
+      return '';
+    }
+  }
+
+  getRequirementAmount() {
+    const requirement = this.getRequirement();
+    if (requirement) {
+      return requirement.amount.toString();
+    } else {
+      return '';
+    }
+  }
+
+  getRequirementString() {
+    const requirement = this.getRequirement();
+    if (requirement && 'displayName' in requirement.requirement) {
+      return requirement.requirement.displayName;
+    } else {
+      return '';
+    }
   }
 }
