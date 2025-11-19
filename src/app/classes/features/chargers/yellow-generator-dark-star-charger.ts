@@ -65,6 +65,14 @@ export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
     return `${this.effect.toString()}x multiplier to yellow generators`;
   }
 
+  getChargeDescription(): string {
+    return 'Charges based on the amount of yellow power you have.';
+  }
+
+  getRewardDescription(): string {
+    return 'Provides a massive static multiplier to yellow generators.';
+  }
+
   override init() {
     this.requirement = [
       new Requirement(HoldingRecord.yellowPower, new Num(1, 9999999999), this)

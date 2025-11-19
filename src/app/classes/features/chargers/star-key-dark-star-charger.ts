@@ -60,6 +60,14 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
     return `${this.effect.toString()}x yellow key gain`;
   }
 
+  getChargeDescription(): string {
+    return 'Charges based on the amount of star keys you have.';
+  }
+
+  getRewardDescription(): string {
+    return 'Increases yellow key gain.';
+  }
+
   override init() {
     this.requirement = [
       new Requirement(HoldingRecord.starKeys, new Num(1, 9999999999), this)

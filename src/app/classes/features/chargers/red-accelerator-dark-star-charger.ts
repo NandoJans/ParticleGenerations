@@ -60,6 +60,14 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
     return `${this.effect.toString()}x power to red accelerator upgrades`;
   }
 
+  getChargeDescription(): string {
+    return 'Charges based on the amount of red accelerators you have.';
+  }
+
+  getRewardDescription(): string {
+    return 'Makes red accelerator upgrades more powerful.';
+  }
+
   override init() {
     this.requirement = [
       new Requirement(HoldingRecord.redParticles, new Num(1, 9999999999), this)

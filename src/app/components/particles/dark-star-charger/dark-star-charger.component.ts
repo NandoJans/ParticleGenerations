@@ -2,6 +2,7 @@ import {ChangeDetectorRef, Component, Input} from '@angular/core';
 import {ComponentService} from '../../../services/component.service';
 import {Subscription} from 'rxjs';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {CommonModule} from '@angular/common';
 import {Charger} from "../../../classes/features/charger";
 import {RedGeneratorDarkStarCharger} from "../../../classes/features/chargers/red-generator-dark-star-charger";
 import {Num} from "../../../num";
@@ -9,7 +10,8 @@ import {Num} from "../../../num";
 @Component({
   selector: 'app-dark-star-charger',
   imports: [
-    FontAwesomeModule
+    FontAwesomeModule,
+    CommonModule
   ],
   templateUrl: './dark-star-charger.component.html',
   styleUrl: './dark-star-charger.component.css',

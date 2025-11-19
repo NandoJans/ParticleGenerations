@@ -66,6 +66,14 @@ export class CombineDarkStarCharger extends DarkStarCharger {
     return `${this.effect.toString()}x amplification to other charger effects`;
   }
 
+  getChargeDescription(): string {
+    return 'Charges based on the total charge from all active chargers raised to the power of active chargers.';
+  }
+
+  getRewardDescription(): string {
+    return 'Amplifies the effects of all other active chargers.';
+  }
+
   override shouldCharge(): boolean {
     // Check if enough chargers are active based on tier
     const requiredChargers = new Num(2, 0).add(this.tier);

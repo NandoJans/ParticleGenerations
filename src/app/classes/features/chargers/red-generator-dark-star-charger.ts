@@ -67,6 +67,14 @@ export class RedGeneratorDarkStarCharger extends DarkStarCharger {
     return `${this.effect.toString()}x multiplier to red generators`;
   }
 
+  getChargeDescription(): string {
+    return 'Charges based on the amount of red particles you have.';
+  }
+
+  getRewardDescription(): string {
+    return 'Provides a static multiplier to red generators.';
+  }
+
   override init() {
     this.requirement = [
       new Requirement(HoldingRecord.redParticles, new Num(1, 9999999999), this)
