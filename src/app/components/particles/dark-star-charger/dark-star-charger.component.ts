@@ -6,6 +6,7 @@ import {CommonModule} from '@angular/common';
 import {Charger} from "../../../classes/features/charger";
 import {RedGeneratorDarkStarCharger} from "../../../classes/features/chargers/red-generator-dark-star-charger";
 import {Num} from "../../../num";
+import {faPlay, faPause} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-dark-star-charger',
@@ -19,6 +20,10 @@ import {Num} from "../../../num";
 export class DarkStarChargerComponent {
   @Input() charger: Charger = new RedGeneratorDarkStarCharger("redGeneratorDarkStarCharger");
   private sub: Subscription;
+  
+  // FontAwesome icons
+  faPlay = faPlay;
+  faPause = faPause;
 
   constructor(
     public cd: ChangeDetectorRef,
@@ -98,5 +103,20 @@ export class DarkStarChargerComponent {
 
   getEffectBreakdown(): {formula: string, effects: string[]} {
     return this.charger.getEffectBreakdown();
+  }
+
+  getChargerType(): string {
+    // Extract the type from the charger name (e.g., "red-generator-dark-star-charger" -> "red")
+    const name = this.charger.saveName || this.charger.name || '';
+    if (name.startsWith('red')) return 'red';
+    if (name.startsWith('yellow')) return 'yellow';
+    if (name.startsWith('star')) return 'star';
+    if (name.startsWith('combine')) return 'combine';
+    return 'default';
+  }
+
+  getCollapsedEffectDisplay(): string {
+    const breakdown = this.getEffectBreakdown();
+    return breakdown.effects.length > 0 ? breakdown.effects[0] : '';
   }
 }
