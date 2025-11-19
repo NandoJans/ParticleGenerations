@@ -27,6 +27,7 @@ import {StarKeyCompressionAutomator} from "../../features/automators/star-key-co
 import {YellowFusionUpgradesAutomator} from "../../features/automators/yellow-fusion-upgrades-automator";
 import {StarKeyUpgradesAutomator} from "../../features/automators/star-key-upgrades-automator";
 import {IncreaseYellowPowerUpgradeAutomator} from "../../features/automators/increase-yellow-power-upgrade-automator";
+import {GreenPrestigeAutomator} from "../../features/automators/green-prestige-automator";
 
 @Injectable({
   providedIn: 'root'
@@ -75,6 +76,9 @@ export class AutomatorRecord extends Record {
   static starKeyUpgrades: StarKeyUpgradesAutomator = new StarKeyUpgradesAutomator('starKeyUpgrades');
 
   static starKeyCompression: StarKeyCompressionAutomator = new StarKeyCompressionAutomator('starKeyCompression');
+
+  // Green prestige automators
+  static greenPrestige: GreenPrestigeAutomator = new GreenPrestigeAutomator('greenPrestige');
 
   static redAutomators: Automator[] = [
     AutomatorRecord.firstRedGenerator,
@@ -148,6 +152,8 @@ export class AutomatorRecord extends Record {
     AutomatorRecord.starKeyCompression,
     AutomatorRecord.yellowFusionUpgrades,
     AutomatorRecord.starKeyUpgrades,
+
+    AutomatorRecord.greenPrestige,
   ]
 
   getList(): Automator[] {

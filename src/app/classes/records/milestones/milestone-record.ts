@@ -18,6 +18,9 @@ import {
 import {HoldingRecord} from "../holdings/holding-record";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {UpgradeRecord} from "../upgrades/upgrade-record";
+import {
+  ChangeHoldingGeneratePercentageGreenMilestone
+} from "../../features/milestones/change-holding-generate-percentage-green-milestone";
 
 @Injectable({
   providedIn: 'root'
@@ -293,6 +296,142 @@ export class MilestoneRecord extends Record {
     'all yellow upgrades',
   )
 
+  static keepYellowFusionUpgradesAutomator: ChangeResetKeyGreenMilestone = new ChangeResetKeyGreenMilestone(
+    'keepYellowFusionUpgradesAutomator',
+    'Keep yellow fusion upgrades automator',
+    new Num(1.2, 1),
+    [
+      AutomatorRecord.yellowFusionUpgrades,
+    ],
+    'yellow fusion upgrades automator'
+  )
+
+  static keepStarChallengeAutomators: ChangeResetKeyGreenMilestone = new ChangeResetKeyGreenMilestone(
+    'keepStarChallengeAutomators',
+    'Keep star challenge automators',
+    new Num(1.3, 1),
+    [
+      AutomatorRecord.proximaCentauriStarChallenge,
+      AutomatorRecord.lalandeStarChallenge,
+      AutomatorRecord.sunStarChallenge,
+      AutomatorRecord.siriusStarChallenge,
+    ],
+    'star challenge automators'
+  )
+
+  static keepFusionBoosterAccelerationAutomator: ChangeResetKeyGreenMilestone = new ChangeResetKeyGreenMilestone(
+    'keepFusionBoosterAccelerationAutomator',
+    'Keep fusion booster acceleration automator',
+    new Num(1.4, 1),
+    [
+      AutomatorRecord.fusionBoosterAcceleration,
+    ],
+    'fusion booster acceleration automator'
+  )
+
+  static keepStarKeyAutomators: ChangeResetKeyGreenMilestone = new ChangeResetKeyGreenMilestone(
+    'keepStarKeyAutomators',
+    'Keep star key automators',
+    new Num(1.5, 1),
+    [
+      AutomatorRecord.starKeyCompression,
+      AutomatorRecord.starKeyUpgrades,
+    ],
+    'star key automators'
+  )
+
+  static keepIncreaseYellowPowerUpgradeAutomator: ChangeResetKeyGreenMilestone = new ChangeResetKeyGreenMilestone(
+    'keepIncreaseYellowPowerUpgradeAutomator',
+    'Keep increase yellow power upgrade automator',
+    new Num(1.6, 1),
+    [
+      AutomatorRecord.increaseYellowPowerUpgrade,
+    ],
+    'increase yellow power upgrade automator'
+  )
+
+  // Generate Green Particles
+  static generate5PercentGreenParticles: ChangeHoldingGeneratePercentageGreenMilestone = new ChangeHoldingGeneratePercentageGreenMilestone(
+    'generate5PercentGreenParticles',
+    '5% Green Particles',
+    new Num(1.7, 1),
+    MultiplierRecord.greenParticleIdleGeneration,
+    new Num(0.05, 0)
+  )
+  static generate10PercentGreenParticles: ChangeHoldingGeneratePercentageGreenMilestone = new ChangeHoldingGeneratePercentageGreenMilestone(
+    'generate10PercentGreenParticles',
+    '10% Green Particles',
+    new Num(1.8, 1),
+    MultiplierRecord.greenParticleIdleGeneration,
+    new Num(0.1, 0)
+  )
+  static generate15PercentGreenParticles: ChangeHoldingGeneratePercentageGreenMilestone = new ChangeHoldingGeneratePercentageGreenMilestone(
+    'generate15PercentGreenParticles',
+    '15% Green Particles',
+    new Num(1.9, 1),
+    MultiplierRecord.greenParticleIdleGeneration,
+    new Num(0.15, 0)
+  )
+  static generate20PercentGreenParticles: ChangeHoldingGeneratePercentageGreenMilestone = new ChangeHoldingGeneratePercentageGreenMilestone(
+    'generate20PercentGreenParticles',
+    '20% Green Particles',
+    new Num(2, 1),
+    MultiplierRecord.greenParticleIdleGeneration,
+    new Num(0.2, 0)
+  )
+  static generate25PercentGreenParticles: ChangeHoldingGeneratePercentageGreenMilestone = new ChangeHoldingGeneratePercentageGreenMilestone(
+    'generate25PercentGreenParticles',
+    '25% Green Particles',
+    new Num(2.2, 1),
+    MultiplierRecord.greenParticleIdleGeneration,
+    new Num(0.25, 0)
+  )
+  static generate30PercentGreenParticles: ChangeHoldingGeneratePercentageGreenMilestone = new ChangeHoldingGeneratePercentageGreenMilestone(
+    'generate30PercentGreenParticles',
+    '30% Green Particles',
+    new Num(2.5, 1),
+    MultiplierRecord.greenParticleIdleGeneration,
+    new Num(0.3, 0)
+  )
+  static generate35PercentGreenParticles: ChangeHoldingGeneratePercentageGreenMilestone = new ChangeHoldingGeneratePercentageGreenMilestone(
+    'generate35PercentGreenParticles',
+    '35% Green Particles',
+    new Num(3, 1),
+    MultiplierRecord.greenParticleIdleGeneration,
+    new Num(0.35, 0)
+  )
+  static generate40PercentGreenParticles: ChangeHoldingGeneratePercentageGreenMilestone = new ChangeHoldingGeneratePercentageGreenMilestone(
+    'generate40PercentGreenParticles',
+    '40% Green Particles',
+    new Num(3.5, 1),
+    MultiplierRecord.greenParticleIdleGeneration,
+    new Num(0.4, 0)
+  )
+  static generate45PercentGreenParticles: ChangeHoldingGeneratePercentageGreenMilestone = new ChangeHoldingGeneratePercentageGreenMilestone(
+    'generate45PercentGreenParticles',
+    '45% Green Particles',
+    new Num(4, 1),
+    MultiplierRecord.greenParticleIdleGeneration,
+    new Num(0.45, 0)
+  )
+  static generate50PercentGreenParticles: ChangeHoldingGeneratePercentageGreenMilestone = new ChangeHoldingGeneratePercentageGreenMilestone(
+    'generate50PercentGreenParticles',
+    '50% Green Particles',
+    new Num(5, 1),
+    MultiplierRecord.greenParticleIdleGeneration,
+    new Num(0.5, 0)
+  )
+
+  static keepGreenPrestigeAutomator: ChangeResetKeyGreenMilestone = new ChangeResetKeyGreenMilestone(
+    'keepGreenPrestigeAutomator',
+    'Keep Green Prestige Automator',
+    new Num(6, 1),
+    [
+      AutomatorRecord.greenPrestige,
+    ],
+    'green prestige automator'
+  );
+
   // Blue Phase
 
   // Purple Phase
@@ -343,6 +482,25 @@ export class MilestoneRecord extends Record {
     MilestoneRecord.keepFifthYellowAutomator,
     MilestoneRecord.startWith100YellowPrestiges,
     MilestoneRecord.keepAllYellowUpgrades,
+    MilestoneRecord.keepYellowFusionUpgradesAutomator,
+    MilestoneRecord.keepStarChallengeAutomators,
+    MilestoneRecord.keepFusionBoosterAccelerationAutomator,
+    MilestoneRecord.keepStarKeyAutomators,
+    MilestoneRecord.keepIncreaseYellowPowerUpgradeAutomator,
+
+    // Generate Green Particles
+    MilestoneRecord.generate5PercentGreenParticles,
+    MilestoneRecord.generate10PercentGreenParticles,
+    MilestoneRecord.generate15PercentGreenParticles,
+    MilestoneRecord.generate20PercentGreenParticles,
+    MilestoneRecord.generate25PercentGreenParticles,
+    MilestoneRecord.generate30PercentGreenParticles,
+    MilestoneRecord.generate35PercentGreenParticles,
+    MilestoneRecord.generate40PercentGreenParticles,
+    MilestoneRecord.generate45PercentGreenParticles,
+    MilestoneRecord.generate50PercentGreenParticles,
+
+    MilestoneRecord.keepGreenPrestigeAutomator,
   ];
 
   getList(): Milestone[] {
