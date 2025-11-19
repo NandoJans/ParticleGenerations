@@ -32,10 +32,12 @@ export class YellowAutomatorsComponent implements OnInit {
     AutomatorRecord.siriusStarChallenge,
   ]
   yellowFusionAutomators: Automator[] = [
-    AutomatorRecord.fusionBoosterAcceleration
+    AutomatorRecord.fusionBoosterAcceleration,
+    AutomatorRecord.yellowFusionUpgrades,
   ]
   yellowStarKeyAutomators: Automator[] = [
-    AutomatorRecord.starKeyCompression
+    AutomatorRecord.starKeyCompression,
+    AutomatorRecord.starKeyUpgrades
   ]
   infoText: string[] = [
     'Yellow Automators manage the advanced automation for the yellow layer.',
@@ -49,6 +51,30 @@ export class YellowAutomatorsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  getToggleAllText() {
+    if (this.oneIsActive()) {
+      return "Deactivate All"
+    } else {
+      return "Activate All"
+    }
+  }
+
+  private oneIsActive() {
+    return AutomatorRecord.yellowAutomators.some(automator => automator.active)
+  }
+
+  toggleAll() {
+    if (this.oneIsActive()) {
+      AutomatorRecord.yellowAutomators.forEach(automator => automator.deactivate())
+    } else {
+      AutomatorRecord.yellowAutomators.forEach(automator => automator.activate())
+    }
+  }
+
+  getToggleColor() {
+    return this.oneIsActive() ? "red" : "green"
   }
 
 }

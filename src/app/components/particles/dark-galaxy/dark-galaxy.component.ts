@@ -62,4 +62,12 @@ export class DarkGalaxyComponent {
   isDarkChallenge(): boolean {
     return ChallengeRecord.currentChallenges['green'] === this.challenge;
   }
+
+  toggleChallenge() {
+    if (this.isDarkChallenge()) {
+      this.challengeService.leaveChallenge('green');
+    } else {
+      this.startChallenge();
+    }
+  }
 }

@@ -92,4 +92,14 @@ export class PrestigeButtonComponent implements OnInit {
   getCompletionHolding(): string {
     return this.getChallenge()?.getCurrency().displayName ?? '';
   }
+
+  hasCustomText(): boolean {
+    return this.getCustomText() !== "";
+  }
+
+  getCustomText() {
+    return this.prestigeLayer.getCustomPrestigeButtonText();
+  }
+
+  protected readonly Array = Array;
 }

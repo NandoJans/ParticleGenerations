@@ -1,15 +1,10 @@
 <div class="holding resource-card">
   <app-number-display [holding]="darkStarHolding"></app-number-display>
 </div>
-<div>
-
-</div>
 <div class="upgrade-row">
   <app-dark-galaxy [challenge]="darkGalaxy"></app-dark-galaxy>
 </div>
-
 <div class="chargers-section">
-  <h3>Dark Star Chargers</h3>
   <div class="chargers-grid">
     @for (charger of chargers; track charger.name) {
       <app-dark-star-charger [charger]="charger"></app-dark-star-charger>

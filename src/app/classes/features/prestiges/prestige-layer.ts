@@ -233,4 +233,10 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
       this.idleGenerationHolding.amount = this.idleGenerationHolding.amount.add(idleGeneration);
     }
   }
+
+  customPrestigeButtonText: string|string[] = '';
+
+  getCustomPrestigeButtonText() {
+    return this.customPrestigeButtonText;
+  }
 }

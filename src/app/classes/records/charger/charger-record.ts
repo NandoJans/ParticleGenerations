@@ -8,7 +8,12 @@ import {StarChallengeDarkStarCharger} from "../../features/chargers/star-challen
 import {YellowFusionDarkStarCharger} from "../../features/chargers/yellow-fusion-dark-star-charger";
 import {StarKeyDarkStarCharger} from "../../features/chargers/star-key-dark-star-charger";
 import {CombineDarkStarCharger} from "../../features/chargers/combine-dark-star-charger";
+import {Num} from "../../../num";
+import {Injectable} from "@angular/core";
 
+@Injectable({
+  providedIn: 'root'
+})
 export class ChargerRecord extends Record {
   static redGeneratorDarkCharger: RedGeneratorDarkStarCharger = new RedGeneratorDarkStarCharger('red-generator-dark-star-charger');
   static redAcceleratorDarkCharger: RedAcceleratorDarkStarCharger = new RedAcceleratorDarkStarCharger('red-accelerator-dark-star-charger');
@@ -32,5 +37,21 @@ export class ChargerRecord extends Record {
 
   getList(): Charger[] {
     return ChargerRecord.list;
+  }
+
+  init() {
+    this.getList().forEach(charger => charger.init());
+  }
+
+  load() {
+    this.getList().forEach(charger => charger.tryLoad());
+  }
+
+  save() {
+    this.getList().forEach(charger => charger.save());
+  }
+
+  run(speed: Num) {
+    this.getList().forEach(charger => charger.run(speed));
   }
 }

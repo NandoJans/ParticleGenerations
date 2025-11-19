@@ -147,6 +147,7 @@ import {
 import {
   UnlockSecondGreenGeneratorGalaxyTreeUpgrade
 } from "../../features/upgrades/unlock-second-green-generator-galaxy-tree-upgrade";
+import {MoreYellowParticlesGalaxyTreeUpgrade} from "../../features/upgrades/more-yellow-particles-galaxy-tree-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -269,6 +270,8 @@ export class UpgradeRecord extends Record {
   static improveFusionCompressionGalaxyTree: ImproveFusionCompressionGalaxyTreeUpgrade = new ImproveFusionCompressionGalaxyTreeUpgrade('improveFusionCompression');
   static unlockSecondGreenGeneratorGalaxyTree: UnlockSecondGreenGeneratorGalaxyTreeUpgrade = new UnlockSecondGreenGeneratorGalaxyTreeUpgrade('unlockSecondGreenGenerator');
 
+  static moreYellowParticlesGalaxyTree: MoreYellowParticlesGalaxyTreeUpgrade = new MoreYellowParticlesGalaxyTreeUpgrade('moreYellowParticlesGalaxyTree');
+
   static starKeyUpgradeList: StarKeyUpgrade[] = [
     UpgradeRecord.ultraRedExtensionStarKey,
     UpgradeRecord.delayedBoosterScalingStarKey,
@@ -310,6 +313,7 @@ export class UpgradeRecord extends Record {
 
     UpgradeRecord.improveFusionCompressionGalaxyTree,
     UpgradeRecord.unlockSecondGreenGeneratorGalaxyTree,
+    UpgradeRecord.moreYellowParticlesGalaxyTree,
   ]
 
   static override list: Upgrade[] = [

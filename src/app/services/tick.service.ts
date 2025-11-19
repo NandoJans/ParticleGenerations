@@ -24,6 +24,8 @@ import {CompressionService} from "./compression.service";
 import {UpgradeRecord} from "../classes/records/upgrades/upgrade-record";
 import {MilestoneService} from "./interactables/milestone.service";
 import {Milestone} from "../classes/features/milestone";
+import {ChargerService} from "./charger.service";
+import {Charger} from "../classes/features/charger";
 
 @Injectable({
   providedIn: 'root'
@@ -51,6 +53,7 @@ export class TickService {
     private challengeService: ChallengeService,
     private compressionService: CompressionService,
     private milestoneService: MilestoneService,
+    private chargerService: ChargerService
   ) {}
 
   /**
@@ -145,6 +148,7 @@ export class TickService {
       this.challengeService,
       this.multiplierService,
       this.milestoneService,
+      this.chargerService
     ];
 
     services.forEach(service => {
@@ -154,7 +158,7 @@ export class TickService {
     });
   }
 
-  private pushToCalculationOrder(element: GameElement|Holding|Multiplier|Milestone) {
+  private pushToCalculationOrder(element: GameElement|Holding|Multiplier|Milestone|Charger) {
     if (element.calculationOrder == undefined) {
       if (this.calculationOrder[4] == undefined) {
         this.calculationOrder[4] = []

@@ -1,0 +1,25 @@
+.click-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.5rem 0;
+  cursor: pointer;
+  padding: 0.5rem 5%;
+  width: 90%;
+  border-top: 2px solid var(--background-color-4);
+  border-bottom: 2px solid var(--background-color-4);
+}
+
+fa-icon {
+  font-size: 1.5rem;
+}
+
+.click-title:hover {
+  color: var(--accent-color-blue);
+  background-color: var(--background-color-2);
+}
+
+.closed {
+  display: none;
+}

@@ -48,6 +48,7 @@ import {GreenDarkGalaxyPageComponent} from "./pages/green/green-dark-galaxy-page
 import {DarkGalaxyComponent} from "./components/particles/dark-galaxy/dark-galaxy.component";
 import {DevPhaseComponent} from "./dev/dev-phase/dev-phase.component";
 import {DarkStarChargerComponent} from "./components/particles/dark-star-charger/dark-star-charger.component";
+import {AutomatorSectionComponent} from "./components/particles/automator-section/automator-section.component";
 
 @NgModule({
   declarations: [
@@ -92,7 +93,9 @@ import {DarkStarChargerComponent} from "./components/particles/dark-star-charger
     BalanceComponent,
     YellowStarKeysPageComponent,
     GreenDarkGalaxyPageComponent,
-    DevPhaseComponent
+    DevPhaseComponent,
+    AutomatorSectionComponent,
+    AutomatorComponent
   ],
   imports: [
     BrowserModule,
@@ -101,14 +104,15 @@ import {DarkStarChargerComponent} from "./components/particles/dark-star-charger
     FormsModule,
     FontAwesomeModule,
     DarkGalaxyComponent,
-    DarkStarChargerComponent
+    DarkStarChargerComponent,
   ],
   providers: [],
-    exports: [
-        ButtonComponent,
-        NumberDisplayComponent,
-        ChallengeComponent
-    ],
+  exports: [
+    ButtonComponent,
+    NumberDisplayComponent,
+    ChallengeComponent,
+    AutomatorComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,6 +1,7 @@
 import {GreenMilestone} from "./green-milestone";
 import {PrestigeLayersService} from "../../../services/prestige-layers.service";
 import {Num} from "../../../num";
+import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 
 export class BreakGreenBarrierMilestone extends GreenMilestone {
   constructor(name: string) {
@@ -12,10 +13,13 @@ export class BreakGreenBarrierMilestone extends GreenMilestone {
   }
 
   override getDescription(): string | string[] {
-      return "Break the green barrier";
+      return ["Break the green barrier", "Keep yellow barrier broken"];
   }
 
   override action() {
     PrestigeLayersService.greenPrestigeLayer.limitPhaseBelow = false;
+    UpgradeRecord.breakYellowBarrier.unlock();
+    UpgradeRecord.breakYellowBarrier.bought = new Num(1, 0);
+    UpgradeRecord.breakYellowBarrier.amount = new Num(1, 0);
   }
 }

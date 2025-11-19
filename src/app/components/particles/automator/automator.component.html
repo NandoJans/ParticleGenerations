@@ -43,4 +43,9 @@
     </div>
     <p>{{ getProgressString() }}</p>
   </div>
+  @if (!isUnlocked()) {
+    <div class="locked-overlay">
+      <fa-icon [icon]="faLock"></fa-icon>
+    </div>
+  }
 </div>

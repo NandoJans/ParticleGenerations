@@ -6,6 +6,16 @@
 <button *ngIf="inChallenge()" [class]="prestigeLayer.style+' '
 +((goalReached()) ? 'reached' : '')+' '
 " [style.display]="getDisplay()" (click)="prestige()">
-  <h3>Complete {{ getChallengeName() }}</h3>
-  <p>Requires {{ getCompletionAmount() }} {{ getCompletionHolding() }}</p>
+  @if (hasCustomText()) {
+    @if (typeof getCustomText() === 'string') {
+      <p>{{ getCustomText() }}</p>
+    } @else if (Array.isArray(getCustomText())) {
+      @for (line of getCustomText(); track line) {
+        <p>{{ line }}</p>
+      }
+    }
+  } @else {
+    <h3>Complete {{ getChallengeName() }}</h3>
+    <p>Requires {{ getCompletionAmount() }} {{ getCompletionHolding() }}</p>
+  }
 </button>

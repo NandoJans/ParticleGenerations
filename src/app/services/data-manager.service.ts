@@ -12,6 +12,7 @@ import {Num} from "../num";
 import {ChallengeService} from "./interactables/challenge.service";
 import {App} from "../App";
 import {CompressionService} from "./compression.service";
+import {ChargerRecord} from "../classes/records/charger/charger-record";
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class DataManagerService {
     private holdingRecord: HoldingRecord,
     private generatorRecord: GeneratorRecord,
     private upgradeRecord: UpgradeRecord,
+    private chargerRecord: ChargerRecord,
     private milestoneRecord: MilestoneRecord,
     private navigationsService: NavigationsService,
     private automatorService: AutomatorService,
@@ -95,6 +97,7 @@ export class DataManagerService {
     this.holdingRecord.save()
     this.generatorRecord.save()
     this.upgradeRecord.save()
+    this.chargerRecord.save()
     this.navigationsService.save();
     this.automatorService.save();
     this.prestigeLayersService.save();
@@ -112,6 +115,7 @@ export class DataManagerService {
     this.holdingRecord.load();
     this.generatorRecord.load();
     this.upgradeRecord.load();
+    this.chargerRecord.load();
     this.navigationsService.load();
     this.automatorService.load();
     this.prestigeLayersService.load();
@@ -130,6 +134,7 @@ export class DataManagerService {
     this.holdingRecord.init();
     this.generatorRecord.init();
     this.upgradeRecord.init();
+    this.chargerRecord.init();
     this.navigationsService.init();
     this.automatorService.init();
     this.prestigeLayersService.init();
