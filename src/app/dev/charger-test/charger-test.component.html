@@ -1,0 +1,12 @@
+<div class="test-container">
+  <h1>Charger Component Test</h1>
+  
+  <div class="controls">
+    <button (click)="addCharge()">Add Charge (+50)</button>
+    <button (click)="resetCharge()">Reset</button>
+    <button (click)="setToHalf()">Set to Half</button>
+    <button (click)="setToMax()">Set to Max</button>
+  </div>
+
+  <app-dark-star-charger [charger]="charger"></app-dark-star-charger>
+</div>

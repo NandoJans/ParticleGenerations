@@ -16,7 +16,6 @@ import {GreenTimelineComponent} from "./pages/timeline/green-timeline/green-time
 import {BalanceComponent} from "./dev/balance/balance.component";
 import {YellowStarKeysPageComponent} from "./pages/yellow/yellow-star-keys-page/yellow-star-keys-page.component";
 import {GreenDarkGalaxyPageComponent} from "./pages/green/green-dark-galaxy-page/green-dark-galaxy-page.component";
-import {DevPhaseComponent} from "./dev/dev-phase/dev-phase.component";
 
 const routes: Routes = [
   { path: '', component: RedComponent },
