@@ -6,6 +6,7 @@ export class Num {
   static TWO: Num = new Num(2, 0);
   static THREE: Num = new Num(3, 0);
   static FOUR: Num = new Num(4, 0);
+  static UNREACHABLE: Num = new Num(1, 9999999999);
 
 
   constructor(mantissa: number, exponent: number) {
