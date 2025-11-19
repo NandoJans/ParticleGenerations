@@ -116,7 +116,6 @@ export class ResetHelper {
   }
 
   private static runResetListeners(resetKey: ResetKey): void {
-    console.log("Running reset listeners for key: " + resetKey + "", this.resetListeners)
     Object.values(this.resetListeners).forEach(listener => listener(resetKey));
   }
 
