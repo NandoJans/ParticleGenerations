@@ -24,7 +24,9 @@ import {CompressionService} from "./compression.service";
 import {UpgradeRecord} from "../classes/records/upgrades/upgrade-record";
 import {MilestoneService} from "./interactables/milestone.service";
 import {Milestone} from "../classes/features/milestone";
-import {ChargerService} from "./interactables/charger.service";
+import {ChargerService} from "./charger.service";
+import {Charger} from "../classes/features/charger";
+
 @Injectable({
   providedIn: 'root'
 })
@@ -51,7 +53,7 @@ export class TickService {
     private challengeService: ChallengeService,
     private compressionService: CompressionService,
     private milestoneService: MilestoneService,
-    private chargerService: ChargerService,
+    private chargerService: ChargerService
   ) {}
 
   /**
@@ -61,7 +63,6 @@ export class TickService {
   gameTick(speed: Num = new Num(1, -1)) {
     if (App.isHalting()) return;
 
-    // HoldingRecord.greenParticles.amount = new Num(1, 0);
 
     if (!App.offlineCalculation) App.gameSpeed = speed;
 
@@ -147,7 +148,7 @@ export class TickService {
       this.challengeService,
       this.multiplierService,
       this.milestoneService,
-      this.chargerService,
+      this.chargerService
     ];
 
     services.forEach(service => {
@@ -157,7 +158,7 @@ export class TickService {
     });
   }
 
-  private pushToCalculationOrder(element: GameElement|Holding|Multiplier|Milestone) {
+  private pushToCalculationOrder(element: GameElement|Holding|Multiplier|Milestone|Charger) {
     if (element.calculationOrder == undefined) {
       if (this.calculationOrder[4] == undefined) {
         this.calculationOrder[4] = []

@@ -100,7 +100,7 @@ export class GreenGalaxyTreeComponent implements OnInit {
 
     UpgradeRecord.betterYellowKeyGainGalaxyTree.setPos(75, -225);
     // Children are strongerYellowGenerators, moreYellowKeysGain
-    UpgradeRecord.betterYellowMultipliersGalaxyTree.setPos(-125, -325);
+    UpgradeRecord.betterYellowMultipliersGalaxyTree.setPos(-75, -425);
     UpgradeRecord.amplifiedYellowKeysGalaxyTree.setPos(125, -325);
     UpgradeRecord.yellowExpertiseGalaxyTree.setPos(0, -325);
 
@@ -112,6 +112,8 @@ export class GreenGalaxyTreeComponent implements OnInit {
     UpgradeRecord.improveFusionCompressionGalaxyTree.setPos(150, 325);
 
     UpgradeRecord.unlockSecondGreenGeneratorGalaxyTree.setPos(325, 150);
+
+    UpgradeRecord.moreYellowParticlesGalaxyTree.setPos(-125, -325);
   }
 
   isBottomSectionOpen() {

@@ -12,7 +12,7 @@ import {Num} from "../num";
 import {ChallengeService} from "./interactables/challenge.service";
 import {App} from "../App";
 import {CompressionService} from "./compression.service";
-import {ChargerService} from "./interactables/charger.service";
+import {ChargerRecord} from "../classes/records/charger/charger-record";
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +24,7 @@ export class DataManagerService {
     private holdingRecord: HoldingRecord,
     private generatorRecord: GeneratorRecord,
     private upgradeRecord: UpgradeRecord,
+    private chargerRecord: ChargerRecord,
     private milestoneRecord: MilestoneRecord,
     private navigationsService: NavigationsService,
     private automatorService: AutomatorService,
@@ -31,7 +32,6 @@ export class DataManagerService {
     private challengeService: ChallengeService,
     private timelineService: TimelineService,
     private compressionService: CompressionService,
-    private chargerService: ChargerService,
   ) {}
 
   // --- Simulation mode management ---
@@ -97,6 +97,7 @@ export class DataManagerService {
     this.holdingRecord.save()
     this.generatorRecord.save()
     this.upgradeRecord.save()
+    this.chargerRecord.save()
     this.navigationsService.save();
     this.automatorService.save();
     this.prestigeLayersService.save();
@@ -104,7 +105,6 @@ export class DataManagerService {
     this.milestoneRecord.save();
     this.challengeService.save();
     this.compressionService.save();
-    this.chargerService.save();
 
     this.setLastSave();
     this.localStorageHelper.store();
@@ -115,6 +115,7 @@ export class DataManagerService {
     this.holdingRecord.load();
     this.generatorRecord.load();
     this.upgradeRecord.load();
+    this.chargerRecord.load();
     this.navigationsService.load();
     this.automatorService.load();
     this.prestigeLayersService.load();
@@ -122,7 +123,6 @@ export class DataManagerService {
     this.milestoneRecord.load();
     this.challengeService.load();
     this.compressionService.load();
-    this.chargerService.load();
 
     // Run milestones
     this.challengeService.applyCurrentChallengeNerfs();
@@ -134,12 +134,12 @@ export class DataManagerService {
     this.holdingRecord.init();
     this.generatorRecord.init();
     this.upgradeRecord.init();
+    this.chargerRecord.init();
     this.navigationsService.init();
     this.automatorService.init();
     this.prestigeLayersService.init();
     this.timelineService.init();
     this.challengeService.init();
-    this.chargerService.init();
   }
 
   setLastSave(): void {

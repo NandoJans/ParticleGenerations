@@ -45,7 +45,10 @@ import { GreenTimelineComponent } from './pages/timeline/green-timeline/green-ti
 import {BalanceComponent} from "./dev/balance/balance.component";
 import {YellowStarKeysPageComponent} from "./pages/yellow/yellow-star-keys-page/yellow-star-keys-page.component";
 import {GreenDarkGalaxyPageComponent} from "./pages/green/green-dark-galaxy-page/green-dark-galaxy-page.component";
+import {DarkGalaxyComponent} from "./components/particles/dark-galaxy/dark-galaxy.component";
+import {DevPhaseComponent} from "./dev/dev-phase/dev-phase.component";
 import {DarkStarChargerComponent} from "./components/particles/dark-star-charger/dark-star-charger.component";
+import {AutomatorSectionComponent} from "./components/particles/automator-section/automator-section.component";
 
 @NgModule({
   declarations: [
@@ -89,7 +92,10 @@ import {DarkStarChargerComponent} from "./components/particles/dark-star-charger
     GreenTimelineComponent,
     BalanceComponent,
     YellowStarKeysPageComponent,
-    GreenDarkGalaxyPageComponent
+    GreenDarkGalaxyPageComponent,
+    DevPhaseComponent,
+    AutomatorSectionComponent,
+    AutomatorComponent
   ],
   imports: [
     BrowserModule,
@@ -97,14 +103,16 @@ import {DarkStarChargerComponent} from "./components/particles/dark-star-charger
     ReactiveFormsModule,
     FormsModule,
     FontAwesomeModule,
-    DarkStarChargerComponent
+    DarkGalaxyComponent,
+    DarkStarChargerComponent,
   ],
   providers: [],
-    exports: [
-        ButtonComponent,
-        NumberDisplayComponent,
-        ChallengeComponent
-    ],
+  exports: [
+    ButtonComponent,
+    NumberDisplayComponent,
+    ChallengeComponent,
+    AutomatorComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

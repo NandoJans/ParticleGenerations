@@ -28,6 +28,9 @@ export class IncreaseKeyAmountStarKeySubUpgrade extends StarKeySubUpgrade {
   override buffer: Num = new Num(3, 0);
   override baseBuffer: Num = new Num(3, 0);
 
+  override scaling: Num = new Num(3, 0);
+  override scalingStart: Num = new Num(1, 20);
+
   override baseCost: Num = new Num(1, 8);
   override cost: Num = new Num(1, 8);
   override increase: Num = new Num(1, 2);

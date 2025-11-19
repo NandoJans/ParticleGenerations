@@ -42,10 +42,16 @@ export abstract class Generator extends Buyable implements Generatable, Storable
   }
 
   override run(speed: Num): any {
-    this.multiplier = this.baseMultiplier
+    // Build local multiplier (excluding globalMultiplier)
+    let localMultiplier = this.baseMultiplier
       .mul(this.baseMulMod)
       .pow(this.bought)
-      .mul(this.mulMod)
+      .mul(this.mulMod) as Num
+
+    // Apply global transformation hook (e.g., challenge nerfs) to the generator's local multiplier
+    localMultiplier = Multiplier.applyHook(localMultiplier, { source: this, kind: 'generator-local' })
+
+    this.multiplier = localMultiplier
       .mul(this.globalMultiplier.getNum()) as Num
     if (this.isUnlocked() && this.isEnabled()) {
       this.generates.generate(this.getGenerateAmount().mul(speed) as Num)

@@ -2,40 +2,68 @@ import {DarkStarCharger} from "./dark-star-charger";
 import {Num} from "../../../num";
 import {ResetKey} from "../../enums/reset-key";
 import {Requirement} from "../interfaces/requirement";
-import {ChallengeRecord} from "../../records/challenges/challenge-record";
+import {HoldingRecord} from "../../records/holdings/holding-record";
 
+/**
+ * Red Generator Dark Star Charger
+ *
+ * Nerfs: The multipliers of red generators are raised to another ^0.5.
+ *        Every tier disables one extra generator, starting with all generators.
+ * Charge: Is gained by getting more red particles.
+ * Amplifies: Gives a static multiplier to red generators with the function: 10^CHARGE.
+ */
 export class RedGeneratorDarkStarCharger extends DarkStarCharger {
-  override displayName: string = "Red Generator Dark Star Charger";
-  override name: string = "redGeneratorDarkStarCharger";
-  override resetId: ResetKey = ResetKey.NONE;
-  override requirement: Requirement[] = [];
-  override max: Num = new Num(1, 3); // Default max to 1000
+  displayName: string = 'Red Generator Charger';
+  resetId: ResetKey = ResetKey.GREEN;
+  maxCharge: Num = new Num(100, 0);
+  maxTier: Num | undefined = new Num(10, 0);
+  canInfiniteChargeAtMaxTier: boolean = true;
+  requirement: Requirement[] = [];
+  name: string = 'red-generator-dark-star-charger';
 
-  constructor(saveName: string) {
-    super(saveName);
+  getChargeAmount(): Num {
+    // TODO: Implement based on red particles gained
+    // For now, return a placeholder
+    return new Num(0, 0);
   }
 
-  override init(): void {
-    super.init();
-    
-    // Register the nerf function with the dark galaxy challenge
-    const darkGalaxyChallenge = ChallengeRecord.darkGalaxy;
-    darkGalaxyChallenge.registerNerfFunction('redGeneratorDarkStarCharger', () => {
-      // If charger is enabled (charging), it increases the nerf
-      if (this.charging && this.amount.greq(new Num(1, 0))) {
-        // The more charged, the stronger the nerf (lower power)
-        const chargeRatio = this.amount.div(this.max);
-        const nerfIncrease = chargeRatio.mul(new Num(5, -2)); // Max 0.05 additional nerf
-        darkGalaxyChallenge.nerfPower = new Num(1, -1).sub(nerfIncrease);
-      } else {
-        // Reset to base nerf power when not charging
-        darkGalaxyChallenge.nerfPower = new Num(1, -1);
-      }
-    });
+  action(): void {
+    // Calculate effect: 10^CHARGE
+    const effectiveCharge = this.getEffectiveCharge();
+    this.effect = new Num(10, 0).pow(effectiveCharge);
+
+    // TODO: Apply multiplier to red generators
   }
 
-  override getChargeAmount(): Num {
-    // Charge by 1 per tick (50ms), so it takes 50 seconds to fully charge at 1000 max
-    return new Num(1, 0);
+  applyTierDrawback(chargeValue: Num): Num {
+    // TODO: Implement tier-based drawback
+    // For now, simple division by tier
+    if (this.tier.equals(new Num(0, 0))) {
+      return chargeValue;
+    }
+    return chargeValue.div(this.tier);
+  }
+
+  applyNerfs(): void {
+    // TODO: Apply ^0.5 to red generator multipliers
+    // TODO: Disable generators based on tier
+  }
+
+  revertNerfs(): void {
+    // TODO: Revert nerfs to red generators
+  }
+
+  getNerfDescription(): string {
+    return 'Red generator multipliers are raised to ^0.5. Each tier disables one additional generator.';
+  }
+
+  getEffectDescription(): string {
+    return `${this.effect.toString()}x multiplier to red generators`;
+  }
+
+  override init() {
+    this.requirement = [
+      new Requirement(HoldingRecord.redParticles, new Num(1, 9999999999), this)
+    ]
   }
 }
