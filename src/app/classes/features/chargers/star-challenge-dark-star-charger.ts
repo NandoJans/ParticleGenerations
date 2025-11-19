@@ -67,6 +67,14 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
     return `Rigel challenge max completions: +${this.effect.toString()}`;
   }
 
+  getChargeDescription(): string {
+    return 'Charges based on total completions and red particles gained in Sirius star challenge.';
+  }
+
+  getRewardDescription(): string {
+    return 'Unlocks or increases max completions of the Rigel star challenge.';
+  }
+
   override init() {
     this.requirement = [
       new Requirement(HoldingRecord.redParticles, new Num(1, 9999999999), this)

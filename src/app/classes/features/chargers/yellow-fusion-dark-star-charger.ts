@@ -63,6 +63,14 @@ export class YellowFusionDarkStarCharger extends DarkStarCharger {
     return `${this.effect.toString()}x hydrogen generation speed`;
   }
 
+  getChargeDescription(): string {
+    return 'Charges based on fusion amount multiplied by fusion booster accelerations.';
+  }
+
+  getRewardDescription(): string {
+    return 'Increases hydrogen generation speed.';
+  }
+
   override init() {
     this.requirement = [
       new Requirement(HoldingRecord.yellowFusion, new Num(1, 9999999999), this)
