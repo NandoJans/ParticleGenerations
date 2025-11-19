@@ -4,6 +4,8 @@ import {Holding} from "../../../classes/features/holding";
 import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 import {DarkGalaxyChallenge} from "../../../classes/features/challenges/dark-galaxy-challenge";
 import {ChallengeRecord} from "../../../classes/records/challenges/challenge-record";
+import {ChargerRecord} from "../../../classes/records/charger/charger-record";
+import {DarkStarCharger} from "../../../classes/features/chargers/dark-star-charger";
 
 @Component({
   selector: 'app-green-dark-galaxy-page',
@@ -14,4 +16,16 @@ import {ChallengeRecord} from "../../../classes/records/challenges/challenge-rec
 export class GreenDarkGalaxyPageComponent {
   darkStarHolding: Holding = HoldingRecord.darkStarHolding;
   darkGalaxy: DarkGalaxyChallenge = ChallengeRecord.darkGalaxy;
+  
+  // Chargers
+  chargers: DarkStarCharger[] = [
+    ChargerRecord.redGeneratorDarkCharger,
+    ChargerRecord.redAcceleratorDarkCharger,
+    ChargerRecord.yellowUpgradeDarkCharger,
+    ChargerRecord.yellowGeneratorDarkCharger,
+    ChargerRecord.starChallengeDarkCharger,
+    ChargerRecord.yellowFusionDarkCharger,
+    ChargerRecord.starKeyDarkCharger,
+    ChargerRecord.combineDarkCharger,
+  ];
 }

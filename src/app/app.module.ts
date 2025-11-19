@@ -47,6 +47,7 @@ import {YellowStarKeysPageComponent} from "./pages/yellow/yellow-star-keys-page/
 import {GreenDarkGalaxyPageComponent} from "./pages/green/green-dark-galaxy-page/green-dark-galaxy-page.component";
 import {DarkGalaxyComponent} from "./components/particles/dark-galaxy/dark-galaxy.component";
 import {DevPhaseComponent} from "./dev/dev-phase/dev-phase.component";
+import {DarkStarChargerComponent} from "./components/particles/dark-star-charger/dark-star-charger.component";
 
 @NgModule({
   declarations: [
@@ -99,7 +100,8 @@ import {DevPhaseComponent} from "./dev/dev-phase/dev-phase.component";
     ReactiveFormsModule,
     FormsModule,
     FontAwesomeModule,
-    DarkGalaxyComponent
+    DarkGalaxyComponent,
+    DarkStarChargerComponent
   ],
   providers: [],
     exports: [
