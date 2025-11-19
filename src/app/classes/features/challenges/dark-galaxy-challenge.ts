@@ -8,7 +8,6 @@ import {HoldingRecord} from "../../records/holdings/holding-record";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {Multiplier} from "../multiplier";
 import {PrestigeLayersService} from "../../../services/prestige-layers.service";
-import {PrestigeLayer} from "../prestiges/prestige-layer";
 
 export class DarkGalaxyChallenge extends Challenge {
     displayName: string = "Dark Galaxy";
