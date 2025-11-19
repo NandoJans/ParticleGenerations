@@ -36,6 +36,14 @@ export class HydrogenGenerator extends Generator {
 
   speed: Num = new Num(1, -1);
 
+  /**
+   * Power exponent for the dynamic hard cap calculation.
+   * Controls how aggressively the gain is capped when it exceeds the barrier.
+   * Lower values result in more aggressive capping.
+   * Example: 0.3 ≈ 1e6→~24k, 1e7→~49k when barrier=5000
+   */
+  private readonly DYNAMIC_CAP_POWER_EXPONENT = 0.05;
+
   override run(speed: Num): any {
     this.speed = speed;
     return super.run(speed);
@@ -57,11 +65,10 @@ export class HydrogenGenerator extends Generator {
     // 2) DYNAMISCHE HARD CAP op basis van power-transform
     //    cap = barrier * (gain / barrier)^p  (alleen als gain > barrier)
     const one = Num.ONE;
-    const p = 0.05; // tunen: 0.3 ≈ 1e6→~24k, 1e7→~49k bij barrier=5000
 
     if (gain.gt(barrier)) {
       const ratio = gain.div(barrier);      // >= 1
-      const ratioPow = ratio.pow(p);        // (gain/barrier)^p
+      const ratioPow = ratio.pow(this.DYNAMIC_CAP_POWER_EXPONENT);        // (gain/barrier)^p
       const dynCap = barrier.mul(ratioPow); // dynamische cap
 
       if (gain.gt(dynCap)) {
