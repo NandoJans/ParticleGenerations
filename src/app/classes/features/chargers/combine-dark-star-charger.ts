@@ -3,6 +3,7 @@ import {Num} from "../../../num";
 import {ResetKey} from "../../enums/reset-key";
 import {Requirement} from "../interfaces/requirement";
 import {ChargerRecord} from "../../records/charger/charger-record";
+import {HoldingRecord} from "../../records/holdings/holding-record";
 
 /**
  * Combine Dark Star Charger
@@ -100,5 +101,11 @@ export class CombineDarkStarCharger extends DarkStarCharger {
       }
     });
     return total;
+  }
+
+  override init() {
+    this.requirement = [
+      new Requirement(HoldingRecord.greenParticles, new Num(1, 9999999999), this)
+    ]
   }
 }

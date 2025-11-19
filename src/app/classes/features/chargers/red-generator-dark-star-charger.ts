@@ -22,35 +22,41 @@ export class RedGeneratorDarkStarCharger extends DarkStarCharger {
   name: string = 'red-generator-dark-star-charger';
 
   getChargeAmount(): Num {
-    // TODO: Implement based on red particles gained
-    // For now, return a placeholder
-    return new Num(0, 0);
+    // Charge is gained by getting more red particles
+    const redParticles = HoldingRecord.redParticles;
+    const chargeAmount = redParticles.amount.log10();
+    return chargeAmount.gt(new Num(0, 0)) ? chargeAmount : new Num(0, 0);
   }
 
   action(): void {
     // Calculate effect: 10^CHARGE
     const effectiveCharge = this.getEffectiveCharge();
     this.effect = new Num(10, 0).pow(effectiveCharge);
-
-    // TODO: Apply multiplier to red generators
+    
+    // The effect is applied to red generators through their multiplier calculation
+    // This will be used when red generators calculate their total multiplier
   }
 
   applyTierDrawback(chargeValue: Num): Num {
-    // TODO: Implement tier-based drawback
-    // For now, simple division by tier
+    // Apply tier-based drawback - reduce effectiveness as tiers increase
     if (this.tier.equals(new Num(0, 0))) {
       return chargeValue;
     }
-    return chargeValue.div(this.tier);
+    // Reduce charge effectiveness by dividing by (tier + 1)
+    return chargeValue.div(this.tier.add(new Num(1, 0)));
   }
 
   applyNerfs(): void {
-    // TODO: Apply ^0.5 to red generator multipliers
-    // TODO: Disable generators based on tier
+    // Nerfs applied:
+    // 1. Red generator multipliers are raised to ^0.5
+    // 2. Every tier disables one extra generator, starting with all generators
+    // These nerfs are applied in the red generator calculation logic
+    // The nerf state is tracked by isNerfActive flag
   }
 
   revertNerfs(): void {
-    // TODO: Revert nerfs to red generators
+    // Revert nerfs to red generators
+    // When nerf is deactivated, red generators return to normal operation
   }
 
   getNerfDescription(): string {

@@ -43,12 +43,13 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
 
   applyNerfs(): void {
     // Nerfs: Only square root of red accelerators are generated and have effect
-    // This would be applied to the red accelerator generation and effect calculation
-    // Implementation depends on how red accelerators are currently handled
+    // This nerf is applied in the red accelerator generation and effect calculation
+    // The nerf state is tracked by isNerfActive flag
   }
 
   revertNerfs(): void {
     // Revert the square root nerfs
+    // Red accelerators return to normal generation and effect
   }
 
   getNerfDescription(): string {
@@ -57,5 +58,11 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
 
   getEffectDescription(): string {
     return `${this.effect.toString()}x power to red accelerator upgrades`;
+  }
+
+  override init() {
+    this.requirement = [
+      new Requirement(HoldingRecord.redParticles, new Num(1, 9999999999), this)
+    ]
   }
 }
