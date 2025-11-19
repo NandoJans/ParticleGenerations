@@ -38,6 +38,14 @@ class TestDarkStarCharger extends DarkStarCharger {
     return 'Test nerf description';
   }
 
+  getChargeDescription(): string {
+    return 'Test charge description';
+  }
+
+  getRewardDescription(): string {
+    return 'Test reward description';
+  }
+
   getEffectDescription(): string {
     return 'Test effect description';
   }
