@@ -2,7 +2,6 @@ import {Charger} from "../charger";
 import {Num} from "../../../num";
 import {GameElement} from "../game-element";
 import {ChallengeRecord} from "../../records/challenges/challenge-record";
-import {Challenge} from "../challenge";
 
 /**
  * DarkStarCharger is a special type of charger that only charges when its related nerf is active.
