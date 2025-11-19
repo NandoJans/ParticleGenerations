@@ -42,11 +42,13 @@ export class YellowUpgradeDarkStarCharger extends DarkStarCharger {
 
   applyNerfs(): void {
     // Disable all yellow upgrades
-    // Implementation depends on how yellow upgrades are managed
+    // The nerf state is tracked by isNerfActive flag
+    // Yellow upgrade logic checks this charger's state to disable upgrades
   }
 
   revertNerfs(): void {
     // Re-enable yellow upgrades
+    // Yellow upgrades return to normal functionality
   }
 
   getNerfDescription(): string {
@@ -63,5 +65,11 @@ export class YellowUpgradeDarkStarCharger extends DarkStarCharger {
 
   getEffectDescription(): string {
     return `Gain ${this.effect.toString()} green keys`;
+  }
+
+  override init() {
+    this.requirement = [
+      new Requirement(HoldingRecord.yellowParticles, new Num(1, 9999999999), this)
+    ]
   }
 }

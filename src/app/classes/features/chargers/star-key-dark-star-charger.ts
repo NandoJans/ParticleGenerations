@@ -43,10 +43,13 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
 
   applyNerfs(): void {
     // Star key multiplies star key power by 0.95 instead of normal value
+    // This nerf is applied in the star key power calculation
+    // The nerf state is tracked by isNerfActive flag
   }
 
   revertNerfs(): void {
     // Restore normal star key power multiplier
+    // Star key power returns to normal operation
   }
 
   getNerfDescription(): string {
@@ -55,5 +58,11 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
 
   getEffectDescription(): string {
     return `${this.effect.toString()}x yellow key gain`;
+  }
+
+  override init() {
+    this.requirement = [
+      new Requirement(HoldingRecord.starKeys, new Num(1, 9999999999), this)
+    ]
   }
 }
