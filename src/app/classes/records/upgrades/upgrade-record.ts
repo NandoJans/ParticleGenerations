@@ -286,6 +286,16 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.improveBetterParticleEffectYellow,
   ]
 
+  static postBreakYellowUpgradeList: YellowUpgrade[] = [
+    UpgradeRecord.empoweredBoosterAcceleration,
+    UpgradeRecord.unlockFourthYellowGenerator,
+    UpgradeRecord.unlockFifthYellowGenerator,
+    UpgradeRecord.stopRedBoosterAccelerationReset,
+    UpgradeRecord.decreaseRedGeneratorScaling,
+    UpgradeRecord.decreaseRedGeneratorBoosterScaling,
+    UpgradeRecord.breakYellowFusionLimitYellow,
+  ]
+
   static starKeyUpgradeList: StarKeyUpgrade[] = [
     UpgradeRecord.ultraRedExtensionStarKey,
     UpgradeRecord.delayedBoosterScalingStarKey,

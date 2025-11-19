@@ -296,6 +296,14 @@ export class MilestoneRecord extends Record {
     'all yellow upgrades',
   )
 
+  static keepPostBreakYellowUpgrades: ChangeResetKeyGreenMilestone = new ChangeResetKeyGreenMilestone(
+    'keepPostBreakYellowUpgrades',
+    'Keep post-break yellow upgrades',
+    new Num(1.15, 1),
+    UpgradeRecord.postBreakYellowUpgradeList,
+    'post-break yellow upgrades',
+  )
+
   static keepYellowFusionUpgradesAutomator: ChangeResetKeyGreenMilestone = new ChangeResetKeyGreenMilestone(
     'keepYellowFusionUpgradesAutomator',
     'Keep yellow fusion upgrades automator',
@@ -482,6 +490,7 @@ export class MilestoneRecord extends Record {
     MilestoneRecord.keepFifthYellowAutomator,
     MilestoneRecord.startWith100YellowPrestiges,
     MilestoneRecord.keepAllYellowUpgrades,
+    MilestoneRecord.keepPostBreakYellowUpgrades,
     MilestoneRecord.keepYellowFusionUpgradesAutomator,
     MilestoneRecord.keepStarChallengeAutomators,
     MilestoneRecord.keepFusionBoosterAccelerationAutomator,
