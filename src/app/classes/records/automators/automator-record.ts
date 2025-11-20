@@ -27,6 +27,7 @@ import {StarKeyCompressionAutomator} from "../../features/automators/star-key-co
 import {YellowFusionUpgradesAutomator} from "../../features/automators/yellow-fusion-upgrades-automator";
 import {StarKeyUpgradesAutomator} from "../../features/automators/star-key-upgrades-automator";
 import {IncreaseYellowPowerUpgradeAutomator} from "../../features/automators/increase-yellow-power-upgrade-automator";
+import {IncreaseChallengeGoalUpgradesAutomator} from "../../features/automators/increase-challenge-goal-upgrades-automator";
 import {GreenPrestigeAutomator} from "../../features/automators/green-prestige-automator";
 
 @Injectable({
@@ -63,6 +64,8 @@ export class AutomatorRecord extends Record {
   static fifthYellowGenerator: YellowGeneratorAutomator = new YellowGeneratorAutomator('fifthYellowGenerator', GeneratorRecord.fifthYellowGenerator);
 
   static increaseYellowPowerUpgrade: IncreaseYellowPowerUpgradeAutomator = new IncreaseYellowPowerUpgradeAutomator('increaseYellowPowerUpgrade');
+
+  static increaseChallengeGoalUpgrades: IncreaseChallengeGoalUpgradesAutomator = new IncreaseChallengeGoalUpgradesAutomator('increaseChallengeGoalUpgrades');
 
   static proximaCentauriStarChallenge: StarChallengeAutomator = new StarChallengeAutomator('proximaCentauriStarChallenge', ChallengeRecord.proximaCentauriStar);
   static lalandeStarChallenge: StarChallengeAutomator = new StarChallengeAutomator('lalandeStarChallenge', ChallengeRecord.lalandeStar);
@@ -105,6 +108,7 @@ export class AutomatorRecord extends Record {
     AutomatorRecord.thirdYellowGenerator,
     AutomatorRecord.fourthYellowGenerator,
     AutomatorRecord.fifthYellowGenerator,
+    AutomatorRecord.increaseChallengeGoalUpgrades,
     AutomatorRecord.proximaCentauriStarChallenge,
     AutomatorRecord.lalandeStarChallenge,
     AutomatorRecord.sunStarChallenge,
@@ -143,6 +147,7 @@ export class AutomatorRecord extends Record {
     AutomatorRecord.fifthYellowGenerator,
     AutomatorRecord.increaseYellowPowerUpgrade,
 
+    AutomatorRecord.increaseChallengeGoalUpgrades,
     AutomatorRecord.proximaCentauriStarChallenge,
     AutomatorRecord.lalandeStarChallenge,
     AutomatorRecord.sunStarChallenge,

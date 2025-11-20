@@ -327,6 +327,16 @@ export class MilestoneRecord extends Record {
     'star challenge automators'
   )
 
+  static keepIncreaseChallengeGoalUpgradesAutomator: ChangeResetKeyGreenMilestone = new ChangeResetKeyGreenMilestone(
+    'keepIncreaseChallengeGoalUpgradesAutomator',
+    'Keep increase challenge goal upgrades automator',
+    new Num(1.35, 1),
+    [
+      AutomatorRecord.increaseChallengeGoalUpgrades,
+    ],
+    'increase challenge goal upgrades automator'
+  )
+
   static keepFusionBoosterAccelerationAutomator: ChangeResetKeyGreenMilestone = new ChangeResetKeyGreenMilestone(
     'keepFusionBoosterAccelerationAutomator',
     'Keep fusion booster acceleration automator',
@@ -493,6 +503,7 @@ export class MilestoneRecord extends Record {
     MilestoneRecord.keepPostBreakYellowUpgrades,
     MilestoneRecord.keepYellowFusionUpgradesAutomator,
     MilestoneRecord.keepStarChallengeAutomators,
+    MilestoneRecord.keepIncreaseChallengeGoalUpgradesAutomator,
     MilestoneRecord.keepFusionBoosterAccelerationAutomator,
     MilestoneRecord.keepStarKeyAutomators,
     MilestoneRecord.keepIncreaseYellowPowerUpgradeAutomator,
