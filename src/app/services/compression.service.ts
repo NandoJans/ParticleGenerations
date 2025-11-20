@@ -10,6 +10,7 @@ import {MultiplierRecord} from "../classes/records/multipliers/multiplier-record
 import {Require} from "../classes/features/interfaces/require";
 import {StatsService} from "./stats.service";
 import {AutomatorRecord} from "../classes/records/automators/automator-record";
+import {TimeHelper} from "../classes/helpers/time-helper";
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,10 @@ export class CompressionService implements Resetable {
   private goal: number = 0; // total required progress to complete one compression
   private progress: number = 0; // accumulated progress towards the goal
   private lastUpdate?: number; // last tick timestamp for delta-time based progress
+  
+  // Rate tracking for predictive compression time
+  private rateHistory: number[] = []; // Track last N rates to predict future rate
+  private readonly MAX_RATE_HISTORY = 20; // Track last 20 ticks
 
   private localStorageHelper: LocalStorageHelper = new LocalStorageHelper('star-key', 'compression');
 
@@ -47,6 +52,7 @@ export class CompressionService implements Resetable {
       this.goal = this.getGoalForCompressionCount(this.compressions.toNumber());
       this.progress = 0;
       this.percentage = 0;
+      this.rateHistory = []; // Clear rate history when starting new compression
       HoldingRecord.yellowKeys.amount = HoldingRecord.yellowKeys.amount.sub(this.getNeededKeys());
     }
   }
@@ -88,6 +94,43 @@ export class CompressionService implements Resetable {
     return 1000 * Math.pow(2, count);
   }
 
+  // Predict future rate based on historical rate data
+  private getPredictedRate(): number {
+    if (this.rateHistory.length === 0) {
+      return this.getProgressPerMs() * 10; // Fallback to current rate if no history
+    }
+
+    // If we have less than 3 data points, just use the current rate
+    if (this.rateHistory.length < 3) {
+      return this.rateHistory[this.rateHistory.length - 1];
+    }
+
+    // Calculate the average rate of change (acceleration/deceleration)
+    // This helps predict whether the rate is increasing or decreasing
+    const rateChanges: number[] = [];
+    for (let i = 1; i < this.rateHistory.length; i++) {
+      rateChanges.push(this.rateHistory[i] - this.rateHistory[i - 1]);
+    }
+
+    // Average rate change
+    const avgRateChange = rateChanges.reduce((sum, val) => sum + val, 0) / rateChanges.length;
+
+    // Current rate
+    const currentRate = this.rateHistory[this.rateHistory.length - 1];
+
+    // Since compression follows a rooted function (slowing down), the rate change itself slows over time
+    // We'll apply a dampening factor to the predicted rate change
+    // This accounts for the diminishing returns in rate increase
+    const dampeningFactor = 0.7; // Assume rate change decays by 30%
+
+    // Predict the future average rate considering dampening
+    // We use the current rate plus a dampened version of the average change
+    const predictedRate = currentRate + (avgRateChange * dampeningFactor);
+
+    // Ensure we don't predict negative rates
+    return Math.max(predictedRate, currentRate * 0.5); // At minimum, assume half the current rate
+  }
+
   private yellowFusionCompressionEffect: Num = new Num(1, 0);
 
   // Calculate progress rate per millisecond based on yellow fusion and compression speed
@@ -121,6 +164,13 @@ export class CompressionService implements Resetable {
       this.lastUpdate = now;
 
       const rate = this.getProgressPerMs() * 10 * speed.toNumber();
+      
+      // Track rate history for predictive time calculation
+      this.rateHistory.push(rate);
+      if (this.rateHistory.length > this.MAX_RATE_HISTORY) {
+        this.rateHistory.shift(); // Keep only last MAX_RATE_HISTORY entries
+      }
+      
       if (this.goal <= 0) {
         // In case loading mid-compression without a goal, recalc it
         this.goal = this.getGoalForCompressionCount(this.compressions.toNumber());
@@ -164,6 +214,7 @@ export class CompressionService implements Resetable {
     this.lastUpdate = undefined;
     this.progress = 0;
     this.goal = 0;
+    this.rateHistory = [];
     this.compressions = this.compressions.add(new Num(1, 0));
     HoldingRecord.starKeys.amount = HoldingRecord.starKeys.amount.add(new Num(1, 0));
   }
@@ -196,21 +247,28 @@ export class CompressionService implements Resetable {
   }
 
   getCompletionTime() {
-    // Calculate the projected completion time based on remaining progress and current rate
-    const rate = this.getProgressPerMs();
-    if (!this.compressing || rate <= 0) {
+    // Calculate the projected completion time based on remaining progress and predicted rate
+    if (!this.compressing) {
+      return '--:--:--';
+    }
+
+    const predictedRate = this.getPredictedRate();
+    
+    if (predictedRate <= 0) {
       return '--:--:--';
     }
 
     const totalGoal = this.getGoalForCompressionCount(this.compressions.toNumber());
     const remaining = Math.max(totalGoal - this.progress, 0);
-    const projectedTime = remaining / rate; // ms
+    
+    // Use predicted rate for more accurate time estimation
+    // Since rate may be increasing, we calculate the time considering acceleration
+    // For a simple model: time ≈ remaining / average_rate
+    // where average_rate is between current and predicted future rate
+    const projectedTime = remaining / predictedRate; // ms
 
-    // Convert the projected time to hh:mm:ss format
-    const hours = Math.floor(projectedTime / (1000 * 60 * 60));
-    const minutes = Math.floor((projectedTime % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((projectedTime % (1000 * 60)) / 1000);
-    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    // Use TimeHelper to format with years support
+    return TimeHelper.formatDuration(projectedTime, 'yy dd hh:mm:ss');
   }
 
   name: string = 'Compression';
@@ -227,6 +285,7 @@ export class CompressionService implements Resetable {
     this.percentage = 0;
     this.progress = 0;
     this.goal = 0;
+    this.rateHistory = [];
     this.compressions = new Num(0, 0);
   }
 
