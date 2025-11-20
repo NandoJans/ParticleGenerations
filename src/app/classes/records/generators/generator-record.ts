@@ -71,7 +71,9 @@ export class GeneratorRecord extends Record {
     GeneratorRecord.yellowFusionGenerator,
     GeneratorRecord.hydrogenGenerator,
 
-    GeneratorRecord.firstGreenGenerator
+    GeneratorRecord.firstGreenGenerator,
+    GeneratorRecord.secondGreenGenerator,
+    GeneratorRecord.thirdGreenGenerator
   ]
 
   static redGenerators: RedGenerator[] = [
