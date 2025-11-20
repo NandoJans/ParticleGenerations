@@ -17,8 +17,8 @@
       <div class="name-description">
         <h4 class="star-name">{{ getSelectedStarName() }}</h4>
         <p class="star-description">{{ getSelectedStarDescription() }}</p>
+        <p>{{ getSelectedStarEffect() }}</p>
       </div>
-      <div>{{ getSelectedStarEffect() }}</div>
       <app-button
         [text]="
       (isSelectedStarMaxed()) ? 'Bought' : getSelectedStarCost()

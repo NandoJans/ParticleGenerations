@@ -17,8 +17,8 @@ export class IncreaseYellowPowerUpgradeAutomator extends Automator {
       UpgradeRecord.yellowPower
     ];
   }
-  goal: Num = new Num(1, 100_000);
-  goalString: string = "Reach 1e100.000 Yellow Power";
+  goal: Num = new Num(1, 10_000);
+  goalString: string = "Reach 1e10.000 Yellow Power";
   task(): Num {
     return HoldingRecord.yellowPower.amount;
   }

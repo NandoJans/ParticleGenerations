@@ -12,6 +12,7 @@ export class BetterYellowKeyGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
     return [
       UpgradeRecord.betterYellowMultipliersGalaxyTree,
       UpgradeRecord.amplifiedYellowKeysGalaxyTree,
+      UpgradeRecord.synergizedPowerGalaxyTree,
     ];
   }
 

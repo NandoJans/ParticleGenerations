@@ -277,15 +277,17 @@ export class MilestoneRecord extends Record {
     'fifth yellow generator automator'
   )
 
-  static startWith100YellowPrestiges: StartWithHoldingAmountGreenMilestone = new StartWithHoldingAmountGreenMilestone(
-    'startWith100YellowPrestiges',
-    'Start with 100 Yellow Prestiges',
+  static startWith1000YellowPrestiges: StartWithHoldingAmountGreenMilestone = new StartWithHoldingAmountGreenMilestone(
+    'startWith1000YellowPrestiges',
+    'Start with 1000 all yellow',
     new Num(1, 1),
     [
       HoldingRecord.yellowPrestiges,
+      HoldingRecord.yellowParticles,
+      HoldingRecord.yellowKeys,
     ],
-    new Num(1, 2),
-    'yellow prestiges'
+    new Num(1, 3),
+    'yellow prestiges, particles, and keys'
   )
 
   static keepAllYellowUpgrades: ChangeResetKeyGreenMilestone = new ChangeResetKeyGreenMilestone(
@@ -488,7 +490,7 @@ export class MilestoneRecord extends Record {
     MilestoneRecord.keepThirdYellowAutomator,
     MilestoneRecord.keepFourthYellowAutomator,
     MilestoneRecord.keepFifthYellowAutomator,
-    MilestoneRecord.startWith100YellowPrestiges,
+    MilestoneRecord.startWith1000YellowPrestiges,
     MilestoneRecord.keepAllYellowUpgrades,
     MilestoneRecord.keepPostBreakYellowUpgrades,
     MilestoneRecord.keepYellowFusionUpgradesAutomator,

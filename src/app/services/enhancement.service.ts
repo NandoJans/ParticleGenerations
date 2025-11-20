@@ -6,13 +6,14 @@ import {Num} from "../num";
 import {ResetHelper} from "../classes/helpers/reset-helper";
 import {UpgradeRecord} from "../classes/records/upgrades/upgrade-record";
 import {GeneratorRecord} from "../classes/records/generators/generator-record";
+import {StatsService} from "./stats.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class EnhancementService {
   enhancing: Enhancement|null = null;
-  enhancementToEnhancables: { [key: string]: Enhancable[] } = {}
+  static enhancementToEnhancables: { [key: string]: Enhancable[] } = {}
 
   constructor(
     private enhancementRecord: EnhancementRecord,
@@ -49,11 +50,21 @@ export class EnhancementService {
     }
   }
 
+  static enhance(enhancable: Enhancable, enhancement: Enhancement) {
+    if (enhancable.allowedEnhancements.includes(enhancement) ) {
+      enhancement.getHolding().amount = enhancement.getHolding().amount.sub(enhancement.getRequirement());
+      enhancable.enhancement = enhancement;
+      enhancement.add(enhancable);
+      StatsService.addNum(enhancement.name, 'totalEnhancements', new Num(1, 0));
+    }
+  }
+
   enhance(enhancable: Enhancable) {
     if (this.enhancing && enhancable.allowedEnhancements.includes(this.enhancing)) {
       this.enhancing.getHolding().amount = this.enhancing.getHolding().amount.sub(this.enhancing.getRequirement());
       enhancable.enhancement = this.enhancing;
       this.enhancing.add(enhancable);
+      StatsService.addNum(this.enhancing.name, 'totalEnhancements', new Num(1, 0));
 
       if (!this.enhancing.canEnhance()) {
         this.stopEnhancing()
@@ -90,26 +101,26 @@ export class EnhancementService {
   }
 
   getAllowedEnhancables(enhancement: Enhancement): Enhancable[] {
-    return this.enhancementToEnhancables[enhancement.name];
+    return EnhancementService.enhancementToEnhancables[enhancement.name];
   }
 
   init() {
     EnhancementRecord.list.forEach(enhancement => {
-      this.enhancementToEnhancables[enhancement.name] = [];
+      EnhancementService.enhancementToEnhancables[enhancement.name] = [];
     })
 
     this.upgradeRecord.getList().forEach(upgrade => {
       upgrade.allowedEnhancements.forEach(enhancement => {
-        this.enhancementToEnhancables[enhancement.name].push(upgrade);
+        EnhancementService.enhancementToEnhancables[enhancement.name].push(upgrade);
       })
     })
     this.generatorRecord.getList().forEach(generator => {
       generator.allowedEnhancements.forEach(enhancement => {
-        this.enhancementToEnhancables[enhancement.name].push(generator);
+        EnhancementService.enhancementToEnhancables[enhancement.name].push(generator);
       })
       generator.getUpgrades().forEach(upgrade => {
         upgrade.allowedEnhancements.forEach(enhancement => {
-          this.enhancementToEnhancables[enhancement.name].push(upgrade);
+          EnhancementService.enhancementToEnhancables[enhancement.name].push(upgrade);
         });
       });
     })

@@ -139,11 +139,11 @@ export class DataManagerService {
     this.upgradeRecord.init();
     this.chargerRecord.init();
     this.navigationsService.init();
+    this.enhancementService.init();
     this.automatorService.init();
     this.prestigeLayersService.init();
     this.timelineService.init();
     this.challengeService.init();
-    this.enhancementService.init();
   }
 
   setLastSave(): void {

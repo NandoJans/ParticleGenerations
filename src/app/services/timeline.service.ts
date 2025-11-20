@@ -135,7 +135,7 @@ export class TimelineService {
     .addMilestone(MilestoneRecord.keepThirdYellowAutomator)
     .addMilestone(MilestoneRecord.keepFourthYellowAutomator)
     .addMilestone(MilestoneRecord.keepFifthYellowAutomator)
-    .addMilestone(MilestoneRecord.startWith100YellowPrestiges)
+    .addMilestone(MilestoneRecord.startWith1000YellowPrestiges)
     .addMilestone(MilestoneRecord.keepAllYellowUpgrades)
     .addMilestone(MilestoneRecord.keepPostBreakYellowUpgrades)
     .addMilestone(MilestoneRecord.keepYellowFusionUpgradesAutomator)

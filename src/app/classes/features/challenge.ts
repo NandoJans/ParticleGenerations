@@ -153,6 +153,15 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   reset(): void {
     this.completed = false;
     this.unlocked = this.startUnlocked;
+
+    // Ensure goal and buffer are reset to their base values to prevent inflated goals after prestiges
+    if (this.baseGoal) {
+      this.goal = this.baseGoal.copy();
+    }
+    if (this.baseBuffer) {
+      this.buffer = this.baseBuffer.copy();
+    }
+
     this.getChallengeElements().forEach((challengeElement) => {
       challengeElement.reset();
     })
@@ -353,7 +362,7 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
   }
 
   requirementSatisfied(amount: Num): boolean {
-    return amount.greq(this.getCompletions());
+    return this.getCompletions().greq(amount);
   }
 
   getCompletions(): Num {

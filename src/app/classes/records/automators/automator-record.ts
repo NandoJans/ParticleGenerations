@@ -28,6 +28,7 @@ import {YellowFusionUpgradesAutomator} from "../../features/automators/yellow-fu
 import {StarKeyUpgradesAutomator} from "../../features/automators/star-key-upgrades-automator";
 import {IncreaseYellowPowerUpgradeAutomator} from "../../features/automators/increase-yellow-power-upgrade-automator";
 import {GreenPrestigeAutomator} from "../../features/automators/green-prestige-automator";
+import {YellowEnhancementAutomator} from "../../features/automators/yellow-enhancement-automator";
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +56,7 @@ export class AutomatorRecord extends Record {
   static multiplyRedGeneratorsYellow: MultiplyRedGeneratorsYellowAutomator = new MultiplyRedGeneratorsYellowAutomator('multiplyRedGeneratorsYellow');
   static multiplyYellowParticlesYellow: MultiplyYellowParticlesYellowAutomator = new MultiplyYellowParticlesYellowAutomator('multiplyYellowParticlesYellow');
   static multiplyYellowKeysYellow: MultiplyYellowKeysYellowAutomator = new MultiplyYellowKeysYellowAutomator('multiplyYellowKeysYellow');
+  static yellowEnhancementAutomator: YellowEnhancementAutomator = new YellowEnhancementAutomator('yellowEnhancementAutomator');
 
   static firstYellowGenerator: YellowGeneratorAutomator = new YellowGeneratorAutomator('firstYellowGenerator', GeneratorRecord.firstYellowGenerator);
   static secondYellowGenerator: YellowGeneratorAutomator = new YellowGeneratorAutomator('secondYellowGenerator', GeneratorRecord.secondYellowGenerator);
@@ -100,6 +102,7 @@ export class AutomatorRecord extends Record {
     AutomatorRecord.multiplyRedGeneratorsYellow,
     AutomatorRecord.multiplyYellowParticlesYellow,
     AutomatorRecord.multiplyYellowKeysYellow,
+    AutomatorRecord.yellowEnhancementAutomator,
     AutomatorRecord.firstYellowGenerator,
     AutomatorRecord.secondYellowGenerator,
     AutomatorRecord.thirdYellowGenerator,
@@ -135,6 +138,7 @@ export class AutomatorRecord extends Record {
     AutomatorRecord.multiplyRedGeneratorsYellow,
     AutomatorRecord.multiplyYellowParticlesYellow,
     AutomatorRecord.multiplyYellowKeysYellow,
+    AutomatorRecord.yellowEnhancementAutomator,
 
     AutomatorRecord.firstYellowGenerator,
     AutomatorRecord.secondYellowGenerator,

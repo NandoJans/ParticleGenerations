@@ -16,6 +16,7 @@ export class YellowAutomatorsComponent implements OnInit {
     AutomatorRecord.multiplyRedGeneratorsYellow,
     AutomatorRecord.multiplyYellowParticlesYellow,
     AutomatorRecord.multiplyYellowKeysYellow,
+    AutomatorRecord.yellowEnhancementAutomator,
     AutomatorRecord.fusionBoosterAcceleration
   ];
   yellowGeneratorAutomators: Automator[] = [

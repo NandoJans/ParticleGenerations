@@ -22,8 +22,8 @@ export class YellowFusionUpgradesAutomator extends Automator {
       UpgradeRecord.increaseMaxFusionBoosterAcceleration
     ];
   }
-  goal: Num = new Num(1, 2);
-  goalString: string = "Reach 100 fusion booster acceleration.";
+  goal: Num = new Num(5, 1);
+  goalString: string = "Reach 50 fusion booster acceleration.";
   task(): Num {
     return UpgradeRecord.fusionBoosterAcceleration.amount;
   }

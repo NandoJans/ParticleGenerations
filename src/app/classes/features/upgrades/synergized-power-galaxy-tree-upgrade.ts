@@ -28,8 +28,12 @@ export class SynergizedPowerGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   action(): Num | undefined {
     if (this.hasBought()) {
       const effect = HoldingRecord.yellowPower.effect
-      GeneratorRecord.firstRedGenerator.multiplier = GeneratorRecord.firstRedGenerator.multiplier.mul(this.buffer);
-      return effect;
+      if (effect instanceof Num) {
+        console.log('mul before', GeneratorRecord.firstRedGenerator.mulMod.toString(2));
+        GeneratorRecord.firstRedGenerator.mulMod = GeneratorRecord.firstRedGenerator.mulMod.mul(effect.pow(this.buffer));
+        console.log('mul after', GeneratorRecord.firstRedGenerator.mulMod.toString(2));
+        return effect;
+      }
     }
     return;
   }
@@ -39,8 +43,8 @@ export class SynergizedPowerGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   style: Styles = Styles.STAR_ORANGE;
   displayName: string = "Synergized Power";
 
-  override buffer = new Num(1.2, 0);
-  override baseBuffer = new Num(1.2, 0);
+  override buffer = new Num(3, 0);
+  override baseBuffer = new Num(3, 0);
 
   cost: Num = new Num(3.5, 1);
   baseCost: Num = new Num(3.5, 1);
