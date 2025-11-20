@@ -40,7 +40,7 @@ export class StarKeyCompressionAutomator extends Automator {
     if (!fastestTime || fastestTime < 0) {
       return 'No time set';
     }
-    return TimeHelper.formatDuration(fastestTime, 'dd hh:mm:ss.ms');
+    return TimeHelper.formatDuration(fastestTime, 'yy dd hh:mm:ss.ms');
   }
 
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
