@@ -54,6 +54,10 @@
   background-color: var(--background-color-2);
   padding: 2px 4px;
   border-radius: 5px;
+  max-width: 85vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 p {
