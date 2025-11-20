@@ -91,7 +91,9 @@ export class GeneratorRecord extends Record {
   ];
 
   static greenGenerators: GreenGenerator[] = [
-    GeneratorRecord.firstGreenGenerator
+    GeneratorRecord.firstGreenGenerator,
+    GeneratorRecord.secondGreenGenerator,
+    GeneratorRecord.thirdGreenGenerator
   ];
 
   getList(): Generator[] {
