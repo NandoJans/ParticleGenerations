@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import {environment} from "../environments/environment";
 import {RedComponent} from "./pages/red/red/red.component";
 import {RedAutomatorsComponent} from "./pages/automator/red-automators/red-automators.component";
 import {RedAcceleratorsComponent} from "./pages/red/red-accelerators/red-accelerators.component";
@@ -15,7 +16,6 @@ import {GreenGeneratorsComponent} from "./pages/green/green-generators/green-gen
 import {GreenTimelineComponent} from "./pages/timeline/green-timeline/green-timeline.component";
 import {YellowStarKeysPageComponent} from "./pages/yellow/yellow-star-keys-page/yellow-star-keys-page.component";
 import {GreenDarkGalaxyPageComponent} from "./pages/green/green-dark-galaxy-page/green-dark-galaxy-page.component";
-import {environment} from "../environments/environment";
 import {BalanceComponent} from "./dev/balance/balance.component";
 import {DevPhaseComponent} from "./dev/dev-phase/dev-phase.component";
 
