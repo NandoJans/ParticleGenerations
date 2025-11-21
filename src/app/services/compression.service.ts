@@ -11,6 +11,7 @@ import {Require} from "../classes/features/interfaces/require";
 import {StatsService} from "./stats.service";
 import {AutomatorRecord} from "../classes/records/automators/automator-record";
 import {TimeHelper} from "../classes/helpers/time-helper";
+import {App} from "../App";
 
 @Injectable({
   providedIn: 'root'
@@ -160,7 +161,16 @@ export class CompressionService implements Resetable {
       const now = Date.now();
       // Initialize lastUpdate if missing (e.g., after load)
       if (!this.lastUpdate) this.lastUpdate = now;
-      const dt = Math.max(now - this.lastUpdate, 0);
+      
+      let dt: number;
+      if (App.offlineCalculation) {
+        // During offline calculation, simulate time passage based on speed
+        // Each tick represents 50ms of game time, modified by speed
+        dt = 50 * speed.toNumber();
+      } else {
+        // Normal gameplay uses real elapsed time
+        dt = Math.max(now - this.lastUpdate, 0);
+      }
       this.lastUpdate = now;
 
       const rate = this.getProgressPerMs() * 10 * speed.toNumber();
