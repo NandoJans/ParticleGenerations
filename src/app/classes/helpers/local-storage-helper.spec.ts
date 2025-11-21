@@ -70,6 +70,26 @@ describe('LocalStorageHelper', () => {
     expect(stored.constructor.name).toBe('Object');
   });
 
+  it('should store default Num values as plain objects', () => {
+    const helper = new LocalStorageHelper('holdings', 'new-key');
+    const defaultValue = new Num(1, 500);
+    
+    // Load with a default (which should store the default)
+    const loaded = helper.loadNum(defaultValue, 'never-before-set');
+    
+    // Check that the default was stored as a plain object
+    const stored = LocalStorageHelper['STORAGE']['holdings']['new-key']['never-before-set'];
+    expect(stored).toBeDefined();
+    expect(stored.mantissa).toBe(1);
+    expect(stored.exponent).toBe(500);
+    expect(stored.constructor.name).toBe('Object');
+    expect(stored.constructor.name).not.toBe('Num');
+    
+    // Verify the returned value is correct
+    expect(loaded.mantissa).toBe(defaultValue.mantissa);
+    expect(loaded.exponent).toBe(defaultValue.exponent);
+  });
+
   it('should handle save/load cycle without data corruption', () => {
     const helper = new LocalStorageHelper('holdings', 'yellow-particles');
     

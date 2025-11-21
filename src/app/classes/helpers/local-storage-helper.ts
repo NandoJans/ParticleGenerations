@@ -201,7 +201,7 @@ export class LocalStorageHelper {
 
     if (stored == null) {
       // Not set yet, write the default into storage so future loads see it
-      bucket[key] = ifNotSet;         // or defaultNum.toJSON()
+      bucket[key] = ifNotSet.saveData();
       return ifNotSet;
     }
 
