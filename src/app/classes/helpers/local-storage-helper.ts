@@ -180,7 +180,7 @@ export class LocalStorageHelper {
     }
 
     // Store under the (possibly empty) key
-    LocalStorageHelper.STORAGE[this.category][this.key][key] = num;        // or num.toJSON() if you need raw data
+    LocalStorageHelper.STORAGE[this.category][this.key][key] = num.saveData();
   }
 
   loadNum(ifNotSet: Num, key: string = 'x'): Num {
