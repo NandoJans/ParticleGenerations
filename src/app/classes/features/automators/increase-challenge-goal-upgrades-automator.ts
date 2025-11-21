@@ -12,7 +12,7 @@ import {ChallengeRecord} from "../../records/challenges/challenge-record";
 export class IncreaseChallengeGoalUpgradesAutomator extends Automator {
   name: string = "increase-challenge-goal-upgrades-automator";
   displayName: string = "Increase Challenge Goal Upgrades Automator";
-  style: Styles = Styles.YELLOW;
+  style: Styles = Styles.GREEN;
   buyables(): Buyable[] {
     return [
       UpgradeRecord.increaseProximaCentauriGoal,
@@ -21,15 +21,28 @@ export class IncreaseChallengeGoalUpgradesAutomator extends Automator {
       UpgradeRecord.increaseSiriusGoal
     ];
   }
-  goal: Num = new Num(1, 1000000);
-  goalString: string = "Reach 1e1,000,000 Red Particles in Lalande Challenge";
+  goal: Num = new Num(4, 0);
+  goalString: string = "Complete 4 star challenges";
   task(): Num {
-    if (ChallengeRecord.currentChallenges['yellow'] === ChallengeRecord.lalandeStar) {
-      return HoldingRecord.redParticles.amount;
-    }
-    return new Num(0, 0);
+    let totalCompletions = new Num(0, 0);
+    const challenges = [
+      ChallengeRecord.proximaCentauriStar,
+      ChallengeRecord.lalandeStar,
+      ChallengeRecord.sunStar,
+      ChallengeRecord.siriusStar
+    ];
+    
+    challenges.forEach(challenge => {
+      if (challenge.completed instanceof Num) {
+        totalCompletions = totalCompletions.add(challenge.completed);
+      } else if (challenge.completed === true) {
+        totalCompletions = totalCompletions.add(new Num(1, 0));
+      }
+    });
+    
+    return totalCompletions;
   }
-  resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
+  resetId: ResetKey = ResetHelper.registerReset(ResetKey.GREEN, this);
   override requirement: Requirement[] = [
     new Requirement(HoldingRecord.yellowParticles, new Num(1, 10), this),
   ];
