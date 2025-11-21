@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import {environment} from "../environments/environment";
 import {RedComponent} from "./pages/red/red/red.component";
 import {RedAutomatorsComponent} from "./pages/automator/red-automators/red-automators.component";
 import {RedAcceleratorsComponent} from "./pages/red/red-accelerators/red-accelerators.component";
@@ -13,9 +14,9 @@ import {YellowFusionComponent} from "./pages/yellow/yellow-fusion/yellow-fusion.
 import {GreenGalaxyTreeComponent} from "./pages/green/green-galaxy-tree/green-galaxy-tree.component";
 import {GreenGeneratorsComponent} from "./pages/green/green-generators/green-generators.component";
 import {GreenTimelineComponent} from "./pages/timeline/green-timeline/green-timeline.component";
-import {BalanceComponent} from "./dev/balance/balance.component";
 import {YellowStarKeysPageComponent} from "./pages/yellow/yellow-star-keys-page/yellow-star-keys-page.component";
 import {GreenDarkGalaxyPageComponent} from "./pages/green/green-dark-galaxy-page/green-dark-galaxy-page.component";
+import {BalanceComponent} from "./dev/balance/balance.component";
 import {DevPhaseComponent} from "./dev/dev-phase/dev-phase.component";
 
 const routes: Routes = [
@@ -41,9 +42,11 @@ const routes: Routes = [
   { path: 'timeline/yellow', component: YellowTimelineComponent },
   { path: 'timeline/green', component: GreenTimelineComponent },
 
-  // Dev
-  { path: 'dev/balance', component: BalanceComponent },
-  { path: 'dev/phase', component: DevPhaseComponent },
+  // Dev (only in development mode)
+  ...(environment.production ? [] : [
+    { path: 'dev/balance', component: BalanceComponent },
+    { path: 'dev/phase', component: DevPhaseComponent },
+  ]),
 ];
 
 @NgModule({

@@ -15,6 +15,7 @@ import {HoldingRecord} from "../classes/records/holdings/holding-record";
 import {Num} from "../num";
 import {UpgradeRecord} from "../classes/records/upgrades/upgrade-record";
 import {App} from "../App";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -91,8 +92,10 @@ export class NavigationsService {
   constructor(
     private router: Router
   ) {
-    // Always add dev routes so they're accessible
-    this.setDevRoutes();
+    // Only add dev routes in development mode
+    if (!environment.production) {
+      this.setDevRoutes();
+    }
 
     this.load();
     console.log('Navigations loaded:', this.navigations, this.subNavigations);
