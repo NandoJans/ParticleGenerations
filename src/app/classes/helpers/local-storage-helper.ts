@@ -180,7 +180,7 @@ export class LocalStorageHelper {
     }
 
     // Store under the (possibly empty) key
-    LocalStorageHelper.STORAGE[this.category][this.key][key] = num;        // or num.toJSON() if you need raw data
+    LocalStorageHelper.STORAGE[this.category][this.key][key] = num.saveData();
   }
 
   loadNum(ifNotSet: Num, key: string = 'x'): Num {
@@ -201,7 +201,7 @@ export class LocalStorageHelper {
 
     if (stored == null) {
       // Not set yet, write the default into storage so future loads see it
-      bucket[key] = ifNotSet;         // or defaultNum.toJSON()
+      bucket[key] = ifNotSet.saveData();
       return ifNotSet;
     }
 
