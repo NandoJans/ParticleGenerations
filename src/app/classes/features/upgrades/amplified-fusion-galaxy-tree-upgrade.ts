@@ -34,10 +34,10 @@ export class AmplifiedFusionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
       // Using a 5x multiplier on fifth red generator count for balanced progression
       const hydrogenBarrierMultiplier = new Num(5, 0);
       const hydrogenEffect = GeneratorRecord.fifthRedGenerator.bought.mul(hydrogenBarrierMultiplier);
-      HoldingRecord.hydrogen.barrier = HoldingRecord.hydrogen.startBarrier.mul(hydrogenEffect);
-      GeneratorRecord.hydrogenGenerator.barrier = GeneratorRecord.hydrogenGenerator.startBarrier.mul(hydrogenEffect);
+      HoldingRecord.hydrogen.barrier = HoldingRecord.hydrogen.startBarrier.add(hydrogenEffect);
+      GeneratorRecord.hydrogenGenerator.barrier = GeneratorRecord.hydrogenGenerator.startBarrier.add(hydrogenEffect);
       
-      return effect;
+      return hydrogenEffect;
     }
     return;
   }
