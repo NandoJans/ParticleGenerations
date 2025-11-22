@@ -30,7 +30,7 @@ export class FusedAccelerationGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   action(): Num|undefined {
     if (this.hasBought()) {
       const effect = HoldingRecord.yellowFusion.amount.pow(this.buffer);
-      MultiplierRecord.redAcceleratorGenerators.correct(this.buffer);
+      MultiplierRecord.redAcceleratorGenerators.correct(effect);
       return effect;
     }
     return
