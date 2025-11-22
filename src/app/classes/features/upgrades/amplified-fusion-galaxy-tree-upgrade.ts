@@ -22,7 +22,7 @@ export class AmplifiedFusionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   }
 
   getDescription(): string {
-    return `Increase yellow fusion barrier by ${this.buffer.toString(2)}^fifth red generators bought. Also increases hydrogen descaling barriers by ${this.buffer.toString(2)}^(fifth red generators × 5).`;
+    return `Increase yellow fusion barrier by ${this.buffer.toString(2)}^fifth red generators bought. Also increases hydrogen descaling barriers by (fifth red generators × 5).`;
   }
 
   action(): Num | undefined {
@@ -33,7 +33,7 @@ export class AmplifiedFusionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
       // Also increase hydrogen barriers to allow more yellow fusion accumulation
       // Using a 5x multiplier on fifth red generator count for balanced progression
       const hydrogenBarrierMultiplier = new Num(5, 0);
-      const hydrogenEffect = (this.buffer).pow(GeneratorRecord.fifthRedGenerator.bought.mul(hydrogenBarrierMultiplier));
+      const hydrogenEffect = GeneratorRecord.fifthRedGenerator.bought.mul(hydrogenBarrierMultiplier);
       HoldingRecord.hydrogen.barrier = HoldingRecord.hydrogen.startBarrier.mul(hydrogenEffect);
       GeneratorRecord.hydrogenGenerator.barrier = GeneratorRecord.hydrogenGenerator.startBarrier.mul(hydrogenEffect);
       
