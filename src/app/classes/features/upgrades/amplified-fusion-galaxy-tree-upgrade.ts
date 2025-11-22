@@ -34,7 +34,7 @@ export class AmplifiedFusionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
       // Reset barriers to base values first, then apply multiplier to prevent indefinite growth
       // Using a 5x multiplier on fifth red generator count for balanced progression (100x was too strong)
       const hydrogenBarrierMultiplier = new Num(1, 0); // 5
-      const hydrogenEffect = this.bufferGeneratorRecord.fifthRedGenerator.bought.mul(hydrogenBarrierMultiplier);
+      const hydrogenEffect = GeneratorRecord.fifthRedGenerator.bought.mul(hydrogenBarrierMultiplier);
       HoldingRecord.hydrogen.barrier = HoldingRecord.hydrogen.startBarrier.mul(hydrogenEffect);
       GeneratorRecord.hydrogenGenerator.barrier = GeneratorRecord.hydrogenGenerator.startBarrier.mul(hydrogenEffect);
       
