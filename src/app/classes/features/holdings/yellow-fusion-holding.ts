@@ -28,6 +28,12 @@ export class YellowFusionHolding extends Holding {
   }
 
   maxAmount: Num = new Num(1, 1000);
+  startMaxAmount: Num = new Num(1, 1000);
+
+  override reset(): void {
+    super.reset();
+    this.maxAmount = this.startMaxAmount.copy();
+  }
 
   override action(): Num {
     if (this.amount.greq(this.maxAmount)) {

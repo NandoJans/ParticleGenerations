@@ -33,6 +33,12 @@ export class HydrogenGenerator extends Generator {
   requirement: Requirement[] = [];
 
   barrier: Num = new Num(5, 3);
+  startBarrier: Num = new Num(5, 3);
+
+  override reset(): void {
+    super.reset();
+    this.barrier = this.startBarrier.copy();
+  }
 
   speed: Num = new Num(1, -1);
 

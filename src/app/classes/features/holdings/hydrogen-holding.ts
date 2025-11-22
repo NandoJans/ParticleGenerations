@@ -27,6 +27,12 @@ export class HydrogenHolding extends Holding {
   }
 
   barrier: Num = new Num(1, 1000);
+  startBarrier: Num = new Num(1, 1000);
+
+  override reset(): void {
+    super.reset();
+    this.barrier = this.startBarrier.copy();
+  }
 
   override action(): Num {
     if (this.amount.greq(Num.ONE)) {
