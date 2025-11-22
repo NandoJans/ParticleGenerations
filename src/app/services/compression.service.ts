@@ -29,7 +29,7 @@ export class CompressionService implements Resetable {
   private goal: number = 0; // total required progress to complete one compression
   private progress: number = 0; // accumulated progress towards the goal
   private lastUpdate?: number; // last tick timestamp for delta-time based progress
-  
+
   // Rate tracking for predictive compression time
   private rateHistory: number[] = []; // Track last N rates to predict future rate
   private readonly MAX_RATE_HISTORY = 20; // Track last 20 ticks
@@ -122,7 +122,7 @@ export class CompressionService implements Resetable {
     // Since compression follows a rooted function (slowing down), the rate change itself slows over time
     // We'll apply a dampening factor to the predicted rate change
     // This accounts for the diminishing returns in rate increase
-    const dampeningFactor = 0.7; // Assume rate change decays by 30%
+    const dampeningFactor = 1; // Assume rate change decays by 30%
 
     // Predict the future average rate considering dampening
     // We use the current rate plus a dampened version of the average change
@@ -157,11 +157,12 @@ export class CompressionService implements Resetable {
   }
 
   tick(speed: Num) {
+    if (!UpgradeRecord.unlockStarKeyCompression.hasBought()) return;
     if (this.compressing && this.started) {
       const now = Date.now();
       // Initialize lastUpdate if missing (e.g., after load)
       if (!this.lastUpdate) this.lastUpdate = now;
-      
+
       let dt: number;
       if (App.offlineCalculation) {
         // During offline calculation, simulate time passage based on speed
@@ -174,13 +175,13 @@ export class CompressionService implements Resetable {
       this.lastUpdate = now;
 
       const rate = this.getProgressPerMs() * 10 * speed.toNumber();
-      
+
       // Track rate history for predictive time calculation
       this.rateHistory.push(rate);
       if (this.rateHistory.length > this.MAX_RATE_HISTORY) {
         this.rateHistory.shift(); // Keep only last MAX_RATE_HISTORY entries
       }
-      
+
       if (this.goal <= 0) {
         // In case loading mid-compression without a goal, recalc it
         this.goal = this.getGoalForCompressionCount(this.compressions.toNumber());
@@ -263,14 +264,14 @@ export class CompressionService implements Resetable {
     }
 
     const predictedRate = this.getPredictedRate();
-    
+
     if (predictedRate <= 0) {
       return '--:--:--';
     }
 
     const totalGoal = this.getGoalForCompressionCount(this.compressions.toNumber());
     const remaining = Math.max(totalGoal - this.progress, 0);
-    
+
     // Use predicted rate for more accurate time estimation
     // Since rate may be increasing, we calculate the time considering acceleration
     // For a simple model: time ≈ remaining / average_rate

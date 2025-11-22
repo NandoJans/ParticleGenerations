@@ -51,7 +51,7 @@ export class EnhancementService {
   }
 
   static enhance(enhancable: Enhancable, enhancement: Enhancement) {
-    if (enhancable.allowedEnhancements.includes(enhancement) ) {
+    if (enhancable.allowedEnhancements.includes(enhancement)) {
       enhancement.getHolding().amount = enhancement.getHolding().amount.sub(enhancement.getRequirement());
       enhancable.enhancement = enhancement;
       enhancement.add(enhancable);

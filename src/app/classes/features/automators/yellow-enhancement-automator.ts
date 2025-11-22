@@ -49,9 +49,16 @@ export class YellowEnhancementAutomator extends Automator {
     if (this.toEnhance.length < 1) return;
 
     for (let enhancable of this.toEnhance) {
+      if (enhancable.enhancement) {
+        // Remove the enhancable
+        this.toEnhance = this.toEnhance.filter(e => e !== enhancable);
+        continue;
+      }
       if (!this.enhancing.canEnhance()) break;
 
       EnhancementService.enhance(enhancable, this.enhancing);
+      // Remove the enhancable
+      this.toEnhance = this.toEnhance.filter(e => e !== enhancable);
     }
   }
 }

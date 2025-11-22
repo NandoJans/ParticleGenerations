@@ -13,7 +13,6 @@ export class FasterHydrogenGenerationGalaxyTreeUpgrade extends GalaxyTreeUpgrade
     return [
       UpgradeRecord.strongerHydrogenGalaxyTree,
       UpgradeRecord.strongerYellowFusionGalaxyTree,
-      UpgradeRecord.amplifiedFusionGalaxyTree,
     ];
   }
 
