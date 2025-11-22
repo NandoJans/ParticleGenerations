@@ -4,6 +4,8 @@ import {Holding} from "../../../classes/features/holding";
 import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 import {GeneratorRecord} from "../../../classes/records/generators/generator-record";
 import {GreenGenerator} from "../../../classes/features/generators/green-generator";
+import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
+import {Upgrade} from "../../../classes/features/upgrade";
 
 @Component({
     selector: 'app-green-generators',
@@ -18,6 +20,9 @@ export class GreenGeneratorsComponent implements OnInit {
     GeneratorRecord.thirdGreenGenerator,
   ];
   darkMatter: Holding = HoldingRecord.darkMatter;
+  upgrades: Upgrade[] = [
+    UpgradeRecord.multiplyGreenParticlesGreen
+  ]
   infoText: string[] = [
     'Welcome to the Green layer - the next major progression milestone!',
     'Green Generators produce Dark Matter, an incredibly powerful resource that unlocks new dimensions of growth.',
