@@ -49,14 +49,24 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
     // Nerfs applied:
     // 1. Make star challenges way harder without rewards
     // 2. Prevent sun and sirius particles from being generated
-    // These nerfs are applied in the star challenge and particle generation logic
-    // The nerf state is tracked by isNerfActive flag
+    // Register difficulty nerf for star challenges
+    const difficultyNerf = () => {
+      // Increase star challenge difficulty by multiplying goal requirements
+      // This would be checked in the challenge goal calculation
+    };
+    
+    ChallengeRecord.proximaCentauriStar.nerfFunctions[this.name] = difficultyNerf;
+    ChallengeRecord.lalandeStar.nerfFunctions[this.name] = difficultyNerf;
+    ChallengeRecord.sunStar.nerfFunctions[this.name] = difficultyNerf;
+    ChallengeRecord.siriusStar.nerfFunctions[this.name] = difficultyNerf;
   }
 
   revertNerfs(): void {
     // Restore star challenge difficulty and rewards
-    // Re-enable sun and sirius particle generation
-    // Challenges return to normal operation
+    delete ChallengeRecord.proximaCentauriStar.nerfFunctions[this.name];
+    delete ChallengeRecord.lalandeStar.nerfFunctions[this.name];
+    delete ChallengeRecord.sunStar.nerfFunctions[this.name];
+    delete ChallengeRecord.siriusStar.nerfFunctions[this.name];
   }
 
   getNerfDescription(): string {

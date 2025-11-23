@@ -3,6 +3,8 @@ import {Num} from "../../../num";
 import {ResetKey} from "../../enums/reset-key";
 import {Requirement} from "../interfaces/requirement";
 import {HoldingRecord} from "../../records/holdings/holding-record";
+import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {Multiplier} from "../multiplier";
 
 /**
  * Red Accelerator Dark Star Charger
@@ -43,13 +45,18 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
 
   applyNerfs(): void {
     // Nerfs: Only square root of red accelerators are generated and have effect
-    // This nerf is applied in the red accelerator generation and effect calculation
-    // The nerf state is tracked by isNerfActive flag
+    const power = new Num(0.5, 0);
+    
+    MultiplierRecord.redAcceleratorGenerators.addLocalHook(
+      this.name,
+      (multiplier: Multiplier) => multiplier.power(power),
+      true
+    );
   }
 
   revertNerfs(): void {
     // Revert the square root nerfs
-    // Red accelerators return to normal generation and effect
+    delete MultiplierRecord.redAcceleratorGenerators.localHooks[this.name];
   }
 
   getNerfDescription(): string {

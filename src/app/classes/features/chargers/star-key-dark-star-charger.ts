@@ -3,6 +3,8 @@ import {Num} from "../../../num";
 import {ResetKey} from "../../enums/reset-key";
 import {Requirement} from "../interfaces/requirement";
 import {HoldingRecord} from "../../records/holdings/holding-record";
+import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {Multiplier} from "../multiplier";
 
 /**
  * Star Key Dark Star Charger
@@ -41,15 +43,39 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
     return chargeValue.div(this.tier);
   }
 
+  private originalStarKeyBuffer: Num | undefined;
+
   applyNerfs(): void {
     // Star key multiplies star key power by 0.95 instead of normal value
-    // This nerf is applied in the star key power calculation
-    // The nerf state is tracked by isNerfActive flag
+    const starKeys = HoldingRecord.starKeys;
+    
+    // Store original buffer if not already stored
+    if (!this.originalStarKeyBuffer) {
+      this.originalStarKeyBuffer = starKeys.buffer.copy();
+    }
+    
+    // Reduce star key power by multiplying buffer by 0.95
+    starKeys.buffer = starKeys.buffer.mul(new Num(0.95, 0));
+    
+    // Also boost yellow key gain based on charge
+    const effectiveCharge = this.getEffectiveCharge();
+    const yellowKeyBoost = new Num(10, 0).pow(effectiveCharge);
+    MultiplierRecord.yellowKeyGain.addLocalHook(
+      this.name,
+      (multiplier: Multiplier) => multiplier.correct(yellowKeyBoost),
+      true
+    );
   }
 
   revertNerfs(): void {
     // Restore normal star key power multiplier
-    // Star key power returns to normal operation
+    const starKeys = HoldingRecord.starKeys;
+    if (this.originalStarKeyBuffer) {
+      starKeys.buffer = this.originalStarKeyBuffer.copy();
+    }
+    
+    // Remove yellow key gain boost
+    delete MultiplierRecord.yellowKeyGain.localHooks[this.name];
   }
 
   getNerfDescription(): string {

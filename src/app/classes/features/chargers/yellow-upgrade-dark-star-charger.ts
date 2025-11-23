@@ -3,6 +3,7 @@ import {Num} from "../../../num";
 import {ResetKey} from "../../enums/reset-key";
 import {Requirement} from "../interfaces/requirement";
 import {HoldingRecord} from "../../records/holdings/holding-record";
+import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 
 /**
  * Yellow Upgrade Dark Star Charger
@@ -42,13 +43,14 @@ export class YellowUpgradeDarkStarCharger extends DarkStarCharger {
 
   applyNerfs(): void {
     // Disable all yellow upgrades
-    // The nerf state is tracked by isNerfActive flag
-    // Yellow upgrade logic checks this charger's state to disable upgrades
+    UpgradeRecord.yellowUpgradeList.forEach(upgrade => upgrade.disable());
+    UpgradeRecord.postBreakYellowUpgradeList.forEach(upgrade => upgrade.disable());
   }
 
   revertNerfs(): void {
     // Re-enable yellow upgrades
-    // Yellow upgrades return to normal functionality
+    UpgradeRecord.yellowUpgradeList.forEach(upgrade => upgrade.enable());
+    UpgradeRecord.postBreakYellowUpgradeList.forEach(upgrade => upgrade.enable());
   }
 
   getNerfDescription(): string {
