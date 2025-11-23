@@ -115,6 +115,9 @@ export class GreenGalaxyTreeComponent implements OnInit {
 
     UpgradeRecord.moreYellowParticlesGalaxyTree.setPos(-125, -325);
     UpgradeRecord.slowerCompressionTimeIncreaseGalaxyTree.setPos(-150, 325);
+
+    UpgradeRecord.betterRedAcceleratorGenerationGalaxyTree.setPos(-325, 125);
+    UpgradeRecord.betterRedAcceleratorEffectGalaxyTree.setPos(-325, -125);
   }
 
   isBottomSectionOpen() {

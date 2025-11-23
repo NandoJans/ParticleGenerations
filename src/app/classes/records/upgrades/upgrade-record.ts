@@ -153,6 +153,8 @@ import {YellowUpgrade} from "../../features/upgrades/yellow-upgrade";
 import {
   SlowerCompressionTimeIncreaseGalaxyTreeUpgrade
 } from "../../features/upgrades/slower-compression-time-increase-galaxy-tree-upgrade";
+import { BetterRedAcceleratorGenerationGalaxyTreeUpgrade } from "../../features/upgrades/better-red-accelerator-generation-galaxy-tree-upgrade";
+import { BetterRedAcceleratorEffectGalaxyTreeUpgrade } from "../../features/upgrades/better-red-accelerator-effect-galaxy-tree-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -255,6 +257,10 @@ export class UpgradeRecord extends Record {
 
   static strongerYellowPowerGalaxyTree: StrongerYellowPowerGalaxyTreeUpgrade = new StrongerYellowPowerGalaxyTreeUpgrade('strongerYellowPower');
 
+  // New red accelerator galaxy tree upgrades
+  static betterRedAcceleratorGenerationGalaxyTree: BetterRedAcceleratorGenerationGalaxyTreeUpgrade = new BetterRedAcceleratorGenerationGalaxyTreeUpgrade('betterRedAcceleratorGenerationGalaxyTree');
+  static betterRedAcceleratorEffectGalaxyTree: BetterRedAcceleratorEffectGalaxyTreeUpgrade = new BetterRedAcceleratorEffectGalaxyTreeUpgrade('betterRedAcceleratorEffectGalaxyTree');
+
   // New red generator upgrades
   static betterRedBoosterGalaxyTree: BetterRedBoosterGalaxyTreeUpgrade = new BetterRedBoosterGalaxyTreeUpgrade('redGeneratorEfficiency');
   static betterRedSubMultipliersGalaxyTree: BetterRedSubMultipliersGalaxyTreeUpgrade = new BetterRedSubMultipliersGalaxyTreeUpgrade('cheaperRedGenerators');
@@ -323,6 +329,8 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.betterYellowKeyGainGalaxyTree,
     UpgradeRecord.strongerRedExtensionGalaxyTree,
     UpgradeRecord.strongerBoosterAccelerationGalaxyTree,
+    UpgradeRecord.betterRedAcceleratorGenerationGalaxyTree,
+    UpgradeRecord.betterRedAcceleratorEffectGalaxyTree,
     UpgradeRecord.fasterHydrogenGenerationGalaxyTree,
     UpgradeRecord.strongerYellowPowerGalaxyTree,
     UpgradeRecord.strongerHydrogenGalaxyTree,

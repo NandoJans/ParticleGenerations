@@ -98,10 +98,22 @@ export class CompressionService implements Resetable {
     ResetHelper.registerReset(ResetKey.YELLOW, this);
   }
 
+  private goalScalingStart: Num = new Num(3.5, 1);
+  private goalScaling: Num = new Num(2, 0);
+
   // Calculate how much total work is needed based on current compression count
   private getGoalForCompressionCount(count: number): number {
     // Keep the same scaling as previous time-based approach: goal = 1000 * 2^count
-    return 1000 * Math.pow(MultiplierRecord.starKeyCompressionTimeIncrease.num.toNumber(), count);
+    // After 35 compressions, the goal increases even stronger
+    const countNum = new Num(count, 0);
+    if (countNum.greq(this.goalScalingStart)) {
+      let diff = countNum.sub(this.goalScalingStart);
+      let goal = new Num(1, 3).mul(MultiplierRecord.starKeyCompressionTimeIncrease.num.pow(this.goalScalingStart));
+      goal = goal.mul(new Num(1, 3).mul(MultiplierRecord.starKeyCompressionTimeIncrease.num.pow(diff.mul(this.goalScaling))));
+      return goal.toNumber();
+    } else {
+      return new Num(1, 3).mul(MultiplierRecord.starKeyCompressionTimeIncrease.num.pow(this.goalScalingStart)).toNumber();
+    }
   }
 
   private yellowFusionCompressionEffect: Num = new Num(1, 0);
@@ -328,6 +340,9 @@ export class CompressionService implements Resetable {
   getCompletionTime() {
     if (!this.compressing) return '--:--:--';
     if (this.displayEtaMs === undefined) return '--:--:--';
+
+    // If the display ETA is larger then a year, show only >1y'
+    if (this.displayEtaMs > 31536000000) return '>1y';
 
     return TimeHelper.formatDuration(this.displayEtaMs, 'yy dd hh:mm:ss');
   }

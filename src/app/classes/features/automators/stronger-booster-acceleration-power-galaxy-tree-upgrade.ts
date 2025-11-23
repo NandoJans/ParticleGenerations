@@ -12,6 +12,7 @@ export class StrongerBoosterAccelerationPowerGalaxyTreeUpgrade extends GalaxyTre
     return [
       UpgradeRecord.powerAccelerationGalaxyTree,
       UpgradeRecord.acceleratorExpertiseGalaxyTree,
+      UpgradeRecord.betterRedAcceleratorEffectGalaxyTree,
     ];
   }
 
