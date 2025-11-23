@@ -23,6 +23,13 @@
     <p class="prestige-status" *ngIf="isPrestigeAutomator()">{{ getPrestigeStatus() }}</p>
     <p *ngIf="hasMaxBuys()" class="prestige-status">Max buys:</p>
     <input *ngIf="hasMaxBuys()" type="text" (change)="setMaxBuys($event)" [value]="getMaxBuys()"/>
+
+    <!-- Star challenge threshold control -->
+    <div *ngIf="isStarChallengeAutomator()" class="prestige-status">
+      <p>Min Yellow Particles to start level {{ getNextChallengeLevel() }}:</p>
+      <input type="text" (change)="setCurrentLevelThreshold($event)" [value]="getCurrentLevelThreshold()"/>
+    </div>
+
     <div class="active-row">
       <label>Active: </label>
       <input

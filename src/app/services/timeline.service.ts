@@ -160,7 +160,7 @@ export class TimelineService {
       'Dark galaxy',
       'After a great galaxy comes a dark one',
       HoldingRecord.greenParticles,
-      new Num(1, 2)
+      new Num(1, 5)
     )
     .build()
     .build()

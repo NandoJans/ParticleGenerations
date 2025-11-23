@@ -21,7 +21,7 @@ export class DarkGalaxyChallenge extends Challenge {
     prestige: ResetKey = ResetKey.YELLOW
     prestigeLayer: string = 'green';
 
-    nerfPower: Num = new Num(4, -1)
+    nerfPower: Num = new Num(1, -1)
 
     override getRewardDescription(): string {
       return "Gather dark stars"
@@ -68,8 +68,9 @@ export class DarkGalaxyChallenge extends Challenge {
     const yp = HoldingRecord.yellowParticles.amount.log10().log10().add(Num.ONE);
     const ypow = HoldingRecord.yellowPower.amount.log10().log10().add(Num.ONE);
     const sk = HoldingRecord.starKeys.amount.log10().add(Num.ONE);
-    const gain = rp.mul(ra).mul(yp).mul(ypow).mul(sk).sub(Num.ONE).div(new Num(1, 1)).sub(HoldingRecord.darkStarHolding.amount);
+    const gain = rp.mul(ra).mul(yp).mul(ypow).mul(sk).sub(Num.ONE).div(new Num(1, 0)).sub(HoldingRecord.darkStarHolding.amount);
 
+    this.currentDarkStarGain = gain;
     if (gain.gt(this.currentDarkStarGain)) {
       this.currentDarkStarGain = gain;
     }

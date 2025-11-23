@@ -13,8 +13,8 @@ export class RedAcceleratorStartGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   getChildren(): GalaxyTreeUpgrade[] {
     return [
       UpgradeRecord.fusedAccelerationGalaxyTree,
-      UpgradeRecord.powerAccelerationGalaxyTree,
       UpgradeRecord.betterRedAcceleratorGenerationGalaxyTree,
+      UpgradeRecord.acceleratorExpertiseGalaxyTree,
     ];
   }
 

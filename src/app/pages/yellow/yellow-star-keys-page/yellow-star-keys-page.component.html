@@ -19,6 +19,8 @@
     <app-button (function)="startCompression()" [style]="'button green'" [text]="'Start'"></app-button>
   } @else if (!this.isCompressing()) {
     <p>You need at least <span class="requirement">{{ getKeysNeededForCompression() }}</span> Yellow Keys to start compression.</p>
+  } @else {
+    <p>Compressing</p>
   }
   <div class="progress-bar-wrapper">
     <div class="progress-bar" [style.width]="getPercentage() + '%'">

@@ -30,17 +30,26 @@ export class AmplifiedFusionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   hydrogenEffect: Num = new Num(0, 0);
   hydrogenGenerateEffect: Num = new Num(1, 0);
   hydrogenGenerateSpeedMultiplier: Num = new Num(1, -2);
+  boughtGeneratorsScalingStart: Num = new Num(3, 3);
 
   action(): Num | undefined {
     if (this.hasBought()) {
-      const effect = (this.buffer).pow(GeneratorRecord.fifthRedGenerator.bought);
+      let boughtGenerators = GeneratorRecord.fifthRedGenerator.bought;
+
+      if (boughtGenerators.gt(this.boughtGeneratorsScalingStart)) {
+        const diff = boughtGenerators.sub(this.boughtGeneratorsScalingStart);
+        const scaled = diff.pow(new Num(5, -1));
+        boughtGenerators = this.boughtGeneratorsScalingStart.add(scaled)
+      }
+
+      const effect = (this.buffer).pow(boughtGenerators);
       HoldingRecord.yellowFusion.maxAmount = HoldingRecord.yellowFusion.startMaxAmount.mul(effect);
 
-      this.hydrogenEffect = GeneratorRecord.fifthRedGenerator.bought.mul(this.hydrogenBarrierMultiplier);
+      this.hydrogenEffect = boughtGenerators.mul(this.hydrogenBarrierMultiplier);
       HoldingRecord.hydrogen.barrier = HoldingRecord.hydrogen.startBarrier.add(this.hydrogenEffect);
       GeneratorRecord.hydrogenGenerator.barrier = GeneratorRecord.hydrogenGenerator.startBarrier.add(this.hydrogenEffect);
 
-      this.hydrogenGenerateEffect = GeneratorRecord.fifthRedGenerator.bought.mul(this.hydrogenGenerateSpeedMultiplier).add(Num.ONE);
+      this.hydrogenGenerateEffect = boughtGenerators.mul(this.hydrogenGenerateSpeedMultiplier).add(Num.ONE);
       GeneratorRecord.hydrogenGenerator.mulMod = GeneratorRecord.hydrogenGenerator.mulMod.mul(this.hydrogenGenerateEffect);
 
       this.hydrogenBarrierMultiplier = new Num(3, 0); // Reset in case it was modified elsewhere

@@ -4,6 +4,7 @@ import {Automator} from "../../../classes/features/automator";
 import {AutomatorRecord} from "../../../classes/records/automators/automator-record";
 import {PrestigeAutomator} from "../../../classes/features/automators/prestige-automator";
 import {faLock} from "@fortawesome/free-solid-svg-icons";
+import {StarChallengeAutomator} from "../../../classes/features/automators/star-challenge-automator";
 
 @Component({
   selector: 'app-automator',
@@ -120,6 +121,35 @@ export class AutomatorComponent implements OnInit {
     const num = this.getNumFromString(($event.target as HTMLInputElement).value);
     if (this.automator instanceof PrestigeAutomator) {
       this.automator.modes[this.automator.currentMode].setting = num;
+    }
+  }
+
+  // Star challenge threshold helpers
+  isStarChallengeAutomator(): boolean {
+    return this.automator instanceof StarChallengeAutomator;
+  }
+
+  getNextChallengeLevel(): number {
+    if (this.automator instanceof StarChallengeAutomator) {
+      const current = this.automator.challenge.getCompletions().toNumber();
+      return Math.max(1, Math.floor(current) + 1);
+    }
+    return 1;
+  }
+
+  getCurrentLevelThreshold(): string {
+    if (this.automator instanceof StarChallengeAutomator) {
+      const lvl = this.getNextChallengeLevel();
+      return this.automator.getThresholdForLevel(lvl).toString();
+    }
+    return "";
+  }
+
+  setCurrentLevelThreshold($event: Event): void {
+    if (this.automator instanceof StarChallengeAutomator) {
+      const lvl = this.getNextChallengeLevel();
+      const num = this.getNumFromString(($event.target as HTMLInputElement).value);
+      this.automator.setThresholdForLevel(lvl, num);
     }
   }
 

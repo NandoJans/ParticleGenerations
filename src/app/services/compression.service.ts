@@ -112,7 +112,7 @@ export class CompressionService implements Resetable {
       goal = goal.mul(new Num(1, 3).mul(MultiplierRecord.starKeyCompressionTimeIncrease.num.pow(diff.mul(this.goalScaling))));
       return goal.toNumber();
     } else {
-      return new Num(1, 3).mul(MultiplierRecord.starKeyCompressionTimeIncrease.num.pow(this.goalScalingStart)).toNumber();
+      return new Num(1, 3).mul(MultiplierRecord.starKeyCompressionTimeIncrease.num.pow(countNum)).toNumber();
     }
   }
 
@@ -268,8 +268,17 @@ export class CompressionService implements Resetable {
     return this.percentage;
   }
 
+  yellowKeyScalingStart: Num = new Num(3.5, 1);
+  yellowKeyScaling: Num = new Num(1, 2);
+
   getNeededKeys() {
-    return this.keysRequired.mul(this.requiredIncrease.pow(this.compressions));
+    // After 35 compressions, the yellow key requirement increases even stronger by applying the yellow key scaling
+    if (this.compressions.greq(this.yellowKeyScalingStart)) {
+      let diff = this.compressions.sub(this.yellowKeyScalingStart);
+      return this.keysRequired.mul(this.yellowKeyScalingStart.pow(this.requiredIncrease)).mul(this.yellowKeyScalingStart.pow(diff.mul(this.yellowKeyScaling)));
+    } else {
+      return this.keysRequired.mul(this.requiredIncrease.pow(this.compressions));
+    }
   }
 
   getCompressionTime(): number {

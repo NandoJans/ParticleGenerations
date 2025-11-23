@@ -71,6 +71,7 @@ div.container {
 
 .star.white {
   --star-size: 1.8rem;
+  --glow-strength: 45px;
   --core-color:#ffffff;
   --rim-color: #aab5ff;
   --glow-color: rgba(245, 246, 255, 0.2);

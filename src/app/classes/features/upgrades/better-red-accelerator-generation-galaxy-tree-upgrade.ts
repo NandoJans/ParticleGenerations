@@ -40,6 +40,6 @@ export class BetterRedAcceleratorGenerationGalaxyTreeUpgrade extends GalaxyTreeU
   override buffer = new Num(2, 0);
   override baseBuffer = new Num(2, 0);
 
-  cost: Num = new Num(3.5, 1);
-  baseCost: Num = new Num(3.5, 1);
+  cost: Num = new Num(3.5, 2);
+  baseCost: Num = new Num(3.5, 2);
 }

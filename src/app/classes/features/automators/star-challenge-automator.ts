@@ -26,6 +26,25 @@ export class StarChallengeAutomator extends ChallengeAutomator {
     this.resetId = ResetHelper.registerReset(ResetKey.GREEN, this);
   }
 
+  private getThresholdKey(level: number): string {
+    return `startThreshold_level_${level}`;
+  }
+
+  // Returns the minimum Yellow Particles required to start the given level
+  getThresholdForLevel(level: number): Num {
+    return this.localStorageHelper.loadNum(new Num(0, 0), this.getThresholdKey(level));
+  }
+
+  setThresholdForLevel(level: number, value: Num): void {
+    this.localStorageHelper.saveNum(value, this.getThresholdKey(level));
+  }
+
+  private getNextLevelIndex(): number {
+    // Next attempt is current completions + 1
+    const current = this.challenge.getCompletions().toNumber();
+    return Math.max(1, Math.floor(current) + 1);
+  }
+
   override action() {
     // Check if we are not in a challenge, and we have the requirements to start one.
     if (
@@ -34,7 +53,17 @@ export class StarChallengeAutomator extends ChallengeAutomator {
         (this.challenge.maxCompletions instanceof Num && this.challenge.getCompletions().lt(this.challenge.maxCompletions))
       )
     ) {
-      console.log('Starting challenge ' + this.challenge.prestigeLayer + ' ' + this.challenge.prestige);
+      // Gate starting by Yellow Particles threshold per level
+      const nextLevel = this.getNextLevelIndex();
+      const threshold = this.getThresholdForLevel(nextLevel);
+      const haveYellow = HoldingRecord.yellowParticles.amount;
+      if (!haveYellow.greq(threshold)) {
+        // Not enough Yellow Particles to start this level according to user setting
+        super.action();
+        return;
+      }
+
+      // Start the challenge
       ResetHelper.reset(this.challenge.prestige)
       this.challenge.start();
       ChallengeRecord.currentChallenges[this.challenge.prestigeLayer] = this.challenge;
