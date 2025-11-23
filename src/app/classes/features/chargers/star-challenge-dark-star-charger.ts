@@ -45,28 +45,71 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
     return chargeValue.div(this.tier.add(new Num(1, 0)));
   }
 
+  private originalDifficulties: Map<string, Num | Num[]> = new Map();
+
   applyNerfs(): void {
     // Nerfs applied:
     // 1. Make star challenges way harder without rewards
     // 2. Prevent sun and sirius particles from being generated
-    // Register difficulty nerf for star challenges
-    const difficultyNerf = () => {
-      // Increase star challenge difficulty by multiplying goal requirements
-      // This would be checked in the challenge goal calculation
-    };
+    // Store original difficulties and increase them
+    const challenges = [
+      ChallengeRecord.proximaCentauriStar,
+      ChallengeRecord.lalandeStar,
+      ChallengeRecord.sunStar,
+      ChallengeRecord.siriusStar
+    ];
     
-    ChallengeRecord.proximaCentauriStar.nerfFunctions[this.name] = difficultyNerf;
-    ChallengeRecord.lalandeStar.nerfFunctions[this.name] = difficultyNerf;
-    ChallengeRecord.sunStar.nerfFunctions[this.name] = difficultyNerf;
-    ChallengeRecord.siriusStar.nerfFunctions[this.name] = difficultyNerf;
+    challenges.forEach(challenge => {
+      // Store original difficulty
+      if (!this.originalDifficulties.has(challenge.name)) {
+        if (challenge.difficultyIncrease instanceof Num) {
+          this.originalDifficulties.set(challenge.name, challenge.difficultyIncrease.copy());
+        } else if (Array.isArray(challenge.difficultyIncrease)) {
+          this.originalDifficulties.set(challenge.name, challenge.difficultyIncrease.map(n => n.copy()));
+        } else {
+          this.originalDifficulties.set(challenge.name, new Num(1, 0));
+        }
+      }
+      
+      // Increase difficulty by 10x
+      const currentDifficulty = challenge.difficultyIncrease;
+      if (currentDifficulty instanceof Num) {
+        (challenge as any).difficultyIncrease = currentDifficulty.mul(new Num(10, 0));
+      } else if (Array.isArray(currentDifficulty)) {
+        (challenge as any).difficultyIncrease = currentDifficulty.map(n => n.mul(new Num(10, 0)));
+      }
+      
+      // Register nerf function to be called during constantNerfs
+      challenge.nerfFunctions[this.name] = () => {
+        // This function is called during challenge calculations
+        // The actual nerf is applied via the difficultyIncrease property
+      };
+    });
   }
 
   revertNerfs(): void {
     // Restore star challenge difficulty and rewards
-    delete ChallengeRecord.proximaCentauriStar.nerfFunctions[this.name];
-    delete ChallengeRecord.lalandeStar.nerfFunctions[this.name];
-    delete ChallengeRecord.sunStar.nerfFunctions[this.name];
-    delete ChallengeRecord.siriusStar.nerfFunctions[this.name];
+    const challenges = [
+      ChallengeRecord.proximaCentauriStar,
+      ChallengeRecord.lalandeStar,
+      ChallengeRecord.sunStar,
+      ChallengeRecord.siriusStar
+    ];
+    
+    challenges.forEach(challenge => {
+      // Restore original difficulty
+      const originalDifficulty = this.originalDifficulties.get(challenge.name);
+      if (originalDifficulty !== undefined) {
+        if (originalDifficulty instanceof Num) {
+          (challenge as any).difficultyIncrease = originalDifficulty.copy();
+        } else if (Array.isArray(originalDifficulty)) {
+          (challenge as any).difficultyIncrease = originalDifficulty.map(n => n.copy());
+        }
+      }
+      
+      // Remove nerf function
+      delete challenge.nerfFunctions[this.name];
+    });
   }
 
   getNerfDescription(): string {

@@ -56,7 +56,6 @@ export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
     );
     
     // 2. Decrease active generators based on tier, starting with 5
-    const activeGenerators = new Num(5, 0).sub(this.tier);
     if (this.tier.greq(new Num(1, 0))) GeneratorRecord.fifthYellowGenerator.disable();
     if (this.tier.greq(new Num(2, 0))) GeneratorRecord.fourthYellowGenerator.disable();
     if (this.tier.greq(new Num(3, 0))) GeneratorRecord.thirdYellowGenerator.disable();
