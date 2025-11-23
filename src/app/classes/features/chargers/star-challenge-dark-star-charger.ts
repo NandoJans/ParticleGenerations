@@ -72,18 +72,13 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
       }
       
       // Increase difficulty by 10x
+      // Note: Using 'as any' to bypass TypeScript type narrowing issues with union types
       const currentDifficulty = challenge.difficultyIncrease;
       if (currentDifficulty instanceof Num) {
         (challenge as any).difficultyIncrease = currentDifficulty.mul(new Num(10, 0));
       } else if (Array.isArray(currentDifficulty)) {
         (challenge as any).difficultyIncrease = currentDifficulty.map(n => n.mul(new Num(10, 0)));
       }
-      
-      // Register nerf function to be called during constantNerfs
-      challenge.nerfFunctions[this.name] = () => {
-        // This function is called during challenge calculations
-        // The actual nerf is applied via the difficultyIncrease property
-      };
     });
   }
 
@@ -98,6 +93,7 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
     
     challenges.forEach(challenge => {
       // Restore original difficulty
+      // Note: Using 'as any' to bypass TypeScript type narrowing issues with union types
       const originalDifficulty = this.originalDifficulties.get(challenge.name);
       if (originalDifficulty !== undefined) {
         if (originalDifficulty instanceof Num) {
@@ -106,9 +102,6 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
           (challenge as any).difficultyIncrease = originalDifficulty.map(n => n.copy());
         }
       }
-      
-      // Remove nerf function
-      delete challenge.nerfFunctions[this.name];
     });
   }
 
