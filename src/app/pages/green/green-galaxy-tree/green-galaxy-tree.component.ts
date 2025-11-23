@@ -16,6 +16,7 @@ interface Star {
   size: number;
   duration: number;
   delay: number;
+  layer: number; // 1 = far (slow), 2 = mid, 3 = near (fast)
 }
 
 @Component({
@@ -116,6 +117,9 @@ export class GreenGalaxyTreeComponent implements OnInit {
       return x - Math.floor(x);
     };
     
+    // Distribute stars across 3 layers
+    const layer = (id % 3) + 1; // 1, 2, or 3
+    
     const size = 1 + seedRandom(id * 1.1) * 2;              // 1–3 px
     const duration = 5 + seedRandom(id * 2.2) * 7;           // 5–12 s
     const delay = seedRandom(id * 3.3) * 10;                 // 0–10 s
@@ -126,12 +130,17 @@ export class GreenGalaxyTreeComponent implements OnInit {
       left: `${seedRandom(id * 5.5) * 100}%`,
       size,
       duration,
-      delay
+      delay,
+      layer
     };
   }
 
   getBackgroundStars(): Star[] {
     return this.stars;
+  }
+
+  getStarsByLayer(layer: number): Star[] {
+    return this.stars.filter(star => star.layer === layer);
   }
 
   private setPositions() {
