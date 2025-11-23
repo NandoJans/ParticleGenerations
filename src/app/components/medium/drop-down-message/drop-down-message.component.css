@@ -46,3 +46,8 @@ div.container.success {
   background-color: var(--background-color-green);
   border: 2px solid var(--accent-color-green);
 }
+
+div.container.error {
+  background-color: var(--background-color-red);
+  border: 2px solid var(--accent-color-red);
+}

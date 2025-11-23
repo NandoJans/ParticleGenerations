@@ -63,8 +63,6 @@ export class TickService {
   gameTick(speed: Num = new Num(1, -1)) {
     if (App.isHalting()) return;
 
-    HoldingRecord.darkStarHolding.amount = new Num(0, 0)
-
     if (!App.offlineCalculation) App.gameSpeed = speed;
 
     this.checkRequirements();

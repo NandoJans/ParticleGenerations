@@ -6,7 +6,7 @@ import {HoldingRecord} from "../../records/holdings/holding-record";
 
 /**
  * Red Accelerator Dark Star Charger
- * 
+ *
  * Nerfs: Only the square root of red accelerators are generated, then, only the square root of red accelerators have effect.
  * Charge: Is gained by getting more red accelerators.
  * Amplifies: Make red accelerator upgrades more powerful
@@ -27,7 +27,7 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
     return chargeAmount.gt(new Num(0, 0)) ? chargeAmount : new Num(0, 0);
   }
 
-  action(): void {
+  action(): undefined {
     // Calculate effect based on charge
     const effectiveCharge = this.getEffectiveCharge();
     this.effect = new Num(1, 0).add(effectiveCharge.div(new Num(10, 0)));

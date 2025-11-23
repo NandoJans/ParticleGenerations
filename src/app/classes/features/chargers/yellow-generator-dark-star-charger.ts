@@ -6,7 +6,7 @@ import {HoldingRecord} from "../../records/holdings/holding-record";
 
 /**
  * Yellow Generator Dark Star Charger
- * 
+ *
  * Nerfs: Raises yellow generator multipliers to ^0.5, and decrease per tier, the amount of active generators, starting with 5.
  * Charge: Charge is based on yellow power
  * Amplifies: Gain a massive static multiplier to yellow generator multipliers.
@@ -27,7 +27,7 @@ export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
     return chargeAmount.gt(new Num(0, 0)) ? chargeAmount : new Num(0, 0);
   }
 
-  action(): void {
+  action(): undefined {
     // Calculate massive static multiplier based on effective charge
     const effectiveCharge = this.getEffectiveCharge();
     this.effect = new Num(10, 0).pow(effectiveCharge);

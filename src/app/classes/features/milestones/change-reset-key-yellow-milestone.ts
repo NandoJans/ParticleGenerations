@@ -12,7 +12,7 @@ export class ChangeResetKeyYellowMilestone extends YellowMilestone {
     this.resetable = resetable;
   }
 
-  override action(): void {
+  override action(): undefined {
     this.resetable.resetId = ResetHelper.registerReset(ResetKey.YELLOW, this.resetable);
   }
 

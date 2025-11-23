@@ -3,12 +3,13 @@ import {ChallengeRecord} from "../../records/challenges/challenge-record";
 import {Num} from "../../../num";
 import {HoldingRecord} from "../../records/holdings/holding-record";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {Milestone} from "../milestone";
+import {Automator} from "../automator";
 
 export class InitialGreenMilestone extends ChangeResetKeyGreenMilestone {
 
   override action() {
     super.action();
-
     HoldingRecord.redParticles.startAmount = new Num(1, 2);
   }
 

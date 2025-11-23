@@ -7,7 +7,7 @@ import {HoldingRecord} from "../../records/holdings/holding-record";
 
 /**
  * Combine Dark Star Charger
- * 
+ *
  * Nerfs: nothing, requires per tier to have a certain amount of chargers active at the same time. Starts at 2 chargers.
  * Charge: is gained based on totalCharge^activeChargers
  * Amplifies: other charger effects
@@ -25,17 +25,17 @@ export class CombineDarkStarCharger extends DarkStarCharger {
     // Calculate total charge from all active chargers
     const activeChargers = this.getActiveChargers();
     const totalCharge = this.getTotalCharge();
-    
+
     if (activeChargers.lte(new Num(0, 0))) {
       return new Num(0, 0);
     }
-    
+
     // Charge = totalCharge^activeChargers
     const chargeAmount = totalCharge.pow(activeChargers).log10();
     return chargeAmount.gt(new Num(0, 0)) ? chargeAmount : new Num(0, 0);
   }
 
-  action(): void {
+  action(): undefined {
     // Calculate amplification of other charger effects
     const effectiveCharge = this.getEffectiveCharge();
     this.effect = new Num(1, 0).add(effectiveCharge.div(new Num(50, 0)));
@@ -78,10 +78,10 @@ export class CombineDarkStarCharger extends DarkStarCharger {
     // Check if enough chargers are active based on tier
     const requiredChargers = new Num(2, 0).add(this.tier);
     const activeChargers = this.getActiveChargers();
-    
-    return this.isNerfActive && 
-           this.isUnlocked() && 
-           this.isEnabled() && 
+
+    return this.isNerfActive &&
+           this.isUnlocked() &&
+           this.isEnabled() &&
            activeChargers.greq(requiredChargers);
   }
 

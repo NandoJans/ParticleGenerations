@@ -38,8 +38,8 @@ export class AcceleratorExpertiseGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   style: Styles = Styles.STAR_WHITE;
   displayName: string = "Accelerator Expertise";
 
-  override buffer = new Num(1.4, 0);
-  override baseBuffer = new Num(1.4, 0);
+  override buffer = new Num(1.5, 0);
+  override baseBuffer = new Num(1.5, 0);
 
   cost: Num = new Num(1, 2);
   baseCost: Num = new Num(1, 2);

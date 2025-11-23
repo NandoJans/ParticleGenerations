@@ -5,7 +5,7 @@
       <button class="toggle-button" (click)="toggleCharging(); $event.stopPropagation()" [class.active]="isCharging()">
         <fa-icon [icon]="isCharging() ? faPause : faPlay"></fa-icon>
       </button>
-      <h3 class="charger-name">{{ getDisplayName() }}</h3>
+      <h3 class="charger-name">{{ getDisplayName() }} <span class="roman-tier">{{ getTierRomanNumerals() }}</span></h3>
     </div>
     <div class="header-right" *ngIf="isCollapsed()">
       <span class="collapsed-charge">{{ getAmountDisplay() }}</span>

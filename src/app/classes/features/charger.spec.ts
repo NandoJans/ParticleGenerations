@@ -21,7 +21,7 @@ class TestCharger extends Charger {
     return new Num(1, 0);
   }
 
-  action(): void {
+  action(): undefined {
     this.effect = this.getEffectiveCharge();
   }
 

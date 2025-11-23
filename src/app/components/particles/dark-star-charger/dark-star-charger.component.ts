@@ -9,6 +9,7 @@ import {Num} from "../../../num";
 import {faPlay, faPause, faLock} from '@fortawesome/free-solid-svg-icons';
 import {ChallengeRecord} from "../../../classes/records/challenges/challenge-record";
 import {DropDownMessageService} from "../../../services/visuals/drop-down-message.service";
+import {RomanNumeralsHelper} from "../../../classes/helpers/roman-numerals-helper";
 
 @Component({
   selector: 'app-dark-star-charger',
@@ -43,10 +44,14 @@ export class DarkStarChargerComponent {
 
   toggleCharging() {
     if (ChallengeRecord.currentChallenges['green'] === ChallengeRecord.darkGalaxy) {
-      this.dropDownMessageService.dropDown("error", "Cannot toggle charging while in Dark Galaxy Challenge.");
+      this.dropDownMessageService.dropDown("Error", "Cannot toggle charging while in Dark Galaxy Challenge.", 'error');
       return;
     }
-    this.charger.charging = !this.charger.charging;
+    if (this.charger.charging) {
+      this.charger.stopCharging();
+    } else {
+      this.charger.startCharging();
+    }
   }
 
   toggleCollapsed() {
@@ -162,5 +167,9 @@ export class DarkStarChargerComponent {
     } else {
       return '';
     }
+  }
+
+  getTierRomanNumerals(): string {
+    return RomanNumeralsHelper.convert(this.charger.tier.toNumber());
   }
 }

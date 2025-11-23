@@ -14,7 +14,7 @@ export class StartWithHoldingAmountGreenMilestone extends GreenMilestone {
     this.groupName = groupName;
   }
 
-  override action(): void {
+  override action(): undefined {
     if (Array.isArray(this.holding)) {
       this.holding.forEach(holding => {
         this.correctHoldingAmount(holding);

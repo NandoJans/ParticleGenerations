@@ -6,7 +6,7 @@ import {HoldingRecord} from "../../records/holdings/holding-record";
 
 /**
  * Star Key Dark Star Charger
- * 
+ *
  * Nerfs: Star key instead multiplies the star key power by 0.95
  * Charge: is gained based on star keys
  * Amplifies: Yellow key-gain
@@ -27,7 +27,7 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
     return chargeAmount.gt(new Num(0, 0)) ? chargeAmount : new Num(0, 0);
   }
 
-  action(): void {
+  action(): undefined {
     // Calculate yellow key-gain boost
     const effectiveCharge = this.getEffectiveCharge();
     this.effect = new Num(10, 0).pow(effectiveCharge);

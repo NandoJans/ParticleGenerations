@@ -81,7 +81,7 @@ export class GreenGalaxyTreeComponent implements OnInit {
     UpgradeRecord.cheaperBoosterAccelerationGalaxyTree.setPos(-125, 0);
     // Children are redAcceleratorStart, increaseBoosterAccelerationPower
     UpgradeRecord.redAcceleratorStartGalaxyTree.setPos(-225, 75);
-    UpgradeRecord.strongerBoosterAccelerationGalaxyTree.setPos(-225, -50);
+    UpgradeRecord.strongerBoosterAccelerationGalaxyTree.setPos(-225, -75);
     UpgradeRecord.acceleratorExpertiseGalaxyTree.setPos(-325, 0);
 
     // Yellow Fusion Section

@@ -6,7 +6,7 @@ import {HoldingRecord} from "../../records/holdings/holding-record";
 
 /**
  * Yellow Fusion Dark Star Charger
- * 
+ *
  * Nerfs: Yellow fusion limit has decreased to 6e66
  * Charge: is gained based on fusion amount multiplied by fusion booster accelerations
  * Amplifies: Hydrogen generation speed
@@ -25,12 +25,12 @@ export class YellowFusionDarkStarCharger extends DarkStarCharger {
     const yellowFusion = HoldingRecord.yellowFusion;
     // Assuming fusion booster accelerations is a property - adjust as needed
     const fusionAmount = yellowFusion.amount;
-    
+
     const chargeAmount = fusionAmount.log10();
     return chargeAmount.gt(new Num(0, 0)) ? chargeAmount : new Num(0, 0);
   }
 
-  action(): void {
+  action(): undefined {
     // Calculate hydrogen generation speed boost
     const effectiveCharge = this.getEffectiveCharge();
     this.effect = new Num(1, 0).add(effectiveCharge.mul(new Num(0.1, 0)));

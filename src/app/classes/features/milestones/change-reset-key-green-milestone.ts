@@ -3,6 +3,7 @@ import {Resetable} from "../interfaces/resetable";
 import {Num} from "../../../num";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {ResetKey} from "../../enums/reset-key";
+import {Automator} from "../automator";
 
 export class ChangeResetKeyGreenMilestone extends GreenMilestone {
   resetable: Resetable|Resetable[];
@@ -19,6 +20,13 @@ export class ChangeResetKeyGreenMilestone extends GreenMilestone {
       this.resetable.forEach(resetable => {
         resetable.softResetId = ResetKey.GREEN;
         resetable.resetId = ResetHelper.registerReset(ResetKey.GREEN, resetable);
+
+        if (resetable instanceof Automator) {
+          resetable.completed = true;
+          if (resetable.isActive()) {
+            resetable.activate()
+          }
+        }
       });
       return;
     } else {

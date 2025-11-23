@@ -11,6 +11,15 @@ export abstract class DarkStarCharger extends Charger {
   // Indicates if the charger's nerf is currently active
   protected isNerfActive: boolean = false;
 
+  override run(speed: Num): void {
+    // Runs charge logic and action logic.
+    super.run(speed);
+    // Apply the nerf effects if active
+    if (this.isNerfActive) {
+      this.applyNerfs();
+    }
+  }
+
   /**
    * DarkStarChargers only charge when their nerf is enabled
    */
@@ -50,6 +59,16 @@ export abstract class DarkStarCharger extends Charger {
    */
   isActive(): boolean {
     return this.isNerfActive;
+  }
+
+  override startCharging() {
+    super.startCharging();
+    this.activateNerf();
+  }
+
+  override stopCharging() {
+    super.stopCharging();
+    this.deactivateNerf();
   }
 
   /**

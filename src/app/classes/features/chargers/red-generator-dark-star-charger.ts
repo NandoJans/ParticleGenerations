@@ -3,6 +3,9 @@ import {Num} from "../../../num";
 import {ResetKey} from "../../enums/reset-key";
 import {Requirement} from "../interfaces/requirement";
 import {HoldingRecord} from "../../records/holdings/holding-record";
+import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {Multiplier} from "../multiplier";
+import {GeneratorRecord} from "../../records/generators/generator-record";
 
 /**
  * Red Generator Dark Star Charger
@@ -21,20 +24,20 @@ export class RedGeneratorDarkStarCharger extends DarkStarCharger {
   requirement: Requirement[] = [];
   name: string = 'red-generator-dark-star-charger';
 
+  override buffer: Num = new Num(1, 1);
+  override baseBuffer: Num = new Num(1, 1);
+
   getChargeAmount(): Num {
     // Charge is gained by getting more red particles
     const redParticles = HoldingRecord.redParticles;
     const chargeAmount = redParticles.amount.log10();
-    return chargeAmount.gt(new Num(0, 0)) ? chargeAmount : new Num(0, 0);
+    return chargeAmount.gt(this.charge) ? chargeAmount : this.charge;
   }
 
-  action(): void {
-    // Calculate effect: 10^CHARGE
-    const effectiveCharge = this.getEffectiveCharge();
-    this.effect = new Num(10, 0).pow(effectiveCharge);
-    
-    // The effect is applied to red generators through their multiplier calculation
-    // This will be used when red generators calculate their total multiplier
+  action(): Num {
+    const effect = this.buffer.pow(this.getTierChargeEffect());
+    MultiplierRecord.redParticleGenerators.correct(effect);
+    return effect;
   }
 
   applyTierDrawback(chargeValue: Num): Num {
@@ -49,7 +52,18 @@ export class RedGeneratorDarkStarCharger extends DarkStarCharger {
   applyNerfs(): void {
     // Nerfs applied:
     // 1. Red generator multipliers are raised to ^0.5
+    const power = new Num(0.9, 0).pow(this.tier);
+
+    MultiplierRecord.redParticleGenerators.addLocalHook(
+      this.name,
+      (multiplier: Multiplier) => multiplier.power(power),
+      true
+    );
     // 2. Every tier disables one extra generator, starting with all generators
+    if (this.tier.greq(Num.TWO)) GeneratorRecord.fifthRedGenerator.disable();
+    if (this.tier.greq(Num.THREE)) GeneratorRecord.fourthRedGenerator.disable();
+    if (this.tier.greq(Num.FOUR)) GeneratorRecord.thirdRedGenerator.disable();
+    if (this.tier.greq(Num.FIVE)) GeneratorRecord.secondRedGenerator.disable();
     // These nerfs are applied in the red generator calculation logic
     // The nerf state is tracked by isNerfActive flag
   }
@@ -57,6 +71,10 @@ export class RedGeneratorDarkStarCharger extends DarkStarCharger {
   revertNerfs(): void {
     // Revert nerfs to red generators
     // When nerf is deactivated, red generators return to normal operation
+    GeneratorRecord.fifthRedGenerator.enable();
+    GeneratorRecord.fourthRedGenerator.enable();
+    GeneratorRecord.thirdRedGenerator.enable();
+    GeneratorRecord.secondRedGenerator.enable();
   }
 
   getNerfDescription(): string {
@@ -75,9 +93,20 @@ export class RedGeneratorDarkStarCharger extends DarkStarCharger {
     return 'Provides a static multiplier to red generators.';
   }
 
+  override getEffectBreakdown(): { formula: string; effects: string[] } {
+    return {
+      formula: `10^(charge x tier)`,
+      effects: [
+        `Current Charge: ${this.charge.toString(2)}`,
+        `Tier: ${this.tier.toString(2)}`,
+        `Effect: ${this.effect.toString(2)}x`
+      ]
+    }
+  }
+
   override init() {
     this.requirement = [
-      new Requirement(HoldingRecord.redParticles, Num.UNREACHABLE, this)
+      new Requirement(HoldingRecord.redParticles, new Num(1, 15_000_000), this)
     ]
   }
 }

@@ -7,7 +7,7 @@ import {ChallengeRecord} from "../../records/challenges/challenge-record";
 
 /**
  * Star Challenge Dark Star Charger
- * 
+ *
  * Nerfs: Makes star challenges way harder without any reward for completion. Sun particles and sirius particles cannot be generated
  * Charge: is gained based on total completions and red particles gained in sirius star challenge
  * Amplifies: Unlocks or increases max completions of the new star challenge: Rigel
@@ -26,12 +26,12 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
     const siriusStar = ChallengeRecord.siriusStar;
     const totalCompletions = siriusStar.completed instanceof Num ? siriusStar.completed : new Num(0, 0);
     const redParticles = HoldingRecord.redParticles;
-    
+
     const chargeAmount = totalCompletions.mul(redParticles.amount.log10());
     return chargeAmount.gt(new Num(0, 0)) ? chargeAmount : new Num(0, 0);
   }
 
-  action(): void {
+  action(): undefined {
     // Calculate unlock/increase of Rigel challenge max completions
     const effectiveCharge = this.getEffectiveCharge();
     this.effect = effectiveCharge.floor();

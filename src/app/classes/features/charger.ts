@@ -15,11 +15,14 @@ export abstract class Charger extends GameElement implements Resetable, Storable
   startCharge: Num = new Num(0, 0);
 
   // Tier system
-  tier: Num = new Num(0, 0);
-  startTier: Num = new Num(0, 0);
+  tier: Num = new Num(1, 0);
+  startTier: Num = new Num(1, 0);
   abstract maxCharge: Num;
   abstract maxTier: Num | undefined;
   abstract canInfiniteChargeAtMaxTier: boolean;
+
+  buffer: Num = new Num(1, 0);
+  baseBuffer: Num = new Num(1, 0);
 
   charging: boolean = false;
   collapsed: boolean = false;
@@ -50,6 +53,13 @@ export abstract class Charger extends GameElement implements Resetable, Storable
         this.charge = this.maxCharge.copy();
       }
     }
+    // If there is charge or tier, perform action
+    if (this.charge.gt(new Num(0, 0)) || this.tier.gt(new Num(0, 0))) {
+      const effect = this.action();
+      if (effect instanceof Num) {
+        this.effect = effect;
+      }
+    }
   }
 
   /**
@@ -69,7 +79,7 @@ export abstract class Charger extends GameElement implements Resetable, Storable
    * Action function that runs when the charger is charging
    * Should calculate and apply the charger's effect
    */
-  abstract action(): void;
+  abstract action(): undefined | Num;
 
   /**
    * Apply a tier-based drawback to reduce the effectiveness of charge as tiers increase
@@ -81,7 +91,7 @@ export abstract class Charger extends GameElement implements Resetable, Storable
    * Applies charge to the charger
    */
   protected applyCharge(amount: Num): void {
-    this.charge = this.charge.add(amount);
+    this.charge = amount.copy();
 
     // Cap charge at max if at max tier and can't infinite charge
     if (this.isAtMaxTier() && !this.canInfiniteChargeAtMaxTier) {
@@ -124,11 +134,31 @@ export abstract class Charger extends GameElement implements Resetable, Storable
     }
   }
 
+  startCharging(): void {
+    this.charging = true;
+  }
+
+  stopCharging(): void {
+    this.charging = false;
+  }
+
+  toggleCharging(): void {
+    this.charging = !this.charging;
+  }
+
+  toggleCollapsed(): void {
+    this.collapsed = !this.collapsed;
+  }
+
   /**
    * Get the effective charge value after applying tier drawback
    */
   protected getEffectiveCharge(): Num {
     return this.applyTierDrawback(this.charge);
+  }
+
+  protected getTierChargeEffect(): Num {
+    return this.charge.mul(this.tier);
   }
 
   softReset(): void {}

@@ -129,6 +129,23 @@
   font-weight: 600;
 }
 
+.roman-tier {
+  font-size: 1.1rem;
+  margin-left: 0.5rem;
+}
+
+.charger-container[data-charger-type="red"] .roman-tier {
+  color: var(--text-color-red);
+}
+
+.charger-container[data-charger-type="yellow"] .roman-tier {
+  color: var(--text-color-yellow);
+}
+
+.charger-container[data-charger-type="green"] .roman-tier {
+  color: var(--text-color-green);
+}
+
 /* Body */
 .charger-body {
   position: relative;

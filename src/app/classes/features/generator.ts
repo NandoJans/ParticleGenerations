@@ -50,6 +50,8 @@ export abstract class Generator extends Buyable implements Generatable, Storable
 
     // Apply global transformation hook (e.g., challenge nerfs) to the generator's local multiplier
     localMultiplier = Multiplier.applyHook(localMultiplier, { source: this, kind: 'generator-local' })
+    localMultiplier = Multiplier.applyHook(localMultiplier, { source: this, kind: this.type })
+    localMultiplier = Multiplier.applyHook(localMultiplier, { source: this, kind: this.name })
 
     this.multiplier = localMultiplier
       .mul(this.globalMultiplier.getNum()) as Num

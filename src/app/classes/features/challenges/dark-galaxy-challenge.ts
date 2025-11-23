@@ -24,7 +24,7 @@ export class DarkGalaxyChallenge extends Challenge {
     nerfPower: Num = new Num(1, -1)
 
     override getRewardDescription(): string {
-      return "Gather dark stars"
+      return "Gather dark stars, their effect is reduced significantly inside the dark galaxy."
     }
 
     override getDescription(): string {
@@ -47,6 +47,7 @@ export class DarkGalaxyChallenge extends Challenge {
     override end(): void {
       super.end();
       // Clear global hook when leaving the challenge
+      this.currentDarkStarGain = new Num(0, 0);
       this.awardDarkStars();
       Multiplier.globalGetHook = undefined;
     }
@@ -61,6 +62,11 @@ export class DarkGalaxyChallenge extends Challenge {
   currentDarkStarGain: Num = new Num(0, 0);
 
   override constantNerfs() {
+    const darkStarNerf: Num = new Num(1, -1);
+    HoldingRecord.darkStarHolding.redBuffer = HoldingRecord.darkStarHolding.redBuffer.pow(darkStarNerf);
+    HoldingRecord.darkStarHolding.yellowBuffer = HoldingRecord.darkStarHolding.yellowBuffer.pow(darkStarNerf);
+    HoldingRecord.darkStarHolding.greenBuffer = HoldingRecord.darkStarHolding.greenBuffer.pow(darkStarNerf);
+
     // Dark star gain is calculated based on:
     // log10(log10(RP)) x log10(log10(RA)) x log10(log10(YP)) x log10(log10(YPow)) x log10(SK) / 10
     const rp = HoldingRecord.redParticles.amount.log10().log10().add(Num.ONE);
@@ -68,9 +74,9 @@ export class DarkGalaxyChallenge extends Challenge {
     const yp = HoldingRecord.yellowParticles.amount.log10().log10().add(Num.ONE);
     const ypow = HoldingRecord.yellowPower.amount.log10().log10().add(Num.ONE);
     const sk = HoldingRecord.starKeys.amount.log10().add(Num.ONE);
-    const gain = rp.mul(ra).mul(yp).mul(ypow).mul(sk).sub(Num.ONE).div(new Num(1, 0)).sub(HoldingRecord.darkStarHolding.amount);
+    const gain = rp.mul(ra).mul(yp).mul(ypow).mul(sk).sub(Num.ONE).div(new Num(5, 0)).sub(HoldingRecord.darkStarHolding.amount);
 
-    this.currentDarkStarGain = gain;
+    // this.currentDarkStarGain = gain;
     if (gain.gt(this.currentDarkStarGain)) {
       this.currentDarkStarGain = gain;
     }

@@ -42,6 +42,10 @@ export class DarkStarHolding extends Holding {
     MultiplierRecord.yellowGenerators.correct(this.yellowEffect);
     MultiplierRecord.greenGenerators.correct(this.greenEffect);
 
+    this.redBuffer = new Num(1, 100);
+    this.yellowBuffer = new Num(1, 5);
+    this.greenBuffer = new Num(5, 0);
+
     return redEffect;  // Return red effect as the primary effect
   }
 
