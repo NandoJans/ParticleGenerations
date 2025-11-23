@@ -32,7 +32,7 @@ export class AmplifiedFusionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
 
       // Also increase hydrogen barriers to allow more yellow fusion accumulation
       // Using a 2x multiplier on fifth red generator count for balanced progression
-      const hydrogenBarrierMultiplier = new Num(3, 0);
+      const hydrogenBarrierMultiplier = new Num(2, 0);
       const hydrogenEffect = GeneratorRecord.fifthRedGenerator.bought.mul(hydrogenBarrierMultiplier);
       HoldingRecord.hydrogen.barrier = HoldingRecord.hydrogen.startBarrier.add(hydrogenEffect);
       GeneratorRecord.hydrogenGenerator.barrier = GeneratorRecord.hydrogenGenerator.startBarrier.add(hydrogenEffect);
