@@ -9,6 +9,15 @@ import {LocalStorageHelper} from "../../../classes/helpers/local-storage-helper"
 import {GalaxyTreeService} from "../../../services/galaxy-tree.service";
 import {Styles} from "../../../classes/enums/styles";
 
+interface Star {
+  id: number;
+  top: string;
+  left: string;
+  size: number;
+  duration: number;
+  delay: number;
+}
+
 @Component({
   selector: 'app-green-galaxy-tree',
   templateUrl: './green-galaxy-tree.component.html',
@@ -32,6 +41,8 @@ export class GreenGalaxyTreeComponent implements OnInit {
     'This is the endgame content - master the galaxy tree to achieve maximum power!'
   ]
   @ViewChild('galaxyTreeWrapper') galaxyTreeWrapper!: ElementRef;
+
+  stars: Star[] = [];
 
   bottomSectionOpen: boolean = true;
 
@@ -57,10 +68,44 @@ export class GreenGalaxyTreeComponent implements OnInit {
     }
 
     this.setPositions();
+    this.updateStars();
   }
 
   getStars(): GalaxyTreeUpgrade[] {
     return this.galaxyTreeService.getStars();
+  }
+
+  private updateStars() {
+    const purchasedCount = this.getPurchasedStarsCount();
+    const starCount = purchasedCount * 3; // 1 to 3 ratio
+    this.generateStars(starCount);
+  }
+
+  private getPurchasedStarsCount(): number {
+    return this.galaxyTreeService.getStars().filter(star => star.hasBought()).length;
+  }
+
+  private generateStars(count: number) {
+    this.stars = [];
+    for (let i = 0; i < count; i++) {
+      const size = 1 + Math.random() * 2;              // 1–3 px
+      const duration = 5 + Math.random() * 7;           // 5–12 s
+      const delay = Math.random() * 10;                 // 0–10 s
+
+      this.stars.push({
+        id: i,
+        top: `${Math.random() * 100}%`,
+        left: `${Math.random() * 100}%`,
+        size,
+        duration,
+        delay
+      });
+    }
+  }
+
+  getBackgroundStars(): Star[] {
+    this.updateStars(); // Update stars on each render
+    return this.stars;
   }
 
   private setPositions() {

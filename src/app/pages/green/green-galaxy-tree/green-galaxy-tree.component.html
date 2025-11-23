@@ -43,7 +43,28 @@
   (pointercancel)="onPointerUp($event)"
   (pointerleave)="onPointerUp($event)"
 >
+  <!-- Background stars that fade in/out -->
+  <div class="galaxy-background-stars">
+    @for (star of getBackgroundStars(); track star.id) {
+      <div
+        class="background-star"
+        [style.top]="star.top"
+        [style.left]="star.left"
+        [style.width.px]="star.size"
+        [style.height.px]="star.size"
+        [style.animationDuration]="star.duration + 's'"
+        [style.animationDelay]="star.delay + 's'">
+      </div>
+    }
+  </div>
+
   <div class="tree-canvas" [style.transform]="transform" [style.touchAction]="'none'">
+    <!-- Nebula regions for different sections -->
+    <div class="nebula-region red-generator-nebula"></div>
+    <div class="nebula-region red-accelerator-nebula"></div>
+    <div class="nebula-region yellow-nebula"></div>
+    <div class="nebula-region fusion-nebula"></div>
+
     @for (star of getStars(); track star) {
       @if (star.getChildren()?.length && star.hasBought()) {
         <svg
