@@ -22,13 +22,13 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
   name: string = 'star-challenge-dark-star-charger';
 
   getChargeAmount(): Num {
-    // Charge based on total completions and red particles from sirius
+    // Charge based on total completions and red particles from sirius - only increases
     const siriusStar = ChallengeRecord.siriusStar;
     const totalCompletions = siriusStar.completed instanceof Num ? siriusStar.completed : new Num(0, 0);
     const redParticles = HoldingRecord.redParticles;
 
     const chargeAmount = totalCompletions.mul(redParticles.amount.log10());
-    return chargeAmount.gt(new Num(0, 0)) ? chargeAmount : new Num(0, 0);
+    return chargeAmount.gt(this.charge) ? chargeAmount : this.charge;
   }
 
   action(): Num {

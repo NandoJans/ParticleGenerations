@@ -23,13 +23,12 @@ export class YellowFusionDarkStarCharger extends DarkStarCharger {
   name: string = 'yellow-fusion-dark-star-charger';
 
   getChargeAmount(): Num {
-    // Charge based on fusion amount * fusion booster accelerations
+    // Charge based on fusion amount - only increases
     const yellowFusion = HoldingRecord.yellowFusion;
-    // Assuming fusion booster accelerations is a property - adjust as needed
     const fusionAmount = yellowFusion.amount;
 
     const chargeAmount = fusionAmount.log10();
-    return chargeAmount.gt(new Num(0, 0)) ? chargeAmount : new Num(0, 0);
+    return chargeAmount.gt(this.charge) ? chargeAmount : this.charge;
   }
 
   action(): Num {
