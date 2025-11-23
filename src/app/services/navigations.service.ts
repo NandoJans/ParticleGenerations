@@ -65,7 +65,7 @@ export class NavigationsService {
       {requirement: UpgradeRecord.unlockFirstGreenGeneratorGalaxyTree, amount: new Num(1, 0)},
     ], false),
     greenDarkGalaxy: new SubNavigation('greenDarkGalaxy', faCompactDisc, 'darkGalaxy', this.navigations['green'], [
-      {requirement: HoldingRecord.greenParticles, amount: new Num(1, 10)},
+      {requirement: HoldingRecord.greenParticles, amount: new Num(1, 2)},
     ], false),
 
     // Automators
