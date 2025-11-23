@@ -9,6 +9,7 @@ import {StarKeyUpgrade} from "../../../classes/features/upgrades/star-key-upgrad
 import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
 import {StarKeySubUpgrade} from "../../../classes/features/upgrades/star-key-sub-upgrade";
 import {UnlockStarKeyCompressionUpgrade} from "../../../classes/features/upgrades/unlock-star-key-compression-upgrade";
+import {App} from "../../../App";
 
 @Component({
   selector: 'app-yellow-star-keys-page',
@@ -62,5 +63,17 @@ export class YellowStarKeysPageComponent {
 
   getYellowFusionCompressionEffect() {
     return this.compressionService.getYellowFusionCompressionEffect();
+  }
+
+  completeCompression() {
+    this.compressionService.instantComplete();
+  }
+
+  isDev(): boolean {
+    return App.isDev();
+  }
+
+  getTotalSkipped(): string {
+    return this.compressionService.getTotalSkipped();
   }
 }

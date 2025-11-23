@@ -38,4 +38,8 @@ export class EnhancementComponent implements OnInit {
   respecEnhancement() {
     this.enhancementService.respecEnhancement(this.enhancement);
   }
+
+  atMaxEnhancements(): boolean {
+    return this.enhancementService.atMaxEnhancements(this.enhancement);
+  }
 }

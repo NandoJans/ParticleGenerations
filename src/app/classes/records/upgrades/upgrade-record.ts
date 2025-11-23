@@ -150,6 +150,9 @@ import {
 } from "../../features/upgrades/unlock-second-green-generator-galaxy-tree-upgrade";
 import {MoreYellowParticlesGalaxyTreeUpgrade} from "../../features/upgrades/more-yellow-particles-galaxy-tree-upgrade";
 import {YellowUpgrade} from "../../features/upgrades/yellow-upgrade";
+import {
+  SlowerCompressionTimeIncreaseGalaxyTreeUpgrade
+} from "../../features/upgrades/slower-compression-time-increase-galaxy-tree-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -276,6 +279,7 @@ export class UpgradeRecord extends Record {
   static unlockSecondGreenGeneratorGalaxyTree: UnlockSecondGreenGeneratorGalaxyTreeUpgrade = new UnlockSecondGreenGeneratorGalaxyTreeUpgrade('unlockSecondGreenGenerator');
 
   static moreYellowParticlesGalaxyTree: MoreYellowParticlesGalaxyTreeUpgrade = new MoreYellowParticlesGalaxyTreeUpgrade('moreYellowParticlesGalaxyTree');
+  static slowerCompressionTimeIncreaseGalaxyTree: SlowerCompressionTimeIncreaseGalaxyTreeUpgrade = new SlowerCompressionTimeIncreaseGalaxyTreeUpgrade('slowerCompressionTimeIncrease');
 
   static yellowUpgradeList: YellowUpgrade[] = [
     UpgradeRecord.redGeneratorMultiplierYellowPrestigeYellow,
@@ -342,6 +346,7 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.improveFusionCompressionGalaxyTree,
     UpgradeRecord.unlockSecondGreenGeneratorGalaxyTree,
     UpgradeRecord.moreYellowParticlesGalaxyTree,
+    UpgradeRecord.slowerCompressionTimeIncreaseGalaxyTree,
   ]
 
   static override list: Upgrade[] = [

@@ -27,7 +27,7 @@
       <p>{{ challenge.getRewardDescription() }}</p>
     </div>
     <div class="start">
-      <button [class]="'button '+((challenge.isCompleted()) ? 'completed' : '')" (click)="toggleChallenge()">{{ getButtonText() }}</button>
+      <button [class]="'button'" (click)="toggleChallenge()">{{ getButtonText() }}</button>
     </div>
   </div>
 </div>

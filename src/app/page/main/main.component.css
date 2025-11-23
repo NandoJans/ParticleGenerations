@@ -17,6 +17,13 @@ div.action-message {
   background-color: var(--background-color-3);
 }
 
+@media screen and (max-width: 1000px) {
+  div.action-message {
+    left: 10%;
+    width: 80%;
+  }
+}
+
 div.action-message h2 {
   margin: 0.5rem 0;
 }

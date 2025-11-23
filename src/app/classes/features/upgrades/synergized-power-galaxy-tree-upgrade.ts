@@ -46,6 +46,6 @@ export class SynergizedPowerGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   override buffer = new Num(3, 0);
   override baseBuffer = new Num(3, 0);
 
-  cost: Num = new Num(3.5, 1);
-  baseCost: Num = new Num(3.5, 1);
+  cost: Num = new Num(2, 1);
+  baseCost: Num = new Num(2, 1);
 }

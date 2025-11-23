@@ -125,4 +125,8 @@ export class EnhancementService {
       });
     })
   }
+
+  atMaxEnhancements(enhancement: Enhancement) {
+    return this.getAllowedEnhancables(enhancement).length === Object.keys(enhancement.enhancables).length;
+  }
 }

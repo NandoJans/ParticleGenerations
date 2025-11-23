@@ -4,6 +4,8 @@ import {Num} from "../../../num";
 import {Styles} from "../../enums/styles";
 
 export class BetterYellowKeyGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
+  override calculationOrder = 401;
+
   constructor(saveName: string) {
     super(saveName, "more-yellow-keys");
   }
@@ -28,8 +30,7 @@ export class BetterYellowKeyGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
 
   action(): undefined {
     if (this.hasBought()) {
-      UpgradeRecord.multiplyYellowKeyGain.buffer =
-        UpgradeRecord.multiplyYellowKeyGain.buffer.mul(this.buffer);
+      UpgradeRecord.multiplyYellowKeyGain.buffer = UpgradeRecord.multiplyYellowKeyGain.buffer.mul(this.buffer);
     }
     return
   }

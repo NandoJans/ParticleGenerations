@@ -7,6 +7,8 @@ import {Charger} from "../../../classes/features/charger";
 import {RedGeneratorDarkStarCharger} from "../../../classes/features/chargers/red-generator-dark-star-charger";
 import {Num} from "../../../num";
 import {faPlay, faPause, faLock} from '@fortawesome/free-solid-svg-icons';
+import {ChallengeRecord} from "../../../classes/records/challenges/challenge-record";
+import {DropDownMessageService} from "../../../services/visuals/drop-down-message.service";
 
 @Component({
   selector: 'app-dark-star-charger',
@@ -27,7 +29,8 @@ export class DarkStarChargerComponent {
 
   constructor(
     public cd: ChangeDetectorRef,
-    private componentService: ComponentService
+    private componentService: ComponentService,
+    private dropDownMessageService: DropDownMessageService
   ) {
     this.sub = this.componentService.reload$.subscribe(() => {
       this.cd.markForCheck();
@@ -39,6 +42,10 @@ export class DarkStarChargerComponent {
   }
 
   toggleCharging() {
+    if (ChallengeRecord.currentChallenges['green'] === ChallengeRecord.darkGalaxy) {
+      this.dropDownMessageService.dropDown("error", "Cannot toggle charging while in Dark Galaxy Challenge.");
+      return;
+    }
     this.charger.charging = !this.charger.charging;
   }
 

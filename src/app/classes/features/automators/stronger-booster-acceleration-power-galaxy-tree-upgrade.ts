@@ -16,7 +16,8 @@ export class StrongerBoosterAccelerationPowerGalaxyTreeUpgrade extends GalaxyTre
   }
 
   getParents(): GalaxyTreeUpgrade[] {
-    return [  UpgradeRecord.cheaperBoosterAccelerationGalaxyTree,
+    return [
+      UpgradeRecord.cheaperBoosterAccelerationGalaxyTree,
     ];
   }
 

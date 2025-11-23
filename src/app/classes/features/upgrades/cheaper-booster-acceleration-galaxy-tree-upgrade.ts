@@ -22,16 +22,22 @@ export class CheaperBoosterAccelerationGalaxyTreeUpgrade extends GalaxyTreeUpgra
   }
 
   getDescription(): string {
-    return "Decrease the cost scaling of booster accelerators from 1.000 to 250";
+    const startIncrease = UpgradeRecord.boosterAccelerationUpgrade.startIncrease;
+    return `Decrease the cost increase of booster accelerators from ${startIncrease} to ${startIncrease.div(this.buffer)}.`;
   }
 
   action(): undefined {
-    UpgradeRecord.boosterAccelerationUpgrade.increase = UpgradeRecord.boosterAccelerationUpgrade.startIncrease.div(new Num(1, 1));
+    if (this.hasBought()) {
+      UpgradeRecord.boosterAccelerationUpgrade.increase = UpgradeRecord.boosterAccelerationUpgrade.startIncrease.div(this.buffer);
+    }
     return
   }
 
   style: Styles = Styles.STAR_ORANGE
   displayName: string = "Cheaper Booster Acceleration";
+
+  override buffer = new Num(1, 1);
+  override baseBuffer = new Num(1, 1);
 
   cost: Num = new Num(2, 0);
   baseCost: Num = new Num(2, 0);

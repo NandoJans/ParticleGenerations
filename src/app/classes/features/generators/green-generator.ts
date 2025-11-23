@@ -40,6 +40,11 @@ export abstract class GreenGenerator extends Generator {
   abstract buyMultiplierUpgrade: GreenGeneratorBuyMultiplierUpgrade;
   abstract costDivisorUpgrade: GreenGeneratorCostDivisorUpgrade;
 
+  override softReset() {
+    this.unlocked = false;
+    super.softReset();
+  }
+
   override getUpgrades(): Upgrade[] {
     return [
       this.multiplierUpgrade,

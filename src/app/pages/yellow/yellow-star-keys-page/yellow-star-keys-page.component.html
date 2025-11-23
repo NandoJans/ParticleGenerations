@@ -31,6 +31,10 @@
       }
     </div>
   </div>
+  @if (isDev()) {
+    <app-button [style]="'button green'" (function)="completeCompression()" [text]="'Instant complete'"></app-button>
+    <p>Total skipped: {{ getTotalSkipped() }}</p>
+  }
   <div class="holding-line">
     <p>Yellow fusion multiplies compression speed by <span class="effect fusion">{{ getYellowFusionCompressionEffect().toString(2) }}x</span></p>
   </div>

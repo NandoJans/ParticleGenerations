@@ -21,6 +21,7 @@ export class MultiplierRecord {
   static yellowFusionGenerators: Multiplier = new Multiplier('yellowFusionGenerators', new Num(0.1, 0));
   static hydrogenGenerators: Multiplier = new Multiplier('hydrogenGenerators', new Num(0.1, 0));
   static starKeyCompressionSpeed: Multiplier = new Multiplier('starKeyCompressionSpeed', new Num(1, 0), 50);
+  static starKeyCompressionTimeIncrease: Multiplier = new Multiplier('starKeyCompressionTimeIncrease', new Num(2, 0));
 
   // Green Phase
   static greenParticleGain: Multiplier = new Multiplier('greenParticleGain', new Num(1, 0), 50);
@@ -45,6 +46,7 @@ export class MultiplierRecord {
     MultiplierRecord.yellowFusionGenerators,
     MultiplierRecord.hydrogenGenerators,
     MultiplierRecord.starKeyCompressionSpeed,
+    MultiplierRecord.starKeyCompressionTimeIncrease,
 
     // Green Phase
     MultiplierRecord.greenParticleGain,
