@@ -43,7 +43,58 @@
   (pointercancel)="onPointerUp($event)"
   (pointerleave)="onPointerUp($event)"
 >
+  <!-- Layer 1: Far background stars (slowest parallax, behind everything) -->
+  <div class="galaxy-background-stars layer-1" [style.transform]="'translate(' + (tx * 0.1) + 'px, ' + (ty * 0.1) + 'px)'">
+    @for (star of getStarsByLayer(1); track star.id) {
+      <div
+        class="background-star"
+        [style.top]="star.top"
+        [style.left]="star.left"
+        [style.width.px]="star.size"
+        [style.height.px]="star.size"
+        [style.animationDuration]="star.duration + 's'"
+        [style.animationDelay]="star.delay + 's'">
+      </div>
+    }
+  </div>
+
+  <!-- Layer 2: Mid background stars (medium parallax) -->
+  <div class="galaxy-background-stars layer-2" [style.transform]="'translate(' + (tx * 0.3) + 'px, ' + (ty * 0.3) + 'px)'">
+    @for (star of getStarsByLayer(2); track star.id) {
+      <div
+        class="background-star"
+        [style.top]="star.top"
+        [style.left]="star.left"
+        [style.width.px]="star.size"
+        [style.height.px]="star.size"
+        [style.animationDuration]="star.duration + 's'"
+        [style.animationDelay]="star.delay + 's'">
+      </div>
+    }
+  </div>
+
+  <!-- Layer 3: Near background stars (faster parallax, but still behind tree) -->
+  <div class="galaxy-background-stars layer-3" [style.transform]="'translate(' + (tx * 0.5) + 'px, ' + (ty * 0.5) + 'px)'">
+    @for (star of getStarsByLayer(3); track star.id) {
+      <div
+        class="background-star"
+        [style.top]="star.top"
+        [style.left]="star.left"
+        [style.width.px]="star.size"
+        [style.height.px]="star.size"
+        [style.animationDuration]="star.duration + 's'"
+        [style.animationDelay]="star.delay + 's'">
+      </div>
+    }
+  </div>
+
   <div class="tree-canvas" [style.transform]="transform" [style.touchAction]="'none'">
+    <!-- Nebula regions for different sections -->
+    <div class="nebula-region red-generator-nebula"></div>
+    <div class="nebula-region red-accelerator-nebula"></div>
+    <div class="nebula-region yellow-nebula"></div>
+    <div class="nebula-region fusion-nebula"></div>
+
     @for (star of getStars(); track star) {
       @if (star.getChildren()?.length && star.hasBought()) {
         <svg

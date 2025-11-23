@@ -64,6 +64,57 @@
   touch-action: none;     /* disables browser panning/zoom so our handlers work */
 }
 
+/* Background stars container */
+.galaxy-background-stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Layer z-indexes - all behind the tree-canvas */
+.galaxy-background-stars.layer-1 {
+  z-index: 0;
+  opacity: 0.6;
+}
+
+.galaxy-background-stars.layer-2 {
+  z-index: 1;
+  opacity: 0.8;
+}
+
+.galaxy-background-stars.layer-3 {
+  z-index: 2;
+  opacity: 1;
+}
+
+/* Individual background star */
+.background-star {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 0, #c9ffe6 50%, transparent 70%);
+  opacity: 0;
+  animation-name: star-fade;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes star-fade {
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  40% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+}
+
 .tree-canvas {
   position: absolute;
   left: 0;
@@ -73,6 +124,75 @@
   transform-origin: 0 0;  /* we handle the math; origin stays at top-left */
   user-select: none;
   -webkit-user-drag: none;
+  z-index: 10; /* Ensure tree is above all background star layers */
+}
+
+/* Nebula regions for different sections */
+.nebula-region {
+  position: absolute;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Red Generator Nebula - positioned around red generator upgrades (right side) */
+.red-generator-nebula {
+  width: 800px;
+  height: 800px;
+  top: 4600px;   /* centered around y=0 area */
+  left: 5200px;  /* centered around x=125-325 area */
+  opacity: 0.4;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(232, 59, 29, 0.5) 0%, rgba(0, 0, 0, 0) 60%),
+    radial-gradient(circle at 30% 70%, rgba(255, 80, 50, 0.3) 0%, rgba(0, 0, 0, 0) 50%);
+}
+
+/* Red Accelerator Nebula - positioned around red accelerator upgrades (left side) */
+.red-accelerator-nebula {
+  width: 800px;
+  height: 800px;
+  top: 4600px;   /* centered around y=0 area */
+  left: 4200px;  /* centered around x=-125 to -325 area */
+  opacity: 0.35;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(180, 30, 20, 0.5) 0%, rgba(0, 0, 0, 0) 60%),
+    radial-gradient(circle at 60% 40%, rgba(220, 50, 40, 0.3) 0%, rgba(0, 0, 0, 0) 50%);
+}
+
+/* Yellow Nebula - positioned around yellow upgrades/generators (bottom) */
+.yellow-nebula {
+  width: 900px;
+  height: 900px;
+  top: 4100px;   /* centered around y=-125 to -425 area */
+  left: 4550px;  /* centered around x=-75 to 125 area */
+  opacity: 0.4;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 216, 59, 0.5) 0%, rgba(0, 0, 0, 0) 60%),
+    radial-gradient(circle at 40% 60%, rgba(255, 200, 100, 0.3) 0%, rgba(0, 0, 0, 0) 50%);
+}
+
+/* Fusion Nebula - positioned around fusion upgrades (top) with animated color shift */
+.fusion-nebula {
+  width: 850px;
+  height: 850px;
+  top: 5150px;   /* centered around y=125 to 325 area */
+  left: 4575px;  /* centered around x=-75 to 150 area */
+  opacity: 0.45;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255, 150, 51, 0.5) 0%, rgba(0, 0, 0, 0) 60%),
+    radial-gradient(circle at 60% 40%, rgba(255, 180, 100, 0.3) 0%, rgba(0, 0, 0, 0) 50%);
+  animation: fusion-color-shift 8s ease-in-out infinite;
+}
+
+@keyframes fusion-color-shift {
+  0%, 100% {
+    filter: blur(80px) hue-rotate(0deg);
+  }
+  50% {
+    filter: blur(80px) hue-rotate(20deg);
+  }
 }
 /* wrapper around the entire galaxy tree allowing scroll on small screens */
 
