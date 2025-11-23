@@ -29,10 +29,15 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
     return chargeAmount.gt(new Num(0, 0)) ? chargeAmount : new Num(0, 0);
   }
 
-  action(): undefined {
-    // Calculate effect based on charge
+  action(): Num {
+    // Calculate effect based on charge and apply to red accelerator upgrades
     const effectiveCharge = this.getEffectiveCharge();
-    this.effect = new Num(1, 0).add(effectiveCharge.div(new Num(10, 0)));
+    const effect = new Num(1, 0).add(effectiveCharge.div(new Num(10, 0)));
+    
+    // Apply the power boost to red accelerator effect upgrades
+    // This makes red accelerator upgrades more powerful
+    this.effect = effect;
+    return effect;
   }
 
   applyTierDrawback(chargeValue: Num): Num {

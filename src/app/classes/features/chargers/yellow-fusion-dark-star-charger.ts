@@ -32,10 +32,16 @@ export class YellowFusionDarkStarCharger extends DarkStarCharger {
     return chargeAmount.gt(new Num(0, 0)) ? chargeAmount : new Num(0, 0);
   }
 
-  action(): undefined {
-    // Calculate hydrogen generation speed boost
+  action(): Num {
+    // Calculate and apply hydrogen generation speed boost
     const effectiveCharge = this.getEffectiveCharge();
-    this.effect = new Num(1, 0).add(effectiveCharge.mul(new Num(0.1, 0)));
+    const effect = new Num(1, 0).add(effectiveCharge.mul(new Num(0.1, 0)));
+    
+    // Apply the multiplier to hydrogen generators
+    MultiplierRecord.hydrogenGenerators.correct(effect);
+    
+    this.effect = effect;
+    return effect;
   }
 
   applyTierDrawback(chargeValue: Num): Num {

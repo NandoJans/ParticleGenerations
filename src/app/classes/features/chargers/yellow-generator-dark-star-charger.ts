@@ -30,10 +30,16 @@ export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
     return chargeAmount.gt(new Num(0, 0)) ? chargeAmount : new Num(0, 0);
   }
 
-  action(): undefined {
-    // Calculate massive static multiplier based on effective charge
+  action(): Num {
+    // Calculate and apply massive static multiplier to yellow generators
     const effectiveCharge = this.getEffectiveCharge();
-    this.effect = new Num(10, 0).pow(effectiveCharge);
+    const effect = new Num(10, 0).pow(effectiveCharge);
+    
+    // Apply the multiplier to yellow generators
+    MultiplierRecord.yellowGenerators.correct(effect);
+    
+    this.effect = effect;
+    return effect;
   }
 
   applyTierDrawback(chargeValue: Num): Num {

@@ -29,10 +29,16 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
     return chargeAmount.gt(new Num(0, 0)) ? chargeAmount : new Num(0, 0);
   }
 
-  action(): undefined {
-    // Calculate yellow key-gain boost
+  action(): Num {
+    // Calculate and apply yellow key-gain boost
     const effectiveCharge = this.getEffectiveCharge();
-    this.effect = new Num(10, 0).pow(effectiveCharge);
+    const effect = new Num(10, 0).pow(effectiveCharge);
+    
+    // Apply the multiplier to yellow key gain
+    MultiplierRecord.yellowKeyGain.correct(effect);
+    
+    this.effect = effect;
+    return effect;
   }
 
   applyTierDrawback(chargeValue: Num): Num {
@@ -56,15 +62,6 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
     
     // Reduce star key power by multiplying buffer by 0.95
     starKeys.buffer = starKeys.buffer.mul(new Num(0.95, 0));
-    
-    // Also boost yellow key gain based on charge
-    const effectiveCharge = this.getEffectiveCharge();
-    const yellowKeyBoost = new Num(10, 0).pow(effectiveCharge);
-    MultiplierRecord.yellowKeyGain.addLocalHook(
-      this.name,
-      (multiplier: Multiplier) => multiplier.correct(yellowKeyBoost),
-      true
-    );
   }
 
   revertNerfs(): void {
@@ -73,9 +70,6 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
     if (this.originalStarKeyBuffer) {
       starKeys.buffer = this.originalStarKeyBuffer.copy();
     }
-    
-    // Remove yellow key gain boost
-    delete MultiplierRecord.yellowKeyGain.localHooks[this.name];
   }
 
   getNerfDescription(): string {

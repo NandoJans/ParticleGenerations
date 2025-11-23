@@ -31,10 +31,16 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
     return chargeAmount.gt(new Num(0, 0)) ? chargeAmount : new Num(0, 0);
   }
 
-  action(): undefined {
+  action(): Num {
     // Calculate unlock/increase of Rigel challenge max completions
     const effectiveCharge = this.getEffectiveCharge();
-    this.effect = effectiveCharge.floor();
+    const effect = effectiveCharge.floor();
+    
+    // TODO: Apply to Rigel challenge when it's implemented
+    // For now, just track the effect value
+    
+    this.effect = effect;
+    return effect;
   }
 
   applyTierDrawback(chargeValue: Num): Num {
