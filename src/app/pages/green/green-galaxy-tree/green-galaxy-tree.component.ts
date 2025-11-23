@@ -69,6 +69,11 @@ export class GreenGalaxyTreeComponent implements OnInit {
 
     this.setPositions();
     this.updateStars();
+    
+    // Update stars periodically to match purchased upgrades
+    setInterval(() => {
+      this.updateStars();
+    }, 1000);
   }
 
   getStars(): GalaxyTreeUpgrade[] {
@@ -77,8 +82,12 @@ export class GreenGalaxyTreeComponent implements OnInit {
 
   private updateStars() {
     const purchasedCount = this.getPurchasedStarsCount();
-    const starCount = purchasedCount * 3; // 1 to 3 ratio
-    this.generateStars(starCount);
+    const targetCount = purchasedCount * 3; // 1 to 3 ratio
+    
+    // Only regenerate if the count has changed
+    if (this.stars.length !== targetCount) {
+      this.generateStars(targetCount);
+    }
   }
 
   private getPurchasedStarsCount(): number {
@@ -86,25 +95,42 @@ export class GreenGalaxyTreeComponent implements OnInit {
   }
 
   private generateStars(count: number) {
-    this.stars = [];
-    for (let i = 0; i < count; i++) {
-      const size = 1 + Math.random() * 2;              // 1–3 px
-      const duration = 5 + Math.random() * 7;           // 5–12 s
-      const delay = Math.random() * 10;                 // 0–10 s
-
-      this.stars.push({
-        id: i,
-        top: `${Math.random() * 100}%`,
-        left: `${Math.random() * 100}%`,
-        size,
-        duration,
-        delay
-      });
+    const currentCount = this.stars.length;
+    
+    // If we need more stars, add new ones
+    if (count > currentCount) {
+      for (let i = currentCount; i < count; i++) {
+        this.stars.push(this.createStar(i));
+      }
+    } 
+    // If we need fewer stars, remove from the end
+    else if (count < currentCount) {
+      this.stars = this.stars.slice(0, count);
     }
   }
 
+  private createStar(id: number): Star {
+    // Use seeded random for consistent star properties
+    const seedRandom = (seed: number) => {
+      const x = Math.sin(seed) * 10000;
+      return x - Math.floor(x);
+    };
+    
+    const size = 1 + seedRandom(id * 1.1) * 2;              // 1–3 px
+    const duration = 5 + seedRandom(id * 2.2) * 7;           // 5–12 s
+    const delay = seedRandom(id * 3.3) * 10;                 // 0–10 s
+    
+    return {
+      id,
+      top: `${seedRandom(id * 4.4) * 100}%`,
+      left: `${seedRandom(id * 5.5) * 100}%`,
+      size,
+      duration,
+      delay
+    };
+  }
+
   getBackgroundStars(): Star[] {
-    this.updateStars(); // Update stars on each render
     return this.stars;
   }
 
