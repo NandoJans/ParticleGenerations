@@ -38,8 +38,8 @@ export class BetterYellowGeneratorsGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   style: Styles = Styles.STAR_ORANGE;
   displayName: string = "Better Yellow Generators";
 
-  override buffer = new Num(2.5, 0);
-  override baseBuffer = new Num(2.5, 0);
+  override buffer = new Num(2, 0);
+  override baseBuffer = new Num(2, 0);
 
   cost: Num = new Num(3, 0);
   baseCost: Num = new Num(3, 0);
