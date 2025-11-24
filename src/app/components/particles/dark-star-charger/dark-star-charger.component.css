@@ -336,3 +336,75 @@
     max-width: 150px;
   }
 }
+
+/* Tier Up Button */
+.tier-up-container {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.tier-up-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, rgba(0, 255, 170, 0.2) 0%, rgba(0, 255, 170, 0.4) 100%);
+  border: 2px solid rgba(0, 255, 170, 0.6);
+  border-radius: 8px;
+  color: rgba(0, 255, 170, 1);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(0, 255, 170, 0.3);
+  animation: tier-up-glow 1.5s ease-in-out infinite;
+}
+
+.tier-up-button:hover {
+  background: linear-gradient(135deg, rgba(0, 255, 170, 0.3) 0%, rgba(0, 255, 170, 0.5) 100%);
+  box-shadow: 0 0 25px rgba(0, 255, 170, 0.5);
+  transform: translateY(-2px);
+}
+
+.tier-up-button:active {
+  transform: translateY(0);
+  box-shadow: 0 0 10px rgba(0, 255, 170, 0.4);
+}
+
+.tier-up-button fa-icon {
+  font-size: 1rem;
+}
+
+@keyframes tier-up-glow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(0, 255, 170, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(0, 255, 170, 0.5);
+  }
+}
+
+/* Milestone Boost */
+.milestone-boost {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.milestone-label {
+  font-size: 0.8rem;
+  color: rgba(255, 215, 0, 0.9);
+  margin: 0 0 0.25rem 0;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.milestone-text {
+  font-size: 0.85rem;
+  color: var(--text-color-light);
+  margin: 0;
+  line-height: 1.4;
+  font-style: italic;
+}

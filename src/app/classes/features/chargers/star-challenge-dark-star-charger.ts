@@ -15,7 +15,7 @@ import {ChallengeRecord} from "../../records/challenges/challenge-record";
 export class StarChallengeDarkStarCharger extends DarkStarCharger {
   displayName: string = 'Star Challenge Charger';
   resetId: ResetKey = ResetKey.GREEN;
-  maxCharge: Num = new Num(100, 0);
+  baseMaxCharge: Num = new Num(100, 0);
   maxTier: Num | undefined = new Num(10, 0);
   canInfiniteChargeAtMaxTier: boolean = true;
   requirement: Requirement[] = [];
@@ -41,14 +41,6 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
     
     this.effect = effect;
     return effect;
-  }
-
-  applyTierDrawback(chargeValue: Num): Num {
-    // Reduce effectiveness with higher tiers
-    if (this.tier.equals(new Num(0, 0))) {
-      return chargeValue;
-    }
-    return chargeValue.div(this.tier.add(new Num(1, 0)));
   }
 
   private originalDifficulties: Map<string, Num | Num[]> = new Map();

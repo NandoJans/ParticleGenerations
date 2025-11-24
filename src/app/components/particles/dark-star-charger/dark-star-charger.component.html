@@ -23,6 +23,13 @@
           <div class="progress-fill" [style.width.%]="getProgress()"></div>
         </div>
       </div>
+      <!-- Tier Up Button -->
+      <div class="tier-up-container" *ngIf="canTierUp()">
+        <button class="tier-up-button" (click)="tierUp(); $event.stopPropagation()">
+          <fa-icon [icon]="faArrowUp"></fa-icon>
+          <span>Tier Up</span>
+        </button>
+      </div>
     </div>
     <div class="body-right">
       <!-- Effect Breakdown -->
@@ -31,6 +38,11 @@
         <p class="formula">{{ getEffectBreakdown().formula }}</p>
         <div class="effects">
           <p *ngFor="let effect of getEffectBreakdown().effects" class="effect-item">{{ effect }}</p>
+        </div>
+        <!-- Milestone Boost Description -->
+        <div class="milestone-boost" *ngIf="getTierMilestoneBoostDescription()">
+          <p class="milestone-label">Tier Milestone:</p>
+          <p class="milestone-text">{{ getTierMilestoneBoostDescription() }}</p>
         </div>
       </div>
     </div>

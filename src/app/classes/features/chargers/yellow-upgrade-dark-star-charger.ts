@@ -15,7 +15,7 @@ import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 export class YellowUpgradeDarkStarCharger extends DarkStarCharger {
   displayName: string = 'Yellow Upgrade Charger';
   resetId: ResetKey = ResetKey.GREEN;
-  maxCharge: Num = new Num(100, 0);
+  baseMaxCharge: Num = new Num(100, 0);
   maxTier: Num | undefined = new Num(10, 0);
   canInfiniteChargeAtMaxTier: boolean = true;
   requirement: Requirement[] = [];
@@ -39,14 +39,6 @@ export class YellowUpgradeDarkStarCharger extends DarkStarCharger {
     
     this.effect = effect;
     return effect;
-  }
-
-  applyTierDrawback(chargeValue: Num): Num {
-    // Reduce effectiveness with higher tiers
-    if (this.tier.equals(new Num(0, 0))) {
-      return chargeValue;
-    }
-    return chargeValue.div(this.tier.sqrt());
   }
 
   applyNerfs(): void {

@@ -15,7 +15,7 @@ import {HoldingRecord} from "../../records/holdings/holding-record";
 export class CombineDarkStarCharger extends DarkStarCharger {
   displayName: string = 'Combine Charger';
   resetId: ResetKey = ResetKey.GREEN;
-  maxCharge: Num = new Num(100, 0);
+  baseMaxCharge: Num = new Num(100, 0);
   maxTier: Num | undefined = new Num(10, 0);
   canInfiniteChargeAtMaxTier: boolean = true;
   requirement: Requirement[] = [];
@@ -39,14 +39,6 @@ export class CombineDarkStarCharger extends DarkStarCharger {
     // Calculate amplification of other charger effects
     const effectiveCharge = this.getEffectiveCharge();
     this.effect = new Num(1, 0).add(effectiveCharge.div(new Num(50, 0)));
-  }
-
-  applyTierDrawback(chargeValue: Num): Num {
-    // Reduce effectiveness with higher tiers
-    if (this.tier.equals(new Num(0, 0))) {
-      return chargeValue;
-    }
-    return chargeValue.pow(new Num(0.95, 0).pow(this.tier));
   }
 
   applyNerfs(): void {

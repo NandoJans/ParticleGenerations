@@ -16,7 +16,7 @@ import {Multiplier} from "../multiplier";
 export class StarKeyDarkStarCharger extends DarkStarCharger {
   displayName: string = 'Star Key Charger';
   resetId: ResetKey = ResetKey.GREEN;
-  maxCharge: Num = new Num(100, 0);
+  baseMaxCharge: Num = new Num(100, 0);
   maxTier: Num | undefined = new Num(10, 0);
   canInfiniteChargeAtMaxTier: boolean = true;
   requirement: Requirement[] = [];
@@ -39,14 +39,6 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
     
     this.effect = effect;
     return effect;
-  }
-
-  applyTierDrawback(chargeValue: Num): Num {
-    // Reduce effectiveness with higher tiers
-    if (this.tier.equals(new Num(0, 0))) {
-      return chargeValue;
-    }
-    return chargeValue.div(this.tier);
   }
 
   private originalStarKeyBuffer: Num | undefined;

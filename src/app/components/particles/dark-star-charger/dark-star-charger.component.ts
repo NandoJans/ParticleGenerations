@@ -6,7 +6,7 @@ import {CommonModule} from '@angular/common';
 import {Charger} from "../../../classes/features/charger";
 import {RedGeneratorDarkStarCharger} from "../../../classes/features/chargers/red-generator-dark-star-charger";
 import {Num} from "../../../num";
-import {faPlay, faPause, faLock} from '@fortawesome/free-solid-svg-icons';
+import {faPlay, faPause, faLock, faArrowUp} from '@fortawesome/free-solid-svg-icons';
 import {ChallengeRecord} from "../../../classes/records/challenges/challenge-record";
 import {DropDownMessageService} from "../../../services/visuals/drop-down-message.service";
 import {RomanNumeralsHelper} from "../../../classes/helpers/roman-numerals-helper";
@@ -27,6 +27,7 @@ export class DarkStarChargerComponent {
   // FontAwesome icons
   faPlay = faPlay;
   faPause = faPause;
+  faArrowUp = faArrowUp;
 
   constructor(
     public cd: ChangeDetectorRef,
@@ -171,5 +172,20 @@ export class DarkStarChargerComponent {
 
   getTierRomanNumerals(): string {
     return RomanNumeralsHelper.convert(this.charger.tier.toNumber());
+  }
+
+  canTierUp(): boolean {
+    return this.charger.canTierUp();
+  }
+
+  tierUp(): void {
+    if (this.charger.canTierUp()) {
+      this.charger.tierUp();
+      this.dropDownMessageService.dropDown("Tier Up!", "Charger has been upgraded to the next tier.", 'success');
+    }
+  }
+
+  getTierMilestoneBoostDescription(): string {
+    return this.charger.getTierMilestoneBoostDescription();
   }
 }

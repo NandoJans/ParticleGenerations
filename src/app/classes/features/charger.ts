@@ -17,9 +17,43 @@ export abstract class Charger extends GameElement implements Resetable, Storable
   // Tier system
   tier: Num = new Num(1, 0);
   startTier: Num = new Num(1, 0);
-  abstract maxCharge: Num;
+  abstract baseMaxCharge: Num;
   abstract maxTier: Num | undefined;
   abstract canInfiniteChargeAtMaxTier: boolean;
+
+  /**
+   * Get the current max charge based on tier
+   * Override this method to implement custom tier scaling
+   */
+  get maxCharge(): Num {
+    return this.getMaxChargeForTier(this.tier);
+  }
+
+  /**
+   * Calculate max charge for a given tier
+   * Override this method to implement custom tier scaling
+   */
+  getMaxChargeForTier(tier: Num): Num {
+    return this.baseMaxCharge.copy();
+  }
+
+  /**
+   * Get the max charge for the previous tier (used in tier up calculations)
+   */
+  getPreviousTierMaxCharge(): Num {
+    if (this.tier.lte(new Num(1, 0))) {
+      return this.baseMaxCharge.copy();
+    }
+    return this.getMaxChargeForTier(this.tier.sub(new Num(1, 0)));
+  }
+
+  /**
+   * Get description of the milestone boost from tiering up
+   * Override this method to provide custom descriptions
+   */
+  getTierMilestoneBoostDescription(): string {
+    return '';
+  }
 
   buffer: Num = new Num(1, 0);
   baseBuffer: Num = new Num(1, 0);
@@ -84,12 +118,6 @@ export abstract class Charger extends GameElement implements Resetable, Storable
   abstract action(): undefined | Num;
 
   /**
-   * Apply a tier-based drawback to reduce the effectiveness of charge as tiers increase
-   * This prevents infinite scaling
-   */
-  abstract applyTierDrawback(chargeValue: Num): Num;
-
-  /**
    * Applies charge to the charger
    */
   protected applyCharge(amount: Num): void {
@@ -106,7 +134,7 @@ export abstract class Charger extends GameElement implements Resetable, Storable
   /**
    * Check if the charger can tier up
    */
-  protected canTierUp(): boolean {
+  canTierUp(): boolean {
     // Can't tier up if already at max tier
     if (this.isAtMaxTier()) {
       return false;
@@ -119,7 +147,7 @@ export abstract class Charger extends GameElement implements Resetable, Storable
   /**
    * Check if at maximum tier
    */
-  protected isAtMaxTier(): boolean {
+  isAtMaxTier(): boolean {
     if (this.maxTier === undefined) {
       return false;
     }
@@ -127,11 +155,16 @@ export abstract class Charger extends GameElement implements Resetable, Storable
   }
 
   /**
-   * Tier up the charger - reset charge and increase tier
+   * Tier up the charger - subtract current max charge from charge and increase tier
    */
-  protected tierUp(): void {
+  tierUp(): void {
     if (this.canTierUp()) {
-      this.charge = new Num(0, 0);
+      // Subtract the current max charge from the current charge
+      const currentMaxCharge = this.maxCharge;
+      this.charge = this.charge.sub(currentMaxCharge);
+      if (this.charge.lt(new Num(0, 0))) {
+        this.charge = new Num(0, 0);
+      }
       this.tier = this.tier.add(new Num(1, 0));
     }
   }
@@ -153,10 +186,10 @@ export abstract class Charger extends GameElement implements Resetable, Storable
   }
 
   /**
-   * Get the effective charge value after applying tier drawback
+   * Get the effective charge value for calculations
    */
   protected getEffectiveCharge(): Num {
-    return this.applyTierDrawback(this.charge);
+    return this.charge;
   }
 
   protected getTierChargeEffect(): Num {

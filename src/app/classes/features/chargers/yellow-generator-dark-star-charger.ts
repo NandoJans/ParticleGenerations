@@ -17,7 +17,7 @@ import {GeneratorRecord} from "../../records/generators/generator-record";
 export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
   displayName: string = 'Yellow Generator Charger';
   resetId: ResetKey = ResetKey.GREEN;
-  maxCharge: Num = new Num(100, 0);
+  baseMaxCharge: Num = new Num(100, 0);
   maxTier: Num | undefined = new Num(10, 0);
   canInfiniteChargeAtMaxTier: boolean = true;
   requirement: Requirement[] = [];
@@ -40,14 +40,6 @@ export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
     
     this.effect = effect;
     return effect;
-  }
-
-  applyTierDrawback(chargeValue: Num): Num {
-    // Reduce effectiveness with higher tiers
-    if (this.tier.equals(new Num(0, 0))) {
-      return chargeValue;
-    }
-    return chargeValue.pow(new Num(0.9, 0).pow(this.tier));
   }
 
   applyNerfs(): void {
