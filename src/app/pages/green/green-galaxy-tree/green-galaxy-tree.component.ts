@@ -107,7 +107,9 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
 
   private updateStars() {
     const purchasedCount = this.getPurchasedStarsCount();
-    const targetCount = purchasedCount * 3; // 1 to 3 ratio
+    // Start with a base of 150 stars, then add 3 more for each purchased upgrade
+    const baseStars = 150;
+    const targetCount = baseStars + (purchasedCount * 3);
     
     // Only regenerate if the count has changed
     if (this.stars.length !== targetCount) {
