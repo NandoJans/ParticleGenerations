@@ -14,6 +14,12 @@ export abstract class DarkStarCharger extends Charger {
   override run(speed: Num): void {
     // Runs charge logic and action logic.
     super.run(speed);
+
+    // If we've reached or exceeded max charge, try to tier up
+    if (this.charging && this.shouldCharge() && this.charge.greq(this.maxCharge)) {
+      this.tierUp();
+    }
+
     // Apply the nerf effects if active
     if (this.isNerfActive) {
       this.applyNerfs();

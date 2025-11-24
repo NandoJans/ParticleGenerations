@@ -33,7 +33,7 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
     // Calculate effect based on charge and apply to red accelerator upgrades
     const effectiveCharge = this.getEffectiveCharge();
     const effect = new Num(1, 0).add(effectiveCharge.div(new Num(10, 0)));
-    
+
     // Apply the power boost to red accelerator effect upgrades
     // This makes red accelerator upgrades more powerful
     this.effect = effect;
@@ -51,7 +51,7 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
   applyNerfs(): void {
     // Nerfs: Only square root of red accelerators are generated and have effect
     const power = new Num(0.5, 0);
-    
+
     MultiplierRecord.redAcceleratorGenerators.addLocalHook(
       this.name,
       (multiplier: Multiplier) => multiplier.power(power),
@@ -82,7 +82,7 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
 
   override init() {
     this.requirement = [
-      new Requirement(HoldingRecord.redParticles, new Num(1, 9999999999), this)
+      new Requirement(HoldingRecord.redAccelerators, new Num(1, 500_000), this)
     ]
   }
 }

@@ -21,7 +21,7 @@ export class DarkGalaxyChallenge extends Challenge {
     prestige: ResetKey = ResetKey.YELLOW
     prestigeLayer: string = 'green';
 
-    nerfPower: Num = new Num(1, -1)
+    nerfPower: Num = new Num(1.5, -1)
 
     override getRewardDescription(): string {
       return "Gather dark stars, their effect is reduced significantly inside the dark galaxy."
