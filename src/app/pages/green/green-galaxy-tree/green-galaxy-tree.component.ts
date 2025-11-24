@@ -54,6 +54,22 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
   private lastFrameTime: number = 0;
   private nebulaAnimationPhase: number = 0;
   private resizeHandler = this.resizeCanvases.bind(this);
+  
+  // Cache nebula brightness values to avoid recalculating on every render
+  private cachedNebulaBrightness = {
+    redGenerator: 0.1,
+    redAccelerator: 0.1,
+    yellow: 0.1,
+    fusion: 0.1
+  };
+  
+  // Define nebula region boundaries as constants for maintainability
+  private readonly NEBULA_REGIONS = {
+    redGenerator: { minX: 75, maxX: 375, minY: -100, maxY: 100 },
+    redAccelerator: { minX: -375, maxX: -75, minY: -100, maxY: 100 },
+    yellow: { minX: -150, maxX: 150, minY: -475, maxY: -75 },
+    fusion: { minX: -150, maxX: 150, minY: 75, maxY: 375 }
+  };
 
   bottomSectionOpen: boolean = true;
 
@@ -108,18 +124,43 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
 
   private updateStars() {
     const purchasedCount = this.getPurchasedStarsCount();
-    // Start with a base of 150 stars, then add 3 more for each purchased upgrade
-    const baseStars = 150;
+    // Start with a base of 0 stars, then add 3 more for each purchased upgrade
+    const baseStars = 0;
     const targetCount = baseStars + (purchasedCount * 3);
     
     // Only regenerate if the count has changed
     if (this.stars.length !== targetCount) {
       this.generateStars(targetCount);
     }
+    
+    // Update cached nebula brightness values when star count changes
+    this.updateNebulaBrightness();
   }
 
   private getPurchasedStarsCount(): number {
     return this.galaxyTreeService.getStars().filter(star => star.hasBought()).length;
+  }
+
+  private getPurchasedStarsInRegion(minX: number, maxX: number, minY: number, maxY: number): number {
+    return this.galaxyTreeService.getStars().filter(star => {
+      if (!star.hasBought()) return false;
+      const x = star.worldX;
+      const y = star.worldY;
+      return x >= minX && x <= maxX && y >= minY && y <= maxY;
+    }).length;
+  }
+  
+  private updateNebulaBrightness(): void {
+    // Calculate brightness for each nebula region and cache the values
+    const calculateBrightness = (region: { minX: number, maxX: number, minY: number, maxY: number }) => {
+      const purchased = this.getPurchasedStarsInRegion(region.minX, region.maxX, region.minY, region.maxY);
+      return Math.min(1.0, 0.1 + (purchased * 0.05));
+    };
+    
+    this.cachedNebulaBrightness.redGenerator = calculateBrightness(this.NEBULA_REGIONS.redGenerator);
+    this.cachedNebulaBrightness.redAccelerator = calculateBrightness(this.NEBULA_REGIONS.redAccelerator);
+    this.cachedNebulaBrightness.yellow = calculateBrightness(this.NEBULA_REGIONS.yellow);
+    this.cachedNebulaBrightness.fusion = calculateBrightness(this.NEBULA_REGIONS.fusion);
   }
 
   private generateStars(count: number) {
@@ -147,7 +188,7 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
     // Distribute stars across 3 layers
     const layer = (id % 3) + 1; // 1, 2, or 3
     
-    const size = 1 + seedRandom(id * 1.1) * 2;              // 1–3 px
+    const size = 0.5 + seedRandom(id * 1.1) * 1;            // 0.5–1.5 px (smaller, more dot-like)
     const duration = 5 + seedRandom(id * 2.2) * 7;           // 5–12 s
     const delay = seedRandom(id * 3.3) * 10;                 // 0–10 s
     
@@ -315,60 +356,66 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
     // Pre-calculate nebula animation value
     const nebulaSin = Math.sin(this.nebulaAnimationPhase * Math.PI * 2);
     
-    // Define nebula regions (matching original positions)
+    // Use cached brightness values instead of recalculating on every render
+    const redGenBrightness = this.cachedNebulaBrightness.redGenerator;
+    const redAccelBrightness = this.cachedNebulaBrightness.redAccelerator;
+    const yellowBrightness = this.cachedNebulaBrightness.yellow;
+    const fusionBrightness = this.cachedNebulaBrightness.fusion;
+    
+    // Define nebula regions with increased spacing and reduced initial brightness
     const nebulae = [
       {
-        // Red Generator Nebula
-        worldX: 225,   // Centered around x=125-325
-        worldY: 0,     // Centered around y=0
-        radius: 400 * this.scale,
-        colors: [
-          { stop: 0, r: 232, g: 59, b: 29, a: 0.4 },
-          { stop: 0.6, r: 255, g: 80, b: 50, a: 0.2 },
-          { stop: 1, r: 0, g: 0, b: 0, a: 0 }
-        ]
-      },
-      {
-        // Red Accelerator Nebula
-        worldX: -225,  // Centered around x=-125 to -325
+        // Red Generator Nebula - moved further right
+        worldX: 275,   // Moved from 225 to 275
         worldY: 0,
-        radius: 400 * this.scale,
+        radius: 350 * this.scale,  // Reduced from 400 to 350
         colors: [
-          { stop: 0, r: 180, g: 30, b: 20, a: 0.35 },
-          { stop: 0.6, r: 220, g: 50, b: 40, a: 0.2 },
+          { stop: 0, r: 232, g: 59, b: 29, a: 0.15 * redGenBrightness },    // Reduced from 0.4
+          { stop: 0.6, r: 255, g: 80, b: 50, a: 0.08 * redGenBrightness },  // Reduced from 0.2
           { stop: 1, r: 0, g: 0, b: 0, a: 0 }
         ]
       },
       {
-        // Yellow Nebula
-        worldX: 0,     // Centered around x=-75 to 125
-        worldY: -275,  // Centered around y=-125 to -425
-        radius: 450 * this.scale,
+        // Red Accelerator Nebula - moved further left
+        worldX: -275,  // Moved from -225 to -275
+        worldY: 0,
+        radius: 350 * this.scale,  // Reduced from 400 to 350
         colors: [
-          { stop: 0, r: 255, g: 216, b: 59, a: 0.4 },
-          { stop: 0.6, r: 255, g: 200, b: 100, a: 0.2 },
+          { stop: 0, r: 180, g: 30, b: 20, a: 0.12 * redAccelBrightness },  // Reduced from 0.35
+          { stop: 0.6, r: 220, g: 50, b: 40, a: 0.08 * redAccelBrightness }, // Reduced from 0.2
           { stop: 1, r: 0, g: 0, b: 0, a: 0 }
         ]
       },
       {
-        // Fusion Nebula (with color shift animation)
-        worldX: 0,     // Centered around x=-75 to 150
-        worldY: 225,   // Centered around y=125 to 325
-        radius: 425 * this.scale,
+        // Yellow Nebula - moved further up
+        worldX: 0,
+        worldY: -325,  // Moved from -275 to -325
+        radius: 400 * this.scale,  // Reduced from 450 to 400
+        colors: [
+          { stop: 0, r: 255, g: 216, b: 59, a: 0.15 * yellowBrightness },   // Reduced from 0.4
+          { stop: 0.6, r: 255, g: 200, b: 100, a: 0.08 * yellowBrightness }, // Reduced from 0.2
+          { stop: 1, r: 0, g: 0, b: 0, a: 0 }
+        ]
+      },
+      {
+        // Fusion Nebula - moved further down (with color shift animation)
+        worldX: 0,
+        worldY: 275,   // Moved from 225 to 275
+        radius: 375 * this.scale,  // Reduced from 425 to 375
         colors: [
           { 
             stop: 0, 
             r: 255, 
             g: 150 + nebulaSin * 30, 
             b: 51 + nebulaSin * 20, 
-            a: 0.45 
+            a: 0.18 * fusionBrightness  // Reduced from 0.45
           },
           { 
             stop: 0.6, 
             r: 255, 
             g: 180 + nebulaSin * 20, 
             b: 100 + nebulaSin * 10, 
-            a: 0.2 
+            a: 0.08 * fusionBrightness  // Reduced from 0.2
           },
           { stop: 1, r: 0, g: 0, b: 0, a: 0 }
         ]
