@@ -15,7 +15,7 @@ import {HoldingRecord} from "../../records/holdings/holding-record";
 export class CombineDarkStarCharger extends DarkStarCharger {
   displayName: string = 'Combine Charger';
   resetId: ResetKey = ResetKey.GREEN;
-  maxCharge: Num = new Num(100, 0);
+  baseMaxCharge: Num = new Num(100, 0);
   maxTier: Num | undefined = new Num(10, 0);
   canInfiniteChargeAtMaxTier: boolean = true;
   requirement: Requirement[] = [];

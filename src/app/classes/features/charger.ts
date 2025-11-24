@@ -17,9 +17,43 @@ export abstract class Charger extends GameElement implements Resetable, Storable
   // Tier system
   tier: Num = new Num(1, 0);
   startTier: Num = new Num(1, 0);
-  abstract maxCharge: Num;
+  abstract baseMaxCharge: Num;
   abstract maxTier: Num | undefined;
   abstract canInfiniteChargeAtMaxTier: boolean;
+
+  /**
+   * Get the current max charge based on tier
+   * Override this method to implement custom tier scaling
+   */
+  get maxCharge(): Num {
+    return this.getMaxChargeForTier(this.tier);
+  }
+
+  /**
+   * Calculate max charge for a given tier
+   * Override this method to implement custom tier scaling
+   */
+  getMaxChargeForTier(tier: Num): Num {
+    return this.baseMaxCharge.copy();
+  }
+
+  /**
+   * Get the max charge for the previous tier (used in tier up calculations)
+   */
+  getPreviousTierMaxCharge(): Num {
+    if (this.tier.lte(new Num(1, 0))) {
+      return this.baseMaxCharge.copy();
+    }
+    return this.getMaxChargeForTier(this.tier.sub(new Num(1, 0)));
+  }
+
+  /**
+   * Get description of the milestone boost from tiering up
+   * Override this method to provide custom descriptions
+   */
+  getTierMilestoneBoostDescription(): string {
+    return '';
+  }
 
   buffer: Num = new Num(1, 0);
   baseBuffer: Num = new Num(1, 0);
@@ -106,7 +140,7 @@ export abstract class Charger extends GameElement implements Resetable, Storable
   /**
    * Check if the charger can tier up
    */
-  protected canTierUp(): boolean {
+  canTierUp(): boolean {
     // Can't tier up if already at max tier
     if (this.isAtMaxTier()) {
       return false;
@@ -119,7 +153,7 @@ export abstract class Charger extends GameElement implements Resetable, Storable
   /**
    * Check if at maximum tier
    */
-  protected isAtMaxTier(): boolean {
+  isAtMaxTier(): boolean {
     if (this.maxTier === undefined) {
       return false;
     }
@@ -127,11 +161,16 @@ export abstract class Charger extends GameElement implements Resetable, Storable
   }
 
   /**
-   * Tier up the charger - reset charge and increase tier
+   * Tier up the charger - subtract previous max charge from charge and increase tier
    */
-  protected tierUp(): void {
+  tierUp(): void {
     if (this.canTierUp()) {
-      this.charge = new Num(0, 0);
+      // Subtract the current max charge (which becomes the previous tier's max charge after tier up)
+      const previousMaxCharge = this.maxCharge;
+      this.charge = this.charge.sub(previousMaxCharge);
+      if (this.charge.lt(new Num(0, 0))) {
+        this.charge = new Num(0, 0);
+      }
       this.tier = this.tier.add(new Num(1, 0));
     }
   }

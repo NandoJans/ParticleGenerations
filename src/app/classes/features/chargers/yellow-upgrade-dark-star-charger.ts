@@ -15,7 +15,7 @@ import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 export class YellowUpgradeDarkStarCharger extends DarkStarCharger {
   displayName: string = 'Yellow Upgrade Charger';
   resetId: ResetKey = ResetKey.GREEN;
-  maxCharge: Num = new Num(100, 0);
+  baseMaxCharge: Num = new Num(100, 0);
   maxTier: Num | undefined = new Num(10, 0);
   canInfiniteChargeAtMaxTier: boolean = true;
   requirement: Requirement[] = [];

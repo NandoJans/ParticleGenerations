@@ -7,7 +7,7 @@ import { Requirement } from '../interfaces/requirement';
 class TestDarkStarCharger extends DarkStarCharger {
   displayName: string = 'Test Dark Star Charger';
   resetId: ResetKey = ResetKey.NONE;
-  maxCharge: Num = new Num(100, 0);
+  baseMaxCharge: Num = new Num(100, 0);
   maxTier: Num | undefined = new Num(5, 0);
   canInfiniteChargeAtMaxTier: boolean = false;
   requirement: Requirement[] = [];

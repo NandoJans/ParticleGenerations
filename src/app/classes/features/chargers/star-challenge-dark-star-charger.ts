@@ -15,7 +15,7 @@ import {ChallengeRecord} from "../../records/challenges/challenge-record";
 export class StarChallengeDarkStarCharger extends DarkStarCharger {
   displayName: string = 'Star Challenge Charger';
   resetId: ResetKey = ResetKey.GREEN;
-  maxCharge: Num = new Num(100, 0);
+  baseMaxCharge: Num = new Num(100, 0);
   maxTier: Num | undefined = new Num(10, 0);
   canInfiniteChargeAtMaxTier: boolean = true;
   requirement: Requirement[] = [];

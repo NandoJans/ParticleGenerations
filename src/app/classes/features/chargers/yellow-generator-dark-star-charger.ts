@@ -17,7 +17,7 @@ import {GeneratorRecord} from "../../records/generators/generator-record";
 export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
   displayName: string = 'Yellow Generator Charger';
   resetId: ResetKey = ResetKey.GREEN;
-  maxCharge: Num = new Num(100, 0);
+  baseMaxCharge: Num = new Num(100, 0);
   maxTier: Num | undefined = new Num(10, 0);
   canInfiniteChargeAtMaxTier: boolean = true;
   requirement: Requirement[] = [];
