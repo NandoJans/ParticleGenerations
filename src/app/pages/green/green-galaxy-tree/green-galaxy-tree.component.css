@@ -239,6 +239,7 @@
   position: absolute;
   width: 10rem;
   transform: translate(-50%, -50%);
+  z-index: 3;
 }
 
 .connectors {
