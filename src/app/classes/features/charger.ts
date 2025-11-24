@@ -60,6 +60,8 @@ export abstract class Charger extends GameElement implements Resetable, Storable
         this.effect = effect;
       }
     }
+    if (this.tier.lt(this.startTier)) this.tier = this.startTier.copy();
+    if (this.charge.lt(this.startCharge)) this.charge = this.startCharge.copy();
   }
 
   /**
