@@ -53,6 +53,7 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
   private animationFrameId: number | null = null;
   private lastFrameTime: number = 0;
   private nebulaAnimationPhase: number = 0;
+  private resizeHandler = this.resizeCanvases.bind(this);
 
   bottomSectionOpen: boolean = true;
 
@@ -91,14 +92,14 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
     this.startAnimation();
     
     // Handle window resize
-    window.addEventListener('resize', this.resizeCanvases.bind(this));
+    window.addEventListener('resize', this.resizeHandler);
   }
 
   ngOnDestroy(): void {
     if (this.animationFrameId !== null) {
       cancelAnimationFrame(this.animationFrameId);
     }
-    window.removeEventListener('resize', this.resizeCanvases.bind(this));
+    window.removeEventListener('resize', this.resizeHandler);
   }
 
   getStars(): GalaxyTreeUpgrade[] {
@@ -181,7 +182,7 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
     // Set canvas sizes with device pixel ratio for sharp rendering
     const dpr = window.devicePixelRatio || 1;
     
-    [this.starCanvas1, this.starCanvas2, this.starCanvas3, this.nebulaCanvas].forEach((canvasRef, index) => {
+    [this.starCanvas1, this.starCanvas2, this.starCanvas3, this.nebulaCanvas].forEach((canvasRef) => {
       if (canvasRef?.nativeElement) {
         const canvas = canvasRef.nativeElement;
         canvas.width = width * dpr;
@@ -272,9 +273,15 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
       layerStars.forEach(star => {
         if (star.opacity <= 0) return;
         
-        // Calculate position with parallax
-        const x = (star.x / 100 * width + offsetX) % (width * 1.5);
-        const y = (star.y / 100 * height + offsetY) % (height * 1.5);
+        // Calculate position with parallax and wrap around
+        let x = (star.x / 100 * width + offsetX);
+        let y = (star.y / 100 * height + offsetY);
+        
+        // Wrap coordinates to create infinite scrolling effect
+        const wrapWidth = width * 1.5;
+        const wrapHeight = height * 1.5;
+        x = ((x % wrapWidth) + wrapWidth) % wrapWidth;
+        y = ((y % wrapHeight) + wrapHeight) % wrapHeight;
         
         // Create gradient for star glow
         const gradient = ctx.createRadialGradient(x, y, 0, x, y, star.size * 2);
@@ -304,6 +311,9 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
     // Calculate world-to-screen transform
     const worldToScreenX = (worldX: number) => worldX * this.scale + this.tx;
     const worldToScreenY = (worldY: number) => worldY * this.scale + this.ty;
+    
+    // Pre-calculate nebula animation value
+    const nebulaSin = Math.sin(this.nebulaAnimationPhase * Math.PI * 2);
     
     // Define nebula regions (matching original positions)
     const nebulae = [
@@ -349,15 +359,15 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
           { 
             stop: 0, 
             r: 255, 
-            g: 150 + Math.sin(this.nebulaAnimationPhase * Math.PI * 2) * 30, 
-            b: 51 + Math.sin(this.nebulaAnimationPhase * Math.PI * 2) * 20, 
+            g: 150 + nebulaSin * 30, 
+            b: 51 + nebulaSin * 20, 
             a: 0.45 
           },
           { 
             stop: 0.6, 
             r: 255, 
-            g: 180 + Math.sin(this.nebulaAnimationPhase * Math.PI * 2) * 20, 
-            b: 100 + Math.sin(this.nebulaAnimationPhase * Math.PI * 2) * 10, 
+            g: 180 + nebulaSin * 20, 
+            b: 100 + nebulaSin * 10, 
             a: 0.2 
           },
           { stop: 1, r: 0, g: 0, b: 0, a: 0 }
