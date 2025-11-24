@@ -58,15 +58,6 @@ export class RedGeneratorDarkStarCharger extends DarkStarCharger {
     return effect;
   }
 
-  applyTierDrawback(chargeValue: Num): Num {
-    // Apply tier-based drawback - reduce effectiveness as tiers increase
-    if (this.tier.lte(new Num(1, 0))) {
-      return chargeValue;
-    }
-    // Reduce charge effectiveness by dividing by (tier + 1)
-    return chargeValue.div(this.tier.add(new Num(1, 0)));
-  }
-
   applyNerfs(): void {
     // Nerfs applied:
     // 1. Red generator multipliers are raised to ^0.5

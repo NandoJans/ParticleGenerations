@@ -42,14 +42,6 @@ export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
     return effect;
   }
 
-  applyTierDrawback(chargeValue: Num): Num {
-    // Reduce effectiveness with higher tiers
-    if (this.tier.lte(new Num(1, 0))) {
-      return chargeValue;
-    }
-    return chargeValue.pow(new Num(0.9, 0).pow(this.tier));
-  }
-
   applyNerfs(): void {
     // Nerfs applied:
     // 1. Raise yellow generator multipliers to ^0.5

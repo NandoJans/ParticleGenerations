@@ -40,14 +40,6 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
     return effect;
   }
 
-  applyTierDrawback(chargeValue: Num): Num {
-    // Reduce effectiveness with higher tiers
-    if (this.tier.lte(new Num(1, 0))) {
-      return chargeValue;
-    }
-    return chargeValue.div(this.tier);
-  }
-
   applyNerfs(): void {
     // Nerfs: Only square root of red accelerators are generated and have effect
     const power = new Num(0.5, 0);

@@ -118,12 +118,6 @@ export abstract class Charger extends GameElement implements Resetable, Storable
   abstract action(): undefined | Num;
 
   /**
-   * Apply a tier-based drawback to reduce the effectiveness of charge as tiers increase
-   * This prevents infinite scaling
-   */
-  abstract applyTierDrawback(chargeValue: Num): Num;
-
-  /**
    * Applies charge to the charger
    */
   protected applyCharge(amount: Num): void {
@@ -192,10 +186,10 @@ export abstract class Charger extends GameElement implements Resetable, Storable
   }
 
   /**
-   * Get the effective charge value after applying tier drawback
+   * Get the effective charge value for calculations
    */
   protected getEffectiveCharge(): Num {
-    return this.applyTierDrawback(this.charge);
+    return this.charge;
   }
 
   protected getTierChargeEffect(): Num {

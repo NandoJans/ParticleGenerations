@@ -24,11 +24,6 @@ class TestCharger extends Charger {
   action(): undefined {
     this.effect = this['getEffectiveCharge']();
   }
-
-  applyTierDrawback(chargeValue: Num): Num {
-    // Simple drawback: divide by (tier + 1)
-    return chargeValue.div(this.tier.add(new Num(1, 0)));
-  }
 }
 
 describe('Charger', () => {
@@ -86,11 +81,11 @@ describe('Charger', () => {
     expect(charger.tier.toNumber()).toBe(1);
   });
 
-  it('should apply tier drawback to effective charge', () => {
+  it('should return effective charge equal to charge (no drawback)', () => {
     charger.charge = new Num(100, 0);
-    charger.tier = new Num(1, 0);
+    charger.tier = new Num(2, 0);
     const effectiveCharge = charger['getEffectiveCharge']();
-    expect(effectiveCharge.toNumber()).toBe(50); // 100 / (1 + 1)
+    expect(effectiveCharge.toNumber()).toBe(100); // No tier drawback anymore
   });
 
   it('should return max charge based on base max charge by default', () => {

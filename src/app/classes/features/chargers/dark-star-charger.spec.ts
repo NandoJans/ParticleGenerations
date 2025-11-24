@@ -22,10 +22,6 @@ class TestDarkStarCharger extends DarkStarCharger {
     this.effect = this.getEffectiveCharge();
   }
 
-  applyTierDrawback(chargeValue: Num): Num {
-    return chargeValue.div(this.tier.add(new Num(1, 0)));
-  }
-
   applyNerfs(): void {
     this.nerfsApplied = true;
   }

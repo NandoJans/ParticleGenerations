@@ -41,14 +41,6 @@ export class CombineDarkStarCharger extends DarkStarCharger {
     this.effect = new Num(1, 0).add(effectiveCharge.div(new Num(50, 0)));
   }
 
-  applyTierDrawback(chargeValue: Num): Num {
-    // Reduce effectiveness with higher tiers
-    if (this.tier.lte(new Num(1, 0))) {
-      return chargeValue;
-    }
-    return chargeValue.pow(new Num(0.95, 0).pow(this.tier));
-  }
-
   applyNerfs(): void {
     // No nerfs, but requires minimum active chargers based on tier
   }
