@@ -54,6 +54,22 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
   private lastFrameTime: number = 0;
   private nebulaAnimationPhase: number = 0;
   private resizeHandler = this.resizeCanvases.bind(this);
+  
+  // Cache nebula brightness values to avoid recalculating on every render
+  private cachedNebulaBrightness = {
+    redGenerator: 0.1,
+    redAccelerator: 0.1,
+    yellow: 0.1,
+    fusion: 0.1
+  };
+  
+  // Define nebula region boundaries as constants for maintainability
+  private readonly NEBULA_REGIONS = {
+    redGenerator: { minX: 75, maxX: 375, minY: -100, maxY: 100 },
+    redAccelerator: { minX: -375, maxX: -75, minY: -100, maxY: 100 },
+    yellow: { minX: -150, maxX: 150, minY: -475, maxY: -75 },
+    fusion: { minX: -150, maxX: 150, minY: 75, maxY: 375 }
+  };
 
   bottomSectionOpen: boolean = true;
 
@@ -116,6 +132,9 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
     if (this.stars.length !== targetCount) {
       this.generateStars(targetCount);
     }
+    
+    // Update cached nebula brightness values when star count changes
+    this.updateNebulaBrightness();
   }
 
   private getPurchasedStarsCount(): number {
@@ -129,6 +148,19 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
       const y = star.worldY;
       return x >= minX && x <= maxX && y >= minY && y <= maxY;
     }).length;
+  }
+  
+  private updateNebulaBrightness(): void {
+    // Calculate brightness for each nebula region and cache the values
+    const calculateBrightness = (region: { minX: number, maxX: number, minY: number, maxY: number }) => {
+      const purchased = this.getPurchasedStarsInRegion(region.minX, region.maxX, region.minY, region.maxY);
+      return Math.min(1.0, 0.1 + (purchased * 0.05));
+    };
+    
+    this.cachedNebulaBrightness.redGenerator = calculateBrightness(this.NEBULA_REGIONS.redGenerator);
+    this.cachedNebulaBrightness.redAccelerator = calculateBrightness(this.NEBULA_REGIONS.redAccelerator);
+    this.cachedNebulaBrightness.yellow = calculateBrightness(this.NEBULA_REGIONS.yellow);
+    this.cachedNebulaBrightness.fusion = calculateBrightness(this.NEBULA_REGIONS.fusion);
   }
 
   private generateStars(count: number) {
@@ -324,22 +356,11 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
     // Pre-calculate nebula animation value
     const nebulaSin = Math.sin(this.nebulaAnimationPhase * Math.PI * 2);
     
-    // Calculate brightness multipliers based on purchased stars in each region
-    // Red Generator region: x=75-375, y=-100-100
-    const redGenPurchased = this.getPurchasedStarsInRegion(75, 375, -100, 100);
-    const redGenBrightness = Math.min(1.0, 0.1 + (redGenPurchased * 0.05)); // Start at 0.1, max 1.0
-    
-    // Red Accelerator region: x=-375 to -75, y=-100-100
-    const redAccelPurchased = this.getPurchasedStarsInRegion(-375, -75, -100, 100);
-    const redAccelBrightness = Math.min(1.0, 0.1 + (redAccelPurchased * 0.05));
-    
-    // Yellow region: x=-150 to 150, y=-475 to -75
-    const yellowPurchased = this.getPurchasedStarsInRegion(-150, 150, -475, -75);
-    const yellowBrightness = Math.min(1.0, 0.1 + (yellowPurchased * 0.05));
-    
-    // Fusion region: x=-150 to 150, y=75 to 375
-    const fusionPurchased = this.getPurchasedStarsInRegion(-150, 150, 75, 375);
-    const fusionBrightness = Math.min(1.0, 0.1 + (fusionPurchased * 0.05));
+    // Use cached brightness values instead of recalculating on every render
+    const redGenBrightness = this.cachedNebulaBrightness.redGenerator;
+    const redAccelBrightness = this.cachedNebulaBrightness.redAccelerator;
+    const yellowBrightness = this.cachedNebulaBrightness.yellow;
+    const fusionBrightness = this.cachedNebulaBrightness.fusion;
     
     // Define nebula regions with increased spacing and reduced initial brightness
     const nebulae = [
