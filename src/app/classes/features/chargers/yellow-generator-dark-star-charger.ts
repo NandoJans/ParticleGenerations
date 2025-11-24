@@ -44,7 +44,7 @@ export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
 
   applyTierDrawback(chargeValue: Num): Num {
     // Reduce effectiveness with higher tiers
-    if (this.tier.equals(new Num(0, 0))) {
+    if (this.tier.lte(new Num(1, 0))) {
       return chargeValue;
     }
     return chargeValue.pow(new Num(0.9, 0).pow(this.tier));

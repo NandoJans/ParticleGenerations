@@ -38,7 +38,7 @@ export class RedGeneratorDarkStarCharger extends DarkStarCharger {
       return this.baseMaxCharge.copy();
     }
     // Max charge = baseMaxCharge * 10^(tier - 1)
-    const tierMultiplier = new Num(1, 1).pow(tier.sub(new Num(1, 0)));
+    const tierMultiplier = new Num(10, 0).pow(tier.sub(new Num(1, 0)));
     return this.baseMaxCharge.mul(tierMultiplier);
   }
 
@@ -60,7 +60,7 @@ export class RedGeneratorDarkStarCharger extends DarkStarCharger {
 
   applyTierDrawback(chargeValue: Num): Num {
     // Apply tier-based drawback - reduce effectiveness as tiers increase
-    if (this.tier.equals(new Num(0, 0))) {
+    if (this.tier.lte(new Num(1, 0))) {
       return chargeValue;
     }
     // Reduce charge effectiveness by dividing by (tier + 1)

@@ -161,13 +161,13 @@ export abstract class Charger extends GameElement implements Resetable, Storable
   }
 
   /**
-   * Tier up the charger - subtract previous max charge from charge and increase tier
+   * Tier up the charger - subtract current max charge from charge and increase tier
    */
   tierUp(): void {
     if (this.canTierUp()) {
-      // Subtract the current max charge (which becomes the previous tier's max charge after tier up)
-      const previousMaxCharge = this.maxCharge;
-      this.charge = this.charge.sub(previousMaxCharge);
+      // Subtract the current max charge from the current charge
+      const currentMaxCharge = this.maxCharge;
+      this.charge = this.charge.sub(currentMaxCharge);
       if (this.charge.lt(new Num(0, 0))) {
         this.charge = new Num(0, 0);
       }
