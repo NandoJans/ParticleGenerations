@@ -3,6 +3,8 @@ import {Num} from "../../../num";
 import {ResetKey} from "../../enums/reset-key";
 import {Requirement} from "../interfaces/requirement";
 import {HoldingRecord} from "../../records/holdings/holding-record";
+import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {Multiplier} from "../multiplier";
 
 /**
  * Star Key Dark Star Charger
@@ -21,16 +23,22 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
   name: string = 'star-key-dark-star-charger';
 
   getChargeAmount(): Num {
-    // Charge based on star keys
+    // Charge based on star keys - only increases
     const starKeys = HoldingRecord.starKeys;
     const chargeAmount = starKeys.amount.log10();
-    return chargeAmount.gt(new Num(0, 0)) ? chargeAmount : new Num(0, 0);
+    return chargeAmount.gt(this.charge) ? chargeAmount : this.charge;
   }
 
-  action(): undefined {
-    // Calculate yellow key-gain boost
+  action(): Num {
+    // Calculate and apply yellow key-gain boost
     const effectiveCharge = this.getEffectiveCharge();
-    this.effect = new Num(10, 0).pow(effectiveCharge);
+    const effect = new Num(10, 0).pow(effectiveCharge);
+    
+    // Apply the multiplier to yellow key gain
+    MultiplierRecord.yellowKeyGain.correct(effect);
+    
+    this.effect = effect;
+    return effect;
   }
 
   applyTierDrawback(chargeValue: Num): Num {
@@ -41,15 +49,27 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
     return chargeValue.div(this.tier);
   }
 
+  private originalStarKeyBuffer: Num | undefined;
+
   applyNerfs(): void {
     // Star key multiplies star key power by 0.95 instead of normal value
-    // This nerf is applied in the star key power calculation
-    // The nerf state is tracked by isNerfActive flag
+    const starKeys = HoldingRecord.starKeys;
+    
+    // Store original buffer if not already stored
+    if (!this.originalStarKeyBuffer) {
+      this.originalStarKeyBuffer = starKeys.buffer.copy();
+    }
+    
+    // Reduce star key power by multiplying buffer by 0.95
+    starKeys.buffer = starKeys.buffer.mul(new Num(0.95, 0));
   }
 
   revertNerfs(): void {
     // Restore normal star key power multiplier
-    // Star key power returns to normal operation
+    const starKeys = HoldingRecord.starKeys;
+    if (this.originalStarKeyBuffer) {
+      starKeys.buffer = this.originalStarKeyBuffer.copy();
+    }
   }
 
   getNerfDescription(): string {

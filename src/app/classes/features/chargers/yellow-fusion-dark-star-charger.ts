@@ -3,6 +3,8 @@ import {Num} from "../../../num";
 import {ResetKey} from "../../enums/reset-key";
 import {Requirement} from "../interfaces/requirement";
 import {HoldingRecord} from "../../records/holdings/holding-record";
+import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {Multiplier} from "../multiplier";
 
 /**
  * Yellow Fusion Dark Star Charger
@@ -21,19 +23,24 @@ export class YellowFusionDarkStarCharger extends DarkStarCharger {
   name: string = 'yellow-fusion-dark-star-charger';
 
   getChargeAmount(): Num {
-    // Charge based on fusion amount * fusion booster accelerations
+    // Charge based on fusion amount - only increases
     const yellowFusion = HoldingRecord.yellowFusion;
-    // Assuming fusion booster accelerations is a property - adjust as needed
     const fusionAmount = yellowFusion.amount;
 
     const chargeAmount = fusionAmount.log10();
-    return chargeAmount.gt(new Num(0, 0)) ? chargeAmount : new Num(0, 0);
+    return chargeAmount.gt(this.charge) ? chargeAmount : this.charge;
   }
 
-  action(): undefined {
-    // Calculate hydrogen generation speed boost
+  action(): Num {
+    // Calculate and apply hydrogen generation speed boost
     const effectiveCharge = this.getEffectiveCharge();
-    this.effect = new Num(1, 0).add(effectiveCharge.mul(new Num(0.1, 0)));
+    const effect = new Num(1, 0).add(effectiveCharge.mul(new Num(0.1, 0)));
+    
+    // Apply the multiplier to hydrogen generators
+    MultiplierRecord.hydrogenGenerators.correct(effect);
+    
+    this.effect = effect;
+    return effect;
   }
 
   applyTierDrawback(chargeValue: Num): Num {
@@ -44,15 +51,38 @@ export class YellowFusionDarkStarCharger extends DarkStarCharger {
     return chargeValue.div(this.tier.sqrt());
   }
 
+  private originalMaxAmount: Num | undefined;
+
   applyNerfs(): void {
     // Decrease yellow fusion limit to 6e66
-    // This nerf is applied in the yellow fusion limit calculation
-    // The nerf state is tracked by isNerfActive flag
+    const yellowFusion = HoldingRecord.yellowFusion;
+    
+    // Store original max amount if not already stored
+    if (!this.originalMaxAmount) {
+      this.originalMaxAmount = yellowFusion.maxAmount.copy();
+    }
+    
+    // Set reduced max amount
+    yellowFusion.maxAmount = new Num(6, 66);
+    
+    // Apply hydrogen generation nerf
+    const hydrogenPower = new Num(0.5, 0);
+    MultiplierRecord.hydrogenGenerators.addLocalHook(
+      this.name,
+      (multiplier: Multiplier) => multiplier.power(hydrogenPower),
+      true
+    );
   }
 
   revertNerfs(): void {
     // Restore original yellow fusion limit
-    // Yellow fusion returns to normal operation
+    const yellowFusion = HoldingRecord.yellowFusion;
+    if (this.originalMaxAmount) {
+      yellowFusion.maxAmount = this.originalMaxAmount.copy();
+    }
+    
+    // Remove hydrogen generation nerf
+    delete MultiplierRecord.hydrogenGenerators.localHooks[this.name];
   }
 
   getNerfDescription(): string {

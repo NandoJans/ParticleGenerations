@@ -3,6 +3,7 @@ import {Num} from "../../../num";
 import {ResetKey} from "../../enums/reset-key";
 import {Requirement} from "../interfaces/requirement";
 import {HoldingRecord} from "../../records/holdings/holding-record";
+import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 
 /**
  * Yellow Upgrade Dark Star Charger
@@ -21,15 +22,23 @@ export class YellowUpgradeDarkStarCharger extends DarkStarCharger {
   name: string = 'yellow-upgrade-dark-star-charger';
 
   getChargeAmount(): Num {
-    // Charge based on yellow particles amount
+    // Charge based on yellow particles amount - only increases
     const yellowParticles = HoldingRecord.yellowParticles;
     const chargeAmount = yellowParticles.amount.log10();
-    return chargeAmount.gt(new Num(0, 0)) ? chargeAmount : new Num(0, 0);
+    return chargeAmount.gt(this.charge) ? chargeAmount : this.charge;
   }
-  action(): undefined {
-    // Calculate green keys gained based on effective charge
+  action(): Num {
+    // Calculate and grant green keys based on effective charge
     const effectiveCharge = this.getEffectiveCharge();
-    this.effect = effectiveCharge.pow(new Num(2, 0));
+    const effect = effectiveCharge.pow(new Num(2, 0));
+    
+    // Grant green keys (green particles) as the reward
+    if (effect.gt(new Num(0, 0))) {
+      HoldingRecord.greenParticles.amount = HoldingRecord.greenParticles.amount.add(effect);
+    }
+    
+    this.effect = effect;
+    return effect;
   }
 
   applyTierDrawback(chargeValue: Num): Num {
@@ -42,13 +51,14 @@ export class YellowUpgradeDarkStarCharger extends DarkStarCharger {
 
   applyNerfs(): void {
     // Disable all yellow upgrades
-    // The nerf state is tracked by isNerfActive flag
-    // Yellow upgrade logic checks this charger's state to disable upgrades
+    UpgradeRecord.yellowUpgradeList.forEach(upgrade => upgrade.disable());
+    UpgradeRecord.postBreakYellowUpgradeList.forEach(upgrade => upgrade.disable());
   }
 
   revertNerfs(): void {
     // Re-enable yellow upgrades
-    // Yellow upgrades return to normal functionality
+    UpgradeRecord.yellowUpgradeList.forEach(upgrade => upgrade.enable());
+    UpgradeRecord.postBreakYellowUpgradeList.forEach(upgrade => upgrade.enable());
   }
 
   getNerfDescription(): string {

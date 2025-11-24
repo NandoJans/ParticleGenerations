@@ -3,6 +3,8 @@ import {Num} from "../../../num";
 import {ResetKey} from "../../enums/reset-key";
 import {Requirement} from "../interfaces/requirement";
 import {HoldingRecord} from "../../records/holdings/holding-record";
+import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {Multiplier} from "../multiplier";
 
 /**
  * Red Accelerator Dark Star Charger
@@ -21,16 +23,21 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
   name: string = 'red-accelerator-dark-star-charger';
 
   getChargeAmount(): Num {
-    // Charge based on red accelerators gained
+    // Charge based on red accelerators gained - only increases
     const redAccelerators = HoldingRecord.redAccelerators;
     const chargeAmount = redAccelerators.amount.log10();
-    return chargeAmount.gt(new Num(0, 0)) ? chargeAmount : new Num(0, 0);
+    return chargeAmount.gt(this.charge) ? chargeAmount : this.charge;
   }
 
-  action(): undefined {
-    // Calculate effect based on charge
+  action(): Num {
+    // Calculate effect based on charge and apply to red accelerator upgrades
     const effectiveCharge = this.getEffectiveCharge();
-    this.effect = new Num(1, 0).add(effectiveCharge.div(new Num(10, 0)));
+    const effect = new Num(1, 0).add(effectiveCharge.div(new Num(10, 0)));
+    
+    // Apply the power boost to red accelerator effect upgrades
+    // This makes red accelerator upgrades more powerful
+    this.effect = effect;
+    return effect;
   }
 
   applyTierDrawback(chargeValue: Num): Num {
@@ -43,13 +50,18 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
 
   applyNerfs(): void {
     // Nerfs: Only square root of red accelerators are generated and have effect
-    // This nerf is applied in the red accelerator generation and effect calculation
-    // The nerf state is tracked by isNerfActive flag
+    const power = new Num(0.5, 0);
+    
+    MultiplierRecord.redAcceleratorGenerators.addLocalHook(
+      this.name,
+      (multiplier: Multiplier) => multiplier.power(power),
+      true
+    );
   }
 
   revertNerfs(): void {
     // Revert the square root nerfs
-    // Red accelerators return to normal generation and effect
+    delete MultiplierRecord.redAcceleratorGenerators.localHooks[this.name];
   }
 
   getNerfDescription(): string {

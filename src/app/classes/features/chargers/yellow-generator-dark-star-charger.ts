@@ -3,6 +3,9 @@ import {Num} from "../../../num";
 import {ResetKey} from "../../enums/reset-key";
 import {Requirement} from "../interfaces/requirement";
 import {HoldingRecord} from "../../records/holdings/holding-record";
+import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {Multiplier} from "../multiplier";
+import {GeneratorRecord} from "../../records/generators/generator-record";
 
 /**
  * Yellow Generator Dark Star Charger
@@ -21,16 +24,22 @@ export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
   name: string = 'yellow-generator-dark-star-charger';
 
   getChargeAmount(): Num {
-    // Charge based on yellow power
+    // Charge based on yellow power - only increases
     const yellowPower = HoldingRecord.yellowPower;
     const chargeAmount = yellowPower.amount.log10();
-    return chargeAmount.gt(new Num(0, 0)) ? chargeAmount : new Num(0, 0);
+    return chargeAmount.gt(this.charge) ? chargeAmount : this.charge;
   }
 
-  action(): undefined {
-    // Calculate massive static multiplier based on effective charge
+  action(): Num {
+    // Calculate and apply massive static multiplier to yellow generators
     const effectiveCharge = this.getEffectiveCharge();
-    this.effect = new Num(10, 0).pow(effectiveCharge);
+    const effect = new Num(10, 0).pow(effectiveCharge);
+    
+    // Apply the multiplier to yellow generators
+    MultiplierRecord.yellowGenerators.correct(effect);
+    
+    this.effect = effect;
+    return effect;
   }
 
   applyTierDrawback(chargeValue: Num): Num {
@@ -44,15 +53,30 @@ export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
   applyNerfs(): void {
     // Nerfs applied:
     // 1. Raise yellow generator multipliers to ^0.5
+    const power = new Num(0.5, 0);
+    
+    MultiplierRecord.yellowGenerators.addLocalHook(
+      this.name,
+      (multiplier: Multiplier) => multiplier.power(power),
+      true
+    );
+    
     // 2. Decrease active generators based on tier, starting with 5
-    // These nerfs are applied in the yellow generator calculation logic
-    // The nerf state is tracked by isNerfActive flag
+    if (this.tier.greq(new Num(1, 0))) GeneratorRecord.fifthYellowGenerator.disable();
+    if (this.tier.greq(new Num(2, 0))) GeneratorRecord.fourthYellowGenerator.disable();
+    if (this.tier.greq(new Num(3, 0))) GeneratorRecord.thirdYellowGenerator.disable();
+    if (this.tier.greq(new Num(4, 0))) GeneratorRecord.secondYellowGenerator.disable();
   }
 
   revertNerfs(): void {
     // Revert yellow generator multiplier nerf
+    delete MultiplierRecord.yellowGenerators.localHooks[this.name];
+    
     // Restore full active generator count
-    // Yellow generators return to normal operation
+    GeneratorRecord.fifthYellowGenerator.enable();
+    GeneratorRecord.fourthYellowGenerator.enable();
+    GeneratorRecord.thirdYellowGenerator.enable();
+    GeneratorRecord.secondYellowGenerator.enable();
   }
 
   getNerfDescription(): string {

@@ -22,19 +22,25 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
   name: string = 'star-challenge-dark-star-charger';
 
   getChargeAmount(): Num {
-    // Charge based on total completions and red particles from sirius
+    // Charge based on total completions and red particles from sirius - only increases
     const siriusStar = ChallengeRecord.siriusStar;
     const totalCompletions = siriusStar.completed instanceof Num ? siriusStar.completed : new Num(0, 0);
     const redParticles = HoldingRecord.redParticles;
 
     const chargeAmount = totalCompletions.mul(redParticles.amount.log10());
-    return chargeAmount.gt(new Num(0, 0)) ? chargeAmount : new Num(0, 0);
+    return chargeAmount.gt(this.charge) ? chargeAmount : this.charge;
   }
 
-  action(): undefined {
+  action(): Num {
     // Calculate unlock/increase of Rigel challenge max completions
     const effectiveCharge = this.getEffectiveCharge();
-    this.effect = effectiveCharge.floor();
+    const effect = effectiveCharge.floor();
+    
+    // TODO: Apply to Rigel challenge when it's implemented
+    // For now, just track the effect value
+    
+    this.effect = effect;
+    return effect;
   }
 
   applyTierDrawback(chargeValue: Num): Num {
@@ -45,18 +51,64 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
     return chargeValue.div(this.tier.add(new Num(1, 0)));
   }
 
+  private originalDifficulties: Map<string, Num | Num[]> = new Map();
+
   applyNerfs(): void {
     // Nerfs applied:
     // 1. Make star challenges way harder without rewards
     // 2. Prevent sun and sirius particles from being generated
-    // These nerfs are applied in the star challenge and particle generation logic
-    // The nerf state is tracked by isNerfActive flag
+    // Store original difficulties and increase them
+    const challenges = [
+      ChallengeRecord.proximaCentauriStar,
+      ChallengeRecord.lalandeStar,
+      ChallengeRecord.sunStar,
+      ChallengeRecord.siriusStar
+    ];
+    
+    challenges.forEach(challenge => {
+      // Store original difficulty
+      if (!this.originalDifficulties.has(challenge.name)) {
+        if (challenge.difficultyIncrease instanceof Num) {
+          this.originalDifficulties.set(challenge.name, challenge.difficultyIncrease.copy());
+        } else if (Array.isArray(challenge.difficultyIncrease)) {
+          this.originalDifficulties.set(challenge.name, challenge.difficultyIncrease.map(n => n.copy()));
+        } else {
+          this.originalDifficulties.set(challenge.name, new Num(1, 0));
+        }
+      }
+      
+      // Increase difficulty by 10x
+      // Note: Using 'as any' to bypass TypeScript type narrowing issues with union types
+      const currentDifficulty = challenge.difficultyIncrease;
+      if (currentDifficulty instanceof Num) {
+        (challenge as any).difficultyIncrease = currentDifficulty.mul(new Num(10, 0));
+      } else if (Array.isArray(currentDifficulty)) {
+        (challenge as any).difficultyIncrease = currentDifficulty.map(n => n.mul(new Num(10, 0)));
+      }
+    });
   }
 
   revertNerfs(): void {
     // Restore star challenge difficulty and rewards
-    // Re-enable sun and sirius particle generation
-    // Challenges return to normal operation
+    const challenges = [
+      ChallengeRecord.proximaCentauriStar,
+      ChallengeRecord.lalandeStar,
+      ChallengeRecord.sunStar,
+      ChallengeRecord.siriusStar
+    ];
+    
+    challenges.forEach(challenge => {
+      // Restore original difficulty
+      // Note: Using 'as any' to bypass TypeScript type narrowing issues with union types
+      const originalDifficulty = this.originalDifficulties.get(challenge.name);
+      if (originalDifficulty !== undefined) {
+        if (originalDifficulty instanceof Num) {
+          (challenge as any).difficultyIncrease = originalDifficulty.copy();
+        } else if (Array.isArray(originalDifficulty)) {
+          (challenge as any).difficultyIncrease = originalDifficulty.map(n => n.copy());
+        }
+      }
+    });
   }
 
   getNerfDescription(): string {
