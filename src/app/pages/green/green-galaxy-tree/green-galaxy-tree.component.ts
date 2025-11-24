@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild, AfterViewInit, OnDestroy} from '@angular/core';
 import {Upgrade} from "../../../classes/features/upgrade";
 import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
 import {Holding} from "../../../classes/features/holding";
@@ -11,12 +11,14 @@ import {Styles} from "../../../classes/enums/styles";
 
 interface Star {
   id: number;
-  top: string;
-  left: string;
+  x: number;       // Position as percentage (0-100)
+  y: number;       // Position as percentage (0-100)
   size: number;
   duration: number;
   delay: number;
-  layer: number; // 1 = far (slow), 2 = mid, 3 = near (fast)
+  layer: number;   // 1 = far (slow), 2 = mid, 3 = near (fast)
+  opacity: number; // Current opacity for animation
+  phase: number;   // Current phase in animation cycle (0-1)
 }
 
 @Component({
@@ -25,7 +27,7 @@ interface Star {
   styleUrls: ['./green-galaxy-tree.component.css'],
   standalone: false
 })
-export class GreenGalaxyTreeComponent implements OnInit {
+export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestroy {
   darkEnergy: Holding = HoldingRecord.darkEnergy;
   upgrades: Upgrade[] = [
     UpgradeRecord.redParticleSacrifice,
@@ -42,8 +44,15 @@ export class GreenGalaxyTreeComponent implements OnInit {
     'This is the endgame content - master the galaxy tree to achieve maximum power!'
   ]
   @ViewChild('galaxyTreeWrapper') galaxyTreeWrapper!: ElementRef;
+  @ViewChild('starCanvas1') starCanvas1!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('starCanvas2') starCanvas2!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('starCanvas3') starCanvas3!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('nebulaCanvas') nebulaCanvas!: ElementRef<HTMLCanvasElement>;
 
   stars: Star[] = [];
+  private animationFrameId: number | null = null;
+  private lastFrameTime: number = 0;
+  private nebulaAnimationPhase: number = 0;
 
   bottomSectionOpen: boolean = true;
 
@@ -75,6 +84,21 @@ export class GreenGalaxyTreeComponent implements OnInit {
     setInterval(() => {
       this.updateStars();
     }, 1000);
+  }
+
+  ngAfterViewInit(): void {
+    this.resizeCanvases();
+    this.startAnimation();
+    
+    // Handle window resize
+    window.addEventListener('resize', this.resizeCanvases.bind(this));
+  }
+
+  ngOnDestroy(): void {
+    if (this.animationFrameId !== null) {
+      cancelAnimationFrame(this.animationFrameId);
+    }
+    window.removeEventListener('resize', this.resizeCanvases.bind(this));
   }
 
   getStars(): GalaxyTreeUpgrade[] {
@@ -126,12 +150,14 @@ export class GreenGalaxyTreeComponent implements OnInit {
     
     return {
       id,
-      top: `${seedRandom(id * 4.4) * 100}%`,
-      left: `${seedRandom(id * 5.5) * 100}%`,
+      x: seedRandom(id * 4.4) * 100,        // 0-100%
+      y: seedRandom(id * 5.5) * 100,        // 0-100%
       size,
       duration,
       delay,
-      layer
+      layer,
+      opacity: 0,
+      phase: delay / duration  // Start at delay phase
     };
   }
 
@@ -141,6 +167,240 @@ export class GreenGalaxyTreeComponent implements OnInit {
 
   getStarsByLayer(layer: number): Star[] {
     return this.stars.filter(star => star.layer === layer);
+  }
+
+  private resizeCanvases(): void {
+    if (!this.galaxyTreeWrapper) return;
+    
+    const rect = this.galaxyTreeWrapper.nativeElement.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    
+    // Set canvas sizes with device pixel ratio for sharp rendering
+    const dpr = window.devicePixelRatio || 1;
+    
+    [this.starCanvas1, this.starCanvas2, this.starCanvas3, this.nebulaCanvas].forEach((canvasRef, index) => {
+      if (canvasRef?.nativeElement) {
+        const canvas = canvasRef.nativeElement;
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${height}px`;
+        
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.scale(dpr, dpr);
+        }
+      }
+    });
+    
+    // Re-render nebula after resize
+    this.renderNebula();
+  }
+
+  private startAnimation(): void {
+    const animate = (currentTime: number) => {
+      if (this.lastFrameTime === 0) {
+        this.lastFrameTime = currentTime;
+      }
+      
+      const deltaTime = (currentTime - this.lastFrameTime) / 1000; // Convert to seconds
+      this.lastFrameTime = currentTime;
+      
+      this.updateStarAnimations(deltaTime);
+      this.updateNebulaAnimation(deltaTime);
+      this.renderStars();
+      this.renderNebula();
+      
+      this.animationFrameId = requestAnimationFrame(animate);
+    };
+    
+    this.animationFrameId = requestAnimationFrame(animate);
+  }
+
+  private updateNebulaAnimation(deltaTime: number): void {
+    // Slowly cycle the nebula animation (8 second cycle like CSS)
+    this.nebulaAnimationPhase = (this.nebulaAnimationPhase + deltaTime / 8) % 1;
+  }
+
+  private updateStarAnimations(deltaTime: number): void {
+    this.stars.forEach(star => {
+      // Update phase (0 to 1 cycle)
+      star.phase = (star.phase + deltaTime / star.duration) % 1;
+      
+      // Calculate opacity based on phase
+      // 0-0.4: fade in
+      // 0.4-0.6: stay bright
+      // 0.6-1.0: fade out
+      if (star.phase < 0.4) {
+        star.opacity = star.phase / 0.4;
+      } else if (star.phase < 0.6) {
+        star.opacity = 1;
+      } else {
+        star.opacity = 1 - ((star.phase - 0.6) / 0.4);
+      }
+    });
+  }
+
+  private renderStars(): void {
+    const canvases = [
+      { canvas: this.starCanvas1, layer: 1, parallax: 0.1, opacity: 0.6 },
+      { canvas: this.starCanvas2, layer: 2, parallax: 0.3, opacity: 0.8 },
+      { canvas: this.starCanvas3, layer: 3, parallax: 0.5, opacity: 1.0 }
+    ];
+
+    canvases.forEach(({ canvas, layer, parallax, opacity }) => {
+      if (!canvas?.nativeElement) return;
+      
+      const ctx = canvas.nativeElement.getContext('2d');
+      if (!ctx) return;
+      
+      const width = canvas.nativeElement.width / (window.devicePixelRatio || 1);
+      const height = canvas.nativeElement.height / (window.devicePixelRatio || 1);
+      
+      // Clear canvas
+      ctx.clearRect(0, 0, width, height);
+      
+      // Calculate parallax offset
+      const offsetX = this.tx * parallax;
+      const offsetY = this.ty * parallax;
+      
+      // Draw stars for this layer
+      const layerStars = this.getStarsByLayer(layer);
+      layerStars.forEach(star => {
+        if (star.opacity <= 0) return;
+        
+        // Calculate position with parallax
+        const x = (star.x / 100 * width + offsetX) % (width * 1.5);
+        const y = (star.y / 100 * height + offsetY) % (height * 1.5);
+        
+        // Create gradient for star glow
+        const gradient = ctx.createRadialGradient(x, y, 0, x, y, star.size * 2);
+        gradient.addColorStop(0, `rgba(255, 255, 255, ${star.opacity * opacity})`);
+        gradient.addColorStop(0.5, `rgba(201, 255, 230, ${star.opacity * opacity * 0.5})`);
+        gradient.addColorStop(1, 'transparent');
+        
+        ctx.fillStyle = gradient;
+        ctx.fillRect(x - star.size * 2, y - star.size * 2, star.size * 4, star.size * 4);
+      });
+    });
+  }
+
+  private renderNebula(): void {
+    if (!this.nebulaCanvas?.nativeElement) return;
+    
+    const canvas = this.nebulaCanvas.nativeElement;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    
+    const width = canvas.width / (window.devicePixelRatio || 1);
+    const height = canvas.height / (window.devicePixelRatio || 1);
+    
+    // Clear canvas
+    ctx.clearRect(0, 0, width, height);
+    
+    // Calculate world-to-screen transform
+    const worldToScreenX = (worldX: number) => worldX * this.scale + this.tx;
+    const worldToScreenY = (worldY: number) => worldY * this.scale + this.ty;
+    
+    // Define nebula regions (matching original positions)
+    const nebulae = [
+      {
+        // Red Generator Nebula
+        worldX: 225,   // Centered around x=125-325
+        worldY: 0,     // Centered around y=0
+        radius: 400 * this.scale,
+        colors: [
+          { stop: 0, r: 232, g: 59, b: 29, a: 0.4 },
+          { stop: 0.6, r: 255, g: 80, b: 50, a: 0.2 },
+          { stop: 1, r: 0, g: 0, b: 0, a: 0 }
+        ]
+      },
+      {
+        // Red Accelerator Nebula
+        worldX: -225,  // Centered around x=-125 to -325
+        worldY: 0,
+        radius: 400 * this.scale,
+        colors: [
+          { stop: 0, r: 180, g: 30, b: 20, a: 0.35 },
+          { stop: 0.6, r: 220, g: 50, b: 40, a: 0.2 },
+          { stop: 1, r: 0, g: 0, b: 0, a: 0 }
+        ]
+      },
+      {
+        // Yellow Nebula
+        worldX: 0,     // Centered around x=-75 to 125
+        worldY: -275,  // Centered around y=-125 to -425
+        radius: 450 * this.scale,
+        colors: [
+          { stop: 0, r: 255, g: 216, b: 59, a: 0.4 },
+          { stop: 0.6, r: 255, g: 200, b: 100, a: 0.2 },
+          { stop: 1, r: 0, g: 0, b: 0, a: 0 }
+        ]
+      },
+      {
+        // Fusion Nebula (with color shift animation)
+        worldX: 0,     // Centered around x=-75 to 150
+        worldY: 225,   // Centered around y=125 to 325
+        radius: 425 * this.scale,
+        colors: [
+          { 
+            stop: 0, 
+            r: 255, 
+            g: 150 + Math.sin(this.nebulaAnimationPhase * Math.PI * 2) * 30, 
+            b: 51 + Math.sin(this.nebulaAnimationPhase * Math.PI * 2) * 20, 
+            a: 0.45 
+          },
+          { 
+            stop: 0.6, 
+            r: 255, 
+            g: 180 + Math.sin(this.nebulaAnimationPhase * Math.PI * 2) * 20, 
+            b: 100 + Math.sin(this.nebulaAnimationPhase * Math.PI * 2) * 10, 
+            a: 0.2 
+          },
+          { stop: 1, r: 0, g: 0, b: 0, a: 0 }
+        ]
+      }
+    ];
+    
+    // Set blend mode for nebula effect
+    ctx.globalCompositeOperation = 'screen';
+    
+    nebulae.forEach(nebula => {
+      const screenX = worldToScreenX(nebula.worldX);
+      const screenY = worldToScreenY(nebula.worldY);
+      
+      // Only render if nebula is somewhat visible on screen
+      if (screenX + nebula.radius < 0 || screenX - nebula.radius > width ||
+          screenY + nebula.radius < 0 || screenY - nebula.radius > height) {
+        return;
+      }
+      
+      const gradient = ctx.createRadialGradient(
+        screenX, screenY, 0,
+        screenX, screenY, nebula.radius
+      );
+      
+      nebula.colors.forEach(color => {
+        gradient.addColorStop(
+          color.stop,
+          `rgba(${Math.round(color.r)}, ${Math.round(color.g)}, ${Math.round(color.b)}, ${color.a})`
+        );
+      });
+      
+      ctx.fillStyle = gradient;
+      ctx.filter = 'blur(80px)';
+      ctx.fillRect(
+        screenX - nebula.radius,
+        screenY - nebula.radius,
+        nebula.radius * 2,
+        nebula.radius * 2
+      );
+      ctx.filter = 'none';
+    });
+    
+    // Reset blend mode
+    ctx.globalCompositeOperation = 'source-over';
   }
 
   private setPositions() {
