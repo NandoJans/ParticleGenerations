@@ -62,7 +62,10 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
     const multipliedEffect = baseEffect.mul(RedAcceleratorDarkStarCharger.staticMultiplier);
 
     // Raise to the power of tier amount (0.5 * tier + 0.5)
-    const effect = multipliedEffect.pow(new Num(0.5, 0).mul(this.tier).add(new Num(0.5, 0)));
+    const tierEffect = multipliedEffect.pow(new Num(0.5, 0).mul(this.tier).add(new Num(0.5, 0)));
+
+    // Apply shared tier boost from all charger tiers
+    const effect = this.applySharedTierBoost(tierEffect);
 
     // Apply the effect to red accelerator generators
     MultiplierRecord.redAcceleratorGenerators.correct(effect);

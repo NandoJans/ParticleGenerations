@@ -32,7 +32,10 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
   action(): Num {
     // Calculate and apply yellow key-gain boost
     const effectiveCharge = this.getEffectiveCharge();
-    const effect = new Num(10, 0).pow(effectiveCharge);
+    const baseEffect = new Num(10, 0).pow(effectiveCharge);
+    
+    // Apply shared tier boost from all charger tiers
+    const effect = this.applySharedTierBoost(baseEffect);
     
     // Apply the multiplier to yellow key gain
     MultiplierRecord.yellowKeyGain.correct(effect);

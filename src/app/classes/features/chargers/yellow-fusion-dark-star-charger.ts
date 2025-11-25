@@ -34,7 +34,10 @@ export class YellowFusionDarkStarCharger extends DarkStarCharger {
   action(): Num {
     // Calculate and apply hydrogen generation speed boost
     const effectiveCharge = this.getEffectiveCharge();
-    const effect = new Num(1, 0).add(effectiveCharge.mul(new Num(0.1, 0)));
+    const baseEffect = new Num(1, 0).add(effectiveCharge.mul(new Num(0.1, 0)));
+    
+    // Apply shared tier boost from all charger tiers
+    const effect = this.applySharedTierBoost(baseEffect);
     
     // Apply the multiplier to hydrogen generators
     MultiplierRecord.hydrogenGenerators.correct(effect);

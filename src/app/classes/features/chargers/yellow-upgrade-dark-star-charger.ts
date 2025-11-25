@@ -30,7 +30,10 @@ export class YellowUpgradeDarkStarCharger extends DarkStarCharger {
   action(): Num {
     // Calculate and grant green keys based on effective charge
     const effectiveCharge = this.getEffectiveCharge();
-    const effect = effectiveCharge.pow(new Num(2, 0));
+    const baseEffect = effectiveCharge.pow(new Num(2, 0));
+
+    // Apply shared tier boost from all charger tiers
+    const effect = this.applySharedTierBoost(baseEffect);
 
     // Grant green keys (green particles) as the reward
     if (effect.gt(new Num(0, 0))) {

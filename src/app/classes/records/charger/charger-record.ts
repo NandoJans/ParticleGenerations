@@ -15,6 +15,36 @@ import {Injectable} from "@angular/core";
   providedIn: 'root'
 })
 export class ChargerRecord extends Record {
+  /**
+   * Shared tier multiplier that boosts all charger effects based on total tiers.
+   * This makes tiering up chargers worthwhile as it benefits all chargers.
+   */
+  static sharedTierMultiplier: Num = new Num(1, 0);
+
+  /**
+   * Calculate the total tiers across all chargers
+   */
+  static getTotalTiers(): Num {
+    let totalTiers = new Num(0, 0);
+    ChargerRecord.list.forEach(charger => {
+      totalTiers = totalTiers.add(charger.tier);
+    });
+    return totalTiers;
+  }
+
+  /**
+   * Update the shared tier multiplier based on total tiers across all chargers.
+   * The multiplier is calculated as: 1 + (totalTiers - numberOfChargers) * 0.1
+   * This means each tier above 1 contributes +10% to all charger effects.
+   */
+  static updateSharedTierMultiplier(): void {
+    const totalTiers = ChargerRecord.getTotalTiers();
+    const numberOfChargers = new Num(ChargerRecord.list.length, 0);
+    // Extra tiers = total tiers - base tiers (1 per charger)
+    const extraTiers = totalTiers.sub(numberOfChargers);
+    // Each extra tier gives +10% boost (0.1 per tier)
+    ChargerRecord.sharedTierMultiplier = Num.ONE.add(extraTiers.mul(new Num(0.1, 0)));
+  }
   static redGeneratorDarkCharger: RedGeneratorDarkStarCharger = new RedGeneratorDarkStarCharger('red-generator-dark-star-charger');
   static redAcceleratorDarkCharger: RedAcceleratorDarkStarCharger = new RedAcceleratorDarkStarCharger('red-accelerator-dark-star-charger');
   static yellowUpgradeDarkCharger: YellowUpgradeDarkStarCharger = new YellowUpgradeDarkStarCharger('yellow-upgrade-dark-star-charger');
@@ -52,6 +82,8 @@ export class ChargerRecord extends Record {
   }
 
   run(speed: Num) {
+    // Update the shared tier multiplier before running chargers
+    ChargerRecord.updateSharedTierMultiplier();
     this.getList().forEach(charger => charger.run(speed));
   }
 }

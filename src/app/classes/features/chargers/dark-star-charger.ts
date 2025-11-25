@@ -4,6 +4,7 @@ import {GameElement} from "../game-element";
 import {ChallengeRecord} from "../../records/challenges/challenge-record";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {HoldingRecord} from "../../records/holdings/holding-record";
+import {ChargerRecord} from "../../records/charger/charger-record";
 
 /**
  * DarkStarCharger is a special type of charger that only charges when its related nerf is active.
@@ -29,6 +30,22 @@ export abstract class DarkStarCharger extends Charger {
   protected applyTierBuffer() {
     HoldingRecord.darkStarHolding.tierBuffer = HoldingRecord.darkStarHolding.tierBuffer.mul(this.tierBuffer.mul(this.tier.sub(Num.ONE)).add(Num.ONE));
     this.tierBuffer = new Num(0.1, 0)
+  }
+
+  /**
+   * Get the shared tier multiplier from ChargerRecord.
+   * This multiplier boosts all charger effects based on total tiers across all chargers.
+   */
+  protected getSharedTierMultiplier(): Num {
+    return ChargerRecord.sharedTierMultiplier;
+  }
+
+  /**
+   * Apply the shared tier multiplier to an effect value.
+   * This makes tiering up chargers worthwhile as it benefits all chargers.
+   */
+  protected applySharedTierBoost(effect: Num): Num {
+    return effect.mul(this.getSharedTierMultiplier());
   }
 
   /**

@@ -38,7 +38,10 @@ export class CombineDarkStarCharger extends DarkStarCharger {
   action(): undefined {
     // Calculate amplification of other charger effects
     const effectiveCharge = this.getEffectiveCharge();
-    this.effect = new Num(1, 0).add(effectiveCharge.div(new Num(50, 0)));
+    const baseEffect = new Num(1, 0).add(effectiveCharge.div(new Num(50, 0)));
+    
+    // Apply shared tier boost from all charger tiers
+    this.effect = this.applySharedTierBoost(baseEffect);
   }
 
   applyNerfs(): void {
