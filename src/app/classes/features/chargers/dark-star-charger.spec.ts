@@ -4,6 +4,7 @@ import { ResetKey } from '../../enums/reset-key';
 import { Requirement } from '../interfaces/requirement';
 import { ChallengeRecord } from '../../records/challenges/challenge-record';
 import { ResetHelper } from '../../helpers/reset-helper';
+import { ChargerRecord } from '../../records/charger/charger-record';
 
 // Concrete test implementation of DarkStarCharger
 class TestDarkStarCharger extends DarkStarCharger {
@@ -47,6 +48,15 @@ class TestDarkStarCharger extends DarkStarCharger {
   getEffectDescription(): string {
     return 'Test effect description';
   }
+
+  // Expose protected methods for testing
+  public testApplySharedTierBoost(effect: Num): Num {
+    return this.applySharedTierBoost(effect);
+  }
+
+  public testGetSharedTierMultiplier(): Num {
+    return this.getSharedTierMultiplier();
+  }
 }
 
 describe('DarkStarCharger', () => {
@@ -54,6 +64,11 @@ describe('DarkStarCharger', () => {
 
   beforeEach(() => {
     charger = new TestDarkStarCharger('test-dark-star-charger');
+    // Reset all charger tiers to 1 before each test
+    ChargerRecord.list.forEach(c => {
+      c.tier = new Num(1, 0);
+    });
+    ChargerRecord.updateSharedTierMultiplier();
   });
 
   it('should create an instance', () => {
@@ -109,6 +124,45 @@ describe('DarkStarCharger', () => {
     
     expect(newCharger.isActive()).toBe(true);
     expect(newCharger.nerfsApplied).toBe(true);
+  });
+
+  describe('sharedTierBoost', () => {
+    it('should get the shared tier multiplier from ChargerRecord', () => {
+      const multiplier = charger.testGetSharedTierMultiplier();
+      expect(multiplier.toNumber()).toBe(ChargerRecord.sharedTierMultiplier.toNumber());
+    });
+
+    it('should apply shared tier boost to effect', () => {
+      // With all chargers at tier 1, multiplier is 1
+      const baseEffect = new Num(100, 0);
+      const boostedEffect = charger.testApplySharedTierBoost(baseEffect);
+      expect(boostedEffect.toNumber()).toBe(100);
+    });
+
+    it('should increase effect when other chargers tier up', () => {
+      // Set one charger to tier 3 (2 extra tiers)
+      ChargerRecord.redGeneratorDarkCharger.tier = new Num(3, 0);
+      ChargerRecord.updateSharedTierMultiplier();
+
+      const baseEffect = new Num(100, 0);
+      const boostedEffect = charger.testApplySharedTierBoost(baseEffect);
+      
+      // Expected: 100 * 1.2 = 120 (2 extra tiers * 0.1 = 0.2 boost)
+      expect(boostedEffect.toNumber()).toBeCloseTo(120, 5);
+    });
+
+    it('should apply cumulative boost from multiple charger tiers', () => {
+      // Set multiple chargers to higher tiers
+      ChargerRecord.redGeneratorDarkCharger.tier = new Num(5, 0);  // 4 extra tiers
+      ChargerRecord.redAcceleratorDarkCharger.tier = new Num(3, 0); // 2 extra tiers
+      ChargerRecord.updateSharedTierMultiplier();
+
+      const baseEffect = new Num(100, 0);
+      const boostedEffect = charger.testApplySharedTierBoost(baseEffect);
+      
+      // Expected: 100 * 1.6 = 160 (6 extra tiers * 0.1 = 0.6 boost)
+      expect(boostedEffect.toNumber()).toBeCloseTo(160, 5);
+    });
   });
 
   describe('tierUp', () => {

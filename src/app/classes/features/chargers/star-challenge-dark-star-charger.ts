@@ -34,7 +34,10 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
   action(): Num {
     // Calculate unlock/increase of Rigel challenge max completions
     const effectiveCharge = this.getEffectiveCharge();
-    const effect = effectiveCharge.floor();
+    const baseEffect = effectiveCharge.floor();
+    
+    // Apply shared tier boost from all charger tiers
+    const effect = this.applySharedTierBoost(baseEffect);
     
     // TODO: Apply to Rigel challenge when it's implemented
     // For now, just track the effect value

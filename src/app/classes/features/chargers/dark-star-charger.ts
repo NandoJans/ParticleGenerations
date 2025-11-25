@@ -4,15 +4,22 @@ import {GameElement} from "../game-element";
 import {ChallengeRecord} from "../../records/challenges/challenge-record";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {HoldingRecord} from "../../records/holdings/holding-record";
+import {ChargerRecord} from "../../records/charger/charger-record";
 
 /**
  * DarkStarCharger is a special type of charger that only charges when its related nerf is active.
  * The nerf makes the dark star galaxy challenge harder, so users must strategically enable chargers.
  */
 export abstract class DarkStarCharger extends Charger {
+  /**
+   * Default tier buffer value (10% = 0.1).
+   * This determines how much each tier contributes to the dark star holding's tier buffer.
+   */
+  private static readonly DEFAULT_TIER_BUFFER: Num = new Num(0.1, 0);
+
   // Indicates if the charger's nerf is currently active
   protected isNerfActive: boolean = false;
-  tierBuffer: Num = new Num(0.1, 0);
+  tierBuffer: Num = DarkStarCharger.DEFAULT_TIER_BUFFER.copy();
 
   override run(speed: Num): void {
     // Runs charge logic and action logic.
@@ -28,7 +35,23 @@ export abstract class DarkStarCharger extends Charger {
 
   protected applyTierBuffer() {
     HoldingRecord.darkStarHolding.tierBuffer = HoldingRecord.darkStarHolding.tierBuffer.mul(this.tierBuffer.mul(this.tier.sub(Num.ONE)).add(Num.ONE));
-    this.tierBuffer = new Num(0.1, 0)
+    this.tierBuffer = DarkStarCharger.DEFAULT_TIER_BUFFER.copy();
+  }
+
+  /**
+   * Get the shared tier multiplier from ChargerRecord.
+   * This multiplier boosts all charger effects based on total tiers across all chargers.
+   */
+  protected getSharedTierMultiplier(): Num {
+    return ChargerRecord.sharedTierMultiplier;
+  }
+
+  /**
+   * Apply the shared tier multiplier to an effect value.
+   * This makes tiering up chargers worthwhile as it benefits all chargers.
+   */
+  protected applySharedTierBoost(effect: Num): Num {
+    return effect.mul(this.getSharedTierMultiplier());
   }
 
   /**
