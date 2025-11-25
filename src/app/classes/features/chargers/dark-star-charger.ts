@@ -11,9 +11,15 @@ import {ChargerRecord} from "../../records/charger/charger-record";
  * The nerf makes the dark star galaxy challenge harder, so users must strategically enable chargers.
  */
 export abstract class DarkStarCharger extends Charger {
+  /**
+   * Default tier buffer value (10% = 0.1).
+   * This determines how much each tier contributes to the dark star holding's tier buffer.
+   */
+  private static readonly DEFAULT_TIER_BUFFER: Num = new Num(0.1, 0);
+
   // Indicates if the charger's nerf is currently active
   protected isNerfActive: boolean = false;
-  tierBuffer: Num = new Num(0.1, 0);
+  tierBuffer: Num = DarkStarCharger.DEFAULT_TIER_BUFFER.copy();
 
   override run(speed: Num): void {
     // Runs charge logic and action logic.
@@ -29,7 +35,7 @@ export abstract class DarkStarCharger extends Charger {
 
   protected applyTierBuffer() {
     HoldingRecord.darkStarHolding.tierBuffer = HoldingRecord.darkStarHolding.tierBuffer.mul(this.tierBuffer.mul(this.tier.sub(Num.ONE)).add(Num.ONE));
-    this.tierBuffer = new Num(0.1, 0)
+    this.tierBuffer = DarkStarCharger.DEFAULT_TIER_BUFFER.copy();
   }
 
   /**
