@@ -22,6 +22,26 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
   requirement: Requirement[] = [];
   name: string = 'red-accelerator-dark-star-charger';
 
+  // Static multiplier that can be adjusted to make the charger stronger
+  // This multiplies the initial effect before raising to the power of tiers
+  static staticMultiplier: Num = new Num(1, 1);
+
+  override buffer: Num = new Num(1, 1);
+  override baseBuffer: Num = new Num(1, 1);
+
+  /**
+   * Calculate max charge for a given tier
+   * Each tier increases max charge by 10x
+   */
+  override getMaxChargeForTier(tier: Num): Num {
+    if (tier.lte(new Num(1, 0))) {
+      return this.baseMaxCharge.copy();
+    }
+    // Max charge = baseMaxCharge * 10^(tier - 1)
+    const tierMultiplier = new Num(10, 0).pow(tier.sub(new Num(1, 0)));
+    return this.baseMaxCharge.mul(tierMultiplier);
+  }
+
   getChargeAmount(): Num {
     // Charge based on red accelerators gained - only increases
     const redAccelerators = HoldingRecord.redAccelerators;
@@ -30,12 +50,19 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
   }
 
   action(): Num {
-    // Calculate effect based on charge and apply to red accelerator upgrades
-    const effectiveCharge = this.getEffectiveCharge();
-    const effect = new Num(1, 0).add(effectiveCharge.div(new Num(10, 0)));
+    // Base effect: buffer^charge (multiplier * charge amount)
+    // This won't charge itself indefinitely because we use charge as exponent, not as multiplier
+    const baseEffect = this.buffer.pow(this.charge);
 
-    // Apply the power boost to red accelerator effect upgrades
-    // This makes red accelerator upgrades more powerful
+    // Apply static multiplier to the initial effect
+    const multipliedEffect = baseEffect.mul(RedAcceleratorDarkStarCharger.staticMultiplier);
+
+    // Raise to the power of tier amount (0.5 * tier + 0.5)
+    const effect = multipliedEffect.pow(new Num(0.5, 0).mul(this.tier).add(new Num(0.5, 0)));
+
+    // Apply the effect to red accelerator generators
+    MultiplierRecord.redAcceleratorGenerators.correct(effect);
+
     this.effect = effect;
     return effect;
   }
@@ -61,7 +88,7 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
   }
 
   getEffectDescription(): string {
-    return `${this.effect.toString()}x power to red accelerator upgrades`;
+    return `${this.effect.toString()}x multiplier to red accelerator generation`;
   }
 
   getChargeDescription(): string {
@@ -69,7 +96,28 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
   }
 
   getRewardDescription(): string {
-    return 'Makes red accelerator upgrades more powerful.';
+    return 'Provides a powerful multiplier to red accelerator generation.';
+  }
+
+  override getEffectBreakdown(): { formula: string; effects: string[] } {
+    return {
+      formula: `(${this.buffer.toString()}^charge × ${RedAcceleratorDarkStarCharger.staticMultiplier.toString()})^(0.5×tier + 0.5)`,
+      effects: [
+        `Current Charge: ${this.charge.toString(2)}`,
+        `Tier: ${this.tier.toString(2)}`,
+        `Effect: ${this.effect.toString(2)}x`
+      ]
+    }
+  }
+
+  override getTierMilestoneBoostDescription(): string {
+    if (this.tier.lte(new Num(1, 0))) {
+      return 'Tier up to raise the effect to a higher power and increase max charge by 10x.';
+    }
+    const nextTier = this.tier.add(new Num(1, 0));
+    const currentMaxCharge = this.maxCharge;
+    const nextMaxCharge = this.getMaxChargeForTier(nextTier);
+    return `Next tier: Max charge increases from ${currentMaxCharge.toString()} to ${nextMaxCharge.toString()}. Effect power will increase.`;
   }
 
   override init() {
