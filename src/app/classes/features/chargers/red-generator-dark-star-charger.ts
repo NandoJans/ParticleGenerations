@@ -53,7 +53,7 @@ export class RedGeneratorDarkStarCharger extends DarkStarCharger {
     // Base effect: 10^charge
     const baseEffect = this.buffer.pow(this.charge);
     // Raise to the power of the number of tiers
-    const effect = baseEffect.mul(new Num(2, 0).pow(this.tier));
+    const effect = baseEffect.pow(new Num(0.5, 0).mul(this.tier).add(new Num(0.5, 0));
     MultiplierRecord.redParticleGenerators.correct(effect);
     return effect;
   }
