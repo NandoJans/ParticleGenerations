@@ -117,12 +117,13 @@ describe('DarkStarCharger', () => {
       charger.charge = new Num(100, 0); // Equal to baseMaxCharge
 
       // Set up mock for dark galaxy challenge
+      const darkGalaxy = ChallengeRecord.darkGalaxy;
       const originalCurrentChallenges = { ...ChallengeRecord.currentChallenges };
-      ChallengeRecord.currentChallenges['green'] = ChallengeRecord.darkGalaxy;
+      ChallengeRecord.currentChallenges[darkGalaxy.prestigeLayer] = darkGalaxy;
 
       // Spy on ResetHelper.reset and darkGalaxy.start
       const resetSpy = spyOn(ResetHelper, 'reset');
-      const startSpy = spyOn(ChallengeRecord.darkGalaxy, 'start');
+      const startSpy = spyOn(darkGalaxy, 'start');
 
       // Perform tier up
       charger.tierUp();
@@ -131,7 +132,7 @@ describe('DarkStarCharger', () => {
       expect(charger.tier.toNumber()).toBe(2);
 
       // Verify challenge restart was triggered
-      expect(resetSpy).toHaveBeenCalledWith(ChallengeRecord.darkGalaxy.prestige);
+      expect(resetSpy).toHaveBeenCalledWith(darkGalaxy.prestige);
       expect(startSpy).toHaveBeenCalled();
 
       // Cleanup
@@ -143,12 +144,13 @@ describe('DarkStarCharger', () => {
       charger.charge = new Num(100, 0); // Equal to baseMaxCharge
 
       // Ensure not in dark galaxy challenge
+      const darkGalaxy = ChallengeRecord.darkGalaxy;
       const originalCurrentChallenges = { ...ChallengeRecord.currentChallenges };
-      delete ChallengeRecord.currentChallenges['green'];
+      delete ChallengeRecord.currentChallenges[darkGalaxy.prestigeLayer];
 
       // Spy on ResetHelper.reset and darkGalaxy.start
       const resetSpy = spyOn(ResetHelper, 'reset');
-      const startSpy = spyOn(ChallengeRecord.darkGalaxy, 'start');
+      const startSpy = spyOn(darkGalaxy, 'start');
 
       // Perform tier up
       charger.tierUp();
@@ -169,12 +171,13 @@ describe('DarkStarCharger', () => {
       charger.charge = new Num(50, 0); // Less than baseMaxCharge
 
       // Set up mock for dark galaxy challenge
+      const darkGalaxy = ChallengeRecord.darkGalaxy;
       const originalCurrentChallenges = { ...ChallengeRecord.currentChallenges };
-      ChallengeRecord.currentChallenges['green'] = ChallengeRecord.darkGalaxy;
+      ChallengeRecord.currentChallenges[darkGalaxy.prestigeLayer] = darkGalaxy;
 
       // Spy on ResetHelper.reset and darkGalaxy.start
       const resetSpy = spyOn(ResetHelper, 'reset');
-      const startSpy = spyOn(ChallengeRecord.darkGalaxy, 'start');
+      const startSpy = spyOn(darkGalaxy, 'start');
 
       // Perform tier up (should fail)
       charger.tierUp();

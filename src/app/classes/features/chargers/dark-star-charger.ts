@@ -119,8 +119,8 @@ export abstract class DarkStarCharger extends Charger {
       super.tierUp();
 
       // If we're in the dark galaxy challenge, restart it to reset progress
-      if (ChallengeRecord.currentChallenges['green'] === ChallengeRecord.darkGalaxy) {
-        const darkGalaxy = ChallengeRecord.darkGalaxy;
+      const darkGalaxy = ChallengeRecord.darkGalaxy;
+      if (ChallengeRecord.currentChallenges[darkGalaxy.prestigeLayer] === darkGalaxy) {
         // Reset the prestige layer progress
         ResetHelper.reset(darkGalaxy.prestige);
         // Restart the challenge (re-apply nerfs)
