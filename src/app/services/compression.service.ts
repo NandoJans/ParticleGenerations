@@ -98,13 +98,13 @@ export class CompressionService implements Resetable {
     ResetHelper.registerReset(ResetKey.YELLOW, this);
   }
 
-  private goalScalingStart: Num = new Num(3.5, 1);
+  private goalScalingStart: Num = new Num(4, 1);
   private goalScaling: Num = new Num(2, 0);
 
   // Calculate how much total work is needed based on current compression count
   private getGoalForCompressionCount(count: number): number {
     // Keep the same scaling as previous time-based approach: goal = 1000 * 2^count
-    // After 35 compressions, the goal increases even stronger
+    // After 40 compressions, the goal increases even stronger
     const countNum = new Num(count, 0);
     if (countNum.greq(this.goalScalingStart)) {
       let diff = countNum.sub(this.goalScalingStart);
