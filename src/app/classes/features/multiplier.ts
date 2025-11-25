@@ -130,7 +130,7 @@ export class Multiplier {
     const multiplications: MultiplierListener[] = [];
     const powers: MultiplierListener[] = [];
 
-    for (const listener of this.listeners.values()) {
+    this.listeners.forEach((listener) => {
       switch (listener.type) {
         case 'add':
           additions.push(listener);
@@ -142,22 +142,22 @@ export class Multiplier {
           powers.push(listener);
           break;
       }
-    }
+    });
 
     // Apply additions
-    for (const listener of additions) {
+    additions.forEach((listener) => {
       result = result.add(listener.getValue());
-    }
+    });
 
     // Apply multiplications
-    for (const listener of multiplications) {
+    multiplications.forEach((listener) => {
       result = result.mul(listener.getValue());
-    }
+    });
 
     // Apply powers
-    for (const listener of powers) {
+    powers.forEach((listener) => {
       result = result.pow(listener.getValue());
-    }
+    });
 
     return result;
   }
@@ -173,15 +173,24 @@ export class Multiplier {
       const originalNum = this.num;
       this.num = calculatedValue;
 
+      // Collect hooks to remove after iteration (once-only hooks)
+      const hooksToRemove: string[] = [];
+
       for (const hookName in this.localHooks) {
         this.localHooks[hookName].hook(this)
-        if (this.localHooks[hookName].once) delete this.localHooks[hookName]
+        if (this.localHooks[hookName].once) {
+          hooksToRemove.push(hookName);
+        }
       }
+
+      // Remove once-only hooks (delete directly since we're inside calculation
+      // and don't want to trigger cache invalidation)
+      hooksToRemove.forEach(hookName => delete this.localHooks[hookName]);
 
       calculatedValue = this.num;
       this.num = originalNum;
 
-      // Cache the result
+      // Cache the result (mark as clean since we just calculated)
       this.cachedValue = calculatedValue;
       this.isDirty = false;
     }
