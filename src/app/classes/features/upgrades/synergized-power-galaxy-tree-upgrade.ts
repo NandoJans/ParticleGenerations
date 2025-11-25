@@ -11,7 +11,9 @@ export class SynergizedPowerGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   }
 
   getChildren(): GalaxyTreeUpgrade[] {
-    return [];
+    return [
+      UpgradeRecord.generatedCompressionGalaxyTree,
+    ];
   }
 
   getParents(): GalaxyTreeUpgrade[] {

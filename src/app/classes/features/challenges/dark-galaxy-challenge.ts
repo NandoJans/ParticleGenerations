@@ -60,9 +60,7 @@ export class DarkGalaxyChallenge extends Challenge {
 
     private awardDarkStars(): void {
       // Update dark star holding if we've earned more
-      if (this.currentDarkStarGain.gt(HoldingRecord.darkStarHolding.amount)) {
-        HoldingRecord.darkStarHolding.amount = HoldingRecord.darkStarHolding.amount.add(this.currentDarkStarGain.floor());
-      }
+      HoldingRecord.darkStarHolding.amount = HoldingRecord.darkStarHolding.amount.add(this.currentDarkStarGain.floor());
     }
 
   currentDarkStarGain: Num = new Num(0, 0);

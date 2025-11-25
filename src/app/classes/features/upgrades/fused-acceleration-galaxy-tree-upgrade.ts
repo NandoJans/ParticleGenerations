@@ -12,7 +12,7 @@ export class FusedAccelerationGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
 
   getChildren(): GalaxyTreeUpgrade[] {
     return [
-
+      UpgradeRecord.acceleratedCompressionGalaxyTree,
     ];
   }
 

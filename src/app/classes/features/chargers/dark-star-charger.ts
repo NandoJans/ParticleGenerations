@@ -3,6 +3,7 @@ import {Num} from "../../../num";
 import {GameElement} from "../game-element";
 import {ChallengeRecord} from "../../records/challenges/challenge-record";
 import {ResetHelper} from "../../helpers/reset-helper";
+import {HoldingRecord} from "../../records/holdings/holding-record";
 
 /**
  * DarkStarCharger is a special type of charger that only charges when its related nerf is active.
@@ -11,17 +12,23 @@ import {ResetHelper} from "../../helpers/reset-helper";
 export abstract class DarkStarCharger extends Charger {
   // Indicates if the charger's nerf is currently active
   protected isNerfActive: boolean = false;
+  tierBuffer: Num = new Num(0.1, 0);
 
   override run(speed: Num): void {
     // Runs charge logic and action logic.
     super.run(speed);
 
-    // Note: Tier up is now manual via the UI button, not automatic
+    this.applyTierBuffer();
 
     // Apply the nerf effects if active
     if (this.isNerfActive) {
       this.applyNerfs();
     }
+  }
+
+  protected applyTierBuffer() {
+    HoldingRecord.darkStarHolding.tierBuffer = HoldingRecord.darkStarHolding.tierBuffer.mul(this.tierBuffer.mul(this.tier.sub(Num.ONE)).add(Num.ONE));
+    this.tierBuffer = new Num(0.1, 0)
   }
 
   /**

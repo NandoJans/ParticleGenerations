@@ -155,6 +155,12 @@ import {
 } from "../../features/upgrades/slower-compression-time-increase-galaxy-tree-upgrade";
 import { BetterRedAcceleratorGenerationGalaxyTreeUpgrade } from "../../features/upgrades/better-red-accelerator-generation-galaxy-tree-upgrade";
 import { BetterRedAcceleratorEffectGalaxyTreeUpgrade } from "../../features/upgrades/better-red-accelerator-effect-galaxy-tree-upgrade";
+import {HydrogenCompressionGalaxyTreeUpgrade} from "../../features/upgrades/hydrogen-compression-galaxy-tree-upgrade";
+import {
+  AcceleratedCompressionGalaxyTreeUpgrade
+} from "../../features/upgrades/accelerated-compression-galaxy-tree-upgrade";
+import {PoweredCompressionGalaxyTreeUpgrade} from "../../features/upgrades/powered-compression-galaxy-tree-upgrade";
+import {GeneratedCompressionGalaxyTreeUpgrade} from "../../features/upgrades/generated-compression-galaxy-tree-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -286,6 +292,11 @@ export class UpgradeRecord extends Record {
 
   static moreYellowParticlesGalaxyTree: MoreYellowParticlesGalaxyTreeUpgrade = new MoreYellowParticlesGalaxyTreeUpgrade('moreYellowParticlesGalaxyTree');
   static slowerCompressionTimeIncreaseGalaxyTree: SlowerCompressionTimeIncreaseGalaxyTreeUpgrade = new SlowerCompressionTimeIncreaseGalaxyTreeUpgrade('slowerCompressionTimeIncrease');
+  static hydrogenCompressionGalaxyTree: HydrogenCompressionGalaxyTreeUpgrade = new HydrogenCompressionGalaxyTreeUpgrade('hydrogenCompressionGalaxyTree');
+  static acceleratedCompressionGalaxyTree: AcceleratedCompressionGalaxyTreeUpgrade = new AcceleratedCompressionGalaxyTreeUpgrade('acceleratedCompressionGalaxyTree');
+  static poweredCompressionGalaxyTree: PoweredCompressionGalaxyTreeUpgrade = new PoweredCompressionGalaxyTreeUpgrade('poweredCompressionGalaxyTree');
+  static generatedCompressionGalaxyTree: GeneratedCompressionGalaxyTreeUpgrade = new GeneratedCompressionGalaxyTreeUpgrade('generatedCompressionGalaxyTree');
+
 
   static yellowUpgradeList: YellowUpgrade[] = [
     UpgradeRecord.redGeneratorMultiplierYellowPrestigeYellow,
@@ -355,6 +366,11 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.unlockSecondGreenGeneratorGalaxyTree,
     UpgradeRecord.moreYellowParticlesGalaxyTree,
     UpgradeRecord.slowerCompressionTimeIncreaseGalaxyTree,
+
+    UpgradeRecord.hydrogenCompressionGalaxyTree,
+    UpgradeRecord.acceleratedCompressionGalaxyTree,
+    UpgradeRecord.poweredCompressionGalaxyTree,
+    UpgradeRecord.generatedCompressionGalaxyTree,
   ]
 
   static override list: Upgrade[] = [

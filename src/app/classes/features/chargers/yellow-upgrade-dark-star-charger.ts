@@ -31,12 +31,12 @@ export class YellowUpgradeDarkStarCharger extends DarkStarCharger {
     // Calculate and grant green keys based on effective charge
     const effectiveCharge = this.getEffectiveCharge();
     const effect = effectiveCharge.pow(new Num(2, 0));
-    
+
     // Grant green keys (green particles) as the reward
     if (effect.gt(new Num(0, 0))) {
       HoldingRecord.greenParticles.amount = HoldingRecord.greenParticles.amount.add(effect);
     }
-    
+
     this.effect = effect;
     return effect;
   }
@@ -71,7 +71,7 @@ export class YellowUpgradeDarkStarCharger extends DarkStarCharger {
 
   override init() {
     this.requirement = [
-      new Requirement(HoldingRecord.yellowParticles, new Num(1, 9999999999), this)
+      new Requirement(HoldingRecord.yellowParticles, new Num(1, 25_000), this)
     ]
   }
 }

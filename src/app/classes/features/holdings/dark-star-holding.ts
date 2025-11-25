@@ -6,6 +6,7 @@ import {ResetKey} from "../../enums/reset-key";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 import {Styles} from "../../enums/styles";
+import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 
 export class DarkStarHolding extends Holding {
   abbreviation: string = 'DS';
@@ -21,6 +22,9 @@ export class DarkStarHolding extends Holding {
     .addLine('Green generators: ', () => {
       return (this.greenEffect) ? this.greenEffect.toString(2) + 'x' : '-';
     }, '')
+    .addLine('Charger tiers boost the power of dark stars by ', () => {
+      return this.tierEffect.toString(2) + 'x';
+    }, '')
     .build();
   name: string = 'dark-star-holding';
   displayName: string = 'Dark Stars';
@@ -33,10 +37,15 @@ export class DarkStarHolding extends Holding {
   yellowEffect: Num|undefined = new Num(1, 100);
   greenEffect: Num|undefined = new Num(1, 100);
 
+  tierEffect: Num = new Num(1, 0);
+  tierBuffer: Num = new Num(1, 0);
+
   override action(): Num {
-    const redEffect = this.redBuffer.pow(this.amount);
-    this.yellowEffect = this.yellowBuffer.pow(this.amount);
-    this.greenEffect = this.greenBuffer.pow(this.amount);
+    const redEffect = this.redBuffer.pow(this.tierBuffer).pow(this.amount);
+    this.yellowEffect = this.yellowBuffer.pow(this.tierBuffer).pow(this.amount);
+    this.greenEffect = this.greenBuffer.pow(this.tierBuffer).pow(this.amount);
+
+    this.tierEffect = this.tierBuffer.copy();
 
     MultiplierRecord.redParticleGenerators.correct(redEffect);
     MultiplierRecord.yellowGenerators.correct(this.yellowEffect);
@@ -45,6 +54,7 @@ export class DarkStarHolding extends Holding {
     this.redBuffer = new Num(1, 100);
     this.yellowBuffer = new Num(1, 5);
     this.greenBuffer = new Num(5, 0);
+    this.tierBuffer = new Num(1, 0);
 
     return redEffect;  // Return red effect as the primary effect
   }

@@ -104,7 +104,7 @@ export class RedGeneratorDarkStarCharger extends DarkStarCharger {
 
   override getEffectBreakdown(): { formula: string; effects: string[] } {
     return {
-      formula: `(10^charge) x 2^tier`,
+      formula: `(10^charge) ^ (0.5 x tier + 0.5)`,
       effects: [
         `Current Charge: ${this.charge.toString(2)}`,
         `Tier: ${this.tier.toString(2)}`,
@@ -120,7 +120,7 @@ export class RedGeneratorDarkStarCharger extends DarkStarCharger {
     const nextTier = this.tier.add(new Num(1, 0));
     const currentMaxCharge = this.maxCharge;
     const nextMaxCharge = this.getMaxChargeForTier(nextTier);
-    return `Next tier: Max charge increases from ${currentMaxCharge.toString()} to ${nextMaxCharge.toString()}. Effect will be multiplied by 2^${nextTier.toString()}.`;
+    return `Next tier: Max charge increases from ${currentMaxCharge.toString()} to ${nextMaxCharge.toString()}. Effect will be multiplied by 0.5 x ${nextTier.toString()} + 0.5.`;
   }
 
   override init() {

@@ -8,6 +8,7 @@
   transition: all 0.3s ease;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   position: relative;
+  --primary-color: rgba(0, 255, 170, 1);
 }
 
 .charger-container::before {
@@ -81,9 +82,9 @@
 
 .collapsed-effect {
   padding: 0.25rem 0.5rem;
-  background: rgba(0, 255, 170, 0.1);
+  background: color-mix(in hsl, var(--primary-color) 10%, transparent);
   border-radius: 4px;
-  color: rgba(0, 255, 170, 0.9);
+  color: color-mix(in hsl, var(--primary-color) 90%, transparent);
   font-size: 0.85rem;
   max-width: 200px;
   overflow: hidden;
@@ -112,10 +113,10 @@
 }
 
 .toggle-button.active {
-  background: rgba(0, 255, 170, 0.2);
-  border-color: rgba(0, 255, 170, 0.5);
-  color: rgba(0, 255, 170, 1);
-  box-shadow: 0 0 10px rgba(0, 255, 170, 0.3);
+  background: color-mix(in hsl, var(--primary-color) 20%, transparent);
+  border-color: color-mix(in hsl, var(--primary-color) 50%, transparent);
+  color: var(--primary-color);
+  box-shadow: 0 0 10px color-mix(in hsl, var(--primary-color) 40%, transparent);
 }
 
 .toggle-button fa-icon {
@@ -134,16 +135,42 @@
   margin-left: 0.5rem;
 }
 
-.charger-container[data-charger-type="red"] .roman-tier {
-  color: var(--text-color-red);
+.charger-container[data-charger-type="red"]{
+  --primary-color: var(--text-color-red);
 }
 
-.charger-container[data-charger-type="yellow"] .roman-tier {
-  color: var(--text-color-yellow);
+.charger-container[data-charger-type="yellow"] {
+  --primary-color: var(--text-color-yellow);
 }
 
-.charger-container[data-charger-type="green"] .roman-tier {
-  color: var(--text-color-green);
+.charger-container[data-charger-type="green"] {
+  --primary-color: var(--text-color-green);
+}
+
+.charger-container[data-charger-type="red"] .progress-fill {
+  background: color-mix(in hsl, var(--primary-color) 30%, transparent);
+  box-shadow: 0 0 10px color-mix(in hsl, var(--primary-color) 50%, transparent);
+}
+
+.charger-container[data-charger-type="red"] .charging .progress-fill {
+  background: linear-gradient(
+    90deg,
+    color-mix(in hsl, var(--primary-color) 80%, transparent) 0%,
+    color-mix(in hsl, var(--primary-color) 30%, transparent) 5%,
+    color-mix(in hsl, var(--primary-color) 30%, transparent) 95%,
+    color-mix(in hsl, var(--primary-color) 80%, transparent) 100%
+  ) repeat-x;
+  background-size: 1000% 100%;
+  animation: fill-charging 10s linear infinite, pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes fill-charging {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 /* Body */
@@ -192,7 +219,8 @@
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg,
+  background:
+    linear-gradient(90deg,
     rgba(0, 255, 170, 0.3) 0%,
     rgba(0, 255, 170, 0.5) 50%,
     rgba(0, 255, 170, 0.3) 100%
@@ -208,17 +236,17 @@
 
 @keyframes pulse-glow {
   0%, 100% {
-    box-shadow: 0 0 10px rgba(0, 255, 170, 0.4);
+    box-shadow: 0 0 10px color-mix(in hsl, var(--primary-color) 50%, transparent)
   }
   50% {
-    box-shadow: 0 0 20px rgba(0, 255, 170, 0.6);
+    box-shadow: 0 0 20px color-mix(in hsl, var(--primary-color) 70%, transparent)
   }
 }
 
 /* Effect Breakdown */
 .effect-breakdown {
   background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(0, 255, 170, 0.3);
+  border: 1px solid color-mix(in hsl, var(--primary-color) 40%, transparent);
   border-radius: 5px;
   padding: 5%;
   height: 80%;
@@ -226,7 +254,7 @@
 
 .effect-label {
   font-size: 0.85rem;
-  color: rgba(0, 255, 170, 0.9);
+  color: color-mix(in hsl, var(--primary-color) 90%, transparent);
   margin: 0 0 0.5rem 0;
   font-weight: 600;
   text-transform: uppercase;
@@ -241,7 +269,7 @@
   background: rgba(0, 0, 0, 0.3);
   padding: 0.25rem 0.5rem;
   border-radius: 3px;
-  border-left: 2px solid rgba(0, 255, 170, 0.5);
+  border-left: 2px solid color-mix(in hsl, var(--primary-color) 60%, transparent);
 }
 
 .effects {
@@ -274,7 +302,7 @@
 
 .description-label {
   font-weight: 600;
-  color: rgba(0, 255, 170, 0.9);
+  color: color-mix(in hsl, var(--primary-color) 90%, transparent);
   margin: 0;
   min-width: 70px;
   font-size: 0.9rem;

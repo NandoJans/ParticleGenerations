@@ -54,7 +54,7 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
   private lastFrameTime: number = 0;
   private nebulaAnimationPhase: number = 0;
   private resizeHandler = this.resizeCanvases.bind(this);
-  
+
   // Cache nebula brightness values to avoid recalculating on every render
   private cachedNebulaBrightness = {
     redGenerator: 0.1,
@@ -62,7 +62,7 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
     yellow: 0.1,
     fusion: 0.1
   };
-  
+
   // Define nebula region boundaries as constants for maintainability
   private readonly NEBULA_REGIONS = {
     redGenerator: { minX: 75, maxX: 375, minY: -100, maxY: 100 },
@@ -96,7 +96,7 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
 
     this.setPositions();
     this.updateStars();
-    
+
     // Update stars periodically to match purchased upgrades
     setInterval(() => {
       this.updateStars();
@@ -106,7 +106,7 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
   ngAfterViewInit(): void {
     this.resizeCanvases();
     this.startAnimation();
-    
+
     // Handle window resize
     window.addEventListener('resize', this.resizeHandler);
   }
@@ -127,12 +127,12 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
     // Start with a base of 0 stars, then add 3 more for each purchased upgrade
     const baseStars = 0;
     const targetCount = baseStars + (purchasedCount * 3);
-    
+
     // Only regenerate if the count has changed
     if (this.stars.length !== targetCount) {
       this.generateStars(targetCount);
     }
-    
+
     // Update cached nebula brightness values when star count changes
     this.updateNebulaBrightness();
   }
@@ -149,14 +149,14 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
       return x >= minX && x <= maxX && y >= minY && y <= maxY;
     }).length;
   }
-  
+
   private updateNebulaBrightness(): void {
     // Calculate brightness for each nebula region and cache the values
     const calculateBrightness = (region: { minX: number, maxX: number, minY: number, maxY: number }) => {
       const purchased = this.getPurchasedStarsInRegion(region.minX, region.maxX, region.minY, region.maxY);
       return Math.min(1.0, 0.1 + (purchased * 0.05));
     };
-    
+
     this.cachedNebulaBrightness.redGenerator = calculateBrightness(this.NEBULA_REGIONS.redGenerator);
     this.cachedNebulaBrightness.redAccelerator = calculateBrightness(this.NEBULA_REGIONS.redAccelerator);
     this.cachedNebulaBrightness.yellow = calculateBrightness(this.NEBULA_REGIONS.yellow);
@@ -165,13 +165,13 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
 
   private generateStars(count: number) {
     const currentCount = this.stars.length;
-    
+
     // If we need more stars, add new ones
     if (count > currentCount) {
       for (let i = currentCount; i < count; i++) {
         this.stars.push(this.createStar(i));
       }
-    } 
+    }
     // If we need fewer stars, remove from the end
     else if (count < currentCount) {
       this.stars = this.stars.slice(0, count);
@@ -184,14 +184,14 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
       const x = Math.sin(seed) * 10000;
       return x - Math.floor(x);
     };
-    
+
     // Distribute stars across 3 layers
     const layer = (id % 3) + 1; // 1, 2, or 3
-    
+
     const size = 0.5 + seedRandom(id * 1.1) * 1;            // 0.5–1.5 px (smaller, more dot-like)
     const duration = 5 + seedRandom(id * 2.2) * 7;           // 5–12 s
     const delay = seedRandom(id * 3.3) * 10;                 // 0–10 s
-    
+
     return {
       id,
       x: seedRandom(id * 4.4) * 100,        // 0-100%
@@ -215,14 +215,14 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
 
   private resizeCanvases(): void {
     if (!this.galaxyTreeWrapper) return;
-    
+
     const rect = this.galaxyTreeWrapper.nativeElement.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;
-    
+
     // Set canvas sizes with device pixel ratio for sharp rendering
     const dpr = window.devicePixelRatio || 1;
-    
+
     [this.starCanvas1, this.starCanvas2, this.starCanvas3, this.nebulaCanvas].forEach((canvasRef) => {
       if (canvasRef?.nativeElement) {
         const canvas = canvasRef.nativeElement;
@@ -230,14 +230,14 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
         canvas.height = height * dpr;
         canvas.style.width = `${width}px`;
         canvas.style.height = `${height}px`;
-        
+
         const ctx = canvas.getContext('2d');
         if (ctx) {
           ctx.scale(dpr, dpr);
         }
       }
     });
-    
+
     // Re-render nebula after resize
     this.renderNebula();
   }
@@ -247,18 +247,18 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
       if (this.lastFrameTime === 0) {
         this.lastFrameTime = currentTime;
       }
-      
+
       const deltaTime = (currentTime - this.lastFrameTime) / 1000; // Convert to seconds
       this.lastFrameTime = currentTime;
-      
+
       this.updateStarAnimations(deltaTime);
       this.updateNebulaAnimation(deltaTime);
       this.renderStars();
       this.renderNebula();
-      
+
       this.animationFrameId = requestAnimationFrame(animate);
     };
-    
+
     this.animationFrameId = requestAnimationFrame(animate);
   }
 
@@ -271,7 +271,7 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
     this.stars.forEach(star => {
       // Update phase (0 to 1 cycle)
       star.phase = (star.phase + deltaTime / star.duration) % 1;
-      
+
       // Calculate opacity based on phase
       // 0-0.4: fade in
       // 0.4-0.6: stay bright
@@ -295,41 +295,41 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
 
     canvases.forEach(({ canvas, layer, parallax, opacity }) => {
       if (!canvas?.nativeElement) return;
-      
+
       const ctx = canvas.nativeElement.getContext('2d');
       if (!ctx) return;
-      
+
       const width = canvas.nativeElement.width / (window.devicePixelRatio || 1);
       const height = canvas.nativeElement.height / (window.devicePixelRatio || 1);
-      
+
       // Clear canvas
       ctx.clearRect(0, 0, width, height);
-      
+
       // Calculate parallax offset
       const offsetX = this.tx * parallax;
       const offsetY = this.ty * parallax;
-      
+
       // Draw stars for this layer
       const layerStars = this.getStarsByLayer(layer);
       layerStars.forEach(star => {
         if (star.opacity <= 0) return;
-        
+
         // Calculate position with parallax and wrap around
         let x = (star.x / 100 * width + offsetX);
         let y = (star.y / 100 * height + offsetY);
-        
+
         // Wrap coordinates to create infinite scrolling effect
         const wrapWidth = width * 1.5;
         const wrapHeight = height * 1.5;
         x = ((x % wrapWidth) + wrapWidth) % wrapWidth;
         y = ((y % wrapHeight) + wrapHeight) % wrapHeight;
-        
+
         // Create gradient for star glow
         const gradient = ctx.createRadialGradient(x, y, 0, x, y, star.size * 2);
         gradient.addColorStop(0, `rgba(255, 255, 255, ${star.opacity * opacity})`);
         gradient.addColorStop(0.5, `rgba(201, 255, 230, ${star.opacity * opacity * 0.5})`);
         gradient.addColorStop(1, 'transparent');
-        
+
         ctx.fillStyle = gradient;
         ctx.fillRect(x - star.size * 2, y - star.size * 2, star.size * 4, star.size * 4);
       });
@@ -338,30 +338,30 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
 
   private renderNebula(): void {
     if (!this.nebulaCanvas?.nativeElement) return;
-    
+
     const canvas = this.nebulaCanvas.nativeElement;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-    
+
     const width = canvas.width / (window.devicePixelRatio || 1);
     const height = canvas.height / (window.devicePixelRatio || 1);
-    
+
     // Clear canvas
     ctx.clearRect(0, 0, width, height);
-    
+
     // Calculate world-to-screen transform
     const worldToScreenX = (worldX: number) => worldX * this.scale + this.tx;
     const worldToScreenY = (worldY: number) => worldY * this.scale + this.ty;
-    
+
     // Pre-calculate nebula animation value
     const nebulaSin = Math.sin(this.nebulaAnimationPhase * Math.PI * 2);
-    
+
     // Use cached brightness values instead of recalculating on every render
     const redGenBrightness = this.cachedNebulaBrightness.redGenerator;
     const redAccelBrightness = this.cachedNebulaBrightness.redAccelerator;
     const yellowBrightness = this.cachedNebulaBrightness.yellow;
     const fusionBrightness = this.cachedNebulaBrightness.fusion;
-    
+
     // Define nebula regions with increased spacing and reduced initial brightness
     const nebulae = [
       {
@@ -403,50 +403,50 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
         worldY: 275,   // Moved from 225 to 275
         radius: 375 * this.scale,  // Reduced from 425 to 375
         colors: [
-          { 
-            stop: 0, 
-            r: 255, 
-            g: 150 + nebulaSin * 30, 
-            b: 51 + nebulaSin * 20, 
+          {
+            stop: 0,
+            r: 255,
+            g: 150 + nebulaSin * 30,
+            b: 51 + nebulaSin * 20,
             a: 0.18 * fusionBrightness  // Reduced from 0.45
           },
-          { 
-            stop: 0.6, 
-            r: 255, 
-            g: 180 + nebulaSin * 20, 
-            b: 100 + nebulaSin * 10, 
+          {
+            stop: 0.6,
+            r: 255,
+            g: 180 + nebulaSin * 20,
+            b: 100 + nebulaSin * 10,
             a: 0.08 * fusionBrightness  // Reduced from 0.2
           },
           { stop: 1, r: 0, g: 0, b: 0, a: 0 }
         ]
       }
     ];
-    
+
     // Set blend mode for nebula effect
     ctx.globalCompositeOperation = 'screen';
-    
+
     nebulae.forEach(nebula => {
       const screenX = worldToScreenX(nebula.worldX);
       const screenY = worldToScreenY(nebula.worldY);
-      
+
       // Only render if nebula is somewhat visible on screen
       if (screenX + nebula.radius < 0 || screenX - nebula.radius > width ||
           screenY + nebula.radius < 0 || screenY - nebula.radius > height) {
         return;
       }
-      
+
       const gradient = ctx.createRadialGradient(
         screenX, screenY, 0,
         screenX, screenY, nebula.radius
       );
-      
+
       nebula.colors.forEach(color => {
         gradient.addColorStop(
           color.stop,
           `rgba(${Math.round(color.r)}, ${Math.round(color.g)}, ${Math.round(color.b)}, ${color.a})`
         );
       });
-      
+
       ctx.fillStyle = gradient;
       ctx.filter = 'blur(80px)';
       ctx.fillRect(
@@ -457,7 +457,7 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
       );
       ctx.filter = 'none';
     });
-    
+
     // Reset blend mode
     ctx.globalCompositeOperation = 'source-over';
   }
@@ -517,6 +517,11 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
 
     UpgradeRecord.betterRedAcceleratorGenerationGalaxyTree.setPos(-325, 125);
     UpgradeRecord.betterRedAcceleratorEffectGalaxyTree.setPos(-325, -125);
+
+    UpgradeRecord.hydrogenCompressionGalaxyTree.setPos(300, 300);
+    UpgradeRecord.acceleratedCompressionGalaxyTree.setPos(-300, 300);
+    UpgradeRecord.poweredCompressionGalaxyTree.setPos(-300, -300);
+    UpgradeRecord.generatedCompressionGalaxyTree.setPos(300, -300);
   }
 
   isBottomSectionOpen() {
