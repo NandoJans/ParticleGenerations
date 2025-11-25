@@ -84,7 +84,7 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
 
   revertNerfs(): void {
     // Revert the square root nerfs
-    delete MultiplierRecord.redAcceleratorGenerators.localHooks[this.name];
+    MultiplierRecord.redAcceleratorGenerators.removeLocalHook(this.name);
   }
 
   getNerfDescription(): string {

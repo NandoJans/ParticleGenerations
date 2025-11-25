@@ -74,7 +74,7 @@ export class YellowFusionDarkStarCharger extends DarkStarCharger {
     }
     
     // Remove hydrogen generation nerf
-    delete MultiplierRecord.hydrogenGenerators.localHooks[this.name];
+    MultiplierRecord.hydrogenGenerators.removeLocalHook(this.name);
   }
 
   getNerfDescription(): string {

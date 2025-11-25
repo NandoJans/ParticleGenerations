@@ -62,7 +62,7 @@ export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
 
   revertNerfs(): void {
     // Revert yellow generator multiplier nerf
-    delete MultiplierRecord.yellowGenerators.localHooks[this.name];
+    MultiplierRecord.yellowGenerators.removeLocalHook(this.name);
     
     // Restore full active generator count
     GeneratorRecord.fifthYellowGenerator.enable();
