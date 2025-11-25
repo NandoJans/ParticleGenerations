@@ -183,9 +183,9 @@ export class Multiplier {
         }
       }
 
-      // Remove once-only hooks (delete directly since we're inside calculation
-      // and don't want to trigger cache invalidation)
-      hooksToRemove.forEach(hookName => delete this.localHooks[hookName]);
+      // Remove once-only hooks using internal method that doesn't invalidate cache
+      // (since we're inside calculation and the hooks have already been applied)
+      hooksToRemove.forEach(hookName => this.deleteLocalHook(hookName));
 
       calculatedValue = this.num;
       this.num = originalNum;
@@ -219,9 +219,22 @@ export class Multiplier {
    * @param name The identifier of the hook to remove
    */
   removeLocalHook(name: string): void {
-    if (this.localHooks[name]) {
-      delete this.localHooks[name];
+    if (this.deleteLocalHook(name)) {
       this.isDirty = true;
     }
+  }
+
+  /**
+   * Internal method to delete a local hook without invalidating cache.
+   * Used when removing once-only hooks during calculation.
+   * @param name The identifier of the hook to remove
+   * @returns true if a hook was deleted, false otherwise
+   */
+  private deleteLocalHook(name: string): boolean {
+    if (this.localHooks[name]) {
+      delete this.localHooks[name];
+      return true;
+    }
+    return false;
   }
 }
