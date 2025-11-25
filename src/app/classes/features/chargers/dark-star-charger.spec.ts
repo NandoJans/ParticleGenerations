@@ -2,6 +2,8 @@ import { DarkStarCharger } from './dark-star-charger';
 import { Num } from '../../../num';
 import { ResetKey } from '../../enums/reset-key';
 import { Requirement } from '../interfaces/requirement';
+import { ChallengeRecord } from '../../records/challenges/challenge-record';
+import { ResetHelper } from '../../helpers/reset-helper';
 
 // Concrete test implementation of DarkStarCharger
 class TestDarkStarCharger extends DarkStarCharger {
@@ -107,5 +109,88 @@ describe('DarkStarCharger', () => {
     
     expect(newCharger.isActive()).toBe(true);
     expect(newCharger.nerfsApplied).toBe(true);
+  });
+
+  describe('tierUp', () => {
+    it('should restart dark galaxy challenge when tiering up while in challenge', () => {
+      // Setup charger with enough charge to tier up
+      charger.charge = new Num(100, 0); // Equal to baseMaxCharge
+
+      // Set up mock for dark galaxy challenge
+      const darkGalaxy = ChallengeRecord.darkGalaxy;
+      const originalCurrentChallenges = { ...ChallengeRecord.currentChallenges };
+      ChallengeRecord.currentChallenges[darkGalaxy.prestigeLayer] = darkGalaxy;
+
+      // Spy on ResetHelper.reset and darkGalaxy.start
+      const resetSpy = spyOn(ResetHelper, 'reset');
+      const startSpy = spyOn(darkGalaxy, 'start');
+
+      // Perform tier up
+      charger.tierUp();
+
+      // Verify tier increased
+      expect(charger.tier.toNumber()).toBe(2);
+
+      // Verify challenge restart was triggered
+      expect(resetSpy).toHaveBeenCalledWith(darkGalaxy.prestige);
+      expect(startSpy).toHaveBeenCalled();
+
+      // Cleanup
+      ChallengeRecord.currentChallenges = originalCurrentChallenges;
+    });
+
+    it('should not restart challenge when tiering up outside of dark galaxy challenge', () => {
+      // Setup charger with enough charge to tier up
+      charger.charge = new Num(100, 0); // Equal to baseMaxCharge
+
+      // Ensure not in dark galaxy challenge
+      const darkGalaxy = ChallengeRecord.darkGalaxy;
+      const originalCurrentChallenges = { ...ChallengeRecord.currentChallenges };
+      delete ChallengeRecord.currentChallenges[darkGalaxy.prestigeLayer];
+
+      // Spy on ResetHelper.reset and darkGalaxy.start
+      const resetSpy = spyOn(ResetHelper, 'reset');
+      const startSpy = spyOn(darkGalaxy, 'start');
+
+      // Perform tier up
+      charger.tierUp();
+
+      // Verify tier increased
+      expect(charger.tier.toNumber()).toBe(2);
+
+      // Verify challenge restart was NOT triggered
+      expect(resetSpy).not.toHaveBeenCalled();
+      expect(startSpy).not.toHaveBeenCalled();
+
+      // Cleanup
+      ChallengeRecord.currentChallenges = originalCurrentChallenges;
+    });
+
+    it('should not do anything when cannot tier up', () => {
+      // Setup charger with insufficient charge
+      charger.charge = new Num(50, 0); // Less than baseMaxCharge
+
+      // Set up mock for dark galaxy challenge
+      const darkGalaxy = ChallengeRecord.darkGalaxy;
+      const originalCurrentChallenges = { ...ChallengeRecord.currentChallenges };
+      ChallengeRecord.currentChallenges[darkGalaxy.prestigeLayer] = darkGalaxy;
+
+      // Spy on ResetHelper.reset and darkGalaxy.start
+      const resetSpy = spyOn(ResetHelper, 'reset');
+      const startSpy = spyOn(darkGalaxy, 'start');
+
+      // Perform tier up (should fail)
+      charger.tierUp();
+
+      // Verify tier did NOT increase
+      expect(charger.tier.toNumber()).toBe(1);
+
+      // Verify challenge restart was NOT triggered
+      expect(resetSpy).not.toHaveBeenCalled();
+      expect(startSpy).not.toHaveBeenCalled();
+
+      // Cleanup
+      ChallengeRecord.currentChallenges = originalCurrentChallenges;
+    });
   });
 });

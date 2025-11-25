@@ -2,6 +2,7 @@ import {Charger} from "../charger";
 import {Num} from "../../../num";
 import {GameElement} from "../game-element";
 import {ChallengeRecord} from "../../records/challenges/challenge-record";
+import {ResetHelper} from "../../helpers/reset-helper";
 
 /**
  * DarkStarCharger is a special type of charger that only charges when its related nerf is active.
@@ -108,6 +109,25 @@ export abstract class DarkStarCharger extends Charger {
    * Get a description of the effect/amplification provided by this charger
    */
   abstract getEffectDescription(): string;
+
+  /**
+   * Override tierUp to restart the dark galaxy challenge when tiering up.
+   * This resets progress in the challenge but keeps the challenge active.
+   */
+  override tierUp(): void {
+    if (this.canTierUp()) {
+      super.tierUp();
+
+      // If we're in the dark galaxy challenge, restart it to reset progress
+      const darkGalaxy = ChallengeRecord.darkGalaxy;
+      if (ChallengeRecord.currentChallenges[darkGalaxy.prestigeLayer] === darkGalaxy) {
+        // Reset the prestige layer progress
+        ResetHelper.reset(darkGalaxy.prestige);
+        // Restart the challenge (re-apply nerfs)
+        darkGalaxy.start();
+      }
+    }
+  }
 
   override reset(): void {
     super.reset();
