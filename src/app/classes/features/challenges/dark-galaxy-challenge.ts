@@ -48,8 +48,14 @@ export class DarkGalaxyChallenge extends Challenge {
       super.end();
       // Clear global hook when leaving the challenge
       this.currentDarkStarGain = new Num(0, 0);
-      this.awardDarkStars();
       Multiplier.globalGetHook = undefined;
+    }
+
+    override complete(): void {
+      this.awardDarkStars();
+      this.currentDarkStarGain = new Num(0, 0);
+      Multiplier.globalGetHook = undefined;
+      super.complete();
     }
 
     private awardDarkStars(): void {
