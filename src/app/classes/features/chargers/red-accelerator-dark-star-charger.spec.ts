@@ -70,4 +70,12 @@ describe('RedAcceleratorDarkStarCharger', () => {
     expect(description).toContain('Tier up');
     expect(description).toContain('10x');
   });
+
+  it('should have calculation order 500 to run after upgrades but before generators', () => {
+    // Calculation order 500 ensures:
+    // - Runs after upgrades (400)
+    // - Runs before generators (1000)
+    // - Runs before multiplier reset (1150)
+    expect(charger.calculationOrder).toBe(500);
+  });
 });

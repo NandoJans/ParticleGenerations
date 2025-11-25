@@ -11,7 +11,7 @@ import {Multiplier} from "../multiplier";
  *
  * Nerfs: Only the square root of red accelerators are generated, then, only the square root of red accelerators have effect.
  * Charge: Is gained by getting more red accelerators.
- * Amplifies: Make red accelerator upgrades more powerful
+ * Amplifies: Provides a powerful multiplier to red accelerator generation.
  */
 export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
   displayName: string = 'Red Accelerator Charger';
@@ -21,6 +21,10 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
   canInfiniteChargeAtMaxTier: boolean = true;
   requirement: Requirement[] = [];
   name: string = 'red-accelerator-dark-star-charger';
+
+  // Set calculation order to run after upgrades (400) but before generators (1000)
+  // This ensures the charger's effect is applied at the correct time
+  override calculationOrder: number = 500;
 
   // Static multiplier that can be adjusted to make the charger stronger
   // This multiplies the initial effect before raising to the power of tiers
