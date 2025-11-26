@@ -21,6 +21,9 @@ import {UpgradeRecord} from "../upgrades/upgrade-record";
 import {
   ChangeHoldingGeneratePercentageGreenMilestone
 } from "../../features/milestones/change-holding-generate-percentage-green-milestone";
+import {
+  FusionAccelerationBoosterDivideYellowFusionGreenMilestone
+} from "../../features/milestones/fusion-acceleration-booster-divide-yellow-fusion-green-milestone";
 
 @Injectable({
   providedIn: 'root'
@@ -452,6 +455,8 @@ export class MilestoneRecord extends Record {
     'green prestige automator'
   );
 
+  static fusionAccelerationBoosterDivideYellowFusion: FusionAccelerationBoosterDivideYellowFusionGreenMilestone = new FusionAccelerationBoosterDivideYellowFusionGreenMilestone('fusionAccelerationBoosterDivideYellowFusion')
+
   // Blue Phase
 
   // Purple Phase
@@ -523,6 +528,7 @@ export class MilestoneRecord extends Record {
     MilestoneRecord.generate50PercentGreenParticles,
 
     MilestoneRecord.keepGreenPrestigeAutomator,
+    MilestoneRecord.fusionAccelerationBoosterDivideYellowFusion,
   ];
 
   getList(): Milestone[] {

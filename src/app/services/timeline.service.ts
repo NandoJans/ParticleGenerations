@@ -154,6 +154,7 @@ export class TimelineService {
     .addMilestone(MilestoneRecord.generate45PercentGreenParticles)
     .addMilestone(MilestoneRecord.generate50PercentGreenParticles)
     .addMilestone(MilestoneRecord.keepGreenPrestigeAutomator)
+    .addMilestone(MilestoneRecord.fusionAccelerationBoosterDivideYellowFusion)
     .build()
     .addTimelineEvent(
       'green-dark-galaxy',

@@ -36,8 +36,8 @@ export class RedExpertiseGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   style: Styles = Styles.STAR_WHITE;
   displayName: string = "Red Expertise";
 
-  override buffer = new Num(1.5, 0);
-  override baseBuffer = new Num(1.5, 0);
+  override buffer = new Num(2, 0);
+  override baseBuffer = new Num(2, 0);
 
   cost: Num = new Num(1.2, 2);
   baseCost: Num = new Num(1.2, 2);

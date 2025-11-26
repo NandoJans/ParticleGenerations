@@ -83,14 +83,22 @@ export class FusionBoosterAccelerationUpgrade extends Upgrade {
     return this.effect ? this.effect.toString(3) + ', ' + this.totalFreeBuys.toString() + ' free buys and ' + this.totalHydrogenBuff.toString(2) + 'x' : '';
   }
 
+  divideInsteadOfReset: boolean = false;
+
   override buy(amount: Num = new Num(1, 0)): Transaction {
     const transaction = super.buy(amount);
     StatsService.addNum(UpgradeRecord.redGeneratorBooster.name, 'totalBought', this.freeBuys);
     StatsService.addNum(UpgradeRecord.redGeneratorBooster.name, 'totalBoughtAutomator', this.freeBuys);
     StatsService.addNum(this.name, 'totalBought', transaction.amount);
     StatsService.addNum(this.name, 'totalBoughtAutomator', transaction.amount);
-    HoldingRecord.hydrogen.reset();
-    HoldingRecord.yellowFusion.reset();
+    if (this.divideInsteadOfReset) {
+      console.log("Dividing instead of resetting hydrogen");
+      HoldingRecord.yellowFusion.amount = HoldingRecord.yellowFusion.amount.div(new Num(1, 1000));
+      HoldingRecord.hydrogen.amount = HoldingRecord.hydrogen.amount.sub(new Num(3, 3));
+    } else {
+      HoldingRecord.hydrogen.reset();
+      HoldingRecord.yellowFusion.reset();
+    }
     return transaction;
   }
 
