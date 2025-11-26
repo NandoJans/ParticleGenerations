@@ -74,7 +74,10 @@ export abstract class Charger extends GameElement implements Resetable, Storable
 
     if (this.charging && this.shouldCharge()) {
       this.chargeAmount = this.getChargeAmount();
-      this.applyCharge(this.chargeAmount);
+
+      if (this.chargeAmount.gt(this.getCharge())) {
+        this.applyCharge(this.chargeAmount);
+      }
 
       // Cap at max
       if (this.charge.greq(this.maxCharge)) {

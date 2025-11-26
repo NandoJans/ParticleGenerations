@@ -27,8 +27,7 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
     const totalCompletions = siriusStar.completed instanceof Num ? siriusStar.completed : new Num(0, 0);
     const redParticles = HoldingRecord.redParticles;
 
-    const chargeAmount = totalCompletions.mul(redParticles.amount.log10());
-    return chargeAmount.gt(this.getCharge()) ? chargeAmount : this.getCharge();
+    return totalCompletions.mul(redParticles.amount.log10());
   }
 
   action(): Num {

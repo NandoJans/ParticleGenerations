@@ -45,8 +45,7 @@ export class RedGeneratorDarkStarCharger extends DarkStarCharger {
   getChargeAmount(): Num {
     // Charge is gained by getting more red particles
     const redParticles = HoldingRecord.redParticles;
-    const chargeAmount = redParticles.amount.log10();
-    return chargeAmount.gt(this.getCharge()) ? chargeAmount : this.getCharge();
+    return redParticles.amount.log10();
   }
 
   action(): Num {

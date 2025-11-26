@@ -27,8 +27,7 @@ export class YellowFusionDarkStarCharger extends DarkStarCharger {
     const yellowFusion = HoldingRecord.yellowFusion;
     const fusionAmount = yellowFusion.amount;
 
-    const chargeAmount = fusionAmount.log10();
-    return chargeAmount.gt(this.getCharge()) ? chargeAmount : this.getCharge();
+    return fusionAmount.log10();
   }
 
   action(): Num {

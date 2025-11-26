@@ -25,8 +25,7 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
   getChargeAmount(): Num {
     // Charge based on star keys - only increases
     const starKeys = HoldingRecord.starKeys;
-    const chargeAmount = starKeys.amount.log10();
-    return chargeAmount.gt(this.getCharge()) ? chargeAmount : this.getCharge();
+    return starKeys.amount.log10();
   }
 
   action(): Num {

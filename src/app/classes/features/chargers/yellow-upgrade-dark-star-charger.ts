@@ -26,8 +26,7 @@ export class YellowUpgradeDarkStarCharger extends DarkStarCharger {
   getChargeAmount(): Num {
     // Charge based on yellow particles amount - only increases
     const yellowParticles = HoldingRecord.yellowParticles;
-    const chargeAmount = yellowParticles.amount.log10().pow(new Num(1.75, 0));
-    return chargeAmount.gt(this.getCharge()) ? chargeAmount : this.getCharge();
+    return yellowParticles.amount.log10().pow(new Num(3, 0));
   }
   action(): Num {
     // Calculate and grant green keys based on effective charge

@@ -31,7 +31,7 @@ export class CombineDarkStarCharger extends DarkStarCharger {
     }
 
     // Charge = totalCharge^activeChargers
-    const chargeAmount = totalCharge.pow(activeChargers).log(10);
+    const chargeAmount = totalCharge.pow(activeChargers).pow(new Num(0.12, 0));
 
     return chargeAmount.gt(new Num(0, 0)) ? chargeAmount : new Num(0, 0);
   }
@@ -110,7 +110,7 @@ export class CombineDarkStarCharger extends DarkStarCharger {
 
   override getEffectBreakdown(): { formula: string; effects: string[] } {
     return {
-      formula: "log10(Total Charge^Active Chargers)",
+      formula: "(Total Charge ^ Active Chargers)^0.12",
       effects: [
         `Total Charge from Active Chargers: ${this.getTotalCharge().toString()}`,
         `Active Chargers: ${this.getActiveChargers().toString()}`,
