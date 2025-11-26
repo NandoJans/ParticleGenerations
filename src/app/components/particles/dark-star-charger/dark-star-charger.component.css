@@ -157,6 +157,10 @@
   --primary-color: var(--text-color-green);
 }
 
+.charger-container[data-charger-type="combine"] {
+  --primary-color: var(--text-color-purple);
+}
+
 .charger-container .progress-fill {
   height: 100%;
   position: relative;

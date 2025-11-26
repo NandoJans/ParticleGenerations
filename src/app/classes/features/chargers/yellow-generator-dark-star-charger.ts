@@ -35,7 +35,7 @@ export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
 
   action(): Num {
     // Base effect: 10^charge
-    const baseEffect = this.buffer.pow(this.getCharge());
+    const baseEffect = this.buffer.pow(this.getCharge().add(this.getSharedCharge()));
     // Raise to the power of the number of tiers
     const effect = baseEffect.pow(new Num(0.55, 0).mul(this.tier).add(new Num(0.45, 0)));
     // Apply shared tier boost from all charger tiers
@@ -92,8 +92,8 @@ export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
     return {
       formula: `charge^(0.55 x tier + 0.45)`,
       effects: [
-        `Current Charge: ${this.getCharge().toString(2)}`,
-        `Tier: ${this.tier.toString(2)}`,
+        `Current Charge: ${this.getCharge().toString()} + ${this.getSharedCharge().toString()}`,
+        `Tier: ${this.tier.toString()}`,
         `Effect: ${this.effect.toString(2)}x`
       ]
     }

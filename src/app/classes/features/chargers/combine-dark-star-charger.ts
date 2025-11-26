@@ -31,17 +31,15 @@ export class CombineDarkStarCharger extends DarkStarCharger {
     }
 
     // Charge = totalCharge^activeChargers
-    const chargeAmount = totalCharge.pow(activeChargers).log10();
+    const chargeAmount = totalCharge.pow(activeChargers).log(10);
+
     return chargeAmount.gt(new Num(0, 0)) ? chargeAmount : new Num(0, 0);
   }
 
   action(): undefined {
     // Calculate amplification of other charger effects
     const effectiveCharge = this.getEffectiveCharge();
-    const baseEffect = new Num(1, 0).add(effectiveCharge.div(new Num(50, 0)));
-
-    // Apply shared tier boost from all charger tiers
-    this.effect = this.applySharedTierBoost(baseEffect);
+    this.setSharedCharge(effectiveCharge);
   }
 
   applyNerfs(): void {
@@ -52,9 +50,12 @@ export class CombineDarkStarCharger extends DarkStarCharger {
     // No nerfs to revert
   }
 
+  getRequiredActiveChargers(): Num {
+    return Num.ONE.add(this.tier);
+  }
+
   getNerfDescription(): string {
-    const requiredChargers = new Num(2, 0).add(this.tier);
-    return `Requires ${requiredChargers.toString()} chargers to be active simultaneously.`;
+    return `Requires ${this.getRequiredActiveChargers().toString()} chargers to be active simultaneously.`;
   }
 
   getEffectDescription(): string {
@@ -71,7 +72,7 @@ export class CombineDarkStarCharger extends DarkStarCharger {
 
   override shouldCharge(): boolean {
     // Check if enough chargers are active based on tier
-    const requiredChargers = new Num(2, 0).add(this.tier);
+    const requiredChargers = this.getRequiredActiveChargers();
     const activeChargers = this.getActiveChargers();
 
     return  super.shouldCharge() &&
@@ -86,8 +87,8 @@ export class CombineDarkStarCharger extends DarkStarCharger {
    */
   private getActiveChargers(): Num {
     let count = new Num(0, 0);
-    ChargerRecord.list.forEach((charger) => {
-      if (charger !== this && charger instanceof DarkStarCharger && charger.isActive()) {
+    ChargerRecord.darkStarChargerList.forEach((charger) => {
+      if (charger !== this && charger.isActive()) {
         count = count.add(new Num(1, 0));
       }
     });
@@ -99,17 +100,28 @@ export class CombineDarkStarCharger extends DarkStarCharger {
    */
   private getTotalCharge(): Num {
     let total = new Num(0, 0);
-    ChargerRecord.list.forEach((charger) => {
-      if (charger !== this && charger instanceof DarkStarCharger && charger.isActive()) {
-        total = total.add(charger.getCharge());
+    ChargerRecord.darkStarChargerList.forEach((charger) => {
+      if (charger !== this && charger.isActive()) {
+        total = total.add(charger.chargeAmount);
       }
     });
     return total;
   }
 
+  override getEffectBreakdown(): { formula: string; effects: string[] } {
+    return {
+      formula: "log10(Total Charge^Active Chargers)",
+      effects: [
+        `Total Charge from Active Chargers: ${this.getTotalCharge().toString()}`,
+        `Active Chargers: ${this.getActiveChargers().toString()}`,
+        `Charge Amount: ${this.chargeAmount.toString()}`,
+      ]
+    }
+  }
+
   override init() {
     this.requirement = [
-      new Requirement(HoldingRecord.greenParticles, new Num(1, 9999999999), this)
+      new Requirement(HoldingRecord.greenParticles, new Num(1, 10), this)
     ]
   }
 }

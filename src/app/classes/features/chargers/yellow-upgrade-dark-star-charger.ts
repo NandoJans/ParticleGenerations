@@ -31,7 +31,7 @@ export class YellowUpgradeDarkStarCharger extends DarkStarCharger {
   }
   action(): Num {
     // Calculate and grant green keys based on effective charge
-    const effect = this.getEffectiveCharge().pow(this.tier.mul(new Num(3, 0)));
+    const effect = this.getEffectiveCharge().add(this.getSharedCharge()).pow(this.tier.mul(new Num(3, 0)));
 
     // Grant green keys (green particles) as the reward
     if (effect.gt(new Num(0, 0))) {
@@ -74,8 +74,8 @@ export class YellowUpgradeDarkStarCharger extends DarkStarCharger {
     return {
       formula: `charge^(3 x tier)`,
       effects: [
-        `Current Charge: ${this.getCharge().toString(2)}`,
-        `Tier: ${this.tier.toString(2)}`,
+        `Current Charge: ${this.getCharge().toString()} + ${this.getSharedCharge().toString()}`,
+        `Tier: ${this.tier.toString()}`,
         `Effect: ${this.effect.toString(2)}x`
       ]
     }

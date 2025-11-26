@@ -10,6 +10,7 @@ import {StarKeyDarkStarCharger} from "../../features/chargers/star-key-dark-star
 import {CombineDarkStarCharger} from "../../features/chargers/combine-dark-star-charger";
 import {Num} from "../../../num";
 import {Injectable} from "@angular/core";
+import {DarkStarCharger} from "../../features/chargers/dark-star-charger";
 
 @Injectable({
   providedIn: 'root'
@@ -60,7 +61,7 @@ export class ChargerRecord extends Record {
   static starKeyDarkCharger: StarKeyDarkStarCharger = new StarKeyDarkStarCharger('star-key-dark-star-charger');
   static combineDarkCharger: CombineDarkStarCharger = new CombineDarkStarCharger('combine-dark-star-charger');
 
-  static override list: Charger[] = [
+  static darkStarChargerList: DarkStarCharger[] = [
     ChargerRecord.redGeneratorDarkCharger,
     ChargerRecord.redAcceleratorDarkCharger,
     ChargerRecord.yellowUpgradeDarkCharger,
@@ -69,6 +70,10 @@ export class ChargerRecord extends Record {
     ChargerRecord.yellowFusionDarkCharger,
     ChargerRecord.starKeyDarkCharger,
     ChargerRecord.combineDarkCharger,
+  ];
+
+  static override list: Charger[] = [
+    ...ChargerRecord.darkStarChargerList,
   ];
 
   getList(): Charger[] {

@@ -11,6 +11,7 @@ export abstract class Charger extends GameElement implements Resetable, Storable
   abstract resetId: ResetKey;
 
   // Charge tracking
+  chargeAmount: Num = new Num(0, 0);
   charge: Num = new Num(0, 0);
   startCharge: Num = new Num(0, 0);
 
@@ -36,16 +37,6 @@ export abstract class Charger extends GameElement implements Resetable, Storable
    */
   getMaxChargeForTier(tier: Num): Num {
     return this.baseMaxCharge.copy();
-  }
-
-  /**
-   * Get the max charge for the previous tier (used in tier up calculations)
-   */
-  getPreviousTierMaxCharge(): Num {
-    if (this.tier.lte(new Num(1, 0))) {
-      return this.baseMaxCharge.copy();
-    }
-    return this.getMaxChargeForTier(this.tier.sub(new Num(1, 0)));
   }
 
   /**
@@ -79,9 +70,11 @@ export abstract class Charger extends GameElement implements Resetable, Storable
    * Main run loop - handles charging logic
    */
   override run(speed: Num): void {
+    this.chargeAmount = new Num(0, 0);
+
     if (this.charging && this.shouldCharge()) {
-      const chargeAmount = this.getChargeAmount();
-      this.applyCharge(chargeAmount);
+      this.chargeAmount = this.getChargeAmount();
+      this.applyCharge(this.chargeAmount);
 
       // Cap at max
       if (this.charge.greq(this.maxCharge)) {

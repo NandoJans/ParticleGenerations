@@ -56,7 +56,7 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
   action(): Num {
     // Base effect: buffer^charge (multiplier * charge amount)
     // This won't charge itself indefinitely because we use charge as exponent, not as multiplier
-    const baseEffect = this.buffer.pow(this.getCharge());
+    const baseEffect = this.buffer.pow(this.getCharge().add(this.getSharedCharge()));
 
     // Apply static multiplier to the initial effect
     const multipliedEffect = baseEffect.mul(RedAcceleratorDarkStarCharger.staticMultiplier);
@@ -108,8 +108,8 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
     return {
       formula: `(${this.buffer.toString()}^charge × ${RedAcceleratorDarkStarCharger.staticMultiplier.toString()})^(0.5×tier + 0.5)`,
       effects: [
-        `Current Charge: ${this.getCharge().toString(2)}`,
-        `Tier: ${this.tier.toString(2)}`,
+        `Current Charge: ${this.getCharge().toString()} + ${this.getSharedCharge().toString()}`,
+        `Tier: ${this.tier.toString()}`,
         `Effect: ${this.effect.toString(2)}x`
       ]
     }

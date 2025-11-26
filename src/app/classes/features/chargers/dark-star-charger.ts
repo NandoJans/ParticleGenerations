@@ -16,6 +16,7 @@ export abstract class DarkStarCharger extends Charger {
    * This determines how much each tier contributes to the dark star holding's tier buffer.
    */
   private static readonly DEFAULT_TIER_BUFFER: Num = new Num(0.1, 0);
+  private static sharedCharge: Num = new Num(0, 0);
 
   // Indicates if the charger's nerf is currently active
   protected isNerfActive: boolean = false;
@@ -52,6 +53,18 @@ export abstract class DarkStarCharger extends Charger {
    */
   protected applySharedTierBoost(effect: Num): Num {
     return effect.mul(this.getSharedTierMultiplier());
+  }
+
+  protected setSharedCharge(value: Num) {
+    DarkStarCharger.sharedCharge = value;
+  }
+
+  protected applySharedChargeBoost(effect: Num): void {
+    DarkStarCharger.sharedCharge = DarkStarCharger.sharedCharge.add(effect);
+  }
+
+  protected getSharedCharge() {
+    return DarkStarCharger.sharedCharge;
   }
 
   /**
