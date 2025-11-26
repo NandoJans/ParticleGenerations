@@ -45,7 +45,7 @@ export class BuyableHelper {
         let buyUntilScaling = x.div(y).ln().div(a.ln()).floor()
         // @ts-ignore
         futureCost = y.mul(buyable.increase.pow(buyUntilScaling))
-        let leftOverCurrency = buyable.currency.amount.sub(futureCost)
+        let leftOverCurrency = buyable.currency.amount.div(futureCost)
         // @ts-ignore
         let postScalingBuying = a.ln().sub(a.ln().pow(two).add(four.mul(b.ln()).mul(leftOverCurrency.div(y).ln())).sqrt()).div(two.mul(b.ln()))
         // @ts-ignore
