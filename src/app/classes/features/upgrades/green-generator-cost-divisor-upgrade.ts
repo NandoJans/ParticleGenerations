@@ -31,7 +31,7 @@ export class GreenGeneratorCostDivisorUpgrade extends GreenGeneratorUpgrade {
 
   action(): Num {
     const buff: Num = this.buffer.pow(this.amount);
-    this.generator.cost = this.generator.cost.div(buff);
+    this.generator.costMultiplier = this.generator.costMultiplier.div(buff);
     return buff;
   }
 

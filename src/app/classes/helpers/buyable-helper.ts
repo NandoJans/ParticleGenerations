@@ -46,7 +46,7 @@ export class BuyableHelper {
         let buyUntilScaling = x.div(y).ln().div(a.ln()).floor()
         // @ts-ignore
         futureCost = y.mul(buyable.increase.pow(buyUntilScaling))
-        let leftOverCurrency = buyable.currency.amount.div(futureCost)
+        let leftOverCurrency = buyable.currency.amount.sub(futureCost)
         // @ts-ignore
         let postScalingBuying = a.ln().sub(a.ln().pow(two).add(four.mul(b.ln()).mul(leftOverCurrency.div(y).ln())).sqrt()).div(two.mul(b.ln()))
         // @ts-ignore
@@ -72,34 +72,62 @@ export class BuyableHelper {
   }
 
   buy(): Transaction {
-    const buyable = this.buyable
-    const transaction = {
+    const buyable = this.buyable;
+    const transaction: Transaction = {
       cost: new Num(0, 0),
       amount: new Num(0, 0),
       currency: buyable.currency,
+    };
+
+    // Not enough currency → nothing happens
+    if (!buyable.currency.amount.greq(buyable.cost)) {
+      return transaction;
     }
-    if (buyable.currency.amount.greq(buyable.cost)) {
-      if (buyable.resets !== 'none' || (buyable.noMax !== undefined && buyable.noMax) || buyable.oneTime) {
-        this.buyAction();
 
-        transaction.cost = buyable.cost;
-        transaction.amount = new Num(1, 0);
+    // Single-buy path (resets, noMax, or one-time)
+    if (
+      buyable.resets !== 'none' ||
+      (buyable.noMax !== undefined && buyable.noMax) ||
+      buyable.oneTime
+    ) {
+      this.buyAction();
 
-        if (buyable.resets !== 'none') ResetHelper.reset(buyable.resets || ResetKey.NONE);
-      } else {
-        const result = this.calculateBulk(buyable)
-        if (result[0].greq(new Num(1, 0)) && buyable.currency.amount.greq(result[1])) {
-          if (buyable.limit !== undefined && result[0].greq(buyable.limit)) result[0] = buyable.limit.copy();
+      transaction.cost = buyable.cost;
+      transaction.amount = new Num(1, 0);
 
-          this.bulkBuyAction(result[1], result[0]);
-
-          transaction.cost = result[1];
-          transaction.amount = result[0];
-        }
+      if (buyable.resets !== 'none') {
+        ResetHelper.reset(buyable.resets || ResetKey.NONE);
       }
+
+      return transaction;
     }
+
+    // Bulk-buy path with fallback to single-buy
+    let [bulk, bulkCost] = this.calculateBulk(buyable);
+
+    // Respect limit if present
+    if (buyable.limit !== undefined && bulk.greq(buyable.limit)) {
+      bulk = buyable.limit.copy();
+      // bulkCost still from calculateBulk; if that makes it unaffordable,
+      // we fall back to single-buy below.
+    }
+
+    if (bulk.greq(new Num(1, 0)) && buyable.currency.amount.greq(bulkCost)) {
+      this.bulkBuyAction(bulkCost, bulk);
+
+      transaction.cost = bulkCost.mul(buyable.costMultiplier);
+      transaction.amount = bulk;
+    } else {
+      // Fallback: we already know at least one buy is affordable
+      this.buyAction();
+
+      transaction.cost = buyable.cost;
+      transaction.amount = new Num(1, 0);
+    }
+
     return transaction;
   }
+
 
   compare() {
     const buyable = this.buyable
@@ -137,5 +165,8 @@ export class BuyableHelper {
         }
       }
     }
+
+    buyable.cost = buyable.cost.mul(buyable.costMultiplier);
+    buyable.costMultiplier = new Num(1, 0);
   }
 }

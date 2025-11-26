@@ -9,6 +9,7 @@ export abstract class Buyable extends GameElement {
   abstract amount: Num
   abstract baseCost: Num
   abstract cost: Num
+  costMultiplier: Num = new Num(1, 0);
   abstract increase: Num
   abstract startIncrease: Num
   scalingStart: Num | undefined = undefined

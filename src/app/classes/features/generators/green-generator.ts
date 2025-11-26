@@ -43,6 +43,7 @@ export abstract class GreenGenerator extends Generator {
   override softReset() {
     this.unlocked = false;
     super.softReset();
+    this.init();
   }
 
   override getUpgrades(): Upgrade[] {

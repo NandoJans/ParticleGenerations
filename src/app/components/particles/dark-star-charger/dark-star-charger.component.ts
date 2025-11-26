@@ -208,7 +208,5 @@ export class DarkStarChargerComponent {
       return;
     }
     this.charger.switchTier(this.charger.tier.add(new Num(number, 0)));
-    const num: Num = new Num(number, 0);
-    this.charger.switchTier(this.charger.tier.add(num));
   }
 }

@@ -90,7 +90,7 @@ export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
 
   override getEffectBreakdown(): { formula: string; effects: string[] } {
     return {
-      formula: `charge^(tier)`,
+      formula: `charge^(0.55 x tier + 0.45)`,
       effects: [
         `Current Charge: ${this.getCharge().toString(2)}`,
         `Tier: ${this.tier.toString(2)}`,
