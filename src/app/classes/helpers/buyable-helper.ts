@@ -1,6 +1,5 @@
 import {Num} from "../../num";
 import {Buyable} from "../features/buyable";
-import {ResetKey} from "../enums/reset-key";
 import {ResetHelper} from "./reset-helper";
 import {Transaction} from "../features/interfaces/transaction";
 
@@ -84,20 +83,12 @@ export class BuyableHelper {
       return transaction;
     }
 
-    // Single-buy path (resets, noMax, or one-time)
-    if (
-      buyable.resets !== 'none' ||
-      (buyable.noMax !== undefined && buyable.noMax) ||
-      buyable.oneTime
-    ) {
+    // Single-buy path (one-time only)
+    if (buyable.oneTime) {
       this.buyAction();
 
       transaction.cost = buyable.cost;
       transaction.amount = new Num(1, 0);
-
-      if (buyable.resets !== 'none') {
-        ResetHelper.reset(buyable.resets || ResetKey.NONE);
-      }
 
       return transaction;
     }
@@ -125,6 +116,11 @@ export class BuyableHelper {
       transaction.amount = new Num(1, 0);
     }
 
+    // Trigger reset after buying if needed
+    if (buyable.resets !== 'none') {
+      ResetHelper.reset(buyable.resets);
+    }
+
     return transaction;
   }
 
@@ -133,15 +129,16 @@ export class BuyableHelper {
     const buyable = this.buyable
     if (buyable.currency.amount.greq(buyable.cost) && buyable.unlocked && buyable.auto &&
       (buyable.limit === undefined || !buyable.bought.greq(buyable.limit.sub(new Num(1, 0))))) {
-      if (buyable.resets !== 'none' || buyable.oneTime) {
-        if ((buyable.oneTime && !buyable.bought.greq(new Num(1, 0))) || !buyable.oneTime) this.buyAction();
-        if (buyable.resets !== 'none') ResetHelper.reset(buyable.resets || ResetKey.NONE);
+      if (buyable.oneTime) {
+        if (!buyable.bought.greq(new Num(1, 0))) this.buyAction();
       } else {
         const result = this.calculateBulk(buyable)
 
         if (result[0].greq(new Num(1, 0)) && buyable.currency.amount.greq(result[1])) {
           this.bulkBuyAction(result[1], result[0]);
         }
+        // Trigger reset after bulk buying if needed
+        if (buyable.resets !== 'none') ResetHelper.reset(buyable.resets);
       }
     }
   }
