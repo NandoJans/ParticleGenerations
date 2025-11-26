@@ -39,7 +39,7 @@ export class CombineDarkStarCharger extends DarkStarCharger {
     // Calculate amplification of other charger effects
     const effectiveCharge = this.getEffectiveCharge();
     const baseEffect = new Num(1, 0).add(effectiveCharge.div(new Num(50, 0)));
-    
+
     // Apply shared tier boost from all charger tiers
     this.effect = this.applySharedTierBoost(baseEffect);
   }
@@ -74,7 +74,8 @@ export class CombineDarkStarCharger extends DarkStarCharger {
     const requiredChargers = new Num(2, 0).add(this.tier);
     const activeChargers = this.getActiveChargers();
 
-    return this.isNerfActive &&
+    return  super.shouldCharge() &&
+            this.isNerfActive &&
            this.isUnlocked() &&
            this.isEnabled() &&
            activeChargers.greq(requiredChargers);
@@ -100,7 +101,7 @@ export class CombineDarkStarCharger extends DarkStarCharger {
     let total = new Num(0, 0);
     ChargerRecord.list.forEach((charger) => {
       if (charger !== this && charger instanceof DarkStarCharger && charger.isActive()) {
-        total = total.add(charger.charge);
+        total = total.add(charger.getCharge());
       }
     });
     return total;

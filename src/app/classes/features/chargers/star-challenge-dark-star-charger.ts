@@ -28,20 +28,20 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
     const redParticles = HoldingRecord.redParticles;
 
     const chargeAmount = totalCompletions.mul(redParticles.amount.log10());
-    return chargeAmount.gt(this.charge) ? chargeAmount : this.charge;
+    return chargeAmount.gt(this.getCharge()) ? chargeAmount : this.getCharge();
   }
 
   action(): Num {
     // Calculate unlock/increase of Rigel challenge max completions
     const effectiveCharge = this.getEffectiveCharge();
     const baseEffect = effectiveCharge.floor();
-    
+
     // Apply shared tier boost from all charger tiers
     const effect = this.applySharedTierBoost(baseEffect);
-    
+
     // TODO: Apply to Rigel challenge when it's implemented
     // For now, just track the effect value
-    
+
     this.effect = effect;
     return effect;
   }
@@ -59,7 +59,7 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
       ChallengeRecord.sunStar,
       ChallengeRecord.siriusStar
     ];
-    
+
     challenges.forEach(challenge => {
       // Store original difficulty
       if (!this.originalDifficulties.has(challenge.name)) {
@@ -71,7 +71,7 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
           this.originalDifficulties.set(challenge.name, new Num(1, 0));
         }
       }
-      
+
       // Increase difficulty by 10x
       // Note: Using 'as any' to bypass TypeScript type narrowing issues with union types
       const currentDifficulty = challenge.difficultyIncrease;
@@ -91,7 +91,7 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
       ChallengeRecord.sunStar,
       ChallengeRecord.siriusStar
     ];
-    
+
     challenges.forEach(challenge => {
       // Restore original difficulty
       // Note: Using 'as any' to bypass TypeScript type narrowing issues with union types

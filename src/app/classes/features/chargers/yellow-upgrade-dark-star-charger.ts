@@ -4,6 +4,8 @@ import {ResetKey} from "../../enums/reset-key";
 import {Requirement} from "../interfaces/requirement";
 import {HoldingRecord} from "../../records/holdings/holding-record";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
+import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {Multiplier} from "../multiplier";
 
 /**
  * Yellow Upgrade Dark Star Charger
@@ -24,20 +26,16 @@ export class YellowUpgradeDarkStarCharger extends DarkStarCharger {
   getChargeAmount(): Num {
     // Charge based on yellow particles amount - only increases
     const yellowParticles = HoldingRecord.yellowParticles;
-    const chargeAmount = yellowParticles.amount.log10();
-    return chargeAmount.gt(this.charge) ? chargeAmount : this.charge;
+    const chargeAmount = yellowParticles.amount.log10().pow(new Num(1.75, 0));
+    return chargeAmount.gt(this.getCharge()) ? chargeAmount : this.getCharge();
   }
   action(): Num {
     // Calculate and grant green keys based on effective charge
-    const effectiveCharge = this.getEffectiveCharge();
-    const baseEffect = effectiveCharge.pow(new Num(2, 0));
-
-    // Apply shared tier boost from all charger tiers
-    const effect = this.applySharedTierBoost(baseEffect);
+    const effect = this.getEffectiveCharge().pow(this.tier.mul(new Num(3, 0)));
 
     // Grant green keys (green particles) as the reward
     if (effect.gt(new Num(0, 0))) {
-      HoldingRecord.greenParticles.amount = HoldingRecord.greenParticles.amount.add(effect);
+      MultiplierRecord.yellowParticleGain.addLocalHook(this.name, (multiplier: Multiplier) => multiplier.correct(effect), true);
     }
 
     this.effect = effect;
@@ -65,16 +63,27 @@ export class YellowUpgradeDarkStarCharger extends DarkStarCharger {
   }
 
   getRewardDescription(): string {
-    return 'Increases green key gain, which enhances yellow upgrades and generators.';
+    return 'Increase yellow particle gain based on your charge.';
   }
 
   getEffectDescription(): string {
-    return `Gain ${this.effect.toString()} green keys`;
+    return `Gain more yellow particles based on your charge.`;
+  }
+
+  override getEffectBreakdown(): { formula: string; effects: string[] } {
+    return {
+      formula: `charge^(3 x tier)`,
+      effects: [
+        `Current Charge: ${this.getCharge().toString(2)}`,
+        `Tier: ${this.tier.toString(2)}`,
+        `Effect: ${this.effect.toString(2)}x`
+      ]
+    }
   }
 
   override init() {
     this.requirement = [
-      new Requirement(HoldingRecord.yellowParticles, new Num(1, 25_000), this)
+      new Requirement(HoldingRecord.yellowParticles, new Num(1, 20_000), this)
     ]
   }
 }

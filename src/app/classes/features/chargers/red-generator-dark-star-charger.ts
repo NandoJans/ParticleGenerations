@@ -46,16 +46,15 @@ export class RedGeneratorDarkStarCharger extends DarkStarCharger {
     // Charge is gained by getting more red particles
     const redParticles = HoldingRecord.redParticles;
     const chargeAmount = redParticles.amount.log10();
-    return chargeAmount.gt(this.charge) ? chargeAmount : this.charge;
+    return chargeAmount.gt(this.getCharge()) ? chargeAmount : this.getCharge();
   }
 
   action(): Num {
     // Base effect: 10^charge
-    const baseEffect = this.buffer.pow(this.charge);
+    const baseEffect = this.buffer.pow(this.getCharge());
     // Raise to the power of the number of tiers
-    const tierEffect = baseEffect.pow(new Num(1, 0).mul(this.tier).add(new Num(1, 0)));
+    const effect = baseEffect.pow(new Num(0.55, 0).mul(this.tier).add(new Num(0.45, 0)));
     // Apply shared tier boost from all charger tiers
-    const effect = this.applySharedTierBoost(tierEffect);
     MultiplierRecord.redParticleGenerators.correct(effect);
     return effect;
   }
@@ -106,9 +105,9 @@ export class RedGeneratorDarkStarCharger extends DarkStarCharger {
 
   override getEffectBreakdown(): { formula: string; effects: string[] } {
     return {
-      formula: `(10^charge) ^ (1 x tier + 1)`,
+      formula: `(10^charge) ^ (0.55 x tier + 0.45)`,
       effects: [
-        `Current Charge: ${this.charge.toString(2)}`,
+        `Current Charge: ${this.getCharge().toString(2)}`,
         `Tier: ${this.tier.toString(2)}`,
         `Effect: ${this.effect.toString(2)}x`
       ]

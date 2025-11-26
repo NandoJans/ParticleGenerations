@@ -34,7 +34,7 @@ export abstract class DarkStarCharger extends Charger {
   }
 
   protected applyTierBuffer() {
-    HoldingRecord.darkStarHolding.tierBuffer = HoldingRecord.darkStarHolding.tierBuffer.mul(this.tierBuffer.mul(this.tier.sub(Num.ONE)).add(Num.ONE));
+    HoldingRecord.darkStarHolding.tierBuffer = HoldingRecord.darkStarHolding.tierBuffer.mul(this.tierBuffer.mul(this.highestTier.sub(Num.ONE)).add(Num.ONE));
     this.tierBuffer = DarkStarCharger.DEFAULT_TIER_BUFFER.copy();
   }
 
@@ -58,7 +58,7 @@ export abstract class DarkStarCharger extends Charger {
    * DarkStarChargers only charge when their nerf is enabled
    */
   override shouldCharge(): boolean {
-    return this.isNerfActive && this.isUnlocked() && this.isEnabled() && ChallengeRecord.currentChallenges['green'] === ChallengeRecord.darkGalaxy;
+    return super.shouldCharge() && this.isNerfActive && this.isUnlocked() && this.isEnabled() && ChallengeRecord.currentChallenges['green'] === ChallengeRecord.darkGalaxy;
   }
 
   /**
@@ -120,8 +120,8 @@ export abstract class DarkStarCharger extends Charger {
   override getEffectBreakdown(): {formula: string, effects: string[]} {
     const effects: string[] = [];
 
-    if (this.charge.greq(new Num(1, 0))) {
-      const chargeRatio = this.charge.div(this.maxCharge);
+    if (this.getCharge().greq(new Num(1, 0))) {
+      const chargeRatio = this.getCharge().div(this.maxCharge);
       const nerfIncrease = chargeRatio.mul(new Num(5, -2));
       effects.push(`Charge level: ${chargeRatio.mul(new Num(1, 2)).toString(1)}%`);
       effects.push(`Nerf increase: ${nerfIncrease.toString(3)}`);

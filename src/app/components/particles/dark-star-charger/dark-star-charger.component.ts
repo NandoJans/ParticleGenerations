@@ -6,7 +6,7 @@ import {CommonModule} from '@angular/common';
 import {Charger} from "../../../classes/features/charger";
 import {RedGeneratorDarkStarCharger} from "../../../classes/features/chargers/red-generator-dark-star-charger";
 import {Num} from "../../../num";
-import {faPlay, faPause, faLock, faArrowUp} from '@fortawesome/free-solid-svg-icons';
+import {faPlay, faPause, faLock, faArrowUp, faArrowDown} from '@fortawesome/free-solid-svg-icons';
 import {ChallengeRecord} from "../../../classes/records/challenges/challenge-record";
 import {DropDownMessageService} from "../../../services/visuals/drop-down-message.service";
 import {RomanNumeralsHelper} from "../../../classes/helpers/roman-numerals-helper";
@@ -64,17 +64,17 @@ export class DarkStarChargerComponent {
   }
 
   getProgress(): number {
-    if (this.charger.charge.lte(new Num(0, 0))) {
+    if (this.charger.getCharge().lte(new Num(0, 0))) {
       return 0;
     }
-    if (this.charger.charge.greq(this.charger.maxCharge)) {
+    if (this.charger.getCharge().greq(this.charger.maxCharge)) {
       return 100;
     }
 
     // Logarithmic scaling
     const start = new Num(1, 0);
     const goal = this.charger.maxCharge.div(start);
-    const progress = this.charger.charge.div(start);
+    const progress = this.charger.getCharge().div(start);
 
     const percentage = progress.log(10)
       .div(goal.log(10))
@@ -91,7 +91,7 @@ export class DarkStarChargerComponent {
   }
 
   getAmountDisplay(): string {
-    return `${this.charger.charge.toString()}/${this.charger.maxCharge.toString()}`;
+    return `${this.charger.getCharge().toString()}/${this.charger.maxCharge.toString()}`;
   }
 
   getDisplayName(): string {
@@ -130,7 +130,7 @@ export class DarkStarChargerComponent {
 
   getCollapsedEffectDisplay(): string {
     const breakdown = this.getEffectBreakdown();
-    return breakdown.effects.length > 0 ? breakdown.effects[0] : '';
+    return breakdown.effects.length > 0 ? breakdown.effects[breakdown.effects.length - 1] : '';
   }
 
   isFirstUnlocked(): boolean {
@@ -174,6 +174,10 @@ export class DarkStarChargerComponent {
     return RomanNumeralsHelper.convert(this.charger.tier.toNumber());
   }
 
+  getHighestTierRomanNumerals() {
+    return RomanNumeralsHelper.convert(this.charger.highestTier.toNumber());
+  }
+
   canTierUp(): boolean {
     return this.charger.canTierUp();
   }
@@ -181,11 +185,30 @@ export class DarkStarChargerComponent {
   tierUp(): void {
     if (this.charger.canTierUp()) {
       this.charger.tierUp();
-      this.dropDownMessageService.dropDown("Tier Up!", "Charger has been upgraded to the next tier.", 'success');
     }
   }
 
   getTierMilestoneBoostDescription(): string {
     return this.charger.getTierMilestoneBoostDescription();
+  }
+
+  protected readonly faArrowDown = faArrowDown;
+
+  canNavigateToTier(number: number): boolean {
+    const num: Num = new Num(number, 0);
+    return this.charger.canSwitchTier(this.charger.tier.add(num));
+  }
+
+  navigateTier(number: number) {
+    if (ChallengeRecord.currentChallenges['green'] === ChallengeRecord.darkGalaxy) {
+      this.dropDownMessageService.dropDown("Error", "Cannot navigate to tier while in Dark Galaxy Challenge.", 'error');
+      return;
+    }
+    if (!this.canNavigateToTier(number)) {
+      return;
+    }
+    this.charger.switchTier(this.charger.tier.add(new Num(number, 0)));
+    const num: Num = new Num(number, 0);
+    this.charger.switchTier(this.charger.tier.add(num));
   }
 }

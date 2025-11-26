@@ -16,6 +16,7 @@ export abstract class Charger extends GameElement implements Resetable, Storable
 
   // Tier system
   tier: Num = new Num(1, 0);
+  highestTier: Num = new Num(1, 0);
   startTier: Num = new Num(1, 0);
   abstract baseMaxCharge: Num;
   abstract maxTier: Num | undefined;
@@ -88,7 +89,7 @@ export abstract class Charger extends GameElement implements Resetable, Storable
       }
     }
     // If there is charge or tier, perform action
-    if (this.charge.gt(new Num(0, 0)) || this.tier.gt(new Num(0, 0))) {
+    if (this.getCharge().gt(new Num(0, 0)) || this.tier.gt(new Num(0, 0))) {
       const effect = this.action();
       if (effect instanceof Num) {
         this.effect = effect;
@@ -96,6 +97,7 @@ export abstract class Charger extends GameElement implements Resetable, Storable
     }
     if (this.tier.lt(this.startTier)) this.tier = this.startTier.copy();
     if (this.charge.lt(this.startCharge)) this.charge = this.startCharge.copy();
+    if (this.tier.gt(this.highestTier)) this.highestTier = this.tier.copy();
   }
 
   /**
@@ -103,7 +105,7 @@ export abstract class Charger extends GameElement implements Resetable, Storable
    * Must be overridden by subclasses to implement specific charging conditions
    */
   protected shouldCharge(): boolean {
-    return true;
+    return this.isAtHighestTier();
   }
   /**
    * Returns the amount of charge to add per tick
@@ -141,7 +143,7 @@ export abstract class Charger extends GameElement implements Resetable, Storable
     }
 
     // Can tier up if charge meets or exceeds max charge
-    return this.charge.greq(this.maxCharge);
+    return this.charge.greq(this.maxCharge) && this.isAtHighestTier();
   }
 
   /**
@@ -154,19 +156,30 @@ export abstract class Charger extends GameElement implements Resetable, Storable
     return this.tier.greq(this.maxTier);
   }
 
+  isAtHighestTier(): boolean {
+    return this.tier.equals(this.highestTier);
+  }
+
   /**
    * Tier up the charger - subtract current max charge from charge and increase tier
    */
   tierUp(): void {
     if (this.canTierUp()) {
       // Subtract the current max charge from the current charge
-      const currentMaxCharge = this.maxCharge;
-      this.charge = this.charge.sub(currentMaxCharge);
-      if (this.charge.lt(new Num(0, 0))) {
-        this.charge = new Num(0, 0);
-      }
-      this.tier = this.tier.add(new Num(1, 0));
+      this.charge = new Num(0, 0);
+      this.highestTier = this.highestTier.add(new Num(1, 0));
+      this.switchTier(this.highestTier);
     }
+  }
+
+  switchTier(targetTier: Num): void {
+    if (this.canSwitchTier(targetTier)) {
+      this.tier = targetTier.copy();
+    }
+  }
+
+  canSwitchTier(targetTier: Num): boolean {
+    return targetTier.greq(this.startTier) && targetTier.lte(this.highestTier);
   }
 
   startCharging(): void {
@@ -185,11 +198,15 @@ export abstract class Charger extends GameElement implements Resetable, Storable
     this.collapsed = !this.collapsed;
   }
 
+  getCharge(): Num {
+    return (this.tier.lt(this.highestTier)) ? this.maxCharge : this.charge;
+  }
+
   /**
    * Get the effective charge value for calculations
    */
   protected getEffectiveCharge(): Num {
-    return this.charge;
+    return this.getCharge();
   }
 
   protected getTierChargeEffect(): Num {
@@ -216,6 +233,7 @@ export abstract class Charger extends GameElement implements Resetable, Storable
     this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey());
     this.charge = this.localStorageHelper.loadNum(this.startCharge, "charge");
     this.tier = this.localStorageHelper.loadNum(this.startTier, "tier");
+    this.highestTier = this.localStorageHelper.loadNum(this.startTier, "highestTier");
     this.unlocked = this.localStorageHelper.load(this.unlocked, "unlocked");
     this.firstUnlock = this.localStorageHelper.load(this.firstUnlock, "firstUnlock");
     this.charging = this.localStorageHelper.load(this.charging, 'charging');
@@ -226,6 +244,7 @@ export abstract class Charger extends GameElement implements Resetable, Storable
     this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey());
     this.localStorageHelper.saveNum(this.charge, "charge");
     this.localStorageHelper.saveNum(this.tier, "tier");
+    this.localStorageHelper.saveNum(this.highestTier, "highestTier");
     this.localStorageHelper.save(this.unlocked, "unlocked");
     this.localStorageHelper.save(this.firstUnlock, "firstUnlock");
     this.localStorageHelper.save(this.charging, 'charging');

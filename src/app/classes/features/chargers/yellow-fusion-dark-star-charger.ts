@@ -28,20 +28,20 @@ export class YellowFusionDarkStarCharger extends DarkStarCharger {
     const fusionAmount = yellowFusion.amount;
 
     const chargeAmount = fusionAmount.log10();
-    return chargeAmount.gt(this.charge) ? chargeAmount : this.charge;
+    return chargeAmount.gt(this.getCharge()) ? chargeAmount : this.getCharge();
   }
 
   action(): Num {
     // Calculate and apply hydrogen generation speed boost
     const effectiveCharge = this.getEffectiveCharge();
     const baseEffect = new Num(1, 0).add(effectiveCharge.mul(new Num(0.1, 0)));
-    
+
     // Apply shared tier boost from all charger tiers
     const effect = this.applySharedTierBoost(baseEffect);
-    
+
     // Apply the multiplier to hydrogen generators
     MultiplierRecord.hydrogenGenerators.correct(effect);
-    
+
     this.effect = effect;
     return effect;
   }
@@ -51,15 +51,15 @@ export class YellowFusionDarkStarCharger extends DarkStarCharger {
   applyNerfs(): void {
     // Decrease yellow fusion limit to 6e66
     const yellowFusion = HoldingRecord.yellowFusion;
-    
+
     // Store original max amount if not already stored
     if (!this.originalMaxAmount) {
       this.originalMaxAmount = yellowFusion.maxAmount.copy();
     }
-    
+
     // Set reduced max amount
     yellowFusion.maxAmount = new Num(6, 66);
-    
+
     // Apply hydrogen generation nerf
     const hydrogenPower = new Num(0.5, 0);
     MultiplierRecord.hydrogenGenerators.addLocalHook(
@@ -75,7 +75,7 @@ export class YellowFusionDarkStarCharger extends DarkStarCharger {
     if (this.originalMaxAmount) {
       yellowFusion.maxAmount = this.originalMaxAmount.copy();
     }
-    
+
     // Remove hydrogen generation nerf
     delete MultiplierRecord.hydrogenGenerators.localHooks[this.name];
   }

@@ -123,6 +123,15 @@
   font-size: 14px;
 }
 
+.charger-name-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
 .charger-name {
   margin: 0;
   font-size: 1.2rem;
@@ -132,6 +141,7 @@
 
 .roman-tier {
   font-size: 1.1rem;
+  color: var(--primary-color);
   margin-left: 0.5rem;
 }
 
@@ -147,17 +157,20 @@
   --primary-color: var(--text-color-green);
 }
 
-.charger-container[data-charger-type="red"] .progress-fill {
-  background: color-mix(in hsl, var(--primary-color) 30%, transparent);
+.charger-container .progress-fill {
+  height: 100%;
+  position: relative;
+  transition: width 0.3s ease;
+  background: color-mix(in hsl, var(--primary-color) 50%, transparent);
   box-shadow: 0 0 10px color-mix(in hsl, var(--primary-color) 50%, transparent);
 }
 
-.charger-container[data-charger-type="red"] .charging .progress-fill {
+.charger-container .charging .progress-fill {
   background: linear-gradient(
     90deg,
     color-mix(in hsl, var(--primary-color) 80%, transparent) 0%,
-    color-mix(in hsl, var(--primary-color) 30%, transparent) 5%,
-    color-mix(in hsl, var(--primary-color) 30%, transparent) 95%,
+    color-mix(in hsl, var(--primary-color) 50%, transparent) 5%,
+    color-mix(in hsl, var(--primary-color) 50%, transparent) 95%,
     color-mix(in hsl, var(--primary-color) 80%, transparent) 100%
   ) repeat-x;
   background-size: 1000% 100%;
@@ -177,6 +190,7 @@
 .charger-body {
   position: relative;
   display: flex;
+  flex-direction: column;
   gap: 1rem;
   padding: 1rem;
   background: rgba(0, 0, 0, 0.2);
@@ -185,6 +199,10 @@
 
 .body-left {
   flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
   min-width: 0;
 }
 
@@ -196,6 +214,51 @@
 /* Progress Bar */
 .progress-bar-container {
   margin-bottom: 0;
+  width: 100%;
+}
+
+.navigate-tier-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.navigate-tier-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(
+    135deg,
+    color-mix(in hsl, var(--primary-color) 20%, transparent 80%) 0%,
+    color-mix(in hsl, var(--primary-color) 40%, transparent 60%) 100%
+  );
+  border: 2px solid color-mix(in hsl, var(--primary-color) 40%, transparent 60%);
+  border-radius: 8px;
+  color: var(--primary-color);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.navigate-tier-button:hover:not(:disabled) {
+  background: linear-gradient(
+    135deg,
+    color-mix(in hsl, var(--primary-color) 30%, transparent 70%) 0%,
+    color-mix(in hsl, var(--primary-color) 50%, transparent 50%) 100%
+  );
+}
+
+.navigate-tier-button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.navigate-tier-button:disabled {
+  opacity: 0.5;
+  cursor: initial;
 }
 
 .charge-amount {
@@ -215,23 +278,6 @@
   border: 2px solid var(--background-color-4);
   overflow: hidden;
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.progress-fill {
-  height: 100%;
-  background:
-    linear-gradient(90deg,
-    rgba(0, 255, 170, 0.3) 0%,
-    rgba(0, 255, 170, 0.5) 50%,
-    rgba(0, 255, 170, 0.3) 100%
-  );
-  transition: width 0.3s ease;
-  position: relative;
-  box-shadow: 0 0 10px rgba(0, 255, 170, 0.4);
-}
-
-.progress-bar.charging .progress-fill {
-  animation: pulse-glow 2s ease-in-out infinite;
 }
 
 @keyframes pulse-glow {

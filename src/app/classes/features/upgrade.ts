@@ -70,6 +70,7 @@ export abstract class Upgrade extends Buyable implements Storable, Require, Rese
     this.requirement.forEach(requirement => {
       requirement.register();
     })
+    this.init();
   }
 
   softReset() {}

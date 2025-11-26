@@ -5,7 +5,10 @@
       <button class="toggle-button" (click)="toggleCharging(); $event.stopPropagation()" [class.active]="isCharging()">
         <fa-icon [icon]="isCharging() ? faPause : faPlay"></fa-icon>
       </button>
-      <h3 class="charger-name">{{ getDisplayName() }} <span class="roman-tier">{{ getTierRomanNumerals() }}</span></h3>
+      <div class="charger-name-container">
+        <h3 class="charger-name">{{ getDisplayName() }}</h3>
+        <span class="roman-tier">{{ getTierRomanNumerals() }} / {{ getHighestTierRomanNumerals() }}</span>
+      </div>
     </div>
     <div class="header-right" *ngIf="isCollapsed()">
       <span class="collapsed-charge">{{ getAmountDisplay() }}</span>
@@ -28,6 +31,14 @@
         <button class="tier-up-button" (click)="tierUp(); $event.stopPropagation()">
           <fa-icon [icon]="faArrowUp"></fa-icon>
           <span>Tier Up</span>
+        </button>
+      </div>
+      <div class="navigate-tier-container">
+        <button [class]="'navigate-tier-button'" [disabled]="!canNavigateToTier(1)" (click)="navigateTier(1); $event.stopPropagation()">
+          <fa-icon [icon]="faArrowUp"></fa-icon>
+        </button>
+        <button [class]="'navigate-tier-button '" [disabled]="!canNavigateToTier(-1)" (click)="navigateTier(-1); $event.stopPropagation()">
+          <fa-icon [icon]="faArrowDown"></fa-icon>
         </button>
       </div>
     </div>

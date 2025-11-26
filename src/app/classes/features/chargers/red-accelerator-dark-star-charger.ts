@@ -49,23 +49,20 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
   getChargeAmount(): Num {
     // Charge based on red accelerators gained - only increases
     const redAccelerators = HoldingRecord.redAccelerators;
-    const chargeAmount = redAccelerators.amount.log10();
-    return chargeAmount.gt(this.charge) ? chargeAmount : this.charge;
+    const chargeAmount = redAccelerators.amount.log10().pow(new Num(1.25, 0));
+    return chargeAmount.gt(this.getCharge()) ? chargeAmount : this.getCharge();
   }
 
   action(): Num {
     // Base effect: buffer^charge (multiplier * charge amount)
     // This won't charge itself indefinitely because we use charge as exponent, not as multiplier
-    const baseEffect = this.buffer.pow(this.charge);
+    const baseEffect = this.buffer.pow(this.getCharge());
 
     // Apply static multiplier to the initial effect
     const multipliedEffect = baseEffect.mul(RedAcceleratorDarkStarCharger.staticMultiplier);
 
     // Raise to the power of tier amount (0.5 * tier + 0.5)
-    const tierEffect = multipliedEffect.pow(new Num(0.5, 0).mul(this.tier).add(new Num(0.5, 0)));
-
-    // Apply shared tier boost from all charger tiers
-    const effect = this.applySharedTierBoost(tierEffect);
+    const effect = multipliedEffect.pow(new Num(0.5, 0).mul(this.tier).add(new Num(0.5, 0)));
 
     // Apply the effect to red accelerator generators
     MultiplierRecord.redAcceleratorGenerators.correct(effect);
@@ -75,8 +72,9 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
   }
 
   applyNerfs(): void {
+    // this.charge = new Num(0, 0);
     // Nerfs: Only square root of red accelerators are generated and have effect
-    const power = new Num(0.5, 0);
+    const power = new Num(0.5, 0).mul(new Num(0.9, 0).pow(this.tier.sub(Num.ONE)));
 
     MultiplierRecord.redAcceleratorGenerators.addLocalHook(
       this.name,
@@ -91,7 +89,7 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
   }
 
   getNerfDescription(): string {
-    return 'Only the square root of red accelerators are generated, then only the square root have effect.';
+    return 'Only the square root of red accelerators are generated, then only the square root have effect. Tiers amplify this nerf.';
   }
 
   getEffectDescription(): string {
@@ -110,7 +108,7 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
     return {
       formula: `(${this.buffer.toString()}^charge × ${RedAcceleratorDarkStarCharger.staticMultiplier.toString()})^(0.5×tier + 0.5)`,
       effects: [
-        `Current Charge: ${this.charge.toString(2)}`,
+        `Current Charge: ${this.getCharge().toString(2)}`,
         `Tier: ${this.tier.toString(2)}`,
         `Effect: ${this.effect.toString(2)}x`
       ]

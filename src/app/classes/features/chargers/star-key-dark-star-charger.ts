@@ -26,20 +26,20 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
     // Charge based on star keys - only increases
     const starKeys = HoldingRecord.starKeys;
     const chargeAmount = starKeys.amount.log10();
-    return chargeAmount.gt(this.charge) ? chargeAmount : this.charge;
+    return chargeAmount.gt(this.getCharge()) ? chargeAmount : this.getCharge();
   }
 
   action(): Num {
     // Calculate and apply yellow key-gain boost
     const effectiveCharge = this.getEffectiveCharge();
     const baseEffect = new Num(10, 0).pow(effectiveCharge);
-    
+
     // Apply shared tier boost from all charger tiers
     const effect = this.applySharedTierBoost(baseEffect);
-    
+
     // Apply the multiplier to yellow key gain
     MultiplierRecord.yellowKeyGain.correct(effect);
-    
+
     this.effect = effect;
     return effect;
   }
@@ -49,12 +49,12 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
   applyNerfs(): void {
     // Star key multiplies star key power by 0.95 instead of normal value
     const starKeys = HoldingRecord.starKeys;
-    
+
     // Store original buffer if not already stored
     if (!this.originalStarKeyBuffer) {
       this.originalStarKeyBuffer = starKeys.buffer.copy();
     }
-    
+
     // Reduce star key power by multiplying buffer by 0.95
     starKeys.buffer = starKeys.buffer.mul(new Num(0.95, 0));
   }

@@ -31,9 +31,7 @@ export class SynergizedPowerGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
     if (this.hasBought()) {
       const effect = HoldingRecord.yellowPower.effect
       if (effect instanceof Num) {
-        console.log('mul before', GeneratorRecord.firstRedGenerator.mulMod.toString(2));
         GeneratorRecord.firstRedGenerator.mulMod = GeneratorRecord.firstRedGenerator.mulMod.mul(effect.pow(this.buffer));
-        console.log('mul after', GeneratorRecord.firstRedGenerator.mulMod.toString(2));
         return effect;
       }
     }
