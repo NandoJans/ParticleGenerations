@@ -1,6 +1,5 @@
 import {Num} from "../../num";
 import {Buyable} from "../features/buyable";
-import {ResetKey} from "../enums/reset-key";
 import {ResetHelper} from "./reset-helper";
 import {Transaction} from "../features/interfaces/transaction";
 
@@ -119,7 +118,7 @@ export class BuyableHelper {
 
     // Trigger reset after buying if needed
     if (buyable.resets !== 'none') {
-      ResetHelper.reset(buyable.resets || ResetKey.NONE);
+      ResetHelper.reset(buyable.resets);
     }
 
     return transaction;
@@ -139,7 +138,7 @@ export class BuyableHelper {
           this.bulkBuyAction(result[1], result[0]);
         }
         // Trigger reset after bulk buying if needed
-        if (buyable.resets !== 'none') ResetHelper.reset(buyable.resets || ResetKey.NONE);
+        if (buyable.resets !== 'none') ResetHelper.reset(buyable.resets);
       }
     }
   }
