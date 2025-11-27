@@ -26,6 +26,19 @@ export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
   override buffer: Num = new Num(5, 0);
   override baseBuffer: Num = new Num(5, 0);
 
+  /**
+   * Calculate max charge for a given tier
+   * Each tier increases max charge by 10x
+   */
+  override getMaxChargeForTier(tier: Num): Num {
+    if (tier.lte(new Num(1, 0))) {
+      return this.baseMaxCharge.copy();
+    }
+    // Max charge = baseMaxCharge * 10^(tier - 1)
+    const tierMultiplier = new Num(10, 0).pow(tier.sub(new Num(1, 0)));
+    return this.baseMaxCharge.mul(tierMultiplier);
+  }
+
   getChargeAmount(): Num {
     // Charge based on yellow power - only increases
     const yellowPower = HoldingRecord.yellowPower;
