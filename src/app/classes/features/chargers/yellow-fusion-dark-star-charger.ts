@@ -72,8 +72,8 @@ export class YellowFusionDarkStarCharger extends DarkStarCharger {
     // Set reduced max amount
     yellowFusion.maxAmount = new Num(6, 66);
 
-    // Apply hydrogen generation nerf
-    const hydrogenPower = new Num(0.5, 0);
+    // Apply hydrogen generation nerf, increasing per tier
+    const hydrogenPower = new Num(0.5, 0).mul(new Num(0.9, 0).pow(this.tier.sub(Num.ONE)));
     MultiplierRecord.hydrogenGenerators.addLocalHook(
       this.name,
       (multiplier: Multiplier) => multiplier.power(hydrogenPower),
@@ -93,7 +93,7 @@ export class YellowFusionDarkStarCharger extends DarkStarCharger {
   }
 
   getNerfDescription(): string {
-    return 'Yellow fusion limit decreased to 6e66.';
+    return 'Yellow fusion limit decreased to 6e66. Hydrogen generation nerf increases per tier.';
   }
 
   getEffectDescription(): string {

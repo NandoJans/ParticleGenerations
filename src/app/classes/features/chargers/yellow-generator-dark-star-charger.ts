@@ -57,8 +57,8 @@ export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
 
   applyNerfs(): void {
     // Nerfs applied:
-    // 1. Raise yellow generator multipliers to ^0.5
-    const power = new Num(0.5, 0);
+    // 1. Raise yellow generator multipliers to ^0.5, decreasing further per tier
+    const power = new Num(0.5, 0).mul(new Num(0.9, 0).pow(this.tier.sub(Num.ONE)));
 
     MultiplierRecord.yellowGenerators.addLocalHook(
       this.name,
@@ -85,7 +85,7 @@ export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
   }
 
   getNerfDescription(): string {
-    return `Yellow generator multipliers are raised to ^0.5. Tiers disable yellow generators.`;
+    return `Yellow generator multipliers are raised to ^0.5, decreasing further per tier. Tiers disable yellow generators.`;
   }
 
   getEffectDescription(): string {
