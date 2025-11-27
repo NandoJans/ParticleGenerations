@@ -582,6 +582,23 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
     this.dragged = false;
     this.downPos = {x: e.clientX, y: e.clientY};
     this.lastPan = {x: e.clientX, y: e.clientY};
+
+    // Initialize pinch state when second pointer is added
+    if (this.pointers.size === 2) {
+      const [p1, p2] = Array.from(this.pointers.values());
+      const rect = this.galaxyTreeWrapper.nativeElement.getBoundingClientRect();
+      const midX = ((p1.x + p2.x) / 2) - rect.left;
+      const midY = ((p1.y + p2.y) / 2) - rect.top;
+
+      this.pinchStart = {
+        scale: this.scale,
+        tx: this.tx,
+        ty: this.ty,
+        dist: this.distance(p1, p2),
+        cx: (midX - this.tx) / this.scale,
+        cy: (midY - this.ty) / this.scale
+      };
+    }
   }
 
   onPointerMove(e: PointerEvent) {
