@@ -84,13 +84,14 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
         }
       }
 
-      // Increase difficulty by 10x
+      // Increase difficulty by 10x per tier
       // Note: Using 'as any' to bypass TypeScript type narrowing issues with union types
+      const difficultyMultiplier = new Num(10, 0).pow(this.tier);
       const currentDifficulty = challenge.difficultyIncrease;
       if (currentDifficulty instanceof Num) {
-        (challenge as any).difficultyIncrease = currentDifficulty.mul(new Num(10, 0));
+        (challenge as any).difficultyIncrease = currentDifficulty.mul(difficultyMultiplier);
       } else if (Array.isArray(currentDifficulty)) {
-        (challenge as any).difficultyIncrease = currentDifficulty.map(n => n.mul(new Num(10, 0)));
+        (challenge as any).difficultyIncrease = currentDifficulty.map(n => n.mul(difficultyMultiplier));
       }
     });
   }
@@ -119,7 +120,7 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
   }
 
   getNerfDescription(): string {
-    return 'Star challenges are much harder with no rewards. Sun and Sirius particles cannot be generated.';
+    return 'Star challenges are much harder (difficulty multiplied by 10^tier) with no rewards. Sun and Sirius particles cannot be generated.';
   }
 
   getEffectDescription(): string {

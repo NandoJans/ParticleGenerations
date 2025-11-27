@@ -67,8 +67,9 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
       this.originalStarKeyBuffer = starKeys.buffer.copy();
     }
 
-    // Reduce star key power by multiplying buffer by 0.95
-    starKeys.buffer = starKeys.buffer.mul(new Num(0.95, 0));
+    // Reduce star key power by multiplying buffer by 0.95, decreasing further per tier
+    const nerfMultiplier = new Num(0.95, 0).pow(this.tier);
+    starKeys.buffer = starKeys.buffer.mul(nerfMultiplier);
   }
 
   revertNerfs(): void {
@@ -80,7 +81,7 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
   }
 
   getNerfDescription(): string {
-    return 'Star key power multiplier reduced to 0.95x.';
+    return 'Star key power multiplier reduced to 0.95x per tier (compounds with tier).';
   }
 
   getEffectDescription(): string {
