@@ -38,8 +38,8 @@ export class AcceleratedCompressionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   style: Styles = Styles.STAR_WHITE
   displayName: string = "Accelerated Compression";
 
-  override buffer = new Num(2, 0);
-  override baseBuffer = new Num(2, 0);
+  override buffer = new Num(2, 1);
+  override baseBuffer = new Num(2, 1);
 
   cost: Num = new Num(5, 1);
   baseCost: Num = new Num(5, 1);

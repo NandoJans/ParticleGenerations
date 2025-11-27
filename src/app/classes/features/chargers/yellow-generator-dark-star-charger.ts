@@ -26,6 +26,19 @@ export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
   override buffer: Num = new Num(5, 0);
   override baseBuffer: Num = new Num(5, 0);
 
+  /**
+   * Calculate max charge for a given tier
+   * Each tier increases max charge by 10x
+   */
+  override getMaxChargeForTier(tier: Num): Num {
+    if (tier.lte(new Num(1, 0))) {
+      return this.baseMaxCharge.copy();
+    }
+    // Max charge = baseMaxCharge * 10^(tier - 1)
+    const tierMultiplier = new Num(10, 0).pow(tier.sub(new Num(1, 0)));
+    return this.baseMaxCharge.mul(tierMultiplier);
+  }
+
   getChargeAmount(): Num {
     // Charge based on yellow power - only increases
     const yellowPower = HoldingRecord.yellowPower;
@@ -44,8 +57,8 @@ export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
 
   applyNerfs(): void {
     // Nerfs applied:
-    // 1. Raise yellow generator multipliers to ^0.5
-    const power = new Num(0.5, 0);
+    // 1. Raise yellow generator multipliers to ^0.5, decreasing further per tier
+    const power = new Num(0.5, 0).mul(new Num(0.9, 0).pow(this.tier.sub(Num.ONE)));
 
     MultiplierRecord.yellowGenerators.addLocalHook(
       this.name,
@@ -72,7 +85,7 @@ export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
   }
 
   getNerfDescription(): string {
-    return `Yellow generator multipliers are raised to ^0.5. Tiers disable yellow generators.`;
+    return `Yellow generator multipliers are raised to ^0.5, decreasing further per tier. Tiers disable yellow generators.`;
   }
 
   getEffectDescription(): string {

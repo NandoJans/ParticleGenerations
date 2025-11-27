@@ -23,12 +23,12 @@ export class HydrogenCompressionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   }
 
   getDescription(): string {
-    return `Compression speed is increased based on hydrogen by applying hydrogen^${this.buffer.toString(2)}.`
+    return `Compression speed is increased based on hydrogen by applying hydrogen x ${this.buffer.toString(2)}.`
   }
 
   action(): undefined|Num {
     if (this.hasBought()) {
-      const effect = HoldingRecord.hydrogen.amount.pow(this.buffer);
+      const effect = HoldingRecord.hydrogen.amount.mul(this.buffer);
       MultiplierRecord.starKeyCompressionSpeed.correct(effect);
       return effect
     }
@@ -38,8 +38,8 @@ export class HydrogenCompressionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   style: Styles = Styles.STAR_WHITE
   displayName: string = "Hydrogen Compression";
 
-  override buffer = new Num(1, 0);
-  override baseBuffer = new Num(1, 0);
+  override buffer = new Num(1, 1);
+  override baseBuffer = new Num(1, 1);
 
   cost: Num = new Num(5, 1);
   baseCost: Num = new Num(5, 1);

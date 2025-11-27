@@ -22,6 +22,19 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
   requirement: Requirement[] = [];
   name: string = 'star-key-dark-star-charger';
 
+  /**
+   * Calculate max charge for a given tier
+   * Each tier increases max charge by 10x
+   */
+  override getMaxChargeForTier(tier: Num): Num {
+    if (tier.lte(new Num(1, 0))) {
+      return this.baseMaxCharge.copy();
+    }
+    // Max charge = baseMaxCharge * 10^(tier - 1)
+    const tierMultiplier = new Num(10, 0).pow(tier.sub(new Num(1, 0)));
+    return this.baseMaxCharge.mul(tierMultiplier);
+  }
+
   getChargeAmount(): Num {
     // Charge based on star keys - only increases
     const starKeys = HoldingRecord.starKeys;
@@ -54,8 +67,9 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
       this.originalStarKeyBuffer = starKeys.buffer.copy();
     }
 
-    // Reduce star key power by multiplying buffer by 0.95
-    starKeys.buffer = starKeys.buffer.mul(new Num(0.95, 0));
+    // Reduce star key power by multiplying buffer by 0.95, decreasing further per tier
+    const nerfMultiplier = new Num(0.95, 0).pow(this.tier);
+    starKeys.buffer = starKeys.buffer.mul(nerfMultiplier);
   }
 
   revertNerfs(): void {
@@ -67,7 +81,7 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
   }
 
   getNerfDescription(): string {
-    return 'Star key power multiplier reduced to 0.95x.';
+    return 'Star key power multiplier reduced to 0.95x per tier (compounds with tier).';
   }
 
   getEffectDescription(): string {

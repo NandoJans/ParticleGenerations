@@ -23,6 +23,19 @@ export class YellowUpgradeDarkStarCharger extends DarkStarCharger {
   requirement: Requirement[] = [];
   name: string = 'yellow-upgrade-dark-star-charger';
 
+  /**
+   * Calculate max charge for a given tier
+   * Each tier increases max charge by 10x
+   */
+  override getMaxChargeForTier(tier: Num): Num {
+    if (tier.lte(new Num(1, 0))) {
+      return this.baseMaxCharge.copy();
+    }
+    // Max charge = baseMaxCharge * 10^(tier - 1)
+    const tierMultiplier = new Num(10, 0).pow(tier.sub(new Num(1, 0)));
+    return this.baseMaxCharge.mul(tierMultiplier);
+  }
+
   getChargeAmount(): Num {
     // Charge based on yellow particles amount - only increases
     const yellowParticles = HoldingRecord.yellowParticles;
