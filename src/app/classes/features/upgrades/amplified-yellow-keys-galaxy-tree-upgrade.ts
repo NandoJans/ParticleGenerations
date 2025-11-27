@@ -22,12 +22,12 @@ export class AmplifiedYellowKeysGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   }
 
   getDescription(): string {
-    return `Yellow key gain is ${this.buffer.toString(2)}x higher.`;
+    return `Yellow key gain upgrade is ${this.buffer.toString(2)}x stronger.`;
   }
 
   action(): undefined {
     if (this.hasBought()) {
-      MultiplierRecord.yellowKeyGain.correct(this.buffer);
+      UpgradeRecord.multiplyYellowKeyGain.buffer = UpgradeRecord.multiplyYellowKeyGain.buffer.mul(this.buffer);
     }
     return;
   }
@@ -35,8 +35,8 @@ export class AmplifiedYellowKeysGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   style: Styles = Styles.STAR_RED;
   displayName: string = "Amplified Yellow Keys";
 
-  override buffer = new Num(1, 1);
-  override baseBuffer = new Num(1, 1);
+  override buffer = new Num(2, 0);
+  override baseBuffer = new Num(2, 0);
 
   cost: Num = new Num(3, 1);
   baseCost: Num = new Num(3, 1);
