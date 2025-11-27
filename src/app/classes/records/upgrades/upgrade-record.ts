@@ -161,6 +161,7 @@ import {
 } from "../../features/upgrades/accelerated-compression-galaxy-tree-upgrade";
 import {PoweredCompressionGalaxyTreeUpgrade} from "../../features/upgrades/powered-compression-galaxy-tree-upgrade";
 import {GeneratedCompressionGalaxyTreeUpgrade} from "../../features/upgrades/generated-compression-galaxy-tree-upgrade";
+import {ExpandedYellowKeyScalingGalaxyTreeUpgrade} from "../../features/upgrades/expanded-yellow-key-scaling-galaxy-tree-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -275,6 +276,7 @@ export class UpgradeRecord extends Record {
   static betterYellowGeneratorsGalaxyTree: BetterYellowGeneratorsGalaxyTreeUpgrade = new BetterYellowGeneratorsGalaxyTreeUpgrade('betterYellowParticles');
   static betterYellowMultipliersGalaxyTree: BetterYellowMultipliersGalaxyTreeUpgrade = new BetterYellowMultipliersGalaxyTreeUpgrade('strongerYellowGenerators');
   static amplifiedYellowKeysGalaxyTree: AmplifiedYellowKeysGalaxyTreeUpgrade = new AmplifiedYellowKeysGalaxyTreeUpgrade('moreYellowKeysGain');
+  static expandedYellowKeyScalingGalaxyTree: ExpandedYellowKeyScalingGalaxyTreeUpgrade = new ExpandedYellowKeyScalingGalaxyTreeUpgrade('expandedYellowKeyScaling');
 
   // Mix-upgrades between sections (10-25 Dark Energy)
   static synergizedPowerGalaxyTree: SynergizedPowerGalaxyTreeUpgrade = new SynergizedPowerGalaxyTreeUpgrade('redGeneratorsBoostYellowUpgrades');
@@ -352,6 +354,7 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.betterYellowGeneratorsGalaxyTree,
     UpgradeRecord.betterYellowMultipliersGalaxyTree,
     UpgradeRecord.amplifiedYellowKeysGalaxyTree,
+    UpgradeRecord.expandedYellowKeyScalingGalaxyTree,
     // Mix-upgrades between sections
     UpgradeRecord.synergizedPowerGalaxyTree,
     UpgradeRecord.amplifiedFusionGalaxyTree,
