@@ -37,9 +37,9 @@ export class YellowExpertiseGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   style: Styles = Styles.STAR_WHITE;
   displayName: string = "Yellow Expertise";
 
-  override buffer = new Num(1.5, 0);
-  override baseBuffer = new Num(1.5, 0);
+  override buffer = new Num(1.05, 0);
+  override baseBuffer = new Num(1.05, 0);
 
-  cost: Num = new Num(9, 1);
-  baseCost: Num = new Num(9, 1);
+  cost: Num = new Num(2, 2);
+  baseCost: Num = new Num(2, 2);
 }
