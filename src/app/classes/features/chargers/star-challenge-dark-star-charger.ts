@@ -4,13 +4,18 @@ import {ResetKey} from "../../enums/reset-key";
 import {Requirement} from "../interfaces/requirement";
 import {HoldingRecord} from "../../records/holdings/holding-record";
 import {ChallengeRecord} from "../../records/challenges/challenge-record";
+import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {ProximaCentauriStarChallenge} from "../challenges/proxima-centauri-star-challenge";
 
 /**
  * Star Challenge Dark Star Charger
  *
  * Nerfs: Makes star challenges way harder without any reward for completion. Sun particles and sirius particles cannot be generated
  * Charge: is gained based on total completions and red particles gained in sirius star challenge
- * Amplifies: Unlocks or increases max completions of the new star challenge: Rigel
+ * Amplifies:
+ *   1. Increases challenge holding generation speed slightly
+ *   2. Increases the buff gained from challenges slightly
+ *   3. Increases Proxima Centauri max buff
  */
 export class StarChallengeDarkStarCharger extends DarkStarCharger {
   displayName: string = 'Star Challenge Charger';
@@ -20,6 +25,11 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
   canInfiniteChargeAtMaxTier: boolean = true;
   requirement: Requirement[] = [];
   name: string = 'star-challenge-dark-star-charger';
+
+  // Effect breakdown values for display
+  holdingSpeedEffect: Num = new Num(1, 0);
+  challengeBuffEffect: Num = new Num(1, 0);
+  proximaMaxBuffEffect: Num = new Num(1, 0);
 
   /**
    * Calculate max charge for a given tier
@@ -44,18 +54,41 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
   }
 
   action(): Num {
-    // Calculate unlock/increase of Rigel challenge max completions
     const effectiveCharge = this.getEffectiveCharge();
-    const baseEffect = effectiveCharge.floor();
+
+    // Calculate the three effects based on charge and tier
+    // 1. Challenge holding generation speed: slight increase (1 + charge * 0.01 * tier)
+    this.holdingSpeedEffect = Num.ONE.add(
+      effectiveCharge.mul(new Num(0.01, 0)).mul(this.tier)
+    );
+
+    // 2. Challenge buff boost: slight increase (1 + charge * 0.005 * tier)
+    this.challengeBuffEffect = Num.ONE.add(
+      effectiveCharge.mul(new Num(0.005, 0)).mul(this.tier)
+    );
+
+    // 3. Proxima Centauri max buff increase: (1 + charge * 0.02 * tier)
+    this.proximaMaxBuffEffect = Num.ONE.add(
+      effectiveCharge.mul(new Num(0.02, 0)).mul(this.tier)
+    );
 
     // Apply shared tier boost from all charger tiers
-    const effect = this.applySharedTierBoost(baseEffect);
+    this.holdingSpeedEffect = this.applySharedTierBoost(this.holdingSpeedEffect);
+    this.challengeBuffEffect = this.applySharedTierBoost(this.challengeBuffEffect);
+    this.proximaMaxBuffEffect = this.applySharedTierBoost(this.proximaMaxBuffEffect);
 
-    // TODO: Apply to Rigel challenge when it's implemented
-    // For now, just track the effect value
+    // Apply the multipliers
+    MultiplierRecord.starChallengeHoldingSpeed.correct(this.holdingSpeedEffect);
+    MultiplierRecord.challengeBuffBoost.correct(this.challengeBuffEffect);
+    MultiplierRecord.proximaCentauriMaxBuff.correct(this.proximaMaxBuffEffect);
 
-    this.effect = effect;
-    return effect;
+    // Update Proxima Centauri's max effect using the constant from the challenge class
+    const proximaChallenge = ChallengeRecord.proximaCentauriStar;
+    proximaChallenge.maxEffect = ProximaCentauriStarChallenge.BASE_MAX_EFFECT.mul(this.proximaMaxBuffEffect);
+
+    // Store the challenge buff effect as the primary display effect (most representative of overall power)
+    this.effect = this.challengeBuffEffect;
+    return this.effect;
   }
 
   private originalDifficulties: Map<string, Num | Num[]> = new Map();
@@ -124,7 +157,7 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
   }
 
   getEffectDescription(): string {
-    return `Rigel challenge max completions: +${this.effect.toString()}`;
+    return `Holding speed: ${this.holdingSpeedEffect.toString(2)}x, Buff boost: ${this.challengeBuffEffect.toString(2)}x, Proxima max: ${this.proximaMaxBuffEffect.toString(2)}x`;
   }
 
   getChargeDescription(): string {
@@ -132,7 +165,20 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
   }
 
   getRewardDescription(): string {
-    return 'Unlocks or increases max completions of the Rigel star challenge.';
+    return 'Increases challenge holding generation speed, challenge buff gains, and Proxima Centauri max buff.';
+  }
+
+  override getEffectBreakdown(): { formula: string; effects: string[] } {
+    return {
+      formula: "charge × tier × factor",
+      effects: [
+        `Current Charge: ${this.getCharge().toString()} + ${this.getSharedCharge().toString()}`,
+        `Tier: ${this.tier.toString()}`,
+        `Holding Speed: ${this.holdingSpeedEffect.toString(2)}x`,
+        `Challenge Buff Boost: ${this.challengeBuffEffect.toString(2)}x`,
+        `Proxima Centauri Max Buff: ${this.proximaMaxBuffEffect.toString(2)}x`
+      ]
+    }
   }
 
   override init() {
