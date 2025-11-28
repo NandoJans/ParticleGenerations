@@ -163,8 +163,10 @@ export class BuyableHelper {
       }
     }
 
-    // Apply super-scaling if the threshold is reached
-    if (buyable.superScalingStart !== undefined && buyable.bought.greq(buyable.superScalingStart)) {
+    // Apply super-scaling if the threshold is reached and super-scaling is configured
+    if (buyable.superScalingStart !== undefined && 
+        buyable.superScaling.gt(new Num(1, 0)) &&
+        buyable.bought.greq(buyable.superScalingStart)) {
       const superScalingPurchases = buyable.bought.sub(buyable.superScalingStart);
       // Super-scaling adds an additional exponential cost multiplier
       buyable.cost = buyable.cost.mul(buyable.superScaling.pow(superScalingPurchases.mul(superScalingPurchases)));
