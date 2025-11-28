@@ -55,6 +55,28 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
   private nebulaAnimationPhase: number = 0;
   private resizeHandler = this.resizeCanvases.bind(this);
 
+  // Performance configuration constants
+  private static readonly MOBILE_MAX_SCREEN_WIDTH = 768;
+  private static readonly MOBILE_TARGET_FPS = 30;
+  private static readonly DESKTOP_TARGET_FPS = 60;
+  private static readonly MOBILE_STAR_LAYERS = 1;
+  private static readonly DESKTOP_STAR_LAYERS = 3;
+  private static readonly MOBILE_STARS_PER_UPGRADE = 1;
+  private static readonly DESKTOP_STARS_PER_UPGRADE = 3;
+
+  // Mobile detection and performance settings
+  private readonly isMobile: boolean = this.detectMobile();
+  private readonly starLayers: number = this.isMobile ? GreenGalaxyTreeComponent.MOBILE_STAR_LAYERS : GreenGalaxyTreeComponent.DESKTOP_STAR_LAYERS;
+  private readonly starsPerUpgrade: number = this.isMobile ? GreenGalaxyTreeComponent.MOBILE_STARS_PER_UPGRADE : GreenGalaxyTreeComponent.DESKTOP_STARS_PER_UPGRADE;
+
+  private detectMobile(): boolean {
+    // Detect mobile devices using touch capability combined with screen size
+    // This catches most phones while allowing tablets and touch-enabled laptops to use full settings
+    const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const isSmallScreen = window.innerWidth <= GreenGalaxyTreeComponent.MOBILE_MAX_SCREEN_WIDTH;
+    return hasTouchScreen && isSmallScreen;
+  }
+
   // Cache nebula brightness values to avoid recalculating on every render
   private cachedNebulaBrightness = {
     redGenerator: 0.1,
@@ -124,9 +146,9 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
 
   private updateStars() {
     const purchasedCount = this.getPurchasedStarsCount();
-    // Start with a base of 0 stars, then add 3 more for each purchased upgrade
+    // On mobile: fewer stars per upgrade for better performance
     const baseStars = 0;
-    const targetCount = baseStars + (purchasedCount * 3);
+    const targetCount = baseStars + (purchasedCount * this.starsPerUpgrade);
 
     // Only regenerate if the count has changed
     if (this.stars.length !== targetCount) {
@@ -185,8 +207,8 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
       return x - Math.floor(x);
     };
 
-    // Distribute stars across 3 layers
-    const layer = (id % 3) + 1; // 1, 2, or 3
+    // Distribute stars across layers (1-3 on desktop, only layer 1 on mobile)
+    const layer = (id % this.starLayers) + 1;
 
     const size = 0.5 + seedRandom(id * 1.1) * 1;            // 0.5–1.5 px (smaller, more dot-like)
     const duration = 5 + seedRandom(id * 2.2) * 7;           // 5–12 s
@@ -242,19 +264,33 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
     this.renderNebula();
   }
 
+  // Calculate frame interval from target FPS
+  private readonly targetFrameInterval: number = this.isMobile 
+    ? Math.round(1000 / GreenGalaxyTreeComponent.MOBILE_TARGET_FPS)
+    : Math.round(1000 / GreenGalaxyTreeComponent.DESKTOP_TARGET_FPS);
+  private lastRenderTime: number = 0;
+
   private startAnimation(): void {
     const animate = (currentTime: number) => {
       if (this.lastFrameTime === 0) {
         this.lastFrameTime = currentTime;
+        this.lastRenderTime = currentTime;
       }
 
       const deltaTime = (currentTime - this.lastFrameTime) / 1000; // Convert to seconds
       this.lastFrameTime = currentTime;
 
+      // Always update animations to maintain smooth state
       this.updateStarAnimations(deltaTime);
       this.updateNebulaAnimation(deltaTime);
-      this.renderStars();
-      this.renderNebula();
+
+      // Throttle rendering on mobile for better performance
+      const timeSinceLastRender = currentTime - this.lastRenderTime;
+      if (timeSinceLastRender >= this.targetFrameInterval) {
+        this.renderStars();
+        this.renderNebula();
+        this.lastRenderTime = currentTime;
+      }
 
       this.animationFrameId = requestAnimationFrame(animate);
     };
@@ -287,11 +323,14 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   private renderStars(): void {
-    const canvases = [
+    const allCanvases = [
       { canvas: this.starCanvas1, layer: 1, parallax: 0.1, opacity: 0.6 },
       { canvas: this.starCanvas2, layer: 2, parallax: 0.3, opacity: 0.8 },
       { canvas: this.starCanvas3, layer: 3, parallax: 0.5, opacity: 1.0 }
     ];
+
+    // On mobile, only render layers up to starLayers
+    const canvases = allCanvases.filter(c => c.layer <= this.starLayers);
 
     canvases.forEach(({ canvas, layer, parallax, opacity }) => {
       if (!canvas?.nativeElement) return;
