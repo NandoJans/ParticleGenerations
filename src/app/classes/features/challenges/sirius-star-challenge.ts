@@ -58,7 +58,9 @@ export class SiriusStarChallenge extends YellowStarChallenge {
   requirement: Requirement[] = [];
 
   reward(): Num|undefined {
-    const effect = this.buffer.pow(UpgradeRecord.redGeneratorExtension.amount);
+    let effect = this.buffer.pow(UpgradeRecord.redGeneratorExtension.amount);
+    // Apply challenge buff boost from Star Challenge Charger
+    effect = effect.mul(MultiplierRecord.challengeBuffBoost.getNum());
     MultiplierRecord.yellowGenerators.correct(effect ?? new Num(1, 0));
     return effect;
   }

@@ -31,6 +31,11 @@ export class MultiplierRecord {
   static totalDarkEnergyCost: Multiplier = new Multiplier('totalDarkEnergyCost', new Num(0, 0), 50);
   static greenGenerators: Multiplier = new Multiplier('greenGenerators', new Num(1, 0));
 
+  // Star Challenge Charger
+  static starChallengeHoldingSpeed: Multiplier = new Multiplier('starChallengeHoldingSpeed', new Num(1, 0), 50);
+  static challengeBuffBoost: Multiplier = new Multiplier('challengeBuffBoost', new Num(1, 0), 50);
+  static proximaCentauriMaxBuff: Multiplier = new Multiplier('proximaCentauriMaxBuff', new Num(1, 0), 50);
+
   static list: Multiplier[] = [
     // Red Phase
     MultiplierRecord.redParticleGenerators,
@@ -55,6 +60,11 @@ export class MultiplierRecord {
     MultiplierRecord.totalDarkEnergyGain,
     MultiplierRecord.totalDarkEnergyCost,
     MultiplierRecord.greenGenerators,
+
+    // Star Challenge Charger
+    MultiplierRecord.starChallengeHoldingSpeed,
+    MultiplierRecord.challengeBuffBoost,
+    MultiplierRecord.proximaCentauriMaxBuff,
 
   ];
 

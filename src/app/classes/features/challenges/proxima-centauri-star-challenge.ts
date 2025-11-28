@@ -57,9 +57,10 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
 
   reward(): Num {
     let effect = HoldingRecord.yellowParticles.amount.pow(this.buffer);
+    // Apply challenge buff boost from Star Challenge Charger
+    effect = effect.mul(MultiplierRecord.challengeBuffBoost.getNum());
     if (effect.greq(this.maxEffect)) {
       effect = this.maxEffect.copy();
-      this.maxEffect = new Num(1, 200);
     }
     MultiplierRecord.yellowGenerators.correct(effect);
     return effect;
