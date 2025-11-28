@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild, AfterViewInit, OnDestroy} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild, AfterViewInit, OnDestroy, ChangeDetectorRef} from '@angular/core';
 import {Upgrade} from "../../../classes/features/upgrade";
 import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
 import {Holding} from "../../../classes/features/holding";
@@ -106,6 +106,7 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
 
   constructor(
     public galaxyTreeService: GalaxyTreeService,
+    private cdr: ChangeDetectorRef,
   ) {
 
   }
@@ -133,8 +134,9 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
   ngAfterViewInit(): void {
     this.resizeCanvases();
     this.startAnimation();
-    // Defer viewport bounds update to avoid ExpressionChangedAfterItHasBeenCheckedError
-    setTimeout(() => this.updateViewportBounds(), 0);
+    // Update viewport bounds and trigger change detection to render visible stars
+    this.updateViewportBounds();
+    this.cdr.detectChanges();
 
     // Handle window resize
     window.addEventListener('resize', this.resizeHandler);
