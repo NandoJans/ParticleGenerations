@@ -163,6 +163,13 @@ export class BuyableHelper {
       }
     }
 
+    // Apply super-scaling if the threshold is reached
+    if (buyable.superScalingStart !== undefined && buyable.bought.greq(buyable.superScalingStart)) {
+      const superScalingPurchases = buyable.bought.sub(buyable.superScalingStart);
+      // Super-scaling adds an additional exponential cost multiplier
+      buyable.cost = buyable.cost.mul(buyable.superScaling.pow(superScalingPurchases.mul(superScalingPurchases)));
+    }
+
     buyable.cost = buyable.cost.mul(buyable.costMultiplier);
     buyable.costMultiplier = new Num(1, 0);
   }
