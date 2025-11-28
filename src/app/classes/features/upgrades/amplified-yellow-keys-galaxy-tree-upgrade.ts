@@ -12,6 +12,7 @@ export class AmplifiedYellowKeysGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   getChildren(): GalaxyTreeUpgrade[] {
     return [
       UpgradeRecord.yellowExpertiseGalaxyTree,
+      UpgradeRecord.expandedYellowKeyScalingGalaxyTree,
     ];
   }
 
