@@ -192,7 +192,8 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
    */
   private updateVisibleStars(): void {
     const bounds = this.viewportBounds;
-    this.visibleStars = this.galaxyTreeService.getStars().filter(star => {
+    const allStars = this.galaxyTreeService.getStars();
+    this.visibleStars = allStars.filter(star => {
       const x = star.worldX;
       const y = star.worldY;
       return x >= bounds.minX && x <= bounds.maxX && y >= bounds.minY && y <= bounds.maxY;
