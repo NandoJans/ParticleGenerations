@@ -56,7 +56,7 @@
   <canvas #starCanvas3 class="star-canvas layer-3"></canvas>
 
   <div class="tree-canvas" [style.transform]="transform" [style.touchAction]="'none'">
-    @for (star of getStars(); track star) {
+    @for (star of getVisibleStars(); track star) {
       @if (star.getChildren()?.length && star.hasBought()) {
         <svg
           class="connectors"

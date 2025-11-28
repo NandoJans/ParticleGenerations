@@ -59,15 +59,13 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
   private static readonly MOBILE_MAX_SCREEN_WIDTH = 768;
   private static readonly MOBILE_TARGET_FPS = 30;
   private static readonly DESKTOP_TARGET_FPS = 60;
-  private static readonly MOBILE_STAR_LAYERS = 1;
-  private static readonly DESKTOP_STAR_LAYERS = 3;
-  private static readonly MOBILE_STARS_PER_UPGRADE = 1;
-  private static readonly DESKTOP_STARS_PER_UPGRADE = 3;
+  private static readonly STAR_LAYERS = 3;
+  private static readonly STARS_PER_UPGRADE = 3;
 
   // Mobile detection and performance settings
   private readonly isMobile: boolean = this.detectMobile();
-  private readonly starLayers: number = this.isMobile ? GreenGalaxyTreeComponent.MOBILE_STAR_LAYERS : GreenGalaxyTreeComponent.DESKTOP_STAR_LAYERS;
-  private readonly starsPerUpgrade: number = this.isMobile ? GreenGalaxyTreeComponent.MOBILE_STARS_PER_UPGRADE : GreenGalaxyTreeComponent.DESKTOP_STARS_PER_UPGRADE;
+  private readonly starLayers: number = GreenGalaxyTreeComponent.STAR_LAYERS;
+  private readonly starsPerUpgrade: number = GreenGalaxyTreeComponent.STARS_PER_UPGRADE;
 
   private detectMobile(): boolean {
     // Detect mobile devices using touch capability combined with screen size
@@ -99,6 +97,13 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
   protected readonly faArrowUp = faArrowUp;
 
   protected readonly faArrowDown = faArrowDown;
+
+  // Viewport culling for performance - only render stars within visible bounds
+  private visibleStars: GalaxyTreeUpgrade[] = [];
+  private viewportBounds = { minX: -1000, maxX: 1000, minY: -1000, maxY: 1000 };
+  // Margin (in world units) to add around the viewport for preloading off-screen elements
+  private static readonly VIEWPORT_MARGIN = 200;
+
   constructor(
     public galaxyTreeService: GalaxyTreeService,
   ) {
@@ -128,6 +133,8 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
   ngAfterViewInit(): void {
     this.resizeCanvases();
     this.startAnimation();
+    // Defer viewport bounds update to avoid ExpressionChangedAfterItHasBeenCheckedError
+    setTimeout(() => this.updateViewportBounds(), 0);
 
     // Handle window resize
     window.addEventListener('resize', this.resizeHandler);
@@ -142,6 +149,52 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
 
   getStars(): GalaxyTreeUpgrade[] {
     return this.galaxyTreeService.getStars();
+  }
+
+  /**
+   * Returns only stars that are visible within the current viewport.
+   * This provides significant performance improvement on devices with many upgrade elements.
+   */
+  getVisibleStars(): GalaxyTreeUpgrade[] {
+    return this.visibleStars;
+  }
+
+  /**
+   * Updates the viewport bounds based on the current transform and viewport size.
+   * Called whenever the transform changes (pan/zoom) or window resizes.
+   */
+  private updateViewportBounds(): void {
+    if (!this.galaxyTreeWrapper?.nativeElement) return;
+
+    const rect = this.galaxyTreeWrapper.nativeElement.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+
+    // Convert screen bounds to world coordinates
+    // screen = world * scale + translate
+    // world = (screen - translate) / scale
+    const margin = GreenGalaxyTreeComponent.VIEWPORT_MARGIN;
+    
+    this.viewportBounds = {
+      minX: (0 - this.tx) / this.scale - margin,
+      maxX: (width - this.tx) / this.scale + margin,
+      minY: (0 - this.ty) / this.scale - margin,
+      maxY: (height - this.ty) / this.scale + margin
+    };
+
+    this.updateVisibleStars();
+  }
+
+  /**
+   * Filters all stars to only those within the current viewport bounds.
+   */
+  private updateVisibleStars(): void {
+    const bounds = this.viewportBounds;
+    this.visibleStars = this.galaxyTreeService.getStars().filter(star => {
+      const x = star.worldX;
+      const y = star.worldY;
+      return x >= bounds.minX && x <= bounds.maxX && y >= bounds.minY && y <= bounds.maxY;
+    });
   }
 
   private updateStars() {
@@ -262,6 +315,8 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
 
     // Re-render nebula after resize
     this.renderNebula();
+    // Update viewport bounds for culling
+    this.updateViewportBounds();
   }
 
   // Calculate frame interval from target FPS
@@ -760,6 +815,8 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
     this.updateTransform();
     // Persist
     this.localStorageHelper.save({x: this.tx, y: this.ty, scale: this.scale}, 'viewport');
+    // Update viewport bounds for culling
+    this.updateViewportBounds();
   }
 
   isStarSelected(): boolean {
