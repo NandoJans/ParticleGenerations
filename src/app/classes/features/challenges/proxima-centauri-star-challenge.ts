@@ -53,7 +53,8 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
   requirement: Requirement[] = [];
 
-  override maxEffect = new Num(1, 200);
+  static readonly BASE_MAX_EFFECT: Num = new Num(1, 200);
+  override maxEffect = ProximaCentauriStarChallenge.BASE_MAX_EFFECT.copy();
 
   reward(): Num {
     let effect = HoldingRecord.yellowParticles.amount.pow(this.buffer);

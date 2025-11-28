@@ -5,6 +5,7 @@ import {Requirement} from "../interfaces/requirement";
 import {HoldingRecord} from "../../records/holdings/holding-record";
 import {ChallengeRecord} from "../../records/challenges/challenge-record";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {ProximaCentauriStarChallenge} from "../challenges/proxima-centauri-star-challenge";
 
 /**
  * Star Challenge Dark Star Charger
@@ -81,13 +82,12 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
     MultiplierRecord.challengeBuffBoost.correct(this.challengeBuffEffect);
     MultiplierRecord.proximaCentauriMaxBuff.correct(this.proximaMaxBuffEffect);
 
-    // Update Proxima Centauri's max effect directly
+    // Update Proxima Centauri's max effect using the constant from the challenge class
     const proximaChallenge = ChallengeRecord.proximaCentauriStar;
-    const baseMaxEffect = new Num(1, 200);
-    proximaChallenge.maxEffect = baseMaxEffect.mul(this.proximaMaxBuffEffect);
+    proximaChallenge.maxEffect = ProximaCentauriStarChallenge.BASE_MAX_EFFECT.mul(this.proximaMaxBuffEffect);
 
-    // Store overall effect for display
-    this.effect = this.holdingSpeedEffect.mul(this.challengeBuffEffect).mul(this.proximaMaxBuffEffect);
+    // Store the challenge buff effect as the primary display effect (most representative of overall power)
+    this.effect = this.challengeBuffEffect;
     return this.effect;
   }
 
