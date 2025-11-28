@@ -49,7 +49,6 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
   getChargeAmount(): Num {
     // Charge based on red accelerators gained - only increases
     const redAccelerators = HoldingRecord.redAccelerators;
-    this.charge = new Num(0, 0);
     return redAccelerators.amount.log10().pow(new Num(1.45, 0));
   }
 

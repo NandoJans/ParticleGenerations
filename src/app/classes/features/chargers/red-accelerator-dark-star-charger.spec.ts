@@ -78,4 +78,15 @@ describe('RedAcceleratorDarkStarCharger', () => {
     // - Runs before multiplier reset (1150)
     expect(charger.calculationOrder).toBe(500);
   });
+
+  it('should not reset charge when getChargeAmount is called', () => {
+    // Set a charge value
+    charger.charge = new Num(50, 0);
+
+    // Call getChargeAmount (which previously would reset charge to 0)
+    charger.getChargeAmount();
+
+    // Verify the charge is preserved
+    expect(charger.charge.toNumber()).toBe(50);
+  });
 });
