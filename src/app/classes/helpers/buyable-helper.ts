@@ -67,6 +67,66 @@ export class BuyableHelper {
     }
     // @ts-ignore
     futureBuying = futureBuying.sub(c).add(new Num(1, 0))
+
+    // Apply super-scaling adjustment if configured and threshold would be crossed
+    if (buyable.superScalingStart !== undefined && 
+        buyable.superScaling.gt(new Num(1, 0))) {
+      const finalBought = c.add(futureBuying);
+      
+      // If the bulk purchase would cross or exceed super-scaling threshold
+      if (finalBought.greq(buyable.superScalingStart)) {
+        // Iteratively reduce bulk amount and recalculate cost with super-scaling
+        // until we find an affordable amount or reach single purchase
+        let adjustedBulk = futureBuying.copy();
+        
+        while (adjustedBulk.gt(new Num(0, 0))) {
+          const testFinalBought = c.add(adjustedBulk);
+          
+          // Calculate base cost for this bulk amount (without super-scaling)
+          let baseCostForBulk: Num;
+          if (buyable.scalingStart === undefined) {
+            // Standard scaling formula: baseCost * (increase * scaling^finalBought)^bulk
+            baseCostForBulk = y.mul(a.mul(b.pow(testFinalBought)).pow(adjustedBulk));
+          } else {
+            // With scaling start: simplified to baseCost * increase^bulk
+            baseCostForBulk = y.mul(a.pow(adjustedBulk));
+          }
+          
+          // Apply super-scaling multiplier if above threshold
+          let totalCost = baseCostForBulk;
+          if (testFinalBought.greq(buyable.superScalingStart)) {
+            const superScalingPurchases = testFinalBought.sub(buyable.superScalingStart);
+            const superScalingMultiplier = buyable.superScaling.pow(superScalingPurchases.mul(superScalingPurchases));
+            totalCost = baseCostForBulk.mul(superScalingMultiplier);
+          }
+          
+          // Check if this is affordable
+          if (buyable.currency.amount.greq(totalCost)) {
+            futureBuying = adjustedBulk;
+            futureCost = totalCost;
+            break;
+          }
+          
+          // Reduce bulk amount
+          adjustedBulk = adjustedBulk.sub(new Num(1, 0));
+        }
+        
+        // If we reduced to 0, set to minimum of 1 purchase
+        if (adjustedBulk.lte(new Num(0, 0))) {
+          futureBuying = new Num(1, 0);
+          // Recalculate cost for single purchase
+          const singleFinalBought = c.add(new Num(1, 0));
+          let singleBaseCost = y.mul(a);
+          if (singleFinalBought.greq(buyable.superScalingStart)) {
+            const superScalingPurchases = singleFinalBought.sub(buyable.superScalingStart);
+            const superScalingMultiplier = buyable.superScaling.pow(superScalingPurchases.mul(superScalingPurchases));
+            singleBaseCost = singleBaseCost.mul(superScalingMultiplier);
+          }
+          futureCost = singleBaseCost;
+        }
+      }
+    }
+
     return [futureBuying, futureCost]
   }
 
