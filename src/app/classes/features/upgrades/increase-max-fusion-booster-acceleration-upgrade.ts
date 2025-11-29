@@ -43,6 +43,8 @@ export class IncreaseMaxFusionBoosterAccelerationUpgrade extends Upgrade {
   increase: Num = new Num(1, 1);
   startIncrease: Num = new Num(1, 1);
   override scaling: Num = new Num(1, 1);
+  override superScalingStart: Num = new Num(100, 0);
+  override superScaling: Num = new Num(1.5, 0);
   bought: Num = new Num(0, 0);
   currency: Holding = HoldingRecord.yellowParticles;
   requirement: Requirement[] = [

@@ -14,6 +14,8 @@ export abstract class Buyable extends GameElement {
   abstract startIncrease: Num
   scalingStart: Num | undefined = undefined
   scaling: Num = new Num(1, 0)
+  superScalingStart: Num | undefined = undefined
+  superScaling: Num = new Num(1, 0)
   limit: Num | undefined = undefined
   abstract bought: Num
   abstract currency: Holding
