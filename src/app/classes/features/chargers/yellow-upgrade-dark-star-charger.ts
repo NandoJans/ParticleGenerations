@@ -43,7 +43,11 @@ export class YellowUpgradeDarkStarCharger extends DarkStarCharger {
   }
   action(): Num {
     // Calculate and grant green keys based on effective charge
-    const effect = this.getEffectiveCharge().add(this.getSharedCharge()).pow(this.tier.mul(new Num(3, 0)));
+    const rawEffect = this.getEffectiveCharge().add(this.getSharedCharge()).pow(this.tier.mul(new Num(3, 0)));
+
+    // Apply softcap to prevent runaway exponential growth
+    // When effect exceeds 1e10,000, apply diminishing returns
+    const effect = this.applySoftcap(rawEffect);
 
     // Grant green keys (green particles) as the reward
     if (effect.gt(new Num(0, 0))) {
@@ -51,6 +55,20 @@ export class YellowUpgradeDarkStarCharger extends DarkStarCharger {
     }
 
     this.effect = effect;
+    return effect;
+  }
+
+  /**
+   * Apply a softcap to prevent the effect from growing too large.
+   * After 1e10,000, the effect is raised to the power of 0.1, significantly
+   * slowing down growth while still allowing progression.
+   */
+  private applySoftcap(effect: Num): Num {
+    const cap = new Num(1, 10_000);
+    if (effect.greq(cap)) {
+      // effect = cap * (effect / cap)^0.1
+      return effect.div(cap).pow(0.1).mul(cap);
+    }
     return effect;
   }
 
@@ -83,13 +101,16 @@ export class YellowUpgradeDarkStarCharger extends DarkStarCharger {
   }
 
   override getEffectBreakdown(): { formula: string; effects: string[] } {
+    const cap = new Num(1, 10_000);
+    const isCapped = this.effect.greq(cap);
     return {
-      formula: `charge^(3 x tier)`,
+      formula: isCapped ? `cap x (charge^(3 x tier) / cap)^0.1` : `charge^(3 x tier)`,
       effects: [
         `Current Charge: ${this.getCharge().toString()} + ${this.getSharedCharge().toString()}`,
         `Tier: ${this.tier.toString()}`,
-        `Effect: ${this.effect.toString(2)}x`
-      ]
+        `Effect: ${this.effect.toString(2)}x`,
+        isCapped ? `(Softcapped above 1e10,000)` : ``
+      ].filter(e => e !== '')
     }
   }
 
