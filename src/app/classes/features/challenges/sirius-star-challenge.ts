@@ -57,10 +57,17 @@ export class SiriusStarChallenge extends YellowStarChallenge {
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
   requirement: Requirement[] = [];
 
+  rewardSoftCap: Num = new Num(1, 50_000);
+
   reward(): Num|undefined {
     let effect = this.buffer.pow(UpgradeRecord.redGeneratorExtension.amount);
     // Apply challenge buff boost from Star Challenge Charger
     effect = effect.mul(MultiplierRecord.challengeBuffBoost.getNum());
+    // Apply softcap to prevent runaway exponential growth
+    if (effect.gt(this.rewardSoftCap)) {
+      const cappedEffect = effect.div(this.rewardSoftCap);
+      effect = this.rewardSoftCap.mul(cappedEffect.sqrt());
+    }
     MultiplierRecord.yellowGenerators.correct(effect ?? new Num(1, 0));
     return effect;
   }
