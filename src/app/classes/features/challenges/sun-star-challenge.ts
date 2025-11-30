@@ -69,7 +69,7 @@ export class SunStarChallenge extends YellowStarChallenge {
     let effect = HoldingRecord.yellowPower.effect?.pow(this.buffer) ?? new Num(1, 0)
     // Apply challenge buff boost from Star Challenge Charger
     effect = effect.mul(MultiplierRecord.challengeBuffBoost.getNum());
-    effect = BuffSoftCapHelper.applyPowerSoftCap(effect, this.rewardSoftCap, new Num(0.25, 0));
+    effect = BuffSoftCapHelper.applyPowerSoftCap(effect, this.rewardSoftCap, new Num(0.3, 0));
     MultiplierRecord.redAcceleratorGenerators.correct(effect);
     return effect;
   }
