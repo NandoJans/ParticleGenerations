@@ -57,7 +57,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.YELLOW, this);
   requirement: Requirement[] = [];
 
-  rewardSoftCap: Num = new Num(1, 50_000);
+  rewardSoftCap: Num = new Num(1, 10_000);
 
   reward(): Num|undefined {
     let effect = this.buffer.pow(UpgradeRecord.redGeneratorExtension.amount);

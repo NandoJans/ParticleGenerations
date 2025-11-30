@@ -13,6 +13,7 @@ import {ChallengeGenerator} from "./generators/challenge-generator";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 import {MultiplierChallengeUpgrade} from "./upgrades/multiplier-challenge-upgrade";
 import {CustomChallengeUpgrade} from "./upgrades/custom-challenge-upgrade";
+import {BuffSoftCapHelper} from "../../helpers/buff-soft-cap-helper";
 
 export class SunStarChallenge extends YellowStarChallenge {
   name: string = 'sun-star-challenge';
@@ -68,11 +69,7 @@ export class SunStarChallenge extends YellowStarChallenge {
     let effect = HoldingRecord.yellowPower.effect?.pow(this.buffer) ?? new Num(1, 0)
     // Apply challenge buff boost from Star Challenge Charger
     effect = effect.mul(MultiplierRecord.challengeBuffBoost.getNum());
-    if (effect.gt(this.rewardSoftCap)) {
-      // Calculate the cap of the reward.
-      const cappedEffect = effect.div(this.rewardSoftCap);
-        effect = this.rewardSoftCap.mul(cappedEffect.sqrt());
-    }
+    effect = BuffSoftCapHelper.applyPowerSoftCap(effect, this.rewardSoftCap, new Num(0.25, 0));
     MultiplierRecord.redAcceleratorGenerators.correct(effect);
     return effect;
   }
