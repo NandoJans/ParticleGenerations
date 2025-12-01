@@ -24,7 +24,7 @@ export class ExpandedYellowKeyScalingGalaxyTreeUpgrade extends GalaxyTreeUpgrade
 
   action(): undefined {
     if (this.hasBought()) {
-      UpgradeRecord.decreaseMultiplyYellowKeysScalingStarKeySub.limit = UpgradeRecord.decreaseMultiplyYellowKeysScalingStarKeySub.limit.add(this.buffer);
+      UpgradeRecord.decreaseMultiplyYellowKeysScalingStarKeySub.limit = new Num(5, 0).add(this.buffer);
     }
   }
 
