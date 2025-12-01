@@ -68,7 +68,8 @@ export class TickService {
     this.checkRequirements();
     this.fixes();
 
-    this.calculationOrder.forEach((elements) => {
+    this.calculationOrder.forEach((elements, index) => {
+      App.currentCalculationOrder = index;
       elements.forEach((element) => {
         if (element instanceof Milestone) {
           element.run();

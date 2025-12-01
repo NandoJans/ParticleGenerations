@@ -28,7 +28,7 @@ export class PoweredCompressionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
 
   action(): undefined|Num {
     if (this.hasBought()) {
-      const effect = HoldingRecord.yellowPower.amount.log10().mul(this.buffer);
+      const effect = HoldingRecord.yellowPower.amount.log10().pow(this.buffer);
       MultiplierRecord.starKeyCompressionSpeed.correct(effect);
       return effect
     }
@@ -38,8 +38,8 @@ export class PoweredCompressionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   style: Styles = Styles.STAR_WHITE
   displayName: string = "Powered Compression";
 
-  override buffer = new Num(3, 0);
-  override baseBuffer = new Num(3, 0);
+  override buffer = new Num(2, 0);
+  override baseBuffer = new Num(2, 0);
 
   cost: Num = new Num(5, 1);
   baseCost: Num = new Num(5, 1);

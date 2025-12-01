@@ -6,6 +6,7 @@ export class App {
   static haltNuclearDecay: boolean = false;
   static purplePhase: boolean = false;
   static halting: boolean = false;
+  static currentCalculationOrder?: number;
 
   static gameSpeed: Num = new Num(1, -1);
 

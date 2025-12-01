@@ -7,6 +7,8 @@ import {ChallengeRecord} from "../../records/challenges/challenge-record";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 import {ProximaCentauriStarChallenge} from "../challenges/proxima-centauri-star-challenge";
 import {Multiplier} from "../multiplier";
+import {Challenge} from "../challenge";
+import {App} from "../../../App";
 
 /**
  * Star Challenge Dark Star Charger
@@ -26,6 +28,7 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
   canInfiniteChargeAtMaxTier: boolean = true;
   requirement: Requirement[] = [];
   name: string = 'star-challenge-dark-star-charger';
+  sunParticlesReached: Num = new Num(1, 0);
 
   // Effect breakdown values for display
   holdingSpeedEffect: Num = new Num(1, 0);
@@ -61,23 +64,27 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
       totalCompletions = totalCompletions.add(completions);
     });
 
-    // 10 charge per completion
-    const completionCharge = totalCompletions.mul(new Num(10, 0));
+    let redParticleCharge = new Num(1, 0);
+    if (ChallengeRecord.currentChallenges['yellow'] === ChallengeRecord.siriusStar) {
+      const redParticles = HoldingRecord.redParticles;
+      redParticleCharge = redParticles.amount.log10().div(new Num(1, 1));
+    }
 
-    // Plus log10 of red particles (from sirius challenge context)
-    const redParticles = HoldingRecord.redParticles;
-    const redParticleCharge = redParticles.amount.log10();
+    if (ChallengeRecord.currentChallenges['yellow'] === ChallengeRecord.sunStar) {
+      const sunParticle = ChallengeRecord.sunStar.challengeHoldings['sunParticle'];
+      if (sunParticle.amount.gt(this.sunParticlesReached)) this.sunParticlesReached = sunParticle.amount.copy();
+    }
 
-    return completionCharge.add(redParticleCharge);
+    return new Num(2, 0).pow(totalCompletions).mul(redParticleCharge).mul(this.sunParticlesReached.log10());
   }
 
   action(): Num {
-    const effectiveCharge = this.getEffectiveCharge();
+    const effectiveCharge = this.getEffectiveCharge().add(this.getSharedCharge());
 
     // Calculate the three effects based on charge and tier
     // 1. Challenge holding generation speed: slight increase (1 + charge * 0.01 * tier)
     this.holdingSpeedEffect = Num.ONE.add(
-      effectiveCharge.mul(new Num(0.01, 0)).mul(this.tier)
+      new Num(3, 0).pow(effectiveCharge).mul(this.tier)
     );
 
     // 2. Challenge buff boost: slight increase (1 + charge * 0.005 * tier)
@@ -87,7 +94,7 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
 
     // 3. Proxima Centauri max buff increase: (1 + charge * 0.02 * tier)
     this.proximaMaxBuffEffect = Num.ONE.add(
-      effectiveCharge.mul(new Num(0.02, 0)).mul(this.tier)
+      new Num(2, 0).mul(this.tier).pow(effectiveCharge)
     );
 
     // Apply shared tier boost from all charger tiers
@@ -145,14 +152,6 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
         (challenge as any).difficultyIncrease = currentDifficulty.map(n => n.mul(difficultyMultiplier));
       }
     });
-
-    // Apply ^0.5 reduction to challenge holding generation speed
-    const power = new Num(0.5, 0);
-    MultiplierRecord.starChallengeHoldingSpeed.addLocalHook(
-      this.name,
-      (multiplier: Multiplier) => multiplier.power(power),
-      true
-    );
   }
 
   revertNerfs(): void {
@@ -199,10 +198,11 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
 
   override getEffectBreakdown(): { formula: string; effects: string[] } {
     return {
-      formula: "charge × tier × factor",
+      formula: "Total challenge completions + log10(red particles) x 10^tier x log10(sun particles reached)",
       effects: [
         `Current Charge: ${this.getCharge().toString()} + ${this.getSharedCharge().toString()}`,
         `Tier: ${this.tier.toString()}`,
+        `Sun Particles Reached: ${this.sunParticlesReached.toString()}`,
         `Holding Speed: ${this.holdingSpeedEffect.toString(2)}x`,
         `Challenge Buff Boost: ${this.challengeBuffEffect.toString(2)}x`,
         `Proxima Centauri Max Buff: ${this.proximaMaxBuffEffect.toString(2)}x`
@@ -210,9 +210,19 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
     }
   }
 
+  override save() {
+    super.save();
+    this.localStorageHelper.saveNum(this.sunParticlesReached, 'sunParticlesReached');
+  }
+
+  override tryLoad() {
+    super.tryLoad();
+    this.sunParticlesReached = this.localStorageHelper.loadNum(this.sunParticlesReached, 'sunParticlesReached');
+  }
+
   override init() {
     this.requirement = [
-      new Requirement(HoldingRecord.redParticles, new Num(1, 100_000_000), this)
+      new Requirement(HoldingRecord.redParticles, new Num(1, 50_000_000), this)
     ]
   }
 }

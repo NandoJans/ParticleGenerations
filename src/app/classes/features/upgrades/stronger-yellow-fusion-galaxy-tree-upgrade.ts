@@ -12,6 +12,8 @@ export class StrongerYellowFusionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   getChildren(): GalaxyTreeUpgrade[] {
     return [
       UpgradeRecord.fusedAccelerationGalaxyTree,
+      UpgradeRecord.yellowExpertiseGalaxyTree,
+      UpgradeRecord.slowerCompressionTimeIncreaseGalaxyTree,
     ];
   }
 

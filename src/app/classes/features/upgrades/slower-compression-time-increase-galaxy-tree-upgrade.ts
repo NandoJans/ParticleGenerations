@@ -37,6 +37,6 @@ export class SlowerCompressionTimeIncreaseGalaxyTreeUpgrade extends GalaxyTreeUp
   override buffer = new Num(0.5, 0);
   override baseBuffer = new Num(0.5, 0);
 
-  cost: Num = new Num(2, 2);
-  baseCost: Num = new Num(2, 2);
+  cost: Num = new Num(1, 2);
+  baseCost: Num = new Num(1, 2);
 }

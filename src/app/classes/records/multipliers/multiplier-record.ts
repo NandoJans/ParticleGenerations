@@ -32,9 +32,9 @@ export class MultiplierRecord {
   static greenGenerators: Multiplier = new Multiplier('greenGenerators', new Num(1, 0));
 
   // Star Challenge Charger
-  static starChallengeHoldingSpeed: Multiplier = new Multiplier('starChallengeHoldingSpeed', new Num(1, 0), 50);
-  static challengeBuffBoost: Multiplier = new Multiplier('challengeBuffBoost', new Num(1, 0), 50);
-  static proximaCentauriMaxBuff: Multiplier = new Multiplier('proximaCentauriMaxBuff', new Num(1, 0), 50);
+  static starChallengeHoldingSpeed: Multiplier = new Multiplier('starChallengeHoldingSpeed', new Num(1, 0), 3);
+  static challengeBuffBoost: Multiplier = new Multiplier('challengeBuffBoost', new Num(1, 0), 3);
+  static proximaCentauriMaxBuff: Multiplier = new Multiplier('proximaCentauriMaxBuff', new Num(1, 0), 3);
 
   static list: Multiplier[] = [
     // Red Phase

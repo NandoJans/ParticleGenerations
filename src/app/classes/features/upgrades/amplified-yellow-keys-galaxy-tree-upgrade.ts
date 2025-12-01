@@ -11,7 +11,6 @@ export class AmplifiedYellowKeysGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
 
   getChildren(): GalaxyTreeUpgrade[] {
     return [
-      UpgradeRecord.yellowExpertiseGalaxyTree,
       UpgradeRecord.expandedYellowKeyScalingGalaxyTree,
     ];
   }
@@ -36,8 +35,8 @@ export class AmplifiedYellowKeysGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   style: Styles = Styles.STAR_RED;
   displayName: string = "Amplified Yellow Keys";
 
-  override buffer = new Num(2, 0);
-  override baseBuffer = new Num(2, 0);
+  override buffer = new Num(3, 0);
+  override baseBuffer = new Num(3, 0);
 
   cost: Num = new Num(3, 1);
   baseCost: Num = new Num(3, 1);

@@ -7,6 +7,7 @@ import {Requirement} from "../../interfaces/requirement";
 import {Multiplier} from "../../multiplier";
 import {Generator} from "../../generator";
 import {MultiplierRecord} from "../../../records/multipliers/multiplier-record";
+import {App} from "../../../../App";
 
 export class ChallengeGenerator extends Generator {
   globalMultiplier: Multiplier;
@@ -38,12 +39,7 @@ export class ChallengeGenerator extends Generator {
     this.globalMultiplier = new Multiplier(this.name, new Num(1, 0));
   }
 
-  /**
-   * Override run to apply star challenge holding speed multiplier
-   */
-  override run(speed: Num): any {
-    // Apply star challenge holding speed multiplier to speed
-    const boostedSpeed = speed.mul(MultiplierRecord.starChallengeHoldingSpeed.getNum());
-    return super.run(boostedSpeed);
+  protected override getGenerateAmount(): Num {
+    return super.getGenerateAmount().mul(MultiplierRecord.starChallengeHoldingSpeed.getNum());
   }
 }

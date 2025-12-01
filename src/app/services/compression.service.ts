@@ -269,7 +269,7 @@ export class CompressionService implements Resetable {
   }
 
   yellowKeyScalingStart: Num = new Num(4, 1);
-  yellowKeyScaling: Num = new Num(1, 1);
+  yellowKeyScaling: Num = new Num(5, 0);
 
   getNeededKeys() {
     // After 35 compressions, the yellow key requirement increases even stronger by applying the yellow key scaling
