@@ -6,12 +6,13 @@ import {HoldingRecord} from "../../records/holdings/holding-record";
 import {ChallengeRecord} from "../../records/challenges/challenge-record";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 import {ProximaCentauriStarChallenge} from "../challenges/proxima-centauri-star-challenge";
+import {Multiplier} from "../multiplier";
 
 /**
  * Star Challenge Dark Star Charger
  *
- * Nerfs: Makes star challenges way harder without any reward for completion. Sun particles and sirius particles cannot be generated
- * Charge: is gained based on total completions and red particles gained in sirius star challenge
+ * Nerfs: Makes star challenges way harder without any reward for completion. Reduces challenge holding generation by applying ^0.5.
+ * Charge: is gained based on total completions from ALL challenges (10 per completion) plus log10 of red particles gained in sirius star challenge
  * Amplifies:
  *   1. Increases challenge holding generation speed slightly
  *   2. Increases the buff gained from challenges slightly
@@ -45,12 +46,29 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
   }
 
   getChargeAmount(): Num {
-    // Charge based on total completions and red particles from sirius - only increases
-    const siriusStar = ChallengeRecord.siriusStar;
-    const totalCompletions = siriusStar.completed instanceof Num ? siriusStar.completed : new Num(0, 0);
-    const redParticles = HoldingRecord.redParticles;
+    // Charge based on total completions from ALL challenges (10 per completion)
+    // Plus log10 of red particles gained in sirius star challenge
+    const challenges = [
+      ChallengeRecord.proximaCentauriStar,
+      ChallengeRecord.lalandeStar,
+      ChallengeRecord.sunStar,
+      ChallengeRecord.siriusStar
+    ];
 
-    return totalCompletions.mul(redParticles.amount.log10());
+    let totalCompletions = new Num(0, 0);
+    challenges.forEach(challenge => {
+      const completions = challenge.getCompletions();
+      totalCompletions = totalCompletions.add(completions);
+    });
+
+    // 10 charge per completion
+    const completionCharge = totalCompletions.mul(new Num(10, 0));
+
+    // Plus log10 of red particles (from sirius challenge context)
+    const redParticles = HoldingRecord.redParticles;
+    const redParticleCharge = redParticles.amount.log10();
+
+    return completionCharge.add(redParticleCharge);
   }
 
   action(): Num {
@@ -96,7 +114,7 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
   applyNerfs(): void {
     // Nerfs applied:
     // 1. Make star challenges way harder without rewards
-    // 2. Prevent sun and sirius particles from being generated
+    // 2. Reduce challenge holding generation by applying ^0.5
     // Store original difficulties and increase them
     const challenges = [
       ChallengeRecord.proximaCentauriStar,
@@ -127,6 +145,14 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
         (challenge as any).difficultyIncrease = currentDifficulty.map(n => n.mul(difficultyMultiplier));
       }
     });
+
+    // Apply ^0.5 reduction to challenge holding generation speed
+    const power = new Num(0.5, 0);
+    MultiplierRecord.starChallengeHoldingSpeed.addLocalHook(
+      this.name,
+      (multiplier: Multiplier) => multiplier.power(power),
+      true
+    );
   }
 
   revertNerfs(): void {
@@ -150,10 +176,13 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
         }
       }
     });
+
+    // Remove the ^0.5 reduction hook from challenge holding generation speed
+    delete MultiplierRecord.starChallengeHoldingSpeed.localHooks[this.name];
   }
 
   getNerfDescription(): string {
-    return 'Star challenges are much harder (difficulty multiplied by 10^tier) with no rewards. Sun and Sirius particles cannot be generated.';
+    return 'Star challenges are much harder (difficulty multiplied by 10^tier) with no rewards. Challenge holding generation is reduced (^0.5).';
   }
 
   getEffectDescription(): string {
@@ -161,7 +190,7 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
   }
 
   getChargeDescription(): string {
-    return 'Charges based on total completions and red particles gained in Sirius star challenge.';
+    return 'Charges based on all challenge completions (10 per completion) plus log10 of red particles from Sirius.';
   }
 
   getRewardDescription(): string {
