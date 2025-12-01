@@ -64,12 +64,15 @@ export class SunStarChallenge extends YellowStarChallenge {
   requirement: Requirement[] = [];
 
   rewardSoftCap: Num = new Num(1, 300_000)
+  rewardHarsherSoftCap: Num = new Num(1, 1_000_000)
 
   reward(): Num {
     let effect = HoldingRecord.yellowPower.effect?.pow(this.buffer) ?? new Num(1, 0)
     // Apply challenge buff boost from Star Challenge Charger
     effect = effect.mul(MultiplierRecord.challengeBuffBoost.getNum());
     effect = BuffSoftCapHelper.applyPowerSoftCap(effect, this.rewardSoftCap, new Num(0.4, 0));
+    // Apply harsher soft cap after 1e1,000,000
+    effect = BuffSoftCapHelper.applyPowerSoftCap(effect, this.rewardHarsherSoftCap, new Num(0.25, 0));
     MultiplierRecord.redAcceleratorGenerators.correct(effect);
     return effect;
   }
