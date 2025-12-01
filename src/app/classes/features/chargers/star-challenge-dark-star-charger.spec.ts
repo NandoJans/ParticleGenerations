@@ -16,8 +16,10 @@ describe('StarChallengeDarkStarCharger', () => {
     expect(charger.displayName).toBe('Star Challenge Charger');
   });
 
-  it('should have correct nerf description', () => {
-    expect(charger.getNerfDescription()).toContain('Star challenges');
+  it('should have correct nerf description mentioning reduced generation', () => {
+    const description = charger.getNerfDescription();
+    expect(description).toContain('Star challenges');
+    expect(description).toContain('^0.5');
   });
 
   it('should have correct reward description for new effects', () => {
@@ -48,5 +50,11 @@ describe('StarChallengeDarkStarCharger', () => {
     expect(charger.holdingSpeedEffect).toEqual(new Num(1, 0));
     expect(charger.challengeBuffEffect).toEqual(new Num(1, 0));
     expect(charger.proximaMaxBuffEffect).toEqual(new Num(1, 0));
+  });
+
+  it('should have correct charge description mentioning all challenges', () => {
+    const description = charger.getChargeDescription();
+    expect(description).toContain('all challenge completions');
+    expect(description).toContain('10 per completion');
   });
 });
