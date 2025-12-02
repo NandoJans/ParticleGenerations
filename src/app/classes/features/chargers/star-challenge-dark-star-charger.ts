@@ -153,12 +153,12 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
 
       // Increase difficulty by 10x per tier
       // Note: Using 'as any' to bypass TypeScript type narrowing issues with union types
-      let difficultyMultiplier = new Num(10, 0).pow(this.tier);
+      const baseDifficultyMultiplier = new Num(10, 0).pow(this.tier);
 
       // Apply extra difficulty multiplier specifically to Sirius star challenge
-      if (challenge === ChallengeRecord.siriusStar) {
-        difficultyMultiplier = difficultyMultiplier.mul(StarChallengeDarkStarCharger.SIRIUS_EXTRA_DIFFICULTY_MULTIPLIER);
-      }
+      const difficultyMultiplier = challenge === ChallengeRecord.siriusStar
+        ? baseDifficultyMultiplier.mul(StarChallengeDarkStarCharger.SIRIUS_EXTRA_DIFFICULTY_MULTIPLIER)
+        : baseDifficultyMultiplier;
 
       const currentDifficulty = challenge.difficultyIncrease;
       if (currentDifficulty instanceof Num) {
