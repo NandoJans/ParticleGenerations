@@ -22,6 +22,12 @@ describe('StarChallengeDarkStarCharger', () => {
     expect(description).toContain('^0.5');
   });
 
+  it('should have nerf description mentioning Sirius extra difficulty', () => {
+    const description = charger.getNerfDescription();
+    expect(description).toContain('Sirius');
+    expect(description).toContain('100x');
+  });
+
   it('should have correct reward description for new effects', () => {
     const description = charger.getRewardDescription();
     expect(description).toContain('challenge holding generation speed');
