@@ -73,7 +73,7 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
   applyNerfs(): void {
     // this.charge = new Num(0, 0);
     // Nerfs: Only square root of red accelerators are generated and have effect
-    const power = new Num(0.5, 0).mul(new Num(0.85, 0).pow(this.tier.sub(Num.ONE)));
+    const power = new Num(0.5, 0).mul(new Num(0.75, 0).pow(this.tier.sub(Num.ONE)));
 
     MultiplierRecord.redAcceleratorGenerators.addLocalHook(
       this.name,
