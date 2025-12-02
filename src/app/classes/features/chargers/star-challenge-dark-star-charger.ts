@@ -14,6 +14,7 @@ import {App} from "../../../App";
  * Star Challenge Dark Star Charger
  *
  * Nerfs: Makes star challenges way harder without any reward for completion. Reduces challenge holding generation by applying ^0.5.
+ *        Sirius star challenge is especially difficult with an extra 100x multiplier on top of the base nerf.
  * Charge: is gained based on total completions from ALL challenges (10 per completion) plus log10 of red particles gained in sirius star challenge
  * Amplifies:
  *   1. Increases challenge holding generation speed slightly
@@ -29,6 +30,13 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
   requirement: Requirement[] = [];
   name: string = 'star-challenge-dark-star-charger';
   sunParticlesReached: Num = new Num(1, 0);
+
+  /**
+   * Extra difficulty multiplier applied specifically to Sirius star challenge
+   * when the Star Challenge Dark Charger is active.
+   * This makes Sirius way more difficult compared to other star challenges.
+   */
+  private static readonly SIRIUS_EXTRA_DIFFICULTY_MULTIPLIER: Num = new Num(100, 0);
 
   // Effect breakdown values for display
   holdingSpeedEffect: Num = new Num(1, 0);
@@ -122,6 +130,7 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
     // Nerfs applied:
     // 1. Make star challenges way harder without rewards
     // 2. Reduce challenge holding generation by applying ^0.5
+    // 3. Sirius star challenge is way more difficult with an extra multiplier
     // Store original difficulties and increase them
     const challenges = [
       ChallengeRecord.proximaCentauriStar,
@@ -144,7 +153,13 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
 
       // Increase difficulty by 10x per tier
       // Note: Using 'as any' to bypass TypeScript type narrowing issues with union types
-      const difficultyMultiplier = new Num(10, 0).pow(this.tier);
+      let difficultyMultiplier = new Num(10, 0).pow(this.tier);
+
+      // Apply extra difficulty multiplier specifically to Sirius star challenge
+      if (challenge === ChallengeRecord.siriusStar) {
+        difficultyMultiplier = difficultyMultiplier.mul(StarChallengeDarkStarCharger.SIRIUS_EXTRA_DIFFICULTY_MULTIPLIER);
+      }
+
       const currentDifficulty = challenge.difficultyIncrease;
       if (currentDifficulty instanceof Num) {
         (challenge as any).difficultyIncrease = currentDifficulty.mul(difficultyMultiplier);
@@ -181,7 +196,7 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
   }
 
   getNerfDescription(): string {
-    return 'Star challenges are much harder (difficulty multiplied by 10^tier) with no rewards. Challenge holding generation is reduced (^0.5).';
+    return 'Star challenges are much harder (difficulty multiplied by 10^tier) with no rewards. Sirius star challenge is way more difficult (extra 100x multiplier). Challenge holding generation is reduced (^0.5).';
   }
 
   getEffectDescription(): string {
