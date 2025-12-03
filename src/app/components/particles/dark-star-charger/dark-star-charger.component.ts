@@ -209,4 +209,8 @@ export class DarkStarChargerComponent {
     }
     this.charger.switchTier(this.charger.tier.add(new Num(number, 0)));
   }
+
+  isUnlocked() {
+    return this.charger.isUnlocked();
+  }
 }

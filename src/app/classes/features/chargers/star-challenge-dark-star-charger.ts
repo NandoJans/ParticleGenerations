@@ -36,7 +36,7 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
    * when the Star Challenge Dark Charger is active.
    * This makes Sirius way more difficult compared to other star challenges.
    */
-  private static readonly SIRIUS_EXTRA_DIFFICULTY_MULTIPLIER: Num = new Num(100, 0);
+  private static readonly SIRIUS_EXTRA_DIFFICULTY_MULTIPLIER: Num = new Num(1, 5);
 
   // Effect breakdown values for display
   holdingSpeedEffect: Num = new Num(1, 0);

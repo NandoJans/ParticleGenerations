@@ -42,7 +42,7 @@ export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
   getChargeAmount(): Num {
     // Charge based on yellow power - only increases
     const yellowPower = HoldingRecord.yellowPower;
-    return yellowPower.amount.log10();
+    return yellowPower.amount.log10().pow(new Num(1.23, 0));
   }
 
   action(): Num {

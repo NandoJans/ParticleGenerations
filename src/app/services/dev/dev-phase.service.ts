@@ -11,6 +11,7 @@ import { DataManagerService } from '../data-manager.service';
 import { PrestigeLayersService } from '../prestige-layers.service';
 import { TimelineService } from '../timeline.service';
 import { ChallengeService } from '../interactables/challenge.service';
+import {ChargerRecord} from "../../classes/records/charger/charger-record";
 
 export interface PhaseConfig {
   id: string;
@@ -31,7 +32,7 @@ export class DevPhaseService {
       setup: () => {
         // Reset everything
         this.fullReset();
-        
+
         // Basic starting state
         HoldingRecord.redParticles.amount = new Num(10, 0);
         GeneratorRecord.firstRedGenerator.amount = new Num(1, 0);
@@ -46,23 +47,23 @@ export class DevPhaseService {
       setup: () => {
         // Reset everything
         this.fullReset();
-        
+
         // Red phase progression
         HoldingRecord.redParticles.amount = new Num(1, 100);
-        
+
         // Unlock and give some red generators
         GeneratorRecord.firstRedGenerator.unlocked = true;
         GeneratorRecord.firstRedGenerator.amount = new Num(10, 0);
         GeneratorRecord.firstRedGenerator.bought = new Num(10, 0);
-        
+
         GeneratorRecord.secondRedGenerator.unlocked = true;
         GeneratorRecord.secondRedGenerator.amount = new Num(5, 0);
         GeneratorRecord.secondRedGenerator.bought = new Num(5, 0);
-        
+
         GeneratorRecord.thirdRedGenerator.unlocked = true;
         GeneratorRecord.thirdRedGenerator.amount = new Num(1, 0);
         GeneratorRecord.thirdRedGenerator.bought = new Num(1, 0);
-        
+
         // Some basic upgrades
         UpgradeRecord.redGeneratorExtension.unlocked = true;
         UpgradeRecord.redGeneratorExtension.bought = new Num(5, 0);
@@ -75,10 +76,10 @@ export class DevPhaseService {
       setup: () => {
         // Reset everything
         this.fullReset();
-        
+
         // Late red phase - ready for yellow prestige
         HoldingRecord.redParticles.amount = new Num(1, 1000);
-        
+
         // All red generators unlocked
         [
           GeneratorRecord.firstRedGenerator,
@@ -91,16 +92,16 @@ export class DevPhaseService {
           gen.amount = new Num(20, 0);
           gen.bought = new Num(20, 0);
         });
-        
+
         // Red accelerators
         HoldingRecord.redAccelerators.amount = new Num(100, 0);
         UpgradeRecord.unlockRedAccelerators.unlocked = true;
         UpgradeRecord.unlockRedAccelerators.bought = new Num(1, 0);
-        
+
         GeneratorRecord.redAcceleratorGenerator.unlocked = true;
         GeneratorRecord.redAcceleratorGenerator.amount = new Num(10, 0);
         GeneratorRecord.redAcceleratorGenerator.bought = new Num(10, 0);
-        
+
         // More upgrades
         UpgradeRecord.redGeneratorExtension.unlocked = true;
         UpgradeRecord.redGeneratorExtension.bought = new Num(20, 0);
@@ -115,12 +116,12 @@ export class DevPhaseService {
       setup: () => {
         // Reset everything
         this.fullReset();
-        
+
         // Yellow phase starting point
         HoldingRecord.redParticles.amount = new Num(1, 100);
         HoldingRecord.yellowParticles.amount = new Num(1, 3);
         HoldingRecord.yellowPrestiges.amount = new Num(1, 0);
-        
+
         // Red generators
         [
           GeneratorRecord.firstRedGenerator,
@@ -131,12 +132,12 @@ export class DevPhaseService {
           gen.amount = new Num(10, 0);
           gen.bought = new Num(10, 0);
         });
-        
+
         // Yellow generators
         GeneratorRecord.firstYellowGenerator.unlocked = true;
         GeneratorRecord.firstYellowGenerator.amount = new Num(1, 0);
         GeneratorRecord.firstYellowGenerator.bought = new Num(1, 0);
-        
+
         // Yellow upgrades
         UpgradeRecord.multiplyRedGeneratorsYellow.unlocked = true;
         UpgradeRecord.multiplyYellowParticlesYellow.unlocked = true;
@@ -149,7 +150,7 @@ export class DevPhaseService {
       setup: () => {
         // Reset everything
         this.fullReset();
-        
+
         // Mid yellow phase
         HoldingRecord.redParticles.amount = new Num(5, 500);
         HoldingRecord.yellowParticles.amount = new Num(5, 28);
@@ -157,7 +158,7 @@ export class DevPhaseService {
         HoldingRecord.yellowKeys.amount = new Num(1, 6);
         HoldingRecord.hydrogen.amount = new Num(1, 3);
         HoldingRecord.yellowFusion.amount = new Num(10, 0);
-        
+
         // Red generators
         [
           GeneratorRecord.firstRedGenerator,
@@ -170,7 +171,7 @@ export class DevPhaseService {
           gen.amount = new Num(50, 0);
           gen.bought = new Num(50, 0);
         });
-        
+
         // Yellow generators
         [
           GeneratorRecord.firstYellowGenerator,
@@ -181,16 +182,16 @@ export class DevPhaseService {
           gen.amount = new Num(20, 0);
           gen.bought = new Num(20, 0);
         });
-        
+
         // Fusion generators
         GeneratorRecord.yellowFusionGenerator.unlocked = true;
         GeneratorRecord.yellowFusionGenerator.amount = new Num(5, 0);
         GeneratorRecord.yellowFusionGenerator.bought = new Num(5, 0);
-        
+
         GeneratorRecord.hydrogenGenerator.unlocked = true;
         GeneratorRecord.hydrogenGenerator.amount = new Num(5, 0);
         GeneratorRecord.hydrogenGenerator.bought = new Num(5, 0);
-        
+
         // Yellow upgrades
         UpgradeRecord.multiplyRedGeneratorsYellow.unlocked = true;
         UpgradeRecord.multiplyYellowParticlesYellow.unlocked = true;
@@ -205,7 +206,7 @@ export class DevPhaseService {
       setup: () => {
         // Reset everything
         this.fullReset();
-        
+
         // Late yellow - ready for green
         HoldingRecord.redParticles.amount = new Num(1, 800);
         HoldingRecord.yellowParticles.amount = new Num(1, 1000);
@@ -214,7 +215,7 @@ export class DevPhaseService {
         HoldingRecord.hydrogen.amount = new Num(1, 10);
         HoldingRecord.yellowFusion.amount = new Num(100, 0);
         HoldingRecord.starKeys.amount = new Num(10, 0);
-        
+
         // All red generators
         [
           GeneratorRecord.firstRedGenerator,
@@ -227,7 +228,7 @@ export class DevPhaseService {
           gen.amount = new Num(100, 0);
           gen.bought = new Num(100, 0);
         });
-        
+
         // All yellow generators
         [
           GeneratorRecord.firstYellowGenerator,
@@ -240,16 +241,16 @@ export class DevPhaseService {
           gen.amount = new Num(50, 0);
           gen.bought = new Num(50, 0);
         });
-        
+
         // Fusion generators
         GeneratorRecord.yellowFusionGenerator.unlocked = true;
         GeneratorRecord.yellowFusionGenerator.amount = new Num(20, 0);
         GeneratorRecord.yellowFusionGenerator.bought = new Num(20, 0);
-        
+
         GeneratorRecord.hydrogenGenerator.unlocked = true;
         GeneratorRecord.hydrogenGenerator.amount = new Num(20, 0);
         GeneratorRecord.hydrogenGenerator.bought = new Num(20, 0);
-        
+
         // Many yellow upgrades
         UpgradeRecord.multiplyRedGeneratorsYellow.unlocked = true;
         UpgradeRecord.multiplyYellowParticlesYellow.unlocked = true;
@@ -268,7 +269,7 @@ export class DevPhaseService {
       setup: () => {
         // Reset everything
         this.fullReset();
-        
+
         // Early green phase
         HoldingRecord.redParticles.amount = new Num(1, 500);
         HoldingRecord.yellowParticles.amount = new Num(1, 500);
@@ -276,7 +277,7 @@ export class DevPhaseService {
         HoldingRecord.greenPrestiges.amount = new Num(1, 0);
         HoldingRecord.darkMatter.amount = new Num(1, 0);
         HoldingRecord.darkEnergy.amount = new Num(1, 0);
-        
+
         // Red generators
         [
           GeneratorRecord.firstRedGenerator,
@@ -289,7 +290,7 @@ export class DevPhaseService {
           gen.amount = new Num(50, 0);
           gen.bought = new Num(50, 0);
         });
-        
+
         // Yellow generators
         [
           GeneratorRecord.firstYellowGenerator,
@@ -300,11 +301,59 @@ export class DevPhaseService {
           gen.amount = new Num(30, 0);
           gen.bought = new Num(30, 0);
         });
-        
+
         // Green generators
         GeneratorRecord.firstGreenGenerator.unlocked = true;
         GeneratorRecord.firstGreenGenerator.amount = new Num(1, 0);
         GeneratorRecord.firstGreenGenerator.bought = new Num(1, 0);
+      }
+    },
+    {
+      id: 'mid-green',
+      name: 'Mid Green',
+      description: 'Dark galaxy just unlocked',
+      setup: () => {
+        // Reset everything
+        this.fullReset();
+
+        // Early green phase
+        HoldingRecord.redParticles.amount = new Num(1, 500);
+        HoldingRecord.yellowParticles.amount = new Num(1, 500);
+        HoldingRecord.greenParticles.amount = new Num(1, 3);
+        HoldingRecord.greenPrestiges.amount = new Num(1, 0);
+        HoldingRecord.darkMatter.amount = new Num(1, 0);
+        HoldingRecord.darkEnergy.amount = new Num(1, 0);
+
+        // Red generators
+        [
+          GeneratorRecord.firstRedGenerator,
+          GeneratorRecord.secondRedGenerator,
+          GeneratorRecord.thirdRedGenerator,
+          GeneratorRecord.fourthRedGenerator,
+          GeneratorRecord.fifthRedGenerator
+        ].forEach(gen => {
+          gen.unlocked = true;
+          gen.amount = new Num(50, 0);
+          gen.bought = new Num(50, 0);
+        });
+
+        // Yellow generators
+        [
+          GeneratorRecord.firstYellowGenerator,
+          GeneratorRecord.secondYellowGenerator,
+          GeneratorRecord.thirdYellowGenerator
+        ].forEach(gen => {
+          gen.unlocked = true;
+          gen.amount = new Num(30, 0);
+          gen.bought = new Num(30, 0);
+        });
+
+        UpgradeRecord.redParticleSacrifice.bought = new Num(3, 1);
+        UpgradeRecord.yellowParticleSacrifice.bought = new Num(3, 1);
+        UpgradeRecord.greenParticleSacrifice.bought = new Num(3, 1);
+
+        HoldingRecord.greenPrestiges.amount = new Num(1, 2);
+        HoldingRecord.greenParticles.amount = new Num(1, 10);
       }
     }
   ];
@@ -329,6 +378,7 @@ export class DevPhaseService {
       ...ChallengeRecord.list,
       ...MilestoneRecord.list,
       ...TimelineService.list,
+      ...ChargerRecord.list,
     ].forEach(element => {
       element.reset();
     });

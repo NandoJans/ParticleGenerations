@@ -37,8 +37,8 @@ export class BetterRedAcceleratorGenerationGalaxyTreeUpgrade extends GalaxyTreeU
   style: Styles = Styles.STAR_YELLOW;
   displayName: string = "Better Red Accelerator Generation";
 
-  override buffer = new Num(2, 0);
-  override baseBuffer = new Num(2, 0);
+  override buffer = new Num(5, 0);
+  override baseBuffer = new Num(5, 0);
 
   cost: Num = new Num(3.5, 2);
   baseCost: Num = new Num(3.5, 2);

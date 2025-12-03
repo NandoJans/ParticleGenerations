@@ -73,7 +73,7 @@ export abstract class Charger extends GameElement implements Resetable, Storable
     this.chargeAmount = new Num(0, 0);
 
     if (this.charging && this.shouldCharge()) {
-      this.chargeAmount = this.getChargeAmount();
+      this.chargeAmount = this.getChargeAmount().div(new Num(2, 0).pow(this.tier));
 
       if (this.chargeAmount.gt(this.getCharge())) {
         this.applyCharge(this.chargeAmount);
@@ -212,9 +212,12 @@ export abstract class Charger extends GameElement implements Resetable, Storable
   softReset(): void {}
 
   reset(): void {
+    this.chargeAmount = this.startCharge.copy();
     this.charge = this.startCharge.copy();
+    this.highestTier = this.startTier.copy();
     this.tier = this.startTier.copy();
     this.effect = new Num(0, 0);
+    this.lock();
   }
 
   getSaveCategory(): string {
