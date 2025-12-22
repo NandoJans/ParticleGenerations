@@ -26,6 +26,8 @@ import { UpgradeHelperService } from './helpers/upgrade-helper.service';
 import { PrestigeHelperService } from './helpers/prestige-helper.service';
 import { BuyableHelperService } from './helpers/buyable-helper.service';
 import { EnhancementHelperService } from './helpers/enhancement-helper.service';
+import { DarkStarChargerHelperService } from './helpers/dark-star-charger-helper.service';
+import { GalaxyTreeUpgradeHelperService } from './helpers/galaxy-tree-upgrade-helper.service';
 import {TimelineService} from "../timeline.service";
 import {CompressionService} from "../compression.service";
 
@@ -95,6 +97,8 @@ export class BalanceService {
     private prestigeHelper: PrestigeHelperService,
     private buyableHelper: BuyableHelperService,
     private enhancementHelper: EnhancementHelperService,
+    private darkStarChargerHelper: DarkStarChargerHelperService,
+    private galaxyTreeUpgradeHelper: GalaxyTreeUpgradeHelperService,
     private timelineService: TimelineService,
     private compressionService: CompressionService,
   ) {
@@ -128,6 +132,7 @@ export class BalanceService {
     this.prestigeGainHistory.clear();
     this.trackedMilestones.clear();
     this.trackedUpgradeLevels.clear();
+    this.darkStarChargerHelper.reset();
 
     // Create an initial snapshot (baseline)
     this.dataManagerService.saveSim();
@@ -202,6 +207,12 @@ export class BalanceService {
 
     // Check for specific upgrade level milestones
     this.checkUpgradeLevels();
+
+    // Handle dark star charger strategy
+    this.handleDarkStarChargers();
+
+    // Handle galaxy tree upgrade purchases
+    this.handleGalaxyTreeUpgrades();
 
     this.prestigeLayerService.getList().forEach(prestigeLayer => {
       if (prestigeLayer.limitPhaseBelow && prestigeLayer.requirementsMet()) {
@@ -342,6 +353,30 @@ export class BalanceService {
       elapsedSincePrevious: this.elapsedSincePrevious,
       markNew: () => { this.newResultsThisLoop = true; },
     }, enhancable);
+  }
+
+  /**
+   * Handle dark star charger strategy during dark galaxy challenge
+   */
+  private handleDarkStarChargers(): void {
+    this.darkStarChargerHelper.handleDarkStarChargers({
+      results: this.results,
+      totalElapsedTime: this.totalElapsedTime,
+      elapsedSincePrevious: this.elapsedSincePrevious,
+      markNew: () => { this.newResultsThisLoop = true; },
+    });
+  }
+
+  /**
+   * Handle galaxy tree upgrade purchases for dark galaxy progression
+   */
+  private handleGalaxyTreeUpgrades(): void {
+    this.galaxyTreeUpgradeHelper.handleGalaxyTreeUpgrades({
+      results: this.results,
+      totalElapsedTime: this.totalElapsedTime,
+      elapsedSincePrevious: this.elapsedSincePrevious,
+      markNew: () => { this.newResultsThisLoop = true; },
+    });
   }
 
   done() {
