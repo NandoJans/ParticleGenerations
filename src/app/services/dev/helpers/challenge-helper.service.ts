@@ -6,6 +6,8 @@ import { EnhancementService } from '../../enhancement.service';
 import { Challenge } from '../../../classes/features/challenge';
 import { GeneratorRecord } from '../../../classes/records/generators/generator-record';
 import { EnhancementRecord } from '../../../classes/records/enhancement-record';
+import { HoldingRecord } from '../../../classes/records/holdings/holding-record';
+import { Num } from '../../../num';
 
 export interface ChallengeCtx {
   results: { [key: string]: any };
@@ -76,6 +78,9 @@ export class ChallengeHelperService {
 
   private shouldStartChallenge(challenge: Challenge) {
     switch (challenge) {
+      case ChallengeRecord.darkGalaxy:
+        // Auto-start dark galaxy when green particles requirement is met
+        return HoldingRecord.greenParticles.amount.greq(new Num(1, 2));
       case ChallengeRecord.lalandeStar:
         return GeneratorRecord.thirdYellowGenerator.hasBought();
       default:

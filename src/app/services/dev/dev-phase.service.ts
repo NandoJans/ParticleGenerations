@@ -364,20 +364,21 @@ export class DevPhaseService {
         // Reset everything
         this.fullReset();
 
-        // Set up green phase ready for dark galaxy
-        HoldingRecord.redParticles.amount = new Num(1, 800);
-        HoldingRecord.yellowParticles.amount = new Num(1, 800);
-        HoldingRecord.greenParticles.amount = new Num(1, 100);
-        HoldingRecord.greenPrestiges.amount = new Num(1, 3);
-        HoldingRecord.darkMatter.amount = new Num(1, 5);
-        HoldingRecord.darkEnergy.amount = new Num(1, 10);
-        HoldingRecord.starKeys.amount = new Num(100, 0);
-        HoldingRecord.yellowPrestiges.amount = new Num(1, 8);
-        HoldingRecord.yellowKeys.amount = new Num(1, 15);
-        HoldingRecord.yellowFusion.amount = new Num(100, 0);
-        HoldingRecord.hydrogen.amount = new Num(1, 20);
+        // Set up green phase ready for dark galaxy (balanced for meaningful progression)
+        // Goal is 1e1000 red particles, starting at 1e400 gives a 600 order of magnitude gap
+        HoldingRecord.redParticles.amount = new Num(1, 400);
+        HoldingRecord.yellowParticles.amount = new Num(1, 400);
+        HoldingRecord.greenParticles.amount = new Num(1, 50);
+        HoldingRecord.greenPrestiges.amount = new Num(1, 2);
+        HoldingRecord.darkMatter.amount = new Num(1, 3);
+        HoldingRecord.darkEnergy.amount = new Num(1, 5);
+        HoldingRecord.starKeys.amount = new Num(20, 0);
+        HoldingRecord.yellowPrestiges.amount = new Num(1, 5);
+        HoldingRecord.yellowKeys.amount = new Num(1, 10);
+        HoldingRecord.yellowFusion.amount = new Num(50, 0);
+        HoldingRecord.hydrogen.amount = new Num(1, 10);
 
-        // Red generators
+        // Red generators (reduced for meaningful progression)
         [
           GeneratorRecord.firstRedGenerator,
           GeneratorRecord.secondRedGenerator,
@@ -386,19 +387,19 @@ export class DevPhaseService {
           GeneratorRecord.fifthRedGenerator
         ].forEach(gen => {
           gen.unlocked = true;
-          gen.amount = new Num(100, 0);
-          gen.bought = new Num(100, 0);
+          gen.amount = new Num(50, 0);
+          gen.bought = new Num(50, 0);
         });
 
-        // Red accelerators
-        HoldingRecord.redAccelerators.amount = new Num(1, 100);
+        // Red accelerators (reduced to match lower progression)
+        HoldingRecord.redAccelerators.amount = new Num(1, 50);
         UpgradeRecord.unlockRedAccelerators.unlocked = true;
         UpgradeRecord.unlockRedAccelerators.bought = new Num(1, 0);
         GeneratorRecord.redAcceleratorGenerator.unlocked = true;
-        GeneratorRecord.redAcceleratorGenerator.amount = new Num(50, 0);
-        GeneratorRecord.redAcceleratorGenerator.bought = new Num(50, 0);
+        GeneratorRecord.redAcceleratorGenerator.amount = new Num(30, 0);
+        GeneratorRecord.redAcceleratorGenerator.bought = new Num(30, 0);
 
-        // Yellow generators
+        // Yellow generators (reduced for better testing)
         [
           GeneratorRecord.firstYellowGenerator,
           GeneratorRecord.secondYellowGenerator,
@@ -407,18 +408,18 @@ export class DevPhaseService {
           GeneratorRecord.fifthYellowGenerator
         ].forEach(gen => {
           gen.unlocked = true;
-          gen.amount = new Num(75, 0);
-          gen.bought = new Num(75, 0);
+          gen.amount = new Num(40, 0);
+          gen.bought = new Num(40, 0);
         });
 
-        // Fusion generators
+        // Fusion generators (reduced for balanced progression)
         GeneratorRecord.yellowFusionGenerator.unlocked = true;
-        GeneratorRecord.yellowFusionGenerator.amount = new Num(30, 0);
-        GeneratorRecord.yellowFusionGenerator.bought = new Num(30, 0);
+        GeneratorRecord.yellowFusionGenerator.amount = new Num(20, 0);
+        GeneratorRecord.yellowFusionGenerator.bought = new Num(20, 0);
 
         GeneratorRecord.hydrogenGenerator.unlocked = true;
-        GeneratorRecord.hydrogenGenerator.amount = new Num(30, 0);
-        GeneratorRecord.hydrogenGenerator.bought = new Num(30, 0);
+        GeneratorRecord.hydrogenGenerator.amount = new Num(20, 0);
+        GeneratorRecord.hydrogenGenerator.bought = new Num(20, 0);
 
         // Green generators
         GeneratorRecord.firstGreenGenerator.unlocked = true;
@@ -434,13 +435,13 @@ export class DevPhaseService {
         UpgradeRecord.yellowParticleSacrifice.bought = new Num(1, 3);
         UpgradeRecord.greenParticleSacrifice.bought = new Num(1, 2);
 
-        // Key upgrades for dark galaxy
+        // Key upgrades for dark galaxy (reduced for meaningful progression)
         UpgradeRecord.redGeneratorExtension.unlocked = true;
-        UpgradeRecord.redGeneratorExtension.bought = new Num(100, 0);
+        UpgradeRecord.redGeneratorExtension.bought = new Num(50, 0);
         UpgradeRecord.redGeneratorBooster.unlocked = true;
-        UpgradeRecord.redGeneratorBooster.bought = new Num(50, 0);
+        UpgradeRecord.redGeneratorBooster.bought = new Num(25, 0);
         UpgradeRecord.yellowPower.unlocked = true;
-        UpgradeRecord.yellowPower.bought = new Num(100, 0);
+        UpgradeRecord.yellowPower.bought = new Num(50, 0);
 
         // Unlock dark star chargers (they will start at tier 1)
         ChargerRecord.redGeneratorDarkCharger.unlocked = true;
@@ -457,8 +458,8 @@ export class DevPhaseService {
           charger.enabled = true;
         });
 
-        // Give some dark stars from previous runs
-        HoldingRecord.darkStarHolding.amount = new Num(10, 0);
+        // Give some dark stars from previous runs (reduced slightly)
+        HoldingRecord.darkStarHolding.amount = new Num(5, 0);
 
         // Set some star challenges completed
         ChallengeRecord.proximaCentauriStar.completed = new Num(3, 0);
