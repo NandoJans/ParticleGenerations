@@ -458,8 +458,8 @@ export class DevPhaseService {
           charger.enabled = true;
         });
 
-        // Give some dark stars from previous runs (reduced slightly)
-        HoldingRecord.darkStarHolding.amount = new Num(5, 0);
+        // Start with 0 dark stars (they are gained during dark galaxy challenge runs)
+        HoldingRecord.darkStarHolding.amount = new Num(0, 0);
 
         // Set some star challenges completed
         ChallengeRecord.proximaCentauriStar.completed = new Num(3, 0);
