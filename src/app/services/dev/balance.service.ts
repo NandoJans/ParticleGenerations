@@ -28,6 +28,7 @@ import { BuyableHelperService } from './helpers/buyable-helper.service';
 import { EnhancementHelperService } from './helpers/enhancement-helper.service';
 import { DarkStarChargerHelperService } from './helpers/dark-star-charger-helper.service';
 import { GalaxyTreeUpgradeHelperService } from './helpers/galaxy-tree-upgrade-helper.service';
+import { SacrificeHelperService } from './helpers/sacrifice-helper.service';
 import { DevPhaseService } from './dev-phase.service';
 import {TimelineService} from "../timeline.service";
 import {CompressionService} from "../compression.service";
@@ -102,6 +103,7 @@ export class BalanceService {
     private enhancementHelper: EnhancementHelperService,
     private darkStarChargerHelper: DarkStarChargerHelperService,
     private galaxyTreeUpgradeHelper: GalaxyTreeUpgradeHelperService,
+    private sacrificeHelper: SacrificeHelperService,
     private devPhaseService: DevPhaseService,
     private timelineService: TimelineService,
     private compressionService: CompressionService,
@@ -223,10 +225,13 @@ export class BalanceService {
     // Check for specific upgrade level milestones
     this.checkUpgradeLevels();
 
+    // Handle sacrifice upgrades (convert particles → dark energy)
+    this.handleSacrificeUpgrades();
+
     // Handle dark star charger strategy
     this.handleDarkStarChargers();
 
-    // Handle galaxy tree upgrade purchases
+    // Handle galaxy tree upgrade purchases (uses dark energy)
     this.handleGalaxyTreeUpgrades();
 
     this.prestigeLayerService.getList().forEach(prestigeLayer => {
@@ -375,6 +380,18 @@ export class BalanceService {
    */
   private handleDarkStarChargers(): void {
     this.darkStarChargerHelper.handleDarkStarChargers({
+      results: this.results,
+      totalElapsedTime: this.totalElapsedTime,
+      elapsedSincePrevious: this.elapsedSincePrevious,
+      markNew: () => { this.newResultsThisLoop = true; },
+    });
+  }
+
+  /**
+   * Handle sacrifice upgrade purchases to convert particles into dark energy
+   */
+  private handleSacrificeUpgrades(): void {
+    this.sacrificeHelper.handleSacrificeUpgrades({
       results: this.results,
       totalElapsedTime: this.totalElapsedTime,
       elapsedSincePrevious: this.elapsedSincePrevious,
