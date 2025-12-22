@@ -1,4 +1,13 @@
 <div class="actions" style="display:flex; gap:8px; align-items:center; margin-bottom:8px; flex-wrap: wrap;">
+  <div style="display:flex; gap:8px; align-items:center;">
+    <label for="phase-select" style="font-weight: bold;">Starting Phase:</label>
+    <select id="phase-select" [(ngModel)]="selectedPhaseId" style="padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+      <option value="">-- Default (Mid Yellow) --</option>
+      @for (phase of getPhases(); track phase.id) {
+        <option [value]="phase.id">{{ phase.name }}</option>
+      }
+    </select>
+  </div>
   <app-button [style]="'button green'" (click)="start()" [text]="'Start'"></app-button>
   <app-button [style]="'button'" (click)="saveSnapshot('Manual')" [text]="'Save snapshot'"></app-button>
 </div>

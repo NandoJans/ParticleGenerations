@@ -28,6 +28,7 @@ import { BuyableHelperService } from './helpers/buyable-helper.service';
 import { EnhancementHelperService } from './helpers/enhancement-helper.service';
 import { DarkStarChargerHelperService } from './helpers/dark-star-charger-helper.service';
 import { GalaxyTreeUpgradeHelperService } from './helpers/galaxy-tree-upgrade-helper.service';
+import { DevPhaseService } from './dev-phase.service';
 import {TimelineService} from "../timeline.service";
 import {CompressionService} from "../compression.service";
 
@@ -51,10 +52,12 @@ export class BalanceService {
     maxTime: number,
     higherPrestige: Num
     initial: () => void,
+    phaseId?: string,
   } = {
     speed: 10,
     maxTime: 1000000,
     higherPrestige: new Num(1.01, 0),
+    phaseId: undefined,
     initial: () => {
       HoldingRecord.yellowParticles.amount = new Num(5, 28);
       HoldingRecord.yellowPrestiges.amount = new Num(1, 4);
@@ -99,6 +102,7 @@ export class BalanceService {
     private enhancementHelper: EnhancementHelperService,
     private darkStarChargerHelper: DarkStarChargerHelperService,
     private galaxyTreeUpgradeHelper: GalaxyTreeUpgradeHelperService,
+    private devPhaseService: DevPhaseService,
     private timelineService: TimelineService,
     private compressionService: CompressionService,
   ) {
@@ -141,7 +145,18 @@ export class BalanceService {
     App.gameSpeed = new Num(this.settings.speed, 0);
     App.offlineCalculation = true;
 
-    this.settings.initial();
+    // Load the selected phase or use default initial setup
+    if (this.settings.phaseId) {
+      const phase = this.devPhaseService.getPhases().find(p => p.id === this.settings.phaseId);
+      if (phase) {
+        phase.setup();
+      } else {
+        this.settings.initial();
+      }
+    } else {
+      this.settings.initial();
+    }
+    
     this.loopTimeout = setInterval(this.loop.bind(this), 1);
   }
 
@@ -424,6 +439,11 @@ export class BalanceService {
 
   getResults() {
     return this.results;
+  }
+
+  // Get available phases for starting the simulation
+  getPhases() {
+    return this.devPhaseService.getPhases();
   }
 
   // List available simulation snapshots
