@@ -76,7 +76,7 @@ export class DarkStarChargerHelperService {
             element: `Switched to ${bestCharger.displayName}`,
             time: ctx.totalElapsedTime,
             timeBetween: ctx.elapsedSincePrevious,
-            style: bestCharger.style,
+            style: 'dark-galaxy',
           };
           ctx.markNew();
         }
@@ -140,7 +140,7 @@ export class DarkStarChargerHelperService {
             element: `${charger.displayName} Tier ${newTier}`,
             time: ctx.totalElapsedTime,
             timeBetween: ctx.elapsedSincePrevious,
-            style: charger.style,
+            style: 'dark-galaxy',
           };
           ctx.markNew();
         }

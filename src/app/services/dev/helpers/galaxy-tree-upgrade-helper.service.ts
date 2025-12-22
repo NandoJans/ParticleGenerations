@@ -37,31 +37,44 @@ export class GalaxyTreeUpgradeHelperService {
    * Buy dark energy galaxy tree upgrades for dark galaxy progression
    */
   private buyDarkEnergyUpgrades(ctx: GalaxyTreeUpgradeCtx): void {
-    const darkEnergyUpgrades = [
-      UpgradeRecord.enhancedDarkEnergyGalaxyTree,
-      UpgradeRecord.greaterDarkEnergyGalaxyTree,
-      UpgradeRecord.superiorDarkEnergyGalaxyTree,
-      UpgradeRecord.cosmicDarkEnergyGalaxyTree,
-      UpgradeRecord.ultimateDarkEnergyGalaxyTree,
-    ];
-
-    darkEnergyUpgrades.forEach(upgrade => {
-      if (this.shouldBuyUpgrade(upgrade)) {
-        const bought = upgrade.buy();
-        if (bought) {
-          const resultKey = `galaxy_tree_${upgrade.name}_bought`;
-          if (!ctx.results[resultKey]) {
-            ctx.results[resultKey] = {
-              element: `${upgrade.displayName} (Galaxy Tree)`,
-              time: ctx.totalElapsedTime,
-              timeBetween: ctx.elapsedSincePrevious,
-              style: upgrade.style,
-            };
-            ctx.markNew();
-          }
-        }
-      }
-    });
+    // TODO: Dark energy galaxy tree upgrades are not yet registered in UpgradeRecord
+    // Uncomment when they are available:
+    // const darkEnergyUpgrades = [
+    //   UpgradeRecord.enhancedDarkEnergyGalaxyTree,
+    //   UpgradeRecord.greaterDarkEnergyGalaxyTree,
+    //   UpgradeRecord.superiorDarkEnergyGalaxyTree,
+    //   UpgradeRecord.cosmicDarkEnergyGalaxyTree,
+    //   UpgradeRecord.ultimateDarkEnergyGalaxyTree,
+    // ];
+    //
+    // darkEnergyUpgrades.forEach(upgrade => {
+    //   if (this.shouldBuyUpgrade(upgrade)) {
+    //     const bought = upgrade.buy();
+    //     if (bought) {
+    //       const resultKey = `galaxy_tree_${upgrade.name}_bought`;
+    //       if (!ctx.results[resultKey]) {
+    //         ctx.results[resultKey] = {
+    //           element: `${upgrade.displayName} (Galaxy Tree)`,
+    //           time: ctx.totalElapsedTime,
+    //           timeBetween: ctx.elapsedSincePrevious,
+    //           style: upgrade.style,
+    //         };
+    //         ctx.markNew();
+    //
+    //         // Save snapshot for upgrade level milestone
+    //         try {
+    //           this.dataManagerService.saveSim();
+    //           const snapId = this.dataManagerService.saveSimSnapshot({
+    //             type: 'upgrade-level',
+    //             label: `${upgrade.displayName}`,
+    //             elapsed: ctx.totalElapsedTime,
+    //           });
+    //           ctx.results[resultKey].snapshotId = snapId;
+    //         } catch {}
+    //       }
+    //     }
+    //   }
+    // });
   }
 
   /**
