@@ -8,13 +8,22 @@ import {BalanceService} from "../../services/dev/balance.service";
   standalone: false,
 })
 export class BalanceComponent {
+  selectedPhaseId: string = '';
 
   constructor(
     private balanceService: BalanceService,
   ) {}
 
   start() {
-    this.balanceService.start()
+    const settings: any = {};
+    if (this.selectedPhaseId) {
+      settings.phaseId = this.selectedPhaseId;
+    }
+    this.balanceService.start(settings);
+  }
+
+  getPhases() {
+    return this.balanceService.getPhases();
   }
 
   getResults() {

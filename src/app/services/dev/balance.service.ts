@@ -26,6 +26,10 @@ import { UpgradeHelperService } from './helpers/upgrade-helper.service';
 import { PrestigeHelperService } from './helpers/prestige-helper.service';
 import { BuyableHelperService } from './helpers/buyable-helper.service';
 import { EnhancementHelperService } from './helpers/enhancement-helper.service';
+import { DarkStarChargerHelperService } from './helpers/dark-star-charger-helper.service';
+import { GalaxyTreeUpgradeHelperService } from './helpers/galaxy-tree-upgrade-helper.service';
+import { SacrificeHelperService } from './helpers/sacrifice-helper.service';
+import { DevPhaseService } from './dev-phase.service';
 import {TimelineService} from "../timeline.service";
 import {CompressionService} from "../compression.service";
 
@@ -49,10 +53,12 @@ export class BalanceService {
     maxTime: number,
     higherPrestige: Num
     initial: () => void,
+    phaseId?: string,
   } = {
     speed: 10,
     maxTime: 1000000,
     higherPrestige: new Num(1.01, 0),
+    phaseId: undefined,
     initial: () => {
       HoldingRecord.yellowParticles.amount = new Num(5, 28);
       HoldingRecord.yellowPrestiges.amount = new Num(1, 4);
@@ -95,6 +101,10 @@ export class BalanceService {
     private prestigeHelper: PrestigeHelperService,
     private buyableHelper: BuyableHelperService,
     private enhancementHelper: EnhancementHelperService,
+    private darkStarChargerHelper: DarkStarChargerHelperService,
+    private galaxyTreeUpgradeHelper: GalaxyTreeUpgradeHelperService,
+    private sacrificeHelper: SacrificeHelperService,
+    private devPhaseService: DevPhaseService,
     private timelineService: TimelineService,
     private compressionService: CompressionService,
   ) {
@@ -128,6 +138,7 @@ export class BalanceService {
     this.prestigeGainHistory.clear();
     this.trackedMilestones.clear();
     this.trackedUpgradeLevels.clear();
+    this.darkStarChargerHelper.reset();
 
     // Create an initial snapshot (baseline)
     this.dataManagerService.saveSim();
@@ -136,7 +147,18 @@ export class BalanceService {
     App.gameSpeed = new Num(this.settings.speed, 0);
     App.offlineCalculation = true;
 
-    this.settings.initial();
+    // Load the selected phase or use default initial setup
+    if (this.settings.phaseId) {
+      const phase = this.devPhaseService.getPhases().find(p => p.id === this.settings.phaseId);
+      if (phase) {
+        phase.setup();
+      } else {
+        this.settings.initial();
+      }
+    } else {
+      this.settings.initial();
+    }
+    
     this.loopTimeout = setInterval(this.loop.bind(this), 1);
   }
 
@@ -202,6 +224,15 @@ export class BalanceService {
 
     // Check for specific upgrade level milestones
     this.checkUpgradeLevels();
+
+    // Handle sacrifice upgrades (convert particles → dark energy)
+    this.handleSacrificeUpgrades();
+
+    // Handle dark star charger strategy
+    this.handleDarkStarChargers();
+
+    // Handle galaxy tree upgrade purchases (uses dark energy)
+    this.handleGalaxyTreeUpgrades();
 
     this.prestigeLayerService.getList().forEach(prestigeLayer => {
       if (prestigeLayer.limitPhaseBelow && prestigeLayer.requirementsMet()) {
@@ -344,6 +375,42 @@ export class BalanceService {
     }, enhancable);
   }
 
+  /**
+   * Handle dark star charger strategy during dark galaxy challenge
+   */
+  private handleDarkStarChargers(): void {
+    this.darkStarChargerHelper.handleDarkStarChargers({
+      results: this.results,
+      totalElapsedTime: this.totalElapsedTime,
+      elapsedSincePrevious: this.elapsedSincePrevious,
+      markNew: () => { this.newResultsThisLoop = true; },
+    });
+  }
+
+  /**
+   * Handle sacrifice upgrade purchases to convert particles into dark energy
+   */
+  private handleSacrificeUpgrades(): void {
+    this.sacrificeHelper.handleSacrificeUpgrades({
+      results: this.results,
+      totalElapsedTime: this.totalElapsedTime,
+      elapsedSincePrevious: this.elapsedSincePrevious,
+      markNew: () => { this.newResultsThisLoop = true; },
+    });
+  }
+
+  /**
+   * Handle galaxy tree upgrade purchases for dark galaxy progression
+   */
+  private handleGalaxyTreeUpgrades(): void {
+    this.galaxyTreeUpgradeHelper.handleGalaxyTreeUpgrades({
+      results: this.results,
+      totalElapsedTime: this.totalElapsedTime,
+      elapsedSincePrevious: this.elapsedSincePrevious,
+      markNew: () => { this.newResultsThisLoop = true; },
+    });
+  }
+
   done() {
     App.gameSpeed = new Num(1, -1);
     App.offlineCalculation = false;
@@ -389,6 +456,11 @@ export class BalanceService {
 
   getResults() {
     return this.results;
+  }
+
+  // Get available phases for starting the simulation
+  getPhases() {
+    return this.devPhaseService.getPhases();
   }
 
   // List available simulation snapshots

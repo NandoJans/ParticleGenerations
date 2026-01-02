@@ -355,6 +355,118 @@ export class DevPhaseService {
         HoldingRecord.greenPrestiges.amount = new Num(1, 2);
         HoldingRecord.greenParticles.amount = new Num(1, 10);
       }
+    },
+    {
+      id: 'dark-galaxy-start',
+      name: 'Dark Galaxy Start',
+      description: 'Ready to start the dark galaxy challenge with dark star chargers',
+      setup: () => {
+        // Reset everything
+        this.fullReset();
+
+        // Set up green phase ready for dark galaxy with very high starting values
+        // for meaningful dark star gain during dark galaxy challenge
+        HoldingRecord.redParticles.amount = new Num(1, 100000);
+        HoldingRecord.yellowParticles.amount = new Num(1, 5000);
+        HoldingRecord.greenParticles.amount = new Num(1, 1000);
+        HoldingRecord.greenPrestiges.amount = new Num(1, 100);
+        HoldingRecord.darkMatter.amount = new Num(1, 50);
+        HoldingRecord.darkEnergy.amount = new Num(1, 100);
+        HoldingRecord.starKeys.amount = new Num(1, 10);
+        HoldingRecord.yellowPrestiges.amount = new Num(1, 1000);
+        HoldingRecord.yellowKeys.amount = new Num(1, 500);
+        HoldingRecord.yellowFusion.amount = new Num(1, 100);
+        HoldingRecord.hydrogen.amount = new Num(1, 500);
+
+        // Red generators (scaled up for very high particle phase)
+        [
+          GeneratorRecord.firstRedGenerator,
+          GeneratorRecord.secondRedGenerator,
+          GeneratorRecord.thirdRedGenerator,
+          GeneratorRecord.fourthRedGenerator,
+          GeneratorRecord.fifthRedGenerator
+        ].forEach(gen => {
+          gen.unlocked = true;
+          gen.amount = new Num(1, 10);
+          gen.bought = new Num(1, 10);
+        });
+
+        // Red accelerators (scaled up significantly)
+        HoldingRecord.redAccelerators.amount = new Num(1, 5000);
+        UpgradeRecord.unlockRedAccelerators.unlocked = true;
+        UpgradeRecord.unlockRedAccelerators.bought = new Num(1, 0);
+        GeneratorRecord.redAcceleratorGenerator.unlocked = true;
+        GeneratorRecord.redAcceleratorGenerator.amount = new Num(1, 5);
+        GeneratorRecord.redAcceleratorGenerator.bought = new Num(1, 5);
+
+        // Yellow generators (scaled up for high yellow particles)
+        [
+          GeneratorRecord.firstYellowGenerator,
+          GeneratorRecord.secondYellowGenerator,
+          GeneratorRecord.thirdYellowGenerator,
+          GeneratorRecord.fourthYellowGenerator,
+          GeneratorRecord.fifthYellowGenerator
+        ].forEach(gen => {
+          gen.unlocked = true;
+          gen.amount = new Num(1, 5);
+          gen.bought = new Num(1, 5);
+        });
+
+        // Fusion generators (scaled up)
+        GeneratorRecord.yellowFusionGenerator.unlocked = true;
+        GeneratorRecord.yellowFusionGenerator.amount = new Num(1, 3);
+        GeneratorRecord.yellowFusionGenerator.bought = new Num(1, 3);
+
+        GeneratorRecord.hydrogenGenerator.unlocked = true;
+        GeneratorRecord.hydrogenGenerator.amount = new Num(1, 3);
+        GeneratorRecord.hydrogenGenerator.bought = new Num(1, 3);
+
+        // Green generators (scaled up)
+        GeneratorRecord.firstGreenGenerator.unlocked = true;
+        GeneratorRecord.firstGreenGenerator.amount = new Num(1, 3);
+        GeneratorRecord.firstGreenGenerator.bought = new Num(1, 3);
+
+        GeneratorRecord.secondGreenGenerator.unlocked = true;
+        GeneratorRecord.secondGreenGenerator.amount = new Num(1, 2);
+        GeneratorRecord.secondGreenGenerator.bought = new Num(1, 2);
+
+        // Sacrifice upgrades (scaled up)
+        UpgradeRecord.redParticleSacrifice.bought = new Num(1, 10);
+        UpgradeRecord.yellowParticleSacrifice.bought = new Num(1, 10);
+        UpgradeRecord.greenParticleSacrifice.bought = new Num(1, 5);
+
+        // Key upgrades for dark galaxy (scaled up significantly)
+        UpgradeRecord.redGeneratorExtension.unlocked = true;
+        UpgradeRecord.redGeneratorExtension.bought = new Num(1, 5);
+        UpgradeRecord.redGeneratorBooster.unlocked = true;
+        UpgradeRecord.redGeneratorBooster.bought = new Num(1, 3);
+        UpgradeRecord.yellowPower.unlocked = true;
+        UpgradeRecord.yellowPower.bought = new Num(1, 5);
+
+        // Unlock dark star chargers (they will start at tier 1)
+        ChargerRecord.redGeneratorDarkCharger.unlocked = true;
+        ChargerRecord.redAcceleratorDarkCharger.unlocked = true;
+        ChargerRecord.yellowUpgradeDarkCharger.unlocked = true;
+        ChargerRecord.yellowGeneratorDarkCharger.unlocked = true;
+        ChargerRecord.starChallengeDarkCharger.unlocked = true;
+        ChargerRecord.yellowFusionDarkCharger.unlocked = true;
+        ChargerRecord.starKeyDarkCharger.unlocked = true;
+        ChargerRecord.combineDarkCharger.unlocked = true;
+
+        // Enable all dark star chargers
+        ChargerRecord.darkStarChargerList.forEach(charger => {
+          charger.enabled = true;
+        });
+
+        // Start with 0 dark stars (they are gained during dark galaxy challenge runs)
+        HoldingRecord.darkStarHolding.amount = new Num(0, 0);
+
+        // Set some star challenges completed
+        ChallengeRecord.proximaCentauriStar.completed = new Num(3, 0);
+        ChallengeRecord.lalandeStar.completed = new Num(2, 0);
+        ChallengeRecord.sunStar.completed = new Num(2, 0);
+        ChallengeRecord.siriusStar.completed = new Num(1, 0);
+      }
     }
   ];
 
