@@ -131,7 +131,7 @@ export class ProximaCentauriStarChallenge extends YellowStarChallenge {
         'unlockFourthRedGenerator',
         'unlock-fourth-red-generator-proxima-centauri',
         'Unlock Fourth Red Generator',
-        new Num(1, 1400),
+        new Num(1, 1300),
         HoldingRecord.redParticles,
         this.style,
         [
