@@ -393,7 +393,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
       ),
     }
 this.requirement = [
-    new Requirement(HoldingRecord.redParticles, new Num(1, 11000), this)
+    new Requirement(HoldingRecord.redParticles, new Num(1, 20000), this)
   ];
   }
 }
