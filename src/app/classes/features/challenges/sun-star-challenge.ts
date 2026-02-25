@@ -19,8 +19,8 @@ export class SunStarChallenge extends YellowStarChallenge {
   name: string = 'sun-star-challenge';
   displayName: string = 'Sun';
 
-  baseGoal: Num = new Num(1, 17000);
-  goal: Num = new Num(1, 17000);
+  baseGoal: Num = new Num(1, 15000);
+  goal: Num = new Num(1, 15000);
   override goalIncrease: Num[] = [
     new Num(1, 15200),
     new Num(1, 46000),
