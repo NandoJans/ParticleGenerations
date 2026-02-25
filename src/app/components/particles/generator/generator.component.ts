@@ -22,6 +22,10 @@ export class GeneratorComponent {
     return this.generator.amount;
   }
 
+  getBought(): Num {
+    return this.generator.bought;
+  }
+
 
   getDisplayName(): string {
     return this.generator.displayName;
