@@ -86,6 +86,8 @@ export class SiriusStarChallenge extends YellowStarChallenge {
   }
 
   nerfs(): void {
+    this.challengeGenerators['siriusGenerator'].amount = new Num(1, 0);
+
     const elementsToDisable = [
       GeneratorRecord.secondRedGenerator,
       GeneratorRecord.thirdRedGenerator,
