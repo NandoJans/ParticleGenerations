@@ -8,8 +8,11 @@
 "
   (click)="buy()"
 >
-  <h4 *ngIf="!isEnhancing()">{{ getDisplayName() }}</h4>
-  <h4 *ngIf="isEnhancing()">{{ getEnhancementString() }}</h4>
+  <div>
+    <h4 *ngIf="!isEnhancing()">{{ getDisplayName() }}</h4>
+    <h4 *ngIf="isEnhancing()">{{ getEnhancementString() }}</h4>
+    <p>Bought: {{ getBought().toString() }}</p>
+  </div>
   <div>
     <p>{{ getAmount().toString() }}</p>
     <p>{{ getMultiplier().toString(2) }}x</p>
