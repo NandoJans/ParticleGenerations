@@ -19,8 +19,8 @@ export class SiriusStarChallenge extends YellowStarChallenge {
   name: string = 'sirius-star-challenge';
   displayName: string = 'Sirius A';
 
-  baseGoal: Num = new Num(1, 15400);
-  goal: Num = new Num(1, 15400);
+  baseGoal: Num = new Num(1, 14500);
+  goal: Num = new Num(1, 14500);
   override goalIncrease: Num[] = [
     new Num(1, 10400),
     new Num(1, 60400),
