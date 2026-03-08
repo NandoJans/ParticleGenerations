@@ -178,7 +178,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
         'yellowStars',
         'siriusUpgrade',
         this.challengeGenerators['siriusGenerator'].globalMultiplier,
-        this.getDifficultyIncrease(new Num(1, 0)),
+        this.getDifficultyIncrease(new Num(0.98, 0)),
       ),
       unlockFirstRedGeneratorMultiplierUpgrade: new YellowStarChallengeUnlockUpgrade(
         'unlockFirstRedGeneratorMultiplierUpgrade',
