@@ -23,7 +23,7 @@ export class SiriusStarChallenge extends YellowStarChallenge {
   goal: Num = new Num(1, 14500);
   override goalIncrease: Num[] = [
     new Num(1, 10400),
-    new Num(1, 60400),
+    new Num(1, 55500),
     new Num(1, 61000),
     new Num(1, 49400),
   ];
