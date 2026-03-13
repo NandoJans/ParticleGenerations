@@ -13,8 +13,8 @@ export class GreaterProximaCentauriStarKeyUpgrade extends StarKeyUpgrade {
 
   override calculationOrder: number = 1000;
 
-  override buffer: Num = new Num(1, 100);
-  override baseBuffer: Num = new Num(1, 100);
+  override buffer: Num = new Num(1, 150);
+  override baseBuffer: Num = new Num(1, 150);
 
   override getDescription(): string {
     return `Increase effect cap of proxima centauri by ${this.buffer.toString(2)}`;
