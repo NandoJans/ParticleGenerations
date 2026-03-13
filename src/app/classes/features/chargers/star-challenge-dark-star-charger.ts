@@ -9,6 +9,7 @@ import {ProximaCentauriStarChallenge} from "../challenges/proxima-centauri-star-
 import {Multiplier} from "../multiplier";
 import {Challenge} from "../challenge";
 import {App} from "../../../App";
+import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 
 /**
  * Star Challenge Dark Star Charger
@@ -115,9 +116,15 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
     MultiplierRecord.challengeBuffBoost.correct(this.challengeBuffEffect);
     MultiplierRecord.proximaCentauriMaxBuff.correct(this.proximaMaxBuffEffect);
 
-    // Update Proxima Centauri's max effect using the constant from the challenge class
+    // Update Proxima Centauri's max effect using the constant from the challenge class,
+    // also applying the Greater Proxima Centauri star key upgrade buff if it has been bought
     const proximaChallenge = ChallengeRecord.proximaCentauriStar;
-    proximaChallenge.maxEffect = ProximaCentauriStarChallenge.BASE_MAX_EFFECT.mul(this.proximaMaxBuffEffect);
+    const starKeyBuff = UpgradeRecord.greaterProximaCentauriStarKey.hasBought()
+      ? UpgradeRecord.greaterProximaCentauriStarKey.buffer
+      : new Num(1, 0);
+    proximaChallenge.maxEffect = ProximaCentauriStarChallenge.BASE_MAX_EFFECT
+      .mul(this.proximaMaxBuffEffect)
+      .mul(starKeyBuff);
 
     // Store the challenge buff effect as the primary display effect (most representative of overall power)
     this.effect = this.challengeBuffEffect;

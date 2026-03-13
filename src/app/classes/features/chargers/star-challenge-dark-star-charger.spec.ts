@@ -1,5 +1,8 @@
 import { StarChallengeDarkStarCharger } from './star-challenge-dark-star-charger';
 import { Num } from '../../../num';
+import { ChallengeRecord } from '../../records/challenges/challenge-record';
+import { ProximaCentauriStarChallenge } from '../challenges/proxima-centauri-star-challenge';
+import { UpgradeRecord } from '../../records/upgrades/upgrade-record';
 
 describe('StarChallengeDarkStarCharger', () => {
   let charger: StarChallengeDarkStarCharger;
@@ -62,5 +65,76 @@ describe('StarChallengeDarkStarCharger', () => {
     const description = charger.getChargeDescription();
     expect(description).toContain('all challenge completions');
     expect(description).toContain('10 per completion');
+  });
+
+  describe('Proxima Centauri maxEffect calculation', () => {
+    beforeEach(() => {
+      // Reset the challenge maxEffect to BASE_MAX_EFFECT before each sub-test
+      ChallengeRecord.proximaCentauriStar.maxEffect = ProximaCentauriStarChallenge.BASE_MAX_EFFECT.copy();
+    });
+
+    afterEach(() => {
+      // Reset the star key upgrade bought state after each sub-test
+      UpgradeRecord.greaterProximaCentauriStarKey.bought = new Num(0, 0);
+    });
+
+    it('should set maxEffect to BASE_MAX_EFFECT * proximaMaxBuffEffect when star key upgrade is not bought', () => {
+      UpgradeRecord.greaterProximaCentauriStarKey.bought = new Num(0, 0);
+      charger.charge = new Num(0, 0);
+      charger.tier = new Num(1, 0);
+
+      charger.action();
+
+      // Without the star key upgrade, maxEffect should equal BASE_MAX_EFFECT * proximaMaxBuffEffect
+      const expectedMaxEffect = ProximaCentauriStarChallenge.BASE_MAX_EFFECT.mul(charger.proximaMaxBuffEffect);
+      expect(ChallengeRecord.proximaCentauriStar.maxEffect?.toString()).toBe(expectedMaxEffect.toString());
+    });
+
+    it('should include the star key upgrade buffer in maxEffect when it has been bought', () => {
+      UpgradeRecord.greaterProximaCentauriStarKey.bought = new Num(1, 0);
+      charger.charge = new Num(0, 0);
+      charger.tier = new Num(1, 0);
+
+      charger.action();
+
+      const starKeyBuff = UpgradeRecord.greaterProximaCentauriStarKey.buffer;
+      const expectedMaxEffect = ProximaCentauriStarChallenge.BASE_MAX_EFFECT
+        .mul(charger.proximaMaxBuffEffect)
+        .mul(starKeyBuff);
+      expect(ChallengeRecord.proximaCentauriStar.maxEffect?.toString()).toBe(expectedMaxEffect.toString());
+    });
+
+    it('should result in a higher maxEffect when star key upgrade is bought compared to not bought', () => {
+      charger.charge = new Num(0, 0);
+      charger.tier = new Num(1, 0);
+
+      UpgradeRecord.greaterProximaCentauriStarKey.bought = new Num(0, 0);
+      charger.action();
+      const maxEffectWithoutUpgrade = ChallengeRecord.proximaCentauriStar.maxEffect!.copy();
+
+      UpgradeRecord.greaterProximaCentauriStarKey.bought = new Num(1, 0);
+      charger.action();
+      const maxEffectWithUpgrade = ChallengeRecord.proximaCentauriStar.maxEffect!.copy();
+
+      expect(maxEffectWithUpgrade.gt(maxEffectWithoutUpgrade)).toBe(true);
+    });
+
+    it('should not grow maxEffect unboundedly across multiple action() calls when upgrade is bought', () => {
+      UpgradeRecord.greaterProximaCentauriStarKey.bought = new Num(1, 0);
+      charger.charge = new Num(0, 0);
+      charger.tier = new Num(1, 0);
+
+      // Call action multiple times (simulating multiple ticks)
+      charger.action();
+      const afterFirstTick = ChallengeRecord.proximaCentauriStar.maxEffect!.toString();
+      charger.action();
+      const afterSecondTick = ChallengeRecord.proximaCentauriStar.maxEffect!.toString();
+      charger.action();
+      const afterThirdTick = ChallengeRecord.proximaCentauriStar.maxEffect!.toString();
+
+      // maxEffect should be the same after each tick (not growing unboundedly)
+      expect(afterFirstTick).toBe(afterSecondTick);
+      expect(afterSecondTick).toBe(afterThirdTick);
+    });
   });
 });
