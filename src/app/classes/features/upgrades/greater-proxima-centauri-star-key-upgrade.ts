@@ -1,6 +1,5 @@
 import {StarKeyUpgrade} from "./star-key-upgrade";
 import {Num} from "../../../num";
-import {ChallengeRecord} from "../../records/challenges/challenge-record";
 
 export class GreaterProximaCentauriStarKeyUpgrade extends StarKeyUpgrade {
   override displayName: string = "Greater Proxima Centauri";
@@ -21,9 +20,6 @@ export class GreaterProximaCentauriStarKeyUpgrade extends StarKeyUpgrade {
   }
 
   override action(): Num | undefined {
-    if (this.hasBought()) {
-      ChallengeRecord.proximaCentauriStar.maxEffect = ChallengeRecord.proximaCentauriStar.maxEffect.mul(this.buffer);
-    }
-    return
+    return;
   }
 }
