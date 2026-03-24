@@ -13,6 +13,8 @@ export class DarkEnergyHolding extends Holding {
   holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
     .withAmountPrefix('You have')
     .withAmountSuffix(' Dark Energy')
+    .withEffectPrefix('Total: ')
+    .withEffectSuffix('')
     .build();
   name: string = 'dark-energy';
   displayName: string = 'Dark Energy';
@@ -27,5 +29,9 @@ export class DarkEnergyHolding extends Holding {
 
   getStyle(): Styles {
     return Styles.DARK;
+  }
+
+  override getEffectDisplay(): string {
+    return MultiplierRecord.totalDarkEnergyGain.getNum().toString();
   }
 }

@@ -19,6 +19,8 @@ export abstract class Charger extends GameElement implements Resetable, Storable
   tier: Num = new Num(1, 0);
   highestTier: Num = new Num(1, 0);
   startTier: Num = new Num(1, 0);
+  tierNerf: Num[] = [new Num(0.5, 0)];
+
   abstract baseMaxCharge: Num;
   abstract maxTier: Num | undefined;
   abstract canInfiniteChargeAtMaxTier: boolean;
@@ -73,7 +75,7 @@ export abstract class Charger extends GameElement implements Resetable, Storable
     this.chargeAmount = new Num(0, 0);
 
     if (this.charging && this.shouldCharge()) {
-      this.chargeAmount = this.getChargeAmount().div(new Num(2, 0).pow(this.tier));
+      this.chargeAmount = this.applyTierNerf(this.getChargeAmount());
 
       if (this.chargeAmount.gt(this.getCharge())) {
         this.applyCharge(this.chargeAmount);
@@ -108,6 +110,16 @@ export abstract class Charger extends GameElement implements Resetable, Storable
    * Must be overridden by subclasses to implement specific charge calculation
    */
   abstract getChargeAmount(): Num;
+
+  protected applyTierNerf(amount: Num): Num {
+    const index = this.tier.toNumber() - 1;
+    if (index >= 0 && index < this.tierNerf.length) {
+      amount = amount.mul(this.tierNerf[index]);
+    } else {
+      amount = amount.mul(this.tierNerf[this.tierNerf.length - 1]);
+    }
+    return amount.pow(this.tier);
+  }
 
   /**
    * Action function that runs when the charger is charging

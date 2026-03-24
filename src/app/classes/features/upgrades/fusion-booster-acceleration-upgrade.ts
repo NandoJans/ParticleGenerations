@@ -92,9 +92,11 @@ export class FusionBoosterAccelerationUpgrade extends Upgrade {
     StatsService.addNum(this.name, 'totalBought', transaction.amount);
     StatsService.addNum(this.name, 'totalBoughtAutomator', transaction.amount);
     if (this.divideInsteadOfReset) {
-      console.log("Dividing instead of resetting hydrogen");
       HoldingRecord.yellowFusion.amount = HoldingRecord.yellowFusion.amount.div(new Num(1, 1000));
       HoldingRecord.hydrogen.amount = HoldingRecord.hydrogen.amount.sub(new Num(3, 3));
+      if (HoldingRecord.hydrogen.amount.lte(HoldingRecord.hydrogen.startAmount)) {
+        HoldingRecord.hydrogen.amount = HoldingRecord.hydrogen.startAmount.copy();
+      }
     } else {
       HoldingRecord.hydrogen.reset();
       HoldingRecord.yellowFusion.reset();

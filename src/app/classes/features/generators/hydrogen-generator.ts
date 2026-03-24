@@ -60,11 +60,10 @@ export class HydrogenGenerator extends Generator {
       return amount;
     }
 
-    // 2) DYNAMISCHE HARD CAP op basis van power-transform
-    //    cap = barrier * (gain / barrier)^p  (alleen als gain > barrier)
-    const p = 0.05; // tunen: 0.3 ≈ 1e6→~24k, 1e7→~49k bij barrier=5000
+    const p = 0.05
 
     if (gain.gt(barrier)) {
+      // const p = barrier.div(gain);
       const ratio = gain.div(barrier);      // >= 1
       const ratioPow = ratio.pow(p);        // (gain/barrier)^p
       const dynCap = barrier.mul(ratioPow); // dynamische cap

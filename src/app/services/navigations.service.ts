@@ -73,6 +73,9 @@ export class NavigationsService {
     yellowAutomators: new SubNavigation('yellowAutomators', faSun, 'yellow', this.navigations['automators'], [
       {requirement: HoldingRecord.yellowPrestiges, amount: new Num(1, 0)},
     ], false),
+    greenAutomators: new SubNavigation('greenAutomators', faStar, 'green', this.navigations['automators'], [
+      {requirement: HoldingRecord.greenPrestiges, amount: new Num(1, 0)},
+    ], false),
 
     // Timeline
     redTimeline: new SubNavigation('redTimeline', faAtom, 'red', this.navigations['timeline'], [], true),

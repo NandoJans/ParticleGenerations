@@ -37,8 +37,8 @@ export class CompressionService implements Resetable {
   private avgRate: number = 0; // smoothed effective rate (progress/ms)
   private currentRate: number = 0;    // smoothed progress/ms
   private avgAccel: number = 0;       // smoothed accel in (progress/ms^2)
-  private readonly RATE_ALPHA = 0.2;  // EMA smoothing factor for rate
-  private readonly ACCEL_ALPHA = 0.2; // EMA smoothing factor for accel
+  private readonly RATE_ALPHA = 0.3;  // EMA smoothing factor for rate
+  private readonly ACCEL_ALPHA = 1.5; // EMA smoothing factor for accel
 
   private displayEtaMs: number | undefined = undefined;
   private readonly SMOOTH = 0.02; // EMA smoothing factor for accel

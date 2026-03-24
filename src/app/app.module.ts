@@ -49,6 +49,7 @@ import {DarkGalaxyComponent} from "./components/particles/dark-galaxy/dark-galax
 import {DevPhaseComponent} from "./dev/dev-phase/dev-phase.component";
 import {DarkStarChargerComponent} from "./components/particles/dark-star-charger/dark-star-charger.component";
 import {AutomatorSectionComponent} from "./components/particles/automator-section/automator-section.component";
+import {GreenAutomatorsPageComponent} from "./pages/automator/green-automators-page/green-automators-page.component";
 
 @NgModule({
   declarations: [
@@ -95,7 +96,8 @@ import {AutomatorSectionComponent} from "./components/particles/automator-sectio
     GreenDarkGalaxyPageComponent,
     DevPhaseComponent,
     AutomatorSectionComponent,
-    AutomatorComponent
+    AutomatorComponent,
+    GreenAutomatorsPageComponent
   ],
   imports: [
     BrowserModule,

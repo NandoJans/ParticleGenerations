@@ -12,8 +12,8 @@ export class HydrogenHolding extends Holding {
   name: string = 'hydrogen-holding';
   displayName: string = 'Hydrogen';
   abbreviation: string = 'H';
-  amount: Num = new Num(0, 0);
-  startAmount: Num = new Num(0, 0);
+  amount: Num = new Num(1, 0);
+  startAmount: Num = new Num(1, 0);
   holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
     .withAmountPrefix('You have')
     .withAmountSuffix('Hydrogen')

@@ -53,8 +53,7 @@ export abstract class Generator extends Buyable implements Generatable, Storable
     localMultiplier = Multiplier.applyHook(localMultiplier, { source: this, kind: this.type })
     localMultiplier = Multiplier.applyHook(localMultiplier, { source: this, kind: this.name })
 
-    this.multiplier = localMultiplier
-      .mul(this.globalMultiplier.getNum()) as Num
+    this.multiplier = localMultiplier.mul(this.globalMultiplier.getNum()) as Num
     if (this.isUnlocked() && this.isEnabled()) {
       this.generates.generate(this.getGenerateAmount().mul(speed) as Num)
     }
