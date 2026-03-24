@@ -23,7 +23,7 @@ export class DarkMatterHolding extends Holding {
   startAmount: Num = new Num(0, 0);
 
   override action(): Num {
-    const effect = this.amount.log(1.25).floor();
+    const effect = this.amount.log(1.1).floor();
     MultiplierRecord.freeRedGeneratorBoosters.add(effect);
     return effect;
   }

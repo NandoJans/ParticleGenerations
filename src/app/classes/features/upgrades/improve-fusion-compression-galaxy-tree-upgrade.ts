@@ -34,6 +34,6 @@ export class ImproveFusionCompressionGalaxyTreeUpgrade extends GalaxyTreeUpgrade
   override buffer = new Num(1, -4);
   override baseBuffer = new Num(1, -4);
 
-  cost: Num = new Num(7, 0);
-  baseCost: Num = new Num(7, 0);
+  cost: Num = new Num(5, 0);
+  baseCost: Num = new Num(5, 0);
 }
