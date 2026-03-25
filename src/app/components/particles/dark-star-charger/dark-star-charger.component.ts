@@ -91,7 +91,7 @@ export class DarkStarChargerComponent {
   }
 
   getAmountDisplay(): string {
-    return `${this.charger.getCharge().toString()}/${this.charger.maxCharge.toString()}`;
+    return `(+${this.charger.chargeAmount.toString()}) ${this.charger.getCharge().toString()} / ${this.charger.maxCharge.toString()}`;
   }
 
   getDisplayName(): string {

@@ -114,11 +114,11 @@ export abstract class Charger extends GameElement implements Resetable, Storable
   protected applyTierNerf(amount: Num): Num {
     const index = this.tier.toNumber() - 1;
     if (index >= 0 && index < this.tierNerf.length) {
-      amount = amount.mul(this.tierNerf[index]);
+      amount = amount.mul(this.tierNerf[index].pow(this.tier.sub(new Num(1, 0))));
     } else {
-      amount = amount.mul(this.tierNerf[this.tierNerf.length - 1]);
+      amount = amount.mul(this.tierNerf[this.tierNerf.length - 1].pow(this.tier.sub(new Num(1, 0))));
     }
-    return amount.pow(this.tier);
+    return amount;
   }
 
   /**
