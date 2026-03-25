@@ -32,6 +32,10 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
   name: string = 'star-challenge-dark-star-charger';
   sunParticlesReached: Num = new Num(1, 0);
 
+  override tierNerf: Num[] = [
+    new Num(0.5, 0)
+  ];
+
   /**
    * Extra difficulty multiplier applied specifically to Sirius star challenge
    * when the Star Challenge Dark Charger is active.

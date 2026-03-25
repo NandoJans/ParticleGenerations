@@ -22,6 +22,10 @@ export class YellowFusionDarkStarCharger extends DarkStarCharger {
   requirement: Requirement[] = [];
   name: string = 'yellow-fusion-dark-star-charger';
 
+  override tierNerf: Num[] = [
+    new Num(0.5, 0)
+  ];
+
   /**
    * Calculate max charge for a given tier
    * Each tier increases max charge by 10x

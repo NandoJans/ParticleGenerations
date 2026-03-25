@@ -29,6 +29,10 @@ export class RedGeneratorDarkStarCharger extends DarkStarCharger {
   override buffer: Num = new Num(1, 1);
   override baseBuffer: Num = new Num(1, 1);
 
+  override tierNerf: Num[] = [
+    new Num(0.5, 0)
+  ];
+
   /**
    * Calculate max charge for a given tier
    * Each tier increases max charge by 10x

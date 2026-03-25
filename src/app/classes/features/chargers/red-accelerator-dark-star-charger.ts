@@ -22,6 +22,10 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
   requirement: Requirement[] = [];
   name: string = 'red-accelerator-dark-star-charger';
 
+  override tierNerf: Num[] = [
+    new Num(0.5, 0)
+  ];
+
   // Set calculation order to run after upgrades (400) but before generators (1000)
   // This ensures the charger's effect is applied at the correct time
   override calculationOrder: number = 500;
