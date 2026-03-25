@@ -6,7 +6,7 @@
         <fa-icon [icon]="isCharging() ? faPause : faPlay"></fa-icon>
       </button>
       <div class="charger-name-container">
-        <h3 class="charger-name">{{ getDisplayName() }}</h3>
+        <h3 class="charger-name" *ngIf="!isCollapsed()">{{ getDisplayName() }}</h3>
         <span class="roman-tier">{{ getTierRomanNumerals() }} / {{ getHighestTierRomanNumerals() }}</span>
       </div>
     </div>
