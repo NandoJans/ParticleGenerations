@@ -29,11 +29,23 @@ export class FusedAccelerationGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
 
   action(): Num|undefined {
     if (this.hasBought()) {
-      const effect = HoldingRecord.yellowFusion.amount.pow(this.buffer);
+      const rawEffect = HoldingRecord.yellowFusion.amount.pow(this.buffer);
+      const effect = this.applySlowdown(rawEffect);
       MultiplierRecord.redAcceleratorGenerators.correct(effect);
       return effect;
     }
     return
+  }
+
+  // Softcap settings - tune these values to adjust where slowdown starts and how strong it is.
+  slowdownStart: Num = new Num(1, 5000);
+  slowdownPower: Num = new Num(5, -1);
+
+  private applySlowdown(effect: Num): Num {
+    if (effect.greq(this.slowdownStart)) {
+      return effect.div(this.slowdownStart).pow(this.slowdownPower).mul(this.slowdownStart);
+    }
+    return effect;
   }
 
   override requireParent: RequireParent = RequireParent.ALL;

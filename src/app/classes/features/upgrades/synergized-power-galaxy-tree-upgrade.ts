@@ -29,13 +29,26 @@ export class SynergizedPowerGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
 
   action(): Num | undefined {
     if (this.hasBought()) {
-      const effect = HoldingRecord.yellowPower.effect
-      if (effect instanceof Num) {
-        GeneratorRecord.firstRedGenerator.mulMod = GeneratorRecord.firstRedGenerator.mulMod.mul(effect.pow(this.buffer));
+      const powerEffect = HoldingRecord.yellowPower.effect
+      if (powerEffect instanceof Num) {
+        const rawEffect = powerEffect.pow(this.buffer);
+        const effect = this.applySlowdown(rawEffect);
+        GeneratorRecord.firstRedGenerator.mulMod = GeneratorRecord.firstRedGenerator.mulMod.mul(effect);
         return effect;
       }
     }
     return;
+  }
+
+  // Softcap settings - tune these values to adjust where slowdown starts and how strong it is.
+  slowdownStart: Num = new Num(1, 5000);
+  slowdownPower: Num = new Num(5, -1);
+
+  private applySlowdown(effect: Num): Num {
+    if (effect.greq(this.slowdownStart)) {
+      return effect.div(this.slowdownStart).pow(this.slowdownPower).mul(this.slowdownStart);
+    }
+    return effect;
   }
 
   override requireParent: RequireParent = RequireParent.ALL;

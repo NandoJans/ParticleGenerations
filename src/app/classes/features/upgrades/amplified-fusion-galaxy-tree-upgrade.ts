@@ -33,6 +33,9 @@ export class AmplifiedFusionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   hydrogenGenerateEffect: Num = new Num(1, 0);
   hydrogenGenerateSpeedMultiplier: Num = new Num(1, -2);
   boughtGeneratorsScalingStart: Num = new Num(3, 3);
+  // Softcap settings - tune these values to adjust where slowdown starts and how strong it is.
+  slowdownStart: Num = new Num(1, 5000);
+  slowdownPower: Num = new Num(5, -1);
 
   action(): Num | undefined {
     if (this.hasBought()) {
@@ -44,7 +47,8 @@ export class AmplifiedFusionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
         boughtGenerators = this.boughtGeneratorsScalingStart.add(scaled)
       }
 
-      const effect = (this.buffer).pow(boughtGenerators);
+      const rawEffect = (this.buffer).pow(boughtGenerators);
+      const effect = this.applySlowdown(rawEffect);
       HoldingRecord.yellowFusion.maxAmount = HoldingRecord.yellowFusion.startMaxAmount.mul(effect);
 
       this.hydrogenEffect = boughtGenerators.mul(this.hydrogenBarrierMultiplier);
@@ -73,6 +77,13 @@ export class AmplifiedFusionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
 
   override buffer = new Num(8, 0);
   override baseBuffer = new Num(8, 0);
+
+  private applySlowdown(effect: Num): Num {
+    if (effect.greq(this.slowdownStart)) {
+      return effect.div(this.slowdownStart).pow(this.slowdownPower).mul(this.slowdownStart);
+    }
+    return effect;
+  }
 
   cost: Num = new Num(2.5, 1);
   baseCost: Num = new Num(2.5, 1);
