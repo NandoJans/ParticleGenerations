@@ -1,7 +1,6 @@
 import { Num } from "src/app/num";
 import { ResetKey } from "../../enums/reset-key";
 import { Styles } from "../../enums/styles";
-import {Automator} from "../automator";
 import {Buyable} from "../buyable";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {StatsService} from "../../../services/stats.service";
@@ -11,8 +10,9 @@ import {Enhancement} from "../enhancements/enhancement";
 import {EnhancementRecord} from "../../records/enhancement-record";
 import {Enhancable} from "../interfaces/enhancable";
 import {EnhancementService} from "../../../services/enhancement.service";
+import {OrderedExecutionAutomator} from "./ordered-execution-automator";
 
-export class YellowEnhancementAutomator extends Automator {
+export class YellowEnhancementAutomator extends OrderedExecutionAutomator {
   override name: string = "yellow-enhancement-automator";
   override displayName: string = "Yellow Enhancement Automator";
   override style: Styles = Styles.YELLOW;
@@ -20,11 +20,11 @@ export class YellowEnhancementAutomator extends Automator {
   override goalString: string = "Enhance a total of 100 times";
   override resetId: ResetKey = ResetHelper.registerReset(ResetKey.GREEN, this);
   enhancing: Enhancement = EnhancementRecord.yellow;
-  toEnhance: Enhancable[] = []
 
   override buyables(): Buyable[] {
     return []
   }
+
   override task(): Num {
     return StatsService.getNum('yellow-enhancement', 'totalEnhancements');
   }
@@ -33,32 +33,40 @@ export class YellowEnhancementAutomator extends Automator {
     this.requirement = [
       new Requirement(HoldingRecord.yellowPrestiges, new Num(1, 0), this)
     ];
-    EnhancementService.enhancementToEnhancables[this.enhancing.name].forEach(enhancable => {
-      this.toEnhance.push(enhancable);
-    });
+
+    const enhancableNames = this.getEnhancables().map(enhancable => enhancable.name);
+    this.setInitialExecutionOrder(enhancableNames);
+    this.syncExecutionOrder(enhancableNames);
   }
 
-  override reset() {
-    super.reset();
-    EnhancementService.enhancementToEnhancables[this.enhancing.name].forEach(enhancable => {
-      this.toEnhance.push(enhancable);
-    });
+
+  override getAvailableExecutionItems(): string[] {
+    return this.getEnhancables().map(enhancable => enhancable.name);
   }
 
   override action() {
-    if (this.toEnhance.length < 1) return;
+    const enhancablesByName: {[key: string]: Enhancable} = {};
+    this.getEnhancables().forEach(enhancable => {
+      enhancablesByName[enhancable.name] = enhancable;
+    });
 
-    for (let enhancable of this.toEnhance) {
-      if (enhancable.enhancement) {
-        // Remove the enhancable
-        this.toEnhance = this.toEnhance.filter(e => e !== enhancable);
+    const orderedNames = this.getExecutionOrder();
+
+    for (const enhancableName of orderedNames) {
+      const enhancable = enhancablesByName[enhancableName];
+      if (!enhancable || enhancable.enhancement) {
         continue;
       }
-      if (!this.enhancing.canEnhance()) break;
+
+      if (!this.enhancing.canEnhance()) {
+        break;
+      }
 
       EnhancementService.enhance(enhancable, this.enhancing);
-      // Remove the enhancable
-      this.toEnhance = this.toEnhance.filter(e => e !== enhancable);
     }
+  }
+
+  private getEnhancables(): Enhancable[] {
+    return EnhancementService.enhancementToEnhancables[this.enhancing.name] ?? [];
   }
 }
