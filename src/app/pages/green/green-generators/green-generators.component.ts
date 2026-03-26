@@ -6,6 +6,8 @@ import {GeneratorRecord} from "../../../classes/records/generators/generator-rec
 import {GreenGenerator} from "../../../classes/features/generators/green-generator";
 import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
 import {Upgrade} from "../../../classes/features/upgrade";
+import {PrestigeLayer} from "../../../classes/features/prestiges/prestige-layer";
+import {PrestigeLayersService} from "../../../services/prestige-layers.service";
 
 @Component({
     selector: 'app-green-generators',
@@ -23,6 +25,7 @@ export class GreenGeneratorsComponent implements OnInit {
   upgrades: Upgrade[] = [
     UpgradeRecord.multiplyGreenParticlesGreen
   ]
+  greenPrestige: PrestigeLayer = PrestigeLayersService.greenPrestigeLayer;
   infoText: string[] = [
     'Welcome to the Green layer - the next major progression milestone!',
     'Green Generators produce Dark Matter, an incredibly powerful resource that unlocks new dimensions of growth.',
