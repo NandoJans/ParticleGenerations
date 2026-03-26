@@ -28,11 +28,11 @@ export class AmplifiedFusionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
     return `Increase yellow fusion barrier by ${this.buffer.toString(2)}^fifth red generators bought. Also increases hydrogen descaling barriers by (fifth red generators × 3).`;
   }
 
-  hydrogenBarrierMultiplier = new Num(3, 0);
+  hydrogenBarrierMultiplier = new Num(2.5, 0);
   hydrogenEffect: Num = new Num(0, 0);
   hydrogenGenerateEffect: Num = new Num(1, 0);
   hydrogenGenerateSpeedMultiplier: Num = new Num(1, -2);
-  boughtGeneratorsScalingStart: Num = new Num(3.5, 3);
+  boughtGeneratorsScalingStart: Num = new Num(3, 3);
 
   action(): Num | undefined {
     if (this.hasBought()) {
@@ -71,8 +71,8 @@ export class AmplifiedFusionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   style: Styles = Styles.STAR_ORANGE;
   displayName: string = "Amplified Fusion";
 
-  override buffer = new Num(1, 1);
-  override baseBuffer = new Num(1, 1);
+  override buffer = new Num(8, 0);
+  override baseBuffer = new Num(8, 0);
 
   cost: Num = new Num(2.5, 1);
   baseCost: Num = new Num(2.5, 1);
