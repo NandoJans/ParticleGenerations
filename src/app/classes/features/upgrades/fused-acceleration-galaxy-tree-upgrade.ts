@@ -41,8 +41,8 @@ export class FusedAccelerationGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   style: Styles = Styles.STAR_YELLOW;
   displayName: string = "Fused Acceleration";
 
-  override buffer = new Num(2, 0);
-  override baseBuffer = new Num(2, 0);
+  override buffer = new Num(5, 0);
+  override baseBuffer = new Num(5, 0);
 
   cost: Num = new Num(1.5, 1);
   baseCost: Num = new Num(1.5, 1);
