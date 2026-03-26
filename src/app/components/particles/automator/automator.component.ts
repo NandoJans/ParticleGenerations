@@ -5,6 +5,7 @@ import {AutomatorRecord} from "../../../classes/records/automators/automator-rec
 import {PrestigeAutomator} from "../../../classes/features/automators/prestige-automator";
 import {faLock} from "@fortawesome/free-solid-svg-icons";
 import {StarChallengeAutomator} from "../../../classes/features/automators/star-challenge-automator";
+import {OrderedExecutionAutomator} from "../../../classes/features/automators/ordered-execution-automator";
 
 @Component({
   selector: 'app-automator',
@@ -14,11 +15,61 @@ import {StarChallengeAutomator} from "../../../classes/features/automators/star-
 })
 export class AutomatorComponent implements OnInit {
   @Input() automator: Automator = AutomatorRecord.firstRedGenerator;
+  showOrderModal: boolean = false;
 
   constructor() { }
 
   isPrestigeAutomator() {
     return this.automator instanceof PrestigeAutomator
+  }
+
+  isOrderedExecutionAutomator(): boolean {
+    return this.automator instanceof OrderedExecutionAutomator;
+  }
+
+  getOrderedExecutionAutomator(): OrderedExecutionAutomator | null {
+    if (this.automator instanceof OrderedExecutionAutomator) {
+      return this.automator;
+    }
+    return null;
+  }
+
+  openOrderModal() {
+    this.showOrderModal = true;
+  }
+
+  closeOrderModal() {
+    this.showOrderModal = false;
+  }
+
+  getOrderedItems(): string[] {
+    const orderedAutomator = this.getOrderedExecutionAutomator();
+    if (!orderedAutomator) {
+      return [];
+    }
+    return orderedAutomator.getExecutionOrder();
+  }
+
+  moveOrderedItem(index: number, direction: -1 | 1) {
+    const orderedAutomator = this.getOrderedExecutionAutomator();
+    if (!orderedAutomator) {
+      return;
+    }
+
+    const items = orderedAutomator.getExecutionOrder();
+    const targetIndex = index + direction;
+    if (targetIndex < 0 || targetIndex >= items.length) {
+      return;
+    }
+
+    [items[index], items[targetIndex]] = [items[targetIndex], items[index]];
+    orderedAutomator.setExecutionOrder(items);
+  }
+
+  formatOrderedItemName(name: string): string {
+    return name
+      .replace(/-/g, ' ')
+      .replace(/\b\w/g, letter => letter.toUpperCase());
   }
 
   setAutomationType(type: string) {

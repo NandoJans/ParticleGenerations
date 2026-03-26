@@ -77,5 +77,4 @@ export class YellowAutomatorsComponent implements OnInit {
   getToggleColor() {
     return this.oneIsActive() ? "red" : "green"
   }
-
 }

@@ -29,6 +29,11 @@
       <p>Min Yellow Particles to start level {{ getNextChallengeLevel() }}:</p>
       <input type="text" (change)="setCurrentLevelThreshold($event)" [value]="getCurrentLevelThreshold()"/>
     </div>
+    <button
+      *ngIf="isOrderedExecutionAutomator()"
+      class="button prestige yellow"
+      (click)="openOrderModal()"
+    >Configure Order</button>
 
     <div class="active-row">
       <label>Active: </label>
@@ -55,4 +60,25 @@
       <fa-icon [icon]="faLock"></fa-icon>
     </div>
   }
+</div>
+
+<div *ngIf="showOrderModal && isOrderedExecutionAutomator()" class="modal-backdrop" (click)="closeOrderModal()">
+  <div class="modal" (click)="$event.stopPropagation()">
+    <h3>{{ automator.displayName }} Order</h3>
+    <p>Set the exact execution order for this automator.</p>
+
+    <div class="order-list">
+      <div class="order-item" *ngFor="let itemName of getOrderedItems(); let i = index">
+        <span>{{ i + 1 }}. {{ formatOrderedItemName(itemName) }}</span>
+        <div class="order-actions">
+          <button class="button" [disabled]="i === 0" (click)="moveOrderedItem(i, -1)">↑</button>
+          <button class="button" [disabled]="i === getOrderedItems().length - 1" (click)="moveOrderedItem(i, 1)">↓</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="button red" (click)="closeOrderModal()">Close</button>
+    </div>
+  </div>
 </div>
