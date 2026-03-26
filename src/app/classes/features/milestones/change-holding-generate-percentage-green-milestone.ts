@@ -10,6 +10,9 @@ export class ChangeHoldingGeneratePercentageGreenMilestone extends GreenMileston
     super(name, displayName, goal);
     this.multiplier = multiplier;
     this.percentage = percentage;
+    // Must run after multiplier reset (calculation order 1150),
+    // otherwise the added idle generation gets wiped every tick.
+    this.calculationOrder = 1200;
   }
 
   override tick(): void {
