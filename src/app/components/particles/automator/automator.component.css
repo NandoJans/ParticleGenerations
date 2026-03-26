@@ -157,6 +157,19 @@ div.active-row {
   gap: 0.4rem;
 }
 
+button.button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.4rem;
+  background: var(--background-color-3);
+  color: var(--text-color);
+  border: 1px solid var(--accent-color);
+  cursor: pointer;
+}
+
+button.button:disabled {
+  opacity: 0.5;
+}
+
 .modal-actions {
   display: flex;
   justify-content: flex-end;
