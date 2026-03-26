@@ -44,6 +44,6 @@ export class PowerAccelerationGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   override buffer = new Num(2, -3);
   override baseBuffer = new Num(2, -3);
 
-  cost: Num = new Num(2.5, 1);
-  baseCost: Num = new Num(2.5, 1);
+  cost: Num = new Num(1, 1);
+  baseCost: Num = new Num(1, 1);
 }
