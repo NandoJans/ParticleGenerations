@@ -39,7 +39,7 @@ export class FusedAccelerationGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
 
   // Softcap settings - tune these values to adjust where slowdown starts and how strong it is.
   slowdownStart: Num = new Num(1, 50000);
-  slowdownPower: Num = new Num(3.5, -1);
+  slowdownPower: Num = new Num(2.5, -1);
 
   private applySlowdown(effect: Num): Num {
     if (effect.greq(this.slowdownStart)) {
