@@ -37,6 +37,9 @@ export class AmplifiedFusionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   slowdownStart: Num = new Num(1, 5000);
   slowdownPower: Num = new Num(5, -1);
 
+  hydrogenBarrierSlowdownStart: Num = new Num(1, 4);
+  hydrogenBarrierSlowdownPower: Num = new Num(1, -1);
+
   action(): Num | undefined {
     if (this.hasBought()) {
       let boughtGenerators = GeneratorRecord.fifthRedGenerator.bought;
@@ -48,10 +51,14 @@ export class AmplifiedFusionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
       }
 
       const rawEffect = (this.buffer).pow(boughtGenerators);
-      const effect = this.applySlowdown(rawEffect);
+      const effect = this.applySlowdown(rawEffect, this.slowdownStart, this.slowdownPower);
       HoldingRecord.yellowFusion.maxAmount = HoldingRecord.yellowFusion.startMaxAmount.mul(effect);
 
-      this.hydrogenEffect = boughtGenerators.mul(this.hydrogenBarrierMultiplier);
+      this.hydrogenEffect = this.applySlowdown(
+        boughtGenerators.mul(this.hydrogenBarrierMultiplier),
+        this.hydrogenBarrierSlowdownStart,
+        this.hydrogenBarrierSlowdownPower
+      )
       HoldingRecord.hydrogen.barrier = HoldingRecord.hydrogen.startBarrier.add(this.hydrogenEffect);
       GeneratorRecord.hydrogenGenerator.barrier = GeneratorRecord.hydrogenGenerator.startBarrier.add(this.hydrogenEffect);
 
@@ -78,9 +85,9 @@ export class AmplifiedFusionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   override buffer = new Num(8, 0);
   override baseBuffer = new Num(8, 0);
 
-  private applySlowdown(effect: Num): Num {
-    if (effect.greq(this.slowdownStart)) {
-      return effect.div(this.slowdownStart).pow(this.slowdownPower).mul(this.slowdownStart);
+  private applySlowdown(effect: Num, slowdownStart: Num, slowdownPower: Num): Num {
+    if (effect.greq(slowdownStart)) {
+      return effect.div(slowdownStart).pow(slowdownPower).mul(slowdownStart);
     }
     return effect;
   }
