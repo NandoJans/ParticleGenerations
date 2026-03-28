@@ -4,6 +4,7 @@ import {Num} from "../../../num";
 import {Styles} from "../../enums/styles";
 import {HoldingRecord} from "../../records/holdings/holding-record";
 import {GeneratorRecord} from "../../records/generators/generator-record";
+import {SlowdownHelper} from "../../helpers/slowdown-helper";
 
 export class SynergizedPowerGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   constructor(saveName: string) {
@@ -32,7 +33,7 @@ export class SynergizedPowerGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
       const powerEffect = HoldingRecord.yellowPower.effect
       if (powerEffect instanceof Num) {
         const rawEffect = powerEffect.pow(this.buffer);
-        const effect = this.applySlowdown(rawEffect);
+        const effect = SlowdownHelper.apply(rawEffect, this.slowdownStart, this.slowdownPower);
         GeneratorRecord.firstRedGenerator.mulMod = GeneratorRecord.firstRedGenerator.mulMod.mul(effect);
         return effect;
       }
@@ -43,13 +44,6 @@ export class SynergizedPowerGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   // Softcap settings - tune these values to adjust where slowdown starts and how strong it is.
   slowdownStart: Num = new Num(1, 100000);
   slowdownPower: Num = new Num(7.5, -1);
-
-  private applySlowdown(effect: Num): Num {
-    if (effect.greq(this.slowdownStart)) {
-      return effect.div(this.slowdownStart).pow(this.slowdownPower).mul(this.slowdownStart);
-    }
-    return effect;
-  }
 
   override requireParent: RequireParent = RequireParent.ALL;
 

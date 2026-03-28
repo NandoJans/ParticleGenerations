@@ -4,7 +4,7 @@ import {Num} from "../../../num";
 import {Styles} from "../../enums/styles";
 import {HoldingRecord} from "../../records/holdings/holding-record";
 import {GeneratorRecord} from "../../records/generators/generator-record";
-import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {SlowdownHelper} from "../../helpers/slowdown-helper";
 
 export class AmplifiedFusionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   constructor(saveName: string) {
@@ -51,10 +51,10 @@ export class AmplifiedFusionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
       }
 
       const rawEffect = (this.buffer).pow(boughtGenerators);
-      const effect = this.applySlowdown(rawEffect, this.slowdownStart, this.slowdownPower);
+      const effect = SlowdownHelper.apply(rawEffect, this.slowdownStart, this.slowdownPower);
       HoldingRecord.yellowFusion.maxAmount = HoldingRecord.yellowFusion.startMaxAmount.mul(effect);
 
-      this.hydrogenEffect = this.applySlowdown(
+      this.hydrogenEffect = SlowdownHelper.apply(
         boughtGenerators.mul(this.hydrogenBarrierMultiplier),
         this.hydrogenBarrierSlowdownStart,
         this.hydrogenBarrierSlowdownPower
@@ -84,13 +84,6 @@ export class AmplifiedFusionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
 
   override buffer = new Num(8, 0);
   override baseBuffer = new Num(8, 0);
-
-  private applySlowdown(effect: Num, slowdownStart: Num, slowdownPower: Num): Num {
-    if (effect.greq(slowdownStart)) {
-      return effect.div(slowdownStart).pow(slowdownPower).mul(slowdownStart);
-    }
-    return effect;
-  }
 
   cost: Num = new Num(2.5, 1);
   baseCost: Num = new Num(2.5, 1);
