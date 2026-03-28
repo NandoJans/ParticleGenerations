@@ -42,7 +42,7 @@ export class FusedAccelerationGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   // Add/remove layers and tune values freely.
   slowdownStarts: Num[] = [
     new Num(1, 50000),
-    new Num(1, 250000),
+    new Num(1, 300000),
   ];
   slowdownPowers: Num[] = [
     new Num(2.5, -1),
