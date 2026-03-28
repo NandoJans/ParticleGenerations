@@ -42,11 +42,11 @@ export class PowerAccelerationGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   // Add/remove layers and tune values freely.
   slowdownStarts: Num[] = [
     new Num(1, 350),
-    new Num(1, 500),
+    new Num(1, 1000),
   ];
   slowdownPowers: Num[] = [
     new Num(7.5, -1),
-    new Num(5, -1),
+    new Num(1, -1),
   ];
 
   override requireParent: RequireParent = RequireParent.ALL;
