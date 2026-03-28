@@ -46,7 +46,7 @@ export class PowerAccelerationGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   ];
   slowdownPowers: Num[] = [
     new Num(7.5, -1),
-    new Num(1, -1),
+    new Num(2.5, -1),
   ];
 
   override requireParent: RequireParent = RequireParent.ALL;
