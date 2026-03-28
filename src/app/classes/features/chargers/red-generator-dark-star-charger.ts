@@ -66,7 +66,7 @@ export class RedGeneratorDarkStarCharger extends DarkStarCharger {
   applyNerfs(): void {
     // Nerfs applied:
     // 1. Red generator multipliers are raised to ^0.5
-    const power = new Num(0.9, 0).pow(this.tier);
+    const power = new Num(0.85, 0).pow(this.tier);
 
     MultiplierRecord.redParticleGenerators.addLocalHook(
       this.name,
