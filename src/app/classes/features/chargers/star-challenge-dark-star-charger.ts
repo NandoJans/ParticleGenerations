@@ -248,7 +248,7 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
 
   override init() {
     this.requirement = [
-      new Requirement(HoldingRecord.redParticles, new Num(1, 50_000_000), this)
+      new Requirement(HoldingRecord.redParticles, new Num(1, 500_000_000), this)
     ]
   }
 }

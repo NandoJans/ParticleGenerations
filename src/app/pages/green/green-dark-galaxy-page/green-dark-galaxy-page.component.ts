@@ -16,13 +16,13 @@ import {DarkStarCharger} from "../../../classes/features/chargers/dark-star-char
 export class GreenDarkGalaxyPageComponent {
   darkStarHolding: Holding = HoldingRecord.darkStarHolding;
   darkGalaxy: DarkGalaxyChallenge = ChallengeRecord.darkGalaxy;
-  
+
   // Chargers
   chargers: DarkStarCharger[] = [
     ChargerRecord.redGeneratorDarkCharger,
     ChargerRecord.redAcceleratorDarkCharger,
-    ChargerRecord.yellowUpgradeDarkCharger,
     ChargerRecord.yellowGeneratorDarkCharger,
+    ChargerRecord.yellowUpgradeDarkCharger,
     ChargerRecord.starChallengeDarkCharger,
     ChargerRecord.yellowFusionDarkCharger,
     ChargerRecord.starKeyDarkCharger,

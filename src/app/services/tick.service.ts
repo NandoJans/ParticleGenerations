@@ -116,10 +116,24 @@ export class TickService {
       this.applyCalculationOrder();
     }
 
+    const fps = (App.isDev()) ? 60 : 20;
+    const baseMultiplier = (App.isDev()) ? new Num(2, -1) : new Num(1, -1);
+    // The game multiplier is based on fps, the more fps, the less game multiplier
+    const gameMultiplier = baseMultiplier.mul(new Num(20 / fps, 0));
+
+
     this.mainInterval = setInterval(() => {
       this.iterations++;
-      this.gameTick()
-    }, 50)
+
+      // In dev, we speed up the game tick so we can test the game tick more easily.
+      if (App.isDev()) {
+
+        this.gameTick(gameMultiplier);
+      } else {
+
+        this.gameTick(gameMultiplier);
+      }
+    }, 1000 / fps)
 
     this.iterationsInterval = setInterval(() => {
       console.log('Iterations: '+this.iterations+'/s')

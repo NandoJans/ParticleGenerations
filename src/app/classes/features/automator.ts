@@ -33,6 +33,7 @@ export abstract class Automator extends GameElement implements Storable, Resetab
   abstract buyables(): Buyable[];
 
   completed: boolean = false;
+  firstTimeCompleted: boolean = false;
   abstract goal: Num
   abstract goalString: string;
   abstract task(): Num;
@@ -49,6 +50,7 @@ export abstract class Automator extends GameElement implements Storable, Resetab
         buyable.auto = true;
       });
       this.completed = true;
+      this.firstTimeCompleted = true;
       this.save();
       DropDownMessageService.dropDown(
         `Automator ${this.displayName} completed!`,
@@ -90,6 +92,7 @@ export abstract class Automator extends GameElement implements Storable, Resetab
   tryLoad(): void {
     this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey());
     this.completed = this.localStorageHelper.load(this.completed, 'completed');
+    this.firstTimeCompleted = this.localStorageHelper.load(this.firstTimeCompleted, 'firstTimeCompleted');
     this.active = this.localStorageHelper.load(this.active, 'active');
     this.maxBuys = this.localStorageHelper.loadNum(new Num(1, 100), 'maxBuys');
   }
@@ -97,6 +100,7 @@ export abstract class Automator extends GameElement implements Storable, Resetab
   save() {
     this.localStorageHelper = new LocalStorageHelper(this.getSaveCategory(), this.getSaveKey());
     this.localStorageHelper.save(this.completed, 'completed');
+    this.localStorageHelper.save(this.firstTimeCompleted, 'firstTimeCompleted');
     this.localStorageHelper.save(this.active, 'active');
     if (this.maxBuys !== null) {
       this.localStorageHelper.saveNum(this.maxBuys, 'maxBuys');

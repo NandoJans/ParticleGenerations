@@ -457,6 +457,16 @@ export class MilestoneRecord extends Record {
 
   static fusionAccelerationBoosterDivideYellowFusion: FusionAccelerationBoosterDivideYellowFusionGreenMilestone = new FusionAccelerationBoosterDivideYellowFusionGreenMilestone('fusionAccelerationBoosterDivideYellowFusion')
 
+  static startWithStarKeyCompressionUnlocked: ChangeResetKeyGreenMilestone = new ChangeResetKeyGreenMilestone(
+    'startWithStarKeyCompressionUnlocked',
+    'Start with star key compression unlocked',
+    new Num(8, 1),
+    [
+      UpgradeRecord.unlockStarKeyCompression,
+    ],
+    'green prestige automator'
+  );
+
   // Blue Phase
 
   // Purple Phase
@@ -529,6 +539,7 @@ export class MilestoneRecord extends Record {
 
     MilestoneRecord.keepGreenPrestigeAutomator,
     MilestoneRecord.fusionAccelerationBoosterDivideYellowFusion,
+    MilestoneRecord.startWithStarKeyCompressionUnlocked,
   ];
 
   getList(): Milestone[] {

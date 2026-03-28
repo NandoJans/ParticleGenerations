@@ -138,7 +138,7 @@ export class CombineDarkStarCharger extends DarkStarCharger {
 
   override init() {
     this.requirement = [
-      new Requirement(HoldingRecord.greenParticles, new Num(1, 10), this)
+      new Requirement(HoldingRecord.greenParticles, new Num(1, 100), this)
     ]
   }
 }

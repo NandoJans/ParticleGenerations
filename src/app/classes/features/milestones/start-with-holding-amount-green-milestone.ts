@@ -1,6 +1,7 @@
 import {GreenMilestone} from "./green-milestone";
 import {Num} from "../../../num";
 import {Holding} from "../holding";
+import {ChallengeRecord} from "../../records/challenges/challenge-record";
 
 export class StartWithHoldingAmountGreenMilestone extends GreenMilestone {
   holding: Holding|Holding[];
@@ -14,7 +15,7 @@ export class StartWithHoldingAmountGreenMilestone extends GreenMilestone {
     this.groupName = groupName;
   }
 
-  override action(): undefined {
+  override tick(): undefined {
     if (Array.isArray(this.holding)) {
       this.holding.forEach(holding => {
         this.correctHoldingAmount(holding);

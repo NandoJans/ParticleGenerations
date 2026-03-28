@@ -12,6 +12,7 @@ import { PrestigeLayersService } from '../prestige-layers.service';
 import { TimelineService } from '../timeline.service';
 import { ChallengeService } from '../interactables/challenge.service';
 import {ChargerRecord} from "../../classes/records/charger/charger-record";
+import {Generator} from "../../classes/features/generator";
 
 export interface PhaseConfig {
   id: string;
@@ -372,9 +373,9 @@ export class DevPhaseService {
         HoldingRecord.yellowPrestiges.amount = new Num(1, 5);
         HoldingRecord.yellowKeys.amount = new Num(1, 25);
 
-        UpgradeRecord.redParticleSacrifice.bought = new Num(1.7, 1);
-        UpgradeRecord.yellowParticleSacrifice.bought = new Num(1.7, 1);
-        UpgradeRecord.greenParticleSacrifice.bought = new Num(1.7, 1);
+        UpgradeRecord.redParticleSacrifice.bought = new Num(3.3, 1);
+        UpgradeRecord.yellowParticleSacrifice.bought = new Num(3.3, 1);
+        UpgradeRecord.greenParticleSacrifice.bought = new Num(3.3, 1);
 
         UpgradeRecord.unlockFirstGreenGeneratorGalaxyTree.bought = new Num(1, 0);
         UpgradeRecord.betterRedGeneratorsMultiplierGalaxyTree.bought = new Num(1, 0);
@@ -390,6 +391,12 @@ export class DevPhaseService {
         UpgradeRecord.strongerHydrogenGalaxyTree.bought = new Num(1, 0);
         UpgradeRecord.amplifiedFusionGalaxyTree.bought = new Num(1, 0);
         UpgradeRecord.improveFusionCompressionGalaxyTree.bought = new Num(1, 0);
+        UpgradeRecord.fusedAccelerationGalaxyTree.bought = new Num(1, 0);
+        UpgradeRecord.powerAccelerationGalaxyTree.bought = new Num(1, 0);
+        UpgradeRecord.strongerBoosterAccelerationGalaxyTree.bought = new Num(1, 0);
+        UpgradeRecord.strongerYellowFusionGalaxyTree.bought = new Num(1, 0);
+        UpgradeRecord.moreYellowParticlesGalaxyTree.bought = new Num(1, 0);
+        UpgradeRecord.strongerRedExtensionGalaxyTree.bought = new Num(1, 0);
 
         UpgradeRecord.multiplyGreenParticlesGreen.bought = new Num(1, 1);
 
@@ -436,6 +443,9 @@ export class DevPhaseService {
       ...TimelineService.list,
       ...ChargerRecord.list,
     ].forEach(element => {
+      if (element instanceof Generator) {
+        element.getUpgrades().forEach(upgrade => upgrade.reset());
+      }
       element.reset();
     });
   }

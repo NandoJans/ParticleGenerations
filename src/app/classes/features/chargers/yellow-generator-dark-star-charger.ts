@@ -117,7 +117,7 @@ export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
 
   override init() {
     this.requirement = [
-      new Requirement(HoldingRecord.yellowPower, new Num(1, 25_000), this)
+      new Requirement(HoldingRecord.yellowPower, new Num(1, 50_000), this)
     ]
   }
 }

@@ -131,7 +131,7 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
 
   override init() {
     this.requirement = [
-      new Requirement(HoldingRecord.redAccelerators, new Num(1, 500_000), this)
+      new Requirement(HoldingRecord.redAccelerators, new Num(1, 900_000), this)
     ]
   }
 }

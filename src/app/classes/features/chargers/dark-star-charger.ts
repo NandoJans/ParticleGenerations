@@ -29,7 +29,7 @@ export abstract class DarkStarCharger extends Charger {
     this.applyTierBuffer();
 
     // Apply the nerf effects if active
-    if (this.isNerfActive) {
+    if (this.isNerfActive && ChallengeRecord.currentChallenges['green'] === ChallengeRecord.darkGalaxy) {
       this.applyNerfs();
     }
   }

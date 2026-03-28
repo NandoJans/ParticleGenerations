@@ -22,6 +22,10 @@ export class ChangeResetKeyGreenMilestone extends GreenMilestone {
         resetable.resetId = ResetHelper.registerReset(ResetKey.GREEN, resetable);
 
         if (resetable instanceof Automator) {
+          // Only set completed if automator is completed before, otherwise the player unlocks the automator without ever reaching its goal.
+          if (!resetable.firstTimeCompleted) {
+            return;
+          }
           resetable.completed = true;
           if (resetable.isActive()) {
             resetable.activate()

@@ -7,6 +7,7 @@ import {ResetHelper} from "../../helpers/reset-helper";
 import {Requirement} from "../interfaces/requirement";
 import {HoldingRecord} from "../../records/holdings/holding-record";
 import {Automator} from "../automator";
+import {Upgrade} from "../upgrade";
 
 export class StarKeyUpgradesAutomator extends Automator {
   name: string = "star-key-upgrades-automator";
@@ -16,7 +17,8 @@ export class StarKeyUpgradesAutomator extends Automator {
     return [
       UpgradeRecord.increaseKeyAmountStarKeySub,
       UpgradeRecord.compressionSpeedStarKeySub,
-      UpgradeRecord.decreaseMultiplyYellowKeysScalingStarKeySub
+      UpgradeRecord.decreaseMultiplyYellowKeysScalingStarKeySub,
+      ...UpgradeRecord.starKeyUpgradeList
     ];
   }
   goal: Num = new Num(1, 2);

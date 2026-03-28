@@ -83,7 +83,7 @@ export class TimelineEventComponent implements OnInit {
     if (next instanceof TimelineEvent) {
       const start = this.timelineEvent.requiredAmount;
       const goal = next.requiredAmount.div(start);
-      const progress = this.timelineEvent.highestAmount.div(start);
+      const progress = next.highestAmount.div(start);
 
       const percentage = progress.log(10)
         .div(goal.log(10))
