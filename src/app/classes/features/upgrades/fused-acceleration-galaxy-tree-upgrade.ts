@@ -4,6 +4,7 @@ import {HoldingRecord} from "../../records/holdings/holding-record";
 import {Styles} from "../../enums/styles";
 import {Num} from "../../../num";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {SlowdownHelper} from "../../helpers/slowdown-helper";
 
 export class FusedAccelerationGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   constructor(saveName: string) {
@@ -30,23 +31,23 @@ export class FusedAccelerationGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   action(): Num|undefined {
     if (this.hasBought()) {
       const rawEffect = HoldingRecord.yellowFusion.amount.pow(this.buffer);
-      const effect = this.applySlowdown(rawEffect);
+      const effect = SlowdownHelper.applyLayers(rawEffect, this.slowdownStarts, this.slowdownPowers);
       MultiplierRecord.redAcceleratorGenerators.correct(effect);
       return effect;
     }
     return
   }
 
-  // Softcap settings - tune these values to adjust where slowdown starts and how strong it is.
-  slowdownStart: Num = new Num(1, 50000);
-  slowdownPower: Num = new Num(2.5, -1);
-
-  private applySlowdown(effect: Num): Num {
-    if (effect.greq(this.slowdownStart)) {
-      return effect.div(this.slowdownStart).pow(this.slowdownPower).mul(this.slowdownStart);
-    }
-    return effect;
-  }
+  // Slowdown layers are applied in order, from earliest to latest threshold.
+  // Add/remove layers and tune values freely.
+  slowdownStarts: Num[] = [
+    new Num(1, 50000),
+    new Num(1, 100000),
+  ];
+  slowdownPowers: Num[] = [
+    new Num(2.5, -1),
+    new Num(1.5, -1),
+  ];
 
   override requireParent: RequireParent = RequireParent.ALL;
 
