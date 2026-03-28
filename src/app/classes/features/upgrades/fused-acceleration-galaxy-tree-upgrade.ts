@@ -46,7 +46,7 @@ export class FusedAccelerationGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   ];
   slowdownPowers: Num[] = [
     new Num(2.5, -1),
-    new Num(1.5, -2),
+    new Num(5, -2),
   ];
 
   override requireParent: RequireParent = RequireParent.ALL;
