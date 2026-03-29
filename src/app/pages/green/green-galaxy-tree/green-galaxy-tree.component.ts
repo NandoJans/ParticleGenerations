@@ -11,6 +11,7 @@ import {Styles} from "../../../classes/enums/styles";
 import {FormControl} from "@angular/forms";
 import {DropDownMessageService} from "../../../services/visuals/drop-down-message.service";
 import {Num} from "../../../num";
+import {MultiplierRecord} from "../../../classes/records/multipliers/multiplier-record";
 
 interface Star {
   id: number;
@@ -908,6 +909,11 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
   respecGalaxyTree() {
     this.galaxyTreeService.respec()
     this.confirmingRespec = false;
+    MultiplierRecord.totalDarkEnergyCost.reset();
+    UpgradeRecord.redParticleSacrifice.run();
+    UpgradeRecord.yellowParticleSacrifice.run();
+    UpgradeRecord.greenParticleSacrifice.run();
+    HoldingRecord.darkEnergy.run();
   }
 
   confirmingRespec: boolean = false;
@@ -977,6 +983,8 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
     savedTree: string[],
     darkEnergy: Num
   }) {
+    this.respecGalaxyTree();
+
     UpgradeRecord.galaxyTreeUpgradeList.forEach(upgrade => {
       if (savedTree.savedTree.includes(upgrade.name)) {
         upgrade.buy();

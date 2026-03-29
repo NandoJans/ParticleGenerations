@@ -31,9 +31,11 @@ export class StarKeyHolding extends Holding {
     this.starKeyUpgradesBought = new Num(0, 0);
     if (this.hasBoughtTotal) {
       const effect = this.buffer.mul(this.amount).add(Num.ONE);
-      MultiplierRecord.redParticleGenerators.power(effect);
-      this.buffer = this.baseBuffer.copy();
-      return effect;
+      if (effect.greq(Num.ONE)) {
+        MultiplierRecord.redParticleGenerators.power(effect);
+        this.buffer = this.baseBuffer.copy();
+        return effect;
+      }
     }
     return;
   }

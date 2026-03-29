@@ -1,7 +1,7 @@
 <div class="charger-container" [class.collapsed]="isCollapsed()" [attr.data-charger-type]="getChargerType()">
   <!-- Header -->
   <div class="charger-header" (click)="toggleCollapsed()">
-    <div class="header-left">
+    <div class="header-left" [class.collapsed]="isCollapsed()">
       <button class="toggle-button" (click)="toggleCharging(); $event.stopPropagation()" [class.active]="isCharging()">
         <fa-icon [icon]="isCharging() ? faPause : faPlay"></fa-icon>
       </button>
@@ -10,6 +10,13 @@
         <span class="roman-tier">{{ getTierRomanNumerals() }} / {{ getHighestTierRomanNumerals() }}</span>
       </div>
     </div>
+    @if (isCollapsed()) {
+      <div class="progress-bar-container">
+        <div class="progress-bar" [class.charging]="isCharging()">
+          <div class="progress-fill" [style.width.%]="getProgress()"></div>
+        </div>
+      </div>
+    }
     <div class="header-right" *ngIf="isCollapsed()">
       <span class="collapsed-charge">{{ getAmountDisplay() }}</span>
       <span class="collapsed-effect">{{ getCollapsedEffectDisplay() }}</span>

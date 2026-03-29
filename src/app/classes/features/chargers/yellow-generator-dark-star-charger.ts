@@ -47,7 +47,7 @@ export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
   getChargeAmount(): Num {
     // Charge based on yellow power - only increases
     const yellowPower = HoldingRecord.yellowPower;
-    return yellowPower.amount.log10().pow(new Num(1.23, 0));
+    return yellowPower.amount.log10().pow(new Num(1.3, 0));
   }
 
   action(): Num {
@@ -70,23 +70,11 @@ export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
       (multiplier: Multiplier) => multiplier.power(power),
       true
     );
-
-    // 2. Decrease active generators based on tier, starting with 5
-    if (this.tier.greq(new Num(3, 0))) GeneratorRecord.fifthYellowGenerator.disable();
-    if (this.tier.greq(new Num(4, 0))) GeneratorRecord.fourthYellowGenerator.disable();
-    if (this.tier.greq(new Num(5, 0))) GeneratorRecord.thirdYellowGenerator.disable();
-    if (this.tier.greq(new Num(6, 0))) GeneratorRecord.secondYellowGenerator.disable();
   }
 
   revertNerfs(): void {
     // Revert yellow generator multiplier nerf
     delete MultiplierRecord.yellowGenerators.localHooks[this.name];
-
-    // Restore full active generator count
-    GeneratorRecord.fifthYellowGenerator.enable();
-    GeneratorRecord.fourthYellowGenerator.enable();
-    GeneratorRecord.thirdYellowGenerator.enable();
-    GeneratorRecord.secondYellowGenerator.enable();
   }
 
   getNerfDescription(): string {
