@@ -162,6 +162,12 @@ import {
 import {PoweredCompressionGalaxyTreeUpgrade} from "../../features/upgrades/powered-compression-galaxy-tree-upgrade";
 import {GeneratedCompressionGalaxyTreeUpgrade} from "../../features/upgrades/generated-compression-galaxy-tree-upgrade";
 import {ExpandedYellowKeyScalingGalaxyTreeUpgrade} from "../../features/upgrades/expanded-yellow-key-scaling-galaxy-tree-upgrade";
+import {
+  CheaperFifthYellowGeneratorGalaxyTreeUpgrade
+} from "../../features/upgrades/cheaper-fifth-yellow-generator-galaxy-tree-upgrade";
+import {
+  CheaperFourthYellowGeneratorGalaxyTreeUpgrade
+} from "../../features/upgrades/cheaper-fourth-yellow-generator-galaxy-tree-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -298,6 +304,8 @@ export class UpgradeRecord extends Record {
   static acceleratedCompressionGalaxyTree: AcceleratedCompressionGalaxyTreeUpgrade = new AcceleratedCompressionGalaxyTreeUpgrade('acceleratedCompressionGalaxyTree');
   static poweredCompressionGalaxyTree: PoweredCompressionGalaxyTreeUpgrade = new PoweredCompressionGalaxyTreeUpgrade('poweredCompressionGalaxyTree');
   static generatedCompressionGalaxyTree: GeneratedCompressionGalaxyTreeUpgrade = new GeneratedCompressionGalaxyTreeUpgrade('generatedCompressionGalaxyTree');
+  static cheaperFourthYellowGeneratorGalaxyTreeUpgrade: CheaperFourthYellowGeneratorGalaxyTreeUpgrade = new CheaperFourthYellowGeneratorGalaxyTreeUpgrade('cheaperFourthYellowGeneratorGalaxyTreeUpgrade');
+  static cheaperFifthYellowGeneratorGalaxyTreeUpgrade: CheaperFifthYellowGeneratorGalaxyTreeUpgrade = new CheaperFifthYellowGeneratorGalaxyTreeUpgrade('cheaperFifthYellowGeneratorGalaxyTreeUpgrade');
 
 
   static yellowUpgradeList: YellowUpgrade[] = [
@@ -374,6 +382,9 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.acceleratedCompressionGalaxyTree,
     UpgradeRecord.poweredCompressionGalaxyTree,
     UpgradeRecord.generatedCompressionGalaxyTree,
+
+    UpgradeRecord.cheaperFourthYellowGeneratorGalaxyTreeUpgrade,
+    UpgradeRecord.cheaperFifthYellowGeneratorGalaxyTreeUpgrade,
   ]
 
   static override list: Upgrade[] = [

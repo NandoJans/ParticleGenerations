@@ -43,13 +43,11 @@ export class YellowUpgradeDarkStarCharger extends DarkStarCharger {
   getChargeAmount(): Num {
     // Charge based on yellow particles amount - only increases
     const yellowParticles = HoldingRecord.yellowParticles;
-    return yellowParticles.amount.div(new Num(1, 3)).log10().pow(new Num(3, 0));
+    return yellowParticles.amount.sub(new Num(1, 3)).log10().pow(new Num(3, 0));
   }
   action(): Num {
-    // Calculate and grant green keys based on effective charge
-    const effect = this.getEffectiveCharge().add(this.getSharedCharge()).pow(this.tier.mul(new Num(3, 0)));
+    const effect = this.getEffectiveCharge().add(this.getSharedCharge()).pow(this.tier.mul(new Num(3, 0))).add(new Num(1, 0));
 
-    // Grant green keys (green particles) as the reward
     if (effect.gt(new Num(0, 0))) {
       MultiplierRecord.yellowParticleGain.addLocalHook(this.name, (multiplier: Multiplier) => multiplier.correct(effect), true);
     }

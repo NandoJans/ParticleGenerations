@@ -176,7 +176,7 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
     // screen = world * scale + translate
     // world = (screen - translate) / scale
     const margin = GreenGalaxyTreeComponent.VIEWPORT_MARGIN;
-    
+
     this.viewportBounds = {
       minX: (0 - this.tx) / this.scale - margin,
       maxX: (width - this.tx) / this.scale + margin,
@@ -323,7 +323,7 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   // Calculate frame interval from target FPS
-  private readonly targetFrameInterval: number = this.isMobile 
+  private readonly targetFrameInterval: number = this.isMobile
     ? Math.round(1000 / GreenGalaxyTreeComponent.MOBILE_TARGET_FPS)
     : Math.round(1000 / GreenGalaxyTreeComponent.DESKTOP_TARGET_FPS);
   private lastRenderTime: number = 0;
@@ -620,6 +620,9 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
     UpgradeRecord.acceleratedCompressionGalaxyTree.setPos(-300, 300);
     UpgradeRecord.poweredCompressionGalaxyTree.setPos(-300, -300);
     UpgradeRecord.generatedCompressionGalaxyTree.setPos(300, -300);
+
+    UpgradeRecord.cheaperFourthYellowGeneratorGalaxyTreeUpgrade.setPos(-200, -425);
+    UpgradeRecord.cheaperFifthYellowGeneratorGalaxyTreeUpgrade.setPos(-275, -525);
   }
 
   isBottomSectionOpen() {
