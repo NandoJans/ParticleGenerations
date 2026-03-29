@@ -27,7 +27,7 @@ export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
   override baseBuffer: Num = new Num(5, 0);
 
   override tierNerf: Num[] = [
-    new Num(0.99, 0),
+    new Num(0.9, 0),
     new Num(0.5, 0)
   ];
 
@@ -54,7 +54,7 @@ export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
     // Base effect: 10^charge
     const baseEffect = this.buffer.pow(this.getCharge().add(this.getSharedCharge()));
     // Raise to the power of the number of tiers
-    const effect = baseEffect.pow(new Num(0.55, 0).mul(this.tier).add(new Num(0.45, 0)));
+    const effect = baseEffect.pow(new Num(0.2, 0).mul(this.tier).add(new Num(0.8, 0)));
     // Apply shared tier boost from all charger tiers
     MultiplierRecord.yellowGenerators.correct(effect);
     return effect;
