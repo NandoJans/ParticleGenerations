@@ -27,6 +27,7 @@ export class YellowGeneratorDarkStarCharger extends DarkStarCharger {
   override baseBuffer: Num = new Num(5, 0);
 
   override tierNerf: Num[] = [
+    new Num(0.99, 0),
     new Num(0.5, 0)
   ];
 
