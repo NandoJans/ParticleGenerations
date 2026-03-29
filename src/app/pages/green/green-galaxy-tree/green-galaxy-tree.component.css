@@ -169,6 +169,13 @@
   z-index: 50;
 }
 
+.saved-button {
+  position: absolute;
+  margin: 1rem auto;
+  transform: translate(-50%, 0);
+  z-index: 50;
+}
+
 .recenter-button {
   position: absolute;
   right: .1rem;
@@ -176,7 +183,7 @@
   z-index: 50;
 }
 
-.confirm-respec {
+.modal {
   background-color: var(--background-color-1);
   border-radius: 0.5rem;
   border: 1px solid var(--background-color-4);
@@ -184,12 +191,12 @@
   text-align: center;
 }
 
-.confirm-respec .buttons {
+.modal .buttons {
   display: flex;
   justify-content: space-between;
 }
 
-.confirm-respec-overlay {
+.modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -200,6 +207,29 @@
   height: 100%;
   backdrop-filter: blur(5px);
   z-index: 1000;
+}
+
+.saved-tree {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  padding: 0.25rem;
+  background-color: var(--background-color-3);
+  border-radius: 0.5rem;
+  border: 1px solid var(--background-color-4);
+  margin-bottom: 1rem;
+  max-width: 40rem;
+}
+
+.saved-trees {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  max-width: 40rem;
 }
 
 @media (max-width: 600px) {

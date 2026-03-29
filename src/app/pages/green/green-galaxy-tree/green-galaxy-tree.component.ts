@@ -8,6 +8,8 @@ import {faArrowDown, faArrowUp, faWindowClose} from "@fortawesome/free-solid-svg
 import {LocalStorageHelper} from "../../../classes/helpers/local-storage-helper";
 import {GalaxyTreeService} from "../../../services/galaxy-tree.service";
 import {Styles} from "../../../classes/enums/styles";
+import {FormControl} from "@angular/forms";
+import {DropDownMessageService} from "../../../services/visuals/drop-down-message.service";
 
 interface Star {
   id: number;
@@ -48,6 +50,9 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
   @ViewChild('starCanvas2') starCanvas2!: ElementRef<HTMLCanvasElement>;
   @ViewChild('starCanvas3') starCanvas3!: ElementRef<HTMLCanvasElement>;
   @ViewChild('nebulaCanvas') nebulaCanvas!: ElementRef<HTMLCanvasElement>;
+
+  treeNameControl: FormControl = new FormControl('');
+  protected savedTrees: {[key: string]: string[]} = {};
 
   stars: Star[] = [];
   private animationFrameId: number | null = null;
@@ -106,6 +111,7 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
 
   constructor(
     public galaxyTreeService: GalaxyTreeService,
+    private dropDownMessageService: DropDownMessageService,
     private cdr: ChangeDetectorRef,
   ) {
 
@@ -129,6 +135,8 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
     setInterval(() => {
       this.updateStars();
     }, 1000);
+
+    this.savedTrees = this.localStorageHelper.load({}, 'savedTrees');
   }
 
   ngAfterViewInit(): void {
@@ -891,9 +899,11 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
 
   respecGalaxyTree() {
     this.galaxyTreeService.respec()
+    this.confirmingRespec = false;
   }
 
   confirmingRespec: boolean = false;
+  showSavedTrees: boolean = false;
 
   isConfirmingRespec(): boolean {
     return this.confirmingRespec;
@@ -901,6 +911,10 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
 
   toggleConfirmRespec(): void {
     this.confirmingRespec = !this.confirmingRespec;
+  }
+
+  toggleSavedTrees(): void {
+    this.showSavedTrees = !this.showSavedTrees;
   }
 
   recenterGalaxyTree(): void {
@@ -924,5 +938,65 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
     this.ty = viewportCY - rootY * this.scale;
 
     this.snapUpdate();
+  }
+
+  addSavedTree() {
+    const saveName = this.treeNameControl.value;
+    if (!saveName) {
+      this.dropDownMessageService.dropDown('Name is missing', 'Please enter a name for the tree', 'error');
+      return;
+    }
+
+    const savedTree: string[] = [];
+
+    UpgradeRecord.galaxyTreeUpgradeList.forEach(upgrade => {
+      if (upgrade.hasBought()) {
+        savedTree.push(upgrade.name);
+      }
+    })
+
+    this.savedTrees[this.parseSavedName(saveName)] = savedTree;
+
+    this.localStorageHelper.save(this.savedTrees, 'savedTrees');
+  }
+
+  loadSavedTree(savedTree: string[]) {
+    UpgradeRecord.galaxyTreeUpgradeList.forEach(upgrade => {
+      if (savedTree.includes(upgrade.name)) {
+        upgrade.buy();
+      }
+    })
+
+    this.showSavedTrees = false;
+  }
+
+  deleteSavedTree(savedTreeName: string) {
+    delete this.savedTrees[savedTreeName];
+
+    this.localStorageHelper.save(this.savedTrees, 'savedTrees');
+  }
+
+  private parseSavedName(savedTreeName: string): string {
+    return savedTreeName.replace(' ', '_');
+  }
+
+  protected deparseSavedName(savedTreeName: string): string {
+    return savedTreeName.replace('_', ' ');
+  }
+
+  protected readonly Object = Object;
+
+  protected updateSavedTree(savedTreeName: string) {
+    const savedTree: string[] = [];
+
+    UpgradeRecord.galaxyTreeUpgradeList.forEach(upgrade => {
+      if (upgrade.hasBought()) {
+        savedTree.push(upgrade.name);
+      }
+    })
+
+    this.savedTrees[this.parseSavedName(savedTreeName)] = savedTree;
+
+    this.localStorageHelper.save(this.savedTrees, 'savedTrees');
   }
 }
