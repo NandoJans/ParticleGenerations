@@ -24,7 +24,8 @@ export class YellowUpgradeDarkStarCharger extends DarkStarCharger {
   name: string = 'yellow-upgrade-dark-star-charger';
 
   override tierNerf: Num[] = [
-    new Num(0.5, 0)
+    new Num(0.6, 0),
+    new Num(0.5, 0),
   ];
 
   /**
