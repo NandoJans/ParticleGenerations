@@ -221,6 +221,22 @@
   border: 1px solid var(--background-color-4);
   margin-bottom: 1rem;
   max-width: 40rem;
+  width: 100%;
+}
+
+.saved-tree span {
+  font-size: 1.2rem;
+  font-weight: bold;
+  background-color: var(--background-color-2);
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--background-color-4);
+}
+
+.saved-tree .buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
 }
 
 .saved-trees {

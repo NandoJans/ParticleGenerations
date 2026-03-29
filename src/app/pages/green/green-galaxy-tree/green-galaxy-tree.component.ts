@@ -10,6 +10,7 @@ import {GalaxyTreeService} from "../../../services/galaxy-tree.service";
 import {Styles} from "../../../classes/enums/styles";
 import {FormControl} from "@angular/forms";
 import {DropDownMessageService} from "../../../services/visuals/drop-down-message.service";
+import {Num} from "../../../num";
 
 interface Star {
   id: number;
@@ -52,7 +53,10 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
   @ViewChild('nebulaCanvas') nebulaCanvas!: ElementRef<HTMLCanvasElement>;
 
   treeNameControl: FormControl = new FormControl('');
-  protected savedTrees: {[key: string]: string[]} = {};
+  protected savedTrees: {[key: string]: {
+    savedTree: string[],
+    darkEnergy: Num
+  }} = {};
 
   stars: Star[] = [];
   private animationFrameId: number | null = null;
@@ -137,6 +141,10 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
     }, 1000);
 
     this.savedTrees = this.localStorageHelper.load({}, 'savedTrees');
+    Object.entries(this.savedTrees).forEach(([key, value]) => {
+      value['darkEnergy'] = new Num(value.darkEnergy.mantissa, value.darkEnergy.exponent);
+      this.savedTrees[key] = value;
+    })
   }
 
   ngAfterViewInit(): void {
@@ -948,21 +956,29 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
     }
 
     const savedTree: string[] = [];
+    let darkEnergy: Num = new Num(0, 0);
 
     UpgradeRecord.galaxyTreeUpgradeList.forEach(upgrade => {
       if (upgrade.hasBought()) {
         savedTree.push(upgrade.name);
+        darkEnergy = darkEnergy.add(upgrade.baseCost);
       }
     })
 
-    this.savedTrees[this.parseSavedName(saveName)] = savedTree;
+    this.savedTrees[this.parseSavedName(saveName)] = {
+      savedTree,
+      darkEnergy
+    };
 
     this.localStorageHelper.save(this.savedTrees, 'savedTrees');
   }
 
-  loadSavedTree(savedTree: string[]) {
+  loadSavedTree(savedTree: {
+    savedTree: string[],
+    darkEnergy: Num
+  }) {
     UpgradeRecord.galaxyTreeUpgradeList.forEach(upgrade => {
-      if (savedTree.includes(upgrade.name)) {
+      if (savedTree.savedTree.includes(upgrade.name)) {
         upgrade.buy();
       }
     })
@@ -977,25 +993,30 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   private parseSavedName(savedTreeName: string): string {
-    return savedTreeName.replace(' ', '_');
+    return savedTreeName.replace(/\s+/g, '-');
   }
 
   protected deparseSavedName(savedTreeName: string): string {
-    return savedTreeName.replace('_', ' ');
+    return savedTreeName.replace(/-/g, ' ');
   }
 
   protected readonly Object = Object;
 
   protected updateSavedTree(savedTreeName: string) {
     const savedTree: string[] = [];
+    let darkEnergy: Num = new Num(0, 0);
 
     UpgradeRecord.galaxyTreeUpgradeList.forEach(upgrade => {
       if (upgrade.hasBought()) {
         savedTree.push(upgrade.name);
+        darkEnergy = darkEnergy.add(upgrade.baseCost);
       }
     })
 
-    this.savedTrees[this.parseSavedName(savedTreeName)] = savedTree;
+    this.savedTrees[this.parseSavedName(savedTreeName)] = {
+      savedTree,
+      darkEnergy
+    }
 
     this.localStorageHelper.save(this.savedTrees, 'savedTrees');
   }

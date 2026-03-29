@@ -16,10 +16,13 @@
       <div class="saved-trees">
       @for (savedTree of Object.entries(savedTrees); track savedTree[0]) {
         <div class="saved-tree">
-          <h4>{{ deparseSavedName(savedTree[0]) }}</h4>
-          <app-button [text]="'Load'" [style]="'button green'" (function)="loadSavedTree(savedTree[1])"></app-button>
-          <app-button [text]="'Update'" [style]="'button blue'" (function)="updateSavedTree(savedTree[0])"></app-button>
-          <app-button [text]="'Delete'" [style]="'button red'" (function)="deleteSavedTree(savedTree[0])"></app-button>
+          <span>{{ deparseSavedName(savedTree[0]) }}</span>
+          <span class="dark">{{ savedTree[1].darkEnergy.toString() }}</span>
+          <div class="buttons">
+            <app-button [text]="'Load'" [style]="'button green'" (function)="loadSavedTree(savedTree[1])"></app-button>
+            <app-button [text]="'Update'" [style]="'button blue'" (function)="updateSavedTree(savedTree[0])"></app-button>
+            <app-button [text]="'Delete'" [style]="'button red'" (function)="deleteSavedTree(savedTree[0])"></app-button>
+          </div>
         </div>
       }
       @if (!savedTrees || Object.keys(savedTrees).length === 0) {
