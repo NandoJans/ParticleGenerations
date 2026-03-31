@@ -8,7 +8,6 @@ import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 import {ProximaCentauriStarChallenge} from "../challenges/proxima-centauri-star-challenge";
 import {Multiplier} from "../multiplier";
 import {Challenge} from "../challenge";
-import {App} from "../../../App";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 
 /**
@@ -16,7 +15,7 @@ import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
  *
  * Nerfs: Makes star challenges way harder without any reward for completion. Reduces challenge holding generation by applying ^0.5.
  *        Sirius star challenge is especially difficult with an extra 100x multiplier on top of the base nerf.
- * Charge: is gained based on total completions from ALL challenges (10 per completion) plus log10 of red particles gained in sirius star challenge
+ * Charge: is gained from red particles earned while currently inside any star challenge
  * Amplifies:
  *   1. Increases challenge holding generation speed slightly
  *   2. Increases the buff gained from challenges slightly
@@ -30,8 +29,6 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
   canInfiniteChargeAtMaxTier: boolean = true;
   requirement: Requirement[] = [];
   name: string = 'star-challenge-dark-star-charger';
-  sunParticlesReached: Num = new Num(1, 0);
-
   override tierNerf: Num[] = [
     new Num(0.5, 0)
   ];
@@ -62,33 +59,23 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
   }
 
   getChargeAmount(): Num {
-    // Charge based on total completions from ALL challenges (10 per completion)
-    // Plus log10 of red particles gained in sirius star challenge
-    const challenges = [
+    // Only charge while currently in a star challenge.
+    const starChallenges = [
       ChallengeRecord.proximaCentauriStar,
       ChallengeRecord.lalandeStar,
       ChallengeRecord.sunStar,
       ChallengeRecord.siriusStar
     ];
 
-    let totalCompletions = new Num(0, 0);
-    challenges.forEach(challenge => {
-      const completions = challenge.getCompletions();
-      totalCompletions = totalCompletions.add(completions);
-    });
-
-    let redParticleCharge = new Num(1, 0);
-    if (ChallengeRecord.currentChallenges['yellow'] === ChallengeRecord.siriusStar) {
-      const redParticles = HoldingRecord.redParticles;
-      redParticleCharge = redParticles.amount.log10().div(new Num(1, 1));
+    const currentYellowChallenge = ChallengeRecord.currentChallenges['yellow'];
+    const inStarChallenge = starChallenges.includes(currentYellowChallenge);
+    if (!inStarChallenge) {
+      return Num.ZERO.copy();
     }
 
-    if (ChallengeRecord.currentChallenges['yellow'] === ChallengeRecord.sunStar) {
-      const sunParticle = ChallengeRecord.sunStar.challengeHoldings['sunParticle'];
-      if (sunParticle.amount.gt(this.sunParticlesReached)) this.sunParticlesReached = sunParticle.amount.copy();
-    }
-
-    return new Num(2, 0).pow(totalCompletions).mul(redParticleCharge).mul(this.sunParticlesReached.log10());
+    // While inside a star challenge, charge directly from red particles gained in that run.
+    // Most star challenges reset red particles on start, so current amount reflects in-challenge progress.
+    return HoldingRecord.redParticles.amount.log10().div(new Num(1, 2));
   }
 
   action(): Num {
@@ -215,7 +202,7 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
   }
 
   getChargeDescription(): string {
-    return 'Charges based on all challenge completions (10 per completion) plus log10 of red particles from Sirius.';
+    return 'Charges from log10(red particles gained) / 100 while you are currently inside a star challenge.';
   }
 
   getRewardDescription(): string {
@@ -224,26 +211,15 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
 
   override getEffectBreakdown(): { formula: string; effects: string[] } {
     return {
-      formula: "Total challenge completions + log10(red particles) x 10^tier x log10(sun particles reached)",
+      formula: "log10(red particles while in a star challenge) / 100",
       effects: [
         `Current Charge: ${this.getCharge().toString()} + ${this.getSharedCharge().toString()}`,
         `Tier: ${this.tier.toString()}`,
-        `Sun Particles Reached: ${this.sunParticlesReached.toString()}`,
         `Holding Speed: ${this.holdingSpeedEffect.toString(2)}x`,
         `Challenge Buff Boost: ${this.challengeBuffEffect.toString(2)}x`,
         `Proxima Centauri Max Buff: ${this.proximaMaxBuffEffect.toString(2)}x`
       ]
     }
-  }
-
-  override save() {
-    super.save();
-    this.localStorageHelper.saveNum(this.sunParticlesReached, 'sunParticlesReached');
-  }
-
-  override tryLoad() {
-    super.tryLoad();
-    this.sunParticlesReached = this.localStorageHelper.loadNum(this.sunParticlesReached, 'sunParticlesReached');
   }
 
   override init() {

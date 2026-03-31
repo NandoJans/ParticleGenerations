@@ -3,12 +3,17 @@ import { Num } from '../../../num';
 import { ChallengeRecord } from '../../records/challenges/challenge-record';
 import { ProximaCentauriStarChallenge } from '../challenges/proxima-centauri-star-challenge';
 import { UpgradeRecord } from '../../records/upgrades/upgrade-record';
+import { HoldingRecord } from '../../records/holdings/holding-record';
 
 describe('StarChallengeDarkStarCharger', () => {
   let charger: StarChallengeDarkStarCharger;
 
   beforeEach(() => {
     charger = new StarChallengeDarkStarCharger('test-star-challenge-charger');
+  });
+
+  afterEach(() => {
+    delete ChallengeRecord.currentChallenges['yellow'];
   });
 
   it('should create an instance', () => {
@@ -47,8 +52,7 @@ describe('StarChallengeDarkStarCharger', () => {
 
   it('should have effect breakdown with correct formulas', () => {
     const breakdown = charger.getEffectBreakdown();
-    expect(breakdown.formula).toContain('charge');
-    expect(breakdown.formula).toContain('tier');
+    expect(breakdown.formula).toContain('red particles');
     expect(breakdown.effects.length).toBeGreaterThan(0);
     expect(breakdown.effects.some(e => e.includes('Holding Speed'))).toBe(true);
     expect(breakdown.effects.some(e => e.includes('Challenge Buff Boost'))).toBe(true);
@@ -61,10 +65,27 @@ describe('StarChallengeDarkStarCharger', () => {
     expect(charger.proximaMaxBuffEffect).toEqual(new Num(1, 0));
   });
 
-  it('should have correct charge description mentioning all challenges', () => {
+  it('should have correct charge description mentioning star challenges and red particles', () => {
     const description = charger.getChargeDescription();
-    expect(description).toContain('all challenge completions');
-    expect(description).toContain('10 per completion');
+    expect(description).toContain('red particles');
+    expect(description).toContain('star challenge');
+  });
+
+  it('should not charge when not in a star challenge', () => {
+    ChallengeRecord.currentChallenges['yellow'] = undefined as any;
+    HoldingRecord.redParticles.amount = new Num(1, 6);
+
+    const chargeAmount = charger.getChargeAmount();
+    expect(chargeAmount.toString()).toBe(new Num(0, 0).toString());
+  });
+
+  it('should charge based on red particles when in a star challenge with /100 scaling', () => {
+    ChallengeRecord.currentChallenges['yellow'] = ChallengeRecord.proximaCentauriStar;
+    HoldingRecord.redParticles.amount = new Num(1, 6);
+
+    const chargeAmount = charger.getChargeAmount();
+    const expected = HoldingRecord.redParticles.amount.log10().div(new Num(1, 2));
+    expect(chargeAmount.toString()).toBe(expected.toString());
   });
 
   describe('Proxima Centauri maxEffect calculation', () => {
