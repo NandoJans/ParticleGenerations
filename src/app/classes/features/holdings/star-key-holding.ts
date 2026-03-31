@@ -6,6 +6,7 @@ import {ResetKey} from "../../enums/reset-key";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {Styles} from "../../enums/styles";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {BuffSoftCapHelper} from "../../helpers/buff-soft-cap-helper";
 
 export class StarKeyHolding extends Holding {
   name: string = 'star-key-holding';
@@ -24,13 +25,20 @@ export class StarKeyHolding extends Holding {
   starKeyUpgradesBought: Num = new Num(0, 0);
   hasBoughtTotal: boolean = false;
   totalUpgrades: Num = new Num(8, 0);
+  private readonly effectSoftCap: Num = new Num(2.5, 0);
+  private readonly effectSoftCapPower: Num = new Num(0.1, 0);
 
 
   override action(): Num|undefined {
     this.hasBoughtTotal = this.starKeyUpgradesBought.greq(this.totalUpgrades);
     this.starKeyUpgradesBought = new Num(0, 0);
     if (this.hasBoughtTotal) {
-      const effect = this.buffer.mul(this.amount).add(Num.ONE);
+      const rawEffect = this.buffer.mul(this.amount).add(Num.ONE);
+      const effect = BuffSoftCapHelper.applyPowerSoftCap(
+        rawEffect,
+        this.effectSoftCap,
+        this.effectSoftCapPower
+      );
       if (effect.greq(Num.ONE)) {
         MultiplierRecord.redParticleGenerators.power(effect);
         this.buffer = this.baseBuffer.copy();
