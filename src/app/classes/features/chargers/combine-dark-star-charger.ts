@@ -48,7 +48,7 @@ export class CombineDarkStarCharger extends DarkStarCharger {
     }
 
     // Charge = productCharge ^ 0.1
-    const chargeAmount = productCharge.pow(new Num(0.1, 0));
+    const chargeAmount = productCharge.pow(new Num(0.15, 0));
 
     return chargeAmount.gt(new Num(0, 0)) ? chargeAmount : new Num(0, 0);
   }
