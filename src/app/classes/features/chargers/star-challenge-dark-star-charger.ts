@@ -44,6 +44,21 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
   holdingSpeedEffect: Num = new Num(1, 0);
   challengeBuffEffect: Num = new Num(1, 0);
   proximaMaxBuffEffect: Num = new Num(1, 0);
+  starChallengeGeneratorEffect: Num = new Num(1, 0);
+
+  private getStarChallenges(): Challenge[] {
+    return [
+      ChallengeRecord.proximaCentauriStar,
+      ChallengeRecord.lalandeStar,
+      ChallengeRecord.sunStar,
+      ChallengeRecord.siriusStar
+    ];
+  }
+
+  private isInStarChallenge(): boolean {
+    const currentYellowChallenge = ChallengeRecord.currentChallenges['yellow'];
+    return this.getStarChallenges().includes(currentYellowChallenge);
+  }
 
   /**
    * Calculate max charge for a given tier
@@ -60,16 +75,7 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
 
   getChargeAmount(): Num {
     // Only charge while currently in a star challenge.
-    const starChallenges: Challenge[] = [
-      ChallengeRecord.proximaCentauriStar,
-      ChallengeRecord.lalandeStar,
-      ChallengeRecord.sunStar,
-      ChallengeRecord.siriusStar
-    ];
-
-    const currentYellowChallenge = ChallengeRecord.currentChallenges['yellow'];
-    const inStarChallenge = starChallenges.includes(currentYellowChallenge);
-    if (!inStarChallenge) {
+    if (!this.isInStarChallenge()) {
       return Num.ZERO.copy();
     }
 
@@ -97,15 +103,26 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
       new Num(2, 0).mul(this.tier).pow(effectiveCharge)
     );
 
+    // 4. In-star-challenge production boost for red generators/accelerators and yellow generators.
+    this.starChallengeGeneratorEffect = Num.ONE.add(
+      new Num(10, 0).pow(effectiveCharge.mul(new Num(0.25, 0))).mul(this.tier)
+    );
+
     // Apply shared tier boost from all charger tiers
     this.holdingSpeedEffect = this.applySharedTierBoost(this.holdingSpeedEffect);
     this.challengeBuffEffect = this.applySharedTierBoost(this.challengeBuffEffect);
     this.proximaMaxBuffEffect = this.applySharedTierBoost(this.proximaMaxBuffEffect);
+    this.starChallengeGeneratorEffect = this.applySharedTierBoost(this.starChallengeGeneratorEffect);
 
     // Apply the multipliers
     MultiplierRecord.starChallengeHoldingSpeed.correct(this.holdingSpeedEffect);
     MultiplierRecord.challengeBuffBoost.correct(this.challengeBuffEffect);
     MultiplierRecord.proximaCentauriMaxBuff.correct(this.proximaMaxBuffEffect);
+    if (this.isInStarChallenge()) {
+      MultiplierRecord.redParticleGenerators.correct(this.starChallengeGeneratorEffect);
+      MultiplierRecord.redAcceleratorGenerators.correct(this.starChallengeGeneratorEffect);
+      MultiplierRecord.yellowGenerators.correct(this.starChallengeGeneratorEffect);
+    }
 
     // Update Proxima Centauri's max effect using the constant from the challenge class,
     // also applying the Greater Proxima Centauri star key upgrade buff if it has been bought
@@ -206,7 +223,7 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
   }
 
   getRewardDescription(): string {
-    return 'Increases challenge holding generation speed, challenge buff gains, and Proxima Centauri max buff.';
+    return 'Increases challenge holding generation speed, challenge buff gains, Proxima Centauri max buff, and star challenge red/yellow generator production.';
   }
 
   override getEffectBreakdown(): { formula: string; effects: string[] } {
@@ -217,7 +234,8 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
         `Tier: ${this.tier.toString()}`,
         `Holding Speed: ${this.holdingSpeedEffect.toString(2)}x`,
         `Challenge Buff Boost: ${this.challengeBuffEffect.toString(2)}x`,
-        `Proxima Centauri Max Buff: ${this.proximaMaxBuffEffect.toString(2)}x`
+        `Proxima Centauri Max Buff: ${this.proximaMaxBuffEffect.toString(2)}x`,
+        `In-Challenge Generator Boost: ${this.starChallengeGeneratorEffect.toString(2)}x`
       ]
     }
   }

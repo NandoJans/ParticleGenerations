@@ -4,6 +4,7 @@ import { ChallengeRecord } from '../../records/challenges/challenge-record';
 import { ProximaCentauriStarChallenge } from '../challenges/proxima-centauri-star-challenge';
 import { UpgradeRecord } from '../../records/upgrades/upgrade-record';
 import { HoldingRecord } from '../../records/holdings/holding-record';
+import { MultiplierRecord } from '../../records/multipliers/multiplier-record';
 
 describe('StarChallengeDarkStarCharger', () => {
   let charger: StarChallengeDarkStarCharger;
@@ -14,6 +15,9 @@ describe('StarChallengeDarkStarCharger', () => {
 
   afterEach(() => {
     delete ChallengeRecord.currentChallenges['yellow'];
+    MultiplierRecord.redParticleGenerators.reset();
+    MultiplierRecord.redAcceleratorGenerators.reset();
+    MultiplierRecord.yellowGenerators.reset();
   });
 
   it('should create an instance', () => {
@@ -63,6 +67,7 @@ describe('StarChallengeDarkStarCharger', () => {
     expect(charger.holdingSpeedEffect).toEqual(new Num(1, 0));
     expect(charger.challengeBuffEffect).toEqual(new Num(1, 0));
     expect(charger.proximaMaxBuffEffect).toEqual(new Num(1, 0));
+    expect(charger.starChallengeGeneratorEffect).toEqual(new Num(1, 0));
   });
 
   it('should have correct charge description mentioning star challenges and red particles', () => {
@@ -86,6 +91,30 @@ describe('StarChallengeDarkStarCharger', () => {
     const chargeAmount = charger.getChargeAmount();
     const expected = HoldingRecord.redParticles.amount.log10().div(new Num(1, 2));
     expect(chargeAmount.toString()).toBe(expected.toString());
+  });
+
+  it('should buff red/yellow generation multipliers while inside a star challenge', () => {
+    ChallengeRecord.currentChallenges['yellow'] = ChallengeRecord.proximaCentauriStar;
+    charger.charge = new Num(2, 0);
+    charger.tier = new Num(1, 0);
+
+    charger.action();
+
+    expect(MultiplierRecord.redParticleGenerators.getNum().gt(Num.ONE)).toBe(true);
+    expect(MultiplierRecord.redAcceleratorGenerators.getNum().gt(Num.ONE)).toBe(true);
+    expect(MultiplierRecord.yellowGenerators.getNum().gt(Num.ONE)).toBe(true);
+  });
+
+  it('should not buff red/yellow generation multipliers outside star challenges', () => {
+    delete ChallengeRecord.currentChallenges['yellow'];
+    charger.charge = new Num(2, 0);
+    charger.tier = new Num(1, 0);
+
+    charger.action();
+
+    expect(MultiplierRecord.redParticleGenerators.getNum().toString()).toBe(Num.ONE.toString());
+    expect(MultiplierRecord.redAcceleratorGenerators.getNum().toString()).toBe(Num.ONE.toString());
+    expect(MultiplierRecord.yellowGenerators.getNum().toString()).toBe(Num.ONE.toString());
   });
 
   describe('Proxima Centauri maxEffect calculation', () => {
