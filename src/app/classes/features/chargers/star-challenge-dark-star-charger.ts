@@ -119,8 +119,8 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
     MultiplierRecord.challengeBuffBoost.correct(this.challengeBuffEffect);
     MultiplierRecord.proximaCentauriMaxBuff.correct(this.proximaMaxBuffEffect);
     if (this.isInStarChallenge()) {
-      MultiplierRecord.redParticleGenerators.correct(this.starChallengeGeneratorEffect);
-      MultiplierRecord.redAcceleratorGenerators.correct(this.starChallengeGeneratorEffect);
+      MultiplierRecord.redParticleGenerators.correct(this.starChallengeGeneratorEffect.pow(new Num(1, 1)));
+      MultiplierRecord.redAcceleratorGenerators.correct(this.starChallengeGeneratorEffect.pow(new Num(1, 1)));
       MultiplierRecord.yellowGenerators.correct(this.starChallengeGeneratorEffect);
     }
 
