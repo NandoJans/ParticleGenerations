@@ -60,7 +60,7 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
 
   getChargeAmount(): Num {
     // Only charge while currently in a star challenge.
-    const starChallenges = [
+    const starChallenges: Challenge[] = [
       ChallengeRecord.proximaCentauriStar,
       ChallengeRecord.lalandeStar,
       ChallengeRecord.sunStar,
