@@ -27,7 +27,8 @@ export class StopRedBoosterAccelerationResetUpgrade extends YellowUpgrade {
 
   action(): undefined {
     if (this.hasBought()) {
-      UpgradeRecord.boosterAccelerationUpgrade.resets = ResetKey.NONE
+      UpgradeRecord.boosterAccelerationUpgrade.resets = ResetKey.NONE;
+      UpgradeRecord.boosterAccelerationUpgrade.noMax = false;
     }
     return;
   }

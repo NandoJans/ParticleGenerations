@@ -70,7 +70,7 @@ export class BoosterAccelerationUpgrade extends Upgrade {
     return this.effect ? this.effect.toString(3) + ' and ' + this.totalFreeBuys.toString() + ' free buys' : '';
   }
 
-  override buy(amount: Num = new Num(1, 0)): Transaction {
+  override buy(amount?: Num): Transaction {
     const transaction = super.buy(amount);
     StatsService.addNum(UpgradeRecord.redGeneratorBooster.name, 'totalBought', this.freeBuys);
     StatsService.addNum(UpgradeRecord.redGeneratorBooster.name, 'totalBoughtAutomator', this.freeBuys);

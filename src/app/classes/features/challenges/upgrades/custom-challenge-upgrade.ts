@@ -65,7 +65,7 @@ export class CustomChallengeUpgrade extends ChallengeUpgrade {
     this.customBuyAction = customBuyAction;
   }
 
-  override buy(amount: Num = new Num(1, 0)): Transaction {
+  override buy(amount?: Num): Transaction {
     const transaction = super.buy(amount);
     this.customBuyAction(this)
     return transaction;

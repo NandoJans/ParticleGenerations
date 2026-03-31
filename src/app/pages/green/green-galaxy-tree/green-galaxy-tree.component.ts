@@ -613,7 +613,7 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
 
     UpgradeRecord.betterYellowKeyGainGalaxyTree.setPos(75, -225);
     // Children are strongerYellowGenerators, moreYellowKeysGain
-    UpgradeRecord.betterYellowMultipliersGalaxyTree.setPos(-75, -425);
+    UpgradeRecord.betterYellowMultipliersGalaxyTree.setPos(-100, -525);
     UpgradeRecord.amplifiedYellowKeysGalaxyTree.setPos(125, -325);
     UpgradeRecord.expandedYellowKeyScalingGalaxyTree.setPos(225, -425);
     UpgradeRecord.yellowExpertiseGalaxyTree.setPos(0, 325);

@@ -130,7 +130,7 @@ export abstract class Generator extends Buyable implements Generatable, Storable
     this.init();
   }
 
-  override buy(amount: Num = new Num(1, 0)): Transaction {
+  override buy(amount?: Num): Transaction {
     const transaction = super.buy(amount);
     StatsService.addNum(this.name, 'totalBoughtAutomator', transaction.amount)
     StatsService.addNum(this.name, 'totalBought', transaction.amount)

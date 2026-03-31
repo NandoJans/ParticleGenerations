@@ -69,19 +69,19 @@ export class BuyableHelper {
     futureBuying = futureBuying.sub(c).add(new Num(1, 0))
 
     // Apply super-scaling adjustment if configured and threshold would be crossed
-    if (buyable.superScalingStart !== undefined && 
+    if (buyable.superScalingStart !== undefined &&
         buyable.superScaling.gt(new Num(1, 0))) {
       const finalBought = c.add(futureBuying);
-      
+
       // If the bulk purchase would cross or exceed super-scaling threshold
       if (finalBought.greq(buyable.superScalingStart)) {
         // Iteratively reduce bulk amount and recalculate cost with super-scaling
         // until we find an affordable amount or reach single purchase
         let adjustedBulk = futureBuying.copy();
-        
+
         while (adjustedBulk.gt(new Num(0, 0))) {
           const testFinalBought = c.add(adjustedBulk);
-          
+
           // Calculate base cost for this bulk amount (without super-scaling)
           let baseCostForBulk: Num;
           if (buyable.scalingStart === undefined) {
@@ -91,7 +91,7 @@ export class BuyableHelper {
             // With scaling start: simplified to baseCost * increase^bulk
             baseCostForBulk = y.mul(a.pow(adjustedBulk));
           }
-          
+
           // Apply super-scaling multiplier if above threshold
           let totalCost = baseCostForBulk;
           if (testFinalBought.greq(buyable.superScalingStart)) {
@@ -99,18 +99,18 @@ export class BuyableHelper {
             const superScalingMultiplier = buyable.superScaling.pow(superScalingPurchases.mul(superScalingPurchases));
             totalCost = baseCostForBulk.mul(superScalingMultiplier);
           }
-          
+
           // Check if this is affordable
           if (buyable.currency.amount.greq(totalCost)) {
             futureBuying = adjustedBulk;
             futureCost = totalCost;
             break;
           }
-          
+
           // Reduce bulk amount
           adjustedBulk = adjustedBulk.sub(new Num(1, 0));
         }
-        
+
         // If we reduced to 0, set to minimum of 1 purchase
         if (adjustedBulk.lte(new Num(0, 0))) {
           futureBuying = new Num(1, 0);
@@ -130,53 +130,124 @@ export class BuyableHelper {
     return [futureBuying, futureCost]
   }
 
-  buy(): Transaction {
+  buy(amount?: Num): Transaction {
     const buyable = this.buyable;
+
     const transaction: Transaction = {
       cost: new Num(0, 0),
       amount: new Num(0, 0),
       currency: buyable.currency,
     };
 
-    // Not enough currency → nothing happens
+    // Nothing affordable at all
     if (!buyable.currency.amount.greq(buyable.cost)) {
       return transaction;
     }
 
-    // Single-buy path (one-time only)
+    // One-time buyables
     if (buyable.oneTime) {
-      this.buyAction();
+      if (!buyable.bought.greq(new Num(1, 0))) {
+        this.buyAction();
+        transaction.cost = buyable.cost;
+        transaction.amount = new Num(1, 0);
 
-      transaction.cost = buyable.cost;
-      transaction.amount = new Num(1, 0);
+        if (buyable.resets !== 'none') {
+          ResetHelper.reset(buyable.resets);
+        }
+      }
 
       return transaction;
     }
 
-    // Bulk-buy path with fallback to single-buy
-    let [bulk, bulkCost] = this.calculateBulk(buyable);
+    // No amount passed -> default existing bulk-buy behavior
+    if (amount === undefined) {
+      let [bulk, bulkCost] = this.calculateBulk(buyable);
 
-    // Respect limit if present
-    if (buyable.limit !== undefined && bulk.greq(buyable.limit)) {
-      bulk = buyable.limit.copy();
-      // bulkCost still from calculateBulk; if that makes it unaffordable,
-      // we fall back to single-buy below.
+      if (buyable.limit !== undefined) {
+        const remaining = buyable.limit.sub(buyable.bought);
+        if (remaining.lte(new Num(0, 0))) {
+          return transaction;
+        }
+
+        if (bulk.greq(remaining)) {
+          bulk = remaining;
+        }
+      }
+
+      if (bulk.greq(new Num(1, 0)) && buyable.currency.amount.greq(bulkCost)) {
+        this.bulkBuyAction(bulkCost, bulk);
+        transaction.cost = bulkCost.mul(buyable.costMultiplier);
+        transaction.amount = bulk;
+      } else {
+        this.buyAction();
+        transaction.cost = buyable.cost;
+        transaction.amount = new Num(1, 0);
+      }
+
+      if (buyable.resets !== 'none') {
+        ResetHelper.reset(buyable.resets);
+      }
+
+      return transaction;
     }
 
-    if (bulk.greq(new Num(1, 0)) && buyable.currency.amount.greq(bulkCost)) {
-      this.bulkBuyAction(bulkCost, bulk);
+    // Amount passed -> try to buy up to that amount
+    let requestedAmount = amount.copy();
 
-      transaction.cost = bulkCost.mul(buyable.costMultiplier);
-      transaction.amount = bulk;
-    } else {
-      // Fallback: we already know at least one buy is affordable
-      this.buyAction();
-
-      transaction.cost = buyable.cost;
-      transaction.amount = new Num(1, 0);
+    if (requestedAmount.lte(new Num(0, 0))) {
+      return transaction;
     }
 
-    // Trigger reset after buying if needed
+    if (buyable.limit !== undefined) {
+      const remaining = buyable.limit.sub(buyable.bought);
+      if (remaining.lte(new Num(0, 0))) {
+        return transaction;
+      }
+
+      if (requestedAmount.greq(remaining)) {
+        requestedAmount = remaining;
+      }
+    }
+
+    const originalBought = buyable.bought.copy();
+    const originalCost = buyable.cost.copy();
+    const originalCostMultiplier = buyable.costMultiplier.copy();
+
+    let totalCost = new Num(0, 0);
+    let affordableAmount = new Num(0, 0);
+
+    for (let i = new Num(0, 0); i.lt(requestedAmount); i = i.add(new Num(1, 0))) {
+      const nextCost = buyable.cost.copy();
+
+      if (!buyable.currency.amount.greq(totalCost.add(nextCost))) {
+        break;
+      }
+
+      totalCost = totalCost.add(nextCost);
+      affordableAmount = affordableAmount.add(new Num(1, 0));
+
+      // simulate purchase
+      buyable.bought = buyable.bought.add(new Num(1, 0));
+      this.correct();
+    }
+
+    // restore
+    buyable.bought = originalBought;
+    buyable.cost = originalCost;
+    buyable.costMultiplier = originalCostMultiplier;
+
+    if (affordableAmount.lte(new Num(0, 0))) {
+      return transaction;
+    }
+
+    buyable.currency.amount = buyable.currency.amount.sub(totalCost);
+    buyable.amount = buyable.amount.add(affordableAmount);
+    buyable.bought = buyable.bought.add(affordableAmount);
+    this.correct();
+
+    transaction.cost = totalCost.mul(originalCostMultiplier);
+    transaction.amount = affordableAmount;
+
     if (buyable.resets !== 'none') {
       ResetHelper.reset(buyable.resets);
     }
@@ -224,7 +295,7 @@ export class BuyableHelper {
     }
 
     // Apply super-scaling if the threshold is reached and super-scaling is configured
-    if (buyable.superScalingStart !== undefined && 
+    if (buyable.superScalingStart !== undefined &&
         buyable.superScaling.gt(new Num(1, 0)) &&
         buyable.bought.greq(buyable.superScalingStart)) {
       const superScalingPurchases = buyable.bought.sub(buyable.superScalingStart);

@@ -24,7 +24,7 @@ export abstract class SacrificeUpgrade extends Upgrade {
     return
   }
 
-  override buy(amount: Num = new Num(1, 0)): Transaction {
+  override buy(amount?: Num): Transaction {
     return super.buy(amount);
   }
 

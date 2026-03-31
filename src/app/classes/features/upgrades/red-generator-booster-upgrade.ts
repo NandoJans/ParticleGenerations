@@ -38,7 +38,7 @@ export class RedGeneratorBoosterUpgrade extends RedUpgrade {
     return `Increases red generator production by ${this.buffer.toString(3)}x.`;
   }
 
-  override buy(amount: Num = new Num(1, 0)): Transaction {
+  override buy(amount?: Num): Transaction {
     const transaction = super.buy(amount);
     StatsService.addNum(this.name, 'totalBought', transaction.amount);
     StatsService.addNum(this.name, 'totalBoughtAutomator', transaction.amount);

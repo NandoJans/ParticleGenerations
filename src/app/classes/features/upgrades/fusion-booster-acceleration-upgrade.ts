@@ -86,14 +86,20 @@ export class FusionBoosterAccelerationUpgrade extends Upgrade {
   divideInsteadOfReset: boolean = false;
 
   override buy(amount: Num = new Num(1, 0)): Transaction {
+    // If the fusion booster acceleration upgrade does not reset anything anymore, we check if more can be bought.
+    // We do this by calculating the amount that can be bought by doing n = log10(yellow fusion) / 1000
+    if (this.resets === ResetKey.NONE) {
+      amount = HoldingRecord.yellowFusion.amount.log10().div(new Num(1, 3)).floor();
+    }
+
     const transaction = super.buy(amount);
     StatsService.addNum(UpgradeRecord.redGeneratorBooster.name, 'totalBought', this.freeBuys);
     StatsService.addNum(UpgradeRecord.redGeneratorBooster.name, 'totalBoughtAutomator', this.freeBuys);
     StatsService.addNum(this.name, 'totalBought', transaction.amount);
     StatsService.addNum(this.name, 'totalBoughtAutomator', transaction.amount);
     if (this.divideInsteadOfReset) {
-      HoldingRecord.yellowFusion.amount = HoldingRecord.yellowFusion.amount.div(new Num(1, 1000));
-      HoldingRecord.hydrogen.amount = HoldingRecord.hydrogen.amount.sub(new Num(3, 3));
+      HoldingRecord.yellowFusion.amount = HoldingRecord.yellowFusion.amount.div((new Num(1, 1000)).pow(transaction.amount));
+      HoldingRecord.hydrogen.amount = HoldingRecord.hydrogen.amount.sub((new Num(3, 3)).mul(transaction.amount));
       if (HoldingRecord.hydrogen.amount.lte(HoldingRecord.hydrogen.startAmount)) {
         HoldingRecord.hydrogen.amount = HoldingRecord.hydrogen.startAmount.copy();
       }

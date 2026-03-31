@@ -14,6 +14,7 @@ export class CheaperFourthYellowGeneratorGalaxyTreeUpgrade extends GalaxyTreeUpg
   override getChildren(): GalaxyTreeUpgrade[] {
     return [
       UpgradeRecord.cheaperFifthYellowGeneratorGalaxyTreeUpgrade,
+      UpgradeRecord.betterYellowMultipliersGalaxyTree,
     ];
   }
 

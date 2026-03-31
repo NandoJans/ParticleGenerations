@@ -28,9 +28,9 @@ export abstract class Buyable extends GameElement {
     return new BuyableHelper(this)
   }
 
-  buy(amount: Num = new Num(1, 0)): Transaction {
+  buy(amount?: Num): Transaction {
     this.correctCost()
-    return this.getBuyableHelper().buy()
+    return this.getBuyableHelper().buy(amount)
   }
 
   correctCost(): void {

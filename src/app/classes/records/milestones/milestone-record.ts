@@ -24,6 +24,7 @@ import {
 import {
   FusionAccelerationBoosterDivideYellowFusionGreenMilestone
 } from "../../features/milestones/fusion-acceleration-booster-divide-yellow-fusion-green-milestone";
+import {NoResetGreenMilestone} from "../../features/milestones/no-reset-green-milestone";
 
 @Injectable({
   providedIn: 'root'
@@ -467,6 +468,17 @@ export class MilestoneRecord extends Record {
     'green prestige automator'
   );
 
+  static fusionBoosterAccelerationNoReset: NoResetGreenMilestone = new NoResetGreenMilestone(
+    'fusionBoosterAccelerationNoReset',
+    'Fusion Booster Acceleration No Reset',
+    new Num(1, 2),
+    [
+      UpgradeRecord.fusionBoosterAcceleration,
+    ],
+    'fusion booster acceleration automator',
+    false
+  )
+
   // Blue Phase
 
   // Purple Phase
@@ -540,6 +552,7 @@ export class MilestoneRecord extends Record {
     MilestoneRecord.keepGreenPrestigeAutomator,
     MilestoneRecord.fusionAccelerationBoosterDivideYellowFusion,
     MilestoneRecord.startWithStarKeyCompressionUnlocked,
+    MilestoneRecord.fusionBoosterAccelerationNoReset,
   ];
 
   getList(): Milestone[] {

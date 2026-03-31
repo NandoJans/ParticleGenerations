@@ -156,6 +156,7 @@ export class TimelineService {
     .addMilestone(MilestoneRecord.keepGreenPrestigeAutomator)
     .addMilestone(MilestoneRecord.fusionAccelerationBoosterDivideYellowFusion)
     .addMilestone(MilestoneRecord.startWithStarKeyCompressionUnlocked)
+    .addMilestone(MilestoneRecord.fusionBoosterAccelerationNoReset)
     .build()
     .addTimelineEvent(
       'green-dark-galaxy',
