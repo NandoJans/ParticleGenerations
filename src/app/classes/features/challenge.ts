@@ -291,6 +291,20 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
     this.appliedNerfs['disabled'] = {};
   }
 
+  refreshUpgrades(): void {
+    const upgrades = this.getUpgrades();
+    if (upgrades) {
+      Object.values(upgrades).forEach((upgrade) => {
+        if (upgrade instanceof ChallengeUpgrade) {
+          upgrade.applyDifficultyIncrease();
+        }
+      });
+    }
+
+    // Also check requirements to ensure the challenge availability is updated in the UI
+    Requirement.checkRequirements();
+  }
+
   getChallengeElements(): (ChallengeGenerator | ChallengeUpgrade | ChallengeHolding)[] {
     return [
       ...Object.values(this.challengeGenerators),

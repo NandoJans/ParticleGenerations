@@ -155,7 +155,7 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
     ];
 
     challenges.forEach(challenge => {
-      // Store original difficulty
+      // Store original difficulty if not already stored
       if (!this.originalDifficulties.has(challenge.name)) {
         if (challenge.difficultyIncrease instanceof Num) {
           this.originalDifficulties.set(challenge.name, challenge.difficultyIncrease.copy());
@@ -166,6 +166,10 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
         }
       }
 
+      // Get the original difficulty to use as a base
+      const originalDifficulty = this.originalDifficulties.get(challenge.name);
+      if (!originalDifficulty) return;
+
       // Increase difficulty by 10x per tier
       // Note: Using 'as any' to bypass TypeScript type narrowing issues with union types
       const baseDifficultyMultiplier = new Num(10, 0).pow(this.tier);
@@ -175,11 +179,10 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
         ? baseDifficultyMultiplier.mul(StarChallengeDarkStarCharger.SIRIUS_EXTRA_DIFFICULTY_MULTIPLIER)
         : baseDifficultyMultiplier;
 
-      const currentDifficulty = challenge.difficultyIncrease;
-      if (currentDifficulty instanceof Num) {
-        (challenge as any).difficultyIncrease = currentDifficulty.mul(difficultyMultiplier);
-      } else if (Array.isArray(currentDifficulty)) {
-        (challenge as any).difficultyIncrease = currentDifficulty.map(n => n.mul(difficultyMultiplier));
+      if (originalDifficulty instanceof Num) {
+        (challenge as any).difficultyIncrease = originalDifficulty.mul(difficultyMultiplier);
+      } else if (Array.isArray(originalDifficulty)) {
+        (challenge as any).difficultyIncrease = originalDifficulty.map(n => n.mul(difficultyMultiplier));
       }
     });
   }
@@ -203,6 +206,8 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
         } else if (Array.isArray(originalDifficulty)) {
           (challenge as any).difficultyIncrease = originalDifficulty.map(n => n.copy());
         }
+        // Remove from map once restored to allow re-storing if nerfs are re-applied later
+        this.originalDifficulties.delete(challenge.name);
       }
     });
 
@@ -242,7 +247,7 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
 
   override init() {
     this.requirement = [
-      new Requirement(HoldingRecord.redParticles, new Num(1, 500_000_000), this)
+      new Requirement(HoldingRecord.redParticles, new Num(1, 50_000_000), this)
     ]
   }
 }

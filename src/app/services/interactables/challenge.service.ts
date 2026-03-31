@@ -83,12 +83,19 @@ export class ChallengeService {
     ResetHelper.reset(challenge.prestige)
     challenge.start();
     ChallengeRecord.currentChallenges[challenge.prestigeLayer] = challenge;
+
+    // Refresh all challenges when a new challenge starts
+    // This ensures requirements and upgrades are updated for the new state
+    ChallengeRecord.list.forEach(c => c.refreshUpgrades());
   }
 
   endChallenge(challenge: Challenge) {
     challenge.end();
     delete ChallengeRecord.currentChallenges[challenge.prestigeLayer];
     this.saveCurrentChallenges();
+
+    // Refresh all challenges when a challenge ends
+    ChallengeRecord.list.forEach(c => c.refreshUpgrades());
   }
 
   static inChallenge(prestigeLayer: string): boolean {

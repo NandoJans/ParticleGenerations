@@ -10,6 +10,8 @@ export abstract class ChallengeUpgrade extends Upgrade {
   baseCost: Num;
   startIncrease: Num;
 
+  initialBaseCost: Num;
+
   protected constructor(
     saveName: string,
     public name: string,
@@ -27,6 +29,7 @@ export abstract class ChallengeUpgrade extends Upgrade {
     public difficulty: number = 0
   ) {
     super(saveName);
+    this.initialBaseCost = cost.copy();
     this.baseCost = cost.copy();
     this.baseBuffer = buffer.copy();
     this.startIncrease = increase.copy();
@@ -34,15 +37,22 @@ export abstract class ChallengeUpgrade extends Upgrade {
     this.applyDifficultyIncrease();
   }
 
-  applyDifficultyIncrease(): void {
+  applyDifficultyIncrease(newDifficultyIncrease?: Num | Num[]): void {
+    if (newDifficultyIncrease !== undefined) {
+      this.difficultyIncrease = newDifficultyIncrease;
+    }
+
     if (this.difficultyIncrease instanceof Num) {
-      this.baseCost = this.baseCost.pow(this.difficultyIncrease);
+      this.baseCost = this.initialBaseCost.pow(this.difficultyIncrease);
     } else {
       if (this.difficulty >= this.difficultyIncrease.length) {
         this.difficulty = this.difficultyIncrease.length - 1;
       }
-      this.baseCost = this.baseCost.pow(this.difficultyIncrease[this.difficulty]);
+      this.baseCost = this.initialBaseCost.pow(this.difficultyIncrease[this.difficulty]);
     }
+
+    // Ensure the current cost is updated based on the new baseCost
+    this.correctCost();
   }
 
   override tryLoad() {

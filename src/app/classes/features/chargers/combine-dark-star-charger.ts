@@ -9,9 +9,9 @@ import {HoldingRecord} from "../../records/holdings/holding-record";
  * Combine Dark Star Charger
  *
  * Nerfs: nothing, requires per tier to have a certain amount of chargers active at the same time. Starts at 2 chargers.
- * Charge: is gained based on totalCharge^activeChargers
- * Amplifies: other charger effects
- */
+   * Charge: is gained based on product of all active chargers charges.
+   * Amplifies: other charger effects
+   */
 export class CombineDarkStarCharger extends DarkStarCharger {
   displayName: string = 'Combine Charger';
   resetId: ResetKey = ResetKey.GREEN;
@@ -39,16 +39,16 @@ export class CombineDarkStarCharger extends DarkStarCharger {
   }
 
   getChargeAmount(): Num {
-    // Calculate total charge from all active chargers
-    const activeChargers = this.getActiveChargers();
-    const totalCharge = this.getTotalCharge();
+    // Calculate product of all active chargers' charges
+    const activeChargers = this.getActiveChargersCount();
+    const productCharge = this.getProductCharge();
 
     if (activeChargers.lte(new Num(0, 0))) {
       return new Num(0, 0);
     }
 
-    // Charge = totalCharge^activeChargers
-    const chargeAmount = totalCharge.pow(activeChargers).pow(new Num(0.1, 0));
+    // Charge = productCharge ^ 0.1
+    const chargeAmount = productCharge.pow(new Num(0.2, 0));
 
     return chargeAmount.gt(new Num(0, 0)) ? chargeAmount : new Num(0, 0);
   }
@@ -80,7 +80,7 @@ export class CombineDarkStarCharger extends DarkStarCharger {
   }
 
   getChargeDescription(): string {
-    return 'Charges based on the total charge from all active chargers raised to the power of active chargers.';
+    return 'Charges based on the product of all active chargers charges.';
   }
 
   getRewardDescription(): string {
@@ -90,7 +90,7 @@ export class CombineDarkStarCharger extends DarkStarCharger {
   override shouldCharge(): boolean {
     // Check if enough chargers are active based on tier
     const requiredChargers = this.getRequiredActiveChargers();
-    const activeChargers = this.getActiveChargers();
+    const activeChargers = this.getActiveChargersCount();
 
     return  super.shouldCharge() &&
             this.isNerfActive &&
@@ -102,7 +102,7 @@ export class CombineDarkStarCharger extends DarkStarCharger {
   /**
    * Get the number of active chargers (excluding this one)
    */
-  private getActiveChargers(): Num {
+  private getActiveChargersCount(): Num {
     let count = new Num(0, 0);
     ChargerRecord.darkStarChargerList.forEach((charger) => {
       if (charger !== this && charger.isActive()) {
@@ -113,24 +113,26 @@ export class CombineDarkStarCharger extends DarkStarCharger {
   }
 
   /**
-   * Get the total charge from all active chargers (excluding this one)
+   * Get the product of all active chargers' charges (excluding this one)
    */
-  private getTotalCharge(): Num {
-    let total = new Num(0, 0);
+  private getProductCharge(): Num {
+    let product = new Num(1, 0);
+    let anyActive = false;
     ChargerRecord.darkStarChargerList.forEach((charger) => {
       if (charger !== this && charger.isActive()) {
-        total = total.add(charger.chargeAmount);
+        product = product.mul(charger.chargeAmount.add(Num.ONE));
+        anyActive = true;
       }
     });
-    return total;
+    return anyActive ? product : new Num(0, 0);
   }
 
   override getEffectBreakdown(): { formula: string; effects: string[] } {
     return {
-      formula: "(Total Charge ^ Active Chargers) ^ 0.1",
+      formula: "(Product of Charges) ^ 0.1",
       effects: [
-        `Total Charge from Active Chargers: ${this.getTotalCharge().toString()}`,
-        `Active Chargers: ${this.getActiveChargers().toString()}`,
+        `Product of Active Chargers' Charges: ${this.getProductCharge().toString()}`,
+        `Active Chargers: ${this.getActiveChargersCount().toString()}`,
         `Charge Amount: ${this.chargeAmount.toString()}`,
       ]
     }

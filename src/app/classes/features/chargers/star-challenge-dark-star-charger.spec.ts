@@ -187,4 +187,77 @@ describe('StarChallengeDarkStarCharger', () => {
       expect(afterSecondTick).toBe(afterThirdTick);
     });
   });
+
+  describe('applyNerfs idempotency', () => {
+    it('should not increase challenge difficulty exponentially when applyNerfs is called multiple times', () => {
+      const proxima = ChallengeRecord.proximaCentauriStar;
+      const initialDifficulty = proxima.difficultyIncrease;
+      const initialDifficultyStr = Array.isArray(initialDifficulty)
+        ? initialDifficulty.map(n => n.toString()).join(',')
+        : initialDifficulty.toString();
+
+      charger.tier = new Num(1, 0);
+
+      // Call applyNerfs multiple times (simulating multiple ticks)
+      charger.applyNerfs();
+      const afterFirstCall = proxima.difficultyIncrease;
+      const afterFirstCallStr = Array.isArray(afterFirstCall)
+        ? afterFirstCall.map(n => n.toString()).join(',')
+        : afterFirstCall.toString();
+
+      // Difficulty should have increased from initial
+      expect(afterFirstCallStr).not.toBe(initialDifficultyStr);
+
+      charger.applyNerfs();
+      const afterSecondCall = proxima.difficultyIncrease;
+      const afterSecondCallStr = Array.isArray(afterSecondCall)
+        ? afterSecondCall.map(n => n.toString()).join(',')
+        : afterSecondCall.toString();
+
+      // Difficulty should be THE SAME as after the first call (idempotent)
+      expect(afterSecondCallStr).toBe(afterFirstCallStr);
+
+      charger.applyNerfs();
+      const afterThirdCall = proxima.difficultyIncrease;
+      const afterThirdCallStr = Array.isArray(afterThirdCall)
+        ? afterThirdCall.map(n => n.toString()).join(',')
+        : afterThirdCall.toString();
+
+      expect(afterThirdCallStr).toBe(afterFirstCallStr);
+
+      // Cleanup
+      charger.revertNerfs();
+      const afterRevert = proxima.difficultyIncrease;
+      const afterRevertStr = Array.isArray(afterRevert)
+        ? afterRevert.map(n => n.toString()).join(',')
+        : afterRevert.toString();
+
+      expect(afterRevertStr).toBe(initialDifficultyStr);
+    });
+  describe('nerf update/revert', () => {
+    it('should update and revert upgrade costs correctly', () => {
+      const proxima = ChallengeRecord.proximaCentauriStar;
+      proxima.completed = new Num(1, 0); // Need some completions to have difficulty increase
+      proxima.init();
+      const upgrade = proxima.challengeUpgrades['unlockSecondRedGenerator'] as any;
+      const initialCost = upgrade.baseCost.copy();
+
+      charger.tier = new Num(1, 0);
+      charger.activateNerf();
+
+      // Ensure nerf is applied (difficultyIncrease should have changed)
+      const afterNerfDifficulty = (proxima.difficultyIncrease as Num[])[0];
+      expect(afterNerfDifficulty.gt(new Num(1, 0))).toBe(true);
+
+      // Check if upgrade cost increased
+      const nerfedCost = upgrade.baseCost;
+      expect(nerfedCost.gt(initialCost)).toBe(true);
+
+      charger.deactivateNerf();
+
+      // Check if upgrade cost reverted
+      expect(upgrade.baseCost.toString()).toBe(initialCost.toString());
+    });
+  });
+});
 });

@@ -84,6 +84,8 @@ export abstract class DarkStarCharger extends Charger {
   activateNerf(): void {
     this.isNerfActive = true;
     this.applyNerfs();
+    // Refresh all challenges to reflect new nerfs
+    ChallengeRecord.list.forEach(challenge => challenge.refreshUpgrades());
   }
 
   /**
@@ -92,6 +94,8 @@ export abstract class DarkStarCharger extends Charger {
   deactivateNerf(): void {
     this.isNerfActive = false;
     this.revertNerfs();
+    // Refresh all challenges to revert nerfs
+    ChallengeRecord.list.forEach(challenge => challenge.refreshUpgrades());
   }
 
   /**
@@ -173,6 +177,9 @@ export abstract class DarkStarCharger extends Charger {
         // Restart the challenge (re-apply nerfs)
         darkGalaxy.start();
       }
+
+      // Refresh all challenges to ensure their upgrades and requirements are up to date
+      ChallengeRecord.list.forEach(challenge => challenge.refreshUpgrades());
     }
   }
 
