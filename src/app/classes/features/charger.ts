@@ -74,9 +74,14 @@ export abstract class Charger extends GameElement implements Resetable, Storable
   override run(speed: Num): void {
     this.chargeAmount = new Num(0, 0);
 
-    if (this.charging && this.shouldCharge()) {
+    if (this.shouldCalculateCharge()) {
       this.chargeAmount = this.applyTierNerf(this.getChargeAmount());
+      if (this.chargeAmount.gt(this.maxCharge)) {
+        this.chargeAmount = this.maxCharge.copy();
+      }
+    }
 
+    if (this.charging && this.shouldCharge()) {
       if (this.chargeAmount.gt(this.getCharge())) {
         this.applyCharge(this.chargeAmount);
       }
@@ -96,6 +101,10 @@ export abstract class Charger extends GameElement implements Resetable, Storable
     if (this.tier.lt(this.startTier)) this.tier = this.startTier.copy();
     if (this.charge.lt(this.startCharge)) this.charge = this.startCharge.copy();
     if (this.tier.gt(this.highestTier)) this.highestTier = this.tier.copy();
+  }
+
+  protected shouldCalculateCharge(): boolean {
+    return true;
   }
 
   /**

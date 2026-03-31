@@ -67,11 +67,15 @@ export abstract class DarkStarCharger extends Charger {
     return DarkStarCharger.sharedCharge;
   }
 
+  override shouldCalculateCharge(): boolean {
+    return this.isNerfActive && this.isUnlocked() && this.isEnabled() && ChallengeRecord.currentChallenges['green'] === ChallengeRecord.darkGalaxy;
+  }
+
   /**
    * DarkStarChargers only charge when their nerf is enabled
    */
   override shouldCharge(): boolean {
-    return super.shouldCharge() && this.isNerfActive && this.isUnlocked() && this.isEnabled() && ChallengeRecord.currentChallenges['green'] === ChallengeRecord.darkGalaxy;
+    return super.shouldCharge() && this.shouldCalculateCharge();
   }
 
   /**
