@@ -22,7 +22,7 @@ export class CombineDarkStarCharger extends DarkStarCharger {
   name: string = 'combine-dark-star-charger';
 
   override tierNerf: Num[] = [
-    new Num(0.8, 0),
+    new Num(0.9, 0),
     new Num(0.5, 0),
   ];
 
@@ -57,7 +57,8 @@ export class CombineDarkStarCharger extends DarkStarCharger {
   action(): undefined {
     // Calculate amplification of other charger effects
     const effectiveCharge = this.getEffectiveCharge();
-    this.setSharedCharge(effectiveCharge);
+    // We have take into account the tier of the combine charger.
+    this.setSharedCharge(effectiveCharge.mul(this.tier.mul(new Num(0.5, 0)).add(new Num(0.5, 0))));
   }
 
   applyNerfs(): void {
