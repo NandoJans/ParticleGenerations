@@ -22,7 +22,8 @@ export class CombineDarkStarCharger extends DarkStarCharger {
   name: string = 'combine-dark-star-charger';
 
   override tierNerf: Num[] = [
-    new Num(0.5, 0)
+    new Num(0.8, 0),
+    new Num(0.5, 0),
   ];
 
   /**
