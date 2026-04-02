@@ -27,6 +27,17 @@ export class HydrogenSynergyGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
     return "Set yellow fusion start requirement to 1e7 yellow particles and reduce increase/scaling of the first two hydrogen upgrades.";
   }
 
+
+  private setHydrogenUpgradeCosts(): void {
+    const reducedCost = new Num(1, 7);
+
+    UpgradeRecord.increaseHydrogen.baseCost = reducedCost.copy();
+    UpgradeRecord.increaseHydrogen.cost = reducedCost.copy();
+
+    UpgradeRecord.increaseHydrogenEffect.baseCost = reducedCost.copy();
+    UpgradeRecord.increaseHydrogenEffect.cost = reducedCost.copy();
+  }
+
   private setYellowFusionStartRequirement(): void {
     const requirement = new Num(1, 7);
     const yellowFusionRequirements = [
@@ -48,6 +59,7 @@ export class HydrogenSynergyGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   action(): undefined {
     if (this.hasBought()) {
       this.setYellowFusionStartRequirement();
+      this.setHydrogenUpgradeCosts();
       UpgradeRecord.increaseHydrogen.increase = UpgradeRecord.increaseHydrogen.startIncrease.div(this.buffer);
       UpgradeRecord.increaseHydrogen.scaling = UpgradeRecord.increaseHydrogen.scaling.div(this.buffer);
 
