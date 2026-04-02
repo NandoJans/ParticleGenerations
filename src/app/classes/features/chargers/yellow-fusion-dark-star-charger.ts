@@ -56,8 +56,8 @@ export class YellowFusionDarkStarCharger extends DarkStarCharger {
     const accelerationAmount = UpgradeRecord.fusionBoosterAcceleration.amount;
     const accelerations = accelerationAmount.lt(Num.ONE) ? Num.ONE : accelerationAmount;
 
-    // One charge step for each multiple of 1e100 × fusion booster accelerations.
-    const step = new Num(1, 2).mul(accelerations);
+    // One charge step for each multiple of 1e10 × fusion booster accelerations.
+    const step = new Num(1, 1).mul(accelerations);
     return yellowFusion.log10().div(step);
   }
 
