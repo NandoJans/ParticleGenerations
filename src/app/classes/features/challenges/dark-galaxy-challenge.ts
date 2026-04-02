@@ -22,7 +22,7 @@ export class DarkGalaxyChallenge extends Challenge {
     prestigeLayer: string = 'green';
 
     nerfPower: Num = new Num(1.5, -1)
-    hydrogenChallengeBoost: Num = new Num(1, 4)
+    hydrogenChallengeBoost: Num = new Num(1, 0)
 
     override getRewardDescription(): string {
       return "Gather dark stars, their effect is reduced significantly inside the dark galaxy."
