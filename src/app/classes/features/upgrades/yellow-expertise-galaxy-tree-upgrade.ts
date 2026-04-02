@@ -9,7 +9,9 @@ export class YellowExpertiseGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   }
 
   getChildren(): GalaxyTreeUpgrade[] {
-    return [];
+    return [
+      UpgradeRecord.hydrogenSynergyGalaxyTree,
+    ];
   }
 
   getParents(): GalaxyTreeUpgrade[] {
