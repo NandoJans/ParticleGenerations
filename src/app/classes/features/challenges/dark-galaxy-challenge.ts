@@ -22,6 +22,7 @@ export class DarkGalaxyChallenge extends Challenge {
     prestigeLayer: string = 'green';
 
     nerfPower: Num = new Num(1.5, -1)
+    hydrogenChallengeBoost: Num = new Num(1, 4)
 
     override getRewardDescription(): string {
       return "Gather dark stars, their effect is reduced significantly inside the dark galaxy."
@@ -41,7 +42,17 @@ export class DarkGalaxyChallenge extends Challenge {
 
     override nerfs(): void {
       // Install a global multiplier retrieval hook that applies the nerf power
-      Multiplier.globalGetHook = (value: Num, _ctx) => value.pow(this.nerfPower);
+      // while keeping hydrogen progression much stronger inside this challenge.
+      Multiplier.globalGetHook = (value: Num, ctx) => {
+        const sourceName = ctx?.source?.name;
+        const nerfed = value.pow(this.nerfPower);
+
+        if (sourceName === 'hydrogenGenerators' || sourceName === 'yellowFusionGenerators') {
+          return nerfed.mul(this.hydrogenChallengeBoost);
+        }
+
+        return nerfed;
+      };
     }
 
     override end(): void {
