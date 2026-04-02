@@ -61,10 +61,10 @@ export class HydrogenSynergyGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
       this.setYellowFusionStartRequirement();
       this.setHydrogenUpgradeCosts();
       UpgradeRecord.increaseHydrogen.increase = UpgradeRecord.increaseHydrogen.startIncrease.div(this.buffer);
-      UpgradeRecord.increaseHydrogen.scaling = UpgradeRecord.increaseHydrogen.scaling.div(this.buffer);
+      UpgradeRecord.increaseHydrogen.scaling = (new Num(2, 0)).div(this.buffer);
 
       UpgradeRecord.increaseHydrogenEffect.increase = UpgradeRecord.increaseHydrogenEffect.startIncrease.div(this.buffer);
-      UpgradeRecord.increaseHydrogenEffect.scaling = UpgradeRecord.increaseHydrogenEffect.scaling.div(this.buffer);
+      UpgradeRecord.increaseHydrogenEffect.scaling = (new Num(2, 0)).div(this.buffer);
     }
     return;
   }
