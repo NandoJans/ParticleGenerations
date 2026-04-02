@@ -168,6 +168,9 @@ import {
 import {
   CheaperFourthYellowGeneratorGalaxyTreeUpgrade
 } from "../../features/upgrades/cheaper-fourth-yellow-generator-galaxy-tree-upgrade";
+import {
+  HydrogenSynergyGalaxyTreeUpgrade
+} from "../../features/upgrades/hydrogen-synergy-galaxy-tree-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -296,6 +299,7 @@ export class UpgradeRecord extends Record {
   static fusionExpertiseGalaxyTree: FusionExpertiseGalaxyTreeUpgrade = new FusionExpertiseGalaxyTreeUpgrade('yellowFusionBoostUpgrades');
 
   static improveFusionCompressionGalaxyTree: ImproveFusionCompressionGalaxyTreeUpgrade = new ImproveFusionCompressionGalaxyTreeUpgrade('improveFusionCompression');
+  static hydrogenSynergyGalaxyTree: HydrogenSynergyGalaxyTreeUpgrade = new HydrogenSynergyGalaxyTreeUpgrade('hydrogenSynergyGalaxyTree');
   static unlockSecondGreenGeneratorGalaxyTree: UnlockSecondGreenGeneratorGalaxyTreeUpgrade = new UnlockSecondGreenGeneratorGalaxyTreeUpgrade('unlockSecondGreenGenerator');
 
   static moreYellowParticlesGalaxyTree: MoreYellowParticlesGalaxyTreeUpgrade = new MoreYellowParticlesGalaxyTreeUpgrade('moreYellowParticlesGalaxyTree');
@@ -374,6 +378,7 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.fusionExpertiseGalaxyTree,
 
     UpgradeRecord.improveFusionCompressionGalaxyTree,
+    UpgradeRecord.hydrogenSynergyGalaxyTree,
     UpgradeRecord.unlockSecondGreenGeneratorGalaxyTree,
     UpgradeRecord.moreYellowParticlesGalaxyTree,
     UpgradeRecord.slowerCompressionTimeIncreaseGalaxyTree,

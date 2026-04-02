@@ -624,6 +624,7 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
     UpgradeRecord.powerAccelerationGalaxyTree.setPos(-200, -200);
 
     UpgradeRecord.improveFusionCompressionGalaxyTree.setPos(150, 325);
+    UpgradeRecord.hydrogenSynergyGalaxyTree.setPos(75, 450);
 
     UpgradeRecord.unlockSecondGreenGeneratorGalaxyTree.setPos(325, 150);
 
