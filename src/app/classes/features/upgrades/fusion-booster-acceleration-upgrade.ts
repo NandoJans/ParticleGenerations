@@ -25,6 +25,7 @@ export class FusionBoosterAccelerationUpgrade extends Upgrade {
   override baseBuffer: Num = new Num(0.1, 0);
   hydrogenBuffer: Num = new Num(1, 0);
   totalHydrogenBuff: Num = new Num(1, 0);
+  hydrogenBuffCap: Num = new Num(1, 15);
 
   freeBuys: Num = new Num(1, 1);
   baseFreeBuys: Num = new Num(1, 1);
@@ -46,7 +47,8 @@ export class FusionBoosterAccelerationUpgrade extends Upgrade {
   action(): Num {
     const effect: Num = this.buffer.mul(this.amount);
     const effect2: Num = this.freeBuys.mul(this.amount);
-    const effect3: Num = this.hydrogenBuffer.pow(this.amount);
+    const uncappedHydrogenBuff: Num = this.hydrogenBuffer.pow(this.amount);
+    const effect3: Num = uncappedHydrogenBuff.gt(this.hydrogenBuffCap) ? this.hydrogenBuffCap.copy() : uncappedHydrogenBuff;
 
     this.freeBuys = this.baseFreeBuys.copy();
     this.hydrogenBuffer = new Num(1.2, 0);
@@ -80,7 +82,13 @@ export class FusionBoosterAccelerationUpgrade extends Upgrade {
   }
 
   override effectString(): string {
-    return this.effect ? this.effect.toString(3) + ', ' + this.totalFreeBuys.toString() + ' free buys and ' + this.totalHydrogenBuff.toString(2) + 'x' : '';
+    if (!this.effect) {
+      return '';
+    }
+
+    const isHydrogenBuffCapped = this.totalHydrogenBuff.greq(this.hydrogenBuffCap);
+    const cappedSuffix = isHydrogenBuffCapped ? ' (capped)' : '';
+    return this.effect.toString(3) + ', ' + this.totalFreeBuys.toString() + ' free buys and ' + this.totalHydrogenBuff.toString(2) + 'x' + cappedSuffix;
   }
 
   divideInsteadOfReset: boolean = false;
