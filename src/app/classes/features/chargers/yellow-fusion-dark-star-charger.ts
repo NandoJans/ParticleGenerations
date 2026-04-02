@@ -5,13 +5,17 @@ import {Requirement} from "../interfaces/requirement";
 import {HoldingRecord} from "../../records/holdings/holding-record";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 import {Multiplier} from "../multiplier";
+import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 
 /**
  * Yellow Fusion Dark Star Charger
  *
- * Nerfs: Yellow fusion limit has decreased to 6e66
- * Charge: is gained based on fusion amount multiplied by fusion booster accelerations
- * Amplifies: Hydrogen generation speed
+ * Nerf: Slows hydrogen generation while active; slowdown scales with tier.
+ * Charge: Gained in dark galaxy from multiples of 1e100 × fusion booster accelerations.
+ * Reward:
+ *  - Hydrogen barrier +1 per charge (tier amplified)
+ *  - Fusion barrier multiplied by 10^charge (tier amplified)
+ *  - Hydrogen generation multiplied by (0.1 × charge + 1)
  */
 export class YellowFusionDarkStarCharger extends DarkStarCharger {
   displayName: string = 'Yellow Fusion Charger';
@@ -21,6 +25,15 @@ export class YellowFusionDarkStarCharger extends DarkStarCharger {
   canInfiniteChargeAtMaxTier: boolean = true;
   requirement: Requirement[] = [];
   name: string = 'yellow-fusion-dark-star-charger';
+
+  // Per-tier amplification for barrier effects.
+  private readonly hydrogenBarrierTierBase: Num = new Num(1.15, 0);
+  private readonly fusionBarrierTierBase: Num = new Num(1.25, 0);
+
+  // Track values for UI/breakdown.
+  hydrogenBarrierBoost: Num = Num.ZERO.copy();
+  fusionBarrierExponent: Num = Num.ZERO.copy();
+  hydrogenGenerationBoost: Num = Num.ONE.copy();
 
   override tierNerf: Num[] = [
     new Num(0.5, 0)
@@ -34,87 +47,90 @@ export class YellowFusionDarkStarCharger extends DarkStarCharger {
     if (tier.lte(new Num(1, 0))) {
       return this.baseMaxCharge.copy();
     }
-    // Max charge = baseMaxCharge * 10^(tier - 1)
     const tierMultiplier = new Num(10, 0).pow(tier.sub(new Num(1, 0)));
     return this.baseMaxCharge.mul(tierMultiplier);
   }
 
   getChargeAmount(): Num {
-    // Charge based on fusion amount - only increases
-    const yellowFusion = HoldingRecord.yellowFusion;
-    const fusionAmount = yellowFusion.amount;
+    const yellowFusion = HoldingRecord.yellowFusion.amount;
+    const accelerationAmount = UpgradeRecord.fusionBoosterAcceleration.amount;
+    const accelerations = accelerationAmount.lt(Num.ONE) ? Num.ONE : accelerationAmount;
 
-    return fusionAmount.log10();
+    // One charge step for each multiple of 1e100 × fusion booster accelerations.
+    const step = new Num(1, 2).mul(accelerations);
+    return yellowFusion.log10().div(step);
   }
 
   action(): Num {
-    // Calculate and apply hydrogen generation speed boost
-    const effectiveCharge = this.getEffectiveCharge();
-    const baseEffect = new Num(1, 0).add(effectiveCharge.mul(new Num(0.1, 0)));
+    const totalCharge = this.getEffectiveCharge().add(this.getSharedCharge());
+    const tierHydrogenBarrierAmp = this.hydrogenBarrierTierBase.pow(this.tier.sub(Num.ONE));
+    const tierFusionBarrierAmp = this.fusionBarrierTierBase.pow(this.tier.sub(Num.ONE));
 
-    // Apply shared tier boost from all charger tiers
-    const effect = this.applySharedTierBoost(baseEffect);
+    this.hydrogenBarrierBoost = totalCharge.mul(tierHydrogenBarrierAmp);
+    this.fusionBarrierExponent = totalCharge.mul(tierFusionBarrierAmp);
 
-    // Apply the multiplier to hydrogen generators
-    MultiplierRecord.hydrogenGenerators.correct(effect);
+    // Hydrogen barrier: +1 per charge, tier amplified.
+    HoldingRecord.hydrogen.barrier = HoldingRecord.hydrogen.startBarrier.add(this.hydrogenBarrierBoost);
 
-    this.effect = effect;
-    return effect;
+    // Fusion barrier: multiplied by 10^(charge), tier amplified.
+    HoldingRecord.yellowFusion.maxAmount = HoldingRecord.yellowFusion.startMaxAmount.mul(
+      new Num(10, 0).pow(this.fusionBarrierExponent)
+    );
+
+    // Hydrogen generation boost: (0.1 × charge + 1), additionally shared-tier amplified.
+    const baseHydrogenBoost = Num.ONE.add(totalCharge.mul(new Num(0.1, 0)));
+    this.hydrogenGenerationBoost = this.applySharedTierBoost(baseHydrogenBoost);
+    MultiplierRecord.hydrogenGenerators.correct(this.hydrogenGenerationBoost);
+
+    this.effect = this.hydrogenGenerationBoost;
+    return this.effect;
   }
 
-  private originalMaxAmount: Num | undefined;
-
   applyNerfs(): void {
-    // Decrease yellow fusion limit to 6e66
-    const yellowFusion = HoldingRecord.yellowFusion;
-
-    // Store original max amount if not already stored
-    if (!this.originalMaxAmount) {
-      this.originalMaxAmount = yellowFusion.maxAmount.copy();
-    }
-
-    // Set reduced max amount
-    yellowFusion.maxAmount = new Num(6, 66);
-
-    // Apply hydrogen generation nerf, increasing per tier
-    const hydrogenPower = new Num(0.5, 0).mul(new Num(0.9, 0).pow(this.tier.sub(Num.ONE)));
+    // Slower hydrogen generation, and each tier strengthens the nerf.
+    const hydrogenNerfPower = new Num(0.9, 0).pow(this.tier);
     MultiplierRecord.hydrogenGenerators.addLocalHook(
       this.name,
-      (multiplier: Multiplier) => multiplier.power(hydrogenPower),
+      (multiplier: Multiplier) => multiplier.power(hydrogenNerfPower),
       true
     );
   }
 
   revertNerfs(): void {
-    // Restore original yellow fusion limit
-    const yellowFusion = HoldingRecord.yellowFusion;
-    if (this.originalMaxAmount) {
-      yellowFusion.maxAmount = this.originalMaxAmount.copy();
-    }
-
-    // Remove hydrogen generation nerf
     delete MultiplierRecord.hydrogenGenerators.localHooks[this.name];
   }
 
   getNerfDescription(): string {
-    return 'Yellow fusion limit decreased to 6e66. Hydrogen generation nerf increases per tier.';
+    return 'Hydrogen generation is slowed while active. Higher charger tiers make this slowdown stronger.';
   }
 
   getEffectDescription(): string {
-    return `${this.effect.toString()}x hydrogen generation speed`;
+    return `${this.effect.toString(2)}x hydrogen generation, +${this.hydrogenBarrierBoost.toString(2)} hydrogen barrier, and +10^${this.fusionBarrierExponent.toString(2)} fusion barrier scaling`;
   }
 
   getChargeDescription(): string {
-    return 'Charges based on fusion amount multiplied by fusion booster accelerations.';
+    return 'Charges inside dark galaxy from multiples of 1e100 × fusion booster accelerations in yellow fusion.';
   }
 
   getRewardDescription(): string {
-    return 'Increases hydrogen generation speed.';
+    return 'Hydrogen barrier +1 per charge, fusion barrier ×10^charge, tiers amplify both, and each charge adds (0.1×charge + 1)x hydrogen generation.';
+  }
+
+  override getEffectBreakdown(): { formula: string; effects: string[] } {
+    return {
+      formula: 'charge = log10(yellow fusion) / (100 × fusion booster accelerations)',
+      effects: [
+        `Total Charge: ${this.getEffectiveCharge().add(this.getSharedCharge()).toString(2)}`,
+        `Hydrogen Barrier Boost: +${this.hydrogenBarrierBoost.toString(2)}`,
+        `Fusion Barrier Multiplier: ×10^${this.fusionBarrierExponent.toString(2)}`,
+        `Hydrogen Generation: ${this.hydrogenGenerationBoost.toString(2)}x`
+      ]
+    };
   }
 
   override init() {
     this.requirement = [
-      new Requirement(HoldingRecord.yellowFusion, new Num(1, 9999999999), this)
+      new Requirement(HoldingRecord.yellowFusion, new Num(1, 100000), this)
     ]
   }
 }
