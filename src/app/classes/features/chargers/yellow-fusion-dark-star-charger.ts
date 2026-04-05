@@ -36,6 +36,7 @@ export class YellowFusionDarkStarCharger extends DarkStarCharger {
   hydrogenGenerationBoost: Num = Num.ONE.copy();
 
   override tierNerf: Num[] = [
+    new Num(0.9, 0),
     new Num(0.5, 0)
   ];
 
