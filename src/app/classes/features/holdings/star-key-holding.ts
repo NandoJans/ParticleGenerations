@@ -26,7 +26,7 @@ export class StarKeyHolding extends Holding {
   hasBoughtTotal: boolean = false;
   totalUpgrades: Num = new Num(8, 0);
   private readonly effectSoftCap: Num = new Num(2.5, 0);
-  private readonly effectSoftCapPower: Num = new Num(0.1, 0);
+  private readonly effectSoftCapPower: Num = new Num(0.2, 0);
 
 
   override action(): Num|undefined {
