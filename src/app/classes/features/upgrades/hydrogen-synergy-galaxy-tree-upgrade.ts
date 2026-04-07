@@ -38,8 +38,8 @@ export class HydrogenSynergyGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
     UpgradeRecord.increaseHydrogenEffect.cost = reducedCost.copy();
   }
 
-UpgradeRecord.moreFusionAccelerationBoosters.baseCost = reducedCost.copy();
-    UpgradeRecord.moreFusionAccelerationBoosters.cost = reducedCost.copy();
+UpgradeRecord.increaseMaxFusionBoosterAcceleration.baseCost = reducedCost.copy();
+    UpgradeRecord.increaseMaxFusionBoosterAcceleration.cost = reducedCost.copy();
   }
 
   private setYellowFusionStartRequirement(): void {
