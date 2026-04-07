@@ -6,6 +6,7 @@ import {HoldingRecord} from "../../records/holdings/holding-record";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 import {Multiplier} from "../multiplier";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
+import {GeneratorRecord} from "../../records/generators/generator-record";
 
 /**
  * Yellow Fusion Dark Star Charger
@@ -70,8 +71,8 @@ export class YellowFusionDarkStarCharger extends DarkStarCharger {
     this.hydrogenBarrierBoost = totalCharge.mul(tierHydrogenBarrierAmp);
     this.fusionBarrierExponent = totalCharge.mul(tierFusionBarrierAmp);
 
-    // Hydrogen barrier: +1 per charge, tier amplified.
-    HoldingRecord.hydrogen.barrier = HoldingRecord.hydrogen.startBarrier.add(this.hydrogenBarrierBoost);
+    // Hydrogen generator barrier: +1 per charge, tier amplified.
+    GeneratorRecord.hydrogenGenerator.barrier = GeneratorRecord.hydrogenGenerator.startBarrier.add(this.hydrogenBarrierBoost);
 
     // Fusion barrier: multiplied by 10^(charge), tier amplified.
     HoldingRecord.yellowFusion.maxAmount = HoldingRecord.yellowFusion.startMaxAmount.mul(
