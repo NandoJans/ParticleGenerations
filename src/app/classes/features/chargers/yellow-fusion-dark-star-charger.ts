@@ -78,7 +78,7 @@ export class YellowFusionDarkStarCharger extends DarkStarCharger {
     );
 
     // Hydrogen generation boost: (0.1 × charge + 1), additionally shared-tier amplified.
-    const baseHydrogenBoost = Num.ONE.add(totalCharge.mul(new Num(2, 0).mul(this.tier)));
+    const baseHydrogenBoost = Num.ONE.add(totalCharge.mul(new Num(1, 1).pow(new Num(1.5, 0).pow(this.tier))));
     this.hydrogenGenerationBoost = this.applySharedTierBoost(baseHydrogenBoost);
     MultiplierRecord.hydrogenGenerators.correct(this.hydrogenGenerationBoost);
 
