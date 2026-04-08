@@ -9,7 +9,9 @@ export class AcceleratorExpertiseGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
   }
 
   getChildren(): GalaxyTreeUpgrade[] {
-    return [];
+    return [
+      UpgradeRecord.mitigatedDarkGalaxyChallengeGalaxyTree,
+    ];
   }
 
   getParents(): GalaxyTreeUpgrade[] {
