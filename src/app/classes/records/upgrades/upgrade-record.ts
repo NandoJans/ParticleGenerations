@@ -171,6 +171,9 @@ import {
 import {
   HydrogenSynergyGalaxyTreeUpgrade
 } from "../../features/upgrades/hydrogen-synergy-galaxy-tree-upgrade";
+import {
+  MitigatedDarkGalaxyChallengeGalaxyTreeUpgrade
+} from "../../features/upgrades/mitigated-dark-galaxy-challenge-galaxy-tree-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -300,6 +303,7 @@ export class UpgradeRecord extends Record {
 
   static improveFusionCompressionGalaxyTree: ImproveFusionCompressionGalaxyTreeUpgrade = new ImproveFusionCompressionGalaxyTreeUpgrade('improveFusionCompression');
   static hydrogenSynergyGalaxyTree: HydrogenSynergyGalaxyTreeUpgrade = new HydrogenSynergyGalaxyTreeUpgrade('hydrogenSynergyGalaxyTree');
+  static mitigatedDarkGalaxyChallengeGalaxyTree: MitigatedDarkGalaxyChallengeGalaxyTreeUpgrade = new MitigatedDarkGalaxyChallengeGalaxyTreeUpgrade('mitigatedDarkGalaxyChallengeGalaxyTree');
   static unlockSecondGreenGeneratorGalaxyTree: UnlockSecondGreenGeneratorGalaxyTreeUpgrade = new UnlockSecondGreenGeneratorGalaxyTreeUpgrade('unlockSecondGreenGenerator');
 
   static moreYellowParticlesGalaxyTree: MoreYellowParticlesGalaxyTreeUpgrade = new MoreYellowParticlesGalaxyTreeUpgrade('moreYellowParticlesGalaxyTree');
@@ -379,6 +383,7 @@ export class UpgradeRecord extends Record {
 
     UpgradeRecord.improveFusionCompressionGalaxyTree,
     UpgradeRecord.hydrogenSynergyGalaxyTree,
+    UpgradeRecord.mitigatedDarkGalaxyChallengeGalaxyTree,
     UpgradeRecord.unlockSecondGreenGeneratorGalaxyTree,
     UpgradeRecord.moreYellowParticlesGalaxyTree,
     UpgradeRecord.slowerCompressionTimeIncreaseGalaxyTree,
