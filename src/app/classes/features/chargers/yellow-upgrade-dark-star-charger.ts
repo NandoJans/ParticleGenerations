@@ -25,7 +25,8 @@ export class YellowUpgradeDarkStarCharger extends DarkStarCharger {
 
   override tierNerf: Num[] = [
     new Num(0.8, 0),
-    new Num(0.5, 0),
+    new Num(0.75, 0),
+    new Num(0.5, 0)
   ];
 
   /**
