@@ -17,8 +17,6 @@ import {App} from '../../../App';
   standalone: false
 })
 export class GreenNuclearComponent {
-  constructor(private challengeService: ChallengeService) {}
-
   nuclearPotential: Holding = HoldingRecord.nuclearPotential;
   nuclearFission: Holding = HoldingRecord.nuclearFission;
   upgrades: NuclearUpgrade[] = UpgradeRecord.nuclearUpgrades;
@@ -50,7 +48,6 @@ export class GreenNuclearComponent {
     HoldingRecord.darkStarHolding.save();
     ChargerRecord.darkStarChargerList.forEach(charger => {
       charger.reset();
-      charger.charging = false;
       charger.save();
     });
     HoldingRecord.nuclearPotential.add(gain);
