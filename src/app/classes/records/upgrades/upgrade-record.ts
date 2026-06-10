@@ -174,11 +174,15 @@ import {
 import {
   MitigatedDarkGalaxyChallengeGalaxyTreeUpgrade
 } from "../../features/upgrades/mitigated-dark-galaxy-challenge-galaxy-tree-upgrade";
+import {NuclearUpgrade} from "../../features/upgrades/nuclear-upgrade";
+import {NuclearConfig} from "../../config/nuclear-config";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UpgradeRecord extends Record {
+
+  static nuclearUpgrades: NuclearUpgrade[] = NuclearConfig.upgrades.map(config => new NuclearUpgrade(config));
 
   // Red Generators
   static redGeneratorExtension: RedGeneratorExtensionUpgrade = new RedGeneratorExtensionUpgrade('redGeneratorExtension');
@@ -453,6 +457,9 @@ export class UpgradeRecord extends Record {
     UpgradeRecord.greenParticleSacrifice,
 
     ...UpgradeRecord.galaxyTreeUpgradeList,
+
+    // Nuclear reactor upgrades
+    ...UpgradeRecord.nuclearUpgrades,
 
   ]
 

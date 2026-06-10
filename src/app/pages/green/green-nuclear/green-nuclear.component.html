@@ -1,0 +1,50 @@
+<section class="reactor-shell">
+  <header class="reactor-header">
+    <div class="radiation-mark" aria-hidden="true">☢</div>
+    <div>
+      <p class="eyebrow">GREEN PHASE // REACTOR ONLINE</p>
+      <h1>Nuclear Holding Facility</h1>
+      <p>Collapse the Dark Galaxy into a controlled reaction and preserve its potential beyond a full green reset.</p>
+    </div>
+  </header>
+
+  <div class="containment-grid">
+    <article class="nuclear-holding potential">
+      <span class="isotope">U-235</span>
+      <app-number-display [holding]="nuclearPotential"></app-number-display>
+    </article>
+    <article class="nuclear-holding fission">
+      <span class="isotope">n + U</span>
+      <app-number-display [holding]="nuclearFission"></app-number-display>
+    </article>
+  </div>
+
+  <article class="scram-panel">
+    <div>
+      <p class="eyebrow">DARK GALAXY REPROCESSING</p>
+      <h2>Initiate Reactor Scram</h2>
+      <p>Resets the entire green phase, all Dark Stars, and every Dark Charger. Nuclear currencies and upgrades remain.</p>
+      <p class="formula">Potential gain = √Dark Stars × (1 + 0.1 × total extra charger tiers)</p>
+    </div>
+    <button class="scram-button" [class.ready]="canScram()" [disabled]="!canScram()" (click)="scramReactor()">
+      <span>VENT CORE</span>
+      <strong>+{{ getPotentialGain().toString(2) }} NP</strong>
+    </button>
+  </article>
+
+  <section class="upgrade-bay">
+    <div class="section-title">
+      <span>☢</span>
+      <div>
+        <p class="eyebrow">FISSION RESEARCH</p>
+        <h2>Nuclear Upgrades</h2>
+      </div>
+      <span>☢</span>
+    </div>
+    <div class="upgrade-row nuclear-upgrades">
+      @for (upgrade of upgrades; track upgrade.name) {
+        <app-upgrade [upgrade]="upgrade"></app-upgrade>
+      }
+    </div>
+  </section>
+</section>

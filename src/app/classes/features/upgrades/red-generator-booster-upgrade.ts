@@ -27,6 +27,7 @@ export class RedGeneratorBoosterUpgrade extends RedUpgrade {
 
   action(): Num {
     const buff: Num = this.buffer
+      .mul(MultiplierRecord.redGeneratorBoosterBuyMultiplier.getNum())
       .pow(this.amount
         .add(MultiplierRecord.freeRedGeneratorBoosters.getNum())
       );
