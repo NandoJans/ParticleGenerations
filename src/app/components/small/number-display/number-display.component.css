@@ -83,3 +83,8 @@ div p span.effect {
     color: var(--color-gradient-1);
   }
 }
+
+.nuclear {
+  color: #e8ff36;
+  text-shadow: 0 0 5px #5cff77, 0 0 14px rgba(232, 255, 54, .55);
+}

@@ -9,7 +9,7 @@ import {
   faCogs, faCompactDisc, faExclamation, faFire,
   faForward, faFlask,
   faIndustry, faKey,
-  faMountain, faStar, faSun
+  faMountain, faRadiation, faStar, faSun
 } from "@fortawesome/free-solid-svg-icons";
 import {HoldingRecord} from "../classes/records/holdings/holding-record";
 import {Num} from "../num";
@@ -66,6 +66,9 @@ export class NavigationsService {
     ], false),
     greenDarkGalaxy: new SubNavigation('greenDarkGalaxy', faCompactDisc, 'darkGalaxy', this.navigations['green'], [
       {requirement: HoldingRecord.greenParticles, amount: new Num(1, 5)},
+    ], false),
+    greenNuclear: new SubNavigation('greenNuclear', faRadiation, 'nuclear', this.navigations['green'], [
+      {requirement: HoldingRecord.greenParticles, amount: new Num(1, 80)},
     ], false),
 
     // Automators
