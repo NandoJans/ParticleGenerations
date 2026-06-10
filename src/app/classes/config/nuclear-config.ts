@@ -21,7 +21,7 @@ export class NuclearConfig {
   static readonly minimumDarkStars = new Num(1, 0);
   static readonly potentialDarkStarPower = new Num(5, -1);
   static readonly potentialTierWeight = new Num(1, -1);
-  static readonly fissionPerPotentialPerSecond = new Num(1, 0);
+  static readonly fissionPerPotentialPerSecond = new Num(1, -2);
   static readonly fissionBoosterPower = new Num(5, -3);
 
   static readonly upgrades: NuclearUpgradeConfig[] = [
