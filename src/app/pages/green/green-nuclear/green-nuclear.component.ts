@@ -21,6 +21,8 @@ export class GreenNuclearComponent {
   nuclearFission: Holding = HoldingRecord.nuclearFission;
   upgrades: NuclearUpgrade[] = UpgradeRecord.nuclearUpgrades;
 
+  constructor(private challengeService: ChallengeService) {}
+
   getPotentialGain(): Num {
     if (HoldingRecord.darkStarHolding.amount.lt(NuclearConfig.minimumDarkStars)) {
       return Num.ZERO;
