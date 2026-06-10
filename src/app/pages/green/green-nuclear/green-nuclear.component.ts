@@ -5,8 +5,8 @@ import {UpgradeRecord} from '../../../classes/records/upgrades/upgrade-record';
 import {NuclearUpgrade} from '../../../classes/features/upgrades/nuclear-upgrade';
 import {NuclearConfig} from '../../../classes/config/nuclear-config';
 import {ChargerRecord} from '../../../classes/records/charger/charger-record';
-import {ResetHelper} from '../../../classes/helpers/reset-helper';
-import {ResetKey} from '../../../classes/enums/reset-key';
+import {ChallengeRecord} from '../../../classes/records/challenges/challenge-record';
+import {ChallengeService} from '../../../services/interactables/challenge.service';
 import {Num} from '../../../num';
 import {App} from '../../../App';
 
@@ -43,8 +43,9 @@ export class GreenNuclearComponent {
     const gain = this.getPotentialGain();
     if (gain.lt(Num.ONE)) return;
 
-    // Potential and fission use BLUE reset IDs, so they survive this green reset.
-    ResetHelper.reset(ResetKey.GREEN);
+    this.challengeService.resetChallengeProgress(ChallengeRecord.darkGalaxy);
+    HoldingRecord.darkStarHolding.reset();
+    HoldingRecord.darkStarHolding.save();
     ChargerRecord.darkStarChargerList.forEach(charger => {
       charger.reset();
       charger.save();

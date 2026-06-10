@@ -9,7 +9,7 @@ describe('GreenNuclearComponent', () => {
   let component: TestableGreenNuclearComponent;
 
   beforeEach(() => {
-    component = new TestableGreenNuclearComponent();
+    component = new TestableGreenNuclearComponent(new ChallengeService());
     HoldingRecord.darkStarHolding.amount = new Num(0, 0);
     HoldingRecord.nuclearPotential.amount = new Num(0, 0);
     ChargerRecord.darkStarChargerList.forEach(charger => {
@@ -31,7 +31,7 @@ describe('GreenNuclearComponent', () => {
     expect(component.getPotentialGain().toNumber()).toBe(12);
   });
 
-  it('awards potential and resets dark stars and chargers', () => {
+  it('awards potential and resets only Dark Galaxy progress, dark stars, and chargers', () => {
     HoldingRecord.darkStarHolding.amount = new Num(100, 0);
     ChargerRecord.redGeneratorDarkCharger.highestTier = new Num(2, 0);
     ChargerRecord.redGeneratorDarkCharger.tier = new Num(2, 0);
