@@ -24,7 +24,7 @@ export class NuclearFissionHolding extends Holding {
 
   override action(): Num {
     const effect = Num.ONE.add(
-      this.amount.add(Num.ONE).log10().mul(NuclearConfig.fissionBoosterLogarithmFactor)
+      this.amount.add(Num.ONE).pow(NuclearConfig.fissionBoosterLogarithmFactor)
     );
     MultiplierRecord.redGeneratorBoosterBuyMultiplier.correct(effect);
     return effect;
