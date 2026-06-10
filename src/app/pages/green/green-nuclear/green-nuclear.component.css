@@ -1,0 +1,116 @@
+:host {
+  display: block;
+  min-height: 100%;
+  --nuclear-yellow: #e8ff36;
+  --nuclear-green: #5cff77;
+  --reactor-black: #080b08;
+}
+
+.reactor-shell {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem;
+  background:
+    repeating-linear-gradient(135deg, rgba(232, 255, 54, .035) 0 2px, transparent 2px 18px),
+    radial-gradient(circle at 50% 0, rgba(92, 255, 119, .13), transparent 42%);
+}
+
+.reactor-header, .scram-panel, .nuclear-holding, .upgrade-bay {
+  border: 1px solid rgba(232, 255, 54, .45);
+  background: linear-gradient(145deg, rgba(20, 29, 20, .96), rgba(5, 8, 5, .98));
+  box-shadow: 0 0 24px rgba(92, 255, 119, .08), inset 0 0 24px rgba(0, 0, 0, .7);
+}
+
+.reactor-header {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  text-align: left;
+  clip-path: polygon(0 0, 97% 0, 100% 24%, 100% 100%, 3% 100%, 0 76%);
+}
+
+.radiation-mark {
+  color: var(--nuclear-yellow);
+  font-size: 7rem;
+  filter: drop-shadow(0 0 14px rgba(232, 255, 54, .5));
+  animation: reactor-pulse 2.5s ease-in-out infinite;
+}
+
+h1, h2 { margin: .2rem 0; letter-spacing: .06em; }
+h1 { color: var(--nuclear-yellow); font-size: 2.5rem; }
+h2 { color: var(--nuclear-green); }
+.eyebrow { color: #8b9b8d; letter-spacing: .22em; font-size: .85rem; font-weight: 700; }
+
+.containment-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.nuclear-holding { position: relative; padding: 2rem 1rem; overflow: hidden; }
+.nuclear-holding::after {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px dashed rgba(232, 255, 54, .18);
+  pointer-events: none;
+}
+.isotope { position: absolute; top: .6rem; right: .8rem; color: rgba(232, 255, 54, .4); font-family: monospace; }
+
+.scram-panel {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  text-align: left;
+  border-color: rgba(255, 146, 55, .55);
+}
+.formula { color: #b8c7b9; font-family: monospace; }
+
+.scram-button {
+  min-width: 190px;
+  padding: 1.4rem;
+  border: 2px solid #596159;
+  background: #181d18;
+  color: #717b72;
+  cursor: not-allowed;
+  text-transform: uppercase;
+  clip-path: polygon(10% 0, 90% 0, 100% 20%, 100% 80%, 90% 100%, 10% 100%, 0 80%, 0 20%);
+}
+.scram-button span, .scram-button strong { display: block; }
+.scram-button.ready {
+  color: #101400;
+  border-color: var(--nuclear-yellow);
+  background: repeating-linear-gradient(-45deg, var(--nuclear-yellow) 0 12px, #c4d82d 12px 24px);
+  cursor: pointer;
+  box-shadow: 0 0 25px rgba(232, 255, 54, .3);
+}
+
+.upgrade-bay { margin-top: 1rem; padding: 1.5rem; }
+.section-title { display: flex; justify-content: center; align-items: center; gap: 1.5rem; color: var(--nuclear-yellow); font-size: 2rem; }
+.section-title p, .section-title h2 { margin: 0; }
+.nuclear-upgrades { padding: 1rem 0; }
+
+:host ::ng-deep .nuclear-upgrades button.nuclear {
+  --accent-color: var(--nuclear-yellow);
+  --text-color: var(--nuclear-green);
+  --background-color: #263226;
+  border: 1px solid var(--nuclear-yellow);
+  background-image: radial-gradient(circle at top, rgba(92, 255, 119, .12), transparent 55%);
+  box-shadow: inset 0 0 18px rgba(92, 255, 119, .06);
+}
+
+:host ::ng-deep .nuclear-upgrades button.nuclear.buyable:hover { box-shadow: 0 0 22px rgba(232, 255, 54, .24), inset 0 0 25px rgba(92, 255, 119, .12); }
+
+@keyframes reactor-pulse { 50% { transform: scale(1.05); filter: drop-shadow(0 0 24px rgba(232, 255, 54, .75)); } }
+
+@media (max-width: 700px) {
+  .reactor-shell { padding: 1rem; }
+  .reactor-header { gap: 1rem; }
+  .radiation-mark { font-size: 4rem; }
+  .containment-grid, .scram-panel { grid-template-columns: 1fr; }
+  .scram-panel { text-align: center; }
+}

@@ -11,6 +11,7 @@ export class MultiplierRecord {
   static redParticleGenerators: Multiplier = new Multiplier('redParticleGenerators', new Num(1, 0))
   static redAcceleratorGenerators: Multiplier = new Multiplier('redAcceleratorGenerators', new Num(1, 0));
   static freeRedGeneratorBoosters: Multiplier = new Multiplier('freeRedGeneratorBoosters', new Num(0, 0), 50);
+  static redGeneratorBoosterBuyMultiplier: Multiplier = new Multiplier('redGeneratorBoosterBuyMultiplier', new Num(1, 0));
 
   // Yellow Phase
   static yellowParticleGain: Multiplier = new Multiplier('yellowParticleGain', new Num(1, 0), 50);
@@ -30,6 +31,7 @@ export class MultiplierRecord {
   static totalDarkEnergyGain: Multiplier = new Multiplier('totalDarkEnergyGain', new Num(0, 0), 50);
   static totalDarkEnergyCost: Multiplier = new Multiplier('totalDarkEnergyCost', new Num(0, 0), 50);
   static greenGenerators: Multiplier = new Multiplier('greenGenerators', new Num(1, 0));
+  static darkChargerEffects: Multiplier = new Multiplier('darkChargerEffects', new Num(1, 0));
 
   // Star Challenge Charger
   static starChallengeHoldingSpeed: Multiplier = new Multiplier('starChallengeHoldingSpeed', new Num(1, 0), 3);
@@ -41,6 +43,7 @@ export class MultiplierRecord {
     MultiplierRecord.redParticleGenerators,
     MultiplierRecord.redAcceleratorGenerators,
     MultiplierRecord.freeRedGeneratorBoosters,
+    MultiplierRecord.redGeneratorBoosterBuyMultiplier,
 
     // Yellow Phase
     MultiplierRecord.yellowParticleGain,
@@ -60,6 +63,7 @@ export class MultiplierRecord {
     MultiplierRecord.totalDarkEnergyGain,
     MultiplierRecord.totalDarkEnergyCost,
     MultiplierRecord.greenGenerators,
+    MultiplierRecord.darkChargerEffects,
 
     // Star Challenge Charger
     MultiplierRecord.starChallengeHoldingSpeed,

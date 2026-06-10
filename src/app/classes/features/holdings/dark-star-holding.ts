@@ -6,7 +6,6 @@ import {ResetKey} from "../../enums/reset-key";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 import {Styles} from "../../enums/styles";
-import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 
 export class DarkStarHolding extends Holding {
   abbreviation: string = 'DS';

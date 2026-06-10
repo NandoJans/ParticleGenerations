@@ -5,6 +5,7 @@ import {ChallengeRecord} from "../../records/challenges/challenge-record";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {HoldingRecord} from "../../records/holdings/holding-record";
 import {ChargerRecord} from "../../records/charger/charger-record";
+import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 
 /**
  * DarkStarCharger is a special type of charger that only charges when its related nerf is active.
@@ -52,7 +53,7 @@ export abstract class DarkStarCharger extends Charger {
    * This makes tiering up chargers worthwhile as it benefits all chargers.
    */
   protected applySharedTierBoost(effect: Num): Num {
-    return effect.mul(this.getSharedTierMultiplier());
+    return effect.mul(this.getSharedTierMultiplier()).mul(MultiplierRecord.darkChargerEffects.getNum());
   }
 
   protected setSharedCharge(value: Num) {

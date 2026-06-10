@@ -5,7 +5,6 @@ import {HoldingDisplayFactory} from "../../factories/holding-display-factory";
 import {ResetKey} from "../../enums/reset-key";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {Styles} from "../../enums/styles";
-import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 
 export class DarkMatterHolding extends Holding {

@@ -22,6 +22,8 @@ export class ResetHelper {
     ResetKey.RED,
     ResetKey.YELLOW,
     ResetKey.GREEN,
+    ResetKey.BLUE,
+    ResetKey.PURPLE,
   ];
 
   static registerReset(resetKey: ResetKey, resetable: Resetable): ResetKey {

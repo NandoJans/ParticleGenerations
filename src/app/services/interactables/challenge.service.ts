@@ -98,6 +98,19 @@ export class ChallengeService {
     ChallengeRecord.list.forEach(c => c.refreshUpgrades());
   }
 
+  resetChallengeProgress(challenge: Challenge): void {
+    if (ChallengeRecord.currentChallenges[challenge.prestigeLayer] === challenge) {
+      delete ChallengeRecord.currentChallenges[challenge.prestigeLayer];
+    }
+
+    challenge.end();
+    challenge.reset();
+    challenge.save();
+    this.saveCurrentChallenges();
+
+    ChallengeRecord.list.forEach(c => c.refreshUpgrades());
+  }
+
   static inChallenge(prestigeLayer: string): boolean {
     return ChallengeRecord.currentChallenges[prestigeLayer] !== undefined;
   }

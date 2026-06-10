@@ -32,4 +32,5 @@ export enum Styles {
   STAR_KEY = "star key",
   SUB_STAR_KEY = "star key sub",
   DARK_GALAXY = "green dark galaxy",
+  NUCLEAR = "nuclear",
 }
