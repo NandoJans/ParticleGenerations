@@ -13,6 +13,7 @@ export class ButtonComponent implements OnInit {
   @Input() icon: IconDefinition | undefined;
   @Input() style: string | undefined;
   @Input() identifier: string | undefined;
+  @Input() ariaLabel: string | undefined;
   @Output() function: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() { }

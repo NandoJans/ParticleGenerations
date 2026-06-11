@@ -37,6 +37,15 @@ export class FooterComponent implements OnInit {
     this.navigationsService.navigate(event);
   }
 
+  isNavigationActive(navigation: Navigation): boolean {
+    return this.navigationsService.selectedNavigation === navigation;
+  }
+
+  isSubNavigationActive(subNavigation: SubNavigation): boolean {
+    return this.navigationsService.selectedNavigation === subNavigation.parent
+      && subNavigation.location === subNavigation.parent.wasOn;
+  }
+
   ngOnInit(): void {
     this.navigations = this.navigationsService.getNavigations();
     this.subNavigations = this.navigationsService.getSubNavigations(this.navigationsService.selectedNavigation);

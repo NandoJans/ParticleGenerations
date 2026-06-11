@@ -1,18 +1,25 @@
-.nav-row {
-  height: 50%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: row;
-  background-color: var(--background-color-2);
-}
-
-.navigation {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  width: 100%;
-  height: 100%;
-  background-color: var(--background-color-2);
+:host { display: block; width: 100%; height: 100%; }
+.navigation-shell { height: 100%; border-top: 1px solid #3b3030; background: rgba(10, 9, 9, .97); box-shadow: 0 -12px 30px rgba(0, 0, 0, .42); }
+.nav-row { display: flex; height: 50%; align-items: stretch; }
+.sub-navigation { padding: 0 max(1rem, 4vw); background: linear-gradient(180deg, #151212, #0e0d0d); border-bottom: 1px solid rgba(255, 255, 255, .06); }
+.phase-navigation { background: #090909; }
+.navigation { position: relative; display: flex; flex: 1 1 0; min-width: 0; }
+.navigation::after { content: ''; position: absolute; right: 20%; bottom: 0; left: 20%; height: 2px; background: var(--nav-accent, #8c8181); opacity: 0; transform: scaleX(.35); transition: opacity .2s ease, transform .2s ease; pointer-events: none; }
+.navigation.active::after { opacity: 1; transform: scaleX(1); box-shadow: 0 0 12px var(--nav-accent, #8c8181); }
+.navigation.active { background: linear-gradient(180deg, color-mix(in srgb, var(--nav-accent, #8c8181) 9%, transparent), transparent); }
+.phase-red { --nav-accent: var(--accent-color-red); }
+.phase-yellow { --nav-accent: var(--accent-color-yellow); }
+.phase-green { --nav-accent: var(--accent-color-green); }
+.phase-automators { --nav-accent: var(--accent-color-blue); }
+.phase-timeline { --nav-accent: #d4a6ff; }
+.phase-dev { --nav-accent: var(--text-color-light); }
+:host ::ng-deep app-button { width: 100%; height: 100%; }
+:host ::ng-deep .navigation-button { display: flex; align-items: center; justify-content: center; padding: .4rem; border: 0; color: #9c9292; font-size: 1.35rem; transition: color .2s ease, background .2s ease; }
+:host ::ng-deep .navigation-button:hover { color: #fff; background: rgba(255, 255, 255, .045); }
+:host ::ng-deep .navigation.active .navigation-button { color: var(--nav-accent, #fff); }
+:host ::ng-deep .sub-navigation .navigation-button { font-size: 1.25rem; }
+@media (max-width: 700px) {
+  .sub-navigation { padding: 0; }
+  :host ::ng-deep .navigation-button { padding: .25rem; font-size: 1.1rem; }
+  :host ::ng-deep .sub-navigation .navigation-button { font-size: 1rem; }
 }

@@ -1,25 +1,82 @@
-<div class="resource-card">
-  <app-number-display [holding]="redAccelerators"></app-number-display>
-</div>
-<div class="upgrade-row">
-  @for (upgrade of upgrades; track upgrade)  {
-    @if (upgrade.isFirstUnlocked()) {
-      <app-upgrade [upgrade]="upgrade"></app-upgrade>
-    }
-  }
-</div>
-<div class="upgrade-row">
-  <div>
-    @if (boosterAccelerationUpgrade.isFirstUnlocked()) {
-      <app-upgrade [upgrade]="boosterAccelerationUpgrade"></app-upgrade>
-    }
+<section class="accelerator-shell">
+  <header class="accelerator-header">
+    <div class="accelerator-mark" aria-hidden="true">
+      <span class="beam"></span>
+      <span class="ring ring-one"></span>
+      <span class="ring ring-two"></span>
+      <span class="particle particle-one"></span>
+      <span class="particle particle-two"></span>
+    </div>
+    <div>
+      <p class="eyebrow">RED PHASE // VELOCITY LAB</p>
+      <h1>Particle Accelerator</h1>
+      <p>Convert raw particle output into momentum and amplify every red generator in the foundry.</p>
+    </div>
+  </header>
+
+  <section class="accelerator-core">
+    <div class="core-copy">
+      <p class="eyebrow">ACCELERATOR RESERVE</p>
+      <h2>Stored Momentum</h2>
+      <p>Accelerators apply their effect across the complete red production chain.</p>
+    </div>
+    <div class="resource-readout">
+      <span class="readout-label">LIVE OUTPUT</span>
+      <app-number-display [holding]="redAccelerators"></app-number-display>
+    </div>
+    <div class="core-meter" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </section>
+
+  <section class="research-bay">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">FIELD CALIBRATION</p>
+        <h2>Accelerator Research</h2>
+      </div>
+      <span class="section-code">ARRAY // A-04</span>
+    </div>
+    <div class="upgrade-grid accelerator-upgrades">
+      @for (upgrade of upgrades; track upgrade.name) {
+        @if (upgrade.isFirstUnlocked()) {
+          <app-upgrade [upgrade]="upgrade"></app-upgrade>
+        }
+      }
+    </div>
+  </section>
+
+  <section class="systems-grid">
+    <article class="system-panel synergy-panel">
+      <div class="panel-icon" aria-hidden="true">↯</div>
+      <div class="panel-copy">
+        <p class="eyebrow">GENERATOR SYNERGY</p>
+        <h2>Booster Acceleration</h2>
+        <p>Link accelerator momentum to the red generator booster system.</p>
+      </div>
+      <div class="panel-upgrade">
+        @if (boosterAccelerationUpgrade.isFirstUnlocked()) {
+          <app-upgrade [upgrade]="boosterAccelerationUpgrade"></app-upgrade>
+        }
+      </div>
+    </article>
+
+    <article class="system-panel access-panel">
+      <div class="panel-icon lock-icon" aria-hidden="true">⌁</div>
+      <div class="panel-copy">
+        <p class="eyebrow">FACILITY ACCESS</p>
+        <h2>Accelerator Control</h2>
+        <p>Authorize the first accelerator systems from this control module.</p>
+      </div>
+      <div class="panel-upgrade">
+        @if (unlockRedAccelerators.isFirstUnlocked()) {
+          <app-upgrade [upgrade]="unlockRedAccelerators"></app-upgrade>
+        }
+      </div>
+    </article>
+  </section>
+
+  <div class="accelerator-info">
+    <app-info [name]="'red-accelerators-info'" [infoText]="infoText"></app-info>
   </div>
-</div>
-<div class="upgrade-row">
-  <div>
-    @if (unlockRedAccelerators.isFirstUnlocked()) {
-      <app-upgrade [upgrade]="unlockRedAccelerators"></app-upgrade>
-    }
-  </div>
-</div>
-<app-info style="width: 60%" [name]="'red-accelerators-info'" [infoText]="infoText"></app-info>
+</section>
