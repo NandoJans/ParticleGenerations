@@ -20,6 +20,8 @@ export class GreenGeneratorsComponent implements OnInit {
     GeneratorRecord.firstGreenGenerator,
     GeneratorRecord.secondGreenGenerator,
     GeneratorRecord.thirdGreenGenerator,
+    GeneratorRecord.fourthGreenGenerator,
+    GeneratorRecord.fifthGreenGenerator,
   ];
   darkMatter: Holding = HoldingRecord.darkMatter;
   upgrades: Upgrade[] = [

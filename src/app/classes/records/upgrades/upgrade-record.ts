@@ -183,6 +183,12 @@ import {NuclearConfig} from "../../config/nuclear-config";
 export class UpgradeRecord extends Record {
 
   static nuclearUpgrades: NuclearUpgrade[] = NuclearConfig.upgrades.map(config => new NuclearUpgrade(config));
+  static unlockFourthGreenGeneratorNuclear: NuclearUpgrade = UpgradeRecord.nuclearUpgrades.find(
+    upgrade => upgrade.config.target === 'unlockGreenGenerator4'
+  )!;
+  static unlockFifthGreenGeneratorNuclear: NuclearUpgrade = UpgradeRecord.nuclearUpgrades.find(
+    upgrade => upgrade.config.target === 'unlockGreenGenerator5'
+  )!;
 
   // Red Generators
   static redGeneratorExtension: RedGeneratorExtensionUpgrade = new RedGeneratorExtensionUpgrade('redGeneratorExtension');

@@ -1,6 +1,11 @@
 import {Num} from '../../num';
 
-export type NuclearUpgradeTarget = 'greenGenerators' | 'darkStars' | 'darkChargers';
+export type NuclearUpgradeTarget =
+  | 'greenGenerators'
+  | 'darkStars'
+  | 'darkChargers'
+  | 'unlockGreenGenerator4'
+  | 'unlockGreenGenerator5';
 
 export interface NuclearUpgradeConfig {
   key: string;
@@ -10,6 +15,7 @@ export interface NuclearUpgradeConfig {
   baseCost: Num;
   costIncrease: Num;
   buffPerLevel: Num;
+  limit?: Num;
 }
 
 /**
@@ -51,6 +57,26 @@ export class NuclearConfig {
       baseCost: new Num(1, 3),
       costIncrease: new Num(1, 2),
       buffPerLevel: new Num(1.25, 0),
+    },
+    {
+      key: 'nuclear-unlock-green-generator-4',
+      displayName: 'Fourth-Stage Reactor',
+      description: 'Unlocks Green Generator 4.',
+      target: 'unlockGreenGenerator4',
+      baseCost: new Num(1, 4),
+      costIncrease: Num.ONE,
+      buffPerLevel: Num.ONE,
+      limit: Num.ONE,
+    },
+    {
+      key: 'nuclear-unlock-green-generator-5',
+      displayName: 'Fifth-Stage Reactor',
+      description: 'Unlocks Green Generator 5.',
+      target: 'unlockGreenGenerator5',
+      baseCost: new Num(1, 6),
+      costIncrease: Num.ONE,
+      buffPerLevel: Num.ONE,
+      limit: Num.ONE,
     },
   ];
 }
