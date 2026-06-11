@@ -30,6 +30,9 @@ jobs:
             --output-path=docs \
             --base-href /ParticleGenerations/
 
+      - name: Verify bundle class order
+        run: npm run check:bundle-order
+
       # 5. Deploy docs folder to gh-pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

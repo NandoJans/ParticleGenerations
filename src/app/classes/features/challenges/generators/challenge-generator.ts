@@ -7,7 +7,6 @@ import {Requirement} from "../../interfaces/requirement";
 import {Multiplier} from "../../multiplier";
 import {Generator} from "../../generator";
 import {MultiplierRecord} from "../../../records/multipliers/multiplier-record";
-import {App} from "../../../../App";
 
 export class ChallengeGenerator extends Generator {
   globalMultiplier: Multiplier;

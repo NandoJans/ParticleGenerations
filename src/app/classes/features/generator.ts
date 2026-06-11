@@ -13,7 +13,6 @@ import {Upgrade} from "./upgrade";
 import {StatsService} from "../../services/stats.service";
 import {Enhancable} from "./interfaces/enhancable";
 import {Enhancement} from "./enhancements/enhancement";
-import {EnhancementRecord} from "../records/enhancement-record";
 
 export abstract class Generator extends Buyable implements Generatable, Storable, Resetable, Require, Enhancable {
   abstract displayName: string
@@ -96,16 +95,8 @@ export abstract class Generator extends Buyable implements Generatable, Storable
     this.auto = this.localStorageHelper.load(this.auto, 'auto')
 
     const enhancementName = this.localStorageHelper.load(null, 'enhancement')
-    // @ts-ignore
-    if (enhancementName && enhancementName in EnhancementRecord && EnhancementRecord[enhancementName] instanceof Enhancement) {
-      // @ts-ignore
-      this.enhancement = EnhancementRecord[enhancementName];
-      if (this.enhancement instanceof Enhancement) {
-        this.enhancement.add(this);
-      }
-    } else {
-      this.enhancement = null
-    }
+    this.enhancement = Enhancement.getBySaveName(enhancementName);
+    this.enhancement?.add(this);
   }
 
   softReset(): void {

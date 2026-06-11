@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "check:bundle-order": "node scripts/check-bundle-class-order.mjs"
   },
   "private": true,
   "dependencies": {
