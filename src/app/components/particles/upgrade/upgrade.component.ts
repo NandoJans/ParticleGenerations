@@ -68,7 +68,7 @@ export class UpgradeComponent {
 
 
   isEnhancing(): boolean {
-    return this.enhancementService.isEnhancing() && this.upgrade.canEnhance() && this.upgrade.enhancement !== this.enhancementService.enhancing;
+    return this.enhancementService.isEnhancing() && this.upgrade.allowedEnhancements.includes(this.enhancementService.enhancing!) && this.upgrade.enhancement !== this.enhancementService.enhancing;
   }
 
   getEnhancementStyle(): string {
@@ -87,6 +87,9 @@ export class UpgradeComponent {
   }
 
   getEnhancementString(): string {
+    if (this.enhancementService.enhancing?.name === 'green-enhancement') {
+      return 'Use one Green Key to double this element\'s power.';
+    }
     if (this.enhancementService.enhancing) {
       return this.upgrade.enhancementString(
         this.enhancementService.enhancing

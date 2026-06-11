@@ -9,6 +9,10 @@ import {ChallengeRecord} from '../../../classes/records/challenges/challenge-rec
 import {ChallengeService} from '../../../services/interactables/challenge.service';
 import {Num} from '../../../num';
 import {App} from '../../../App';
+import {GreenKeyHolding} from '../../../classes/features/holdings/green-key-holding';
+import {GreenKeyUpgrade} from '../../../classes/features/upgrades/green-key-upgrade';
+import {GreenEnhancement} from '../../../classes/features/enhancements/green-enhancement';
+import {EnhancementRecord} from '../../../classes/records/enhancement-record';
 
 @Component({
   selector: 'app-green-nuclear',
@@ -19,6 +23,9 @@ import {App} from '../../../App';
 export class GreenNuclearComponent {
   nuclearPotential: Holding = HoldingRecord.nuclearPotential;
   nuclearFission: Holding = HoldingRecord.nuclearFission;
+  greenKeys: GreenKeyHolding = HoldingRecord.greenKeys;
+  greenKeyUpgrade: GreenKeyUpgrade = UpgradeRecord.greenKey;
+  greenEnhancement: GreenEnhancement = EnhancementRecord.green;
   upgrades: NuclearUpgrade[] = UpgradeRecord.nuclearUpgrades;
 
   constructor(private challengeService: ChallengeService) {}

@@ -175,6 +175,7 @@ import {
   MitigatedDarkGalaxyChallengeGalaxyTreeUpgrade
 } from "../../features/upgrades/mitigated-dark-galaxy-challenge-galaxy-tree-upgrade";
 import {NuclearUpgrade} from "../../features/upgrades/nuclear-upgrade";
+import {GreenKeyUpgrade} from "../../features/upgrades/green-key-upgrade";
 import {NuclearConfig} from "../../config/nuclear-config";
 
 @Injectable({
@@ -182,6 +183,7 @@ import {NuclearConfig} from "../../config/nuclear-config";
 })
 export class UpgradeRecord extends Record {
 
+  static greenKey: GreenKeyUpgrade = new GreenKeyUpgrade('green-key-upgrade');
   static nuclearUpgrades: NuclearUpgrade[] = NuclearConfig.upgrades.map(config => new NuclearUpgrade(config));
   static unlockFourthGreenGeneratorNuclear: NuclearUpgrade = UpgradeRecord.nuclearUpgrades.find(
     upgrade => upgrade.config.target === 'unlockGreenGenerator4'
@@ -465,6 +467,7 @@ export class UpgradeRecord extends Record {
     ...UpgradeRecord.galaxyTreeUpgradeList,
 
     // Nuclear reactor upgrades
+    UpgradeRecord.greenKey,
     ...UpgradeRecord.nuclearUpgrades,
 
   ]

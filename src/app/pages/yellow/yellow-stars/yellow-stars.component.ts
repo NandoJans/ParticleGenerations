@@ -48,8 +48,8 @@ export class YellowStarsComponent implements OnInit {
     return ChallengeRecord.currentChallenges['yellow']?.getGenerators() ?? [];
   }
 
-  getStars() {
-    return this.challengeService.sortByCompleted(this.stars);
+  getStars(): YellowStarChallenge[] {
+    return this.challengeService.sortByCompleted(this.stars) as YellowStarChallenge[];
   }
 
   getNextLockedStar() {

@@ -7,6 +7,8 @@ import {ResetHelper} from "../classes/helpers/reset-helper";
 import {UpgradeRecord} from "../classes/records/upgrades/upgrade-record";
 import {GeneratorRecord} from "../classes/records/generators/generator-record";
 import {StatsService} from "./stats.service";
+import {ChallengeRecord} from "../classes/records/challenges/challenge-record";
+import {YellowStarChallenge} from "../classes/features/challenges/yellow-star-challenge";
 
 @Injectable({
   providedIn: 'root'
@@ -23,11 +25,12 @@ export class EnhancementService {
 
   respecEnhancement(enhancement: Enhancement) {
     let returnHolding: Num = new Num(1, 0);
+    const scalesRefund = enhancement !== EnhancementRecord.green;
     Object.entries(enhancement.enhancables).forEach(([key, enhancable]) => {
       enhancable.enhancement = null;
       delete enhancement.enhancables[key];
       enhancement.getHolding().amount = enhancement.getHolding().amount.add(returnHolding);
-      returnHolding = returnHolding.mul(new Num(2, 0));
+      if (scalesRefund) returnHolding = returnHolding.mul(new Num(2, 0));
     })
     ResetHelper.reset(enhancement.respecResetKey);
   }
@@ -101,7 +104,7 @@ export class EnhancementService {
   }
 
   getAllowedEnhancables(enhancement: Enhancement): Enhancable[] {
-    return EnhancementService.enhancementToEnhancables[enhancement.name];
+    return EnhancementService.enhancementToEnhancables[enhancement.name] ?? [];
   }
 
   init() {
@@ -110,20 +113,42 @@ export class EnhancementService {
     })
 
     this.upgradeRecord.getList().forEach(upgrade => {
+      this.allowGreenEnhancement(upgrade);
       upgrade.allowedEnhancements.forEach(enhancement => {
-        EnhancementService.enhancementToEnhancables[enhancement.name].push(upgrade);
+        this.registerAllowedEnhancable(enhancement, upgrade);
       })
     })
     this.generatorRecord.getList().forEach(generator => {
+      this.allowGreenEnhancement(generator);
       generator.allowedEnhancements.forEach(enhancement => {
-        EnhancementService.enhancementToEnhancables[enhancement.name].push(generator);
+        this.registerAllowedEnhancable(enhancement, generator);
       })
       generator.getUpgrades().forEach(upgrade => {
+        this.allowGreenEnhancement(upgrade);
         upgrade.allowedEnhancements.forEach(enhancement => {
-          EnhancementService.enhancementToEnhancables[enhancement.name].push(upgrade);
+          this.registerAllowedEnhancable(enhancement, upgrade);
         });
       });
     })
+    ChallengeRecord.list.forEach(challenge => {
+      if (challenge instanceof YellowStarChallenge) {
+        challenge.allowedEnhancements.forEach(enhancement => {
+          this.registerAllowedEnhancable(enhancement, challenge);
+        });
+      }
+    });
+  }
+
+
+  private registerAllowedEnhancable(enhancement: Enhancement, enhancable: Enhancable): void {
+    const allowed = EnhancementService.enhancementToEnhancables[enhancement.name];
+    if (!allowed.includes(enhancable)) allowed.push(enhancable);
+  }
+
+  private allowGreenEnhancement(enhancable: Enhancable & { nav?: string }): void {
+    if (enhancable.nav === 'yellow' && !enhancable.allowedEnhancements.includes(EnhancementRecord.green)) {
+      enhancable.allowedEnhancements.push(EnhancementRecord.green);
+    }
   }
 
   atMaxEnhancements(enhancement: Enhancement) {
