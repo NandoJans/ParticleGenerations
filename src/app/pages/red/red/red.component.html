@@ -1,15 +1,68 @@
-<div class="generator-row">
-  <div class="generator-card" *ngFor="let generator of generators">
-    <app-generator *ngIf="generator.isFirstUnlocked()" [generator]="generator"></app-generator>
-    <div class="upgrades">
-      <app-upgrade *ngIf="generator.multiplierUpgrade.isFirstUnlocked()" [upgrade]="generator.multiplierUpgrade"></app-upgrade>
-      <app-upgrade *ngIf="generator.buyMultiplierUpgrade.isFirstUnlocked()" [upgrade]="generator.buyMultiplierUpgrade"></app-upgrade>
+<section class="foundry-shell">
+  <header class="foundry-header">
+    <div class="particle-core" aria-hidden="true">
+      <span class="core"></span>
+      <span class="orbit orbit-one"></span>
+      <span class="orbit orbit-two"></span>
+      <span class="orbit orbit-three"></span>
     </div>
+    <div class="header-copy">
+      <p class="eyebrow">RED PHASE // PRODUCTION ONLINE</p>
+      <h1>Particle Foundry</h1>
+      <p>Build a cascading production line where every generator powers the tier beneath it.</p>
+    </div>
+  </header>
+
+  <div class="flow-guide" aria-label="Production flow">
+    <span>HIGHER TIERS</span>
+    <div class="flow-line"><i></i></div>
+    <strong>PRODUCTION CASCADE</strong>
+    <div class="flow-line reverse"><i></i></div>
+    <span>RED PARTICLES</span>
   </div>
-</div>
-<div class="upgrade-row">
-  <div *ngFor="let upgrade of upgrades">
-    <app-upgrade *ngIf="upgrade.isFirstUnlocked()" [upgrade]="upgrade"></app-upgrade>
+
+  <section class="generator-bay">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">ASSEMBLY ARRAY</p>
+        <h2>Red Generators</h2>
+      </div>
+      <span class="section-code">RG-01 / RG-05</span>
+    </div>
+
+    <div class="generator-stack">
+      <article class="generator-card" *ngFor="let generator of generators; let index = index">
+        <div class="tier-rail">
+          <span>0{{ index + 1 }}</span>
+          <i></i>
+        </div>
+        <div class="generator-module">
+          <app-generator *ngIf="generator.isFirstUnlocked()" [generator]="generator"></app-generator>
+          <div class="upgrades">
+            <app-upgrade *ngIf="generator.multiplierUpgrade.isFirstUnlocked()" [upgrade]="generator.multiplierUpgrade"></app-upgrade>
+            <app-upgrade *ngIf="generator.buyMultiplierUpgrade.isFirstUnlocked()" [upgrade]="generator.buyMultiplierUpgrade"></app-upgrade>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="control-bay">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">FOUNDRY CONTROL</p>
+        <h2>System Upgrades</h2>
+      </div>
+      <span class="warning-stripe" aria-hidden="true"></span>
+    </div>
+    <div class="upgrade-row system-upgrades">
+      <div *ngFor="let upgrade of upgrades">
+        <app-upgrade *ngIf="upgrade.isFirstUnlocked()" [upgrade]="upgrade"></app-upgrade>
+      </div>
+    </div>
+  </section>
+
+  <div class="foundry-info">
+    <app-info [name]="'red-generators-info'" [infoText]="infoText"></app-info>
   </div>
-</div>
-<app-info style="width: 60%" [name]="'red-generators-info'" [infoText]="infoText"></app-info>
+</section>
