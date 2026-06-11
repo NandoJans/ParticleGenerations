@@ -44,10 +44,11 @@ export class NuclearUpgrade extends Upgrade {
     this.startIncrease = config.costIncrease.copy();
     this.baseBuffer = config.buffPerLevel.copy();
     this.buffer = config.buffPerLevel.copy();
+    this.limit = config.limit?.copy();
     this.resetId = ResetHelper.registerReset(ResetKey.BLUE, this);
   }
 
-  action(): Num {
+  action(): Num | undefined {
     const effect = this.buffer.pow(this.amount);
     switch (this.config.target) {
       case 'greenGenerators':
@@ -59,11 +60,17 @@ export class NuclearUpgrade extends Upgrade {
       case 'darkChargers':
         MultiplierRecord.darkChargerEffects.correct(effect);
         break;
+      case 'unlockGreenGenerator4':
+      case 'unlockGreenGenerator5':
+        return undefined;
     }
     return effect;
   }
 
   getDescription(): string {
+    if (this.config.target === 'unlockGreenGenerator4' || this.config.target === 'unlockGreenGenerator5') {
+      return this.config.description;
+    }
     return `${this.config.description} ${this.buffer.toString(2)}x per level.`;
   }
 
