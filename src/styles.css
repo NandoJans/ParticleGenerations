@@ -73,6 +73,28 @@ html, body {
   background: var(--background-color-3);
 }
 
+button {
+  transition: transform 120ms ease, box-shadow 160ms ease, border-color 160ms ease, background-color 160ms ease;
+}
+
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+button:not(:disabled):focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.12);
+}
+
+button:not(:disabled):active {
+  transform: translateY(1px) scale(0.99);
+}
+
 button.button {
   color: var(--text-color-main);
   border: none;
