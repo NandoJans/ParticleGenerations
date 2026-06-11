@@ -22,3 +22,17 @@ button.respec {
   font-size: 1rem;
   margin: 0.5rem;
 }
+
+div.green button {
+  border: 1px solid var(--accent-color-green);
+  background:
+    linear-gradient(rgba(100, 210, 74, 0.08), rgba(100, 210, 74, 0.08)),
+    var(--background-color-3);
+  color: var(--text-color-green);
+  box-shadow: 0 0 12px rgba(100, 210, 74, 0.12), inset 0 0 12px rgba(100, 210, 74, 0.05);
+}
+
+div.green button:hover {
+  border-color: var(--text-color-green);
+  box-shadow: 0 0 18px rgba(100, 210, 74, 0.22), inset 0 0 16px rgba(100, 210, 74, 0.1);
+}

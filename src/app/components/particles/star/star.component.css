@@ -118,3 +118,37 @@ div.challenge.sirius div.star {
   height: 12rem;
   margin: 2rem auto;
 }
+
+div.challenge.enhancing-green {
+  border-color: var(--accent-color-green);
+  box-shadow: 0 0 18px rgba(100, 210, 74, 0.18);
+  cursor: pointer;
+}
+
+div.challenge.enhancing-green div.details {
+  background:
+    linear-gradient(rgba(100, 210, 74, 0.06), rgba(100, 210, 74, 0.06)),
+    var(--background-color-3);
+}
+
+div.challenge.enhancing-green div.start button {
+  border-color: var(--accent-color-green);
+  color: var(--text-color-green);
+  box-shadow: 0 0 12px rgba(100, 210, 74, 0.18);
+}
+
+div.challenge.enhanced-yellow,
+div.challenge.enhanced-green {
+  border-color: var(--enhancement-color);
+  box-shadow:
+    0 0 18px color-mix(in srgb, var(--enhancement-color) 20%, transparent),
+    inset 0 0 16px color-mix(in srgb, var(--enhancement-color) 6%, transparent);
+}
+
+div.challenge.enhanced-yellow {
+  --enhancement-color: var(--accent-color-yellow);
+}
+
+div.challenge.enhanced-green {
+  --enhancement-color: var(--accent-color-green);
+}
