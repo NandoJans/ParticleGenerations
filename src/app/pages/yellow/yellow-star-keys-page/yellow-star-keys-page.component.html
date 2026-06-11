@@ -1,50 +1,35 @@
-@if (!this.compressionUnlocked()) {
-  <p>You need to unlock the Compression Upgrade to start compressing Yellow Keys.</p>
-  <app-upgrade [upgrade]="unlockCompressionUpgrade"></app-upgrade>
-} @else {
-  <div class="resource-card">
-    <fa-icon [icon]="faKey" class="key-icon"></fa-icon>
-    <app-number-display [holding]="yellowStarKeys"></app-number-display>
-    <app-number-display [holding]="yellowKeys"></app-number-display>
-  </div>
-  <br/>
-  <div class="upgrade-row">
-    @for (upgrade of subUpgrades; track upgrade)  {
-      @if (upgrade.isUnlocked()) {
-        <app-upgrade [upgrade]="upgrade"></app-upgrade>
-      }
-    }
-  </div>
-  @if (!this.isCompressing() && canCompressKeys()) {
-    <app-button (function)="startCompression()" [style]="'button green'" [text]="'Start'"></app-button>
-  } @else if (!this.isCompressing()) {
-    <p>You need at least <span class="requirement">{{ getKeysNeededForCompression() }}</span> Yellow Keys to start compression.</p>
-  } @else {
-    <p>Compressing</p>
-  }
-  <div class="progress-bar-wrapper">
-    <div class="progress-bar" [style.width]="getPercentage() + '%'">
+<section class="compression-shell">
+  <header class="compression-header">
+    <div class="compression-mark" aria-hidden="true"><span class="key-orbit"></span><fa-icon [icon]="faKey"></fa-icon><i></i><b></b></div>
+    <div><p class="eyebrow">YELLOW PHASE // GRAVITY PRESS</p><h1>Star-Key Compression</h1><p>Collapse yellow keys into stellar matter, trading raw reserves for a denser and more powerful currency.</p></div>
+  </header>
 
-    </div>
-    <div class="progress-text">
-      @if (this.isCompressing()) {
-        <p><span class="percentage">{{ getPercentage().toFixed(2) }}%</span></p>
-        <p><span class="percentage">{{ getCompletionTime() }}</span></p>
-      }
-    </div>
-  </div>
-  @if (isDev()) {
-    <app-button [style]="'button green'" (function)="completeCompression()" [text]="'Instant complete'"></app-button>
-    <p>Total skipped: {{ getTotalSkipped() }}</p>
+  @if (!this.compressionUnlocked()) {
+    <section class="locked-panel"><div class="lock-symbol" aria-hidden="true">⌁</div><div><p class="eyebrow">SYSTEM LOCKED</p><h2>Compression Offline</h2><p>Authorize the compression upgrade to bring the gravity press online.</p></div><app-upgrade [upgrade]="unlockCompressionUpgrade"></app-upgrade></section>
+  } @else {
+    <section class="resource-panel">
+      <div class="section-heading"><div><p class="eyebrow">MASS INVENTORY</p><h2>Compression Reserves</h2></div><span class="press-status"><i></i> PRESS READY</span></div>
+      <div class="resource-grid"><div class="resource-readout star-key"><span>STAR KEYS</span><app-number-display [holding]="yellowStarKeys"></app-number-display></div><div class="resource-readout"><span>YELLOW KEYS</span><app-number-display [holding]="yellowKeys"></app-number-display></div></div>
+    </section>
+
+    <section class="calibration-panel">
+      <div class="section-heading"><div><p class="eyebrow">PRESS CALIBRATION</p><h2>Compression Systems</h2></div><span class="section-code">GRAVITY // C-01</span></div>
+      <div class="upgrade-grid">@for (upgrade of subUpgrades; track upgrade) { @if (upgrade.isUnlocked()) { <app-upgrade [upgrade]="upgrade"></app-upgrade> } }</div>
+    </section>
+
+    <section class="press-panel" [class.active]="isCompressing()">
+      <div class="press-heading"><div><p class="eyebrow">COMPRESSION CHAMBER</p><h2>{{ isCompressing() ? 'PRESS CYCLE ACTIVE' : 'PRESS STANDBY' }}</h2></div>
+        @if (!this.isCompressing() && canCompressKeys()) { <app-button (function)="startCompression()" [style]="'button green'" [text]="'START COMPRESSION'"></app-button> }
+      </div>
+      @if (!this.isCompressing() && !canCompressKeys()) { <p class="requirement-copy">Minimum charge: <span>{{ getKeysNeededForCompression() }}</span> Yellow Keys</p> }
+      <div class="progress-frame"><div class="progress-grid" aria-hidden="true"></div><div class="progress-bar" [style.width]="getPercentage() + '%'"></div><div class="progress-text">@if (this.isCompressing()) { <strong>{{ getPercentage().toFixed(2) }}%</strong><span>{{ getCompletionTime() }}</span> } @else { <strong>0.00%</strong><span>AWAITING INPUT</span> }</div></div>
+      <div class="fusion-link"><span>FUSION LINK</span><p>Yellow fusion multiplies compression speed by <strong class="fusion">{{ getYellowFusionCompressionEffect().toString(2) }}x</strong></p></div>
+      @if (isDev()) { <div class="dev-tools"><app-button [style]="'button green'" (function)="completeCompression()" [text]="'Instant complete'"></app-button><span>Total skipped: {{ getTotalSkipped() }}</span></div> }
+    </section>
+
+    <section class="calibration-panel">
+      <div class="section-heading"><div><p class="eyebrow">DENSITY RESEARCH</p><h2>Star-Key Upgrades</h2></div><span class="spectrum" aria-hidden="true"></span></div>
+      <div class="upgrade-grid">@for (upgrade of upgrades; track upgrade) { @if (upgrade.isUnlocked()) { <app-upgrade [upgrade]="upgrade"></app-upgrade> } }</div>
+    </section>
   }
-  <div class="holding-line">
-    <p>Yellow fusion multiplies compression speed by <span class="effect fusion">{{ getYellowFusionCompressionEffect().toString(2) }}x</span></p>
-  </div>
-  <div class="upgrade-row">
-    @for (upgrade of upgrades; track upgrade)  {
-      @if (upgrade.isUnlocked()) {
-        <app-upgrade [upgrade]="upgrade"></app-upgrade>
-      }
-    }
-  </div>
-}
+</section>

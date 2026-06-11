@@ -1,37 +1,31 @@
-<div class="resource-card">
-  @if (getCurrentStar()) {
-    <p>Current star: <span [class]="getCurrentStarStyle()">{{ getCurrentStar() }}</span></p>
-  } @else {
-    <p>No current star</p>
-  }
-  @if (hasNextLockedStar()) {
-    <p class="next-unlock">
-      <span [class]="getNextLockedStarStyle()">{{ getNextLockedStar()?.displayName }}</span>
-      unlocks at
-      <span [class]="getNextLockedRequirementStyle()">{{ getNextLockedRequirementAmount() }}</span>
-      {{ getNextLockedRequirementName() }}
-    </p>
-  }
-</div>
-<button *ngIf="inChallenge()" class="button" (click)="leaveChallenge()">Leave challenge</button>
-<div *ngIf="inChallenge()">
-  <div *ngFor="let holding of getChallengeHoldings()">
-    <app-number-display [holding]="holding"></app-number-display>
-  </div>
-</div>
-<div *ngIf="inChallenge()" class="upgrade-row">
-  <div *ngFor="let generator of getChallengeGenerators()">
-    <app-generator *ngIf="!generator.isHidden()" [generator]="generator"></app-generator>
-  </div>
-</div>
-<div *ngIf="inChallenge()" class="upgrade-row">
-  <div *ngFor="let upgrade of getChallengeUpgrades()">
-    <app-upgrade [upgrade]="upgrade"></app-upgrade>
-  </div>
-</div>
-<div class="upgrade-row">
-  <div *ngFor="let star of getStars()">
-    <app-star *ngIf="star.isUnlocked()" [star]="star"></app-star>
-  </div>
-</div>
-<app-info style="width: 60%" [name]="'yellow-stars-info'" [infoText]="infoText"></app-info>
+<section class="observatory-shell">
+  <header class="observatory-header">
+    <div class="star-map" aria-hidden="true"><span class="star star-main"></span><span class="star star-one"></span><span class="star star-two"></span><span class="star star-three"></span><i></i><b></b></div>
+    <div><p class="eyebrow">YELLOW PHASE // DEEP-SPACE OBSERVATORY</p><h1>Stellar Challenges</h1><p>Chart nearby stars, enter their hostile conditions, and return with permanent rewards for the yellow phase.</p></div>
+  </header>
+
+  <section class="mission-console">
+    <div class="mission-status">
+      <p class="eyebrow">ACTIVE MISSION</p>
+      @if (getCurrentStar()) { <h2 [class]="getCurrentStarStyle()">{{ getCurrentStar() }}</h2> } @else { <h2>NO STAR LOCKED</h2> }
+      <span><i [class.active]="inChallenge()"></i>{{ inChallenge() ? ' CHALLENGE LINK ACTIVE' : ' OBSERVATORY STANDBY' }}</span>
+    </div>
+    @if (hasNextLockedStar()) {
+      <div class="next-target"><span>NEXT TARGET</span><strong [class]="getNextLockedStarStyle()">{{ getNextLockedStar()?.displayName }}</strong><p>Unlocks at <b [class]="getNextLockedRequirementStyle()">{{ getNextLockedRequirementAmount() }}</b> {{ getNextLockedRequirementName() }}</p></div>
+    }
+    <button *ngIf="inChallenge()" class="button leave-button" (click)="leaveChallenge()">ABORT MISSION</button>
+  </section>
+
+  <section *ngIf="inChallenge()" class="mission-bay">
+    <div class="section-heading"><div><p class="eyebrow">MISSION TELEMETRY</p><h2>Challenge Systems</h2></div><span class="live-code">● LIVE</span></div>
+    <div class="challenge-holdings"><div *ngFor="let holding of getChallengeHoldings()"><app-number-display [holding]="holding"></app-number-display></div></div>
+    <div class="challenge-grid"><ng-container *ngFor="let generator of getChallengeGenerators()"><app-generator *ngIf="!generator.isHidden()" [generator]="generator"></app-generator></ng-container></div>
+    <div class="upgrade-grid"><app-upgrade *ngFor="let upgrade of getChallengeUpgrades()" [upgrade]="upgrade"></app-upgrade></div>
+  </section>
+
+  <section class="catalog-panel">
+    <div class="section-heading"><div><p class="eyebrow">CELESTIAL CATALOG</p><h2>Known Stars</h2></div><span class="catalog-code">CATALOG // 04</span></div>
+    <div class="star-grid"><div *ngFor="let star of getStars()"><app-star *ngIf="star.isUnlocked()" [star]="star"></app-star></div></div>
+  </section>
+  <div class="page-info"><app-info [name]="'yellow-stars-info'" [infoText]="infoText"></app-info></div>
+</section>

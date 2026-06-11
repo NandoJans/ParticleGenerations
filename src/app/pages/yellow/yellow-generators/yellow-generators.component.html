@@ -1,18 +1,63 @@
-<div class="resource-card">
-  <app-number-display [holding]="yellowPower"></app-number-display>
-</div>
-<div class="generator-row">
-  <div class="generator-card" *ngFor="let generator of generators">
-    <app-generator *ngIf="generator.isFirstUnlocked()" [generator]="generator"></app-generator>
-    <div class="upgrades">
-      <app-upgrade *ngIf="generator.multiplierUpgrade.isFirstUnlocked()" [upgrade]="generator.multiplierUpgrade"></app-upgrade>
-      <app-upgrade *ngIf="generator.buyMultiplierUpgrade.isFirstUnlocked()" [upgrade]="generator.buyMultiplierUpgrade"></app-upgrade>
+<section class="solar-shell">
+  <header class="solar-header">
+    <div class="solar-mark" aria-hidden="true">
+      <span class="sun-core"></span>
+      <span class="orbit orbit-one"></span>
+      <span class="orbit orbit-two"></span>
+      <span class="flare flare-one"></span>
+      <span class="flare flare-two"></span>
     </div>
+    <div>
+      <p class="eyebrow">YELLOW PHASE // SOLAR ARRAY ONLINE</p>
+      <h1>Radiant Foundry</h1>
+      <p>Channel yellow power through a cascading generator array and turn stellar energy into sustained production.</p>
+    </div>
+  </header>
+
+  <section class="power-console">
+    <div>
+      <p class="eyebrow">ARRAY RESERVE</p>
+      <h2>Yellow Power</h2>
+    </div>
+    <div class="power-readout">
+      <span>LIVE CHARGE</span>
+      <app-number-display [holding]="yellowPower"></app-number-display>
+    </div>
+    <div class="charge-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  </section>
+
+  <div class="flow-guide" aria-label="Production flow">
+    <span>STELLAR INPUT</span><div class="flow-line"><i></i></div><strong>RADIANT CASCADE</strong><div class="flow-line"><i></i></div><span>YELLOW POWER</span>
   </div>
-</div>
-<div class="upgrade-row">
-  <div *ngFor="let upgrade of upgrades">
-    <app-upgrade [upgrade]="upgrade"></app-upgrade>
-  </div>
-</div>
-<app-info style="width: 60%" [name]="'yellow-generators-info'" [infoText]="infoText"></app-info>
+
+  <section class="generator-bay">
+    <div class="section-heading">
+      <div><p class="eyebrow">HELIOSTATIC ARRAY</p><h2>Yellow Generators</h2></div>
+      <span class="section-code">YG-01 / YG-05</span>
+    </div>
+    <div class="generator-stack">
+      <article class="generator-card" *ngFor="let generator of generators; let index = index">
+        <div class="tier-rail"><span>0{{ index + 1 }}</span><i></i></div>
+        <div class="generator-module">
+          <app-generator *ngIf="generator.isFirstUnlocked()" [generator]="generator"></app-generator>
+          <div class="upgrades">
+            <app-upgrade *ngIf="generator.multiplierUpgrade.isFirstUnlocked()" [upgrade]="generator.multiplierUpgrade"></app-upgrade>
+            <app-upgrade *ngIf="generator.buyMultiplierUpgrade.isFirstUnlocked()" [upgrade]="generator.buyMultiplierUpgrade"></app-upgrade>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="control-bay">
+    <div class="section-heading">
+      <div><p class="eyebrow">ARRAY CONTROL</p><h2>System Upgrades</h2></div>
+      <span class="signal" aria-hidden="true"></span>
+    </div>
+    <div class="upgrade-row system-upgrades">
+      <div *ngFor="let upgrade of upgrades"><app-upgrade [upgrade]="upgrade"></app-upgrade></div>
+    </div>
+  </section>
+
+  <div class="page-info"><app-info [name]="'yellow-generators-info'" [infoText]="infoText"></app-info></div>
+</section>

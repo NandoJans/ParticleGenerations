@@ -1,34 +1,33 @@
-<div class="fusion-container">
-  <div class="resource-section">
-    <div class="resource-card">
-      <app-number-display [holding]="yellowFusion" class="resource-amount"></app-number-display>
-    </div>
-    <div class="resource-card">
-      <app-number-display [holding]="hydrogen" class="resource-amount"></app-number-display>
-    </div>
-  </div>
+<section class="fusion-shell">
+  <header class="fusion-header">
+    <div class="reactor-mark" aria-hidden="true"><span class="reactor-core"></span><span class="reactor-ring ring-one"></span><span class="reactor-ring ring-two"></span><i></i><b></b></div>
+    <div><p class="eyebrow">YELLOW PHASE // STELLAR REACTOR</p><h1>Fusion Chamber</h1><p>Fuse hydrogen under stellar pressure to accelerate boosters and push every star challenge beyond its limits.</p></div>
+  </header>
 
-  <div class="upgrades-section">
-    <div class="upgrade-row">
-      <div *ngFor="let upgrade of hydrogenUpgrades">
-        <app-upgrade *ngIf="upgrade.isUnlocked()" [upgrade]="upgrade"></app-upgrade>
-      </div>
+  <section class="resource-panel">
+    <div class="section-heading"><div><p class="eyebrow">REACTOR INVENTORY</p><h2>Fusion Reserves</h2></div><span class="reactor-status"><i></i> STABLE</span></div>
+    <div class="resource-grid">
+      <div class="resource-readout"><span>YELLOW FUSION</span><app-number-display [holding]="yellowFusion"></app-number-display></div>
+      <div class="resource-readout"><span>HYDROGEN FEED</span><app-number-display [holding]="hydrogen"></app-number-display></div>
     </div>
-    <div class="resource-card fusion-booster-acceleration-card" [style.margin]="'0 auto'">
-      <p>You have <span class="fusion-booster-acceleration">{{ getFusionBoosterAccelerationAmount() }}</span> Fusion booster accelerations</p>
-    </div>
-    <div class="upgrade-row">
-      <app-upgrade *ngIf="fusionBoosterAcceleration.isUnlocked()" [upgrade]="fusionBoosterAcceleration"></app-upgrade>
-    </div>
-    <div class="upgrade-row">
-      <div *ngFor="let upgrade of upgrades">
-        <app-upgrade *ngIf="upgrade.isUnlocked()" [upgrade]="upgrade"></app-upgrade>
-      </div>
-    </div>
-  </div>
+  </section>
 
-  <div class="info-section">
-    <app-info style="width: 60%" [name]="'yellow-fusion-info'" [infoText]="infoText"></app-info>
-  </div>
-</div>
+  <section class="research-panel">
+    <div class="section-heading"><div><p class="eyebrow">FUEL CALIBRATION</p><h2>Hydrogen Systems</h2></div><span class="section-code">CORE // H-03</span></div>
+    <div class="upgrade-grid">
+      <ng-container *ngFor="let upgrade of hydrogenUpgrades"><app-upgrade *ngIf="upgrade.isUnlocked()" [upgrade]="upgrade"></app-upgrade></ng-container>
+    </div>
+  </section>
 
+  <section class="acceleration-panel">
+    <div class="acceleration-copy"><p class="eyebrow">BOOSTER COUPLING</p><h2>Fusion Acceleration</h2><p>Stored stellar impulses currently linked to the booster array.</p></div>
+    <div class="acceleration-count"><span>{{ getFusionBoosterAccelerationAmount() }}</span><small>ACTIVE IMPULSES</small></div>
+    <div class="acceleration-upgrade"><app-upgrade *ngIf="fusionBoosterAcceleration.isUnlocked()" [upgrade]="fusionBoosterAcceleration"></app-upgrade></div>
+  </section>
+
+  <section class="research-panel">
+    <div class="section-heading"><div><p class="eyebrow">STELLAR THRESHOLDS</p><h2>Challenge Research</h2></div><span class="spectrum" aria-hidden="true"></span></div>
+    <div class="upgrade-grid stellar-grid"><ng-container *ngFor="let upgrade of upgrades"><app-upgrade *ngIf="upgrade.isUnlocked()" [upgrade]="upgrade"></app-upgrade></ng-container></div>
+  </section>
+  <div class="page-info"><app-info [name]="'yellow-fusion-info'" [infoText]="infoText"></app-info></div>
+</section>
