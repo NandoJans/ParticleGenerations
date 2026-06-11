@@ -13,8 +13,8 @@
   margin: 0 auto;
   padding: 2rem;
   background:
-    repeating-linear-gradient(135deg, rgba(255, 77, 77, .035) 0 2px, transparent 2px 18px),
-    radial-gradient(circle at 50% 0, rgba(255, 77, 77, .16), transparent 42%);
+    radial-gradient(circle at 50% 0, rgba(255, 77, 77, .16), transparent 42%),
+    linear-gradient(180deg, rgba(255, 77, 77, .025), transparent 28%);
 }
 
 .foundry-header,
@@ -201,7 +201,7 @@ h2 {
 .warning-stripe {
   width: 7rem;
   height: .75rem;
-  background: repeating-linear-gradient(-45deg, var(--foundry-red) 0 8px, transparent 8px 16px);
+  background: linear-gradient(90deg, transparent, var(--foundry-red), transparent);
   opacity: .55;
 }
 

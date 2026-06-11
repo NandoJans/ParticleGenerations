@@ -1,4 +1,5 @@
-<button class="{{ style }}" id="{{identifier}}" (click)="onClick()">
+
+<button class="{{ style }}" id="{{identifier}}" [attr.aria-label]="ariaLabel" [attr.title]="ariaLabel" (click)="onClick()">
   <fa-icon *ngIf="icon" class="button-icon" [icon]="icon"></fa-icon>
   <span *ngIf="text" class="button-text">{{ text }}</span>
 </button>

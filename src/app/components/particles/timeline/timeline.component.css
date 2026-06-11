@@ -1,5 +1,5 @@
 :host { display: block; }
-.timeline-shell { --timeline-accent: var(--accent-color-red); max-width: 1000px; margin: 0 auto; padding: 2rem; background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--timeline-accent) 3%, transparent) 0 2px, transparent 2px 18px); }
+.timeline-shell { --timeline-accent: var(--accent-color-red); max-width: 1000px; margin: 0 auto; padding: 2rem; background: radial-gradient(circle at 50% 0, color-mix(in srgb, var(--timeline-accent) 8%, transparent), transparent 36%); }
 .timeline-shell.yellow { --timeline-accent: var(--accent-color-yellow); }
 .timeline-shell.green { --timeline-accent: var(--accent-color-green); }
 .timeline-shell.blue { --timeline-accent: var(--accent-color-blue); }

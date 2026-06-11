@@ -46,9 +46,6 @@ export class FooterComponent implements OnInit {
       && subNavigation.location === subNavigation.parent.wasOn;
   }
 
-  getNavigationLabel(name: string): string {
-    return name.charAt(0).toUpperCase() + name.slice(1);
-  }
 
   ngOnInit(): void {
     this.navigations = this.navigationsService.getNavigations();

@@ -1,12 +1,12 @@
 <nav class="navigation-shell" aria-label="Game navigation">
   <div class="nav-row sub-navigation" aria-label="Section navigation">
     <div class="navigation" *ngFor="let subNavigation of subNavigations" [class.active]="isSubNavigationActive(subNavigation)">
-      <app-button *ngIf="subNavigation.isUnlocked()" [object]="subNavigation" [identifier]="subNavigation.name" [icon]="subNavigation.displayName" [style]="'navigation-button'" (function)="navigate($event)"></app-button>
+      <app-button *ngIf="subNavigation.isUnlocked()" [ariaLabel]="subNavigation.name" [object]="subNavigation" [identifier]="subNavigation.name" [icon]="subNavigation.displayName" [style]="'navigation-button'" (function)="navigate($event)"></app-button>
     </div>
   </div>
   <div class="nav-row phase-navigation" aria-label="Phase navigation">
     <div class="navigation" *ngFor="let navigation of navigations" [class.active]="isNavigationActive(navigation)" [class]="'navigation phase-'+navigation.name">
-      <app-button *ngIf="navigation.isUnlocked()" [object]="navigation" [icon]="navigation.displayIcon" [text]="getNavigationLabel(navigation.name)" [identifier]="navigation.name" [style]="'navigation-button'" (function)="setNavigation($event)"></app-button>
+      <app-button *ngIf="navigation.isUnlocked()" [ariaLabel]="navigation.name" [object]="navigation" [icon]="navigation.displayIcon" [identifier]="navigation.name" [style]="'navigation-button'" (function)="setNavigation($event)"></app-button>
     </div>
   </div>
 </nav>
