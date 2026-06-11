@@ -6,11 +6,22 @@ import {Enhancable} from "../interfaces/enhancable";
 import {Num} from "../../../num";
 
 export abstract class Enhancement implements Resetable {
+  private static readonly registry = new Map<string, Enhancement>();
+
   abstract style: Styles;
   saveName: string
 
   constructor(saveName: string) {
     this.saveName = saveName;
+    Enhancement.registry.set(saveName, this);
+  }
+
+  static getBySaveName(saveName: unknown): Enhancement | null {
+    if (typeof saveName !== 'string') {
+      return null;
+    }
+
+    return Enhancement.registry.get(saveName) ?? null;
   }
 
   enhancables: {[key: string]: Enhancable } = {};

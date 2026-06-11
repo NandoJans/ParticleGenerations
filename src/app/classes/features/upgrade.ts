@@ -8,7 +8,6 @@ import {Storable} from "./interfaces/storable";
 import {LocalStorageHelper} from "../helpers/local-storage-helper";
 import {Enhancable} from "./interfaces/enhancable";
 import {Enhancement} from "./enhancements/enhancement";
-import {EnhancementRecord} from "../records/enhancement-record";
 
 export abstract class Upgrade extends Buyable implements Storable, Require, Resetable, Enhancable {
   abstract override name: string
@@ -105,16 +104,8 @@ export abstract class Upgrade extends Buyable implements Storable, Require, Rese
     this.auto = this.localStorageHelper.load(this.auto, 'auto')
 
     const enhancementName = this.localStorageHelper.load(null, 'enhancement')
-    // @ts-ignore
-    if (enhancementName && enhancementName in EnhancementRecord && EnhancementRecord[enhancementName] instanceof Enhancement) {
-      // @ts-ignore
-      this.enhancement = EnhancementRecord[enhancementName];
-      if (this.enhancement instanceof Enhancement) {
-        this.enhancement.add(this);
-      }
-    } else {
-      this.enhancement = null
-    }
+    this.enhancement = Enhancement.getBySaveName(enhancementName);
+    this.enhancement?.add(this);
   }
 
   override unlock() {
