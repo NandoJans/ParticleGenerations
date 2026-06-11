@@ -1,25 +1,82 @@
-.click-title {
+:host {
+  display: block;
+}
+
+.automator-section {
+  border: 1px solid rgba(var(--automation-accent-rgb, 92, 184, 227), .2);
+  background: rgba(7, 9, 10, .76);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, .14);
+}
+
+.section-toggle {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin: 0.5rem 0;
-  cursor: pointer;
-  padding: 0.5rem 5%;
-  width: 90%;
-  border-top: 2px solid var(--background-color-4);
-  border-bottom: 2px solid var(--background-color-4);
+  width: 100%;
+  padding: 1rem 1.15rem;
+  border: 0;
+  border-left: 3px solid var(--automation-accent, var(--accent-color-blue));
+  border-radius: 0;
+  background: linear-gradient(90deg, rgba(var(--automation-accent-rgb, 92, 184, 227), .09), transparent 48%);
+  color: var(--text-color-main);
+  text-align: left;
 }
 
-fa-icon {
-  font-size: 1.5rem;
+.section-toggle:hover {
+  background: linear-gradient(90deg, rgba(var(--automation-accent-rgb, 92, 184, 227), .15), rgba(var(--automation-accent-rgb, 92, 184, 227), .025));
 }
 
-.click-title:hover {
-  color: var(--accent-color-blue);
-  background-color: var(--background-color-2);
+.section-toggle:focus-visible {
+  outline-color: var(--automation-accent, var(--accent-color-blue));
+  outline-offset: -3px;
+}
+
+.section-identity {
+  display: grid;
+  gap: .25rem;
+}
+
+.section-kicker {
+  color: var(--automation-accent, var(--accent-color-blue));
+  font: 700 .68rem/1 monospace;
+  letter-spacing: .15em;
+}
+
+.section-title {
+  color: #eef1f2;
+  font-size: 1.35rem;
+  font-weight: 400;
+  letter-spacing: .01em;
+}
+
+.section-state {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  color: rgba(var(--automation-accent-rgb, 92, 184, 227), .72);
+  font: .68rem/1 monospace;
+  letter-spacing: .12em;
+}
+
+.automator-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  gap: 1px;
+  padding: 1px;
+  border-top: 1px solid rgba(var(--automation-accent-rgb, 92, 184, 227), .15);
+  background: rgba(var(--automation-accent-rgb, 92, 184, 227), .12);
 }
 
 .closed {
   display: none;
+}
+
+.collapsed .section-toggle {
+  border-left-color: rgba(var(--automation-accent-rgb, 92, 184, 227), .45);
+}
+
+@media (max-width: 560px) {
+  .section-state { font-size: 0; }
+  .section-state fa-icon { font-size: 1rem; }
+  .automator-grid { grid-template-columns: 1fr; }
 }

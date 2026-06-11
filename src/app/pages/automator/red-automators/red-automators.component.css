@@ -1,4 +1,5 @@
-h2 {
-  margin-bottom: 0;
-  color: var(--text-color-light);
+.red-automation {
+  --automation-accent: var(--accent-color-red);
+  --automation-accent-rgb: 224, 67, 67;
+  --automation-muted: #a18b8b;
 }

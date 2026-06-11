@@ -1,16 +1,20 @@
+<section class="automator-section" [class.collapsed]="!isOpen()">
+  <button class="section-toggle" type="button" (click)="toggle()" [attr.aria-expanded]="isOpen()">
+    <span class="section-identity">
+      <span class="section-kicker">AUTOMATION MODULE // {{ automators.length | number:'2.0-0' }} SYSTEMS</span>
+      <span class="section-title">{{ title }}</span>
+    </span>
+    <span class="section-state">
+      {{ isOpen() ? 'COLLAPSE' : 'EXPAND' }}
+      <fa-icon [icon]="isOpen() ? faChevronUp : faChevronDown"></fa-icon>
+    </span>
+  </button>
 
-<div [class]="'click-title'" (click)="toggle()">
-  <h2>{{ title }}</h2>
-  @if (isOpen()) {
-    <fa-icon [icon]="faChevronUp"></fa-icon>
-  } @else {
-    <fa-icon [icon]="faChevronDown"></fa-icon>
-  }
-</div>
-<div [class]="'upgrade-row '+(isOpen() ? 'open' : 'closed')">
-  @for (automator of automators; track automator.name) {
-    @if (automator.isFirstUnlocked()) {
-      <app-automator [automator]="automator"></app-automator>
+  <div class="automator-grid" [class.open]="isOpen()" [class.closed]="!isOpen()">
+    @for (automator of automators; track automator.name) {
+      @if (automator.isFirstUnlocked()) {
+        <app-automator [automator]="automator"></app-automator>
+      }
     }
-  }
-</div>
+  </div>
+</section>

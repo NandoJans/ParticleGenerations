@@ -1,6 +1,24 @@
-<br/>
-<app-button [text]="getToggleAllText()" [style]="'button '+getToggleColor()" (function)="toggleAll()"></app-button>
-<app-automator-section [automators]="redGeneratorAutomators" [title]="'Red Generators Automators'" [name]="'redGeneratorAutomators'"></app-automator-section>
-<app-automator-section [automators]="redUpgradeAutomators" [title]="'Red Upgrade Automators'" [name]="'redUpgradeAutomators'"></app-automator-section>
-<app-automator-section [automators]="redAcceleratorAutomators" [title]="'Red Accelerators Automators'" [name]="'redAcceleratorAutomators'"></app-automator-section>
-<app-info style="width: 60%" [name]="'red-automators-info'" [infoText]="infoText"></app-info>
+<main class="automation-shell red-automation">
+  <header class="phase-header">
+    <div class="phase-mark" aria-hidden="true"></div>
+    <div>
+      <p class="eyebrow">RED PHASE // AUTOMATION NETWORK</p>
+      <h1>Foundry Automators</h1>
+      <p class="description">Coordinate generator production, extension upgrades, and accelerator research from one autonomous control deck.</p>
+    </div>
+    <div class="system-status"><span class="status-dot"></span>NETWORK STATUS<strong>OPERATIONAL</strong></div>
+  </header>
+
+  <div class="automation-toolbar" aria-label="Red automator controls">
+    <div class="toolbar-label"><span></span> GLOBAL FOUNDRY CONTROL</div>
+    <app-button [text]="getToggleAllText()" [style]="'button '+getToggleColor()" (function)="toggleAll()"></app-button>
+  </div>
+
+  <div class="automation-content">
+    <app-automator-section [automators]="redGeneratorAutomators" [title]="'Red Generator Automators'" [name]="'redGeneratorAutomators'"></app-automator-section>
+    <app-automator-section [automators]="redUpgradeAutomators" [title]="'Red Upgrade Automators'" [name]="'redUpgradeAutomators'"></app-automator-section>
+    <app-automator-section [automators]="redAcceleratorAutomators" [title]="'Red Accelerator Automators'" [name]="'redAcceleratorAutomators'"></app-automator-section>
+  </div>
+
+  <app-info class="page-info" [name]="'red-automators-info'" [infoText]="infoText"></app-info>
+</main>

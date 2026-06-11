@@ -1,9 +1,14 @@
 <div [class]="
 'automator '+automator.style+' '
 +((isPrestigeAutomator()) ? 'prestige' : '')+' '
++((getActive()) ? 'active' : 'inactive')+' '
 " [id]="automator.name">
+  <div class="automator-heading">
+    <span class="automator-index">AUTO // {{ automator.name.slice(0, 3).toUpperCase() }}</span>
+    <span class="automator-state" *ngIf="completed()">{{ getActive() ? 'RUNNING' : 'STANDBY' }}</span>
+  </div>
   <h4>{{ automator.displayName }}</h4>
-  <div *ngIf="completed()" [class]="'automator-form '+((isPrestigeAutomator()) ? 'prestige' : '')+' '" (change)="onChange()">
+  <div *ngIf="completed()" [class]="'automator-form '+((isPrestigeAutomator()) ? 'prestige' : '')" (change)="onChange()">
     <button
       *ngIf="isPrestigeAutomator() && getMode() === 'atX'"
       class="button prestige yellow"
@@ -40,15 +45,15 @@
       <input
         type="checkbox"
         class="checkbox"
-        [id]="automator.name"
-        [name]="automator.name"
+        [id]="automator.name + '-active'"
+        [name]="automator.name + '-active'"
         [value]="automator.name"
         [checked]="getActive()"
         (change)="setActive($event)"
       />
     </div>
   </div>
-  <div *ngIf="!completed()">
+  <div *ngIf="!completed()" class="unlock-progress">
     <p>{{ getGoalString() }}</p>
     <div class="progress-bar">
       <div class="progress" [style.width]="getProgressPercentage() + '%'"></div>
