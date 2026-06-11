@@ -2,6 +2,7 @@ import {YellowUpgrade} from "./yellow-upgrade";
 import {GeneratorRecord} from "../../records/generators/generator-record";
 import {RedGenerator} from "../generators/red-generator";
 import {Num} from "../../../num";
+import {Enhancement} from "../enhancements/enhancement";
 
 export class IncreaseRedGeneratorBuyMultipliersUpgrade extends YellowUpgrade {
   constructor(saveName: string) {
@@ -25,6 +26,24 @@ export class IncreaseRedGeneratorBuyMultipliersUpgrade extends YellowUpgrade {
       });
     }
     return;
+  }
+
+  override canEnhance(): boolean {
+    return true;
+  }
+
+  private getEnhancedBuffer(enhancement: Enhancement): Num {
+    return this.buffer.mul(enhancement.getMultiplier());
+  }
+
+  override enhancementString(enhancement: Enhancement): string {
+    return `Increase red generator buy multipliers by ${this.getEnhancedBuffer(enhancement).toString(2)}.`;
+  }
+
+  override enhance(): void {
+    if (this.enhancement) {
+      this.buffer = this.getEnhancedBuffer(this.enhancement);
+    }
   }
 
   override limit: Num = new Num(1, 0);

@@ -2,6 +2,7 @@ import {YellowUpgrade} from "./yellow-upgrade";
 import {Requirement} from "../interfaces/requirement";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {Num} from "../../../num";
+import {Enhancement} from "../enhancements/enhancement";
 
 export class EmpoweredBoosterAccelerationUpgrade extends YellowUpgrade {
   displayName: string = 'Empowered Booster Acceleration Upgrade';
@@ -20,7 +21,7 @@ export class EmpoweredBoosterAccelerationUpgrade extends YellowUpgrade {
   }
 
   getDescription(): string {
-    return "Increases the power of booster accelerations by 50%";
+    return "Increases the power of booster accelerations by " + this.buffer.sub(Num.ONE).mul(new Num(1, 2)).toString(0) + "%";
   }
 
   action(): undefined {
@@ -36,5 +37,28 @@ export class EmpoweredBoosterAccelerationUpgrade extends YellowUpgrade {
 
   override buffer: Num = new Num(1.5, 0);
   override baseBuffer: Num = new Num(1.5, 0);
+
+
+  override canEnhance(): boolean {
+    return true;
+  }
+
+  private getEnhancementPower(enhancement: Enhancement): Num {
+    return enhancement.getMultiplier().mul(new Num(2, 0));
+  }
+
+  override enhancementString(enhancement: Enhancement): string {
+    return "Increase the power of booster accelerations by " +
+      this.buffer.mul(this.getEnhancementPower(enhancement))
+      .sub(Num.ONE)
+      .mul(new Num(1, 2))
+      .toString(0) +
+      "%";
+  }
+  override enhance() {
+    if (this.enhancement) {
+      this.buffer = this.buffer.mul(this.getEnhancementPower(this.enhancement));
+    }
+  }
 
 }

@@ -29,12 +29,16 @@ export abstract class StarKeySubUpgrade extends Upgrade {
   allowedEnhancements: Enhancement[] = [];
 
   enhancementString(enhancement: Enhancement): string {
-    return "";
+    return `Increase this Star Key upgrade's multiplier to ${this.buffer.mul(enhancement.getMultiplier()).toString(2)}x.`;
   }
   canEnhance(): boolean {
-    return false;
+    return true;
   }
-  enhance(): void {}
+  enhance(): void {
+    if (this.enhancement) {
+      this.buffer = this.buffer.mul(this.enhancement.getMultiplier());
+    }
+  }
 
   override getDisplayName(): string {
     return "";

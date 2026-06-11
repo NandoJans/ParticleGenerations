@@ -207,13 +207,13 @@ export class UpgradeRecord extends Record {
   // Yellow Upgrades
   static multiplyRedGeneratorsYellow: MultiplyRedGeneratorsYellowUpgrade = new MultiplyRedGeneratorsYellowUpgrade('multiplyRedGeneratorsYellow');
   static multiplyYellowParticlesYellow: MultiplyYellowParticlesYellowUpgrade = new MultiplyYellowParticlesYellowUpgrade('multiplyYellowParticlesYellow');
+  static multiplyYellowKeyGain: MultiplyYellowKeyGainUpgrade = new MultiplyYellowKeyGainUpgrade('multiplyYellowKeyGain');
   static redGeneratorMultiplierYellowPrestigeYellow: RedGeneratorMultiplierYellowPrestigeYellowUpgrade = new RedGeneratorMultiplierYellowPrestigeYellowUpgrade('redGeneratorMultiplierYellowPrestigeYellow');
   static multiplyRedGeneratorExtensionYellow: MultiplyRedGeneratorExtensionYellowUpgrade = new MultiplyRedGeneratorExtensionYellowUpgrade('multiplyRedGeneratorExtensionYellow');
   static startWithMoreRedExtensionsUpgrade: StartWithMoreRedExtensionsUpgrade = new StartWithMoreRedExtensionsUpgrade('startWithMoreRedExtensionsUpgrade');
   static noResetRedExtension: NoResetRedExtensionsUpgrade = new NoResetRedExtensionsUpgrade('noResetRedExtension');
   static increaseRedGeneratorSubMultipliers: IncreaseRedGeneratorSubMultipliersUpgrade = new IncreaseRedGeneratorSubMultipliersUpgrade('increaseGeneratorSubMultipliers');
   static increaseRedGeneratorBuyMultipliers: IncreaseRedGeneratorBuyMultipliersUpgrade = new IncreaseRedGeneratorBuyMultipliersUpgrade('increaseGeneratorBuyMultipliers');
-  static multiplyYellowKeyGain: MultiplyYellowKeyGainUpgrade = new MultiplyYellowKeyGainUpgrade('multiplyYellowKeyGain');
   static improveFasterAccelerationYellow: ImproveFasterAccelerationYellowUpgrade = new ImproveFasterAccelerationYellowUpgrade('improveFasterAccelerationYellow');
   static improveMultiplyAcceleratorEffectYellow: ImproveMultiplyAcceleratorEffectYellowUpgrade = new ImproveMultiplyAcceleratorEffectYellowUpgrade('improveMultiplyAcceleratorEffectYellow');
   static improveBetterAccelerationYellow: ImproveBetterAccelerationYellowUpgrade = new ImproveBetterAccelerationYellowUpgrade('improveBetterAccelerationYellow');
@@ -222,10 +222,10 @@ export class UpgradeRecord extends Record {
 
   // Break upgrades
   static empoweredBoosterAcceleration: EmpoweredBoosterAccelerationUpgrade = new EmpoweredBoosterAccelerationUpgrade('empoweredBoosterAcceleration');
-  static unlockFourthYellowGenerator: UnlockFourthYellowGeneratorUpgrade = new UnlockFourthYellowGeneratorUpgrade('unlockFourthYellowGenerator');
-  static unlockFifthYellowGenerator: UnlockFifthYellowGeneratorUpgrade = new UnlockFifthYellowGeneratorUpgrade('unlockFifthYellowGenerator');
   static decreaseRedGeneratorScaling: DecreaseRedGeneratorScalingUpgrade = new DecreaseRedGeneratorScalingUpgrade('decreaseRedGeneratorScaling');
   static decreaseRedGeneratorBoosterScaling: DecreaseRedGeneratorBoosterScalingUpgrade = new DecreaseRedGeneratorBoosterScalingUpgrade('decreaseRedGeneratorBoosterScaling');
+  static unlockFourthYellowGenerator: UnlockFourthYellowGeneratorUpgrade = new UnlockFourthYellowGeneratorUpgrade('unlockFourthYellowGenerator');
+  static unlockFifthYellowGenerator: UnlockFifthYellowGeneratorUpgrade = new UnlockFifthYellowGeneratorUpgrade('unlockFifthYellowGenerator');
   static stopRedBoosterAccelerationReset: StopRedBoosterAccelerationResetUpgrade = new StopRedBoosterAccelerationResetUpgrade('stopRedBoosterAccelerationReset');
   static breakYellowFusionLimitYellow: BreakYellowFusionLimitYellowUpgrade = new BreakYellowFusionLimitYellowUpgrade('breakYellowFusionLimitYellow');
 

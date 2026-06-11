@@ -16,10 +16,14 @@ export abstract class YellowStarChallenge extends Challenge {
     return true;
   }
 
-  enhance(): void {}
+  enhance(): void {
+    if (this.enhancement) {
+      this.buffer = this.buffer.mul(this.enhancement.getMultiplier());
+    }
+  }
 
-  enhancementString(_enhancement: Enhancement): string {
-    return 'Use one Green Key to double this challenge reward.';
+  enhancementString(enhancement: Enhancement): string {
+    return `Multiply this challenge reward by ${enhancement.getMultiplier().toString(2)}x.`;
   }
 
   override save(): void {

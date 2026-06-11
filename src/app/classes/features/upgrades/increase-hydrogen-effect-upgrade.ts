@@ -29,13 +29,18 @@ export class IncreaseHydrogenEffectUpgrade extends Upgrade {
   subNav: string = 'yellowFusion';
   allowedEnhancements: Enhancement[] = [];
   enhancementString(enhancement: Enhancement): string {
-    return "";
+    return `Increase the Hydrogen effect by ${this.getEnhancedBuffer(enhancement).toString(2)}x.`;
   }
   canEnhance(): boolean {
-    return false;
+    return true;
   }
   enhance(): void {
-
+    if (this.enhancement) {
+      this.buffer = this.getEnhancedBuffer(this.enhancement);
+    }
+  }
+  private getEnhancedBuffer(enhancement: Enhancement): Num {
+    return Num.ONE.add(this.buffer.sub(Num.ONE).mul(enhancement.getMultiplier()));
   }
   baseCost: Num = new Num(1, 10);
   cost: Num = new Num(1, 10);

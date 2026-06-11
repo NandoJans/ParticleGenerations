@@ -37,13 +37,15 @@ export class IncreaseHydrogenHoldingUpgrade extends Upgrade {
     subNav: string = 'yellowFusion';
     allowedEnhancements: Enhancement[] = [];
     enhancementString(enhancement: Enhancement): string {
-        return "";
+        return `Multiply hydrogen generation by ${this.buffer.mul(enhancement.getMultiplier()).toString(2)}x.`;
     }
     canEnhance(): boolean {
-        return false;
+        return true;
     }
     enhance(): void {
-
+      if (this.enhancement) {
+        this.buffer = this.buffer.mul(this.enhancement.getMultiplier());
+      }
     }
     baseCost: Num = new Num(1, 10);
     cost: Num = new Num(1, 10);

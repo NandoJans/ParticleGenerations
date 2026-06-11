@@ -4,16 +4,13 @@ import {HoldingRecord} from '../../records/holdings/holding-record';
 import {ResetKey} from '../../enums/reset-key';
 import {ResetHelper} from '../../helpers/reset-helper';
 import {Num} from '../../../num';
-import {Upgrade} from '../upgrade';
-import {Generator} from '../generator';
-import {YellowStarChallenge} from '../challenges/yellow-star-challenge';
 
 export class GreenEnhancement extends Enhancement {
   style: Styles = Styles.GREEN;
   respecResetKey: ResetKey = ResetKey.YELLOW;
   name = 'green-enhancement';
   displayName = 'Green Enhancement';
-  description = 'Assign a Green Key to permanently double the power of a yellow element.';
+  description = 'Assign a Green Key to permanently enhance an eligible yellow element.';
   actionMessage = 'Click a yellow element to enhance it.';
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.BLUE, this);
 
@@ -46,15 +43,7 @@ export class GreenEnhancement extends Enhancement {
 
   override run(): void {
     Object.values(this.enhancables).forEach(enhancable => {
-      if (!enhancable.unlocked) return;
-
-      if (enhancable instanceof Upgrade) {
-        enhancable.buffer = enhancable.buffer.mul(this.getMultiplier());
-      } else if (enhancable instanceof Generator) {
-        enhancable.baseMulMod = enhancable.baseMulMod.mul(this.getMultiplier());
-      } else if (enhancable instanceof YellowStarChallenge) {
-        enhancable.buffer = enhancable.buffer.mul(this.getMultiplier());
-      }
+      if (enhancable.unlocked && enhancable.canEnhance()) enhancable.enhance();
     });
   }
 }

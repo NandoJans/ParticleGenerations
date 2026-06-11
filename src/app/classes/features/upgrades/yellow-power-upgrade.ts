@@ -32,12 +32,16 @@ export class YellowPowerUpgrade extends Upgrade {
   allowedEnhancements: Enhancement[] = [];
 
   enhancementString(enhancement: Enhancement): string {
-    return "";
+    return `Add ^${this.buffer.mul(enhancement.getMultiplier()).toString(2)} to Yellow Power.`;
   }
   canEnhance(): boolean {
-    return false;
+    return true;
   }
-  enhance(): void {}
+  enhance(): void {
+    if (this.enhancement) {
+      this.buffer = this.buffer.mul(this.enhancement.getMultiplier());
+    }
+  }
 
   override oneTime: boolean = false;
   increase: Num = new Num(1, 1);

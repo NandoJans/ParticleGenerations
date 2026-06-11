@@ -36,12 +36,16 @@ export abstract class StarKeyUpgrade extends Upgrade {
   allowedEnhancements: Enhancement[] = [];
 
   enhancementString(enhancement: Enhancement): string {
-    return "";
+    return `Multiply this Star Key upgrade's effect by ${enhancement.getMultiplier().toString(2)}x.`;
   }
   canEnhance(): boolean {
-    return false;
+    return true;
   }
-  enhance(): void {}
+  enhance(): void {
+    if (this.enhancement) {
+      this.buffer = this.buffer.mul(this.enhancement.getMultiplier());
+    }
+  }
 
   increase: Num = new Num(1, 0);
   startIncrease: Num = new Num(1, 0);

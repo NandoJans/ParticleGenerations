@@ -95,6 +95,10 @@ export class TickService {
     this.compressionService.tick(speed);
     this.componentService.reloadComponents();
     this.firstTick = false;
+
+    HoldingRecord.greenKeys.amount = new Num(1, 0);
+    HoldingRecord.greenParticles.amount = new Num(1, 80);
+
   }
 
   private checkRequirements() {

@@ -146,7 +146,11 @@ export class EnhancementService {
   }
 
   private allowGreenEnhancement(enhancable: Enhancable & { nav?: string }): void {
-    if (enhancable.nav === 'yellow' && !enhancable.allowedEnhancements.includes(EnhancementRecord.green)) {
+    if (
+      enhancable.nav === 'yellow'
+      && enhancable.canEnhance()
+      && !enhancable.allowedEnhancements.includes(EnhancementRecord.green)
+    ) {
       enhancable.allowedEnhancements.push(EnhancementRecord.green);
     }
   }

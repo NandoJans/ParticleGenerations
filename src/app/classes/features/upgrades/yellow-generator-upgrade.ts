@@ -16,15 +16,18 @@ export abstract class YellowGeneratorUpgrade extends GeneratorUpgrade {
   override effect: Num = new Num(1, 0);
 
   override canEnhance(): boolean {
-    return false;
+    return true;
   }
 
   override enhance() {
+    if (this.enhancement) {
+      this.buffer = this.buffer.mul(this.enhancement.getMultiplier());
+    }
   }
 
   allowedEnhancements: Enhancement[] = [];
 
   override enhancementString(enhancement: Enhancement): string {
-    return "";
+    return `Increase this upgrade's multiplier to ${this.buffer.mul(enhancement.getMultiplier()).toString(2)}x.`;
   }
 }

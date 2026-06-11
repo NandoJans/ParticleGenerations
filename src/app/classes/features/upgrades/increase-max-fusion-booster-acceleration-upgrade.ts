@@ -30,13 +30,15 @@ export class IncreaseMaxFusionBoosterAccelerationUpgrade extends Upgrade {
   subNav: string = 'yellowFusion';
   allowedEnhancements: Enhancement[] = [];
   enhancementString(enhancement: Enhancement): string {
-    return "";
+    return `Gain ${this.buffer.mul(enhancement.getMultiplier()).toString()} maximum Fusion Boosters per level.`;
   }
   canEnhance(): boolean {
-    return false;
+    return true;
   }
   enhance(): void {
-
+    if (this.enhancement) {
+      this.buffer = this.buffer.mul(this.enhancement.getMultiplier());
+    }
   }
   baseCost: Num = new Num(1, 15);
   cost: Num = new Num(1, 15);

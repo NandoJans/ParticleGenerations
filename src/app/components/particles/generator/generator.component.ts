@@ -75,9 +75,6 @@ export class GeneratorComponent {
   }
 
   getEnhancementString(): string {
-    if (this.enhancementService.enhancing?.name === 'green-enhancement') {
-      return 'Use one Green Key to double this element\'s power.';
-    }
     if (this.enhancementService.enhancing) {
       return this.generator.enhancementString(
         this.enhancementService.enhancing

@@ -2,6 +2,7 @@ import { Num } from "src/app/num";
 import {StarKeyUpgrade} from "./star-key-upgrade";
 import {YellowParticleHolding} from "../holdings/yellow-particle-holding";
 import {HoldingRecord} from "../../records/holdings/holding-record";
+import {Enhancement} from "../enhancements/enhancement";
 
 export class UnlockStarKeyCompressionUpgrade extends StarKeyUpgrade {
   override displayName: string = "Unlock Star Key Compression";
@@ -17,6 +18,16 @@ export class UnlockStarKeyCompressionUpgrade extends StarKeyUpgrade {
   override action(): undefined {
     return;
   }
+
+  override canEnhance(): boolean {
+    return false;
+  }
+
+  override enhancementString(_enhancement: Enhancement): string {
+    return "";
+  }
+
+  override enhance(): void {}
 
   override cost: Num = new Num(1, 350);
   override baseCost: Num = new Num(1, 350);

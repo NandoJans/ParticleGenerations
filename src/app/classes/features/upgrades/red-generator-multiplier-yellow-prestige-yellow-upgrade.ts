@@ -3,6 +3,7 @@ import {Num} from "../../../num";
 import {HoldingRecord} from "../../records/holdings/holding-record";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
+import {Enhancement} from "../enhancements/enhancement";
 
 export class RedGeneratorMultiplierYellowPrestigeYellowUpgrade extends YellowUpgrade {
   constructor(saveName: string) {
@@ -47,4 +48,22 @@ export class RedGeneratorMultiplierYellowPrestigeYellowUpgrade extends YellowUpg
   override limit: Num = new Num(1, 0);
   baseCost: Num = new Num(3, 0);
   cost: Num = new Num(3, 0);
+
+  override canEnhance(): boolean {
+    return true;
+  }
+
+  private getEnhancementPower(enhancement: Enhancement): Num {
+    return enhancement.getMultiplier().mul(new Num(1, 1));
+  }
+
+  override enhancementString(enhancement: Enhancement): string {
+    return "Multiplier increases by " + this.getEnhancementPower(enhancement).toString(2) + "x";
+  }
+  override enhance() {
+    if (this.enhancement) {
+      this.buffer = this.buffer.mul(this.getEnhancementPower(this.enhancement));
+      UpgradeRecord.ultraYellowPrestigeBoostStarKey.buffer = UpgradeRecord.ultraYellowPrestigeBoostStarKey.buffer.mul(this.getEnhancementPower(this.enhancement));
+    }
+  }
 }

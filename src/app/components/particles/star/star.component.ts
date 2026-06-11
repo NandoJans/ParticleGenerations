@@ -45,7 +45,9 @@ export class StarComponent implements OnInit {
   }
 
   getButtonText() {
-    if (this.isEnhancing()) return 'Use one Green Key to double this challenge reward';
+    if (this.isEnhancing() && this.enhancementService.enhancing) {
+      return this.star.enhancementString(this.enhancementService.enhancing);
+    }
     return (this.star.isCompleted()) ? 'Completed' : 'Enter';
   }
 

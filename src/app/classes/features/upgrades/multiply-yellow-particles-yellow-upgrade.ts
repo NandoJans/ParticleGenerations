@@ -1,6 +1,7 @@
 import {Num} from "../../../num";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 import {YellowUpgrade} from "./yellow-upgrade";
+import {Enhancement} from "../enhancements/enhancement";
 
 export class MultiplyYellowParticlesYellowUpgrade extends YellowUpgrade {
   constructor(saveName: string) {
@@ -18,6 +19,24 @@ export class MultiplyYellowParticlesYellowUpgrade extends YellowUpgrade {
     const effect: Num = this.buffer.pow(this.amount);
     MultiplierRecord.yellowParticleGain.correct(effect);
     return effect
+  }
+
+  override canEnhance(): boolean {
+    return true;
+  }
+
+  private getEnhancementPower(enhancement: Enhancement): Num {
+    return enhancement.getMultiplier().mul(new Num(7.5, -1));
+  }
+
+  override enhancementString(enhancement: Enhancement): string {
+    return "Make the multiplier " + this.getEnhancementPower(enhancement).toString(2) + "x stronger.";
+  }
+
+  override enhance() {
+    if (this.enhancement) {
+      this.buffer = this.buffer.mul(this.getEnhancementPower(this.enhancement));
+    }
   }
 
   override oneTime: boolean = false;

@@ -62,7 +62,7 @@ export class GreenKeyUpgrade extends Upgrade {
   }
 
   getDescription(): string {
-    return 'Create a Green Key with Nuclear Potential. Each key can double one yellow element.';
+    return 'Create a Green Key with Nuclear Potential. Each key can enhance one yellow element.';
   }
 
   override effectString(): string {

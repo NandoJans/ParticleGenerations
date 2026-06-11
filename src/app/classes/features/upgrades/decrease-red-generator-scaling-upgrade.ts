@@ -3,6 +3,7 @@ import {Num} from "../../../num";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {Requirement} from "../interfaces/requirement";
 import {GeneratorRecord} from "../../records/generators/generator-record";
+import {Enhancement} from "../enhancements/enhancement";
 
 export class DecreaseRedGeneratorScalingUpgrade extends YellowUpgrade {
   displayName: string = 'Decrease Red Generator Scaling';
@@ -42,4 +43,23 @@ export class DecreaseRedGeneratorScalingUpgrade extends YellowUpgrade {
   override startIncrease: Num = new Num(1, 10);
   baseCost: Num = new Num(1, 20);
   cost: Num = new Num(1, 20);
+
+
+  override canEnhance(): boolean {
+    return true;
+  }
+
+  private getEnhancementPower(enhancement: Enhancement): Num {
+    return enhancement.getMultiplier().mul(new Num(0.52, 0));
+  }
+
+  override enhancementString(enhancement: Enhancement): string {
+    return "Enhancement reduces scaling multiplier by " + this.getEnhancementPower(enhancement).toString(3) + "x.";
+  }
+  override enhance() {
+    if (this.enhancement) {
+      this.buffer = this.buffer.div(this.getEnhancementPower(this.enhancement));
+    }
+  }
+
 }
