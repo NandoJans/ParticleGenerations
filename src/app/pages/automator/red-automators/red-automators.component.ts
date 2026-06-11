@@ -5,7 +5,7 @@ import {AutomatorRecord} from "../../../classes/records/automators/automator-rec
 @Component({
     selector: 'app-red-automators',
     templateUrl: './red-automators.component.html',
-    styleUrls: ['./red-automators.component.css'],
+    styleUrls: ['./red-automators.component.css', '../../automators-page.shared.css'],
     standalone: false
 })
 export class RedAutomatorsComponent implements OnInit {

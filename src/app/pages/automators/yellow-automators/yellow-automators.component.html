@@ -1,13 +1,38 @@
-<app-button [text]="getToggleAllText()" [style]="'button '+getToggleColor()" (function)="toggleAll()"></app-button>
-<div class="upgrade-row">
-  <div *ngFor="let automator of yellowPrestigeAutomator">
-    <app-automator *ngIf="automator.isFirstUnlocked()" [automator]="automator"></app-automator>
-  </div>
-</div>
-<app-automator-section [automators]="yellowUpgradeAutomators" [title]="'Yellow Upgrade Automators'" [name]="'yellowUpgradeAutomators'"></app-automator-section>
-<app-automator-section [automators]="yellowGeneratorAutomators" [title]="'Yellow Generator Automators'" [name]="'yellowGeneratorAutomators'"></app-automator-section>
-<app-automator-section [automators]="yellowStarChallengeAutomators" [title]="'Star Challenge Automators'" [name]="'yellowStarChallengeAutomators'"></app-automator-section>
-<app-automator-section [automators]="yellowFusionAutomators" [title]="'Yellow Fusion automators'" [name]="'yellowFusionAutomators'"></app-automator-section>
-<app-automator-section [automators]="yellowStarKeyAutomators" [title]="'Star Key automators'" [name]="'yellowStarKeyAutomators'"></app-automator-section>
+<main class="automation-shell yellow-automation">
+  <header class="phase-header">
+    <div class="phase-mark" aria-hidden="true"></div>
+    <div>
+      <p class="eyebrow">YELLOW PHASE // AUTOMATION NETWORK</p>
+      <h1>Solar Automators</h1>
+      <p class="description">Orchestrate prestige cycles, stellar challenges, fusion systems, and generator arrays through a unified command layer.</p>
+    </div>
+    <div class="system-status"><span class="status-dot"></span>NETWORK STATUS<strong>OPERATIONAL</strong></div>
+  </header>
 
-<app-info style="width: 60%" [name]="'yellow-automators-info'" [infoText]="infoText"></app-info>
+  <div class="automation-toolbar" aria-label="Yellow automator controls">
+    <div class="toolbar-label"><span></span> GLOBAL SOLAR CONTROL</div>
+    <app-button [text]="getToggleAllText()" [style]="'button '+getToggleColor()" (function)="toggleAll()"></app-button>
+  </div>
+
+  <div class="automation-content">
+    <section class="prestige-module">
+      <div class="prestige-heading">
+        <div><p class="eyebrow">PRESTIGE PROTOCOL</p><h2>Yellow Prestige Automator</h2></div>
+        <span class="module-code">CORE // Y-00</span>
+      </div>
+      <div class="prestige-row">
+        <ng-container *ngFor="let automator of yellowPrestigeAutomator">
+          <app-automator *ngIf="automator.isFirstUnlocked()" [automator]="automator"></app-automator>
+        </ng-container>
+      </div>
+    </section>
+
+    <app-automator-section [automators]="yellowUpgradeAutomators" [title]="'Yellow Upgrade Automators'" [name]="'yellowUpgradeAutomators'"></app-automator-section>
+    <app-automator-section [automators]="yellowGeneratorAutomators" [title]="'Yellow Generator Automators'" [name]="'yellowGeneratorAutomators'"></app-automator-section>
+    <app-automator-section [automators]="yellowStarChallengeAutomators" [title]="'Star Challenge Automators'" [name]="'yellowStarChallengeAutomators'"></app-automator-section>
+    <app-automator-section [automators]="yellowFusionAutomators" [title]="'Yellow Fusion Automators'" [name]="'yellowFusionAutomators'"></app-automator-section>
+    <app-automator-section [automators]="yellowStarKeyAutomators" [title]="'Star Key Automators'" [name]="'yellowStarKeyAutomators'"></app-automator-section>
+  </div>
+
+  <app-info class="page-info" [name]="'yellow-automators-info'" [infoText]="infoText"></app-info>
+</main>

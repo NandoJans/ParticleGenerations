@@ -1,3 +1,5 @@
-app-button {
-  margin: 0.5rem;
+.yellow-automation {
+  --automation-accent: var(--accent-color-yellow);
+  --automation-accent-rgb: 240, 240, 27;
+  --automation-muted: #aaa578;
 }

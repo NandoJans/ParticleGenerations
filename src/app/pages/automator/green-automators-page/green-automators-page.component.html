@@ -1,3 +1,30 @@
-<div class="upgrade-row">
-  <app-automator [automator]="greenPrestigeAutomator"></app-automator>
-</div>
+<main class="automation-shell green-automation">
+  <header class="phase-header">
+    <div class="phase-mark" aria-hidden="true"></div>
+    <div>
+      <p class="eyebrow">GREEN PHASE // AUTOMATION NETWORK</p>
+      <h1>Cosmic Automators</h1>
+      <p class="description">Configure autonomous green prestige cycles and prepare the cosmic network for deeper galaxy-scale automation.</p>
+    </div>
+    <div class="system-status"><span class="status-dot"></span>NETWORK STATUS<strong>OPERATIONAL</strong></div>
+  </header>
+
+  <div class="automation-toolbar" aria-label="Green automator controls">
+    <div class="toolbar-label"><span></span> GLOBAL COSMIC CONTROL</div>
+    <app-button [text]="getToggleAllText()" [style]="'button '+getToggleColor()" (function)="toggleAll()"></app-button>
+  </div>
+
+  <div class="automation-content">
+    <section class="prestige-module">
+      <div class="prestige-heading">
+        <div><p class="eyebrow">PRESTIGE PROTOCOL</p><h2>Green Prestige Automator</h2></div>
+        <span class="module-code">CORE // G-00</span>
+      </div>
+      <div class="prestige-row">
+        <app-automator [automator]="greenPrestigeAutomator"></app-automator>
+      </div>
+    </section>
+  </div>
+
+  <app-info class="page-info" [name]="'green-automators-info'" [infoText]="infoText"></app-info>
+</main>

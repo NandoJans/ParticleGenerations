@@ -5,7 +5,7 @@ import {AutomatorRecord} from "../../../classes/records/automators/automator-rec
 @Component({
     selector: 'app-yellow-automators',
     templateUrl: './yellow-automators.component.html',
-    styleUrls: ['./yellow-automators.component.css'],
+    styleUrls: ['./yellow-automators.component.css', '../../automators-page.shared.css'],
     standalone: false
 })
 export class YellowAutomatorsComponent implements OnInit {

@@ -1,0 +1,5 @@
+.green-automation {
+  --automation-accent: var(--accent-color-green);
+  --automation-accent-rgb: 100, 210, 74;
+  --automation-muted: #88a383;
+}
