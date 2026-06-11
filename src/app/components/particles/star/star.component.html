@@ -1,4 +1,4 @@
-<div class="challenge {{ star.style }}">
+<div [class]="'challenge '+star.style+' '+(isEnhancing() ? 'enhancing enhancing-'+getEnhancementStyle() : '')+' '+(isEnhanced() ? 'enhanced enhanced-'+star.enhancement?.style : '')">
   <div class="star-wrapper">
     <div class="star">
 

@@ -32,6 +32,28 @@
     </button>
   </article>
 
+  <section class="key-bay">
+    <div class="section-title">
+      <span>◆</span>
+      <div>
+        <p class="eyebrow">POTENTIAL ENRICHMENT</p>
+        <h2>Green Keys</h2>
+      </div>
+      <span>◆</span>
+    </div>
+    <p class="key-explanation">Green Keys are purchased with Nuclear Potential. Each key can permanently double one element on the Yellow Upgrades, Yellow Generators, Star Challenges, Yellow Fusion, or Star-Key pages.</p>
+    <div class="green-key-grid">
+      <article class="green-key-holding">
+        <span>AVAILABLE KEYS</span>
+        <app-number-display [holding]="greenKeys"></app-number-display>
+      </article>
+      <app-upgrade [upgrade]="greenKeyUpgrade"></app-upgrade>
+      <article class="green-enhancement-control">
+        <app-enhancement [enhancement]="greenEnhancement"></app-enhancement>
+      </article>
+    </div>
+  </section>
+
   <section class="upgrade-bay">
     <div class="section-title">
       <span>☢</span>

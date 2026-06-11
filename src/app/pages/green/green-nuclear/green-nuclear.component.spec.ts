@@ -2,6 +2,7 @@ import {GreenNuclearComponent} from './green-nuclear.component';
 import {HoldingRecord} from '../../../classes/records/holdings/holding-record';
 import {ChargerRecord} from '../../../classes/records/charger/charger-record';
 import {Num} from '../../../num';
+import {ChallengeService} from '../../../services/interactables/challenge.service';
 
 class TestableGreenNuclearComponent extends GreenNuclearComponent {}
 
