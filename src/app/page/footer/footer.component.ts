@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {App} from "../../App";
 import {Navigation} from "../../classes/features/navigation";
 import {SubNavigation} from "../../classes/features/sub-navigation";
+import {PurchaseAvailabilityService} from "../../services/purchase-availability.service";
 
 @Component({
     selector: 'app-footer',
@@ -17,6 +18,7 @@ export class FooterComponent implements OnInit {
 
   constructor(
     private navigationsService: NavigationsService,
+    private purchaseAvailabilityService: PurchaseAvailabilityService,
     private router: Router
   ) {
     App.subscribe().subscribe(
@@ -44,6 +46,29 @@ export class FooterComponent implements OnInit {
   isSubNavigationActive(subNavigation: SubNavigation): boolean {
     return this.navigationsService.selectedNavigation === subNavigation.parent
       && subNavigation.location === subNavigation.parent.wasOn;
+  }
+
+  hasAvailablePurchase(subNavigation: SubNavigation): boolean {
+    return this.purchaseAvailabilityService.hasAvailablePurchase(subNavigation);
+  }
+
+  hasAvailablePurchaseInNavigation(navigation: Navigation): boolean {
+    return this.purchaseAvailabilityService.hasAvailablePurchaseInNavigation(
+      navigation,
+      this.navigationsService.getSubNavigations(navigation)
+    );
+  }
+
+  getNavigationAriaLabel(navigation: Navigation): string {
+    return this.hasAvailablePurchaseInNavigation(navigation)
+      ? `${navigation.name}, purchase available`
+      : navigation.name;
+  }
+
+  getSubNavigationAriaLabel(subNavigation: SubNavigation): string {
+    return this.hasAvailablePurchase(subNavigation)
+      ? `${subNavigation.name}, purchase available`
+      : subNavigation.name;
   }
 
 
