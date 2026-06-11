@@ -1,5 +1,23 @@
-<div class="timeline">
-  <div *ngFor="let event of getEvents()">
-    <app-timeline-event *ngIf="event.shouldShow" [timelineEvent]="event"></app-timeline-event>
+<section [class]="'timeline-shell '+timeline.style">
+  <header class="timeline-header">
+    <div class="archive-mark" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
+    <div>
+      <p class="eyebrow">PROGRESSION ARCHIVE // {{ timeline.style | uppercase }} PHASE</p>
+      <h1>{{ timeline.title }}</h1>
+      <p>{{ timeline.message }}</p>
+    </div>
+    <div class="archive-count">
+      <strong>{{ getReachedCount() }}/{{ getVisibleCount() }}</strong>
+      <span>EVENTS LOGGED</span>
+    </div>
+  </header>
+  <div class="timeline-track">
+    @for (event of getEvents(); track event.name; let index = $index) {
+      @if (event.shouldShow) {
+        <app-timeline-event [attr.data-index]="index + 1" [timelineEvent]="event"></app-timeline-event>
+      }
+    }
   </div>
-</div>
+</section>

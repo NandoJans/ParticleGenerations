@@ -1,11 +1,14 @@
-<div class="items">
-  @if (yellowPrestigeLayer.prestigedFirstTime || yellowPrestigeLayer.hasReached()) {
-    <app-prestige-button [prestigeLayer]="yellowPrestigeLayer"></app-prestige-button>
-  }
-  @if (greenPrestigeLayer.prestigedFirstTime || greenPrestigeLayer.hasReached()) {
-    <app-prestige-button [prestigeLayer]="greenPrestigeLayer"></app-prestige-button>
-  }
+<div class="prestige-dock">
+  <div class="dock-label" aria-hidden="true">
+    <span>PHASE TRANSITION</span>
+    <i></i>
+  </div>
+  <div class="items">
+    @if (yellowPrestigeLayer.prestigedFirstTime || yellowPrestigeLayer.hasReached()) {
+      <app-prestige-button [prestigeLayer]="yellowPrestigeLayer"></app-prestige-button>
+    }
+    @if (greenPrestigeLayer.prestigedFirstTime || greenPrestigeLayer.hasReached()) {
+      <app-prestige-button [prestigeLayer]="greenPrestigeLayer"></app-prestige-button>
+    }
+  </div>
 </div>
-
-
-

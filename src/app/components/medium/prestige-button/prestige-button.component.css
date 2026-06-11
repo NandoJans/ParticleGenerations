@@ -1,39 +1,17 @@
-button {
-  width: 100%;
-  height: 100%;
-  background-color: var(--background-color-2);
-  border-radius: 5px;
-}
-
-h3, p {
-  margin: 0;
-}
-
-button.yellow {
-  color: var(--background-color-yellow);
-  border: 2px solid var(--background-color-yellow);
-}
-
-button.yellow.reached {
-  color: var(--text-color-yellow);
-  border-color: var(--accent-color-yellow);
-}
-
-button.green {
-  color: var(--background-color-green);
-  border: 2px solid var(--background-color-green);
-}
-
-button.green.reached {
-  color: var(--text-color-green);
-  border-color: var(--text-color-green);
-}
-
-button.reached {
-  background-color: var(--background-color-3);
-  cursor: pointer;
-}
-
-button.reached:hover {
-  box-shadow: 0 0 1000px rgba(255, 255, 255, 0.2) inset
-}
+:host { display: block; height: 100%; }
+.prestige-control { --phase-color: #8f8585; position: relative; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1rem; width: 100%; height: 100%; padding: .65rem 1.4rem; overflow: hidden; border: 0; border-right: 1px solid rgba(255, 255, 255, .08); background: linear-gradient(110deg, color-mix(in srgb, var(--phase-color) 7%, #0c0b0b), #0c0b0b 65%); color: #766f6f; text-align: left; cursor: not-allowed; }
+.prestige-control::before { content: ''; position: absolute; inset: 0 auto 0 0; width: 3px; background: var(--phase-color); opacity: .35; }
+.prestige-control.yellow { --phase-color: var(--accent-color-yellow); }
+.prestige-control.green { --phase-color: var(--accent-color-green); }
+.control-state { color: color-mix(in srgb, var(--phase-color) 65%, #777); font-family: monospace; font-size: .7rem; font-weight: 700; letter-spacing: .13em; writing-mode: vertical-rl; transform: rotate(180deg); }
+.control-copy { min-width: 0; }
+h3, p { margin: 0; }
+h3 { color: color-mix(in srgb, var(--phase-color) 65%, #777); font-size: 1.15rem; letter-spacing: .06em; }
+p { margin-top: .2rem; font-size: .85rem; }
+.control-arrow { color: #625d5d; font-size: 1.8rem; transition: transform .2s ease; }
+.prestige-control.reached { color: #d8d1d1; cursor: pointer; background: radial-gradient(circle at 80% 50%, color-mix(in srgb, var(--phase-color) 12%, transparent), transparent 38%), #0c0b0b; box-shadow: inset 0 -2px 0 color-mix(in srgb, var(--phase-color) 60%, transparent); }
+.prestige-control.reached::before { opacity: 1; box-shadow: 0 0 15px var(--phase-color); }
+.prestige-control.reached h3, .prestige-control.reached .control-state { color: var(--phase-color); }
+.prestige-control.reached:hover { background-color: color-mix(in srgb, var(--phase-color) 8%, #0c0b0b); }
+.prestige-control.reached:hover .control-arrow { color: var(--phase-color); transform: translateX(.35rem); }
+@media (max-width: 700px) { .prestige-control { gap: .55rem; padding: .5rem .7rem; } .control-state { display: none; } h3 { font-size: .9rem; } p { font-size: .7rem; } }

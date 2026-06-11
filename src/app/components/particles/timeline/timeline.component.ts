@@ -19,4 +19,12 @@ export class TimelineComponent implements OnInit {
   getEvents(): TimelineEvent[] {
     return this.timeline.events
   }
+
+  getVisibleCount(): number {
+    return this.timeline.events.filter(event => event.shouldShow).length;
+  }
+
+  getReachedCount(): number {
+    return this.timeline.events.filter(event => event.shouldShow && event.reached).length;
+  }
 }
