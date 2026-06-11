@@ -259,9 +259,11 @@ export class BuyableHelper {
   compare() {
     const buyable = this.buyable
     if (buyable.currency.amount.greq(buyable.cost) && buyable.unlocked && buyable.auto &&
-      (buyable.limit === undefined || !buyable.bought.greq(buyable.limit.sub(new Num(1, 0))))) {
+      (buyable.limit === undefined || !buyable.bought.greq(buyable.limit))) {
       if (buyable.oneTime) {
         if (!buyable.bought.greq(new Num(1, 0))) this.buyAction();
+      } else if (buyable.limit !== undefined) {
+        this.buy(buyable.limit.sub(buyable.bought));
       } else {
         const result = this.calculateBulk(buyable)
 

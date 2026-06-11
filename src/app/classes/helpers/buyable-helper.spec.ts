@@ -57,4 +57,33 @@ describe('BuyableHelper', () => {
       expect(mult2Past.gt(mult1Past)).toBeTruthy();
     });
   });
+
+  describe('compare at a purchase limit', () => {
+    it('buys the final available level without exceeding the limit', () => {
+      const buyable = {
+        amount: new Num(30, 0),
+        baseCost: new Num(1, 0),
+        cost: new Num(1, 0),
+        costMultiplier: new Num(1, 0),
+        increase: new Num(1, 0),
+        startIncrease: new Num(1, 0),
+        scaling: new Num(1, 0),
+        superScaling: new Num(1, 0),
+        bought: new Num(30, 0),
+        limit: new Num(31, 0),
+        currency: {amount: new Num(1, 3)},
+        resets: 'none',
+        oneTime: false,
+        unlocked: true,
+        auto: true,
+      } as any;
+
+      new BuyableHelper(buyable).compare();
+
+      expect(buyable.amount.toNumber()).toBe(31);
+      expect(buyable.bought.toNumber()).toBe(31);
+      expect(buyable.currency.amount.toNumber()).toBe(999);
+    });
+  });
+
 });

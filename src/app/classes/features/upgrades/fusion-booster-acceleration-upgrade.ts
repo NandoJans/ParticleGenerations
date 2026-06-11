@@ -101,6 +101,10 @@ export class FusionBoosterAccelerationUpgrade extends Upgrade {
     }
 
     const transaction = super.buy(amount);
+    if (transaction.amount.lte(new Num(0, 0))) {
+      return transaction;
+    }
+
     StatsService.addNum(UpgradeRecord.redGeneratorBooster.name, 'totalBought', this.freeBuys);
     StatsService.addNum(UpgradeRecord.redGeneratorBooster.name, 'totalBoughtAutomator', this.freeBuys);
     StatsService.addNum(this.name, 'totalBought', transaction.amount);
