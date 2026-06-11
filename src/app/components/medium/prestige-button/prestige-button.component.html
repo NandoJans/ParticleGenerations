@@ -1,21 +1,25 @@
-<button *ngIf="!inChallenge()" [class]="prestigeLayer.style+' '+getReached()" [style.display]="getDisplay()" (click)="prestige()">
-  <h3>Start {{ getName() }}</h3>
-  <p *ngIf="!firstTime()">{{ getFirstTimeText() }}</p>
-  <p *ngIf="firstTime() && hasReached()">Gain {{ getGainAmount() }} {{ getGainHolding() }}</p>
+<button *ngIf="!inChallenge()" [class]="'prestige-control '+prestigeLayer.style+' '+getReached()" [style.display]="getDisplay()" (click)="prestige()">
+  <span class="control-state">{{ hasReached() ? 'TRANSITION READY' : 'CHARGE INCOMPLETE' }}</span>
+  <span class="control-copy">
+    <h3>Start {{ getName() }}</h3>
+    <p *ngIf="!firstTime()">{{ getFirstTimeText() }}</p>
+    <p *ngIf="firstTime() && hasReached()">Gain {{ getGainAmount() }} {{ getGainHolding() }}</p>
+  </span>
+  <span class="control-arrow" aria-hidden="true">→</span>
 </button>
-<button *ngIf="inChallenge()" [class]="prestigeLayer.style+' '
-+((goalReached()) ? 'reached' : '')+' '
-" [style.display]="getDisplay()" (click)="prestige()">
-  @if (hasCustomText()) {
-    @if (typeof getCustomText() === 'string') {
-      <p>{{ getCustomText() }}</p>
-    } @else if (Array.isArray(getCustomText())) {
-      @for (line of getCustomText(); track line) {
-        <p>{{ line }}</p>
+<button *ngIf="inChallenge()" [class]="'prestige-control challenge '+prestigeLayer.style+' '+((goalReached()) ? 'reached' : '')" [style.display]="getDisplay()" (click)="prestige()">
+  <span class="control-state">CHALLENGE PROTOCOL</span>
+  <span class="control-copy">
+    @if (hasCustomText()) {
+      @if (typeof getCustomText() === 'string') {
+        <p>{{ getCustomText() }}</p>
+      } @else if (Array.isArray(getCustomText())) {
+        @for (line of getCustomText(); track line) { <p>{{ line }}</p> }
       }
+    } @else {
+      <h3>Complete {{ getChallengeName() }}</h3>
+      <p>Requires {{ getCompletionAmount() }} {{ getCompletionHolding() }}</p>
     }
-  } @else {
-    <h3>Complete {{ getChallengeName() }}</h3>
-    <p>Requires {{ getCompletionAmount() }} {{ getCompletionHolding() }}</p>
-  }
+  </span>
+  <span class="control-arrow" aria-hidden="true">→</span>
 </button>
