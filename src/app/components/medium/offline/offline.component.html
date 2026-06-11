@@ -1,28 +1,97 @@
-<div class="background" (click)="close()">
-  <div class="container" (click)="stopClose($event)">
-    <div class="progress-bar">
-      <div class="progress" [style]="'width: ' + getOfflineProgress() + '%;'"></div>
-    </div>
-    <div class="progress-text">
-      <p>{{ getTickProgress() }}/{{ getTotalTicks() }} Ticks</p>
-    </div>
-    <div class="holdings">
-      <div class="holdings-text">
-        <h3>Generated Holdings</h3>
+<div class="offline-backdrop" (click)="close()">
+  <section
+    class="offline-dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="offline-title"
+    aria-describedby="offline-status"
+    (click)="stopClose($event)"
+  >
+    <div class="dialog-glow" aria-hidden="true"></div>
+
+    <header class="offline-header">
+      <div class="status-mark" [class.complete]="isDone()" aria-hidden="true">
+        <span class="status-core"></span>
+        <span class="status-ring"></span>
       </div>
-      <div *ngFor="let generatedHolding of getGeneratedHoldings()" class="holdings-value {{ generatedHolding.holding.getStyle() }}">
-        <p class="holding-name">{{ generatedHolding.holding.getHoldingDisplay().getAmountSuffix() }}</p>
-        <p class="holding-generated">{{ generatedHolding.generated.toString() }}</p>
+      <div class="header-copy">
+        <p class="eyebrow">TEMPORAL RECOVERY</p>
+        <h2 id="offline-title">{{ isDone() ? 'Offline gains recovered' : 'Calculating offline progress' }}</h2>
+        <p id="offline-status" class="status-copy">
+          {{ isDone() ? 'Your generators are synchronized with the current timeline.' : 'Simulating the production that occurred while you were away.' }}
+        </p>
+      </div>
+      <div class="progress-readout" aria-hidden="true">
+        <strong>{{ getOfflineProgress() | number:'1.0-0' }}%</strong>
+        <span>{{ isDone() ? 'COMPLETE' : 'SYNCHRONIZING' }}</span>
+      </div>
+    </header>
+
+    <div class="progress-section">
+      <div
+        class="progress-track"
+        role="progressbar"
+        aria-label="Offline calculation progress"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        [attr.aria-valuenow]="getOfflineProgress() | number:'1.0-0'"
+      >
+        <div class="progress-fill" [style.width.%]="getOfflineProgress()">
+          <span class="progress-shine"></span>
+        </div>
+      </div>
+      <div class="progress-meta">
+        <span>SIMULATION CYCLES</span>
+        <strong>{{ getTickProgress() | number }} <i>/</i> {{ getTotalTicks() | number }}</strong>
       </div>
     </div>
-    <div *ngIf="isDone()" class="checkbox-container">
-      <label class="checkbox-label">
+
+    <section class="holdings-panel" aria-labelledby="holdings-title">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">RECOVERY LOG</p>
+          <h3 id="holdings-title">Generated holdings</h3>
+        </div>
+        <span class="entry-count">{{ getGeneratedHoldings().length }} RESOURCES</span>
+      </div>
+
+      <div class="holdings-list">
+        <div
+          *ngFor="let generatedHolding of getGeneratedHoldings()"
+          class="holding-row {{ generatedHolding.holding.getStyle() }}"
+        >
+          <span class="resource-indicator" aria-hidden="true"></span>
+          <span class="holding-name">{{ generatedHolding.holding.getHoldingDisplay().getAmountSuffix() }}</span>
+          <span class="holding-generated">
+            <small>+</small>{{ generatedHolding.generated.toString() }}
+          </span>
+        </div>
+        <div *ngIf="getGeneratedHoldings().length === 0" class="empty-state">
+          <span aria-hidden="true">◇</span>
+          <p>No holdings generated during this session.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="offline-actions" [class.waiting]="!isDone()">
+      <label *ngIf="isDone()" class="fullscreen-option">
         <input type="checkbox" [checked]="autoFullscreenEnabled" (change)="toggleAutoFullscreen()">
-        <span>Automatically enter fullscreen</span>
+        <span class="custom-checkbox" aria-hidden="true"></span>
+        <span>
+          <strong>Enter fullscreen automatically</strong>
+          <small>Use an immersive view after recovery</small>
+        </span>
       </label>
-    </div>
-    <button *ngIf="isDone()" class="button success" (click)="close()">
-      Close
-    </button>
-  </div>
+
+      <p *ngIf="!isDone()" class="calculation-note">
+        <span class="activity-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        Please keep this window open
+      </p>
+
+      <button *ngIf="isDone()" class="continue-button" (click)="close()">
+        <span>Continue</span>
+        <span aria-hidden="true">→</span>
+      </button>
+    </footer>
+  </section>
 </div>
