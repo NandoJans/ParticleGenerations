@@ -1,0 +1,258 @@
+:host {
+  display: block;
+  --blue: #5cb8e3;
+  --proton: #ff6f7d;
+  --electron: #66c7ff;
+}
+
+.blue-laboratory {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  background:
+    linear-gradient(rgba(92, 184, 227, .035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(92, 184, 227, .035) 1px, transparent 1px);
+  background-size: 2rem 2rem;
+}
+
+.phase-header,
+.collider-panel,
+.neutron-section,
+.particle-card {
+  border: 1px solid rgba(92, 184, 227, .28);
+  background: linear-gradient(145deg, #111c24, #070b0f);
+  box-shadow: inset 0 0 28px rgba(0, 0, 0, .58);
+}
+
+.phase-header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem 2rem;
+  text-align: left;
+}
+
+.phase-header h1,
+.collider-panel h2,
+.section-heading h2 {
+  margin: .2rem 0;
+  color: #d9f3ff;
+}
+
+.phase-header p,
+.collider-panel p,
+.section-heading p {
+  margin: 0;
+}
+
+.eyebrow {
+  color: rgba(92, 184, 227, .72);
+  font: 700 .75rem monospace;
+  letter-spacing: .16em;
+}
+
+.atom-mark {
+  position: relative;
+  width: 5rem;
+  height: 5rem;
+}
+
+.atom-mark span {
+  position: absolute;
+  inset: 1.7rem .25rem;
+  border: 1px solid var(--blue);
+  border-radius: 50%;
+}
+
+.atom-mark span:nth-child(2) { transform: rotate(60deg); }
+.atom-mark span:nth-child(3) { transform: rotate(-60deg); }
+.atom-mark i {
+  position: absolute;
+  inset: 2.15rem;
+  border-radius: 50%;
+  background: #e8f8ff;
+  box-shadow: 0 0 14px var(--blue);
+}
+
+.beam-status {
+  min-width: 10rem;
+  padding: 1rem;
+  border-left: 2px solid #4a5861;
+  text-align: right;
+}
+
+.beam-status span,
+.beam-status strong,
+.beam-status small {
+  display: block;
+}
+
+.beam-status strong { color: #96a7b0; }
+.beam-status.proton { border-color: var(--proton); }
+.beam-status.proton strong { color: var(--proton); }
+.beam-status.electron { border-color: var(--electron); }
+.beam-status.electron strong { color: var(--electron); }
+
+.particle-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.particle-card {
+  position: relative;
+  min-height: 10rem;
+  padding: 1.5rem;
+  overflow: hidden;
+}
+
+.particle-card.active {
+  border-color: currentColor;
+  box-shadow: inset 0 0 30px color-mix(in srgb, currentColor 10%, transparent), 0 0 18px color-mix(in srgb, currentColor 16%, transparent);
+}
+
+.proton-card { color: var(--proton); }
+.electron-card { color: var(--electron); }
+.particle-symbol {
+  position: absolute;
+  right: 1rem;
+  bottom: -.6rem;
+  font: 700 7rem monospace;
+  opacity: .08;
+}
+
+.collider-panel {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 1rem;
+  padding: 1.5rem 2rem;
+  text-align: left;
+}
+
+.collision-core {
+  position: relative;
+  width: 5rem;
+  height: 5rem;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 50%;
+}
+
+.collision-core span,
+.collision-core i {
+  position: absolute;
+  top: 2rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+}
+
+.collision-core span { left: .6rem; background: var(--proton); box-shadow: 0 0 14px var(--proton); }
+.collision-core i { right: .6rem; background: var(--electron); box-shadow: 0 0 14px var(--electron); }
+.collision-core b {
+  position: absolute;
+  inset: 1.85rem;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 18px #fff;
+}
+
+.collider-panel button,
+.deposit-button {
+  padding: 1rem 1.4rem;
+  border: 1px solid rgba(92, 184, 227, .28);
+  background: #081119;
+  color: #718692;
+}
+
+.collider-panel button span,
+.collider-panel button strong {
+  display: block;
+}
+
+.collider-panel button.ready,
+.deposit-button:not(:disabled) {
+  border-color: var(--blue);
+  color: #dff6ff;
+  box-shadow: 0 0 16px rgba(92, 184, 227, .18), inset 0 0 18px rgba(92, 184, 227, .08);
+}
+
+.neutron-section {
+  margin-top: 1rem;
+  padding: 1.5rem;
+}
+
+.blue-upgrades {
+  margin-top: 1rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(92, 184, 227, .28);
+  background: linear-gradient(145deg, #111c24, #070b0f);
+}
+
+.blue-upgrades .upgrade-row {
+  margin-top: 1rem;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+}
+
+.stage-readout {
+  text-align: right;
+}
+
+.stage-readout span,
+.stage-readout strong {
+  display: block;
+}
+
+.stage-readout strong {
+  color: var(--blue);
+  font-size: 2rem;
+}
+
+.neutron-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 1rem;
+  background: rgba(92, 184, 227, .18);
+}
+
+.matter-card {
+  position: relative;
+  min-height: 9rem;
+  padding: 1.4rem;
+  background: #090f14;
+}
+
+.matter-card p {
+  margin: .6rem 0 0;
+  color: #8ba0ab;
+}
+
+.element-symbol {
+  display: inline-grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid var(--blue);
+  color: #dff6ff;
+  font: 700 1.4rem monospace;
+}
+
+@media (max-width: 760px) {
+  .phase-header,
+  .collider-panel {
+    grid-template-columns: 1fr;
+  }
+  .beam-status { text-align: left; }
+  .particle-grid,
+  .neutron-grid { grid-template-columns: 1fr; }
+}

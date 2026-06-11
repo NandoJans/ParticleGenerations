@@ -1,53 +1,99 @@
 div.challenge {
+  --challenge-color: #32f39a;
   position: relative;
-  background-color: var(--background-color-1);
-  border: 5px solid var(--background-color-2);
-  border-radius: 10px;
+  isolation: isolate;
+  overflow: hidden;
+  box-sizing: border-box;
+  background: linear-gradient(155deg, #111917, #050807 75%);
+  border: 1px solid rgba(50, 243, 154, .42);
+  border-radius: .2rem;
   width: 26rem;
   margin: 1rem;
-  height: 24rem;
+  min-height: 29rem;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, .68), 0 5px 18px rgba(0, 0, 0, .3);
+}
+
+div.challenge::before {
+  content: "";
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: .28rem;
+  background: linear-gradient(90deg, transparent 5%, var(--challenge-color) 5% 32%, transparent 32% 38%, #a6ffda 38% 75%, transparent 75% 82%, var(--challenge-color) 82% 95%, transparent 95%);
+  opacity: .7;
+}
+
+div.challenge.active {
+  border-color: var(--challenge-color);
+  box-shadow: inset 0 0 35px rgba(50, 243, 154, .08), 0 0 25px rgba(50, 243, 154, .16);
 }
 
 div.details {
-  background-color: var(--background-color-3);
-  color: var(--text-color-light);
+  box-sizing: border-box;
+  color: #9badA6;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  width: 90%;
-  height: 25%;
-  padding: 5%;
-  border-radius: 0 0 5px 5px;
+  gap: .75rem;
+  width: 100%;
+  padding: 1rem;
+  border-top: 1px solid rgba(50, 243, 154, .18);
+  background: rgba(4, 9, 7, .92);
+  text-align: left;
 }
 
-div.details p, button {
-  margin: 0.2rem;
+div.details p {
+  margin: .25rem 0 0;
+  line-height: 1.3;
 }
 
 div.name {
-  position: absolute;
+  position: relative;
   z-index: 2;
-  width: 100%;
-  left: 0;
+  padding: 1rem 1rem .8rem;
+  text-align: left;
 }
 
 div.name h2 {
-  margin: 0.5rem auto;
-  text-align: center;
-  width: 50%;
-  background-color: var(--background-color-2);
-  border-radius: 5px;
-  border: 2px solid var(--background-color-4);
+  margin: .25rem 0 0;
+  color: var(--challenge-color);
+  font-size: 1.45rem;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+div.name span,
+.data-row span,
+.signal-code {
+  color: #658477;
+  font: 700 .7rem monospace;
+  letter-spacing: .14em;
+}
+
+.data-row {
+  padding-left: .75rem;
+  border-left: 2px solid rgba(50, 243, 154, .3);
+}
+
+.reward p {
+  color: #a8dfc7;
 }
 
 div.start button {
-  background-color: var(--background-color-2);
-  color: var(--text-color-main);
-  border: 2px solid var(--background-color-light);
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
+  width: 100%;
+  min-height: 3rem;
+  margin-top: .25rem;
+  padding: .65rem 1rem;
+  border: 1px solid rgba(50, 243, 154, .62);
+  border-radius: .1rem;
+  background: linear-gradient(145deg, rgba(50, 243, 154, .12), #07100c);
+  color: #9effd0;
+  font-family: monospace;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
   cursor: pointer;
-  width: 10rem;
 }
 
 div.start button.completed {
@@ -58,10 +104,20 @@ div.start button.completed {
 
 .galaxy-wrapper {
   position: relative;
+  isolation: isolate;
   width: 100%;
-  height: 65%;
+  height: 15rem;
   overflow: hidden;
-  background: radial-gradient(circle at 50% 50%, #050b08 0%, #000 65%, #000 100%);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(22, 83, 61, .2), transparent 32%),
+    radial-gradient(circle at 50% 50%, #050b08 0%, #000 68%);
+}
+
+.signal-code {
+  position: absolute;
+  z-index: 3;
+  right: .8rem;
+  bottom: .65rem;
 }
 
 /* Rotating green nebula */
@@ -93,10 +149,132 @@ div.start button.completed {
     );
 }
 
+.outer-dust,
+.accretion-disk,
+.lensing-ring,
+.event-horizon,
+.gravity-wave,
+.relativistic-jet {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  pointer-events: none;
+}
+
+.outer-dust {
+  z-index: 1;
+  width: 23rem;
+  height: 8rem;
+  border-radius: 50%;
+  background: repeating-conic-gradient(from 20deg, rgba(50, 243, 154, .13) 0 3deg, transparent 3deg 11deg);
+  filter: blur(5px);
+  mix-blend-mode: screen;
+}
+
+.dust-one { animation: dust-orbit 31s linear infinite; }
+.dust-two {
+  width: 19rem;
+  height: 6rem;
+  opacity: .55;
+  animation: dust-orbit-reverse 23s linear -11s infinite;
+}
+
+.accretion-disk {
+  z-index: 3;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+}
+
+.disk-outer {
+  width: 15rem;
+  height: 4.4rem;
+  background: conic-gradient(from 40deg, transparent, rgba(37, 255, 160, .15), #b4ffe0, rgba(30, 194, 125, .18), transparent 42%, rgba(118, 255, 202, .55), transparent 70%);
+  filter: blur(2px);
+  animation: disk-spin 8.5s linear infinite;
+}
+
+.disk-inner {
+  width: 10rem;
+  height: 2.6rem;
+  background: conic-gradient(from 180deg, #e1fff2, rgba(57, 255, 173, .16), transparent 35%, #72ffc2, transparent 70%);
+  filter: blur(.7px);
+  animation: disk-spin-reverse 4.6s linear infinite;
+}
+
+.lensing-ring {
+  z-index: 4;
+  width: 6rem;
+  height: 6rem;
+  border: .13rem solid rgba(154, 255, 216, .62);
+  border-right-color: rgba(50, 243, 154, .08);
+  border-left-color: rgba(50, 243, 154, .18);
+  border-radius: 50%;
+  box-shadow: 0 0 .8rem rgba(50, 243, 154, .55), inset 0 0 .7rem rgba(50, 243, 154, .28);
+  animation: lens-wobble 5.7s ease-in-out infinite;
+}
+
+.event-horizon {
+  z-index: 5;
+  width: 4.8rem;
+  height: 4.8rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 46% 43%, #050706 0 35%, #000 58%, rgba(4, 17, 12, .96) 72%);
+  box-shadow: 0 0 1.2rem #000, 0 0 2.2rem rgba(50, 243, 154, .2);
+  transform: translate(-50%, -50%);
+  animation: horizon-breathe 4.2s ease-in-out infinite;
+}
+
+.singularity {
+  position: absolute;
+  inset: 41%;
+  border-radius: 50%;
+  background: #000;
+  box-shadow: 0 0 .7rem rgba(174, 255, 223, .35);
+  animation: singularity-flash 8.3s linear -3s infinite;
+}
+
+.gravity-wave {
+  z-index: 2;
+  width: 5rem;
+  height: 5rem;
+  border: 1px solid rgba(85, 255, 187, .4);
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  animation: gravity-pulse 7s ease-out infinite;
+}
+
+.wave-two { animation-delay: -3.5s; }
+
+.relativistic-jet {
+  z-index: 2;
+  width: .7rem;
+  height: 7rem;
+  background: linear-gradient(to top, rgba(177, 255, 226, .85), rgba(50, 243, 154, .22) 42%, transparent);
+  filter: blur(2px) drop-shadow(0 0 .35rem #32f39a);
+  opacity: 0;
+  transform-origin: 50% 100%;
+  animation: jet-burst 12s ease-out infinite;
+}
+
+.jet-top { transform: translate(-50%, -100%) rotate(4deg); }
+.jet-bottom {
+  transform: translate(-50%, 0) rotate(184deg);
+  animation-delay: -6s;
+}
+
+.challenge.active .galaxy-nebula { animation-duration: 42s; opacity: 1; }
+.challenge.active .disk-outer { animation-duration: 5.2s; }
+.challenge.active .disk-inner { animation-duration: 2.8s; }
+.challenge.active .gravity-wave { animation-duration: 4.5s; }
+.challenge.active .relativistic-jet { animation-duration: 7.5s; }
+.challenge.active .event-horizon { box-shadow: 0 0 1.5rem #000, 0 0 3rem rgba(50, 243, 154, .32); }
+
 /* Container for programmatic stars */
 .galaxy-stars {
   position: absolute;
   inset: 0;
+  z-index: 2;
   pointer-events: none;
 }
 
@@ -143,4 +321,68 @@ div.start button.completed {
     opacity: 0;
     transform: scale(1.05);
   }
+}
+
+@keyframes dust-orbit {
+  from { transform: translate(-50%, -50%) rotate(-14deg); }
+  to { transform: translate(-50%, -50%) rotate(346deg); }
+}
+
+@keyframes dust-orbit-reverse {
+  from { transform: translate(-50%, -50%) rotate(170deg); }
+  to { transform: translate(-50%, -50%) rotate(-190deg); }
+}
+
+@keyframes disk-spin {
+  from { transform: translate(-50%, -50%) rotate(-8deg); }
+  to { transform: translate(-50%, -50%) rotate(352deg); }
+}
+
+@keyframes disk-spin-reverse {
+  from { transform: translate(-50%, -50%) rotate(18deg); }
+  to { transform: translate(-50%, -50%) rotate(-342deg); }
+}
+
+@keyframes lens-wobble {
+  0%, 100% { transform: translate(-50%, -50%) rotateX(67deg) rotateZ(-8deg) scale(.96); opacity: .55; }
+  50% { transform: translate(-50%, -50%) rotateX(72deg) rotateZ(8deg) scale(1.06); opacity: .9; }
+}
+
+@keyframes horizon-breathe {
+  0%, 100% { scale: .97; }
+  50% { scale: 1.04; }
+}
+
+@keyframes singularity-flash {
+  0%, 46%, 49%, 77%, 80%, 100% { box-shadow: 0 0 .5rem rgba(174, 255, 223, .18); }
+  47%, 78% { box-shadow: 0 0 1.1rem rgba(174, 255, 223, .72); }
+}
+
+@keyframes gravity-pulse {
+  0%, 24% { opacity: 0; scale: .6; }
+  28% { opacity: .6; }
+  72%, 100% { opacity: 0; scale: 3.8; }
+}
+
+@keyframes jet-burst {
+  0%, 67%, 100% { opacity: 0; scale: .2 0; }
+  70% { opacity: .75; scale: .7 .45; }
+  76% { opacity: .9; scale: 1 1; }
+  84% { opacity: 0; scale: .65 1.35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .galaxy-nebula,
+  .outer-dust,
+  .accretion-disk,
+  .lensing-ring,
+  .event-horizon,
+  .singularity,
+  .gravity-wave,
+  .relativistic-jet,
+  .star {
+    animation: none;
+  }
+  .relativistic-jet,
+  .gravity-wave { display: none; }
 }

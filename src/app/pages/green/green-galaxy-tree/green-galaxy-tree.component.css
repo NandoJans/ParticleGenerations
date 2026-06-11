@@ -43,10 +43,6 @@
   border-left: 1px solid var(--background-color-4);
 }
 
-.upgrade-row > app-upgrade {
-
-}
-
 .upgrade-row {
   width: 100%;
   padding: 0;
@@ -110,6 +106,7 @@
   width: 100%;
   overflow: auto;
   z-index: 51;
+  pointer-events: none;
 }
 
 .star-details {
@@ -122,6 +119,7 @@
   border-radius: 0 0 0.5rem 0.5rem;
   border: 1px solid var(--background-color-4);
   border-top: none;
+  pointer-events: auto;
 }
 
 .star-details.red .star-name {
@@ -160,27 +158,6 @@
   height: 10000px;
   pointer-events: none;
   display: block;
-}
-
-.respec-button {
-  position: absolute;
-  left: .1rem;
-  margin: 1rem;
-  z-index: 50;
-}
-
-.saved-button {
-  position: absolute;
-  margin: 1rem auto;
-  transform: translate(-50%, 0);
-  z-index: 50;
-}
-
-.recenter-button {
-  position: absolute;
-  right: .1rem;
-  margin: 1rem;
-  z-index: 50;
 }
 
 .modal {
@@ -262,6 +239,60 @@
   --tree-cyan: #48e8d2;
 }
 
+:host.main-screen-expanded {
+  position: fixed;
+  inset: var(--header-height) 0 var(--footer-height);
+  z-index: 90;
+  min-height: 0;
+  overflow: hidden;
+  background: #05080b;
+}
+
+:host.main-screen-expanded .tree-header {
+  display: none;
+}
+
+:host.main-screen-expanded .tree-controls {
+  position: absolute;
+  top: .75rem;
+  right: .75rem;
+  left: .75rem;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: .5rem;
+  pointer-events: none;
+}
+
+:host.main-screen-expanded .tree-toolbar {
+  order: 2;
+  width: auto;
+  max-width: calc(100% - 1.5rem);
+  margin: 0;
+  background: rgba(4, 12, 9, .9);
+  box-shadow: 0 0 24px rgba(0, 0, 0, .55);
+  pointer-events: auto;
+}
+
+:host.main-screen-expanded .toolbar-label {
+  display: none;
+}
+
+:host.main-screen-expanded .tree-viewport {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  margin: 0;
+  border: 0;
+}
+
+:host.main-screen-expanded .star-overlay {
+  position: static;
+  order: 1;
+  overflow: visible;
+}
+
 .tree-header {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -312,4 +343,19 @@
   .tree-toolbar { align-items: stretch; flex-direction: column; margin: .75rem 1rem; }
   .toolbar-actions { display: grid; grid-template-columns: repeat(3, 1fr); }
   .tree-viewport { width: calc(100% - 2rem); }
+  :host.main-screen-expanded .tree-controls {
+    top: .5rem;
+    right: .5rem;
+    left: .5rem;
+  }
+  :host.main-screen-expanded .tree-toolbar {
+    align-self: stretch;
+    max-width: none;
+  }
+  :host.main-screen-expanded .toolbar-actions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  :host.main-screen-expanded .tree-viewport {
+    width: 100%;
+  }
 }

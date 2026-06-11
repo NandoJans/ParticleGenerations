@@ -34,6 +34,12 @@ div p span.effect {
   --accent-color: var(--text-color-green);
 }
 
+.blue {
+  color: var(--text-color-blue);
+  --accent-color: var(--accent-color-blue);
+  text-shadow: 0 0 8px rgba(92, 184, 227, .4);
+}
+
 .dark {
   color: var(--background-color-3);
   text-shadow:

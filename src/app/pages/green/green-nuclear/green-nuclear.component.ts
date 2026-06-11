@@ -41,7 +41,12 @@ export class GreenNuclearComponent {
       Num.ZERO
     );
     const tierBonus = Num.ONE.add(extraTiers.mul(NuclearConfig.potentialTierWeight));
-    return darkStarGain.mul(tierBonus).floor();
+    return darkStarGain.mul(tierBonus).mul(this.getPotentialGainMultiplier()).floor();
+  }
+
+  getPotentialGainMultiplier(): Num {
+    const upgrade = UpgradeRecord.nuclearPotentialGainNuclear;
+    return upgrade.buffer.pow(upgrade.amount);
   }
 
   canScram(): boolean {

@@ -32,6 +32,7 @@ export class MultiplierRecord {
   static totalDarkEnergyCost: Multiplier = new Multiplier('totalDarkEnergyCost', new Num(0, 0), 50);
   static greenGenerators: Multiplier = new Multiplier('greenGenerators', new Num(1, 0));
   static darkChargerEffects: Multiplier = new Multiplier('darkChargerEffects', new Num(1, 0));
+  static nuclearFissionGain: Multiplier = new Multiplier('nuclearFissionGain', new Num(1, 0));
 
   // Star Challenge Charger
   static starChallengeHoldingSpeed: Multiplier = new Multiplier('starChallengeHoldingSpeed', new Num(1, 0), 3);
@@ -64,6 +65,7 @@ export class MultiplierRecord {
     MultiplierRecord.totalDarkEnergyCost,
     MultiplierRecord.greenGenerators,
     MultiplierRecord.darkChargerEffects,
+    MultiplierRecord.nuclearFissionGain,
 
     // Star Challenge Charger
     MultiplierRecord.starChallengeHoldingSpeed,

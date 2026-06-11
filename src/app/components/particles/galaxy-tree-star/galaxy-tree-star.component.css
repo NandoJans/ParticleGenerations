@@ -97,9 +97,10 @@ div.container {
 }
 
 .star.buyable {
-  --core-color: #d4fdc9; /* bright yellow core */
-  --rim-color: #86ff3a;
-  --glow-color: rgba(64, 255, 0, 0.2);
+  --core-color: #f0ffe9;
+  --rim-color: #9dff5f;
+  --glow-color: rgba(100, 255, 46, 0.38);
+  filter: saturate(1.25) brightness(1.16);
 }
 
 .upgrade.star.buyable:hover {
@@ -145,9 +146,11 @@ body {
 }
 
 .upgrade:not(.maxed):not(.buyable) {
-  --core-color: #888888;
-  --rim-color: #505050;
-  --glow-color: rgba(0, 0, 0, 0.2);
+  --core-color: #626662;
+  --rim-color: #383c38;
+  --glow-color: rgba(0, 0, 0, 0.12);
+  filter: saturate(0.3) brightness(0.62);
+  opacity: 0.7;
   cursor: pointer;
 }
 

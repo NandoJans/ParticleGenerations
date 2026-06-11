@@ -1,58 +1,293 @@
 div.challenge {
-  background-color: var(--background-color-1);
-  border: 5px solid var(--background-color-2);
-  border-radius: 10px;
+  --challenge-color: var(--sun-color);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  box-sizing: border-box;
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--challenge-color) 8%, transparent), transparent 34%),
+    linear-gradient(155deg, #171817, #080909 72%);
+  border: 1px solid color-mix(in srgb, var(--challenge-color) 42%, #51585a);
+  border-radius: .2rem;
   width: 26rem;
   margin: 1rem;
   height: 38rem;
+  color: #a6adab;
+  box-shadow: inset 0 0 30px rgba(0, 0, 0, .6), 0 5px 18px rgba(0, 0, 0, .28);
+}
+
+div.challenge::before {
+  content: "";
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: .28rem;
+  background: linear-gradient(90deg, transparent 5%, var(--challenge-color) 5% 32%, transparent 32% 36%, color-mix(in srgb, var(--challenge-color) 55%, white) 36% 77%, transparent 77% 82%, var(--challenge-color) 82% 95%, transparent 95%);
+  opacity: .75;
+  box-shadow: 0 0 10px color-mix(in srgb, var(--challenge-color) 30%, transparent);
 }
 
 div.details {
-  background-color: var(--background-color-3);
-  color: var(--text-color-light);
+  position: relative;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  width: 90%;
-  height: 53%;
-  padding: 5%;
-  border-radius: 0 0 5px 5px;
+  gap: .7rem;
+  width: 100%;
+  min-height: 22rem;
+  padding: 1.1rem;
+  border-top: 1px solid color-mix(in srgb, var(--challenge-color) 22%, transparent);
+  background: rgba(7, 9, 9, .88);
+  text-align: left;
 }
 
-div.details p, button {
-  margin: 0.2rem;
+div.details p {
+  margin: .25rem 0 0;
+  line-height: 1.3;
 }
 
 div.star-wrapper {
-  height: 40%;
+  position: relative;
+  flex: 0 0 15rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 48%, color-mix(in srgb, var(--challenge-color) 12%, transparent), transparent 35%),
+    repeating-linear-gradient(0deg, transparent 0 23px, rgba(255, 255, 255, .018) 24px),
+    #060809;
 }
 
 div.star {
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
   border-radius: 50%;
   margin: 0 auto;
+  animation:
+    stellar-pulse var(--pulse-duration) ease-in-out var(--pulse-delay) infinite,
+    stellar-flicker var(--flicker-duration) linear var(--flicker-delay) infinite;
 }
 
+.stellar-corona {
+  position: absolute;
+  z-index: 1;
+  width: 9rem;
+  height: 9rem;
+  border-radius: 50%;
+  background:
+    repeating-conic-gradient(from 12deg, color-mix(in srgb, var(--challenge-color) 20%, transparent) 0 4deg, transparent 4deg 13deg),
+    radial-gradient(circle, color-mix(in srgb, var(--challenge-color) 28%, transparent), transparent 68%);
+  filter: blur(6px);
+  opacity: .65;
+  animation:
+    corona-turn var(--corona-turn-duration) linear var(--corona-delay) infinite,
+    corona-breathe var(--corona-breathe-duration) ease-in-out var(--corona-delay) infinite;
+}
+
+.surface-texture,
+.surface-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.surface-texture {
+  background:
+    radial-gradient(circle at 18% 28%, rgba(255, 255, 255, .3) 0 1.5%, transparent 3%),
+    radial-gradient(circle at 62% 18%, rgba(255, 255, 255, .18) 0 2%, transparent 4%),
+    radial-gradient(circle at 72% 62%, rgba(80, 15, 0, .2) 0 2.5%, transparent 5%),
+    radial-gradient(circle at 35% 75%, rgba(255, 255, 255, .18) 0 2%, transparent 4%),
+    repeating-radial-gradient(ellipse at 35% 40%, rgba(255, 255, 255, .09) 0 1.5%, rgba(90, 20, 0, .05) 2% 3.5%, transparent 4% 7%);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 42% 38%;
+  mix-blend-mode: overlay;
+  opacity: .85;
+  animation: surface-drift var(--texture-duration) linear var(--texture-delay) infinite;
+}
+
+.surface-glow {
+  background:
+    radial-gradient(circle at 34% 26%, rgba(255, 255, 255, .42), transparent 24%),
+    radial-gradient(circle at 50% 55%, transparent 48%, rgba(60, 0, 0, .28) 82%, rgba(0, 0, 0, .5) 100%);
+  mix-blend-mode: soft-light;
+}
+
+.sunspot-group {
+  position: absolute;
+  z-index: 3;
+  opacity: 0;
+  animation: sunspot-cycle var(--spot-duration) ease-in-out var(--spot-delay) infinite;
+}
+
+.sunspot-group i {
+  position: absolute;
+  display: block;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(20, 5, 3, .86), rgba(77, 19, 5, .55) 45%, transparent 72%);
+  box-shadow: 0 0 .18rem rgba(255, 169, 74, .28);
+}
+
+.spots-one { top: 31%; left: 24%; width: 28%; height: 20%; }
+.spots-one i:nth-child(1) { width: 42%; height: 55%; left: 0; top: 20%; }
+.spots-one i:nth-child(2) { width: 27%; height: 36%; left: 43%; top: 0; }
+.spots-one i:nth-child(3) { width: 22%; height: 30%; right: 0; bottom: 0; }
+
+.spots-two {
+  right: 20%;
+  bottom: 25%;
+  width: 22%;
+  height: 18%;
+  animation-delay: var(--second-spot-delay);
+  animation-duration: var(--second-spot-duration);
+}
+.spots-two i:nth-child(1) { width: 48%; height: 55%; left: 0; bottom: 0; }
+.spots-two i:nth-child(2) { width: 34%; height: 38%; right: 0; top: 0; }
+
+.solar-flare {
+  position: absolute;
+  z-index: 1;
+  width: 4.2rem;
+  height: 2.3rem;
+  border: .28rem solid color-mix(in srgb, var(--challenge-color) 70%, white);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  border-radius: 60% 45% 55% 35%;
+  opacity: 0;
+  filter: drop-shadow(0 0 .45rem var(--challenge-color));
+  transform-origin: 100% 100%;
+  animation: flare-burst var(--flare-duration) ease-out var(--flare-delay) infinite;
+}
+
+.flare-one {
+  top: 22%;
+  right: calc(50% - 4.8rem);
+  transform: rotate(34deg) scale(.2);
+}
+
+.flare-two {
+  bottom: 21%;
+  left: calc(50% - 5rem);
+  width: 3rem;
+  height: 1.7rem;
+  transform: rotate(205deg) scale(.2);
+  animation-delay: var(--second-flare-delay);
+  animation-duration: var(--second-flare-duration);
+}
+
+.catalog-label,
+.target-code {
+  position: absolute;
+  z-index: 3;
+  color: color-mix(in srgb, var(--challenge-color) 58%, #7d8985);
+  font: 700 .7rem monospace;
+  letter-spacing: .14em;
+}
+
+.catalog-label { top: 1rem; left: 1rem; }
+.target-code { right: 1rem; bottom: .8rem; }
+
+.orbit {
+  position: absolute;
+  z-index: 1;
+  border: 1px solid color-mix(in srgb, var(--challenge-color) 24%, transparent);
+  border-radius: 50%;
+  transform: rotate(-18deg);
+}
+
+.orbit-outer { width: 12rem; height: 7rem; }
+.orbit-inner { width: 8.5rem; height: 4rem; transform: rotate(28deg); }
+
+div.name {
+  padding-bottom: .65rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--challenge-color) 20%, transparent);
+}
+
+div.name span,
+.data-row > span,
+.goal > span {
+  color: #747d79;
+  font: 700 .68rem monospace;
+  letter-spacing: .13em;
+}
+
+div.name h2 {
+  margin: .25rem 0 0;
+  color: var(--challenge-color);
+  font-size: 1.35rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.data-row {
+  padding-left: .75rem;
+  border-left: 2px solid color-mix(in srgb, var(--challenge-color) 38%, transparent);
+}
+
+.reward p,
+.effect p {
+  color: color-mix(in srgb, var(--challenge-color) 52%, #d4dcda);
+}
+
+.goal {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  margin-top: auto;
+  padding: .65rem .75rem;
+  border: 1px solid color-mix(in srgb, var(--challenge-color) 20%, transparent);
+  background: color-mix(in srgb, var(--challenge-color) 5%, #090b0b);
+}
+
+.goal span { grid-column: 1 / -1; }
+.goal strong { color: color-mix(in srgb, var(--challenge-color) 72%, white); font: 700 1.15rem monospace; }
+.goal p { color: #88918e; font-family: monospace; }
+
 div.start button {
-  background-color: var(--background-color-2);
-  color: var(--text-color-main);
-  border: 2px solid var(--background-color-light);
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
+  width: 100%;
+  min-height: 3rem;
+  margin: 0;
+  padding: .65rem 1rem;
+  border: 1px solid color-mix(in srgb, var(--challenge-color) 62%, #646e6b);
+  border-radius: .1rem;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--challenge-color) 12%, #161a18), #090b0a);
+  color: color-mix(in srgb, var(--challenge-color) 72%, white);
+  font-family: monospace;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
   cursor: pointer;
-  width: 10rem;
+  box-shadow: inset 0 -2px 0 color-mix(in srgb, var(--challenge-color) 24%, transparent);
 }
 
 div.start button.completed {
-  background-color: var(--background-color-green);
-  color: var(--text-color-main);
-  border: 2px solid var(--accent-color-green);
+  background: linear-gradient(145deg, rgba(100, 210, 74, .2), #091109);
+  color: #a7ff96;
+  border-color: var(--accent-color-green);
 }
 
-div.challenge.proxima-centauri div.name h2 {
-  color: var(--proxima-centauri-color);
+div.challenge.proxima-centauri {
+  --challenge-color: var(--proxima-centauri-color);
+  --pulse-duration: 4.3s;
+  --pulse-delay: -1.1s;
+  --texture-duration: 15.5s;
+  --texture-delay: -8s;
+  --corona-turn-duration: 22s;
+  --corona-breathe-duration: 3.8s;
+  --corona-delay: -2.4s;
+  --spot-duration: 10.7s;
+  --spot-delay: -3.2s;
+  --second-spot-duration: 14.2s;
+  --second-spot-delay: -9.1s;
+  --flare-duration: 9.8s;
+  --flare-delay: -2s;
+  --second-flare-duration: 13.1s;
+  --second-flare-delay: -10.4s;
+  --flicker-duration: 6.1s;
+  --flicker-delay: -4.7s;
 }
 
 div.challenge.proxima-centauri div.star {
@@ -62,14 +297,31 @@ div.challenge.proxima-centauri div.star {
     var(--proxima-centauri-color) 70%,
     rgb(199, 24, 8) 100%
   );
-  box-shadow: 0 0 15px var(--proxima-centauri-color);
+  box-shadow: inset -.7rem -.5rem 1.2rem rgba(93, 10, 0, .5), 0 0 15px var(--proxima-centauri-color);
   width: 6rem;
   height: 6rem;
   margin: 2rem auto;
 }
 
-div.challenge.lalande div.name h2 {
-  color: var(--lalande-color);
+div.challenge.lalande {
+  --challenge-color: var(--lalande-color);
+  --pulse-duration: 5.8s;
+  --pulse-delay: -3.6s;
+  --texture-duration: 21s;
+  --texture-delay: -13s;
+  --corona-turn-duration: 29s;
+  --corona-breathe-duration: 5.2s;
+  --corona-delay: -8.5s;
+  --spot-duration: 13.4s;
+  --spot-delay: -8.6s;
+  --second-spot-duration: 17.8s;
+  --second-spot-delay: -2.3s;
+  --flare-duration: 15.6s;
+  --flare-delay: -5s;
+  --second-flare-duration: 11.7s;
+  --second-flare-delay: -7.9s;
+  --flicker-duration: 8.7s;
+  --flicker-delay: -1.9s;
 }
 
 div.challenge.lalande div.star {
@@ -79,14 +331,31 @@ div.challenge.lalande div.star {
     var(--lalande-color) 70%,
     rgb(218, 45, 15) 100%
   );
-  box-shadow: 0 0 35px var(--lalande-color);
+  box-shadow: inset -.8rem -.6rem 1.4rem rgba(112, 20, 0, .42), 0 0 35px var(--lalande-color);
   width: 8rem;
   height: 8rem;
   margin: 2rem auto;
 }
 
-div.challenge.sun div.name h2 {
-  color: var(--sun-color);
+div.challenge.sun {
+  --challenge-color: var(--sun-color);
+  --pulse-duration: 6.6s;
+  --pulse-delay: -5.2s;
+  --texture-duration: 25s;
+  --texture-delay: -4s;
+  --corona-turn-duration: 34s;
+  --corona-breathe-duration: 5.9s;
+  --corona-delay: -13s;
+  --spot-duration: 16.3s;
+  --spot-delay: -5.8s;
+  --second-spot-duration: 12.6s;
+  --second-spot-delay: -10.7s;
+  --flare-duration: 12.9s;
+  --flare-delay: -8s;
+  --second-flare-duration: 18.4s;
+  --second-flare-delay: -3.1s;
+  --flicker-duration: 10.2s;
+  --flicker-delay: -7.4s;
 }
 
 div.challenge.sun div.star {
@@ -96,14 +365,31 @@ div.challenge.sun div.star {
     var(--sun-color) 70%,
     rgb(255, 255, 0) 100%
   );
-  box-shadow: 0 0 35px var(--sun-color);
+  box-shadow: inset -1rem -.7rem 1.6rem rgba(145, 86, 0, .38), 0 0 35px var(--sun-color);
   width: 10rem;
   height: 10rem;
   margin: 2rem auto;
 }
 
-div.challenge.sirius div.name h2 {
-  color: var(--sirius-color);
+div.challenge.sirius {
+  --challenge-color: var(--sirius-color);
+  --pulse-duration: 3.7s;
+  --pulse-delay: -2.8s;
+  --texture-duration: 12.8s;
+  --texture-delay: -10s;
+  --corona-turn-duration: 19s;
+  --corona-breathe-duration: 3.3s;
+  --corona-delay: -6.6s;
+  --spot-duration: 9.6s;
+  --spot-delay: -7.4s;
+  --second-spot-duration: 11.3s;
+  --second-spot-delay: -4.8s;
+  --flare-duration: 8.7s;
+  --flare-delay: -6.1s;
+  --second-flare-duration: 12.2s;
+  --second-flare-delay: -1.5s;
+  --flicker-duration: 5.4s;
+  --flicker-delay: -3.3s;
 }
 
 div.challenge.sirius div.star {
@@ -113,7 +399,7 @@ div.challenge.sirius div.star {
     var(--sirius-color) 70%,
     rgb(0, 0, 255) 100%
   );
-  box-shadow: 0 0 35px var(--sirius-color);
+  box-shadow: inset -1rem -.8rem 1.8rem rgba(18, 50, 145, .42), 0 0 35px var(--sirius-color);
   width: 12rem;
   height: 12rem;
   margin: 2rem auto;
@@ -123,12 +409,6 @@ div.challenge.enhancing-green {
   border-color: var(--accent-color-green);
   box-shadow: 0 0 18px rgba(100, 210, 74, 0.18);
   cursor: pointer;
-}
-
-div.challenge.enhancing-green div.details {
-  background:
-    linear-gradient(rgba(100, 210, 74, 0.06), rgba(100, 210, 74, 0.06)),
-    var(--background-color-3);
 }
 
 div.challenge.enhancing-green div.start button {
@@ -151,4 +431,67 @@ div.challenge.enhanced-yellow {
 
 div.challenge.enhanced-green {
   --enhancement-color: var(--accent-color-green);
+}
+
+div.challenge.proxima-centauri .stellar-corona { width: 7.5rem; height: 7.5rem; }
+div.challenge.lalande .stellar-corona { width: 9.5rem; height: 9.5rem; }
+div.challenge.sun .stellar-corona { width: 11.5rem; height: 11.5rem; }
+div.challenge.sirius .stellar-corona { width: 13.5rem; height: 13.5rem; }
+
+@keyframes stellar-pulse {
+  0%, 100% { transform: scale(.99); }
+  50% { transform: scale(1.015); }
+}
+
+@keyframes stellar-flicker {
+  0%, 17%, 21%, 46%, 49%, 73%, 76%, 100% { filter: brightness(.98) saturate(1); }
+  18% { filter: brightness(1.09) saturate(1.06); }
+  20% { filter: brightness(1.02) saturate(1.02); }
+  47% { filter: brightness(1.14) saturate(1.08); }
+  48% { filter: brightness(1.04) saturate(1.03); }
+  74% { filter: brightness(1.08) saturate(1.05); }
+  75% { filter: brightness(1.01) saturate(1.01); }
+}
+
+@keyframes surface-drift {
+  from { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; transform: rotate(0deg) scale(1.04); }
+  to { background-position: 0 0, 0 0, 0 0, 0 0, 42% 38%; transform: rotate(360deg) scale(1.04); }
+}
+
+@keyframes sunspot-cycle {
+  0%, 12%, 78%, 100% { opacity: 0; transform: translateX(-12%) scale(.65); }
+  24%, 62% { opacity: .78; transform: translateX(0) scale(1); }
+  70% { opacity: .35; transform: translateX(14%) scale(.85); }
+}
+
+@keyframes corona-turn {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes corona-breathe {
+  0%, 100% { opacity: .45; scale: .96; }
+  50% { opacity: .78; scale: 1.06; }
+}
+
+@keyframes flare-burst {
+  0%, 70%, 100% { opacity: 0; scale: .15; }
+  73% { opacity: .9; scale: .55; }
+  78% { opacity: .72; scale: 1; }
+  84% { opacity: 0; scale: 1.35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  div.star,
+  .stellar-corona,
+  .surface-texture,
+  .sunspot-group,
+  .solar-flare {
+    animation: none;
+  }
+  .sunspot-group { opacity: .5; }
+  .solar-flare { display: none; }
+}
+
+@media (max-width: 600px) {
+  div.challenge { width: 100%; margin: 0; }
 }

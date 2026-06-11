@@ -1,27 +1,40 @@
 <div [class]="'challenge '+star.style+' '+(isEnhancing() ? 'enhancing enhancing-'+getEnhancementStyle() : '')+' '+(isEnhanced() ? 'enhanced enhanced-'+star.enhancement?.style : '')">
   <div class="star-wrapper">
+    <span class="catalog-label">STELLAR TARGET</span>
+    <div class="orbit orbit-outer"></div>
+    <div class="orbit orbit-inner"></div>
+    <div class="stellar-corona"></div>
+    <div class="solar-flare flare-one"></div>
+    <div class="solar-flare flare-two"></div>
     <div class="star">
-
+      <div class="surface-texture"></div>
+      <div class="sunspot-group spots-one"><i></i><i></i><i></i></div>
+      <div class="sunspot-group spots-two"><i></i><i></i></div>
+      <div class="surface-glow"></div>
     </div>
+    <span class="target-code">{{ hasMultipleCompletions() ? star.completed + ' / ' + star.maxCompletions : 'SINGLE MISSION' }}</span>
   </div>
   <div class="details">
     <div class="name">
+      <span>CHALLENGE PROFILE</span>
       <h2>{{ star.displayName }}</h2>
     </div>
-    <div class="description">
+    <div class="data-row description">
+      <span>CONDITION</span>
       <p>{{ star.getDescription() }}</p>
     </div>
-    <div class="reward">
+    <div class="data-row reward">
+      <span>REWARD</span>
       <p>{{ star.getRewardDescription() }}</p>
     </div>
-    <div class="effect">
+    <div class="data-row effect">
+      <span>CURRENT EFFECT</span>
       <p>{{ star.getEffectDisplay() }}</p>
     </div>
     <div class="goal">
-      <p>Reach {{ star.goal.toString() }} {{ star.getCurrency().displayName }}</p>
-    </div>
-    <div *ngIf="hasMultipleCompletions()" class="completions">
-      <p>{{ star.completed }} / {{ star.maxCompletions }} Completions</p>
+      <span>MISSION GOAL</span>
+      <strong>{{ star.goal.toString() }}</strong>
+      <p>{{ star.getCurrency().displayName }}</p>
     </div>
     <div class="start">
       <button [class]="'button '+((star.isCompleted()) ? 'completed' : '')" (click)="startChallenge()">{{ getButtonText() }}</button>

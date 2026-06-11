@@ -85,6 +85,41 @@ button:disabled {
   cursor: not-allowed;
 }
 
+app-upgrade button:disabled:not(.maxed) {
+  filter: saturate(0.42) brightness(0.72);
+  opacity: 0.68;
+}
+
+app-generator button:disabled {
+  filter: saturate(0.4) brightness(0.72);
+  opacity: 0.66;
+}
+
+app-upgrade button.locked,
+app-generator button.locked {
+  filter: saturate(0.72) brightness(0.78);
+  opacity: 1;
+}
+
+app-upgrade button:disabled:not(.maxed) h4,
+app-upgrade button:disabled:not(.maxed) p,
+app-generator button:disabled h4,
+app-generator button:disabled p {
+  filter: saturate(1.3) brightness(1.75);
+}
+
+app-upgrade button.buyable,
+app-generator button.buyable {
+  filter: saturate(1.3) brightness(1.2);
+  opacity: 1;
+}
+
+app-upgrade button.blue {
+  --accent-color: var(--accent-color-blue);
+  --text-color: #bdeaff;
+  --background-color: var(--background-color-blue);
+}
+
 button:not(:disabled):focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 3px;
@@ -168,18 +203,50 @@ button.button.success {
 
 .disabled-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(2px);
-  color: white;
-  font-size: 1.5rem;
+  inset: 0;
+  box-sizing: border-box;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: .55rem;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--accent-color, #879297) 38%, transparent);
+  border-top: 3px solid color-mix(in srgb, var(--accent-color, #879297) 72%, #dce4e8);
+  background:
+    repeating-linear-gradient(135deg, transparent 0 13px, rgba(255, 255, 255, .025) 13px 14px),
+    radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--accent-color, #879297) 11%, transparent), transparent 45%),
+    rgba(4, 6, 7, .88);
+  backdrop-filter: blur(2px) saturate(.55);
+  color: color-mix(in srgb, var(--accent-color, #879297) 68%, #e6ecef);
+  font-size: 1.45rem;
+  text-shadow: 0 0 12px color-mix(in srgb, var(--accent-color, #879297) 35%, transparent);
   z-index: 10;
+}
+
+.disabled-overlay::before {
+  color: color-mix(in srgb, var(--accent-color, #879297) 64%, #dce4e8);
+  font: 700 .65rem/1 monospace;
+  letter-spacing: .2em;
+  text-shadow: none;
+}
+
+.disabled-overlay::after {
+  content: "";
+  width: min(7rem, 55%);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent-color, #879297), transparent);
+  opacity: .55;
+  box-shadow: 0 0 8px color-mix(in srgb, var(--accent-color, #879297) 42%, transparent);
+}
+
+.disabled-overlay p {
+  max-width: 90%;
+  margin: 0;
+  color: #b5bec2;
+  font: .72rem/1.35 monospace;
+  text-align: center;
+  text-shadow: none;
 }
 
 span.effect {

@@ -4,7 +4,7 @@ button {
   overflow: hidden;
   box-sizing: border-box;
   width: 13rem;
-  height: 12rem;
+  min-height: 12rem;
   padding: 1.25rem 1rem 1rem;
   border: 1px solid color-mix(in srgb, var(--accent-color) 52%, #65717a);
   border-radius: 0.2rem;
@@ -82,7 +82,6 @@ button p {
 button p.cost,
 button p.effect {
   margin: 0.55rem 0 0;
-  word-break: break-word;
 }
 
 button p.effect {
@@ -105,20 +104,19 @@ button.buyable {
     linear-gradient(155deg, #202426, #0d1011 72%);
   border-color: color-mix(in srgb, var(--accent-color) 82%, white);
   color: var(--text-color);
-  cursor: pointer;
   box-shadow:
     inset 0 -3px 0 color-mix(in srgb, var(--accent-color) 35%, transparent),
-    inset 0 0 28px color-mix(in srgb, var(--accent-color) 7%, transparent),
-    0 0 0 1px color-mix(in srgb, var(--accent-color) 14%, transparent),
+    inset 0 0 32px color-mix(in srgb, var(--accent-color) 12%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--accent-color) 28%, transparent),
     0 5px 14px rgba(0, 0, 0, 0.28);
 }
 
 button.buyable::before {
-  opacity: 0.94;
+  opacity: 1;
 }
 
 button.buyable::after {
-  opacity: 0.62;
+  opacity: 0.78;
 }
 
 button.buyable:not(.maxed):hover {
@@ -169,7 +167,7 @@ button.maxed p.cost {
 /* Compact upgrades read as control modules rather than full research cards. */
 button.sub {
   width: 13rem;
-  height: 5.5rem;
+  min-height: 5.5rem;
   padding: 0.8rem 0.75rem 0.55rem;
   border-radius: 0.1rem;
   font-size: 0.92rem;
@@ -196,7 +194,7 @@ button.sub p.effect {
 
 button.small {
   width: 8rem;
-  height: 4.6rem;
+  min-height: 4.6rem;
   margin: 0.1rem;
   padding: 0.65rem 0.35rem 0.35rem;
   font-size: 0.78rem;
@@ -243,8 +241,7 @@ button.super {
 
 button.unlock {
   width: 20rem;
-  height: 10rem;
-  margin: 3rem;
+  min-height: 10rem;
 }
 
 button.super::before,
@@ -269,6 +266,11 @@ button.red {
   --accent-color: var(--accent-color-red);
   --text-color: var(--text-color-red);
   --background-color: var(--background-color-red);
+}
+
+button.red-accelerator {
+  --accent-color: var(--accent-color-red);
+  --text-color: var(--text-color-red);
 }
 
 button.yellow {

@@ -45,12 +45,18 @@
     <p>Navigate the stellar lattice, invest Dark Energy, and build a permanent constellation of phase-wide effects.</p>
   </div>
 </header>
+<div class="tree-controls">
 <div class="tree-toolbar" aria-label="Galaxy tree controls">
   <div class="toolbar-label"><span></span> NAVIGATION CONTROL</div>
   <div class="toolbar-actions">
     <app-button [text]="'Respec'" [style]="'button green'" (function)="toggleConfirmRespec()"></app-button>
     <app-button [text]="'Saved trees'" [style]="'button green'" (function)="toggleSavedTrees()"></app-button>
     <app-button [text]="'Recenter'" [style]="'button green'" (function)="recenterGalaxyTree()"></app-button>
+    <app-button
+      [text]="isMainScreenExpanded ? 'Exit full screen' : 'Full screen'"
+      [style]="'button green'"
+      (function)="toggleMainScreenExpansion()"
+    ></app-button>
   </div>
 </div>
 @if (isStarSelected()) {
@@ -75,6 +81,7 @@
     </div>
   </div>
 }
+</div>
 <div
   class="galaxy-tree-wrapper tree-viewport"
   #galaxyTreeWrapper

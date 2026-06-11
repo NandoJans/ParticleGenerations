@@ -20,6 +20,8 @@ import {BalanceComponent} from "./dev/balance/balance.component";
 import {DevPhaseComponent} from "./dev/dev-phase/dev-phase.component";
 import {GreenAutomatorsPageComponent} from "./pages/automator/green-automators-page/green-automators-page.component";
 import {GreenNuclearComponent} from "./pages/green/green-nuclear/green-nuclear.component";
+import {BlueParticlesComponent} from "./pages/blue/blue-particles/blue-particles.component";
+import {BlueTimelineComponent} from "./pages/timeline/blue-timeline/blue-timeline.component";
 
 const routes: Routes = [
   { path: '', component: RedComponent },
@@ -37,6 +39,8 @@ const routes: Routes = [
   { path: 'green/generators', component: GreenGeneratorsComponent },
   { path: 'green/darkGalaxy', component: GreenDarkGalaxyPageComponent },
   { path: 'green/nuclear', component: GreenNuclearComponent },
+  // Blue
+  { path: 'blue/particles', component: BlueParticlesComponent },
   // Automators
   { path: 'automators/red' , component: RedAutomatorsComponent },
   { path: 'automators/yellow' , component: YellowAutomatorsComponent },
@@ -45,6 +49,7 @@ const routes: Routes = [
   { path: 'timeline/red', component: RedTimelineComponent },
   { path: 'timeline/yellow', component: YellowTimelineComponent },
   { path: 'timeline/green', component: GreenTimelineComponent },
+  { path: 'timeline/blue', component: BlueTimelineComponent },
 
   // Dev (only in development mode)
   ...(environment.production ? [] : [

@@ -98,6 +98,11 @@ export class PurchaseAvailabilityService {
         ];
       case 'green/nuclear':
         return [UpgradeRecord.greenKey, ...UpgradeRecord.nuclearUpgrades];
+      case 'blue/particles':
+        return [
+          UpgradeRecord.blueBeamIntensity,
+          UpgradeRecord.blueColliderEfficiency,
+        ];
       default:
         return [];
     }

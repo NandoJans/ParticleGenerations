@@ -3,6 +3,7 @@
   [class]="'upgrade '+upgrade.style+' '
   +((getIsBuyable()) ? 'buyable' : '')+' '
   +((getIsMaxed()) ? 'maxed' : '')+' '
+  +((!isEnabled() || !isUnlocked()) ? 'locked' : '')+' '
   +((isEnhancing()) ? 'enhancing enhancing-' + getEnhancementStyle() : '')+' '
   +((isEnhanced()) ? 'enhanced enhanced-' + getEnhancedStyle() : '')+' '
 "

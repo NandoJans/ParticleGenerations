@@ -12,7 +12,11 @@ button {
 
 button.buyable {
   cursor: pointer;
-  box-shadow: inset 0 -3px 0 color-mix(in srgb, currentColor 32%, transparent), 0 0 0 1px color-mix(in srgb, currentColor 12%, transparent);
+  box-shadow:
+    inset 0 -3px 0 color-mix(in srgb, currentColor 48%, transparent),
+    inset 0 0 24px color-mix(in srgb, currentColor 8%, transparent),
+    0 0 0 1px color-mix(in srgb, currentColor 30%, transparent),
+    0 0 14px color-mix(in srgb, currentColor 18%, transparent);
 }
 
 button.buyable:hover {
@@ -36,6 +40,7 @@ button p, button h4 {
 }
 
 button.red {
+  --accent-color: var(--accent-color-red);
   --linear-gradient-to: var(--background-color-red);
   background-color: var(--background-color-red);
   border: 1px solid var(--background-color-red);
@@ -49,6 +54,7 @@ button.red.buyable {
 }
 
 button.yellow {
+  --accent-color: var(--accent-color-yellow);
   --linear-gradient-to: var(--background-color-yellow);
   background-color: var(--background-color-yellow);
   border: 1px solid var(--background-color-yellow);
@@ -62,6 +68,7 @@ button.yellow.buyable {
 }
 
 button.green {
+  --accent-color: var(--accent-color-green);
   --linear-gradient-to: var(--background-color-green);
   background-color: var(--background-color-green);
   border: 1px solid var(--background-color-green);

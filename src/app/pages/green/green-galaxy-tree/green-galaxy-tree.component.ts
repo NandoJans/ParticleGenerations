@@ -1,4 +1,13 @@
-import {Component, ElementRef, OnInit, ViewChild, AfterViewInit, OnDestroy, ChangeDetectorRef} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  HostBinding,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import {Upgrade} from "../../../classes/features/upgrade";
 import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
 import {Holding} from "../../../classes/features/holding";
@@ -32,6 +41,8 @@ interface Star {
   standalone: false
 })
 export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestroy {
+  @HostBinding('class.main-screen-expanded') isMainScreenExpanded = false;
+
   darkEnergy: Holding = HoldingRecord.darkEnergy;
   upgrades: Upgrade[] = [
     UpgradeRecord.redParticleSacrifice,
@@ -124,6 +135,7 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
 
   ngOnInit(): void {
     this.bottomSectionOpen = this.localStorageHelper.load(true, 'bottomSectionOpen');
+    this.isMainScreenExpanded = this.localStorageHelper.load(false, 'mainScreenExpanded');
     // Load persisted pan/zoom
     const saved = this.localStorageHelper.load(null, 'viewport');
     if (saved) {
@@ -164,6 +176,17 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
       cancelAnimationFrame(this.animationFrameId);
     }
     window.removeEventListener('resize', this.resizeHandler);
+  }
+
+  toggleMainScreenExpansion(): void {
+    this.isMainScreenExpanded = !this.isMainScreenExpanded;
+    this.localStorageHelper.save(this.isMainScreenExpanded, 'mainScreenExpanded');
+
+    requestAnimationFrame(() => {
+      this.resizeCanvases();
+      this.updateViewportBounds();
+      this.cdr.detectChanges();
+    });
   }
 
   getStars(): GalaxyTreeUpgrade[] {

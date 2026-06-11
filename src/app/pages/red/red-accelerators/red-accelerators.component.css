@@ -141,7 +141,7 @@ p { color: #a09a9a; }
   .particle { animation-name: particle-flight-mobile; }
   .accelerator-core, .systems-grid { grid-template-columns: 1fr; }
   .resource-readout { border-top: 1px solid rgba(112, 217, 255, .22); border-left: 0; }
-  .upgrade-grid { grid-template-columns: 1fr; }
+  .upgrade-grid { grid-template-columns: 2fr; }
   .accelerator-info { width: 100%; }
 }
 @keyframes particle-flight-mobile { from { left: .2rem; opacity: 0; } 15%, 85% { opacity: 1; } to { left: 5.5rem; opacity: 0; } }

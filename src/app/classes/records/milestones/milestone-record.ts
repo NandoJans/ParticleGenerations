@@ -25,6 +25,7 @@ import {
   FusionAccelerationBoosterDivideYellowFusionGreenMilestone
 } from "../../features/milestones/fusion-acceleration-booster-divide-yellow-fusion-green-milestone";
 import {NoResetGreenMilestone} from "../../features/milestones/no-reset-green-milestone";
+import {BlueMilestone} from "../../features/milestones/blue-milestone";
 
 @Injectable({
   providedIn: 'root'
@@ -480,6 +481,19 @@ export class MilestoneRecord extends Record {
   )
 
   // Blue Phase
+  static stableParticleBeam: BlueMilestone = new BlueMilestone(
+    'stableParticleBeam',
+    'Stable Particle Beam',
+    Num.ONE,
+    'Generate 2 Protons or Electrons per second.'
+  );
+
+  static denseParticleCollision: BlueMilestone = new BlueMilestone(
+    'denseParticleCollision',
+    'Dense Particle Collision',
+    new Num(1, 1),
+    'Generate 5 particles per second and gain twice as many Neutrons from collisions.'
+  );
 
   // Purple Phase
 
@@ -553,6 +567,10 @@ export class MilestoneRecord extends Record {
     MilestoneRecord.fusionAccelerationBoosterDivideYellowFusion,
     MilestoneRecord.startWithStarKeyCompressionUnlocked,
     MilestoneRecord.fusionBoosterAccelerationNoReset,
+
+    // Blue particle milestones
+    MilestoneRecord.stableParticleBeam,
+    MilestoneRecord.denseParticleCollision,
   ];
 
   getList(): Milestone[] {

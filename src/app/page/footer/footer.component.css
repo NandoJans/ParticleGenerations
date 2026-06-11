@@ -10,6 +10,7 @@
 .phase-red { --nav-accent: var(--accent-color-red); }
 .phase-yellow { --nav-accent: var(--accent-color-yellow); }
 .phase-green { --nav-accent: var(--accent-color-green); }
+.phase-blue { --nav-accent: var(--accent-color-blue); }
 .phase-automators { --nav-accent: var(--accent-color-blue); }
 .phase-timeline { --nav-accent: #d4a6ff; }
 .phase-dev { --nav-accent: var(--text-color-light); }

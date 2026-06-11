@@ -60,6 +60,11 @@ export class NuclearUpgrade extends Upgrade {
       case 'darkChargers':
         MultiplierRecord.darkChargerEffects.correct(effect);
         break;
+      case 'nuclearFissionGain':
+        MultiplierRecord.nuclearFissionGain.correct(effect);
+        break;
+      case 'nuclearPotentialGain':
+        break;
       case 'unlockGreenGenerator4':
       case 'unlockGreenGenerator5':
         return undefined;

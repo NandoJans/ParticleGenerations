@@ -1,0 +1,86 @@
+<section class="blue-laboratory">
+  <header class="phase-header">
+    <div class="atom-mark" aria-hidden="true"><span></span><span></span><span></span><i></i></div>
+    <div>
+      <p class="eyebrow">BLUE PHASE // PARTICLE LABORATORY</p>
+      <h1>Subatomic Separation</h1>
+      <p>Each generator or upgrade bought for the first time during this run switches the active particle beam.</p>
+    </div>
+    <div class="beam-status" [class.proton]="bluePhase.activeParticle === 'protons'" [class.electron]="bluePhase.activeParticle === 'electrons'">
+      <span>ACTIVE OUTPUT</span>
+      <strong>{{ getActiveParticleName() }}</strong>
+      <small>{{ bluePhase.getParticleGeneration().toString(2) }}/s</small>
+    </div>
+  </header>
+
+  <div class="particle-grid">
+    <article class="particle-card proton-card" [class.active]="bluePhase.activeParticle === 'protons'">
+      <span class="particle-symbol">p+</span>
+      <app-number-display [holding]="protons"></app-number-display>
+    </article>
+    <article class="particle-card electron-card" [class.active]="bluePhase.activeParticle === 'electrons'">
+      <span class="particle-symbol">e-</span>
+      <app-number-display [holding]="electrons"></app-number-display>
+    </article>
+  </div>
+
+  <article class="collider-panel">
+    <div>
+      <p class="eyebrow">PAIR COLLISION</p>
+      <h2>Collapse Opposing Charges</h2>
+      <p>Consumes the current Blue run and resets all earlier phases. One matched pair becomes one Neutron.</p>
+    </div>
+    <div class="collision-core" aria-hidden="true"><span></span><i></i><b></b></div>
+    <button [class.ready]="bluePhase.canCollide()" [disabled]="!bluePhase.canCollide()" (click)="collide()">
+      <span>COLLIDE PARTICLES</span>
+      <strong>+{{ getCollisionGain().toString(2) }} n</strong>
+    </button>
+  </article>
+
+  <section class="neutron-section">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">PERSISTENT MATTER</p>
+        <h2>Neutron Compression</h2>
+      </div>
+      <div class="stage-readout">
+        <span>CLUMP STAGE</span>
+        <strong>{{ bluePhase.getClumpStage() }}</strong>
+      </div>
+    </div>
+
+    <div class="neutron-grid">
+      <article class="matter-card">
+        <app-number-display [holding]="neutrons"></app-number-display>
+        <button class="deposit-button" [disabled]="!bluePhase.canDepositNeutrons()" (click)="depositAllNeutrons()">
+          DEPOSIT ALL INTO CLUMP
+        </button>
+      </article>
+      <article class="matter-card clump-card">
+        <app-number-display [holding]="neutronClump"></app-number-display>
+        <p>Current output: <strong>{{ bluePhase.getCurrentElementName() }}</strong></p>
+        <p>Next stage: {{ bluePhase.getNextStageRequirement().toString() }} clumped Neutrons</p>
+      </article>
+      <article class="matter-card element-card">
+        <span class="element-symbol">Li</span>
+        <app-number-display [holding]="lithium"></app-number-display>
+        <p>Lithium begins forming at clump stage 1.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="blue-upgrades">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">NEUTRON RESEARCH</p>
+        <h2>Persistent Blue Upgrades</h2>
+      </div>
+      <p>Spend Neutrons here for immediate power, or preserve them for the clump.</p>
+    </div>
+    <div class="upgrade-row">
+      @for (upgrade of upgrades; track upgrade.name) {
+        <app-upgrade [upgrade]="upgrade"></app-upgrade>
+      }
+    </div>
+  </section>
+</section>

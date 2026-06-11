@@ -177,6 +177,8 @@ import {
 import {NuclearUpgrade} from "../../features/upgrades/nuclear-upgrade";
 import {GreenKeyUpgrade} from "../../features/upgrades/green-key-upgrade";
 import {NuclearConfig} from "../../config/nuclear-config";
+import {BlueUpgrade} from "../../features/upgrades/blue-upgrade";
+import {Num} from "../../../num";
 
 @Injectable({
   providedIn: 'root'
@@ -185,12 +187,36 @@ export class UpgradeRecord extends Record {
 
   static greenKey: GreenKeyUpgrade = new GreenKeyUpgrade('green-key-upgrade');
   static nuclearUpgrades: NuclearUpgrade[] = NuclearConfig.upgrades.map(config => new NuclearUpgrade(config));
+  static nuclearFissionGainNuclear: NuclearUpgrade = UpgradeRecord.nuclearUpgrades.find(
+    upgrade => upgrade.config.target === 'nuclearFissionGain'
+  )!;
+  static nuclearPotentialGainNuclear: NuclearUpgrade = UpgradeRecord.nuclearUpgrades.find(
+    upgrade => upgrade.config.target === 'nuclearPotentialGain'
+  )!;
   static unlockFourthGreenGeneratorNuclear: NuclearUpgrade = UpgradeRecord.nuclearUpgrades.find(
     upgrade => upgrade.config.target === 'unlockGreenGenerator4'
   )!;
   static unlockFifthGreenGeneratorNuclear: NuclearUpgrade = UpgradeRecord.nuclearUpgrades.find(
     upgrade => upgrade.config.target === 'unlockGreenGenerator5'
   )!;
+  static blueBeamIntensity: BlueUpgrade = new BlueUpgrade(
+    'blueBeamIntensity',
+    'blue-beam-intensity',
+    'Beam Intensity',
+    'Multiply Proton and Electron generation.',
+    Num.ONE,
+    new Num(1, 1),
+    Num.TWO
+  );
+  static blueColliderEfficiency: BlueUpgrade = new BlueUpgrade(
+    'blueColliderEfficiency',
+    'blue-collider-efficiency',
+    'Collider Efficiency',
+    'Multiply Neutrons gained from collisions.',
+    new Num(5, 0),
+    new Num(2.5, 1),
+    new Num(1.5, 0)
+  );
 
   // Red Generators
   static redGeneratorExtension: RedGeneratorExtensionUpgrade = new RedGeneratorExtensionUpgrade('redGeneratorExtension');
@@ -469,6 +495,10 @@ export class UpgradeRecord extends Record {
     // Nuclear reactor upgrades
     UpgradeRecord.greenKey,
     ...UpgradeRecord.nuclearUpgrades,
+
+    // Blue particle upgrades
+    UpgradeRecord.blueBeamIntensity,
+    UpgradeRecord.blueColliderEfficiency,
 
   ]
 

@@ -168,10 +168,45 @@ export class TimelineService {
     .build()
     .build()
 
+  static blueTimeline: Timeline = TimelineFactory.start(
+    'blue-timeline',
+    Styles.BLUE,
+    'Blue Timeline',
+    'Blue is the fourth phase of the universe. Matter is separated, collided, and compressed into the first heavy elements.'
+  )
+    .addTimelineEvent(
+      'blue-particle-beams',
+      'Particle Beams',
+      'First-time generator and upgrade purchases alternate the active beam between Protons and Electrons.',
+      HoldingRecord.greenParticles,
+      new Num(1, 1000)
+    )
+    .addMilestone(MilestoneRecord.stableParticleBeam)
+    .addMilestone(MilestoneRecord.denseParticleCollision)
+    .build()
+    .addTimelineEvent(
+      'blue-first-collision',
+      'First Collision',
+      'Collide matching Protons and Electrons to create persistent Neutrons and reset the Blue run.',
+      HoldingRecord.neutrons,
+      Num.ONE
+    )
+    .build()
+    .addTimelineEvent(
+      'blue-neutron-clump',
+      'Neutron Clump',
+      'Commit Neutrons to a growing clump. The first logarithmic stage begins Lithium production, establishing the path toward heavier elements.',
+      HoldingRecord.neutronClump,
+      new Num(1, 1)
+    )
+    .build()
+    .build()
+
   static list: Timeline[] = [
     TimelineService.redTimeline,
     TimelineService.yellowTimeline,
     TimelineService.greenTimeline,
+    TimelineService.blueTimeline,
   ]
 
   getList(): Timeline[] {

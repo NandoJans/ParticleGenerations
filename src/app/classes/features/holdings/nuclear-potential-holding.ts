@@ -8,6 +8,7 @@ import {ResetHelper} from '../../helpers/reset-helper';
 import {Styles} from '../../enums/styles';
 import {NuclearConfig} from '../../config/nuclear-config';
 import {HoldingRecord} from '../../records/holdings/holding-record';
+import {MultiplierRecord} from '../../records/multipliers/multiplier-record';
 
 export class NuclearPotentialHolding extends Holding {
   name = 'nuclear-potential';
@@ -24,7 +25,9 @@ export class NuclearPotentialHolding extends Holding {
     .build();
 
   override action(): Num {
-    const generation = this.amount.mul(NuclearConfig.fissionPerPotentialPerSecond);
+    const generation = this.amount
+      .mul(NuclearConfig.fissionPerPotentialPerSecond)
+      .mul(MultiplierRecord.nuclearFissionGain.getNum());
     HoldingRecord.nuclearFission.generate(generation.mul(App.getSpeed()));
     return generation;
   }

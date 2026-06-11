@@ -15,6 +15,7 @@ import {CompressionService} from "./compression.service";
 import {ChargerRecord} from "../classes/records/charger/charger-record";
 import {EnhancementRecord} from "../classes/records/enhancement-record";
 import {EnhancementService} from "./enhancement.service";
+import {BluePhaseService} from "./blue-phase.service";
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,7 @@ export class DataManagerService {
     private timelineService: TimelineService,
     private compressionService: CompressionService,
     private enhancementService: EnhancementService,
+    private bluePhaseService: BluePhaseService,
   ) {}
 
   // --- Simulation mode management ---
@@ -108,6 +110,7 @@ export class DataManagerService {
     this.milestoneRecord.save();
     this.challengeService.save();
     this.compressionService.save();
+    this.bluePhaseService.save();
 
     this.setLastSave();
     this.localStorageHelper.store();
@@ -126,6 +129,7 @@ export class DataManagerService {
     this.milestoneRecord.load();
     this.challengeService.load();
     this.compressionService.load();
+    this.bluePhaseService.load();
 
     // Run milestones
     this.challengeService.applyCurrentChallengeNerfs();
@@ -144,6 +148,7 @@ export class DataManagerService {
     this.prestigeLayersService.init();
     this.timelineService.init();
     this.challengeService.init();
+    this.bluePhaseService.init();
   }
 
   setLastSave(): void {

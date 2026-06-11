@@ -29,6 +29,9 @@ export class NavigationsService {
     green: new Navigation('green', faStar, 'green', [
       {requirement: HoldingRecord.greenPrestiges, amount: new Num(1, 0)},
     ], 'galaxy', false),
+    blue: new Navigation('blue', faAtom, 'blue', [
+      {requirement: HoldingRecord.greenParticles, amount: new Num(1, 1000)},
+    ], 'particles', false),
     automators: new Navigation('automators', faCogs, 'automators', [], 'red', true),
     timeline: new Navigation('timeline', faCalendar, 'timeline', [], 'red', true)
 }
@@ -71,6 +74,11 @@ export class NavigationsService {
       {requirement: HoldingRecord.greenParticles, amount: new Num(1, 80)},
     ], false),
 
+    // Blue
+    blueParticles: new SubNavigation('blueParticles', faAtom, 'particles', this.navigations['blue'], [
+      {requirement: HoldingRecord.greenParticles, amount: new Num(1, 1000)},
+    ], false),
+
     // Automators
     redAutomators: new SubNavigation('redParticles', faAtom, 'red', this.navigations['automators'], [], true),
     yellowAutomators: new SubNavigation('yellowAutomators', faSun, 'yellow', this.navigations['automators'], [
@@ -87,6 +95,9 @@ export class NavigationsService {
     ], false),
     greenTimeline: new SubNavigation('greenTimeline', faStar, 'green', this.navigations['timeline'], [
       {requirement: HoldingRecord.greenPrestiges, amount: new Num(1, 0)},
+    ], false),
+    blueTimeline: new SubNavigation('blueTimeline', faAtom, 'blue', this.navigations['timeline'], [
+      {requirement: HoldingRecord.greenParticles, amount: new Num(1, 1000)},
     ], false),
 
   }

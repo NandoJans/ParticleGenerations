@@ -59,6 +59,10 @@ export class YellowPowerUpgrade extends Upgrade {
 
   override limit: Num = new Num(4, 1);
 
+  override isMaxed(): boolean {
+    return this.bought.greq(this.limit) || this.amount.greq(this.limit);
+  }
+
   override action(): Num | undefined {
     const effect = this.buffer.mul(this.amount)
     HoldingRecord.yellowPower.yellowPower = HoldingRecord.yellowPower.yellowPower.add(effect);

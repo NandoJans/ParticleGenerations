@@ -26,6 +26,7 @@ import {MilestoneService} from "./interactables/milestone.service";
 import {Milestone} from "../classes/features/milestone";
 import {ChargerService} from "./charger.service";
 import {Charger} from "../classes/features/charger";
+import {BluePhaseService} from "./blue-phase.service";
 
 @Injectable({
   providedIn: 'root'
@@ -53,7 +54,8 @@ export class TickService {
     private challengeService: ChallengeService,
     private compressionService: CompressionService,
     private milestoneService: MilestoneService,
-    private chargerService: ChargerService
+    private chargerService: ChargerService,
+    private bluePhaseService: BluePhaseService
   ) {}
 
   /**
@@ -92,12 +94,11 @@ export class TickService {
     this.challengeService.tick();
     this.timelineService.tick();
     this.enhancementService.tick();
+    this.bluePhaseService.tick(speed);
     this.compressionService.tick(speed);
     this.componentService.reloadComponents();
     this.firstTick = false;
 
-    HoldingRecord.greenKeys.amount = new Num(1, 0);
-    HoldingRecord.greenParticles.amount = new Num(1, 80);
 
   }
 

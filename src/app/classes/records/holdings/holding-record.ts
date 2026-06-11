@@ -17,6 +17,13 @@ import {DarkStarHolding} from "../../features/holdings/dark-star-holding";
 import {NuclearPotentialHolding} from "../../features/holdings/nuclear-potential-holding";
 import {NuclearFissionHolding} from "../../features/holdings/nuclear-fission-holding";
 import {GreenKeyHolding} from "../../features/holdings/green-key-holding";
+import {
+  ElectronHolding,
+  LithiumHolding,
+  NeutronClumpHolding,
+  NeutronHolding,
+  ProtonHolding
+} from "../../features/holdings/blue-holdings";
 
 @Injectable({
   providedIn: 'root'
@@ -46,6 +53,13 @@ export class HoldingRecord {
   static nuclearFission: NuclearFissionHolding = new NuclearFissionHolding();
   static greenKeys: GreenKeyHolding = new GreenKeyHolding();
 
+  // Blue Phase
+  static protons: ProtonHolding = new ProtonHolding();
+  static electrons: ElectronHolding = new ElectronHolding();
+  static neutrons: NeutronHolding = new NeutronHolding();
+  static neutronClump: NeutronClumpHolding = new NeutronClumpHolding();
+  static lithium: LithiumHolding = new LithiumHolding();
+
   static getList(): Holding[] {
     return [
       HoldingRecord.redParticles,
@@ -67,6 +81,12 @@ export class HoldingRecord {
       HoldingRecord.nuclearPotential,
       HoldingRecord.nuclearFission,
       HoldingRecord.greenKeys,
+
+      HoldingRecord.protons,
+      HoldingRecord.electrons,
+      HoldingRecord.neutrons,
+      HoldingRecord.neutronClump,
+      HoldingRecord.lithium,
     ]
   }
 

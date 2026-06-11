@@ -1,9 +1,23 @@
-<div class="challenge {{ challenge.style }}">
+<div class="challenge {{ challenge.style }}" [class.active]="isDarkChallenge()">
   <div class="name">
+    <span>DARK GALAXY PROTOCOL</span>
     <h2>{{ challenge.displayName }}</h2>
   </div>
   <div class="galaxy-wrapper">
+    <span class="signal-code">{{ isDarkChallenge() ? 'LINK ACTIVE' : 'AWAITING ENTRY' }}</span>
     <div class="galaxy-nebula"></div>
+    <div class="outer-dust dust-one"></div>
+    <div class="outer-dust dust-two"></div>
+    <div class="gravity-wave wave-one"></div>
+    <div class="gravity-wave wave-two"></div>
+    <div class="relativistic-jet jet-top"></div>
+    <div class="relativistic-jet jet-bottom"></div>
+    <div class="accretion-disk disk-outer"></div>
+    <div class="accretion-disk disk-inner"></div>
+    <div class="lensing-ring"></div>
+    <div class="event-horizon">
+      <div class="singularity"></div>
+    </div>
 
     <div class="galaxy-stars">
       @for (star of stars; track star.id) {
@@ -20,10 +34,12 @@
     </div>
   </div>
   <div class="details">
-    <div class="description">
+    <div class="data-row description">
+      <span>CONDITION</span>
       <p>{{ challenge.getDescription() }}</p>
     </div>
-    <div class="reward">
+    <div class="data-row reward">
+      <span>REWARD</span>
       <p>{{ challenge.getRewardDescription() }}</p>
     </div>
     <div class="start">
