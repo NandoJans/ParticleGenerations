@@ -1,20 +1,82 @@
-<div class="resource-card">
-  <app-number-display [holding]="darkMatter"></app-number-display>
-  <app-fastest-prestige [prestige]="greenPrestige"></app-fastest-prestige>
-</div>
-<div class="generator-card">
-  <div class="generator" *ngFor="let generator of generators">
-    <app-generator *ngIf="generator.isUnlocked()" [generator]="generator"></app-generator>
-    <div class="upgrades">
-      <app-upgrade *ngIf="generator.isUnlocked()" [upgrade]="generator.multiplierUpgrade"></app-upgrade>
-      <app-upgrade *ngIf="generator.isUnlocked()" [upgrade]="generator.buyMultiplierUpgrade"></app-upgrade>
-      <app-upgrade *ngIf="generator.isUnlocked()" [upgrade]="generator.costDivisorUpgrade"></app-upgrade>
+<section class="matter-shell">
+  <header class="matter-header">
+    <div class="singularity-mark" aria-hidden="true">
+      <span class="event-horizon"></span>
+      <span class="matter-orbit orbit-one"></span>
+      <span class="matter-orbit orbit-two"></span>
     </div>
+    <div class="header-copy">
+      <p class="eyebrow">GREEN PHASE // CONTAINMENT ONLINE</p>
+      <h1>Dark Matter Foundry</h1>
+      <p>Condense green particles into dark matter and feed a self-reinforcing production chain beyond the solar phase.</p>
+    </div>
+  </header>
+
+  <section class="matter-console">
+    <div class="console-copy">
+      <span class="status-light" aria-hidden="true"></span>
+      <div>
+        <p class="eyebrow">ACTIVE RESERVE</p>
+        <strong>Dark Matter Containment</strong>
+      </div>
+    </div>
+    <div class="resource-readout">
+      <app-number-display [holding]="darkMatter"></app-number-display>
+      <app-fastest-prestige [prestige]="greenPrestige"></app-fastest-prestige>
+    </div>
+  </section>
+
+  <div class="flow-guide" aria-label="Production flow">
+    <span>DEEP GENERATORS</span>
+    <div class="flow-line"><i></i></div>
+    <strong>GRAVITY CASCADE</strong>
+    <div class="flow-line reverse"><i></i></div>
+    <span>DARK MATTER</span>
   </div>
-</div>
-<div class="upgrade-row">
-  <div *ngFor="let upgrade of upgrades">
-    <app-upgrade [upgrade]="upgrade"></app-upgrade>
+
+  <section class="generator-bay">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">CONTAINMENT ARRAY</p>
+        <h2>Green Generators</h2>
+      </div>
+      <span class="section-code">GG-01 / GG-03</span>
+    </div>
+
+    <div class="generator-stack">
+      <article class="generator-card" *ngFor="let generator of generators; let index = index">
+        <div class="tier-rail">
+          <span>0{{ index + 1 }}</span>
+          <i></i>
+        </div>
+        <div class="generator-module">
+          <app-generator *ngIf="generator.isUnlocked()" [generator]="generator"></app-generator>
+          <div class="upgrades" *ngIf="generator.isUnlocked()">
+            <app-upgrade [upgrade]="generator.multiplierUpgrade"></app-upgrade>
+            <app-upgrade [upgrade]="generator.buyMultiplierUpgrade"></app-upgrade>
+            <app-upgrade [upgrade]="generator.costDivisorUpgrade"></app-upgrade>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="control-bay">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">SINGULARITY CONTROL</p>
+        <h2>Phase Upgrades</h2>
+      </div>
+      <span class="pulse-line" aria-hidden="true"></span>
+    </div>
+    <div class="upgrade-row system-upgrades">
+      <div *ngFor="let upgrade of upgrades">
+        <app-upgrade [upgrade]="upgrade"></app-upgrade>
+      </div>
+    </div>
+  </section>
+
+  <div class="page-info">
+    <app-info [name]="'green-generators-info'" [infoText]="infoText"></app-info>
   </div>
-</div>
-<app-info style="width: 60%" [name]="'green-generators-info'" [infoText]="infoText"></app-info>
+</section>
