@@ -1,13 +1,58 @@
-<div class="holding resource-card">
-  <app-number-display [holding]="darkStarHolding"></app-number-display>
-</div>
-<div class="upgrade-row">
-  <app-dark-galaxy [challenge]="darkGalaxy"></app-dark-galaxy>
-</div>
-<div class="chargers-section">
-  <div class="chargers-grid">
-    @for (charger of chargers; track charger.name) {
-      <app-dark-star-charger [charger]="charger"></app-dark-star-charger>
-    }
-  </div>
-</div>
+<section class="void-shell">
+  <header class="void-header">
+    <div class="void-mark" aria-hidden="true">
+      <span class="void-core"></span>
+      <span class="accretion-ring"></span>
+      <span class="accretion-ring ring-two"></span>
+    </div>
+    <div>
+      <p class="eyebrow">GREEN PHASE // EVENT HORIZON OPEN</p>
+      <h1>Dark Galaxy</h1>
+      <p>Enter a collapsed universe, harvest Dark Stars, and route their energy through chargers that reinforce every earlier phase.</p>
+    </div>
+  </header>
+
+  <section class="dark-star-console">
+    <div>
+      <p class="eyebrow">EXOTIC MATTER RESERVE</p>
+      <h2>Dark Star Telemetry</h2>
+    </div>
+    <div class="resource-readout">
+      <app-number-display [holding]="darkStarHolding"></app-number-display>
+    </div>
+  </section>
+
+  <section class="challenge-bay">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">COLLAPSE PROTOCOL</p>
+        <h2>Galaxy Challenge</h2>
+      </div>
+      <span class="danger-code">DG-NULL / ACTIVE</span>
+    </div>
+    <div class="challenge-frame">
+      <app-dark-galaxy [challenge]="darkGalaxy"></app-dark-galaxy>
+      <div class="challenge-notes">
+        <span>01</span>
+        <p>Entering the Dark Galaxy replaces normal progression with a hostile collapsed-state objective.</p>
+        <span>02</span>
+        <p>Dark Stars survive as the fuel source for the charger array below.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="chargers-section">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">DARK STAR DISTRIBUTION</p>
+        <h2>Charger Array</h2>
+      </div>
+      <span class="signal" aria-hidden="true"><i></i><i></i><i></i></span>
+    </div>
+    <div class="chargers-grid">
+      @for (charger of chargers; track charger.name) {
+        <app-dark-star-charger [charger]="charger"></app-dark-star-charger>
+      }
+    </div>
+  </section>
+</section>

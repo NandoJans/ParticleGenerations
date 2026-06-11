@@ -37,8 +37,22 @@
     </div>
   </div>
 }
-<app-button class="respec-button" [text]="'Respec'" [style]="'button green'" (function)="toggleConfirmRespec()"></app-button>
-<app-button class="saved-button" [text]="'Saved trees'" [style]="'button green'" (function)="toggleSavedTrees()"></app-button>
+<header class="tree-header">
+  <div class="tree-mark" aria-hidden="true"><span></span><i></i><i></i><i></i></div>
+  <div>
+    <p class="eyebrow">GREEN PHASE // COSMIC NETWORK ONLINE</p>
+    <h1>Galaxy Tree</h1>
+    <p>Navigate the stellar lattice, invest Dark Energy, and build a permanent constellation of phase-wide effects.</p>
+  </div>
+</header>
+<div class="tree-toolbar" aria-label="Galaxy tree controls">
+  <div class="toolbar-label"><span></span> NAVIGATION CONTROL</div>
+  <div class="toolbar-actions">
+    <app-button [text]="'Respec'" [style]="'button green'" (function)="toggleConfirmRespec()"></app-button>
+    <app-button [text]="'Saved trees'" [style]="'button green'" (function)="toggleSavedTrees()"></app-button>
+    <app-button [text]="'Recenter'" [style]="'button green'" (function)="recenterGalaxyTree()"></app-button>
+  </div>
+</div>
 @if (isStarSelected()) {
   <div class="star-overlay">
     <div [class]="'star-details ' + getSelectedStarStyle()">
@@ -61,7 +75,6 @@
     </div>
   </div>
 }
-<app-button class="recenter-button" [text]="'Recenter'" [style]="'button green'" (function)="recenterGalaxyTree()"></app-button>
 <div
   class="galaxy-tree-wrapper tree-viewport"
   #galaxyTreeWrapper
