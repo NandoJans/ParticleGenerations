@@ -174,13 +174,27 @@ button.enhancing:hover {
   cursor: pointer;
 }
 
-button.enhancing.enhancing-yellow {
+button.enhancing.enhancing-yellow,
+button.enhancing.enhancing-green {
   background-color: var(--background-color-3);
-  border: 1px solid var(--accent-color-yellow);
-  color: var(--text-color-yellow);
+  border: 1px solid var(--enhancement-color);
+  color: var(--enhancement-color);
+  box-shadow: 0 0 14px color-mix(in srgb, var(--enhancement-color) 18%, transparent);
+}
+
+button.enhancing.enhancing-yellow {
+  --enhancement-color: var(--accent-color-yellow);
+}
+
+button.enhancing.enhancing-green {
+  --enhancement-color: var(--accent-color-green);
 }
 
 button.enhanced {
+  border-color: var(--enhancement-color);
+  box-shadow:
+    0 0 16px color-mix(in srgb, var(--enhancement-color) 20%, transparent),
+    inset 0 0 12px color-mix(in srgb, var(--enhancement-color) 7%, transparent);
   background:
     radial-gradient(
       circle at top left,
@@ -196,7 +210,13 @@ button.enhanced {
 }
 
 button.enhanced.enhanced-yellow {
+  --enhancement-color: var(--accent-color-yellow);
   --linear-gradient-from: var(--background-color-yellow);
+}
+
+button.enhanced.enhanced-green {
+  --enhancement-color: var(--accent-color-green);
+  --linear-gradient-from: var(--background-color-green);
 }
 
 button.enhance.buyable.enhanced-yellow {
