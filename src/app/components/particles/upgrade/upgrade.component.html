@@ -6,6 +6,7 @@
   +((isEnhancing()) ? 'enhancing enhancing-' + getEnhancementStyle() : '')+' '
   +((isEnhanced()) ? 'enhanced enhanced-' + getEnhancedStyle() : '')+' '
 "
+  [disabled]="(!getIsBuyable() && !isEnhancing()) || !isEnabled() || !isUnlocked()"
   (click)="buy()"
 >
   <h4 *ngIf="getDisplayName() !== ''">{{ getDisplayName() }}</h4>
