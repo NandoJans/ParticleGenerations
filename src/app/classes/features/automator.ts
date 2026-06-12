@@ -66,7 +66,11 @@ export abstract class Automator extends GameElement implements Storable, Resetab
 
     if (this.completed && this.active) {
       this.buyables().forEach(buyable => {
-        if (buyable.isUnlocked() && buyable.isBuyable() && buyable.auto && this.belowMax()) {
+        // Resets may clear a buyable's automation after the automator has been
+        // restored by a milestone. Keep the buyable in sync with the enabled
+        // automator instead of requiring the player to toggle it again.
+        buyable.auto = true;
+        if (buyable.isUnlocked() && buyable.isBuyable() && this.belowMax()) {
           buyable.buy();
         }
       })
