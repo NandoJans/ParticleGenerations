@@ -52,7 +52,7 @@ export class PrestigeLayersService {
     MessageStepsFactory.start(Styles.GREEN, faCloud)
       .addStep(
         'Gravity Wall',
-        'A viridian aurora curdles space ahead, dense enough to bend time itself. This is the **Green Barrier**.'
+        'A viridian aurora curdles space ahead, dense enough to bend time itself. This is the Green Barrier.'
       )
       .addStep(
         'Voice in the Void',
@@ -60,11 +60,11 @@ export class PrestigeLayersService {
       )
       .addStep(
         'First Hint',
-        'Dark matter drifts here like black snow. **Condense 1 × 10^500 units** into a single, coherent core.'
+        'Dark matter drifts here like black snow. Condense 1 × 10^500 units into a single, coherent core.'
       )
       .addStep(
         'Second Hint',
-        'When density peaks, ignite the core with star-light to birth your **first galaxy**.'
+        'When density peaks, ignite the core with star-light to birth your first galaxy.'
       )
       .addStep(
         'Galaxy Forge',
@@ -72,7 +72,7 @@ export class PrestigeLayersService {
       )
       .addStep(
         'Through the Breach',
-        'Your galaxy barrels forward, punching a tunnel through folded space. Behind it, the Barrier seals, but **you are on the other side**.'
+        'Your galaxy barrels forward, punching a tunnel through folded space. Behind it, the Barrier seals, but you are on the other side.'
       )
       .build(),
     'There are too many stars, we need to contain them.',

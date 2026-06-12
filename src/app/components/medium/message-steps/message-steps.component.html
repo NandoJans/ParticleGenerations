@@ -1,32 +1,72 @@
-<div class="background" (click)="close()">
-  <div class="container {{ getStyle() }}" (click)="stopClose($event)">
-    <div class="icon">
-      <fa-icon [icon]="getIcon()"></fa-icon>
-    </div>
-    <div class="header">
-      <h2>{{ getTitle() }}</h2>
-    </div>
-    <div class="message">
-      <p>
-        {{ getMessage() }}
-      </p>
-    </div>
-    <div class="footer">
-      <div>
-        <button *ngIf="showLeftButton()" class="" (click)="previous()">
-          <fa-icon [icon]="faArrowLeft"></fa-icon>
-        </button>
+<div class="message-backdrop" (click)="close()">
+  <section
+    class="message-console {{ getStyle() }}"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-labelledby]="'prestige-message-title'"
+    (click)="stopClose($event)"
+  >
+    <div class="console-glow" aria-hidden="true"></div>
+
+    <header class="console-header">
+      <div class="phase-identity">
+        <div class="phase-icon" aria-hidden="true">
+          <span class="orbit"></span>
+          <fa-icon [icon]="getIcon()"></fa-icon>
+        </div>
+        <div>
+          <p class="eyebrow">PRESTIGE TRANSMISSION // {{ getPhaseName() }}</p>
+          <p class="signal"><span></span> SIGNAL ACQUIRED</p>
+        </div>
       </div>
-      <div>
-        <button *ngIf="showDoneButton()" class="" (click)="close()">
+      <button class="close-button" type="button" aria-label="Close transmission" (click)="close()">×</button>
+    </header>
+
+    <div class="transmission-progress" aria-label="Transmission progress">
+      <div class="progress-copy">
+        <span>TRANSMISSION {{ getCurrentStepNumber() | number:'2.0-0' }}</span>
+        <span>{{ getTotalSteps() | number:'2.0-0' }}</span>
+      </div>
+      <div class="progress-track"><span [style.width.%]="getProgressPercentage()"></span></div>
+    </div>
+
+    <main class="message-content">
+      <p class="chapter-label">{{ getChapterLabel() }}</p>
+      <h2 id="prestige-message-title">{{ getTitle() }}</h2>
+      <div class="message-rule"><span></span></div>
+      <p class="message-copy">{{ getMessage() }}</p>
+    </main>
+
+    <footer class="console-footer">
+      <button
+        class="nav-button previous"
+        type="button"
+        [class.hidden]="!showLeftButton()"
+        [attr.aria-hidden]="!showLeftButton()"
+        [disabled]="!showLeftButton()"
+        (click)="previous()"
+      >
+        <fa-icon [icon]="faArrowLeft"></fa-icon>
+        <span>Previous</span>
+      </button>
+
+      <div class="step-markers" aria-hidden="true">
+        @for (step of getSteps(); track $index) {
+          <span [class.active]="$index === getCurrentStepIndex()" [class.complete]="$index < getCurrentStepIndex()"></span>
+        }
+      </div>
+
+      @if (showDoneButton()) {
+        <button class="nav-button complete" type="button" (click)="close()">
+          <span>Enter phase</span>
           <fa-icon [icon]="faCheck"></fa-icon>
         </button>
-      </div>
-      <div>
-        <button *ngIf="showRightButton()" class="" (click)="next()">
+      } @else {
+        <button class="nav-button next" type="button" (click)="next()">
+          <span>Continue</span>
           <fa-icon [icon]="faArrowRight"></fa-icon>
         </button>
-      </div>
-    </div>
-  </div>
+      }
+    </footer>
+  </section>
 </div>

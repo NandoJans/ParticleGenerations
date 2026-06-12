@@ -979,6 +979,14 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
     this.snapUpdate();
   }
 
+  protected getSavedTreeCount(): number {
+    return Object.keys(this.savedTrees).length;
+  }
+
+  protected getCurrentTreeUpgradeCount(): number {
+    return UpgradeRecord.galaxyTreeUpgradeList.filter(upgrade => upgrade.hasBought()).length;
+  }
+
   addSavedTree() {
     const saveName = this.treeNameControl.value;
     if (!saveName) {
@@ -1002,6 +1010,7 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
     };
 
     this.localStorageHelper.save(this.savedTrees, 'savedTrees');
+    this.treeNameControl.reset('');
   }
 
   loadSavedTree(savedTree: {

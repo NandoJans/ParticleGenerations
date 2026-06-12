@@ -161,74 +161,32 @@
 }
 
 .modal {
-  background-color: var(--background-color-1);
-  border-radius: 0.5rem;
+  padding: 1.25rem;
   border: 1px solid var(--background-color-4);
-  padding: 1rem;
+  border-radius: .5rem;
+  background: var(--background-color-1);
   text-align: center;
 }
 
-.modal .buttons {
-  display: flex;
-  justify-content: space-between;
-}
+.modal .buttons { display: flex; justify-content: space-between; gap: .75rem; }
 
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
+  z-index: 1000;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(5px);
-  z-index: 1000;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, .72);
+  backdrop-filter: blur(8px);
 }
 
-.saved-tree {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 5px;
-  padding: 0.25rem;
-  background-color: var(--background-color-3);
-  border-radius: 0.5rem;
-  border: 1px solid var(--background-color-4);
-  margin-bottom: 1rem;
-  max-width: 40rem;
-  width: 100%;
-}
-
-.saved-tree span {
-  font-size: 1.2rem;
-  font-weight: bold;
-  background-color: var(--background-color-2);
-  padding: 0.25rem;
-  border-radius: 0.5rem;
-  border: 1px solid var(--background-color-4);
-}
-
-.saved-tree .buttons {
-  display: flex;
-  flex-direction: row;
-  gap: 5px;
-}
-
-.saved-trees {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1rem;
-  max-width: 40rem;
-}
-
-@media (max-width: 600px) {
-  .galaxy-tree-wrapper {
-    padding-bottom: 0.5rem;
-  }
+@media (max-width: 700px) {
+  .galaxy-tree-wrapper { padding-bottom: 0.5rem; }
 }
 
 
