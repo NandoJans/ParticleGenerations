@@ -10,31 +10,79 @@
   </div>
 }
 @if (showSavedTrees) {
-  <div class="modal-overlay" (click)="toggleSavedTrees()">
-    <div class="modal" (click)="$event.stopPropagation()">
-      <h2>Save and load galaxy trees</h2>
-      <div class="saved-trees">
-      @for (savedTree of Object.entries(savedTrees); track savedTree[0]) {
-        <div class="saved-tree">
-          <span>{{ deparseSavedName(savedTree[0]) }}</span>
-          <span class="dark">{{ savedTree[1].darkEnergy.toString() }}</span>
-          <div class="buttons">
-            <app-button [text]="'Load'" [style]="'button green'" (function)="loadSavedTree(savedTree[1])"></app-button>
-            <app-button [text]="'Update'" [style]="'button blue'" (function)="updateSavedTree(savedTree[0])"></app-button>
-            <app-button [text]="'Delete'" [style]="'button red'" (function)="deleteSavedTree(savedTree[0])"></app-button>
-          </div>
+  <div class="modal-overlay saved-trees-overlay" (click)="toggleSavedTrees()">
+    <section
+      class="saved-trees-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="saved-trees-title"
+      (click)="$event.stopPropagation()"
+    >
+      <header class="saved-trees-header">
+        <div class="archive-mark" aria-hidden="true"><span></span><i></i><i></i></div>
+        <div class="saved-trees-heading">
+          <p class="modal-eyebrow">GALAXY TREE // CONFIGURATION ARCHIVE</p>
+          <h2 id="saved-trees-title">Saved constellations</h2>
+          <p>Store the current stellar lattice or restore a previous Dark Energy configuration.</p>
         </div>
-      }
-      @if (!savedTrees || Object.keys(savedTrees).length === 0) {
-        <p>No saved trees</p>
-      }
+        <button class="saved-trees-close" type="button" aria-label="Close saved constellations" (click)="toggleSavedTrees()">×</button>
+      </header>
+
+      <div class="archive-status">
+        <div><span>ARCHIVE SLOTS</span><strong>{{ getSavedTreeCount() | number:'2.0-0' }}</strong></div>
+        <div><span>ACTIVE NODES</span><strong>{{ getCurrentTreeUpgradeCount() | number:'2.0-0' }}</strong></div>
+        <p><span></span> LOCAL STORAGE ONLINE</p>
       </div>
-      <div class="saved-tree">
-        <input class="" type="text" [formControl]="treeNameControl" placeholder="Tree name">
-        <app-button [text]="'Save'" [style]="'button green'" (function)="addSavedTree()"></app-button>
+
+      <div class="saved-trees-content">
+        @if (!savedTrees || Object.keys(savedTrees).length === 0) {
+          <div class="saved-trees-empty">
+            <div class="empty-constellation" aria-hidden="true"><span></span><i></i><i></i><i></i></div>
+            <p class="modal-eyebrow">ARCHIVE EMPTY</p>
+            <h3>No constellations saved</h3>
+            <p>Name the current galaxy tree below to create your first reusable configuration.</p>
+          </div>
+        } @else {
+          <div class="saved-trees-grid">
+            @for (savedTree of Object.entries(savedTrees); track savedTree[0]; let index = $index) {
+              <article class="saved-tree-card">
+                <div class="card-index">{{ index + 1 | number:'2.0-0' }}</div>
+                <div class="saved-tree-summary">
+                  <p class="modal-eyebrow">STORED CONSTELLATION</p>
+                  <h3>{{ deparseSavedName(savedTree[0]) }}</h3>
+                </div>
+                <div class="saved-tree-metrics">
+                  <div>
+                    <span>Dark Energy</span>
+                    <strong>{{ savedTree[1].darkEnergy.toString() }}</strong>
+                  </div>
+                  <div>
+                    <span>Tree nodes</span>
+                    <strong>{{ savedTree[1].savedTree.length | number:'2.0-0' }}</strong>
+                  </div>
+                </div>
+                <div class="saved-tree-actions">
+                  <app-button [text]="'Load tree'" [style]="'button green'" (function)="loadSavedTree(savedTree[1])"></app-button>
+                  <app-button [text]="'Overwrite'" [style]="'button blue'" (function)="updateSavedTree(savedTree[0])"></app-button>
+                  <app-button [text]="'Delete'" [style]="'button red'" (function)="deleteSavedTree(savedTree[0])"></app-button>
+                </div>
+              </article>
+            }
+          </div>
+        }
       </div>
-      <app-button [text]="'Close'" [style]="'button green'" (function)="toggleSavedTrees()"></app-button>
-    </div>
+
+      <footer class="save-tree-composer">
+        <div>
+          <p class="modal-eyebrow">NEW ARCHIVE ENTRY</p>
+          <label for="tree-name">Save current configuration</label>
+        </div>
+        <div class="save-tree-input">
+          <input id="tree-name" type="text" maxlength="40" autocomplete="off" [formControl]="treeNameControl" (keyup.enter)="addSavedTree()" placeholder="Enter constellation name">
+          <app-button [text]="'Save tree'" [style]="'button green'" (function)="addSavedTree()"></app-button>
+        </div>
+      </footer>
+    </section>
   </div>
 }
 <header class="tree-header">
