@@ -7,6 +7,7 @@ import {HoldingDisplayFactory} from "../../factories/holding-display-factory";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 import {ChallengeRecord} from "../../records/challenges/challenge-record";
+import {BuffSoftCapHelper} from "../../helpers/buff-soft-cap-helper";
 
 export class YellowPowerHolding extends Holding {
     name: string = 'yellow-power-holding';
@@ -25,12 +26,14 @@ export class YellowPowerHolding extends Holding {
       ).build();
     resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED, this);
     yellowPower: Num = new Num(1, 0)
+    readonly effectSoftCap: Num = new Num(1, 5_000_000);
     getStyle(): Styles {
         return Styles.YELLOW;
     }
 
     override action(): Num {
-      const effect = this.amount.pow(this.yellowPower);
+      const rawEffect = this.amount.pow(this.yellowPower);
+      const effect = BuffSoftCapHelper.applyPowerSoftCap(rawEffect, this.effectSoftCap);
       MultiplierRecord.redParticleGenerators.correct(effect);
       this.yellowPower = new Num(1, 0);
       return effect;
