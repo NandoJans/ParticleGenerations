@@ -26,7 +26,7 @@ export class YellowPowerHolding extends Holding {
       ).build();
     resetId: ResetKey = ResetHelper.registerReset(ResetKey.RED, this);
     yellowPower: Num = new Num(1, 0)
-    readonly effectSoftCap: Num = new Num(1, 5_000_000);
+    readonly effectSoftCap: Num = new Num(1, 2_500_000);
     getStyle(): Styles {
         return Styles.YELLOW;
     }
