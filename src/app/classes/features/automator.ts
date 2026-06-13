@@ -10,10 +10,13 @@ import {ResetKey} from "../enums/reset-key";
 import {DropDownMessageService} from "../../services/visuals/drop-down-message.service";
 
 export abstract class Automator extends GameElement implements Storable, Resetable {
+  static keepOnReset = false;
   softResetId: ResetKey = ResetKey.NONE;
   abstract resetId: ResetKey;
 
   reset(): void {
+    if (Automator.keepOnReset) return;
+
     this.completed = false;
     this.save();
     this.buyables().forEach(buyable => {

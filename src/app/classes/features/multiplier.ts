@@ -5,6 +5,7 @@ export class Multiplier {
   num: Num
   originalNum: Num
   calculationOrder: number = 1150
+  neutronMeltdownImmune: boolean
   localHooks: { [key: string]: {
     hook: (multiplier: Multiplier) => void,
     once?: boolean
@@ -13,12 +14,19 @@ export class Multiplier {
   // Global hook to transform multipliers when retrieved (e.g., Dark Galaxy Challenge)
   // It should be a pure function that returns a new Num without mutating the input.
   static globalGetHook?: (value: Num, context?: { source?: any; kind?: string }) => Num
+  static neutronMeltdownPower: Num = Num.ONE.copy()
 
-  constructor(name: string, num: Num, calculationOrder: number = 1150) {
+  constructor(
+    name: string,
+    num: Num,
+    calculationOrder: number = 1150,
+    neutronMeltdownImmune: boolean = false
+  ) {
     this.name = name
     this.num = num.copy()
     this.originalNum = num.copy()
     this.calculationOrder = calculationOrder
+    this.neutronMeltdownImmune = neutronMeltdownImmune
   }
 
   reset(): void {
@@ -40,7 +48,11 @@ export class Multiplier {
     return value
   }
 
-  getNum(): Num {
+  static applyNeutronMeltdown(value: Num, immune: boolean = false): Num {
+    return immune ? value : value.pow(Multiplier.neutronMeltdownPower)
+  }
+
+  getNum(applyNeutronMeltdown: boolean = true): Num {
     // First, apply local hooks (if any) to the multiplier value
     // After applying local hooks, delete if the hook is onetime-only
     for (const hookName in this.localHooks) {
@@ -48,7 +60,10 @@ export class Multiplier {
       if (this.localHooks[hookName].once) delete this.localHooks[hookName]
     }
     // Apply global transformation hook (if any) when retrieving the multiplier value
-    return Multiplier.applyHook(this.num, { source: this, kind: 'multiplier' })
+    const value = Multiplier.applyHook(this.num, { source: this, kind: 'multiplier' })
+    return applyNeutronMeltdown
+      ? Multiplier.applyNeutronMeltdown(value, this.neutronMeltdownImmune)
+      : value
   }
 
   power(effect: Num) {

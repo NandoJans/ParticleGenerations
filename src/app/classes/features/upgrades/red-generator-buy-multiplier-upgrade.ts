@@ -5,6 +5,7 @@ import {ResetKey} from "../../enums/reset-key";
 import {RedGenerator} from "../generators/red-generator";
 import {Requirement} from "../interfaces/requirement";
 import {Enhancement} from "../enhancements/enhancement";
+import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 
 export class RedGeneratorBuyMultiplierUpgrade extends RedGeneratorUpgrade {
 
@@ -31,13 +32,22 @@ export class RedGeneratorBuyMultiplierUpgrade extends RedGeneratorUpgrade {
   override calculationOrder: number = 1005;
 
   action(): Num {
-    const buff: Num = this.buffer.pow(this.amount);
+    const modifiedBuffer = this.getModifiedBuffer();
+    const buff: Num = modifiedBuffer.pow(this.amount);
     this.generator.baseMulMod = this.generator.baseMulMod.mul(buff);
     return buff;
   }
 
   getDescription(): string {
-    return `${this.buffer.toString(2)}x buy multiplier`;
+    return `${this.getModifiedBuffer().toString(3)}x buy multiplier per level`;
+  }
+
+  override getDisplayName(): string {
+    return `${this.displayName} (${this.getModifiedBuffer().toString(3)}x)`;
+  }
+
+  private getModifiedBuffer(): Num {
+    return this.buffer.mul(MultiplierRecord.electronRedGeneratorUpgradeBuffer.getNum());
   }
 
   override enhance() {

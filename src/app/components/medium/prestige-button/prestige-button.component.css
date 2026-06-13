@@ -3,6 +3,7 @@
 .prestige-control::before { content: ''; position: absolute; inset: 0 auto 0 0; width: 3px; background: var(--phase-color); opacity: .35; }
 .prestige-control.yellow { --phase-color: var(--accent-color-yellow); }
 .prestige-control.green { --phase-color: var(--accent-color-green); }
+.prestige-control.blue { --phase-color: var(--accent-color-blue); }
 .control-state { color: color-mix(in srgb, var(--phase-color) 65%, #777); font-family: monospace; font-size: .7rem; font-weight: 700; letter-spacing: .13em; writing-mode: vertical-rl; transform: rotate(180deg); }
 .control-copy { min-width: 0; }
 h3, p { margin: 0; }

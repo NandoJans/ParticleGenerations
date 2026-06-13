@@ -24,17 +24,37 @@ export class ProtonHolding extends BlueHolding {
   holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
     .withAmountPrefix('You have')
     .withAmountSuffix(' Protons')
-    .withEffectPrefix('Red Generator production: ')
+    .addLine('Red multiplier upgrade buffer: ', () => this.getRedEffect().toString(2) + 'x', '')
+    .addLine('Yellow multiplier upgrade buffer: ', () => this.getYellowEffect().toString(2) + 'x', '')
+    .addLine('Green multiplier upgrade buffer: ', () => this.getGreenEffect().toString(2) + 'x', '')
     .build();
 
   override action(): Num {
-    const effect = Num.ONE.add(this.amount.add(Num.ONE).log10());
-    MultiplierRecord.redParticleGenerators.correct(effect);
-    return effect;
+    const redEffect = this.getRedEffect();
+    MultiplierRecord.protonRedGeneratorUpgradeBuffer.correct(redEffect);
+    MultiplierRecord.protonYellowGeneratorUpgradeBuffer.correct(this.getYellowEffect());
+    MultiplierRecord.protonGreenGeneratorUpgradeBuffer.correct(this.getGreenEffect());
+    return redEffect;
   }
 
   override effectString(effect: Num): string {
     return effect.toString(3) + 'x';
+  }
+
+  getRedEffect(): Num {
+    return this.getEffect(new Num(2.5, -1));
+  }
+
+  getYellowEffect(): Num {
+    return this.getEffect(new Num(2, -1));
+  }
+
+  getGreenEffect(): Num {
+    return this.getEffect(new Num(1.5, -1));
+  }
+
+  private getEffect(power: Num): Num {
+    return this.amount.add(Num.ONE).pow(power);
   }
 }
 
@@ -46,17 +66,37 @@ export class ElectronHolding extends BlueHolding {
   holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
     .withAmountPrefix('You have')
     .withAmountSuffix(' Electrons')
-    .withEffectPrefix('Red Accelerator production: ')
+    .addLine('Red buy multiplier upgrade buffer: ', () => this.getRedEffect().toString(3) + 'x', '')
+    .addLine('Yellow buy multiplier upgrade buffer: ', () => this.getYellowEffect().toString(3) + 'x', '')
+    .addLine('Green buy multiplier upgrade buffer: ', () => this.getGreenEffect().toString(3) + 'x', '')
     .build();
 
   override action(): Num {
-    const effect = Num.ONE.add(this.amount.add(Num.ONE).log10());
-    MultiplierRecord.redAcceleratorGenerators.correct(effect);
-    return effect;
+    const redEffect = this.getRedEffect();
+    MultiplierRecord.electronRedGeneratorUpgradeBuffer.correct(redEffect);
+    MultiplierRecord.electronYellowGeneratorUpgradeBuffer.correct(this.getYellowEffect());
+    MultiplierRecord.electronGreenGeneratorUpgradeBuffer.correct(this.getGreenEffect());
+    return redEffect;
   }
 
   override effectString(effect: Num): string {
     return effect.toString(3) + 'x';
+  }
+
+  getRedEffect(): Num {
+    return this.getEffect(new Num(1, -2));
+  }
+
+  getYellowEffect(): Num {
+    return this.getEffect(new Num(4, -3));
+  }
+
+  getGreenEffect(): Num {
+    return this.getEffect(new Num(1, -3));
+  }
+
+  private getEffect(coefficient: Num): Num {
+    return Num.ONE.add(this.amount.add(Num.ONE).log10().mul(coefficient));
   }
 }
 
@@ -90,16 +130,21 @@ export class LithiumHolding extends BlueHolding {
   holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
     .withAmountPrefix('The neutron clump has forged')
     .withAmountSuffix(' Lithium')
-    .withEffectPrefix('Green Generator production: ')
+    .withEffectPrefix('Red Accelerator generation: ')
+    .addLine('Formula: 10^sqrt(Lithium) = ', () => this.getEffect(), 'x')
     .build();
 
   override action(): Num {
-    const effect = Num.ONE.add(this.amount.sqrt().mul(new Num(5, -2)));
-    MultiplierRecord.greenGenerators.correct(effect);
+    const effect = this.getEffect();
+    MultiplierRecord.redAcceleratorGenerators.correct(effect);
     return effect;
   }
 
   override effectString(effect: Num): string {
     return effect.toString(3) + 'x';
+  }
+
+  getEffect(): Num {
+    return new Num(1, 1).pow(this.amount.sqrt());
   }
 }

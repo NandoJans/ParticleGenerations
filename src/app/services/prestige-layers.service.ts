@@ -5,7 +5,7 @@ import {Num} from "../num";
 import {Styles} from "../classes/enums/styles";
 import {ResetKey} from "../classes/enums/reset-key";
 import {MessageStepsFactory} from "../classes/factories/message-steps-factory";
-import {faCloud, faSun} from "@fortawesome/free-solid-svg-icons";
+import {faAtom, faCloud, faSun} from "@fortawesome/free-solid-svg-icons";
 import {MessageStepsService} from "./message-steps.service";
 import {NavigationsService} from "./navigations.service";
 import {MultiplierRecord} from "../classes/records/multipliers/multiplier-record";
@@ -79,10 +79,34 @@ export class PrestigeLayersService {
     HoldingRecord.greenParticles,
     MultiplierRecord.greenParticleIdleGeneration,
   );
+  static bluePrestigeLayer: PrestigeLayer = new PrestigeLayer(
+    'bluePrestigeLayer',
+    'blue',
+    HoldingRecord.greenParticles,
+    new Num(1, 1000),
+    Styles.BLUE,
+    [
+      {
+        holding: HoldingRecord.blueParticles,
+        basedOnRequiredHolding: true,
+        gainMultiplier: MultiplierRecord.blueParticleGain,
+        idleGeneration: true
+      },
+    ],
+    ResetKey.BLUE,
+    ResetKey.PURPLE,
+    MessageStepsFactory.start(Styles.BLUE, faAtom)
+      .addStep('Particle Laboratory', 'Green light collapses into a field of separated charge. The Blue Phase is ready for controlled experiments.')
+      .build(),
+    'Reset your earlier progress to enter the Blue particle laboratory.',
+    HoldingRecord.blueParticles,
+    MultiplierRecord.blueParticleIdleGeneration,
+  );
 
   static list: PrestigeLayer[] = [
     PrestigeLayersService.yellowPrestigeLayer,
     PrestigeLayersService.greenPrestigeLayer,
+    PrestigeLayersService.bluePrestigeLayer,
   ];
 
   constructor(

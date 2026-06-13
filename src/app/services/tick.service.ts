@@ -27,6 +27,7 @@ import {Milestone} from "../classes/features/milestone";
 import {ChargerService} from "./charger.service";
 import {Charger} from "../classes/features/charger";
 import {BluePhaseService} from "./blue-phase.service";
+import {ChargerRecord} from "../classes/records/charger/charger-record";
 
 @Injectable({
   providedIn: 'root'
@@ -69,6 +70,7 @@ export class TickService {
 
     this.checkRequirements();
     this.fixes();
+    this.bluePhaseService.applyNeutronMeltdown();
 
     this.calculationOrder.forEach((elements, index) => {
       App.currentCalculationOrder = index;
@@ -98,7 +100,6 @@ export class TickService {
     this.compressionService.tick(speed);
     this.componentService.reloadComponents();
     this.firstTick = false;
-
 
   }
 

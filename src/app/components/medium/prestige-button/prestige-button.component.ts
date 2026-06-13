@@ -69,6 +69,10 @@ export class PrestigeButtonComponent implements OnInit {
     return this.prestigeLayer.idleGenerationHolding.displayName;
   }
 
+  grantsHoldings(): boolean {
+    return this.prestigeLayer.gainHoldings.length > 0;
+  }
+
   inChallenge(): boolean {
     return this.challengeService.inChallenge(this.prestigeLayer.name);
   }

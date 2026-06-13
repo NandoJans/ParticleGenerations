@@ -13,6 +13,7 @@ import {ChallengeService} from "../../../services/interactables/challenge.servic
 import {App} from "../../../App";
 
 export class PrestigeLayer extends GameElement implements Resetable, Storable {
+  private static readonly passivePrestigeRate = new Num(1, -2);
   name: string;
   displayName: string = '';
   requirement: Requirement[];
@@ -32,6 +33,7 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
   highestGenerationPerTick: Num = new Num(0, 0);
   holdingGain: Num = new Num(0, 0);
   bestPrestige: Num = new Num(0, 0);
+  passivePrestige: boolean = false;
 
 
   constructor(
@@ -137,18 +139,19 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     basedOnRequiredHolding: boolean,
     gainMultiplier: Multiplier,
     idleGeneration: boolean
-  }): Num {
+  }, includeOfflineSpeed: boolean = true): Num {
     // start with the normal gain
     let baseGain = new Num(1, 0).mul(gain.gainMultiplier.getNum());
 
     if (gain.basedOnRequiredHolding) {
       const exponent = this.holdingPhaseBelow.amount.log10();
       const base = this.amountRequired.log10();
-      const thresholds = exponent.div(base).sub(new Num(1, 0));
+      let thresholds = exponent.div(base).sub(new Num(1, 0));
+      if (thresholds.lt(Num.ZERO)) thresholds = Num.ZERO.copy();
       baseGain = baseGain.mul(new Num(2, 0).pow(thresholds));
     }
 
-    if (App.offlineCalculation) {
+    if (includeOfflineSpeed && App.offlineCalculation) {
       baseGain = baseGain.mul(App.gameSpeed);
     }
 
@@ -182,7 +185,22 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     this.applyLimitPhaseBelow();
     this.setHoldingGain();
     this.checkRequirements();
-    this.idleGeneration(speed);
+    if (this.passivePrestige) {
+      this.generatePassivePrestigeRewards(speed);
+    } else {
+      this.idleGeneration(speed);
+    }
+  }
+
+  private generatePassivePrestigeRewards(speed: Num): void {
+    if (this.holdingPhaseBelow.amount.lt(this.amountRequired)) return;
+
+    this.gainHoldings.forEach(gain => {
+      const passiveGain = this.calculateHoldingGain(gain, false)
+        .mul(PrestigeLayer.passivePrestigeRate)
+        .mul(speed);
+      gain.holding.generate(passiveGain);
+    });
   }
 
   private applyReset() {

@@ -18,10 +18,68 @@
 .phase-header,
 .collider-panel,
 .neutron-section,
-.particle-card {
+.particle-card,
+.meltdown-panel {
   border: 1px solid rgba(92, 184, 227, .28);
   background: linear-gradient(145deg, #111c24, #070b0f);
   box-shadow: inset 0 0 28px rgba(0, 0, 0, .58);
+}
+
+.meltdown-panel {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem 2rem;
+  margin-top: 1rem;
+  padding: 1.25rem 1.5rem;
+  border-color: rgba(255, 111, 125, .48);
+  text-align: left;
+}
+
+.meltdown-panel h2 {
+  margin: .2rem 0;
+  color: #ffdce0;
+}
+
+.meltdown-panel p {
+  margin: 0;
+  color: #9babb3;
+}
+
+.meltdown-readout {
+  min-width: 13rem;
+  text-align: right;
+}
+
+.meltdown-readout span,
+.meltdown-readout strong,
+.meltdown-readout small {
+  display: block;
+}
+
+.meltdown-readout span {
+  color: #a8787e;
+  font: 700 .7rem monospace;
+  letter-spacing: .12em;
+}
+
+.meltdown-readout strong {
+  color: var(--proton);
+  font-size: 2rem;
+}
+
+.restoration-track {
+  grid-column: 1 / -1;
+  height: .45rem;
+  overflow: hidden;
+  border: 1px solid rgba(92, 184, 227, .24);
+  background: #05090c;
+}
+
+.restoration-track span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--proton), var(--blue));
+  box-shadow: 0 0 12px rgba(92, 184, 227, .5);
 }
 
 .phase-header {
@@ -121,6 +179,34 @@
   bottom: -.6rem;
   font: 700 7rem monospace;
   opacity: .08;
+}
+
+.buffer-effects {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: .35rem;
+  margin-top: 1rem;
+  padding-top: .85rem;
+  border-top: 1px solid rgba(255, 255, 255, .08);
+}
+
+.buffer-effects p {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0;
+  color: #80939d;
+  font: .72rem monospace;
+}
+
+.buffer-effects span {
+  letter-spacing: .08em;
+}
+
+.buffer-effects strong {
+  color: currentColor;
+  text-align: right;
 }
 
 .collider-panel {
@@ -249,9 +335,11 @@
 
 @media (max-width: 760px) {
   .phase-header,
-  .collider-panel {
+  .collider-panel,
+  .meltdown-panel {
     grid-template-columns: 1fr;
   }
+  .meltdown-readout { text-align: left; }
   .beam-status { text-align: left; }
   .particle-grid,
   .neutron-grid { grid-template-columns: 1fr; }

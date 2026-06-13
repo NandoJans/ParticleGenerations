@@ -6,6 +6,7 @@ import {ResetHelper} from "../../helpers/reset-helper";
 import {HoldingRecord} from "../../records/holdings/holding-record";
 import {ChargerRecord} from "../../records/charger/charger-record";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {ResetKey} from "../../enums/reset-key";
 
 /**
  * DarkStarCharger is a special type of charger that only charges when its related nerf is active.
@@ -22,6 +23,11 @@ export abstract class DarkStarCharger extends Charger {
   // Indicates if the charger's nerf is currently active
   protected isNerfActive: boolean = false;
   tierBuffer: Num = DarkStarCharger.DEFAULT_TIER_BUFFER.copy();
+
+  override init(): void {
+    this.resetId = ResetHelper.registerReset(ResetKey.GREEN, this);
+    super.init();
+  }
 
   override run(speed: Num): void {
     // Runs charge logic and action logic.

@@ -7,6 +7,8 @@ import {EnhancementService} from "../../services/enhancement.service";
 import {Enhancement} from "../../classes/features/enhancements/enhancement";
 import {GreenPrestigeHolding} from "../../classes/features/holdings/green-prestige-holding";
 import {GreenParticleHolding} from "../../classes/features/holdings/green-particle-holding";
+import {BluePhaseService} from "../../services/blue-phase.service";
+import {BlueParticleHolding} from "../../classes/features/holdings/blue-particle-holding";
 
 @Component({
     selector: 'app-main',
@@ -23,10 +25,12 @@ export class MainComponent implements OnInit {
   purplePhase: boolean = App.purplePhase;
   yellowParticles: YellowParticleHolding = HoldingRecord.yellowParticles;
   greenParticles: GreenParticleHolding = HoldingRecord.greenParticles;
+  blueParticles: BlueParticleHolding = HoldingRecord.blueParticles;
 
   constructor(
     public holdingRecord: HoldingRecord,
-    private enhancementService: EnhancementService
+    private enhancementService: EnhancementService,
+    private bluePhaseService: BluePhaseService
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +43,10 @@ export class MainComponent implements OnInit {
 
   getPrestigedGreen(): any {
     return PrestigeLayersService.greenPrestigeLayer.prestigedFirstTime;
+  }
+
+  getPrestigedBlue(): boolean {
+    return this.bluePhaseService.isUnlocked();
   }
 
   isEnhancing(): boolean {

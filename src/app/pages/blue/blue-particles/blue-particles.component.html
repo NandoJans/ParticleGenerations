@@ -13,14 +13,48 @@
     </div>
   </header>
 
+  <article class="meltdown-panel">
+    <div>
+      <p class="eyebrow">NEUTRON MELTDOWN</p>
+      <h2>Universal Multiplier Power</h2>
+      <p>
+        The Blue universe is starved of neutrons. All non-Blue multipliers are raised to this power until
+        persistent neutron matter stabilizes the universe.
+      </p>
+    </div>
+    <div class="meltdown-readout">
+      <span>CURRENT POWER</span>
+      <strong>^{{ bluePhase.getNeutronMeltdownPower().toString(4) }}</strong>
+      <small>
+        {{ bluePhase.getTotalNeutronMatter().toString(2) }} /
+        {{ bluePhase.getNeutronRestorationTarget().toString() }} neutron matter
+      </small>
+    </div>
+    <div class="restoration-track" role="progressbar"
+         [attr.aria-valuenow]="bluePhase.getNeutronMeltdownProgressPercent()"
+         aria-valuemin="0" aria-valuemax="100">
+      <span [style.width.%]="bluePhase.getNeutronMeltdownProgressPercent()"></span>
+    </div>
+  </article>
+
   <div class="particle-grid">
     <article class="particle-card proton-card" [class.active]="bluePhase.activeParticle === 'protons'">
       <span class="particle-symbol">p+</span>
       <app-number-display [holding]="protons"></app-number-display>
+      <div class="buffer-effects">
+        <p><span>RED BUFFERS</span><strong>{{ getProtonBufferEffect('red') }}</strong></p>
+        <p><span>YELLOW BUFFERS</span><strong>{{ getProtonBufferEffect('yellow') }}</strong></p>
+        <p><span>GREEN BUFFERS</span><strong>{{ getProtonBufferEffect('green') }}</strong></p>
+      </div>
     </article>
     <article class="particle-card electron-card" [class.active]="bluePhase.activeParticle === 'electrons'">
       <span class="particle-symbol">e-</span>
       <app-number-display [holding]="electrons"></app-number-display>
+      <div class="buffer-effects">
+        <p><span>RED BUFFERS</span><strong>{{ getElectronBufferEffect('red') }}</strong></p>
+        <p><span>YELLOW BUFFERS</span><strong>{{ getElectronBufferEffect('yellow') }}</strong></p>
+        <p><span>GREEN BUFFERS</span><strong>{{ getElectronBufferEffect('green') }}</strong></p>
+      </div>
     </article>
   </div>
 
@@ -64,7 +98,7 @@
       <article class="matter-card element-card">
         <span class="element-symbol">Li</span>
         <app-number-display [holding]="lithium"></app-number-display>
-        <p>Lithium begins forming at clump stage 1.</p>
+        <p>Lithium begins forming at clump stage 1 and massively boosts Red Accelerator generation.</p>
       </article>
     </div>
   </section>

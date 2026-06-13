@@ -8,6 +8,7 @@ import {LocalStorageHelper} from '../classes/helpers/local-storage-helper';
 import {ResetHelper} from '../classes/helpers/reset-helper';
 import {ResetKey} from '../classes/enums/reset-key';
 import {MilestoneRecord} from '../classes/records/milestones/milestone-record';
+import {Multiplier} from '../classes/features/multiplier';
 
 export type BlueParticleMode = 'none' | 'protons' | 'electrons';
 
@@ -16,23 +17,26 @@ export type BlueParticleMode = 'none' | 'protons' | 'electrons';
 })
 export class BluePhaseService {
   static readonly unlockRequirement = new Num(1, 1000);
+  static readonly neutronRestorationTarget = new Num(1, 4);
+  static readonly minimumMeltdownPower = new Num(1, -1);
   private readonly storage = new LocalStorageHelper('blue-phase', 'state');
   private purchaseStates: {[key: string]: boolean} = {};
   activeParticle: BlueParticleMode = 'none';
   unlocked = false;
 
+  constructor() {
+    ResetHelper.registerResetListener('blue-phase-unlock', resetKey => {
+      if (resetKey === ResetKey.BLUE) {
+        this.unlockFromPrestige();
+      }
+    });
+  }
+
   isUnlocked(): boolean {
-    return this.unlocked || HoldingRecord.greenParticles.amount.greq(BluePhaseService.unlockRequirement);
+    return this.unlocked;
   }
 
   tick(speed: Num): void {
-    if (!this.unlocked && HoldingRecord.greenParticles.amount.greq(BluePhaseService.unlockRequirement)) {
-      this.unlocked = true;
-      this.activeParticle = 'none';
-      ResetHelper.reset(ResetKey.BLUE);
-      this.synchronizePurchases();
-      return;
-    }
     if (!this.isUnlocked()) return;
 
     this.detectFirstPurchases();
@@ -49,10 +53,46 @@ export class BluePhaseService {
     }
   }
 
+  applyNeutronMeltdown(): void {
+    Multiplier.neutronMeltdownPower = this.isUnlocked()
+      ? this.getNeutronMeltdownPower()
+      : Num.ONE.copy();
+  }
+
+  getTotalNeutronMatter(): Num {
+    return HoldingRecord.neutrons.amount.add(HoldingRecord.neutronClump.amount);
+  }
+
+  getNeutronRestorationTarget(): Num {
+    return BluePhaseService.neutronRestorationTarget;
+  }
+
+  getNeutronMeltdownProgress(): number {
+    const total = Math.max(0, this.getTotalNeutronMatter().toNumber());
+    const target = BluePhaseService.neutronRestorationTarget.toNumber();
+    return Math.min(1, Math.log10(total + 1) / Math.log10(target + 1));
+  }
+
+  getNeutronMeltdownProgressPercent(): number {
+    return this.getNeutronMeltdownProgress() * 100;
+  }
+
+  getNeutronMeltdownPower(): Num {
+    const minimum = BluePhaseService.minimumMeltdownPower.toNumber();
+    const restored = minimum * Math.pow(1 / minimum, this.getNeutronMeltdownProgress());
+    return new Num(restored, 0);
+  }
+
+  unlockFromPrestige(): void {
+    this.unlocked = true;
+    this.activeParticle = 'none';
+    this.synchronizePurchases();
+    this.applyNeutronMeltdown();
+  }
+
   getParticleGeneration(): Num {
-    let generation = Num.ONE.copy();
-    if (MilestoneRecord.stableParticleBeam.unlocked) generation = generation.mul(Num.TWO);
-    if (MilestoneRecord.denseParticleCollision.unlocked) generation = generation.mul(new Num(2.5, 0));
+    let generation = new Num(1, -2);
+    if (MilestoneRecord.denseParticleCollision.unlocked) generation = new Num(5, 0);
     return generation.mul(
       UpgradeRecord.blueBeamIntensity.buffer.pow(UpgradeRecord.blueBeamIntensity.amount)
     );
@@ -66,7 +106,12 @@ export class BluePhaseService {
     multiplier = multiplier.mul(
       UpgradeRecord.blueColliderEfficiency.buffer.pow(UpgradeRecord.blueColliderEfficiency.amount)
     );
-    return pairs.floor().mul(multiplier).floor();
+    return pairs.pow(new Num(5, -1))
+      .sub(Num.ONE)
+      .max(Num.ZERO)
+      .floor()
+      .mul(multiplier)
+      .floor();
   }
 
   canCollide(): boolean {
@@ -163,9 +208,11 @@ export class BluePhaseService {
     this.activeParticle = this.storage.load(this.activeParticle, 'activeParticle');
     this.purchaseStates = this.storage.load({}, 'purchaseStates');
     this.synchronizePurchases();
+    this.applyNeutronMeltdown();
   }
 
   init(): void {
     this.synchronizePurchases();
+    this.applyNeutronMeltdown();
   }
 }

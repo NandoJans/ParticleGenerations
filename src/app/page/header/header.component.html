@@ -4,11 +4,14 @@
     <i></i>
   </div>
   <div class="items">
-    @if (yellowPrestigeLayer.prestigedFirstTime || yellowPrestigeLayer.hasReached()) {
+    @if (!automationMilestone.unlocked && (yellowPrestigeLayer.prestigedFirstTime || yellowPrestigeLayer.hasReached())) {
       <app-prestige-button [prestigeLayer]="yellowPrestigeLayer"></app-prestige-button>
     }
-    @if (greenPrestigeLayer.prestigedFirstTime || greenPrestigeLayer.hasReached()) {
+    @if (!automationMilestone.unlocked && (greenPrestigeLayer.prestigedFirstTime || greenPrestigeLayer.hasReached())) {
       <app-prestige-button [prestigeLayer]="greenPrestigeLayer"></app-prestige-button>
+    }
+    @if (bluePhaseService.isUnlocked() || bluePrestigeLayer.prestigedFirstTime || bluePrestigeLayer.hasReached()) {
+      <app-prestige-button [prestigeLayer]="bluePrestigeLayer"></app-prestige-button>
     }
   </div>
 </div>

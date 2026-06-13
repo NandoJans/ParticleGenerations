@@ -26,6 +26,7 @@ import {
 } from "../../features/milestones/fusion-acceleration-booster-divide-yellow-fusion-green-milestone";
 import {NoResetGreenMilestone} from "../../features/milestones/no-reset-green-milestone";
 import {BlueMilestone} from "../../features/milestones/blue-milestone";
+import {AutomationSingularityBlueMilestone} from "../../features/milestones/automation-singularity-blue-milestone";
 
 @Injectable({
   providedIn: 'root'
@@ -481,11 +482,11 @@ export class MilestoneRecord extends Record {
   )
 
   // Blue Phase
-  static stableParticleBeam: BlueMilestone = new BlueMilestone(
+  static stableParticleBeam: AutomationSingularityBlueMilestone = new AutomationSingularityBlueMilestone(
     'stableParticleBeam',
-    'Stable Particle Beam',
+    'Automation Singularity',
     Num.ONE,
-    'Generate 2 Protons or Electrons per second.'
+    'Keep every Automator through all resets. While their prestige requirements are met, Yellow and Green prestige rewards generate passively at 1% of their normal gain.'
   );
 
   static denseParticleCollision: BlueMilestone = new BlueMilestone(

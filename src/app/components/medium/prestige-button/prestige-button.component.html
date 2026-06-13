@@ -2,8 +2,8 @@
   <span class="control-state">{{ hasReached() ? 'TRANSITION READY' : 'CHARGE INCOMPLETE' }}</span>
   <span class="control-copy">
     <h3>Start {{ getName() }}</h3>
-    <p *ngIf="!firstTime()">{{ getFirstTimeText() }}</p>
-    <p *ngIf="firstTime() && hasReached()">Gain {{ getGainAmount() }} {{ getGainHolding() }}</p>
+    <p *ngIf="!firstTime() || !grantsHoldings()">{{ getFirstTimeText() }}</p>
+    <p *ngIf="firstTime() && hasReached() && grantsHoldings()">Gain {{ getGainAmount() }} {{ getGainHolding() }}</p>
   </span>
   <span class="control-arrow" aria-hidden="true">→</span>
 </button>

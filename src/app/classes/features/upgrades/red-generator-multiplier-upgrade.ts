@@ -5,6 +5,7 @@ import {ResetHelper} from "../../helpers/reset-helper";
 import {ResetKey} from "../../enums/reset-key";
 import {Requirement} from "../interfaces/requirement";
 import {Enhancement} from "../enhancements/enhancement";
+import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 
 export class RedGeneratorMultiplierUpgrade extends RedGeneratorUpgrade {
 
@@ -31,13 +32,22 @@ export class RedGeneratorMultiplierUpgrade extends RedGeneratorUpgrade {
 
 
   action(): Num {
-    const buff: Num = this.buffer.pow(this.amount);
+    const modifiedBuffer = this.getModifiedBuffer();
+    const buff: Num = modifiedBuffer.pow(this.amount);
     this.generator.mulMod = this.generator.mulMod.mul(buff);
     return buff;
   }
 
   getDescription(): string {
-    return `${this.buffer.toString(2)}x Production`;
+    return `${this.getModifiedBuffer().toString(3)}x Production per level`;
+  }
+
+  override getDisplayName(): string {
+    return `${this.displayName} (${this.getModifiedBuffer().toString(3)}x)`;
+  }
+
+  private getModifiedBuffer(): Num {
+    return this.buffer.mul(MultiplierRecord.protonRedGeneratorUpgradeBuffer.getNum());
   }
 
   override enhance() {

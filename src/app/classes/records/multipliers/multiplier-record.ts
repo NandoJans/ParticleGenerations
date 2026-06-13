@@ -34,6 +34,16 @@ export class MultiplierRecord {
   static darkChargerEffects: Multiplier = new Multiplier('darkChargerEffects', new Num(1, 0));
   static nuclearFissionGain: Multiplier = new Multiplier('nuclearFissionGain', new Num(1, 0));
 
+  // Blue Phase
+  static blueParticleGain: Multiplier = new Multiplier('blueParticleGain', new Num(1, 0), 50, true);
+  static blueParticleIdleGeneration: Multiplier = new Multiplier('blueParticleIdleGeneration', new Num(0, 0), 50, true);
+  static protonRedGeneratorUpgradeBuffer: Multiplier = new Multiplier('protonRedGeneratorUpgradeBuffer', Num.ONE, 1150, true);
+  static protonYellowGeneratorUpgradeBuffer: Multiplier = new Multiplier('protonYellowGeneratorUpgradeBuffer', Num.ONE, 1150, true);
+  static protonGreenGeneratorUpgradeBuffer: Multiplier = new Multiplier('protonGreenGeneratorUpgradeBuffer', Num.ONE, 1150, true);
+  static electronRedGeneratorUpgradeBuffer: Multiplier = new Multiplier('electronRedGeneratorUpgradeBuffer', Num.ONE, 1150, true);
+  static electronYellowGeneratorUpgradeBuffer: Multiplier = new Multiplier('electronYellowGeneratorUpgradeBuffer', Num.ONE, 1150, true);
+  static electronGreenGeneratorUpgradeBuffer: Multiplier = new Multiplier('electronGreenGeneratorUpgradeBuffer', Num.ONE, 1150, true);
+
   // Star Challenge Charger
   static starChallengeHoldingSpeed: Multiplier = new Multiplier('starChallengeHoldingSpeed', new Num(1, 0), 3);
   static challengeBuffBoost: Multiplier = new Multiplier('challengeBuffBoost', new Num(1, 0), 3);
@@ -66,6 +76,16 @@ export class MultiplierRecord {
     MultiplierRecord.greenGenerators,
     MultiplierRecord.darkChargerEffects,
     MultiplierRecord.nuclearFissionGain,
+
+    // Blue Phase
+    MultiplierRecord.blueParticleGain,
+    MultiplierRecord.blueParticleIdleGeneration,
+    MultiplierRecord.protonRedGeneratorUpgradeBuffer,
+    MultiplierRecord.protonYellowGeneratorUpgradeBuffer,
+    MultiplierRecord.protonGreenGeneratorUpgradeBuffer,
+    MultiplierRecord.electronRedGeneratorUpgradeBuffer,
+    MultiplierRecord.electronYellowGeneratorUpgradeBuffer,
+    MultiplierRecord.electronGreenGeneratorUpgradeBuffer,
 
     // Star Challenge Charger
     MultiplierRecord.starChallengeHoldingSpeed,

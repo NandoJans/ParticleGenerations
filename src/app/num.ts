@@ -231,4 +231,8 @@ export class Num {
   lte(b: Num) {
     return this.lt(b) || this.equals(b);
   }
+
+  max(b: Num) {
+    return this.gt(b) ? this : b;
+  }
 }
