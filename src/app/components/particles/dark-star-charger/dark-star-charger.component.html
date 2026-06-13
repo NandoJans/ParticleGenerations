@@ -1,90 +1,95 @@
-<div class="charger-container" [class.collapsed]="isCollapsed()" [attr.data-charger-type]="getChargerType()">
-  <!-- Header -->
+<article class="charger-container" [class.collapsed]="isCollapsed()" [class.locked]="!isUnlocked()" [attr.data-charger-type]="getChargerType()">
   <div class="charger-header" (click)="toggleCollapsed()">
-    <div class="header-left" [class.collapsed]="isCollapsed()">
-      <button class="toggle-button" (click)="toggleCharging(); $event.stopPropagation()" [class.active]="isCharging()">
+    <div class="header-left">
+      <button class="toggle-button"
+              (click)="toggleCharging(); $event.stopPropagation()"
+              [class.active]="isCharging()"
+              [disabled]="!isUnlocked()"
+              [attr.aria-label]="isCharging() ? 'Stop charging' : 'Start charging'">
         <fa-icon [icon]="isCharging() ? faPause : faPlay"></fa-icon>
       </button>
       <div class="charger-name-container">
-        <h3 class="charger-name" *ngIf="!isCollapsed()">{{ getDisplayName() }}</h3>
-        <span class="roman-tier">{{ getTierRomanNumerals() }} / {{ getHighestTierRomanNumerals() }}</span>
+        <span class="charger-kicker">{{ isCharging() ? 'Charging' : 'Standby' }}</span>
+        <h3 class="charger-name">{{ getDisplayName() }}</h3>
       </div>
     </div>
-    @if (isCollapsed()) {
-      <div class="progress-bar-container">
-        <div class="progress-bar" [class.charging]="isCharging()">
-          <div class="progress-fill" [style.width.%]="getProgress()"></div>
-        </div>
-      </div>
-    }
-    <div class="header-right" *ngIf="isCollapsed()">
-      <span class="collapsed-charge">{{ getAmountDisplay() }}</span>
-      <span class="collapsed-effect">{{ getCollapsedEffectDisplay() }}</span>
+    <div class="header-summary">
+      <span class="tier-label">Tier</span>
+      <strong>{{ getTierRomanNumerals() }}</strong>
+      <span class="tier-limit">/ {{ getHighestTierRomanNumerals() }}</span>
+      <span class="collapse-indicator" [class.open]="!isCollapsed()">⌄</span>
     </div>
   </div>
 
-  <!-- Body (Collapsible Content) -->
+  <div class="compact-progress" *ngIf="isCollapsed()">
+    <div class="progress-fill" [class.charging]="isCharging()" [style.width.%]="getProgress()"></div>
+    <span>{{ getAmountDisplay() }}</span>
+  </div>
+
   <div class="charger-body" *ngIf="!isCollapsed()">
-    <div class="body-left">
-      <!-- Progress Bar -->
-      <div class="progress-bar-container">
-        <p class="charge-amount">{{ getAmountDisplay() }}</p>
-        <div class="progress-bar" [class.charging]="isCharging()">
-          <div class="progress-fill" [style.width.%]="getProgress()"></div>
+    <section class="charge-panel">
+      <div class="panel-heading">
+        <div>
+          <span class="panel-label">Charge</span>
+          <strong>{{ getAmountDisplay() }}</strong>
         </div>
+        <span class="charge-rate">{{ getChargeRateDisplay() }}</span>
       </div>
-      <!-- Tier Up Button -->
-      <div class="tier-up-container" *ngIf="canTierUp()">
-        <button class="tier-up-button" (click)="tierUp(); $event.stopPropagation()">
-          <fa-icon [icon]="faArrowUp"></fa-icon>
-          <span>Tier Up</span>
-        </button>
+      <div class="progress-bar" [class.charging]="isCharging()">
+        <div class="progress-fill" [style.width.%]="getProgress()"></div>
       </div>
-      <div class="navigate-tier-container">
-        <button [class]="'navigate-tier-button'" [disabled]="!canNavigateToTier(1)" (click)="navigateTier(1); $event.stopPropagation()">
-          <fa-icon [icon]="faArrowUp"></fa-icon>
-        </button>
-        <button [class]="'navigate-tier-button '" [disabled]="!canNavigateToTier(-1)" (click)="navigateTier(-1); $event.stopPropagation()">
+      <div class="tier-controls">
+        <button class="navigate-tier-button" [disabled]="!canNavigateToTier(-1)" (click)="navigateTier(-1); $event.stopPropagation()" aria-label="Previous tier">
           <fa-icon [icon]="faArrowDown"></fa-icon>
         </button>
+        <span>Selected tier {{ getTierRomanNumerals() }}</span>
+        <button class="navigate-tier-button" [disabled]="!canNavigateToTier(1)" (click)="navigateTier(1); $event.stopPropagation()" aria-label="Next tier">
+          <fa-icon [icon]="faArrowUp"></fa-icon>
+        </button>
+        <button class="tier-up-button" *ngIf="canTierUp()" (click)="tierUp(); $event.stopPropagation()">
+          <fa-icon [icon]="faArrowUp"></fa-icon> Tier Up
+        </button>
       </div>
-    </div>
-    <div class="body-right">
-      <!-- Effect Breakdown -->
-      <div class="effect-breakdown">
-        <p class="effect-label">Effect</p>
-        <p class="formula">{{ getEffectBreakdown().formula }}</p>
-        <div class="effects">
-          <p *ngFor="let effect of getEffectBreakdown().effects" class="effect-item">{{ effect }}</p>
-        </div>
-        <!-- Milestone Boost Description -->
-        <div class="milestone-boost" *ngIf="getTierMilestoneBoostDescription()">
-          <p class="milestone-label">Tier Milestone:</p>
-          <p class="milestone-text">{{ getTierMilestoneBoostDescription() }}</p>
-        </div>
+    </section>
+
+    <section class="effect-breakdown">
+      <div class="panel-heading">
+        <span class="panel-label">Output</span>
+        <span class="status-pill" [class.active]="isCharging()">{{ isCharging() ? 'Online' : 'Idle' }}</span>
       </div>
-    </div>
+      <code class="formula">{{ getEffectBreakdown().formula }}</code>
+      <div class="effects">
+        <p *ngFor="let effect of getEffectBreakdown().effects" class="effect-item">{{ effect }}</p>
+      </div>
+      <div class="milestone-boost" *ngIf="getTierMilestoneBoostDescription()">
+        <p class="milestone-label">Tier protocol</p>
+        <p class="milestone-text">{{ getTierMilestoneBoostDescription() }}</p>
+      </div>
+    </section>
+
+    <section class="charger-details">
+      <div class="description-section nerf">
+        <p class="description-label">Tradeoff</p>
+        <p class="description-text">{{ getNerfDescription() }}</p>
+      </div>
+      <div class="description-section">
+        <p class="description-label">Charge source</p>
+        <p class="description-text">{{ getChargeDescription() }}</p>
+      </div>
+      <div class="description-section reward">
+        <p class="description-label">Reward</p>
+        <p class="description-text">{{ getRewardDescription() }}</p>
+      </div>
+    </section>
+
     @if (!isUnlocked()) {
       <div class="disabled-overlay">
-        <fa-icon [icon]="faLock"></fa-icon>
-        <p>Reach <span [class]="getRequirementStyle()">{{ getRequirementAmount() }}</span> {{ getRequirementString() }}</p>
+        <div class="lock-badge"><fa-icon [icon]="faLock"></fa-icon></div>
+        <div>
+          <strong>Charger locked</strong>
+          <p>Reach <span [class]="getRequirementStyle()">{{ getRequirementAmount() }}</span> {{ getRequirementString() }}</p>
+        </div>
       </div>
     }
   </div>
-
-  <!-- Footer -->
-  <div class="charger-footer" *ngIf="!isCollapsed()">
-    <div class="description-section">
-      <p class="description-label">Nerf:</p>
-      <p class="description-text">{{ getNerfDescription() }}</p>
-    </div>
-    <div class="description-section">
-      <p class="description-label">Charge:</p>
-      <p class="description-text">{{ getChargeDescription() }}</p>
-    </div>
-    <div class="description-section">
-      <p class="description-label">Reward:</p>
-      <p class="description-text">{{ getRewardDescription() }}</p>
-    </div>
-  </div>
-</div>
+</article>
