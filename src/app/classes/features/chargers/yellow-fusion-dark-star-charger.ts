@@ -130,7 +130,7 @@ export class YellowFusionDarkStarCharger extends DarkStarCharger {
 
   override init() {
     this.requirement = [
-      new Requirement(HoldingRecord.yellowFusion, new Num(1, 80000), this)
+      new Requirement(HoldingRecord.yellowFusion, new Num(1, 90000), this)
     ]
   }
 }
