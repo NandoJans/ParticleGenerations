@@ -36,9 +36,11 @@ export class BlueUpgrade extends Upgrade {
     private readonly description: string,
     baseCost: Num,
     increase: Num,
-    buffer: Num
+    buffer: Num,
+    currency: Holding = HoldingRecord.neutrons
   ) {
     super(saveName);
+    this.currency = currency;
     this.baseCost = baseCost.copy();
     this.cost = baseCost.copy();
     this.increase = increase.copy();

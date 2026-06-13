@@ -20,9 +20,13 @@ export class BlueParticlesComponent {
   neutrons: Holding = HoldingRecord.neutrons;
   neutronClump: Holding = HoldingRecord.neutronClump;
   lithium: Holding = HoldingRecord.lithium;
-  upgrades: BlueUpgrade[] = [
+  neutronUpgrades: BlueUpgrade[] = [
     UpgradeRecord.blueBeamIntensity,
     UpgradeRecord.blueColliderEfficiency
+  ];
+  blueParticleUpgrades: BlueUpgrade[] = [
+    UpgradeRecord.blueParticleResonance,
+    UpgradeRecord.blueCollisionCalibration
   ];
 
   constructor(public bluePhase: BluePhaseService) {}

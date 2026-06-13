@@ -130,13 +130,17 @@ export class LithiumHolding extends BlueHolding {
   holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
     .withAmountPrefix('The neutron clump has forged')
     .withAmountSuffix(' Lithium')
-    .withEffectPrefix('Red Accelerator generation: ')
-    .addLine('Formula: 10^sqrt(Lithium) = ', () => this.getEffect(), 'x')
+    .withEffectPrefix('They multiply red particle generators by')
+    .addLine('And multiply nucleus generators by', () => this.nucleusEffect.toString(2) + 'x', '')
     .build();
+
+  nucleusEffect: Num = new Num(1, 0);
 
   override action(): Num {
     const effect = this.getEffect();
-    MultiplierRecord.redAcceleratorGenerators.correct(effect);
+    MultiplierRecord.redParticleGenerators.correct(effect);
+    this.nucleusEffect = this.amount.log10();
+    MultiplierRecord.nucleusGeneration.correct(this.nucleusEffect);
     return effect;
   }
 

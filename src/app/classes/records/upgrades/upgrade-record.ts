@@ -179,6 +179,7 @@ import {GreenKeyUpgrade} from "../../features/upgrades/green-key-upgrade";
 import {NuclearConfig} from "../../config/nuclear-config";
 import {BlueUpgrade} from "../../features/upgrades/blue-upgrade";
 import {Num} from "../../../num";
+import {HoldingRecord} from "../holdings/holding-record";
 
 @Injectable({
   providedIn: 'root'
@@ -216,6 +217,26 @@ export class UpgradeRecord extends Record {
     new Num(5, 0),
     new Num(2.5, 1),
     new Num(1.5, 0)
+  );
+  static blueParticleResonance: BlueUpgrade = new BlueUpgrade(
+    'blueParticleResonance',
+    'blue-particle-resonance',
+    'Particle Resonance',
+    'Multiply Proton and Electron generation.',
+    Num.ONE,
+    new Num(5, 0),
+    new Num(3, 0),
+    HoldingRecord.blueParticles
+  );
+  static blueCollisionCalibration: BlueUpgrade = new BlueUpgrade(
+    'blueCollisionCalibration',
+    'blue-collision-calibration',
+    'Collision Calibration',
+    'Multiply Neutrons gained from collisions.',
+    new Num(2, 0),
+    new Num(1, 1),
+    Num.TWO,
+    HoldingRecord.blueParticles
   );
 
   // Red Generators
@@ -499,6 +520,8 @@ export class UpgradeRecord extends Record {
     // Blue particle upgrades
     UpgradeRecord.blueBeamIntensity,
     UpgradeRecord.blueColliderEfficiency,
+    UpgradeRecord.blueParticleResonance,
+    UpgradeRecord.blueCollisionCalibration,
 
   ]
 

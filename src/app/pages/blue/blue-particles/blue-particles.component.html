@@ -106,13 +106,28 @@
   <section class="blue-upgrades">
     <div class="section-heading">
       <div>
+        <p class="eyebrow">BLUE PARTICLE RESEARCH</p>
+        <h2>Particle Laboratory Upgrades</h2>
+      </div>
+      <p>Spend Blue Particles to accelerate particle separation and collision research.</p>
+    </div>
+    <div class="upgrade-row">
+      @for (upgrade of blueParticleUpgrades; track upgrade.name) {
+        <app-upgrade [upgrade]="upgrade"></app-upgrade>
+      }
+    </div>
+  </section>
+
+  <section class="blue-upgrades">
+    <div class="section-heading">
+      <div>
         <p class="eyebrow">NEUTRON RESEARCH</p>
-        <h2>Persistent Blue Upgrades</h2>
+        <h2>Persistent Neutron Upgrades</h2>
       </div>
       <p>Spend Neutrons here for immediate power, or preserve them for the clump.</p>
     </div>
     <div class="upgrade-row">
-      @for (upgrade of upgrades; track upgrade.name) {
+      @for (upgrade of neutronUpgrades; track upgrade.name) {
         <app-upgrade [upgrade]="upgrade"></app-upgrade>
       }
     </div>

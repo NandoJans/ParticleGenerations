@@ -30,6 +30,10 @@ describe('BluePhaseService', () => {
     UpgradeRecord.blueBeamIntensity.bought = Num.ZERO.copy();
     UpgradeRecord.blueColliderEfficiency.amount = Num.ZERO.copy();
     UpgradeRecord.blueColliderEfficiency.bought = Num.ZERO.copy();
+    UpgradeRecord.blueParticleResonance.amount = Num.ZERO.copy();
+    UpgradeRecord.blueParticleResonance.bought = Num.ZERO.copy();
+    UpgradeRecord.blueCollisionCalibration.amount = Num.ZERO.copy();
+    UpgradeRecord.blueCollisionCalibration.bought = Num.ZERO.copy();
     MilestoneRecord.stableParticleBeam.unlocked = false;
     MilestoneRecord.denseParticleCollision.unlocked = false;
     service.synchronizePurchases();
@@ -53,6 +57,10 @@ describe('BluePhaseService', () => {
     UpgradeRecord.blueBeamIntensity.bought = Num.ZERO.copy();
     UpgradeRecord.blueColliderEfficiency.amount = Num.ZERO.copy();
     UpgradeRecord.blueColliderEfficiency.bought = Num.ZERO.copy();
+    UpgradeRecord.blueParticleResonance.amount = Num.ZERO.copy();
+    UpgradeRecord.blueParticleResonance.bought = Num.ZERO.copy();
+    UpgradeRecord.blueCollisionCalibration.amount = Num.ZERO.copy();
+    UpgradeRecord.blueCollisionCalibration.bought = Num.ZERO.copy();
   });
 
   it('does not automatically enter Blue when the unlock threshold is reached', () => {
@@ -98,6 +106,22 @@ describe('BluePhaseService', () => {
     expect(ResetHelper.reset).toHaveBeenCalledWith(ResetKey.BLUE);
     expect(HoldingRecord.neutrons.amount.toNumber()).toBe(5);
     expect(service.activeParticle).toBe('none');
+  });
+
+  it('uses Blue Particles for Blue Particle research upgrades', () => {
+    expect(UpgradeRecord.blueParticleResonance.currency).toBe(HoldingRecord.blueParticles);
+    expect(UpgradeRecord.blueCollisionCalibration.currency).toBe(HoldingRecord.blueParticles);
+    expect(UpgradeRecord.blueBeamIntensity.currency).toBe(HoldingRecord.neutrons);
+  });
+
+  it('applies Blue Particle research to beam generation and collision gain', () => {
+    UpgradeRecord.blueParticleResonance.amount = Num.ONE.copy();
+    UpgradeRecord.blueCollisionCalibration.amount = Num.ONE.copy();
+    HoldingRecord.protons.amount = new Num(8, 0);
+    HoldingRecord.electrons.amount = new Num(5, 0);
+
+    expect(service.getParticleGeneration().toNumber()).toBeCloseTo(0.03, 8);
+    expect(service.getCollisionGain().toNumber()).toBe(2);
   });
 
   it('advances one clump stage for every power of ten', () => {

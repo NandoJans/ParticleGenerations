@@ -9,6 +9,7 @@ import {ResetHelper} from '../classes/helpers/reset-helper';
 import {ResetKey} from '../classes/enums/reset-key';
 import {MilestoneRecord} from '../classes/records/milestones/milestone-record';
 import {Multiplier} from '../classes/features/multiplier';
+import {MultiplierRecord} from "../classes/records/multipliers/multiplier-record";
 
 export type BlueParticleMode = 'none' | 'protons' | 'electrons';
 
@@ -49,7 +50,7 @@ export class BluePhaseService {
     }
 
     if (this.getClumpStage() >= 1) {
-      HoldingRecord.lithium.generate(this.getElementGeneration().mul(speed));
+      HoldingRecord.lithium.generate(this.getElementGeneration(1).mul(speed));
     }
   }
 
@@ -92,9 +93,12 @@ export class BluePhaseService {
 
   getParticleGeneration(): Num {
     let generation = new Num(1, -2);
-    if (MilestoneRecord.denseParticleCollision.unlocked) generation = new Num(5, 0);
+    generation = generation.mul(MultiplierRecord.nucleusGeneration.getNum(false));
+    // if (MilestoneRecord.denseParticleCollision.unlocked) generation = new Num(5, 0);
     return generation.mul(
       UpgradeRecord.blueBeamIntensity.buffer.pow(UpgradeRecord.blueBeamIntensity.amount)
+    ).mul(
+      UpgradeRecord.blueParticleResonance.buffer.pow(UpgradeRecord.blueParticleResonance.amount)
     );
   }
 
@@ -105,6 +109,8 @@ export class BluePhaseService {
     let multiplier = MilestoneRecord.denseParticleCollision.unlocked ? Num.TWO.copy() : Num.ONE.copy();
     multiplier = multiplier.mul(
       UpgradeRecord.blueColliderEfficiency.buffer.pow(UpgradeRecord.blueColliderEfficiency.amount)
+    ).mul(
+      UpgradeRecord.blueCollisionCalibration.buffer.pow(UpgradeRecord.blueCollisionCalibration.amount)
     );
     return pairs.pow(new Num(5, -1))
       .sub(Num.ONE)
@@ -151,8 +157,11 @@ export class BluePhaseService {
     return new Num(1, this.getClumpStage() + 1);
   }
 
-  private getElementGeneration(): Num {
-    return new Num(this.getClumpStage(), 0);
+  private getElementGeneration(requiredStage: number): Num {
+    return new Num(2, 0)
+      .pow(HoldingRecord.neutronClump.amount.log10())
+      .pow(this.getClumpStage() - requiredStage + 1)
+      .mul(new Num(1, -2));
   }
 
   private getBuyables(): {key: string, buyable: Buyable}[] {

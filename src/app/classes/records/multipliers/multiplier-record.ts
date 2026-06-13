@@ -49,6 +49,8 @@ export class MultiplierRecord {
   static challengeBuffBoost: Multiplier = new Multiplier('challengeBuffBoost', new Num(1, 0), 3);
   static proximaCentauriMaxBuff: Multiplier = new Multiplier('proximaCentauriMaxBuff', new Num(1, 0), 3);
 
+  static nucleusGeneration: Multiplier = new Multiplier('nucleusGeneration', Num.ONE, 3);
+
   static list: Multiplier[] = [
     // Red Phase
     MultiplierRecord.redParticleGenerators,
@@ -91,6 +93,8 @@ export class MultiplierRecord {
     MultiplierRecord.starChallengeHoldingSpeed,
     MultiplierRecord.challengeBuffBoost,
     MultiplierRecord.proximaCentauriMaxBuff,
+
+    MultiplierRecord.nucleusGeneration,
 
   ];
 
