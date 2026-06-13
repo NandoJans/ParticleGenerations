@@ -44,6 +44,9 @@ export class DarkStarChargerComponent {
   }
 
   toggleCharging() {
+    if (!this.isUnlocked()) {
+      return;
+    }
     if (ChallengeRecord.currentChallenges['green'] === ChallengeRecord.darkGalaxy) {
       this.dropDownMessageService.dropDown("Error", "Cannot toggle charging while in Dark Galaxy Challenge.", 'error');
       return;
@@ -91,7 +94,11 @@ export class DarkStarChargerComponent {
   }
 
   getAmountDisplay(): string {
-    return `(+${this.charger.chargeAmount.toString()}) ${this.charger.getCharge().toString()} / ${this.charger.maxCharge.toString()}`;
+    return `${this.charger.getCharge().toString()} / ${this.charger.maxCharge.toString()}`;
+  }
+
+  getChargeRateDisplay(): string {
+    return `Potential ${this.charger.chargeAmount.toString()}`;
   }
 
   getDisplayName(): string {

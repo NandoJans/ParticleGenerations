@@ -4,7 +4,6 @@ import {ResetKey} from "../../enums/reset-key";
 import {Requirement} from "../interfaces/requirement";
 import {HoldingRecord} from "../../records/holdings/holding-record";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
-import {Multiplier} from "../multiplier";
 
 /**
  * Star Key Dark Star Charger
@@ -40,20 +39,13 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
   }
 
   getChargeAmount(): Num {
-    // Charge based on star keys - only increases
-    const starKeys = HoldingRecord.starKeys;
-    return starKeys.amount.log10();
+    return HoldingRecord.starKeys.amount.log10();
   }
 
   action(): Num {
-    // Calculate and apply yellow key-gain boost
-    const effectiveCharge = this.getEffectiveCharge();
+    const effectiveCharge = this.getEffectiveCharge().add(this.getSharedCharge());
     const baseEffect = new Num(10, 0).pow(effectiveCharge);
-
-    // Apply shared tier boost from all charger tiers
     const effect = this.applySharedTierBoost(baseEffect);
-
-    // Apply the multiplier to yellow key gain
     MultiplierRecord.yellowKeyGain.correct(effect);
 
     this.effect = effect;
@@ -96,16 +88,31 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
   }
 
   getChargeDescription(): string {
-    return 'Charges based on the amount of star keys you have.';
+    return 'Charges from log10 of your current Star Keys.';
   }
 
   getRewardDescription(): string {
     return 'Increases yellow key gain.';
   }
 
+  override getEffectBreakdown(): { formula: string; effects: string[] } {
+    return {
+      formula: '10^(charge + combined charge) × shared tier boost',
+      effects: [
+        `Current Charge: ${this.getEffectiveCharge().toString()} + ${this.getSharedCharge().toString()}`,
+        `Tier: ${this.tier.toString()}`,
+        `Yellow Key Gain: ${this.effect.toString(2)}x`
+      ]
+    };
+  }
+
+  override getTierMilestoneBoostDescription(): string {
+    return 'Each tier raises the charge cap by 10x and contributes to the shared charger boost.';
+  }
+
   override init() {
     this.requirement = [
-      new Requirement(HoldingRecord.starKeys, new Num(1, 9999999999), this)
-    ]
+      new Requirement(HoldingRecord.starKeys, new Num(100, 0), this)
+    ];
   }
 }
