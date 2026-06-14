@@ -40,7 +40,7 @@ export class GreenNuclearComponent {
       (total, charger) => total.add(charger.highestTier.sub(Num.ONE)),
       Num.ZERO
     );
-    const tierBonus = Num.ONE.add(extraTiers.mul(NuclearConfig.potentialTierWeight));
+    const tierBonus = Num.ONE.add(NuclearConfig.potentialTierWeight).pow(extraTiers);
     return darkStarGain.mul(tierBonus).mul(this.getPotentialGainMultiplier()).floor();
   }
 
