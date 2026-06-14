@@ -14,6 +14,7 @@ import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 import {MultiplierChallengeUpgrade} from "./upgrades/multiplier-challenge-upgrade";
 import {CustomChallengeUpgrade} from "./upgrades/custom-challenge-upgrade";
 import {BuffSoftCapHelper} from "../../helpers/buff-soft-cap-helper";
+import {Enhancement} from "../enhancements/enhancement";
 
 export class SunStarChallenge extends YellowStarChallenge {
   name: string = 'sun-star-challenge';
@@ -40,6 +41,10 @@ export class SunStarChallenge extends YellowStarChallenge {
     new Num(0.7, 0),
     new Num(0.6, 0),
   ];
+
+  protected override getEnhancementPower(enhancement: Enhancement): Num {
+    return enhancement.getMultiplier().div(new Num(1, 1)).add(Num.ONE);
+  }
 
   override strongerBuffer(completionBuffer: Num): Num | void {
     if (this.completed instanceof Num) {
