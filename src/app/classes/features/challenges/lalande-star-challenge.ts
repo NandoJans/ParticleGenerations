@@ -10,6 +10,7 @@ import {GeneratorRecord} from "../../records/generators/generator-record";
 import {RedGenerator} from "../generators/red-generator";
 import {Upgrade} from "../upgrade";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
+import {Enhancement} from "../enhancements/enhancement";
 
 export class LalandeStarChallenge extends YellowStarChallenge {
   name: string = 'lalande-star-challenge';
@@ -78,5 +79,9 @@ export class LalandeStarChallenge extends YellowStarChallenge {
     this.requirement = [
     new Requirement(HoldingRecord.redParticles, new Num(1, 4100), this)
   ];
+  }
+
+  protected override getEnhancementPower(enhancement: Enhancement): Num {
+    return enhancement.getMultiplier().div(new Num(1, 1,)).add(Num.ONE);
   }
 }

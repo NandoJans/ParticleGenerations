@@ -4,6 +4,7 @@ import {Holding} from "../holding";
 import {HoldingRecord} from "../../records/holdings/holding-record";
 import {Enhancement} from "../enhancements/enhancement";
 import {EnhancementRecord} from "../../records/enhancement-record";
+import {Num} from "../../../num";
 
 export abstract class YellowStarChallenge extends Challenge {
   type: string = "yellow-star-challenge";
@@ -16,14 +17,18 @@ export abstract class YellowStarChallenge extends Challenge {
     return true;
   }
 
+  protected getEnhancementPower(enhancement: Enhancement): Num {
+    return enhancement.getMultiplier()
+  }
+
   enhance(): void {
     if (this.enhancement) {
-      this.buffer = this.buffer.mul(this.enhancement.getMultiplier());
+      this.buffer = this.buffer.mul(this.getEnhancementPower(this.enhancement));
     }
   }
 
   enhancementString(enhancement: Enhancement): string {
-    return `Multiply this challenge reward by ${enhancement.getMultiplier().toString(2)}x.`;
+    return `Multiply this challenge reward by ${this.getEnhancementPower(enhancement).toString(2)}x.`;
   }
 
   override save(): void {
