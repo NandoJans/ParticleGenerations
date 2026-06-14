@@ -7,7 +7,8 @@ export type NuclearUpgradeTarget =
   | 'nuclearFissionGain'
   | 'nuclearPotentialGain'
   | 'unlockGreenGenerator4'
-  | 'unlockGreenGenerator5';
+  | 'unlockGreenGenerator5'
+  | 'reduceStarKeyCompressionRequirement';
 
 export interface NuclearUpgradeConfig {
   key: string;
@@ -28,7 +29,8 @@ export class NuclearConfig {
   static readonly unlockRequirement = new Num(1, 80);
   static readonly minimumDarkStars = new Num(1, 0);
   static readonly potentialDarkStarPower = new Num(5, -1);
-  static readonly potentialTierWeight = new Num(1, -1);
+  static readonly potentialChargerTierStart = new Num(1, 1);
+  static readonly potentialChargerTierBase = Num.TWO;
   static readonly fissionPerPotentialPerSecond = new Num(1, -2);
   static readonly fissionBoosterPower = new Num(2.5, -1);
 
@@ -77,6 +79,16 @@ export class NuclearConfig {
       baseCost: new Num(2.5, 3),
       costIncrease: new Num(1, 2),
       buffPerLevel: new Num(1.25, 0),
+    },
+    {
+      key: 'nuclear-star-key-compression',
+      displayName: 'Compact Stellar Press',
+      description: 'Star-Key Compression can be started with 1,000 Yellow Keys.',
+      target: 'reduceStarKeyCompressionRequirement',
+      baseCost: new Num(1, 5),
+      costIncrease: Num.ONE,
+      buffPerLevel: Num.ONE,
+      limit: Num.ONE,
     },
     {
       key: 'nuclear-unlock-green-generator-4',

@@ -67,13 +67,18 @@ export class NuclearUpgrade extends Upgrade {
         break;
       case 'unlockGreenGenerator4':
       case 'unlockGreenGenerator5':
+      case 'reduceStarKeyCompressionRequirement':
         return undefined;
     }
     return effect;
   }
 
   getDescription(): string {
-    if (this.config.target === 'unlockGreenGenerator4' || this.config.target === 'unlockGreenGenerator5') {
+    if (
+      this.config.target === 'unlockGreenGenerator4'
+      || this.config.target === 'unlockGreenGenerator5'
+      || this.config.target === 'reduceStarKeyCompressionRequirement'
+    ) {
       return this.config.description;
     }
     return `${this.config.description} ${this.buffer.toString(2)}x per level.`;

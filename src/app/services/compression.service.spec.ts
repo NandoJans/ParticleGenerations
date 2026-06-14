@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { CompressionService } from './compression.service';
 import { App } from '../App';
 import { Num } from '../num';
+import { UpgradeRecord } from '../classes/records/upgrades/upgrade-record';
 
 describe('CompressionService', () => {
   let service: CompressionService;
@@ -10,6 +11,7 @@ describe('CompressionService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(CompressionService);
+    UpgradeRecord.reduceStarKeyCompressionRequirementNuclear.bought = Num.ZERO;
   });
 
   it('should be created', () => {
@@ -69,5 +71,13 @@ describe('CompressionService', () => {
     
     // Assert: Progress should increase based on real elapsed time
     expect(progressAfterTick).toBeGreaterThan(initialProgress);
+  });
+
+  it('should require only 1,000 Yellow Keys after buying Compact Stellar Press', () => {
+    expect(service.getNeededKeys().equals(new Num(1, 8))).toBeTrue();
+
+    UpgradeRecord.reduceStarKeyCompressionRequirementNuclear.bought = Num.ONE;
+
+    expect(service.getNeededKeys().equals(new Num(1, 3))).toBeTrue();
   });
 });
