@@ -23,6 +23,7 @@ export class CombineDarkStarCharger extends DarkStarCharger {
 
   override tierNerf: Num[] = [
     new Num(0.99, 0),
+new Num(0.99, 0),
     new Num(0.5, 0),
   ];
 
