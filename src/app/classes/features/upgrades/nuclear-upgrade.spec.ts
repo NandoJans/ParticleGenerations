@@ -48,4 +48,18 @@ describe('NuclearUpgrade', () => {
       expect(upgrade.action()).toBeUndefined();
     });
   });
+
+  it('configures Compact Stellar Press as a one-time 100,000 Nuclear Fission upgrade', () => {
+    const config = NuclearConfig.upgrades.find(
+      upgrade => upgrade.target === 'reduceStarKeyCompressionRequirement'
+    );
+
+    expect(config).toBeDefined();
+    expect(config!.baseCost.equals(new Num(1, 5))).toBeTrue();
+
+    const upgrade = new NuclearUpgrade(config!);
+    expect(upgrade.limit?.equals(Num.ONE)).toBeTrue();
+    expect(upgrade.getDescription()).toBe('Star-Key Compression can be started with 1,000 Yellow Keys.');
+    expect(upgrade.action()).toBeUndefined();
+  });
 });

@@ -7,7 +7,8 @@ export type NuclearUpgradeTarget =
   | 'nuclearFissionGain'
   | 'nuclearPotentialGain'
   | 'unlockGreenGenerator4'
-  | 'unlockGreenGenerator5';
+  | 'unlockGreenGenerator5'
+  | 'reduceStarKeyCompressionRequirement';
 
 export interface NuclearUpgradeConfig {
   key: string;
@@ -77,6 +78,16 @@ export class NuclearConfig {
       baseCost: new Num(2.5, 3),
       costIncrease: new Num(1, 2),
       buffPerLevel: new Num(1.25, 0),
+    },
+    {
+      key: 'nuclear-star-key-compression',
+      displayName: 'Compact Stellar Press',
+      description: 'Star-Key Compression can be started with 1,000 Yellow Keys.',
+      target: 'reduceStarKeyCompressionRequirement',
+      baseCost: new Num(1, 5),
+      costIncrease: Num.ONE,
+      buffPerLevel: Num.ONE,
+      limit: Num.ONE,
     },
     {
       key: 'nuclear-unlock-green-generator-4',

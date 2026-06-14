@@ -18,6 +18,7 @@ import {App} from "../App";
 })
 export class CompressionService implements Resetable {
   private keysRequired: Num = new Num(1, 8);
+  private reducedKeysRequired: Num = new Num(1, 3);
   private requiredIncrease: Num = new Num(1, 1);
   private compressions: Num = new Num(0, 0);
 
@@ -272,12 +273,16 @@ export class CompressionService implements Resetable {
   yellowKeyScaling: Num = new Num(8, 0);
 
   getNeededKeys() {
+    const baseKeysRequired = UpgradeRecord.reduceStarKeyCompressionRequirementNuclear.hasBought()
+      ? this.reducedKeysRequired
+      : this.keysRequired;
+
     // After 35 compressions, the yellow key requirement increases even stronger by applying the yellow key scaling
     if (this.compressions.greq(this.yellowKeyScalingStart)) {
       let diff = this.compressions.sub(this.yellowKeyScalingStart);
-      return this.keysRequired.mul(this.yellowKeyScalingStart.pow(this.requiredIncrease)).mul(this.yellowKeyScalingStart.pow(diff.mul(this.yellowKeyScaling)));
+      return baseKeysRequired.mul(this.yellowKeyScalingStart.pow(this.requiredIncrease)).mul(this.yellowKeyScalingStart.pow(diff.mul(this.yellowKeyScaling)));
     } else {
-      return this.keysRequired.mul(this.requiredIncrease.pow(this.compressions));
+      return baseKeysRequired.mul(this.requiredIncrease.pow(this.compressions));
     }
   }
 
