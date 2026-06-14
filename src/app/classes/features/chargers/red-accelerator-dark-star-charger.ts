@@ -26,7 +26,7 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
     new Num(0.99, 0),
     new Num(0.95, 0),
     new Num(0.96, 0),
-    new Num(0.95, 0),
+    new Num(0.925, 0),
     new Num(0.9, 0),
   ];
 
