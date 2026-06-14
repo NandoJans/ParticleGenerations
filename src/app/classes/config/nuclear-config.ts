@@ -29,7 +29,8 @@ export class NuclearConfig {
   static readonly unlockRequirement = new Num(1, 80);
   static readonly minimumDarkStars = new Num(1, 0);
   static readonly potentialDarkStarPower = new Num(5, -1);
-  static readonly potentialTierWeight = new Num(1, -1);
+  static readonly potentialChargerTierStart = new Num(1, 1);
+  static readonly potentialChargerTierBase = Num.TWO;
   static readonly fissionPerPotentialPerSecond = new Num(1, -2);
   static readonly fissionBoosterPower = new Num(2.5, -1);
 
