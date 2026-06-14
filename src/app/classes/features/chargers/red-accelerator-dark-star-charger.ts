@@ -27,6 +27,7 @@ export class RedAcceleratorDarkStarCharger extends DarkStarCharger {
     new Num(0.95, 0),
     new Num(0.96, 0),
     new Num(0.95, 0),
+    new Num(0.9, 0),
   ];
 
   // Set calculation order to run after upgrades (400) but before generators (1000)
