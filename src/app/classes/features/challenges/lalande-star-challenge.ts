@@ -82,6 +82,6 @@ export class LalandeStarChallenge extends YellowStarChallenge {
   }
 
   protected override getEnhancementPower(enhancement: Enhancement): Num {
-    return enhancement.getMultiplier().div(new Num(1, 1,)).add(Num.ONE);
+    return enhancement.getMultiplier().div(new Num(1, 2)).add(Num.ONE);
   }
 }
