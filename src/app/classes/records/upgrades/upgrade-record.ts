@@ -200,6 +200,9 @@ export class UpgradeRecord extends Record {
   static unlockFifthGreenGeneratorNuclear: NuclearUpgrade = UpgradeRecord.nuclearUpgrades.find(
     upgrade => upgrade.config.target === 'unlockGreenGenerator5'
   )!;
+  static reduceStarKeyCompressionRequirementNuclear: NuclearUpgrade = UpgradeRecord.nuclearUpgrades.find(
+    upgrade => upgrade.config.target === 'reduceStarKeyCompressionRequirement'
+  )!;
   static blueBeamIntensity: BlueUpgrade = new BlueUpgrade(
     'blueBeamIntensity',
     'blue-beam-intensity',
