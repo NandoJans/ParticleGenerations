@@ -36,11 +36,14 @@ export class GreenNuclearComponent {
     }
 
     const darkStarGain = HoldingRecord.darkStarHolding.amount.pow(NuclearConfig.potentialDarkStarPower);
-    const extraTiers = ChargerRecord.darkStarChargerList.reduce(
-      (total, charger) => total.add(charger.highestTier.sub(Num.ONE)),
+    const totalChargerTiers = ChargerRecord.darkStarChargerList.reduce(
+      (total, charger) => total.add(charger.highestTier),
       Num.ZERO
     );
-    const tierBonus = Num.ONE.add(NuclearConfig.potentialTierWeight).pow(extraTiers);
+    const bonusTiers = totalChargerTiers.sub(NuclearConfig.potentialChargerTierStart);
+    const tierBonus = bonusTiers.lt(Num.ZERO)
+      ? Num.ONE
+      : NuclearConfig.potentialChargerTierBase.pow(bonusTiers);
     return darkStarGain.mul(tierBonus).mul(this.getPotentialGainMultiplier()).floor();
   }
 

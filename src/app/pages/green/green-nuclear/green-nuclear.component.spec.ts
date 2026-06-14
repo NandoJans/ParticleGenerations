@@ -28,19 +28,24 @@ describe('GreenNuclearComponent', () => {
     expect(component.canScram()).toBeFalse();
   });
 
-  it('calculates potential from dark stars and extra charger tiers', () => {
+  it('starts applying the charger tier bonus at 10 total tiers', () => {
     HoldingRecord.darkStarHolding.amount = new Num(100, 0);
     ChargerRecord.redGeneratorDarkCharger.highestTier = new Num(3, 0);
 
-    expect(component.getPotentialGain().toNumber()).toBe(12);
+    expect(component.getPotentialGain().toNumber()).toBe(10);
   });
 
-  it('compounds the potential bonus for every extra charger tier', () => {
+  it('doubles potential gain for every total charger tier above 10', () => {
     HoldingRecord.darkStarHolding.amount = new Num(100, 0);
-    ChargerRecord.redGeneratorDarkCharger.highestTier = new Num(4, 0);
-    ChargerRecord.redAcceleratorDarkCharger.highestTier = new Num(4, 0);
+    ChargerRecord.redGeneratorDarkCharger.highestTier = new Num(5, 0);
 
-    expect(component.getPotentialGain().toNumber()).toBe(17);
+    expect(component.getPotentialGain().toNumber()).toBe(80);
+  });
+
+  it('does not reduce potential gain below 10 total charger tiers', () => {
+    HoldingRecord.darkStarHolding.amount = new Num(100, 0);
+
+    expect(component.getPotentialGain().toNumber()).toBe(10);
   });
 
   it('multiplies potential gain with Reactor Yield levels', () => {
@@ -59,7 +64,7 @@ describe('GreenNuclearComponent', () => {
 
     component.scramReactor();
 
-    expect(HoldingRecord.nuclearPotential.amount.toNumber()).toBe(11);
+    expect(HoldingRecord.nuclearPotential.amount.toNumber()).toBe(10);
     expect(HoldingRecord.darkStarHolding.amount.equals(Num.ZERO)).toBeTrue();
     expect(ChargerRecord.redGeneratorDarkCharger.tier.equals(Num.ONE)).toBeTrue();
     expect(ChargerRecord.redGeneratorDarkCharger.charge.equals(Num.ZERO)).toBeTrue();
