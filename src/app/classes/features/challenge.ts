@@ -71,9 +71,10 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
       this.correctCompleted();
       this.correctGoal()
       this.correctBuffer();
-
+      this.buffer = this.baseBuffer.copy();
       return reward;
     }
+    this.buffer = this.baseBuffer.copy();
     return;
   }
 
