@@ -35,6 +35,14 @@ describe('GreenNuclearComponent', () => {
     expect(component.getPotentialGain().toNumber()).toBe(12);
   });
 
+  it('compounds the potential bonus for every extra charger tier', () => {
+    HoldingRecord.darkStarHolding.amount = new Num(100, 0);
+    ChargerRecord.redGeneratorDarkCharger.highestTier = new Num(4, 0);
+    ChargerRecord.redAcceleratorDarkCharger.highestTier = new Num(4, 0);
+
+    expect(component.getPotentialGain().toNumber()).toBe(17);
+  });
+
   it('multiplies potential gain with Reactor Yield levels', () => {
     HoldingRecord.darkStarHolding.amount = new Num(100, 0);
     UpgradeRecord.nuclearPotentialGainNuclear.amount = new Num(2, 0);
