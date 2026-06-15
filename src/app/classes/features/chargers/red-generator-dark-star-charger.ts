@@ -30,10 +30,11 @@ export class RedGeneratorDarkStarCharger extends DarkStarCharger {
   override baseBuffer: Num = new Num(1, 1);
 
   override tierNerf: Num[] = [
-    new Num(0.98, 0),
-    new Num(0.98, 0),
-    new Num(0.98, 0),
-    new Num(0.5, 0)
+    new Num(0.98, 0), // TIER II
+    new Num(0.98, 0), // TIER III
+    new Num(0.98, 0), // TIER IV
+    new Num(0.98, 0), // TIER V
+    new Num(0.9, 0), // TIER VI
   ];
 
   /**
