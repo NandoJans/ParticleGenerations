@@ -182,6 +182,8 @@ import {BlueUpgrade} from "../../features/upgrades/blue-upgrade";
 import {Num} from "../../../num";
 import {HoldingRecord} from "../holdings/holding-record";
 import {StarKeyHolding} from "../../features/holdings/star-key-holding";
+import {NuclearPotentialGalaxyTreeUpgrade} from "../../features/upgrades/nuclear-potential-galaxy-tree-upgrade";
+import {NuclearReactionGalaxyTreeUpgrade} from "../../features/upgrades/nuclear-reaction-galaxy-tree-upgrade";
 
 @Injectable({
   providedIn: 'root'
@@ -384,6 +386,9 @@ export class UpgradeRecord extends Record {
   static cheaperFourthYellowGeneratorGalaxyTreeUpgrade: CheaperFourthYellowGeneratorGalaxyTreeUpgrade = new CheaperFourthYellowGeneratorGalaxyTreeUpgrade('cheaperFourthYellowGeneratorGalaxyTreeUpgrade');
   static cheaperFifthYellowGeneratorGalaxyTreeUpgrade: CheaperFifthYellowGeneratorGalaxyTreeUpgrade = new CheaperFifthYellowGeneratorGalaxyTreeUpgrade('cheaperFifthYellowGeneratorGalaxyTreeUpgrade');
 
+  static nuclearPotentialGalaxyTree: NuclearPotentialGalaxyTreeUpgrade = new NuclearPotentialGalaxyTreeUpgrade('nuclearPotentialGalaxyTree');
+  static nuclearReactionGalaxyTree: NuclearReactionGalaxyTreeUpgrade = new NuclearReactionGalaxyTreeUpgrade('nuclearReactionGalaxyTree');
+
 
   static yellowUpgradeList: YellowUpgrade[] = [
     UpgradeRecord.redGeneratorMultiplierYellowPrestigeYellow,
@@ -464,6 +469,9 @@ export class UpgradeRecord extends Record {
 
     UpgradeRecord.cheaperFourthYellowGeneratorGalaxyTreeUpgrade,
     UpgradeRecord.cheaperFifthYellowGeneratorGalaxyTreeUpgrade,
+
+    UpgradeRecord.nuclearPotentialGalaxyTree,
+    UpgradeRecord.nuclearReactionGalaxyTree,
   ]
 
   static override list: Upgrade[] = [

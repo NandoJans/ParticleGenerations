@@ -12,7 +12,7 @@ export class HydrogenCompressionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
 
   getChildren(): GalaxyTreeUpgrade[] {
     return [
-
+      UpgradeRecord.nuclearPotentialGalaxyTree,
     ];
   }
 

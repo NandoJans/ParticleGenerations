@@ -13,7 +13,7 @@ export class GeneratedCompressionGalaxyTreeUpgrade extends GalaxyTreeUpgrade {
 
   getChildren(): GalaxyTreeUpgrade[] {
     return [
-
+      UpgradeRecord.nuclearReactionGalaxyTree,
     ];
   }
 

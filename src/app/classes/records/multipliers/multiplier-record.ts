@@ -33,6 +33,7 @@ export class MultiplierRecord {
   static greenGenerators: Multiplier = new Multiplier('greenGenerators', new Num(1, 0));
   static darkChargerEffects: Multiplier = new Multiplier('darkChargerEffects', new Num(1, 0));
   static nuclearFissionGain: Multiplier = new Multiplier('nuclearFissionGain', new Num(1, 0));
+  static nuclearPotentialGain: Multiplier = new Multiplier('nuclearPotentialGain', new Num(1, 0));
 
   // Blue Phase
   static blueParticleGain: Multiplier = new Multiplier('blueParticleGain', new Num(1, 0), 50, true);
@@ -78,6 +79,7 @@ export class MultiplierRecord {
     MultiplierRecord.greenGenerators,
     MultiplierRecord.darkChargerEffects,
     MultiplierRecord.nuclearFissionGain,
+    MultiplierRecord.nuclearPotentialGain,
 
     // Blue Phase
     MultiplierRecord.blueParticleGain,

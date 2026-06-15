@@ -13,6 +13,7 @@ import {GreenKeyHolding} from '../../../classes/features/holdings/green-key-hold
 import {GreenKeyUpgrade} from '../../../classes/features/upgrades/green-key-upgrade';
 import {GreenEnhancement} from '../../../classes/features/enhancements/green-enhancement';
 import {EnhancementRecord} from '../../../classes/records/enhancement-record';
+import {MultiplierRecord} from '../../../classes/records/multipliers/multiplier-record';
 
 @Component({
   selector: 'app-green-nuclear',
@@ -49,7 +50,7 @@ export class GreenNuclearComponent {
 
   getPotentialGainMultiplier(): Num {
     const upgrade = UpgradeRecord.nuclearPotentialGainNuclear;
-    return upgrade.buffer.pow(upgrade.amount);
+    return upgrade.buffer.pow(upgrade.amount).mul(MultiplierRecord.nuclearPotentialGain.getNum());
   }
 
   canScram(): boolean {
