@@ -95,6 +95,7 @@ export class PurchaseAvailabilityService {
         return [
           ...this.withGeneratorUpgrades(GeneratorRecord.greenGenerators),
           UpgradeRecord.multiplyGreenParticlesGreen,
+          UpgradeRecord.unlockThirdGreenGenerator,
         ];
       case 'green/nuclear':
         return [UpgradeRecord.greenKey, ...UpgradeRecord.nuclearUpgrades];

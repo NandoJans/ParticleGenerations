@@ -57,6 +57,7 @@ import {RedParticleSacrificeUpgrade} from "../../features/upgrades/red-particle-
 import {YellowParticleSacrificeUpgrade} from "../../features/upgrades/yellow-particle-sacrifice-upgrade";
 import {GreenParticleSacrificeUpgrade} from "../../features/upgrades/green-particle-sacrifice-upgrade";
 import {MultiplyGreenParticlesGreenUpgrade} from "../../features/upgrades/multiply-green-particles-green-upgrade";
+import {UnlockThirdGreenGeneratorUpgrade} from "../../features/upgrades/unlock-third-green-generator-upgrade";
 import {
   UnlockFirstGreenGeneratorGalaxyTreeUpgrade
 } from "../../features/upgrades/unlock-first-green-generator-galaxy-tree-upgrade";
@@ -289,6 +290,7 @@ export class UpgradeRecord extends Record {
 
   // Green generator upgrades
   static multiplyGreenParticlesGreen: MultiplyGreenParticlesGreenUpgrade = new MultiplyGreenParticlesGreenUpgrade('multiplyGreenParticlesGreen');
+  static unlockThirdGreenGenerator: UnlockThirdGreenGeneratorUpgrade = new UnlockThirdGreenGeneratorUpgrade('unlockThirdGreenGenerator');
 
   // yellow fusion upgrades
   static increaseHydrogen: IncreaseHydrogenHoldingUpgrade = new IncreaseHydrogenHoldingUpgrade('increaseHydrogen');
@@ -496,6 +498,7 @@ export class UpgradeRecord extends Record {
 
     // Green generator upgrades
     UpgradeRecord.multiplyGreenParticlesGreen,
+    UpgradeRecord.unlockThirdGreenGenerator,
 
     // Yellow fusion upgrades
     UpgradeRecord.increaseHydrogen,
