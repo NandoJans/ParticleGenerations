@@ -26,7 +26,7 @@ export abstract class StarKeyUpgrade extends Upgrade {
   }
 
   override run(): Num | undefined {
-    if (this.hasBought() && this.currency === HoldingRecord.starKeys) {
+    if (this.hasBought() && this.currency === HoldingRecord.starKeys && !UpgradeRecord.reduceStarKeyCompressionRequirementNuclear.hasBought()) {
       HoldingRecord.starKeys.starKeyUpgradesBought = HoldingRecord.starKeys.starKeyUpgradesBought.add(new Num(1, 0));
     }
     return super.run();
