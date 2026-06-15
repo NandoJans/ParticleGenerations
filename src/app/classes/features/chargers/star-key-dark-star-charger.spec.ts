@@ -24,8 +24,19 @@ describe('StarKeyDarkStarCharger', () => {
     expect(charger.requirementsMet()).toBeTrue();
   });
 
-  it('calculates charge from the logarithm of Star Keys', () => {
+  it('calculates charge from Star Keys squared', () => {
     HoldingRecord.starKeys.amount = new Num(100, 0);
-    expect(charger.getChargeAmount().toNumber()).toBe(2);
+    expect(charger.getChargeAmount().toNumber()).toBe(10_000);
+  });
+
+  it('makes Yellow Key compression cheaper and reduces its cost scaling', () => {
+    charger.charge = new Num(2, 0);
+    charger.tier = new Num(1, 0);
+
+    charger.action();
+
+    expect(charger.getCompressionCostDivisor().toNumber()).toBe(4);
+    expect(charger.getCompressionScalingPower().toNumber()).toBeCloseTo(1 / 1.1, 10);
+    expect(charger.getRewardDescription()).toContain('compression cheaper');
   });
 });
