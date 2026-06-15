@@ -96,6 +96,19 @@ div.container {
   --glow-color: rgba(45, 107, 255, 0.3);
 }
 
+.star.nuclear {
+  --star-size: 1.8rem;
+  --core-color: #f9ff9a;
+  --rim-color: #5cff77;
+  --glow-color: rgba(232, 255, 54, 0.28);
+}
+
+.star.nuclear:hover {
+  --core-color: #ffffc8;
+  --rim-color: #7dff92;
+  --glow-color: rgba(232, 255, 54, 0.42);
+}
+
 .star.buyable {
   --core-color: #f0ffe9;
   --rim-color: #9dff5f;

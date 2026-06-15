@@ -665,6 +665,10 @@ export class GreenGalaxyTreeComponent implements OnInit, AfterViewInit, OnDestro
 
     UpgradeRecord.cheaperFourthYellowGeneratorGalaxyTreeUpgrade.setPos(-200, -425);
     UpgradeRecord.cheaperFifthYellowGeneratorGalaxyTreeUpgrade.setPos(-275, -525);
+
+    // Nuclear branch nodes continue the outer ring on symmetric cardinal positions.
+    UpgradeRecord.nuclearPotentialGalaxyTree.setPos(0, 600);
+    UpgradeRecord.nuclearReactionGalaxyTree.setPos(0, -600);
   }
 
   isBottomSectionOpen() {
