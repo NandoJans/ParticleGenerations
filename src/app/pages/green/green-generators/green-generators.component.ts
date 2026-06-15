@@ -25,7 +25,8 @@ export class GreenGeneratorsComponent implements OnInit {
   ];
   darkMatter: Holding = HoldingRecord.darkMatter;
   upgrades: Upgrade[] = [
-    UpgradeRecord.multiplyGreenParticlesGreen
+    UpgradeRecord.multiplyGreenParticlesGreen,
+    UpgradeRecord.unlockThirdGreenGenerator,
   ]
   greenPrestige: PrestigeLayer = PrestigeLayersService.greenPrestigeLayer;
   infoText: string[] = [

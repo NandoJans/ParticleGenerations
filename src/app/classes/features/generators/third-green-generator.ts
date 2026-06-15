@@ -51,7 +51,7 @@ export class ThirdGreenGenerator extends GreenGenerator {
   override init() {
     this.generates = GeneratorRecord.secondGreenGenerator;
     this.requirement = [
-      // new Requirement(UpgradeRecord.unlockThird, new Num(1, 0), this)
+      new Requirement(UpgradeRecord.unlockThirdGreenGenerator, new Num(1, 0), this)
     ];
   }
 }
