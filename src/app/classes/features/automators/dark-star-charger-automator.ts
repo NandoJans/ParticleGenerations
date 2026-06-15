@@ -142,7 +142,10 @@ export class DarkStarChargerAutomator extends Automator {
       return;
     }
 
-    if (step.completionAction === "leave") {
+    if (
+      step.completionAction === "leave" ||
+      ChallengeRecord.darkGalaxy.currentDarkStarGain.lt(Num.ONE)
+    ) {
       ChallengeService.leaveChallenge(prestigeLayer);
     } else {
       ChallengeService.completeChallenge(prestigeLayer);

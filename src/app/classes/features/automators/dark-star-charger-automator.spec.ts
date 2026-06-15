@@ -88,12 +88,27 @@ describe("DarkStarChargerAutomator", () => {
 
   it("collects earned Dark Stars before advancing", () => {
     ChallengeRecord.currentChallenges["green"] = ChallengeRecord.darkGalaxy;
+    ChallengeRecord.darkGalaxy.currentDarkStarGain = Num.ONE;
     spyOn(ChallengeService, "completeChallenge");
 
     automator.steps[0].goal = "1";
     automator.run(new Num(1, 0));
 
     expect(ChallengeService.completeChallenge).toHaveBeenCalledWith("green");
+    expect(automator.currentStepIndex).toBe(1);
+  });
+
+  it("leaves Dark Galaxy when a collect step earns less than one Dark Star", () => {
+    ChallengeRecord.currentChallenges["green"] = ChallengeRecord.darkGalaxy;
+    ChallengeRecord.darkGalaxy.currentDarkStarGain = new Num(5, -1);
+    spyOn(ChallengeService, "completeChallenge");
+    spyOn(ChallengeService, "leaveChallenge");
+
+    automator.steps[0].goal = "1";
+    automator.run(new Num(1, 0));
+
+    expect(ChallengeService.completeChallenge).not.toHaveBeenCalled();
+    expect(ChallengeService.leaveChallenge).toHaveBeenCalledWith("green");
     expect(automator.currentStepIndex).toBe(1);
   });
 
