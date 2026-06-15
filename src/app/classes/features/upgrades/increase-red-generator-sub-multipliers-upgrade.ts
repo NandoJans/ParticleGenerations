@@ -5,6 +5,8 @@ import {RedGenerator} from "../generators/red-generator";
 import {Enhancement} from "../enhancements/enhancement";
 
 export class IncreaseRedGeneratorSubMultipliersUpgrade extends YellowUpgrade {
+  private static readonly ENHANCEMENT_MULTIPLIER = new Num(10, 0);
+
   constructor(saveName: string) {
     super(saveName, 'increase-red-generator-sub-multipliers');
   }
@@ -30,12 +32,12 @@ export class IncreaseRedGeneratorSubMultipliersUpgrade extends YellowUpgrade {
   }
 
   override enhancementString(enhancement: Enhancement): string {
-    return `Multiply red generator sub multipliers by ${this.buffer.mul(enhancement.getMultiplier()).toString(2)}x.`;
+    return `Multiply red generator sub multipliers by ${this.buffer.mul(IncreaseRedGeneratorSubMultipliersUpgrade.ENHANCEMENT_MULTIPLIER).toString(2)}x.`;
   }
 
   override enhance(): void {
     if (this.enhancement) {
-      this.buffer = this.buffer.mul(this.enhancement.getMultiplier());
+      this.buffer = this.buffer.mul(IncreaseRedGeneratorSubMultipliersUpgrade.ENHANCEMENT_MULTIPLIER);
     }
   }
 

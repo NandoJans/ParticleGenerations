@@ -5,8 +5,10 @@ import {ResetKey} from "../../enums/reset-key";
 import {Requirement} from "../interfaces/requirement";
 import {YellowGenerator} from "../generators/yellow-generator";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {Enhancement} from "../enhancements/enhancement";
 
 export class YellowGeneratorBuyMultiplierUpgrade extends YellowGeneratorUpgrade {
+  private static readonly ENHANCEMENT_MULTIPLIER = new Num(1.2, 0);
 
   constructor(
     saveName: string,
@@ -48,5 +50,15 @@ export class YellowGeneratorBuyMultiplierUpgrade extends YellowGeneratorUpgrade 
 
   private getModifiedBuffer(): Num {
     return this.buffer.mul(MultiplierRecord.electronYellowGeneratorUpgradeBuffer.getNum());
+  }
+
+  override enhance(): void {
+    if (this.enhancement) {
+      this.buffer = this.buffer.mul(YellowGeneratorBuyMultiplierUpgrade.ENHANCEMENT_MULTIPLIER);
+    }
+  }
+
+  override enhancementString(_enhancement: Enhancement): string {
+    return `Increase this upgrade's multiplier to ${this.buffer.mul(YellowGeneratorBuyMultiplierUpgrade.ENHANCEMENT_MULTIPLIER).toString(2)}x.`;
   }
 }
