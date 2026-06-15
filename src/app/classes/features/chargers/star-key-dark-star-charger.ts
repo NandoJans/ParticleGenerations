@@ -57,7 +57,7 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
     const tieredCharge = effectiveCharge.mul(this.tier);
     this.compressionCostDivisor = tieredCharge.pow(Num.TWO);
     this.compressionScalingPower = Num.ONE.div(
-      Num.ONE.add(tieredCharge.log10())
+      Num.ONE.add(tieredCharge.log10().div(new Num(1, 1)))
     );
 
     this.effect = effect;
