@@ -55,9 +55,9 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
     MultiplierRecord.yellowKeyGain.correct(effect);
 
     const tieredCharge = effectiveCharge.mul(this.tier);
-    this.compressionCostDivisor = Num.TWO.pow(tieredCharge);
+    this.compressionCostDivisor = tieredCharge.pow(Num.TWO);
     this.compressionScalingPower = Num.ONE.div(
-      Num.ONE.add(tieredCharge.mul(new Num(5, -2)))
+      Num.ONE.add(tieredCharge.log10())
     );
 
     this.effect = effect;
