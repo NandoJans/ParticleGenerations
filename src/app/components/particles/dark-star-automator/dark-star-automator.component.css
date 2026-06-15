@@ -1,0 +1,193 @@
+:host {
+  display: block;
+}
+
+.dark-star-automator {
+  border: 1px solid rgba(107, 226, 255, .25);
+  background: linear-gradient(135deg, rgba(28, 63, 70, .2), rgba(7, 9, 11, .96) 45%);
+}
+
+.dark-star-automator.running {
+  border-color: rgba(107, 226, 255, .65);
+  box-shadow: 0 0 28px rgba(55, 190, 220, .1);
+}
+
+.automator-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  padding: 1.2rem;
+  border-bottom: 1px solid rgba(107, 226, 255, .18);
+}
+
+.automator-header h2 {
+  margin: .2rem 0;
+  color: #f2f7f8;
+  font-weight: 400;
+}
+
+.automator-header p {
+  margin-bottom: 0;
+  color: #8ca4a9;
+}
+
+.runtime {
+  display: grid;
+  min-width: 14rem;
+  align-content: center;
+  color: #91a9ae;
+  font-family: monospace;
+  text-align: right;
+}
+
+.runtime span {
+  color: #6be2ff;
+  font-size: .72rem;
+  letter-spacing: .15em;
+}
+
+.runtime strong {
+  margin-top: .25rem;
+  color: #eefbff;
+}
+
+.runtime small {
+  margin: .3rem 0 .7rem;
+}
+
+button,
+select,
+input {
+  border: 1px solid rgba(107, 226, 255, .32);
+  background: #0b1113;
+  color: #dcebed;
+  font: inherit;
+}
+
+button {
+  padding: .45rem .75rem;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  border-color: #6be2ff;
+  color: #6be2ff;
+}
+
+button:disabled {
+  cursor: default;
+  opacity: .35;
+}
+
+.sequence-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .75rem 1rem;
+  color: #9fb2b6;
+}
+
+.sequence-controls label,
+.challenge-toggle {
+  display: flex;
+  gap: .5rem;
+  align-items: center;
+}
+
+.step-list {
+  display: grid;
+  gap: .75rem;
+  padding: 0 1rem 1rem;
+}
+
+.algorithm-step {
+  padding: 1rem;
+  border: 1px solid rgba(107, 226, 255, .16);
+  background: rgba(7, 10, 12, .78);
+}
+
+.algorithm-step.current {
+  border-left: 3px solid #6be2ff;
+  background: rgba(34, 96, 108, .12);
+}
+
+.step-heading {
+  display: grid;
+  grid-template-columns: auto minmax(8rem, 1fr) auto;
+  gap: .75rem;
+  align-items: center;
+  color: #6be2ff;
+  font: .75rem/1 monospace;
+  letter-spacing: .12em;
+}
+
+.step-heading input {
+  padding: .5rem;
+  font-size: .95rem;
+  letter-spacing: 0;
+}
+
+.step-actions {
+  display: flex;
+  gap: .35rem;
+}
+
+.step-settings {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .65rem;
+  margin: .9rem 0;
+}
+
+.step-settings label {
+  display: grid;
+  gap: .35rem;
+  color: #82999e;
+  font-size: .78rem;
+}
+
+.step-settings input,
+.step-settings select {
+  min-width: 0;
+  padding: .5rem;
+}
+
+.charger-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .4rem;
+}
+
+.charger-grid label {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: .15rem .45rem;
+  padding: .55rem;
+  border: 1px solid rgba(255, 255, 255, .08);
+  color: #819398;
+  cursor: pointer;
+}
+
+.charger-grid label.selected {
+  border-color: rgba(107, 226, 255, .45);
+  background: rgba(107, 226, 255, .08);
+  color: #dffaff;
+}
+
+.charger-grid small {
+  grid-column: 2;
+  opacity: .7;
+}
+
+@media (max-width: 850px) {
+  .automator-header { grid-template-columns: 1fr; }
+  .runtime { text-align: left; }
+  .step-settings,
+  .charger-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .step-heading { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 520px) {
+  .step-settings,
+  .charger-grid { grid-template-columns: 1fr; }
+}

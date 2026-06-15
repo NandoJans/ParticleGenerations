@@ -1,0 +1,74 @@
+<section class="dark-star-automator" [class.running]="automator.active">
+  <header class="automator-header">
+    <div>
+      <p class="eyebrow">PROGRAMMABLE PROTOCOL // DSC-01</p>
+      <h2>{{ automator.displayName }}</h2>
+      <p>Build a looping strategy that switches charger tradeoffs and controls Dark Galaxy runs.</p>
+    </div>
+    <div class="runtime">
+      <span>{{ automator.active ? 'RUNNING' : 'STANDBY' }}</span>
+      <strong>{{ automator.getCurrentStep()?.name || 'No step' }}</strong>
+      <small>{{ automator.getStepProgress() }}</small>
+      <button type="button" (click)="toggleActive()">{{ automator.active ? 'Stop' : 'Run algorithm' }}</button>
+    </div>
+  </header>
+
+  <div class="sequence-controls">
+    <label>
+      <input type="checkbox" [(ngModel)]="automator.loop" (change)="updateStep()">
+      Loop sequence
+    </label>
+    <button type="button" (click)="automator.addStep()">Add step</button>
+  </div>
+
+  <div class="step-list">
+    <article
+      class="algorithm-step"
+      *ngFor="let step of automator.steps; let i = index; trackBy: trackStep"
+      [class.current]="automator.active && automator.currentStepIndex === i">
+      <div class="step-heading">
+        <span>STEP {{ i + 1 | number:'2.0-0' }}</span>
+        <input type="text" [(ngModel)]="step.name" (change)="updateStep()" aria-label="Step name">
+        <div class="step-actions">
+          <button type="button" [disabled]="i === 0" (click)="automator.moveStep(i, -1)">Up</button>
+          <button type="button" [disabled]="i === automator.steps.length - 1" (click)="automator.moveStep(i, 1)">Down</button>
+          <button type="button" [disabled]="automator.steps.length === 1" (click)="automator.removeStep(i)">Remove</button>
+        </div>
+      </div>
+
+      <div class="step-settings">
+        <label>
+          Delay before step
+          <span><input type="number" min="0" step="0.1" [value]="step.delaySeconds" (change)="setDelay(step, $any($event.target).value)"> seconds</span>
+        </label>
+        <label>
+          Complete step when
+          <select [value]="step.goalType" (change)="setGoalType(step, $any($event.target).value)">
+            <option value="darkStars">Dark Star goal reached</option>
+            <option value="time">Time elapsed</option>
+          </select>
+        </label>
+        <label>
+          {{ step.goalType === 'time' ? 'Seconds' : 'Dark Star goal' }}
+          <input type="text" [(ngModel)]="step.goal" (change)="updateStep()">
+        </label>
+        <label class="challenge-toggle">
+          <input type="checkbox" [(ngModel)]="step.startDarkGalaxy" (change)="updateStep()">
+          Start Dark Galaxy if inactive
+        </label>
+      </div>
+
+      <div class="charger-grid">
+        <label *ngFor="let charger of automator.getChargers()" [class.selected]="isChargerActive(step, charger)">
+          <input
+            type="checkbox"
+            [checked]="isChargerActive(step, charger)"
+            [disabled]="!charger.isUnlocked()"
+            (change)="setChargerActive(step, charger, $event)">
+          <span>{{ charger.displayName }}</span>
+          <small>Tier {{ charger.tier.toString() }}</small>
+        </label>
+      </div>
+    </article>
+  </div>
+</section>

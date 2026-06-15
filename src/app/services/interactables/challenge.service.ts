@@ -76,9 +76,11 @@ export class ChallengeService {
     });
   }
 
-  startChallenge(challenge: Challenge) {
+  static startChallenge(challenge: Challenge) {
     if (ChallengeRecord.currentChallenges[challenge.prestigeLayer]) {
-      this.endChallenge(challenge);
+      const currentChallenge = ChallengeRecord.currentChallenges[challenge.prestigeLayer];
+      currentChallenge.end();
+      delete ChallengeRecord.currentChallenges[challenge.prestigeLayer];
     }
     ResetHelper.reset(challenge.prestige)
     challenge.start();
@@ -87,6 +89,10 @@ export class ChallengeService {
     // Refresh all challenges when a new challenge starts
     // This ensures requirements and upgrades are updated for the new state
     ChallengeRecord.list.forEach(c => c.refreshUpgrades());
+  }
+
+  startChallenge(challenge: Challenge) {
+    ChallengeService.startChallenge(challenge);
   }
 
   endChallenge(challenge: Challenge) {
