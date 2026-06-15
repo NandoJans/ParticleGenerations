@@ -12,6 +12,7 @@ import {StatsService} from "./stats.service";
 import {AutomatorRecord} from "../classes/records/automators/automator-record";
 import {TimeHelper} from "../classes/helpers/time-helper";
 import {App} from "../App";
+import {ChargerRecord} from "../classes/records/charger/charger-record";
 
 @Injectable({
   providedIn: 'root'
@@ -278,13 +279,20 @@ export class CompressionService implements Resetable {
     const baseKeysRequired = UpgradeRecord.reduceStarKeyCompressionRequirementNuclear.hasBought()
       ? this.reducedKeysRequired
       : this.keysRequired;
+    const costDivisor = ChargerRecord.starKeyDarkCharger.getCompressionCostDivisor();
+    const scalingPower = ChargerRecord.starKeyDarkCharger.getCompressionScalingPower();
 
     // After 35 compressions, the yellow key requirement increases even stronger by applying the yellow key scaling
     if (this.compressions.greq(this.yellowKeyScalingStart)) {
       let diff = this.compressions.sub(this.yellowKeyScalingStart);
-      return baseKeysRequired.mul(this.yellowKeyScalingStart.pow(this.requiredIncrease)).mul(this.yellowKeyScalingStart.pow(diff.mul(this.yellowKeyScaling)));
+      const scaledCost = baseKeysRequired
+        .mul(this.yellowKeyScalingStart.pow(this.requiredIncrease))
+        .mul(this.yellowKeyScalingStart.pow(diff.mul(this.yellowKeyScaling).mul(scalingPower)));
+      return scaledCost.div(costDivisor);
     } else {
-      return baseKeysRequired.mul(this.requiredIncrease.pow(this.compressions));
+      return baseKeysRequired
+        .mul(this.requiredIncrease.pow(this.compressions.mul(scalingPower)))
+        .div(costDivisor);
     }
   }
 

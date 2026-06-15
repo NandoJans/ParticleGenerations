@@ -4,6 +4,7 @@ import { CompressionService } from './compression.service';
 import { App } from '../App';
 import { Num } from '../num';
 import { UpgradeRecord } from '../classes/records/upgrades/upgrade-record';
+import { ChargerRecord } from '../classes/records/charger/charger-record';
 
 describe('CompressionService', () => {
   let service: CompressionService;
@@ -12,6 +13,8 @@ describe('CompressionService', () => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(CompressionService);
     UpgradeRecord.reduceStarKeyCompressionRequirementNuclear.bought = Num.ZERO;
+    ChargerRecord.starKeyDarkCharger.compressionCostDivisor = Num.ONE.copy();
+    ChargerRecord.starKeyDarkCharger.compressionScalingPower = Num.ONE.copy();
   });
 
   it('should be created', () => {
@@ -79,5 +82,17 @@ describe('CompressionService', () => {
     UpgradeRecord.reduceStarKeyCompressionRequirementNuclear.bought = Num.ONE;
 
     expect(service.getNeededKeys().equals(new Num(1, 3))).toBeTrue();
+  });
+
+  it('should apply the Star Key Charger compression discount and scaling reduction', () => {
+    (service as any).compressions = new Num(2, 0);
+    ChargerRecord.starKeyDarkCharger.compressionCostDivisor = new Num(4, 0);
+    ChargerRecord.starKeyDarkCharger.compressionScalingPower = new Num(0.5, 0);
+
+    const expected = new Num(1, 8)
+      .mul(new Num(1, 1).pow(new Num(1, 0)))
+      .div(new Num(4, 0));
+
+    expect(service.getNeededKeys().equals(expected)).toBeTrue();
   });
 });

@@ -20,6 +20,8 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
   canInfiniteChargeAtMaxTier: boolean = true;
   requirement: Requirement[] = [];
   name: string = 'star-key-dark-star-charger';
+  compressionCostDivisor: Num = Num.ONE.copy();
+  compressionScalingPower: Num = Num.ONE.copy();
 
   override tierNerf: Num[] = [
     new Num(0.9, 0), // TIER II
@@ -52,8 +54,22 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
     const effect = this.applySharedTierBoost(baseEffect);
     MultiplierRecord.yellowKeyGain.correct(effect);
 
+    const tieredCharge = effectiveCharge.mul(this.tier);
+    this.compressionCostDivisor = Num.TWO.pow(tieredCharge);
+    this.compressionScalingPower = Num.ONE.div(
+      Num.ONE.add(tieredCharge.mul(new Num(5, -2)))
+    );
+
     this.effect = effect;
     return effect;
+  }
+
+  getCompressionCostDivisor(): Num {
+    return this.compressionCostDivisor;
+  }
+
+  getCompressionScalingPower(): Num {
+    return this.compressionScalingPower;
   }
 
   private originalStarKeyBuffer: Num | undefined;
@@ -88,7 +104,7 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
   }
 
   getEffectDescription(): string {
-    return `${this.effect.toString()}x yellow key gain`;
+    return `${this.effect.toString()}x yellow key gain, compression costs ÷${this.compressionCostDivisor.toString(2)}, and compression scaling ^${this.compressionScalingPower.toString(3)}`;
   }
 
   getChargeDescription(): string {
@@ -96,16 +112,18 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
   }
 
   getRewardDescription(): string {
-    return 'Increases yellow key gain.';
+    return 'Increases yellow key gain, makes Yellow Key compression cheaper, and reduces its cost scaling.';
   }
 
   override getEffectBreakdown(): { formula: string; effects: string[] } {
     return {
-      formula: '10^(charge + combined charge) × shared tier boost',
+      formula: 'Yellow Keys: 5^(charge + combined charge) × shared tier boost; compression: ÷2^(charge × tier), scaling ^(1 / (1 + charge × tier × 0.05))',
       effects: [
         `Current Charge: ${this.getEffectiveCharge().toString()} + ${this.getSharedCharge().toString()}`,
         `Tier: ${this.tier.toString()}`,
-        `Yellow Key Gain: ${this.effect.toString(2)}x`
+        `Yellow Key Gain: ${this.effect.toString(2)}x`,
+        `Compression Cost: ÷${this.compressionCostDivisor.toString(2)}`,
+        `Compression Cost Scaling: ^${this.compressionScalingPower.toString(3)}`
       ]
     };
   }
