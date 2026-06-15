@@ -241,8 +241,10 @@ export class CompressionService implements Resetable {
 
 
   correctStarKeyAmount() {
-    const upgradeCount = new Num(UpgradeRecord.starKeyUpgradeList.filter(upgrade => upgrade.hasBought()).length, 0);
-    HoldingRecord.starKeys.amount = this.compressions.sub(upgradeCount);
+    if (!UpgradeRecord.reduceStarKeyCompressionRequirementNuclear.hasBought()) {
+      const upgradeCount = new Num(UpgradeRecord.starKeyUpgradeList.filter(upgrade => upgrade.hasBought()).length, 0);
+      HoldingRecord.starKeys.amount = this.compressions.sub(upgradeCount);
+    }
   }
 
   complete() {
