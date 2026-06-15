@@ -7,6 +7,7 @@ import {ResetHelper} from "../../helpers/reset-helper";
 import {Styles} from "../../enums/styles";
 import {Enhancement} from "../enhancements/enhancement";
 import {Holding} from "../holding";
+import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 
 export abstract class StarKeySubUpgrade extends Upgrade {
   type: string = "star-key-upgrade";
@@ -21,6 +22,13 @@ export abstract class StarKeySubUpgrade extends Upgrade {
       new Requirement(HoldingRecord.yellowParticles, new Num(1, 350), this),
     ]
     this.resetId = ResetHelper.registerReset(ResetKey.YELLOW, this);
+  }
+
+  override requirementsMet(): boolean {
+    return (
+      UpgradeRecord.reduceStarKeyCompressionRequirementNuclear.hasBought()
+      && HoldingRecord.yellowParticles.amount.greq(new Num(1, 40))
+    ) || super.requirementsMet();
   }
 
   style: Styles = Styles.SUB_STAR_KEY;

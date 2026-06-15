@@ -7,6 +7,7 @@ import {ResetHelper} from "../../helpers/reset-helper";
 import {Styles} from "../../enums/styles";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 import {BuffSoftCapHelper} from "../../helpers/buff-soft-cap-helper";
+import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 
 export class StarKeyHolding extends Holding {
   name: string = 'star-key-holding';
@@ -32,7 +33,10 @@ export class StarKeyHolding extends Holding {
   override action(): Num|undefined {
     this.hasBoughtTotal = this.starKeyUpgradesBought.greq(this.totalUpgrades);
     this.starKeyUpgradesBought = new Num(0, 0);
-    if (this.hasBoughtTotal) {
+    if (
+      this.hasBoughtTotal
+      || UpgradeRecord.reduceStarKeyCompressionRequirementNuclear.hasBought()
+    ) {
       const rawEffect = this.buffer.mul(this.amount).add(Num.ONE);
       const effect = BuffSoftCapHelper.applyPowerSoftCap(
         rawEffect,
