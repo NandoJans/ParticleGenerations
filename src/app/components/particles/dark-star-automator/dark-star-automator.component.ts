@@ -14,6 +14,7 @@ import {DarkStarCharger} from "../../../classes/features/chargers/dark-star-char
 })
 export class DarkStarAutomatorComponent {
   @Input({required: true}) automator!: DarkStarChargerAutomator;
+  private collapsedSteps = new Set<number>();
 
   updateStep(): void {
     this.automator.save();
@@ -44,6 +45,18 @@ export class DarkStarAutomatorComponent {
 
   toggleActive(): void {
     this.automator.active ? this.automator.deactivate() : this.automator.activate();
+  }
+
+  toggleStepDetails(step: DarkStarAutomatorStep): void {
+    if (this.collapsedSteps.has(step.id)) {
+      this.collapsedSteps.delete(step.id);
+    } else {
+      this.collapsedSteps.add(step.id);
+    }
+  }
+
+  isStepCollapsed(step: DarkStarAutomatorStep): boolean {
+    return this.collapsedSteps.has(step.id);
   }
 
   trackStep(_index: number, step: DarkStarAutomatorStep): number {

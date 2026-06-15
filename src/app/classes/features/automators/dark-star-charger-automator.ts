@@ -11,6 +11,7 @@ import {DarkStarCharger} from "../chargers/dark-star-charger";
 import {ChallengeService} from "../../../services/interactables/challenge.service";
 
 export type DarkStarStepGoal = "darkStars" | "time";
+export type DarkStarStepCompletionAction = "collect" | "leave";
 
 export interface DarkStarAutomatorStep {
   id: number;
@@ -19,6 +20,7 @@ export interface DarkStarAutomatorStep {
   goal: string;
   delaySeconds: number;
   startDarkGalaxy: boolean;
+  completionAction: DarkStarStepCompletionAction;
   activeChargers: string[];
 }
 
@@ -60,6 +62,7 @@ export class DarkStarChargerAutomator extends Automator {
       goal: "1",
       delaySeconds: 0,
       startDarkGalaxy: true,
+      completionAction: "collect",
       activeChargers: [],
     };
   }
@@ -86,6 +89,7 @@ export class DarkStarChargerAutomator extends Automator {
 
     this.elapsedSeconds += seconds;
     if (this.isStepComplete(step)) {
+      this.finishStep(step);
       this.advanceStep();
       return false;
     }
@@ -130,6 +134,19 @@ export class DarkStarChargerAutomator extends Automator {
         charger.tierUp();
       }
     });
+  }
+
+  private finishStep(step: DarkStarAutomatorStep): void {
+    const prestigeLayer = ChallengeRecord.darkGalaxy.prestigeLayer;
+    if (ChallengeRecord.currentChallenges[prestigeLayer] !== ChallengeRecord.darkGalaxy) {
+      return;
+    }
+
+    if (step.completionAction === "leave") {
+      ChallengeService.leaveChallenge(prestigeLayer);
+    } else {
+      ChallengeService.completeChallenge(prestigeLayer);
+    }
   }
 
   private advanceStep(): void {
@@ -272,6 +289,7 @@ export class DarkStarChargerAutomator extends Automator {
       goal: typeof step.goal === "string" ? step.goal : "1",
       delaySeconds: typeof step.delaySeconds === "number" ? Math.max(0, step.delaySeconds) : 0,
       startDarkGalaxy: step.startDarkGalaxy !== false,
+      completionAction: step.completionAction === "leave" ? "leave" : "collect",
       activeChargers: Array.isArray(step.activeChargers)
         ? step.activeChargers.filter(name => typeof name === "string")
         : [],

@@ -132,11 +132,19 @@ button:disabled {
   gap: .35rem;
 }
 
+.collapse-button {
+  min-width: 6.8rem;
+}
+
+.step-details {
+  padding-top: .9rem;
+}
+
 .step-settings {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: .65rem;
-  margin: .9rem 0;
+  margin: 0 0 .9rem;
 }
 
 .step-settings label {
