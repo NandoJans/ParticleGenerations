@@ -30,44 +30,61 @@
         <span>STEP {{ i + 1 | number:'2.0-0' }}</span>
         <input type="text" [(ngModel)]="step.name" (change)="updateStep()" aria-label="Step name">
         <div class="step-actions">
+          <button
+            type="button"
+            class="collapse-button"
+            [attr.aria-expanded]="!isStepCollapsed(step)"
+            [attr.aria-controls]="'step-details-' + step.id"
+            (click)="toggleStepDetails(step)">
+            {{ isStepCollapsed(step) ? 'Show details' : 'Hide details' }}
+          </button>
           <button type="button" [disabled]="i === 0" (click)="automator.moveStep(i, -1)">Up</button>
           <button type="button" [disabled]="i === automator.steps.length - 1" (click)="automator.moveStep(i, 1)">Down</button>
           <button type="button" [disabled]="automator.steps.length === 1" (click)="automator.removeStep(i)">Remove</button>
         </div>
       </div>
 
-      <div class="step-settings">
-        <label>
-          Delay before step
-          <span><input type="number" min="0" step="0.1" [value]="step.delaySeconds" (change)="setDelay(step, $any($event.target).value)"> seconds</span>
-        </label>
-        <label>
-          Complete step when
-          <select [value]="step.goalType" (change)="setGoalType(step, $any($event.target).value)">
-            <option value="darkStars">Dark Star goal reached</option>
-            <option value="time">Time elapsed</option>
-          </select>
-        </label>
-        <label>
-          {{ step.goalType === 'time' ? 'Seconds' : 'Dark Star goal' }}
-          <input type="text" [(ngModel)]="step.goal" (change)="updateStep()">
-        </label>
-        <label class="challenge-toggle">
-          <input type="checkbox" [(ngModel)]="step.startDarkGalaxy" (change)="updateStep()">
-          Start Dark Galaxy if inactive
-        </label>
-      </div>
+      <div class="step-details" [id]="'step-details-' + step.id" *ngIf="!isStepCollapsed(step)">
+        <div class="step-settings">
+          <label>
+            Delay before step
+            <span><input type="number" min="0" step="0.1" [value]="step.delaySeconds" (change)="setDelay(step, $any($event.target).value)"> seconds</span>
+          </label>
+          <label>
+            Complete step when
+            <select [value]="step.goalType" (change)="setGoalType(step, $any($event.target).value)">
+              <option value="darkStars">Dark Star goal reached</option>
+              <option value="time">Time elapsed</option>
+            </select>
+          </label>
+          <label>
+            {{ step.goalType === 'time' ? 'Seconds' : 'Dark Star goal' }}
+            <input type="text" [(ngModel)]="step.goal" (change)="updateStep()">
+          </label>
+          <label>
+            After completing step
+            <select [(ngModel)]="step.completionAction" (change)="updateStep()">
+              <option value="collect">Collect Dark Stars</option>
+              <option value="leave">Leave without collecting</option>
+            </select>
+          </label>
+          <label class="challenge-toggle">
+            <input type="checkbox" [(ngModel)]="step.startDarkGalaxy" (change)="updateStep()">
+            Start Dark Galaxy if inactive
+          </label>
+        </div>
 
-      <div class="charger-grid">
-        <label *ngFor="let charger of automator.getChargers()" [class.selected]="isChargerActive(step, charger)">
-          <input
-            type="checkbox"
-            [checked]="isChargerActive(step, charger)"
-            [disabled]="!charger.isUnlocked()"
-            (change)="setChargerActive(step, charger, $event)">
-          <span>{{ charger.displayName }}</span>
-          <small>Tier {{ charger.tier.toString() }}</small>
-        </label>
+        <div class="charger-grid">
+          <label *ngFor="let charger of automator.getChargers()" [class.selected]="isChargerActive(step, charger)">
+            <input
+              type="checkbox"
+              [checked]="isChargerActive(step, charger)"
+              [disabled]="!charger.isUnlocked()"
+              (change)="setChargerActive(step, charger, $event)">
+            <span>{{ charger.displayName }}</span>
+            <small>Tier {{ charger.tier.toString() }}</small>
+          </label>
+        </div>
       </div>
     </article>
   </div>

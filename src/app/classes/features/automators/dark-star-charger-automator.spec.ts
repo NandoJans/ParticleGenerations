@@ -20,6 +20,7 @@ describe("DarkStarChargerAutomator", () => {
         goal: "5",
         delaySeconds: 0,
         startDarkGalaxy: false,
+        completionAction: "collect",
         activeChargers: [ChargerRecord.redGeneratorDarkCharger.saveName],
       },
       {
@@ -29,6 +30,7 @@ describe("DarkStarChargerAutomator", () => {
         goal: "5",
         delaySeconds: 0,
         startDarkGalaxy: false,
+        completionAction: "leave",
         activeChargers: [],
       }
     ];
@@ -81,6 +83,29 @@ describe("DarkStarChargerAutomator", () => {
 
     automator.run(Num.ZERO);
 
+    expect(automator.currentStepIndex).toBe(1);
+  });
+
+  it("collects earned Dark Stars before advancing", () => {
+    ChallengeRecord.currentChallenges["green"] = ChallengeRecord.darkGalaxy;
+    spyOn(ChallengeService, "completeChallenge");
+
+    automator.steps[0].goal = "1";
+    automator.run(new Num(1, 0));
+
+    expect(ChallengeService.completeChallenge).toHaveBeenCalledWith("green");
+    expect(automator.currentStepIndex).toBe(1);
+  });
+
+  it("leaves Dark Galaxy without collecting before advancing", () => {
+    ChallengeRecord.currentChallenges["green"] = ChallengeRecord.darkGalaxy;
+    automator.steps[0].completionAction = "leave";
+    spyOn(ChallengeService, "leaveChallenge");
+
+    automator.steps[0].goal = "1";
+    automator.run(new Num(1, 0));
+
+    expect(ChallengeService.leaveChallenge).toHaveBeenCalledWith("green");
     expect(automator.currentStepIndex).toBe(1);
   });
 
