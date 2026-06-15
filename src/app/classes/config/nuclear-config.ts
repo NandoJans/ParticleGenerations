@@ -83,7 +83,7 @@ export class NuclearConfig {
     {
       key: 'nuclear-star-key-compression',
       displayName: 'Compact Stellar Press',
-      description: 'Star-Key Compression can be started with 1,000 Yellow Keys.',
+      description: 'Star-Key Compression can be started with 1,000 Yellow Keys, Star Keys immediately empower red generators, and Star-Key upgrades unlock at 1e40 Yellow Particles and are free.',
       target: 'reduceStarKeyCompressionRequirement',
       baseCost: new Num(1, 5),
       costIncrease: Num.ONE,

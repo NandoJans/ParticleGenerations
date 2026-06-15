@@ -9,6 +9,7 @@ import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 import {BuffSoftCapHelper} from "../../helpers/buff-soft-cap-helper";
 
 export class StarKeyHolding extends Holding {
+  static hasIncompleteUpgradeUnlock: () => boolean = () => false;
   name: string = 'star-key-holding';
   displayName: string = 'Star Key';
   abbreviation: string = 'SK';
@@ -32,7 +33,10 @@ export class StarKeyHolding extends Holding {
   override action(): Num|undefined {
     this.hasBoughtTotal = this.starKeyUpgradesBought.greq(this.totalUpgrades);
     this.starKeyUpgradesBought = new Num(0, 0);
-    if (this.hasBoughtTotal) {
+    if (
+      this.hasBoughtTotal
+      || StarKeyHolding.hasIncompleteUpgradeUnlock()
+    ) {
       const rawEffect = this.buffer.mul(this.amount).add(Num.ONE);
       const effect = BuffSoftCapHelper.applyPowerSoftCap(
         rawEffect,

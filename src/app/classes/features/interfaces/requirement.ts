@@ -25,7 +25,7 @@ export class Requirement {
     const messages: {title: string, message: string}[] = [];
 
     Object.entries(Requirement.requirements).forEach(([key, requirement]) => {
-      if (requirement.requirementMet()) {
+      if (requirement.gameElement.requirementsMet()) {
         if (requirement.gameElement.unlocked && requirement.gameElement.firstUnlock) {
           return;
         }
