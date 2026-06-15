@@ -30,8 +30,9 @@ export class StarChallengeDarkStarCharger extends DarkStarCharger {
   requirement: Requirement[] = [];
   name: string = 'star-challenge-dark-star-charger';
   override tierNerf: Num[] = [
-    new Num(0.9, 0),
-    new Num(0.5, 0),
+    new Num(0.9, 0), // TIER II
+    new Num(0.85, 0), // TIER III
+    new Num(0.8, 0), // TIER IV
   ];
 
   /**
