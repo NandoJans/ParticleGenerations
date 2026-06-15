@@ -43,12 +43,12 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
   }
 
   getChargeAmount(): Num {
-    return HoldingRecord.starKeys.amount.log10();
+    return HoldingRecord.starKeys.amount.pow(new Num(2, 0));
   }
 
   action(): Num {
     const effectiveCharge = this.getEffectiveCharge().add(this.getSharedCharge());
-    const baseEffect = new Num(10, 0).pow(effectiveCharge);
+    const baseEffect = new Num(1.5, 0).pow(effectiveCharge);
     const effect = this.applySharedTierBoost(baseEffect);
     MultiplierRecord.yellowKeyGain.correct(effect);
 
@@ -92,7 +92,7 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
   }
 
   getChargeDescription(): string {
-    return 'Charges from log10 of your current Star Keys.';
+    return 'Charges from your Star Keys ^ 2.';
   }
 
   getRewardDescription(): string {
