@@ -48,7 +48,7 @@ export class StarKeyDarkStarCharger extends DarkStarCharger {
 
   action(): Num {
     const effectiveCharge = this.getEffectiveCharge().add(this.getSharedCharge());
-    const baseEffect = new Num(1.5, 0).pow(effectiveCharge);
+    const baseEffect = new Num(2, 0).pow(effectiveCharge);
     const effect = this.applySharedTierBoost(baseEffect);
     MultiplierRecord.yellowKeyGain.correct(effect);
 
