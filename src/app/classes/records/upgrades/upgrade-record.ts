@@ -180,6 +180,7 @@ import {NuclearConfig} from "../../config/nuclear-config";
 import {BlueUpgrade} from "../../features/upgrades/blue-upgrade";
 import {Num} from "../../../num";
 import {HoldingRecord} from "../holdings/holding-record";
+import {StarKeyHolding} from "../../features/holdings/star-key-holding";
 
 @Injectable({
   providedIn: 'root'
@@ -203,6 +204,10 @@ export class UpgradeRecord extends Record {
   static reduceStarKeyCompressionRequirementNuclear: NuclearUpgrade = UpgradeRecord.nuclearUpgrades.find(
     upgrade => upgrade.config.target === 'reduceStarKeyCompressionRequirement'
   )!;
+  static {
+    StarKeyHolding.hasIncompleteUpgradeUnlock = () =>
+      UpgradeRecord.reduceStarKeyCompressionRequirementNuclear.hasBought();
+  }
   static blueBeamIntensity: BlueUpgrade = new BlueUpgrade(
     'blueBeamIntensity',
     'blue-beam-intensity',
