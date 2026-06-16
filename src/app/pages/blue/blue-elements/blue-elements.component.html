@@ -56,7 +56,7 @@
         <app-number-display [holding]="selectedElement.holding"></app-number-display>
         <p>Unlocks at {{ selectedElement.unlockAmount.toString() }} clumped Neutrons.</p>
         <p *ngIf="bluePhase.isElementUnlocked(selectedElement)">
-          Generation: {{ getElementGeneration(selectedElement).toString(3) }} / sec from clump size ÷ unlock amount.
+          Generation: {{ getElementGeneration(selectedElement).toString(3) }} / sec {{ selectedElement.requiredStage === 1 ? 'from clump size' : 'by compressing 10 ' + bluePhase.elementDefinitions[selectedElement.requiredStage - 2].holding.displayName }}.
         </p>
         <p *ngIf="!bluePhase.isElementUnlocked(selectedElement)" class="locked-copy">Compress more Neutrons to unlock this element.</p>
       </div>
@@ -104,6 +104,31 @@
       <article class="battery-card"><span>Batteries</span><strong>{{ bluePhase.lithiumBatteries.toString() }}</strong><button (click)="bluePhase.buyLithiumBattery()" [disabled]="!bluePhase.canBuyLithiumBattery()">Buy for {{ bluePhase.getLithiumBatteryCost().toString() }} Lithium</button></article>
       <article class="battery-card"><span>Chargers</span><strong>{{ bluePhase.lithiumChargeGenerators.toString() }}</strong><button (click)="bluePhase.buyLithiumChargeGenerator()" [disabled]="!bluePhase.canBuyLithiumChargeGenerator()">Buy for {{ bluePhase.getLithiumChargeGeneratorCost().toString() }} Electrons</button></article>
       <article class="battery-card"><span>Capacity Level</span><strong>{{ bluePhase.lithiumCapacityUpgrades.toString() }}</strong><button (click)="bluePhase.buyLithiumCapacityUpgrade()" [disabled]="!bluePhase.canBuyLithiumCapacityUpgrade()">Upgrade for {{ bluePhase.getLithiumCapacityCost().toString() }} Protons</button></article>
+    </div>
+  </section>
+
+  <section *ngIf="selectedElement.holding.name === 'beryllium'" class="beryllium-lab">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">BERYLLIUM REACTOR ARRAY</p>
+        <h2>Moderator & Reflector Systems</h2>
+      </div>
+      <p>Beryllium compresses 10 Lithium into 1 Beryllium, then uses neutron moderation and reflection to stabilize the forge and recover more collision neutrons.</p>
+    </div>
+
+    <div class="battery-grid">
+      <article class="battery-card">
+        <span>Moderators</span>
+        <strong>{{ bluePhase.berylliumModerators.toString() }}</strong>
+        <p>Lithium forge speed: {{ bluePhase.getBerylliumModeratorEffect().toString(2) }}x</p>
+        <button (click)="bluePhase.buyBerylliumModerator()" [disabled]="!bluePhase.canBuyBerylliumModerator()">Buy for {{ bluePhase.getBerylliumModeratorCost().toString() }} Beryllium</button>
+      </article>
+      <article class="battery-card">
+        <span>Reflectors</span>
+        <strong>{{ bluePhase.berylliumReflectors.toString() }}</strong>
+        <p>Collision neutron gain: {{ bluePhase.getBerylliumReflectorEffect().toString(2) }}x</p>
+        <button (click)="bluePhase.buyBerylliumReflector()" [disabled]="!bluePhase.canBuyBerylliumReflector()">Buy for {{ bluePhase.getBerylliumReflectorCost().toString() }} Beryllium</button>
+      </article>
     </div>
   </section>
 </section>

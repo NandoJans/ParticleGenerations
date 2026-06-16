@@ -43,6 +43,8 @@ describe('BluePhaseService', () => {
     UpgradeRecord.blueCollisionCalibration.bought = Num.ZERO.copy();
     MilestoneRecord.stableParticleBeam.unlocked = false;
     MilestoneRecord.denseParticleCollision.unlocked = false;
+    service.berylliumModerators = Num.ZERO.copy();
+    service.berylliumReflectors = Num.ZERO.copy();
     service.synchronizePurchases();
   });
 
@@ -74,6 +76,8 @@ describe('BluePhaseService', () => {
     UpgradeRecord.blueParticleResonance.bought = Num.ZERO.copy();
     UpgradeRecord.blueCollisionCalibration.amount = Num.ZERO.copy();
     UpgradeRecord.blueCollisionCalibration.bought = Num.ZERO.copy();
+    service.berylliumModerators = Num.ZERO.copy();
+    service.berylliumReflectors = Num.ZERO.copy();
   });
 
   it('does not automatically enter Blue when the unlock threshold is reached', () => {
@@ -179,16 +183,47 @@ describe('BluePhaseService', () => {
   });
 
 
-  it('generates more forged elements as the neutron clump reaches higher stages', () => {
-    HoldingRecord.neutronClump.amount = new Num(1, 3);
+  it('compresses Lithium into Beryllium at clump stage 2', () => {
+    HoldingRecord.neutronClump.amount = new Num(1, 2);
 
     service.tick(Num.ONE);
 
-    expect(HoldingRecord.lithium.amount.gt(Num.ZERO)).toBeTrue();
-    expect(HoldingRecord.beryllium.amount.gt(Num.ZERO)).toBeTrue();
+    expect(service.getCurrentElementName()).toBe('Lithium, Beryllium');
+    expect(HoldingRecord.beryllium.amount.toNumber()).toBeCloseTo(0.1, 8);
+    expect(HoldingRecord.lithium.amount.toNumber()).toBeCloseTo(0, 8);
+  });
+
+  it('compresses each subsequent element from ten of the previous element', () => {
+    HoldingRecord.neutronClump.amount = new Num(1, 3);
+    HoldingRecord.lithium.amount = new Num(1, 2);
+    HoldingRecord.beryllium.amount = new Num(1, 1);
+
+    expect(service.getElementGeneration(service.elementDefinitions[1]).toNumber()).toBe(10);
+    expect(service.getElementGeneration(service.elementDefinitions[2]).toNumber()).toBe(1);
+
+    service.tick(Num.ONE);
+
     expect(HoldingRecord.boron.amount.gt(Num.ZERO)).toBeTrue();
     expect(HoldingRecord.carbon.amount.toNumber()).toBe(0);
     expect(service.getCurrentElementName()).toBe('Lithium, Beryllium, Boron');
+  });
+
+  it('uses Beryllium moderators and reflectors to boost forging and neutron collision gain', () => {
+    HoldingRecord.beryllium.amount = new Num(2, 1);
+    HoldingRecord.neutronClump.amount = new Num(1, 2);
+    HoldingRecord.protons.amount = new Num(1, 2);
+    HoldingRecord.electrons.amount = new Num(1, 2);
+
+    const baseLithiumGeneration = service.getLithiumGeneration();
+    const baseCollisionGain = service.getCollisionGain();
+
+    service.buyBerylliumModerator();
+    service.buyBerylliumReflector();
+
+    expect(service.getBerylliumModeratorEffect().toNumber()).toBeCloseTo(1.25, 8);
+    expect(service.getBerylliumReflectorEffect().toNumber()).toBeCloseTo(1.5, 8);
+    expect(service.getLithiumGeneration().toNumber()).toBeCloseTo(baseLithiumGeneration.mul(new Num(1.25, 0)).toNumber(), 8);
+    expect(service.getCollisionGain().toNumber()).toBeGreaterThan(baseCollisionGain.toNumber());
   });
 
 

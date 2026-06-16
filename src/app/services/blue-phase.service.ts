@@ -39,10 +39,12 @@ export class BluePhaseService {
   lithiumChargeGenerators = Num.ZERO.copy();
   lithiumCapacityUpgrades = Num.ZERO.copy();
   lithiumCharge = Num.ZERO.copy();
+  berylliumModerators = Num.ZERO.copy();
+  berylliumReflectors = Num.ZERO.copy();
 
   readonly elementDefinitions: BlueElementDefinition[] = [
     {requiredStage: 1, unlockAmount: new Num(1, 1), holding: HoldingRecord.lithium, theme: 'Lithium-ion batteries'},
-    {requiredStage: 2, unlockAmount: new Num(1, 2), holding: HoldingRecord.beryllium, theme: 'Aerospace alloys'},
+    {requiredStage: 2, unlockAmount: new Num(1, 2), holding: HoldingRecord.beryllium, theme: 'Neutron moderators and reflectors'},
     {requiredStage: 3, unlockAmount: new Num(1, 3), holding: HoldingRecord.boron, theme: 'Neutron shielding'},
     {requiredStage: 4, unlockAmount: new Num(1, 4), holding: HoldingRecord.carbon, theme: 'Carbon lattice computing'},
     {requiredStage: 5, unlockAmount: new Num(1, 5), holding: HoldingRecord.nitrogen, theme: 'Cryogenic atmospheres'}
@@ -72,9 +74,7 @@ export class BluePhaseService {
       HoldingRecord.electrons.generate(generation);
     }
 
-    this.getActiveElementDefinitions().forEach(element => {
-      element.holding.generate(this.getElementGeneration(element).mul(speed));
-    });
+    this.generateForgedElements(speed);
     this.generateLithiumCharge(speed);
     LithiumHolding.batteryCharge = this.getLithiumTotalCharge();
   }
@@ -149,6 +149,7 @@ export class BluePhaseService {
       .max(Num.ZERO)
       .floor()
       .mul(multiplier)
+      .mul(this.getBerylliumReflectorEffect())
       .floor();
   }
 
@@ -202,7 +203,59 @@ export class BluePhaseService {
 
   getElementGeneration(element: BlueElementDefinition): Num {
     if (!this.isElementUnlocked(element)) return Num.ZERO.copy();
-    return HoldingRecord.neutronClump.amount.div(element.unlockAmount).mul(new Num(1, -2));
+    if (element.requiredStage === 1) return this.getLithiumGeneration();
+
+    const previousElement = this.getPreviousElementDefinition(element);
+    if (!previousElement) return Num.ZERO.copy();
+
+    return previousElement.holding.amount.div(this.getElementCompressionRatio());
+  }
+
+  getElementCompressionRatio(): Num { return new Num(1, 1); }
+
+  getLithiumGeneration(): Num {
+    return HoldingRecord.neutronClump.amount
+      .div(this.elementDefinitions[0].unlockAmount)
+      .mul(new Num(1, -2))
+      .mul(this.getBerylliumModeratorEffect());
+  }
+
+  getBerylliumModeratorCost(): Num { return new Num(5, 0).mul(new Num(2, 0).pow(this.berylliumModerators)); }
+  getBerylliumReflectorCost(): Num { return new Num(1, 1).mul(new Num(2.5, 0).pow(this.berylliumReflectors)); }
+  getBerylliumModeratorEffect(): Num { return this.berylliumModerators.mul(new Num(2.5, -1)).add(Num.ONE); }
+  getBerylliumReflectorEffect(): Num { return this.berylliumReflectors.mul(new Num(5, -1)).add(Num.ONE); }
+  canBuyBerylliumModerator(): boolean { return HoldingRecord.beryllium.amount.greq(this.getBerylliumModeratorCost()); }
+  buyBerylliumModerator(): void { if (!this.canBuyBerylliumModerator()) return; HoldingRecord.beryllium.sub(this.getBerylliumModeratorCost()); this.berylliumModerators = this.berylliumModerators.add(Num.ONE); }
+  canBuyBerylliumReflector(): boolean { return HoldingRecord.beryllium.amount.greq(this.getBerylliumReflectorCost()); }
+  buyBerylliumReflector(): void { if (!this.canBuyBerylliumReflector()) return; HoldingRecord.beryllium.sub(this.getBerylliumReflectorCost()); this.berylliumReflectors = this.berylliumReflectors.add(Num.ONE); }
+
+  private generateForgedElements(speed: Num): void {
+    const lithiumDefinition = this.elementDefinitions[0];
+    if (this.isElementUnlocked(lithiumDefinition)) {
+      lithiumDefinition.holding.generate(this.getLithiumGeneration().mul(speed));
+    }
+
+    this.getActiveElementDefinitions()
+      .filter(element => element.requiredStage > 1)
+      .forEach(element => this.compressElement(element, speed));
+  }
+
+  private compressElement(element: BlueElementDefinition, speed: Num): void {
+    const previousElement = this.getPreviousElementDefinition(element);
+    if (!previousElement) return;
+
+    const requestedOutput = this.getElementGeneration(element).mul(speed);
+    const availableOutput = previousElement.holding.amount.div(this.getElementCompressionRatio());
+    const output = requestedOutput.lt(availableOutput) ? requestedOutput : availableOutput;
+    if (output.lt(Num.ZERO) || output.equals(Num.ZERO)) return;
+
+    previousElement.holding.sub(output.mul(this.getElementCompressionRatio()));
+    element.holding.generate(output);
+  }
+
+  private getPreviousElementDefinition(element: BlueElementDefinition): BlueElementDefinition | undefined {
+    const index = this.elementDefinitions.indexOf(element);
+    return index > 0 ? this.elementDefinitions[index - 1] : undefined;
   }
 
   getLithiumBatteryCost(): Num { return new Num(5, 0).mul(new Num(1.75, 0).pow(this.lithiumBatteries)); }
@@ -288,6 +341,8 @@ export class BluePhaseService {
     this.storage.saveNum(this.lithiumChargeGenerators, 'lithiumChargeGenerators');
     this.storage.saveNum(this.lithiumCapacityUpgrades, 'lithiumCapacityUpgrades');
     this.storage.saveNum(this.lithiumCharge, 'lithiumCharge');
+    this.storage.saveNum(this.berylliumModerators, 'berylliumModerators');
+    this.storage.saveNum(this.berylliumReflectors, 'berylliumReflectors');
   }
 
   load(): void {
@@ -298,6 +353,8 @@ export class BluePhaseService {
     this.lithiumChargeGenerators = this.storage.loadNum(this.lithiumChargeGenerators, 'lithiumChargeGenerators');
     this.lithiumCapacityUpgrades = this.storage.loadNum(this.lithiumCapacityUpgrades, 'lithiumCapacityUpgrades');
     this.lithiumCharge = this.storage.loadNum(this.lithiumCharge, 'lithiumCharge');
+    this.berylliumModerators = this.storage.loadNum(this.berylliumModerators, 'berylliumModerators');
+    this.berylliumReflectors = this.storage.loadNum(this.berylliumReflectors, 'berylliumReflectors');
     this.synchronizePurchases();
     LithiumHolding.batteryCharge = this.getLithiumTotalCharge();
     this.applyNeutronMeltdown();
