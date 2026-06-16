@@ -1,24 +1,36 @@
 <section class="elements-page">
+  <header class="elements-header">
+    <div class="atom-mark" aria-hidden="true"><span></span><span></span><span></span><i></i></div>
+    <div>
+      <p class="eyebrow">BLUE PHASE // ELEMENT FORGE</p>
+      <h1>Persistent Matter Synthesis</h1>
+      <p>Compress neutrons into a lasting clump, then forge heavier elements that carry power between Blue resets.</p>
+    </div>
+    <div class="stage-readout">
+      <span>CLUMP STAGE</span>
+      <strong>{{ bluePhase.getClumpStage() }}</strong>
+    </div>
+  </header>
+
   <section class="neutron-section">
     <div class="section-heading">
       <div>
         <p class="eyebrow">PERSISTENT MATTER</p>
         <h2>Neutron Clump</h2>
       </div>
-      <div class="stage-readout">
-        <span>CLUMP STAGE</span>
-        <strong>{{ bluePhase.getClumpStage() }}</strong>
-      </div>
+      <p>Deposit fresh neutrons to widen the forge and unlock the element chain.</p>
     </div>
 
     <div class="neutron-grid">
       <article class="matter-card">
+        <div class="card-visual neutron-visual" aria-hidden="true"><span></span><span></span><span></span></div>
         <app-number-display [holding]="neutrons"></app-number-display>
         <button class="deposit-button" [disabled]="!bluePhase.canDepositNeutrons()" (click)="bluePhase.depositAllNeutrons()">
           DEPOSIT ALL INTO CLUMP
         </button>
       </article>
       <article class="matter-card clump-card">
+        <div class="card-visual clump-visual" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
         <app-number-display [holding]="neutronClump"></app-number-display>
         <p>Unlocked elements: <strong>{{ bluePhase.getCurrentElementName() }}</strong></p>
         <p>Next unlock: {{ bluePhase.getNextStageRequirement().toString() }} clumped Neutrons</p>
@@ -30,12 +42,17 @@
     <button class="arrow" type="button" aria-label="Previous element" (click)="previousElement()">‹</button>
 
     <article class="element-view" [class.locked]="!bluePhase.isElementUnlocked(selectedElement)">
-      <div class="element-orb">
-        <span>{{ selectedElement.holding.abbreviation }}</span>
+      <div class="element-visual" [ngClass]="selectedElement.holding.name">
+        <div class="element-orb"><span>{{ selectedElement.holding.abbreviation }}</span></div>
+        <span class="orbit orbit-one"></span>
+        <span class="orbit orbit-two"></span>
+        <span class="orbit orbit-three"></span>
+        <i class="spark spark-one"></i><i class="spark spark-two"></i><i class="spark spark-three"></i>
       </div>
       <div class="element-copy">
         <p class="eyebrow">ELEMENT {{ selectedElementIndex + 1 }} / {{ bluePhase.elementDefinitions.length }}</p>
         <h2>{{ selectedElement.holding.displayName }}</h2>
+        <p class="element-theme">{{ selectedElement.theme }}</p>
         <app-number-display [holding]="selectedElement.holding"></app-number-display>
         <p>Unlocks at {{ selectedElement.unlockAmount.toString() }} clumped Neutrons.</p>
         <p *ngIf="bluePhase.isElementUnlocked(selectedElement)">
@@ -62,14 +79,31 @@
         <p class="eyebrow">LITHIUM-ION ARRAY</p>
         <h2>Battery Foundry</h2>
       </div>
-      <p>Build ion batteries, charge them with electron generators, and expand capacity with proton lattice frames.</p>
+      <p>Only charged lithium batteries boost red generator multipliers; raw Lithium now powers battery construction and nucleus generation.</p>
+    </div>
+
+    <div class="battery-showcase">
+      <div class="battery-visual" aria-hidden="true">
+        <div class="battery-shell">
+          <span class="battery-fill" [style.width.%]="getLithiumChargePercent()"></span>
+          <i></i><i></i><i></i>
+        </div>
+        <div class="charge-bolts"><span></span><span></span><span></span></div>
+      </div>
+      <div class="charge-panel">
+        <span>CHARGE STORED</span>
+        <strong>{{ bluePhase.getLithiumTotalCharge().toString(3) }} / {{ bluePhase.getLithiumTotalCapacity().toString(3) }}</strong>
+        <div class="charge-track" role="progressbar" [attr.aria-valuenow]="getLithiumChargePercent()" aria-valuemin="0" aria-valuemax="100">
+          <span [style.width.%]="getLithiumChargePercent()"></span>
+        </div>
+        <p>Battery red generator multiplier: {{ getLithiumRedMultiplier().toString(3) }}x</p>
+      </div>
     </div>
 
     <div class="battery-grid">
       <article class="battery-card"><span>Batteries</span><strong>{{ bluePhase.lithiumBatteries.toString() }}</strong><button (click)="bluePhase.buyLithiumBattery()" [disabled]="!bluePhase.canBuyLithiumBattery()">Buy for {{ bluePhase.getLithiumBatteryCost().toString() }} Lithium</button></article>
       <article class="battery-card"><span>Chargers</span><strong>{{ bluePhase.lithiumChargeGenerators.toString() }}</strong><button (click)="bluePhase.buyLithiumChargeGenerator()" [disabled]="!bluePhase.canBuyLithiumChargeGenerator()">Buy for {{ bluePhase.getLithiumChargeGeneratorCost().toString() }} Electrons</button></article>
       <article class="battery-card"><span>Capacity Level</span><strong>{{ bluePhase.lithiumCapacityUpgrades.toString() }}</strong><button (click)="bluePhase.buyLithiumCapacityUpgrade()" [disabled]="!bluePhase.canBuyLithiumCapacityUpgrade()">Upgrade for {{ bluePhase.getLithiumCapacityCost().toString() }} Protons</button></article>
-      <article class="battery-card charged"><span>Total Charge</span><strong>{{ bluePhase.getLithiumTotalCharge().toString(3) }}</strong><p>Red generator multiplier: {{ getLithiumRedMultiplier().toString(3) }}x</p></article>
     </div>
   </section>
 </section>

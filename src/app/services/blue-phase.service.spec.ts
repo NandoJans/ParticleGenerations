@@ -191,6 +191,20 @@ describe('BluePhaseService', () => {
     expect(service.getCurrentElementName()).toBe('Lithium, Beryllium, Boron');
   });
 
+
+  it('boosts red generators with lithium battery charge but not raw Lithium', () => {
+    HoldingRecord.lithium.amount = new Num(1, 6);
+    service.lithiumCharge = Num.ZERO.copy();
+
+    expect(HoldingRecord.lithium.getEffect().toNumber()).toBe(1);
+
+    service.lithiumBatteries = Num.ONE.copy();
+    service.lithiumChargeGenerators = Num.ONE.copy();
+    service.tick(Num.ONE);
+
+    expect(HoldingRecord.lithium.getEffect().toNumber()).toBeGreaterThan(1);
+  });
+
   it('starts the neutron meltdown at ^0.001 and fully restores at 10,000 neutron matter', () => {
     expect(service.getNeutronMeltdownPower().toNumber()).toBeCloseTo(0.001, 8);
 

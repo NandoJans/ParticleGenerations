@@ -55,4 +55,12 @@ export class BlueElementsComponent {
   getLithiumRedMultiplier(): Num {
     return HoldingRecord.lithium.getEffect();
   }
+
+  getLithiumChargePercent(): number {
+    const capacity = this.bluePhase.getLithiumTotalCapacity().toNumber();
+    if (!Number.isFinite(capacity) || capacity <= 0) return 0;
+
+    const charge = this.bluePhase.getLithiumTotalCharge().toNumber();
+    return Math.max(0, Math.min(100, (charge / capacity) * 100));
+  }
 }
