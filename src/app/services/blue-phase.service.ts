@@ -10,6 +10,7 @@ import {ResetKey} from '../classes/enums/reset-key';
 import {MilestoneRecord} from '../classes/records/milestones/milestone-record';
 import {Multiplier} from '../classes/features/multiplier';
 import {MultiplierRecord} from "../classes/records/multipliers/multiplier-record";
+import {ChargerRecord} from "../classes/records/charger/charger-record";
 
 export type BlueParticleMode = 'none' | 'protons' | 'electrons';
 
@@ -86,7 +87,8 @@ export class BluePhaseService {
 
   unlockFromPrestige(): void {
     this.unlocked = true;
-    this.activeParticle = 'none';
+    this.resetDarkStarChargers();
+    this.startParticleGeneration();
     this.synchronizePurchases();
     this.applyNeutronMeltdown();
   }
@@ -130,7 +132,7 @@ export class BluePhaseService {
 
     ResetHelper.reset(ResetKey.BLUE);
     HoldingRecord.neutrons.add(gain);
-    this.activeParticle = 'none';
+    this.startParticleGeneration();
     this.synchronizePurchases();
   }
 
@@ -197,6 +199,17 @@ export class BluePhaseService {
 
   private toggleParticle(): void {
     this.activeParticle = this.activeParticle === 'protons' ? 'electrons' : 'protons';
+  }
+
+  private startParticleGeneration(): void {
+    this.activeParticle = 'protons';
+  }
+
+  private resetDarkStarChargers(): void {
+    ChargerRecord.darkStarChargerList.forEach(charger => {
+      charger.reset();
+      charger.save();
+    });
   }
 
   synchronizePurchases(): void {
