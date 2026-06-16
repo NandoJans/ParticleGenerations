@@ -24,6 +24,7 @@
 .neutron-section,
 .element-view,
 .lithium-lab,
+.beryllium-lab,
 .matter-card,
 .battery-card,
 .battery-showcase {
@@ -55,7 +56,7 @@ h2 { margin: .2rem 0; color: #d9f3ff; }
 .atom-mark i { position: absolute; inset: 2.15rem; border-radius: 50%; background: #e8f8ff; box-shadow: 0 0 14px var(--blue); }
 
 .neutron-section,
-.lithium-lab { margin-top: 1rem; padding: 1.25rem 1.5rem; }
+.lithium-lab, .beryllium-lab { margin-top: 1rem; padding: 1.25rem 1.5rem; }
 .section-heading { display: flex; justify-content: space-between; gap: 1rem; align-items: center; margin-bottom: 1rem; }
 .stage-readout { min-width: 9rem; padding: 1rem; border-left: 2px solid var(--blue); text-align: right; }
 .stage-readout span,
