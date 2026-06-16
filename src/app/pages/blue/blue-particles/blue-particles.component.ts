@@ -19,7 +19,7 @@ export class BlueParticlesComponent {
   electrons: Holding = HoldingRecord.electrons;
   neutrons: Holding = HoldingRecord.neutrons;
   neutronClump: Holding = HoldingRecord.neutronClump;
-  lithium: Holding = HoldingRecord.lithium;
+  elementHoldings: Holding[] = [];
   neutronUpgrades: BlueUpgrade[] = [
     UpgradeRecord.blueBeamIntensity,
     UpgradeRecord.blueColliderEfficiency
@@ -29,7 +29,9 @@ export class BlueParticlesComponent {
     UpgradeRecord.blueCollisionCalibration
   ];
 
-  constructor(public bluePhase: BluePhaseService) {}
+  constructor(public bluePhase: BluePhaseService) {
+    this.elementHoldings = this.bluePhase.elementDefinitions.map(element => element.holding);
+  }
 
   getActiveParticleName(): string {
     if (this.bluePhase.activeParticle === 'protons') return 'PROTON BEAM';

@@ -152,3 +152,48 @@ export class LithiumHolding extends BlueHolding {
     return new Num(1, 1).pow(this.amount.sqrt());
   }
 }
+
+
+export class BerylliumHolding extends BlueHolding {
+  name = 'beryllium';
+  displayName = 'Beryllium';
+  abbreviation = 'Be';
+  resetId = ResetHelper.registerReset(ResetKey.PURPLE, this);
+  holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
+    .withAmountPrefix('The neutron clump has forged')
+    .withAmountSuffix(' Beryllium')
+    .build();
+}
+
+export class BoronHolding extends BlueHolding {
+  name = 'boron';
+  displayName = 'Boron';
+  abbreviation = 'B';
+  resetId = ResetHelper.registerReset(ResetKey.PURPLE, this);
+  holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
+    .withAmountPrefix('The neutron clump has forged')
+    .withAmountSuffix(' Boron')
+    .build();
+}
+
+export class CarbonHolding extends BlueHolding {
+  name = 'carbon';
+  displayName = 'Carbon';
+  abbreviation = 'C';
+  resetId = ResetHelper.registerReset(ResetKey.PURPLE, this);
+  holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
+    .withAmountPrefix('The neutron clump has forged')
+    .withAmountSuffix(' Carbon')
+    .build();
+}
+
+export class NitrogenHolding extends BlueHolding {
+  name = 'nitrogen';
+  displayName = 'Nitrogen';
+  abbreviation = 'N';
+  resetId = ResetHelper.registerReset(ResetKey.PURPLE, this);
+  holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
+    .withAmountPrefix('The neutron clump has forged')
+    .withAmountSuffix(' Nitrogen')
+    .build();
+}

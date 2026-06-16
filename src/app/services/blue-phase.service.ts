@@ -11,8 +11,14 @@ import {MilestoneRecord} from '../classes/records/milestones/milestone-record';
 import {Multiplier} from '../classes/features/multiplier';
 import {MultiplierRecord} from "../classes/records/multipliers/multiplier-record";
 import {ChargerRecord} from "../classes/records/charger/charger-record";
+import {Holding} from '../classes/features/holding';
 
 export type BlueParticleMode = 'none' | 'protons' | 'electrons';
+
+export interface BlueElementDefinition {
+  requiredStage: number;
+  holding: Holding;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +31,14 @@ export class BluePhaseService {
   private purchaseStates: {[key: string]: boolean} = {};
   activeParticle: BlueParticleMode = 'none';
   unlocked = false;
+
+  readonly elementDefinitions: BlueElementDefinition[] = [
+    {requiredStage: 1, holding: HoldingRecord.lithium},
+    {requiredStage: 2, holding: HoldingRecord.beryllium},
+    {requiredStage: 3, holding: HoldingRecord.boron},
+    {requiredStage: 4, holding: HoldingRecord.carbon},
+    {requiredStage: 5, holding: HoldingRecord.nitrogen}
+  ];
 
   constructor() {
     ResetHelper.registerResetListener('blue-phase-unlock', resetKey => {
@@ -50,9 +64,9 @@ export class BluePhaseService {
       HoldingRecord.electrons.generate(generation);
     }
 
-    if (this.getClumpStage() >= 1) {
-      HoldingRecord.lithium.generate(this.getElementGeneration(1).mul(speed));
-    }
+    this.getActiveElementDefinitions().forEach(element => {
+      element.holding.generate(this.getElementGeneration(element.requiredStage).mul(speed));
+    });
   }
 
   applyNeutronMeltdown(): void {
@@ -151,8 +165,16 @@ export class BluePhaseService {
     return Math.max(0, Math.floor(HoldingRecord.neutronClump.amount.log10().toNumber()));
   }
 
+  getActiveElementDefinitions(): BlueElementDefinition[] {
+    const clumpStage = this.getClumpStage();
+    return this.elementDefinitions.filter(element => clumpStage >= element.requiredStage);
+  }
+
   getCurrentElementName(): string {
-    return this.getClumpStage() >= 1 ? 'Lithium' : 'No element';
+    const activeElements = this.getActiveElementDefinitions();
+    return activeElements.length > 0
+      ? activeElements.map(element => element.holding.displayName).join(', ')
+      : 'No element';
   }
 
   getNextStageRequirement(): Num {
