@@ -12,7 +12,7 @@ import {Multiplier} from '../classes/features/multiplier';
 import {MultiplierRecord} from "../classes/records/multipliers/multiplier-record";
 import {ChargerRecord} from "../classes/records/charger/charger-record";
 import {Holding} from '../classes/features/holding';
-import {LithiumHolding} from '../classes/features/holdings/blue-holdings';
+import {BerylliumHolding, LithiumHolding} from '../classes/features/holdings/blue-holdings';
 
 export type BlueParticleMode = 'none' | 'protons' | 'electrons';
 
@@ -39,12 +39,13 @@ export class BluePhaseService {
   lithiumChargeGenerators = Num.ZERO.copy();
   lithiumCapacityUpgrades = Num.ZERO.copy();
   lithiumCharge = Num.ZERO.copy();
-  berylliumModerators = Num.ZERO.copy();
-  berylliumReflectors = Num.ZERO.copy();
+  berylliumRockets = Num.ZERO.copy();
+  berylliumFuelSystems = Num.ZERO.copy();
+  berylliumLogicSystems = Num.ZERO.copy();
 
   readonly elementDefinitions: BlueElementDefinition[] = [
     {requiredStage: 1, unlockAmount: new Num(1, 1), holding: HoldingRecord.lithium, theme: 'Lithium-ion batteries'},
-    {requiredStage: 2, unlockAmount: new Num(1, 2), holding: HoldingRecord.beryllium, theme: 'Neutron moderators and reflectors'},
+    {requiredStage: 2, unlockAmount: new Num(1, 2), holding: HoldingRecord.beryllium, theme: 'Rocket construction and accelerator thrust'},
     {requiredStage: 3, unlockAmount: new Num(1, 3), holding: HoldingRecord.boron, theme: 'Neutron shielding'},
     {requiredStage: 4, unlockAmount: new Num(1, 4), holding: HoldingRecord.carbon, theme: 'Carbon lattice computing'},
     {requiredStage: 5, unlockAmount: new Num(1, 5), holding: HoldingRecord.nitrogen, theme: 'Cryogenic atmospheres'}
@@ -77,6 +78,7 @@ export class BluePhaseService {
     this.generateForgedElements(speed);
     this.generateLithiumCharge(speed);
     LithiumHolding.batteryCharge = this.getLithiumTotalCharge();
+    BerylliumHolding.rocketBoost = this.getBerylliumRocketEffect();
   }
 
   applyNeutronMeltdown(): void {
@@ -115,6 +117,7 @@ export class BluePhaseService {
     this.startParticleGeneration();
     this.synchronizePurchases();
     LithiumHolding.batteryCharge = this.getLithiumTotalCharge();
+    BerylliumHolding.rocketBoost = this.getBerylliumRocketEffect();
     this.applyNeutronMeltdown();
   }
 
@@ -149,7 +152,6 @@ export class BluePhaseService {
       .max(Num.ZERO)
       .floor()
       .mul(multiplier)
-      .mul(this.getBerylliumReflectorEffect())
       .floor();
   }
 
@@ -216,18 +218,26 @@ export class BluePhaseService {
   getLithiumGeneration(): Num {
     return HoldingRecord.neutronClump.amount
       .div(this.elementDefinitions[0].unlockAmount)
-      .mul(new Num(1, -2))
-      .mul(this.getBerylliumModeratorEffect());
+      .mul(new Num(1, -2));
   }
 
-  getBerylliumModeratorCost(): Num { return new Num(5, 0).mul(new Num(2, 0).pow(this.berylliumModerators)); }
-  getBerylliumReflectorCost(): Num { return new Num(1, 1).mul(new Num(2.5, 0).pow(this.berylliumReflectors)); }
-  getBerylliumModeratorEffect(): Num { return this.berylliumModerators.mul(new Num(2.5, -1)).add(Num.ONE); }
-  getBerylliumReflectorEffect(): Num { return this.berylliumReflectors.mul(new Num(5, -1)).add(Num.ONE); }
-  canBuyBerylliumModerator(): boolean { return HoldingRecord.beryllium.amount.greq(this.getBerylliumModeratorCost()); }
-  buyBerylliumModerator(): void { if (!this.canBuyBerylliumModerator()) return; HoldingRecord.beryllium.sub(this.getBerylliumModeratorCost()); this.berylliumModerators = this.berylliumModerators.add(Num.ONE); }
-  canBuyBerylliumReflector(): boolean { return HoldingRecord.beryllium.amount.greq(this.getBerylliumReflectorCost()); }
-  buyBerylliumReflector(): void { if (!this.canBuyBerylliumReflector()) return; HoldingRecord.beryllium.sub(this.getBerylliumReflectorCost()); this.berylliumReflectors = this.berylliumReflectors.add(Num.ONE); }
+  getBerylliumRocketCost(): Num { return new Num(5, 0).mul(new Num(2, 0).pow(this.berylliumRockets)); }
+  getBerylliumFuelCost(): Num { return new Num(1, 1).mul(new Num(2, 0).pow(this.berylliumFuelSystems)); }
+  getBerylliumLogicCost(): Num { return new Num(1, 1).mul(new Num(2, 0).pow(this.berylliumLogicSystems)); }
+  getBerylliumFuelEffect(): Num { return this.berylliumFuelSystems.mul(new Num(2.5, -1)).add(Num.ONE); }
+  getBerylliumLogicEffect(): Num { return this.berylliumLogicSystems.mul(new Num(1.5, -1)).add(Num.ONE); }
+  getBerylliumRocketEffect(): Num {
+    return this.berylliumRockets
+      .mul(this.getBerylliumFuelEffect())
+      .mul(this.getBerylliumLogicEffect())
+      .add(Num.ONE);
+  }
+  canBuyBerylliumRocket(): boolean { return HoldingRecord.beryllium.amount.greq(this.getBerylliumRocketCost()); }
+  buyBerylliumRocket(): void { if (!this.canBuyBerylliumRocket()) return; HoldingRecord.beryllium.sub(this.getBerylliumRocketCost()); this.berylliumRockets = this.berylliumRockets.add(Num.ONE); BerylliumHolding.rocketBoost = this.getBerylliumRocketEffect(); }
+  canBuyBerylliumFuel(): boolean { return HoldingRecord.protons.amount.greq(this.getBerylliumFuelCost()); }
+  buyBerylliumFuel(): void { if (!this.canBuyBerylliumFuel()) return; HoldingRecord.protons.sub(this.getBerylliumFuelCost()); this.berylliumFuelSystems = this.berylliumFuelSystems.add(Num.ONE); BerylliumHolding.rocketBoost = this.getBerylliumRocketEffect(); }
+  canBuyBerylliumLogic(): boolean { return HoldingRecord.electrons.amount.greq(this.getBerylliumLogicCost()); }
+  buyBerylliumLogic(): void { if (!this.canBuyBerylliumLogic()) return; HoldingRecord.electrons.sub(this.getBerylliumLogicCost()); this.berylliumLogicSystems = this.berylliumLogicSystems.add(Num.ONE); BerylliumHolding.rocketBoost = this.getBerylliumRocketEffect(); }
 
   private generateForgedElements(speed: Num): void {
     const lithiumDefinition = this.elementDefinitions[0];
@@ -341,8 +351,9 @@ export class BluePhaseService {
     this.storage.saveNum(this.lithiumChargeGenerators, 'lithiumChargeGenerators');
     this.storage.saveNum(this.lithiumCapacityUpgrades, 'lithiumCapacityUpgrades');
     this.storage.saveNum(this.lithiumCharge, 'lithiumCharge');
-    this.storage.saveNum(this.berylliumModerators, 'berylliumModerators');
-    this.storage.saveNum(this.berylliumReflectors, 'berylliumReflectors');
+    this.storage.saveNum(this.berylliumRockets, 'berylliumRockets');
+    this.storage.saveNum(this.berylliumFuelSystems, 'berylliumFuelSystems');
+    this.storage.saveNum(this.berylliumLogicSystems, 'berylliumLogicSystems');
   }
 
   load(): void {
@@ -353,16 +364,19 @@ export class BluePhaseService {
     this.lithiumChargeGenerators = this.storage.loadNum(this.lithiumChargeGenerators, 'lithiumChargeGenerators');
     this.lithiumCapacityUpgrades = this.storage.loadNum(this.lithiumCapacityUpgrades, 'lithiumCapacityUpgrades');
     this.lithiumCharge = this.storage.loadNum(this.lithiumCharge, 'lithiumCharge');
-    this.berylliumModerators = this.storage.loadNum(this.berylliumModerators, 'berylliumModerators');
-    this.berylliumReflectors = this.storage.loadNum(this.berylliumReflectors, 'berylliumReflectors');
+    this.berylliumRockets = this.storage.loadNum(this.berylliumRockets, 'berylliumRockets');
+    this.berylliumFuelSystems = this.storage.loadNum(this.berylliumFuelSystems, 'berylliumFuelSystems');
+    this.berylliumLogicSystems = this.storage.loadNum(this.berylliumLogicSystems, 'berylliumLogicSystems');
     this.synchronizePurchases();
     LithiumHolding.batteryCharge = this.getLithiumTotalCharge();
+    BerylliumHolding.rocketBoost = this.getBerylliumRocketEffect();
     this.applyNeutronMeltdown();
   }
 
   init(): void {
     this.synchronizePurchases();
     LithiumHolding.batteryCharge = this.getLithiumTotalCharge();
+    BerylliumHolding.rocketBoost = this.getBerylliumRocketEffect();
     this.applyNeutronMeltdown();
   }
 }

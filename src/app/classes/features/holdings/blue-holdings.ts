@@ -156,6 +156,7 @@ export class LithiumHolding extends BlueHolding {
 
 
 export class BerylliumHolding extends BlueHolding {
+  static rocketBoost: Num = Num.ONE.copy();
   name = 'beryllium';
   displayName = 'Beryllium';
   abbreviation = 'Be';
@@ -163,7 +164,22 @@ export class BerylliumHolding extends BlueHolding {
   holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
     .withAmountPrefix('The neutron clump has forged')
     .withAmountSuffix(' Beryllium')
+    .withEffectPrefix('Beryllium rocket fleets multiply red accelerator generation by')
     .build();
+
+  override action(): Num {
+    const effect = this.getEffect();
+    MultiplierRecord.redAcceleratorGenerators.correct(effect);
+    return effect;
+  }
+
+  override effectString(effect: Num): string {
+    return effect.toString(3) + 'x';
+  }
+
+  getEffect(): Num {
+    return BerylliumHolding.rocketBoost;
+  }
 }
 
 export class BoronHolding extends BlueHolding {
