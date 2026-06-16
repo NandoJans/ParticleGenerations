@@ -1,0 +1,26 @@
+.elements-page { min-height: 100%; padding: 1rem; color: #d8f4ff; background: radial-gradient(circle at top, rgba(86, 186, 255, .18), transparent 34%), #050b13; }
+.neutron-section, .lithium-lab { border: 1px solid rgba(110, 210, 255, .28); border-radius: 18px; padding: 1rem; background: rgba(8, 20, 33, .88); box-shadow: 0 0 30px rgba(41, 147, 255, .12); }
+.section-heading { display: flex; justify-content: space-between; gap: 1rem; align-items: center; margin-bottom: 1rem; }
+.eyebrow { margin: 0; color: #7bdcff; font: 700 .75rem monospace; letter-spacing: .16em; }
+h2 { margin: .15rem 0; color: #f4fbff; }
+.stage-readout { text-align: center; border: 1px solid rgba(123, 220, 255, .35); border-radius: 12px; padding: .5rem 1rem; }
+.stage-readout span, .battery-card span { display: block; color: #87abc2; font-size: .75rem; letter-spacing: .12em; }
+.stage-readout strong { font-size: 2rem; color: #7bdcff; }
+.neutron-grid, .battery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+.matter-card, .battery-card { border: 1px solid rgba(255,255,255,.12); border-radius: 16px; padding: 1rem; background: rgba(255,255,255,.045); }
+.deposit-button, .battery-card button { width: 100%; margin-top: .75rem; padding: .75rem; border: 1px solid #7bdcff; border-radius: 10px; color: #d8f4ff; background: rgba(44, 135, 255, .18); cursor: pointer; }
+button:disabled { opacity: .45; cursor: not-allowed; }
+.element-browser { display: grid; grid-template-columns: auto 1fr auto; gap: .75rem; align-items: stretch; margin: 1rem 0; }
+.arrow { min-width: 44px; border: 1px solid rgba(123, 220, 255, .35); border-radius: 18px; color: #7bdcff; background: rgba(255,255,255,.04); font-size: 3rem; }
+.element-view { display: grid; grid-template-columns: minmax(110px, 180px) 1fr; gap: 1.25rem; align-items: center; border: 1px solid rgba(123, 220, 255, .28); border-radius: 24px; padding: 1.25rem; background: linear-gradient(135deg, rgba(33, 83, 133, .55), rgba(8, 20, 33, .92)); overflow: hidden; }
+.element-view.locked { filter: grayscale(.8); opacity: .72; }
+.element-orb { aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle at 35% 25%, #ffffff, #8ee7ff 18%, #248bff 48%, #061225 72%); box-shadow: 0 0 45px rgba(64, 174, 255, .45), inset -18px -24px 30px rgba(0,0,0,.38); }
+.element-orb span { color: #03101c; font-size: 3.5rem; font-weight: 900; text-shadow: 0 1px rgba(255,255,255,.6); }
+.locked-copy { color: #ffcf7b; }
+.element-dots { display: flex; justify-content: center; flex-wrap: wrap; gap: .5rem; margin-bottom: 1rem; }
+.element-dots button { border: 1px solid rgba(255,255,255,.14); border-radius: 999px; padding: .45rem .8rem; color: #87abc2; background: rgba(255,255,255,.04); }
+.element-dots button.unlocked { color: #d8f4ff; border-color: rgba(123, 220, 255, .45); }
+.element-dots button.active { background: #7bdcff; color: #03101c; }
+.battery-card strong { display: block; margin: .35rem 0; font-size: 1.7rem; color: #7cffc5; }
+.battery-card.charged { background: linear-gradient(135deg, rgba(66,255,179,.12), rgba(125,220,255,.08)); }
+@media (max-width: 700px) { .element-view { grid-template-columns: 1fr; text-align: center; } .element-orb { max-width: 160px; margin: auto; } .section-heading { align-items: flex-start; flex-direction: column; } }

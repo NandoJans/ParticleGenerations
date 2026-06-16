@@ -17,9 +17,7 @@ import {GeneratorUpgrade} from '../../../classes/features/upgrades/generator-upg
 export class BlueParticlesComponent {
   protons: Holding = HoldingRecord.protons;
   electrons: Holding = HoldingRecord.electrons;
-  neutrons: Holding = HoldingRecord.neutrons;
-  neutronClump: Holding = HoldingRecord.neutronClump;
-  elementHoldings: Holding[] = [];
+
   neutronUpgrades: BlueUpgrade[] = [
     UpgradeRecord.blueBeamIntensity,
     UpgradeRecord.blueColliderEfficiency
@@ -29,9 +27,7 @@ export class BlueParticlesComponent {
     UpgradeRecord.blueCollisionCalibration
   ];
 
-  constructor(public bluePhase: BluePhaseService) {
-    this.elementHoldings = this.bluePhase.elementDefinitions.map(element => element.holding);
-  }
+  constructor(public bluePhase: BluePhaseService) {}
 
   getActiveParticleName(): string {
     if (this.bluePhase.activeParticle === 'protons') return 'PROTON BEAM';
@@ -47,9 +43,6 @@ export class BlueParticlesComponent {
     this.bluePhase.collide();
   }
 
-  depositAllNeutrons(): void {
-    this.bluePhase.depositAllNeutrons();
-  }
 
   getProtonBufferEffect(phase: 'red' | 'yellow' | 'green'): string {
     const generators = phase === 'red'

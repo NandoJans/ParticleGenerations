@@ -72,40 +72,6 @@
     </button>
   </article>
 
-  <section class="neutron-section">
-    <div class="section-heading">
-      <div>
-        <p class="eyebrow">PERSISTENT MATTER</p>
-        <h2>Neutron Compression</h2>
-      </div>
-      <div class="stage-readout">
-        <span>CLUMP STAGE</span>
-        <strong>{{ bluePhase.getClumpStage() }}</strong>
-      </div>
-    </div>
-
-    <div class="neutron-grid">
-      <article class="matter-card">
-        <app-number-display [holding]="neutrons"></app-number-display>
-        <button class="deposit-button" [disabled]="!bluePhase.canDepositNeutrons()" (click)="depositAllNeutrons()">
-          DEPOSIT ALL INTO CLUMP
-        </button>
-      </article>
-      <article class="matter-card clump-card">
-        <app-number-display [holding]="neutronClump"></app-number-display>
-        <p>Current output: <strong>{{ bluePhase.getCurrentElementName() }}</strong></p>
-        <p>Next stage: {{ bluePhase.getNextStageRequirement().toString() }} clumped Neutrons</p>
-      </article>
-      @for (element of elementHoldings; track element.name) {
-        <article class="matter-card element-card" [class.locked]="bluePhase.getClumpStage() < bluePhase.elementDefinitions[$index].requiredStage">
-          <span class="element-symbol">{{ element.abbreviation }}</span>
-          <app-number-display [holding]="element"></app-number-display>
-          <p>Begins forming at clump stage {{ bluePhase.elementDefinitions[$index].requiredStage }}.</p>
-        </article>
-      }
-    </div>
-  </section>
-
   <section class="blue-upgrades">
     <div class="section-heading">
       <div>
