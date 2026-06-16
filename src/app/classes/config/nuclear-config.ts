@@ -42,7 +42,7 @@ export class NuclearConfig {
       target: 'nuclearFissionGain',
       baseCost: new Num(1, 1),
       costIncrease: new Num(1, 1),
-      buffPerLevel: new Num(3, 0),
+      buffPerLevel: new Num(2, 0),
     },
     {
       key: 'nuclear-green-generators',
