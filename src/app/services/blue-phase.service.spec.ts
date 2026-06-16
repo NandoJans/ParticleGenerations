@@ -23,6 +23,11 @@ describe('BluePhaseService', () => {
     HoldingRecord.electrons.amount = Num.ZERO.copy();
     HoldingRecord.neutrons.amount = Num.ZERO.copy();
     HoldingRecord.neutronClump.amount = Num.ZERO.copy();
+    HoldingRecord.lithium.amount = Num.ZERO.copy();
+    HoldingRecord.beryllium.amount = Num.ZERO.copy();
+    HoldingRecord.boron.amount = Num.ZERO.copy();
+    HoldingRecord.carbon.amount = Num.ZERO.copy();
+    HoldingRecord.nitrogen.amount = Num.ZERO.copy();
     HoldingRecord.greenParticles.amount = Num.ZERO.copy();
 
     GeneratorRecord.firstRedGenerator.bought = Num.ZERO.copy();
@@ -51,6 +56,11 @@ describe('BluePhaseService', () => {
     HoldingRecord.electrons.amount = Num.ZERO.copy();
     HoldingRecord.neutrons.amount = Num.ZERO.copy();
     HoldingRecord.neutronClump.amount = Num.ZERO.copy();
+    HoldingRecord.lithium.amount = Num.ZERO.copy();
+    HoldingRecord.beryllium.amount = Num.ZERO.copy();
+    HoldingRecord.boron.amount = Num.ZERO.copy();
+    HoldingRecord.carbon.amount = Num.ZERO.copy();
+    HoldingRecord.nitrogen.amount = Num.ZERO.copy();
     HoldingRecord.greenParticles.amount = Num.ZERO.copy();
     GeneratorRecord.firstRedGenerator.bought = Num.ZERO.copy();
     GeneratorRecord.firstRedGenerator.multiplierUpgrade.bought = Num.ZERO.copy();
@@ -154,6 +164,19 @@ describe('BluePhaseService', () => {
 
     HoldingRecord.neutronClump.amount = new Num(1, 3);
     expect(service.getClumpStage()).toBe(3);
+  });
+
+
+  it('generates more forged elements as the neutron clump reaches higher stages', () => {
+    HoldingRecord.neutronClump.amount = new Num(1, 3);
+
+    service.tick(Num.ONE);
+
+    expect(HoldingRecord.lithium.amount.gt(Num.ZERO)).toBeTrue();
+    expect(HoldingRecord.beryllium.amount.gt(Num.ZERO)).toBeTrue();
+    expect(HoldingRecord.boron.amount.gt(Num.ZERO)).toBeTrue();
+    expect(HoldingRecord.carbon.amount.toNumber()).toBe(0);
+    expect(service.getCurrentElementName()).toBe('Lithium, Beryllium, Boron');
   });
 
   it('starts the neutron meltdown at ^0.001 and fully restores at 10,000 neutron matter', () => {

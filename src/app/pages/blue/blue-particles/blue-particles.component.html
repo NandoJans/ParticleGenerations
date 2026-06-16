@@ -95,11 +95,13 @@
         <p>Current output: <strong>{{ bluePhase.getCurrentElementName() }}</strong></p>
         <p>Next stage: {{ bluePhase.getNextStageRequirement().toString() }} clumped Neutrons</p>
       </article>
-      <article class="matter-card element-card">
-        <span class="element-symbol">Li</span>
-        <app-number-display [holding]="lithium"></app-number-display>
-        <p>Lithium begins forming at clump stage 1 and massively boosts Red Accelerator generation.</p>
-      </article>
+      @for (element of elementHoldings; track element.name) {
+        <article class="matter-card element-card" [class.locked]="bluePhase.getClumpStage() < bluePhase.elementDefinitions[$index].requiredStage">
+          <span class="element-symbol">{{ element.abbreviation }}</span>
+          <app-number-display [holding]="element"></app-number-display>
+          <p>Begins forming at clump stage {{ bluePhase.elementDefinitions[$index].requiredStage }}.</p>
+        </article>
+      }
     </div>
   </section>
 
