@@ -178,8 +178,8 @@ export class TimelineService {
       'blue-particle-beams',
       'Particle Beams',
       'First-time generator and upgrade purchases alternate the active beam between Protons and Electrons.',
-      HoldingRecord.greenParticles,
-      new Num(1, 1000)
+      HoldingRecord.bluePrestiges,
+      Num.ONE
     )
     .addMilestone(MilestoneRecord.stableParticleBeam)
     .addMilestone(MilestoneRecord.denseParticleCollision)

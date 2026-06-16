@@ -10,6 +10,7 @@ import {Multiplier} from '../classes/features/multiplier';
 import {Automator} from '../classes/features/automator';
 import {PrestigeLayersService} from './prestige-layers.service';
 import {ChargerRecord} from '../classes/records/charger/charger-record';
+import {LithiumHolding} from '../classes/features/holdings/blue-holdings';
 
 describe('BluePhaseService', () => {
   let service: BluePhaseService;
@@ -46,6 +47,13 @@ describe('BluePhaseService', () => {
     service.berylliumRockets = Num.ZERO.copy();
     service.berylliumFuelSystems = Num.ZERO.copy();
     service.berylliumLogicSystems = Num.ZERO.copy();
+    service.lithiumBatteryTier = Num.ZERO.copy();
+    service.lithiumCharge = Num.ZERO.copy();
+    service.lithiumBatteries = Num.ZERO.copy();
+    service.lithiumChargeGenerators = Num.ZERO.copy();
+    service.lithiumCapacityUpgrades = Num.ZERO.copy();
+    LithiumHolding.batteryTier = Num.ZERO.copy();
+    LithiumHolding.batteryCharge = Num.ZERO.copy();
     service.synchronizePurchases();
   });
 
@@ -80,6 +88,13 @@ describe('BluePhaseService', () => {
     service.berylliumRockets = Num.ZERO.copy();
     service.berylliumFuelSystems = Num.ZERO.copy();
     service.berylliumLogicSystems = Num.ZERO.copy();
+    service.lithiumBatteryTier = Num.ZERO.copy();
+    service.lithiumCharge = Num.ZERO.copy();
+    service.lithiumBatteries = Num.ZERO.copy();
+    service.lithiumChargeGenerators = Num.ZERO.copy();
+    service.lithiumCapacityUpgrades = Num.ZERO.copy();
+    LithiumHolding.batteryTier = Num.ZERO.copy();
+    LithiumHolding.batteryCharge = Num.ZERO.copy();
   });
 
   it('does not automatically enter Blue when the unlock threshold is reached', () => {
@@ -102,7 +117,7 @@ describe('BluePhaseService', () => {
     expect(service.activeParticle).toBe('protons');
   });
 
-  it('starts generating protons immediately and alternates the active particle on first generator and upgrade purchases', () => {
+  it('starts generating protons immediately and alternates the active particle on every generator and upgrade purchase', () => {
     service.unlockFromPrestige();
     service.tick(Num.ONE);
     expect(HoldingRecord.protons.amount.toNumber()).toBeGreaterThan(0);
@@ -111,11 +126,42 @@ describe('BluePhaseService', () => {
     service.tick(Num.ZERO);
     expect(service.activeParticle).toBe('electrons');
 
-    GeneratorRecord.firstRedGenerator.multiplierUpgrade.bought = Num.ONE.copy();
+    GeneratorRecord.firstRedGenerator.bought = Num.TWO.copy();
     service.tick(Num.ZERO);
     expect(service.activeParticle).toBe('protons');
 
+    GeneratorRecord.firstRedGenerator.multiplierUpgrade.bought = Num.ONE.copy();
     service.tick(Num.ZERO);
+    expect(service.activeParticle).toBe('electrons');
+
+    service.tick(Num.ZERO);
+    expect(service.activeParticle).toBe('electrons');
+  });
+
+  it('alternates the active particle on successful blue element purchases', () => {
+    service.unlockFromPrestige();
+    HoldingRecord.neutronClump.amount = new Num(1, 2);
+    HoldingRecord.lithium.amount = new Num(1, 3);
+    HoldingRecord.protons.amount = new Num(1, 3);
+    HoldingRecord.electrons.amount = new Num(1, 3);
+    HoldingRecord.beryllium.amount = new Num(1, 3);
+
+    service.buyLithiumBattery();
+    expect(service.activeParticle).toBe('electrons');
+
+    service.buyLithiumCapacityUpgrade();
+    expect(service.activeParticle).toBe('protons');
+
+    service.buyLithiumChargeGenerator();
+    expect(service.activeParticle).toBe('electrons');
+
+    service.buyBerylliumRocket();
+    expect(service.activeParticle).toBe('protons');
+
+    service.buyBerylliumFuel();
+    expect(service.activeParticle).toBe('electrons');
+
+    service.buyBerylliumLogic();
     expect(service.activeParticle).toBe('protons');
   });
 
@@ -211,6 +257,7 @@ describe('BluePhaseService', () => {
   });
 
   it('uses Beryllium rockets, Proton fuel, and Electron logic to boost red accelerators', () => {
+    HoldingRecord.neutronClump.amount = new Num(1, 2);
     HoldingRecord.beryllium.amount = new Num(2, 1);
     HoldingRecord.protons.amount = new Num(1, 2);
     HoldingRecord.electrons.amount = new Num(1, 2);
@@ -226,6 +273,18 @@ describe('BluePhaseService', () => {
     expect(HoldingRecord.beryllium.getEffect().toNumber()).toBeCloseTo(2.4375, 8);
   });
 
+  it('keeps Beryllium upgrades locked until Beryllium is unlocked', () => {
+    HoldingRecord.neutronClump.amount = new Num(1, 1);
+    HoldingRecord.beryllium.amount = new Num(1, 3);
+    HoldingRecord.protons.amount = new Num(1, 3);
+    HoldingRecord.electrons.amount = new Num(1, 3);
+
+    expect(service.isBerylliumUnlocked()).toBeFalse();
+    expect(service.canBuyBerylliumRocket()).toBeFalse();
+    expect(service.canBuyBerylliumFuel()).toBeFalse();
+    expect(service.canBuyBerylliumLogic()).toBeFalse();
+  });
+
 
   it('boosts red generators with lithium battery charge but not raw Lithium', () => {
     HoldingRecord.lithium.amount = new Num(1, 6);
@@ -238,6 +297,45 @@ describe('BluePhaseService', () => {
     service.tick(Num.ONE);
 
     expect(HoldingRecord.lithium.getEffect().toNumber()).toBeGreaterThan(1);
+  });
+
+  it('discharges charged lithium batteries into tiers and resets only lithium battery progress', () => {
+    HoldingRecord.neutronClump.amount = new Num(1, 1);
+    HoldingRecord.lithium.amount = new Num(4, 2);
+    HoldingRecord.protons.amount = new Num(7, 0);
+    HoldingRecord.electrons.amount = new Num(8, 0);
+    HoldingRecord.beryllium.amount = new Num(9, 0);
+    service.lithiumBatteries = new Num(1, 3);
+    service.lithiumChargeGenerators = new Num(3, 0);
+    service.lithiumCapacityUpgrades = new Num(20, 0);
+    service.lithiumCharge = BluePhaseService.lithiumDischargeBaseCharge.copy();
+
+    expect(service.canDischargeLithiumBattery()).toBeTrue();
+
+    service.dischargeLithiumBattery();
+
+    expect(service.lithiumBatteryTier.toNumber()).toBe(1);
+    expect(HoldingRecord.lithium.amount.equals(Num.ZERO)).toBeTrue();
+    expect(service.lithiumBatteries.equals(Num.ZERO)).toBeTrue();
+    expect(service.lithiumChargeGenerators.equals(Num.ZERO)).toBeTrue();
+    expect(service.lithiumCapacityUpgrades.equals(Num.ZERO)).toBeTrue();
+    expect(service.lithiumCharge.equals(Num.ZERO)).toBeTrue();
+    expect(HoldingRecord.protons.amount.toNumber()).toBe(7);
+    expect(HoldingRecord.electrons.amount.toNumber()).toBe(8);
+    expect(HoldingRecord.beryllium.amount.toNumber()).toBe(9);
+    expect(service.getLithiumDischargeThreshold().toNumber()).toBe(200000);
+  });
+
+  it('increases lithium red generator boost from battery tiers', () => {
+    const baseEffect = HoldingRecord.lithium.getEffect();
+    service.lithiumBatteries = new Num(1, 3);
+    service.lithiumCharge = BluePhaseService.lithiumDischargeBaseCharge.copy();
+
+    service.dischargeLithiumBattery();
+    service.tick(Num.ZERO);
+
+    expect(service.getLithiumBatteryTierEffect().toNumber()).toBe(2);
+    expect(HoldingRecord.lithium.getEffect().toNumber()).toBeGreaterThan(baseEffect.toNumber());
   });
 
   it('starts the neutron meltdown at ^0.001 and fully restores at 10,000 neutron matter', () => {

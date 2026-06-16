@@ -37,6 +37,7 @@ export class MultiplierRecord {
 
   // Blue Phase
   static blueParticleGain: Multiplier = new Multiplier('blueParticleGain', new Num(1, 0), 50, true);
+  static bluePrestigeGain: Multiplier = new Multiplier('bluePrestigeGain', new Num(1, 0), 50, true);
   static blueParticleIdleGeneration: Multiplier = new Multiplier('blueParticleIdleGeneration', new Num(0, 0), 50, true);
   static protonRedGeneratorUpgradeBuffer: Multiplier = new Multiplier('protonRedGeneratorUpgradeBuffer', Num.ONE, 1150, true);
   static protonYellowGeneratorUpgradeBuffer: Multiplier = new Multiplier('protonYellowGeneratorUpgradeBuffer', Num.ONE, 1150, true);
@@ -83,6 +84,7 @@ export class MultiplierRecord {
 
     // Blue Phase
     MultiplierRecord.blueParticleGain,
+    MultiplierRecord.bluePrestigeGain,
     MultiplierRecord.blueParticleIdleGeneration,
     MultiplierRecord.protonRedGeneratorUpgradeBuffer,
     MultiplierRecord.protonYellowGeneratorUpgradeBuffer,

@@ -73,7 +73,7 @@
     }
   </div>
 
-  <section *ngIf="selectedElement.holding.name === 'lithium'" class="lithium-lab">
+  <section *ngIf="selectedElement.holding.name === 'lithium' && bluePhase.isLithiumUnlocked()" class="lithium-lab">
     <div class="section-heading">
       <div>
         <p class="eyebrow">LITHIUM-ION ARRAY</p>
@@ -97,17 +97,40 @@
           <span [style.width.%]="getLithiumChargePercent()"></span>
         </div>
         <p>Battery red generator multiplier: {{ getLithiumRedMultiplier().toString(3) }}x</p>
+        <div class="discharge-panel">
+          <span>BATTERY TIER</span>
+          <strong>{{ bluePhase.lithiumBatteryTier.toString() }} // {{ bluePhase.getLithiumBatteryTierEffect().toString(2) }}x</strong>
+          <p>Next discharge: {{ bluePhase.getLithiumDischargeThreshold().toString() }} stored charge</p>
+          <button type="button" class="discharge-button" [disabled]="!bluePhase.canDischargeLithiumBattery()" (click)="bluePhase.dischargeLithiumBattery()">
+            DISCHARGE BATTERIES
+          </button>
+        </div>
       </div>
     </div>
 
     <div class="battery-grid">
-      <article class="battery-card"><span>Batteries</span><strong>{{ bluePhase.lithiumBatteries.toString() }}</strong><button (click)="bluePhase.buyLithiumBattery()" [disabled]="!bluePhase.canBuyLithiumBattery()">Buy for {{ bluePhase.getLithiumBatteryCost().toString() }} Lithium</button></article>
-      <article class="battery-card"><span>Chargers</span><strong>{{ bluePhase.lithiumChargeGenerators.toString() }}</strong><button (click)="bluePhase.buyLithiumChargeGenerator()" [disabled]="!bluePhase.canBuyLithiumChargeGenerator()">Buy for {{ bluePhase.getLithiumChargeGeneratorCost().toString() }} Electrons</button></article>
-      <article class="battery-card"><span>Capacity Level</span><strong>{{ bluePhase.lithiumCapacityUpgrades.toString() }}</strong><button (click)="bluePhase.buyLithiumCapacityUpgrade()" [disabled]="!bluePhase.canBuyLithiumCapacityUpgrade()">Upgrade for {{ bluePhase.getLithiumCapacityCost().toString() }} Protons</button></article>
+      <article class="battery-card">
+        <span>Batteries</span>
+        <strong>{{ bluePhase.lithiumBatteries.toString() }}</strong>
+        <p class="resource-balance">{{ lithium.amount.toString(3) }} Lithium</p>
+        <button (click)="bluePhase.buyLithiumBattery()" [disabled]="!bluePhase.canBuyLithiumBattery()">Buy for {{ bluePhase.getLithiumBatteryCost().toString() }} Lithium</button>
+      </article>
+      <article class="battery-card">
+        <span>Chargers</span>
+        <strong>{{ bluePhase.lithiumChargeGenerators.toString() }}</strong>
+        <p class="resource-balance">{{ electrons.amount.toString(3) }} Electrons</p>
+        <button (click)="bluePhase.buyLithiumChargeGenerator()" [disabled]="!bluePhase.canBuyLithiumChargeGenerator()">Buy for {{ bluePhase.getLithiumChargeGeneratorCost().toString() }} Electrons</button>
+      </article>
+      <article class="battery-card">
+        <span>Capacity Level</span>
+        <strong>{{ bluePhase.lithiumCapacityUpgrades.toString() }}</strong>
+        <p class="resource-balance">{{ protons.amount.toString(3) }} Protons</p>
+        <button (click)="bluePhase.buyLithiumCapacityUpgrade()" [disabled]="!bluePhase.canBuyLithiumCapacityUpgrade()">Upgrade for {{ bluePhase.getLithiumCapacityCost().toString() }} Protons</button>
+      </article>
     </div>
   </section>
 
-  <section *ngIf="selectedElement.holding.name === 'beryllium'" class="beryllium-lab">
+  <section *ngIf="selectedElement.holding.name === 'beryllium' && bluePhase.isBerylliumUnlocked()" class="beryllium-lab">
     <div class="section-heading">
       <div>
         <p class="eyebrow">BERYLLIUM ROCKET HANGAR</p>
@@ -118,12 +141,14 @@
 
     <div class="rocket-showcase">
       <div class="rocket-visual" aria-hidden="true">
-        <div class="rocket-stars"><span></span><span></span><span></span></div>
-        <div class="rocket-body">
-          <span class="rocket-window"></span>
-          <i class="rocket-fin left"></i>
-          <i class="rocket-fin right"></i>
-          <em class="rocket-flame"></em>
+        <div class="rocket-shell">
+          <div class="rocket-stars"><span></span><span></span><span></span></div>
+          <div class="rocket-body">
+            <span class="rocket-window"></span>
+            <i class="rocket-fin left"></i>
+            <i class="rocket-fin right"></i>
+            <em class="rocket-flame"></em>
+          </div>
         </div>
         <div class="fuel-source">
           <span>p+</span>

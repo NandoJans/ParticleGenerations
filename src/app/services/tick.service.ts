@@ -90,7 +90,6 @@ export class TickService {
         }
       });
     });
-    // HoldingRecord.yellowFusion.amount = new Num(1, 1000);
 
     this.prestigeLayersService.tick(speed);
     this.challengeService.tick();

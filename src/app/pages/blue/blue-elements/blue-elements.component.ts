@@ -13,6 +13,9 @@ import {Num} from '../../../num';
 export class BlueElementsComponent {
   neutrons: Holding = HoldingRecord.neutrons;
   neutronClump: Holding = HoldingRecord.neutronClump;
+  lithium: Holding = HoldingRecord.lithium;
+  electrons: Holding = HoldingRecord.electrons;
+  protons: Holding = HoldingRecord.protons;
   selectedElementIndex = 0;
   private touchStartX: number | null = null;
 

@@ -124,6 +124,7 @@ export class NeutronClumpHolding extends BlueHolding {
 
 export class LithiumHolding extends BlueHolding {
   static batteryCharge: Num = Num.ZERO.copy();
+  static batteryTier: Num = Num.ZERO.copy();
   name = 'lithium';
   displayName = 'Lithium';
   abbreviation = 'Li';
@@ -132,6 +133,7 @@ export class LithiumHolding extends BlueHolding {
     .withAmountPrefix('The neutron clump has forged')
     .withAmountSuffix(' Lithium')
     .withEffectPrefix('The battery charge multiplies red particle generators by')
+    .addLine('Battery tier multiplier: ', () => this.getBatteryTierEffect().toString(2) + 'x', '')
     .addLine('Forged Lithium multiplies nucleus generators by', () => this.nucleusEffect.toString(2) + 'x', '')
     .build();
 
@@ -150,7 +152,12 @@ export class LithiumHolding extends BlueHolding {
   }
 
   getEffect(): Num {
-    return LithiumHolding.batteryCharge.pow(new Num(5, -1));
+    return LithiumHolding.batteryCharge.add(Num.ONE)
+      .pow(this.getBatteryTierEffect());
+  }
+
+  getBatteryTierEffect(): Num {
+    return Num.TWO.pow(LithiumHolding.batteryTier);
   }
 }
 

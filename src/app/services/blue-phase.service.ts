@@ -30,8 +30,9 @@ export class BluePhaseService {
   static readonly unlockRequirement = new Num(1, 1000);
   static readonly neutronRestorationTarget = new Num(1, 6);
   static readonly minimumMeltdownPower = new Num(1, -1);
+  static readonly lithiumDischargeBaseCharge = new Num(1, 1);
   private readonly storage = new LocalStorageHelper('blue-phase', 'state');
-  private purchaseStates: {[key: string]: boolean} = {};
+  private purchaseStates: {[key: string]: {mantissa: number, exponent: number} | boolean} = {};
   activeParticle: BlueParticleMode = 'none';
   unlocked = false;
 
@@ -39,6 +40,7 @@ export class BluePhaseService {
   lithiumChargeGenerators = Num.ZERO.copy();
   lithiumCapacityUpgrades = Num.ZERO.copy();
   lithiumCharge = Num.ZERO.copy();
+  lithiumBatteryTier = Num.ZERO.copy();
   berylliumRockets = Num.ZERO.copy();
   berylliumFuelSystems = Num.ZERO.copy();
   berylliumLogicSystems = Num.ZERO.copy();
@@ -66,7 +68,7 @@ export class BluePhaseService {
   tick(speed: Num): void {
     if (!this.isUnlocked()) return;
 
-    this.detectFirstPurchases();
+    this.detectPurchases();
     const generation = this.getParticleGeneration().mul(speed);
 
     if (this.activeParticle === 'protons') {
@@ -77,7 +79,7 @@ export class BluePhaseService {
 
     this.generateForgedElements(speed);
     this.generateLithiumCharge(speed);
-    LithiumHolding.batteryCharge = this.getLithiumTotalCharge();
+    this.syncLithiumBatteryState();
     BerylliumHolding.rocketBoost = this.getBerylliumRocketEffect();
   }
 
@@ -116,13 +118,13 @@ export class BluePhaseService {
     this.resetDarkStarChargers();
     this.startParticleGeneration();
     this.synchronizePurchases();
-    LithiumHolding.batteryCharge = this.getLithiumTotalCharge();
+    this.syncLithiumBatteryState();
     BerylliumHolding.rocketBoost = this.getBerylliumRocketEffect();
     this.applyNeutronMeltdown();
   }
 
   getParticleGeneration(): Num {
-    let generation = new Num(1, -3);
+    let generation = new Num(1, -2);
     generation = generation.mul(this.getRedParticleGenerationBoost());
     generation = generation.mul(MultiplierRecord.nucleusGeneration.getNum(false));
     // if (MilestoneRecord.denseParticleCollision.unlocked) generation = new Num(5, 0);
@@ -232,12 +234,14 @@ export class BluePhaseService {
       .mul(this.getBerylliumLogicEffect())
       .add(Num.ONE);
   }
-  canBuyBerylliumRocket(): boolean { return HoldingRecord.beryllium.amount.greq(this.getBerylliumRocketCost()); }
-  buyBerylliumRocket(): void { if (!this.canBuyBerylliumRocket()) return; HoldingRecord.beryllium.sub(this.getBerylliumRocketCost()); this.berylliumRockets = this.berylliumRockets.add(Num.ONE); BerylliumHolding.rocketBoost = this.getBerylliumRocketEffect(); }
-  canBuyBerylliumFuel(): boolean { return HoldingRecord.protons.amount.greq(this.getBerylliumFuelCost()); }
-  buyBerylliumFuel(): void { if (!this.canBuyBerylliumFuel()) return; HoldingRecord.protons.sub(this.getBerylliumFuelCost()); this.berylliumFuelSystems = this.berylliumFuelSystems.add(Num.ONE); BerylliumHolding.rocketBoost = this.getBerylliumRocketEffect(); }
-  canBuyBerylliumLogic(): boolean { return HoldingRecord.electrons.amount.greq(this.getBerylliumLogicCost()); }
-  buyBerylliumLogic(): void { if (!this.canBuyBerylliumLogic()) return; HoldingRecord.electrons.sub(this.getBerylliumLogicCost()); this.berylliumLogicSystems = this.berylliumLogicSystems.add(Num.ONE); BerylliumHolding.rocketBoost = this.getBerylliumRocketEffect(); }
+  isLithiumUnlocked(): boolean { return this.isElementUnlocked(this.elementDefinitions[0]); }
+  isBerylliumUnlocked(): boolean { return this.isElementUnlocked(this.elementDefinitions[1]); }
+  canBuyBerylliumRocket(): boolean { return this.isBerylliumUnlocked() && HoldingRecord.beryllium.amount.greq(this.getBerylliumRocketCost()); }
+  buyBerylliumRocket(): void { if (!this.canBuyBerylliumRocket()) return; HoldingRecord.beryllium.sub(this.getBerylliumRocketCost()); this.berylliumRockets = this.berylliumRockets.add(Num.ONE); this.toggleParticle(); BerylliumHolding.rocketBoost = this.getBerylliumRocketEffect(); }
+  canBuyBerylliumFuel(): boolean { return this.isBerylliumUnlocked() && HoldingRecord.protons.amount.greq(this.getBerylliumFuelCost()); }
+  buyBerylliumFuel(): void { if (!this.canBuyBerylliumFuel()) return; HoldingRecord.protons.sub(this.getBerylliumFuelCost()); this.berylliumFuelSystems = this.berylliumFuelSystems.add(Num.ONE); this.toggleParticle(); BerylliumHolding.rocketBoost = this.getBerylliumRocketEffect(); }
+  canBuyBerylliumLogic(): boolean { return this.isBerylliumUnlocked() && HoldingRecord.electrons.amount.greq(this.getBerylliumLogicCost()); }
+  buyBerylliumLogic(): void { if (!this.canBuyBerylliumLogic()) return; HoldingRecord.electrons.sub(this.getBerylliumLogicCost()); this.berylliumLogicSystems = this.berylliumLogicSystems.add(Num.ONE); this.toggleParticle(); BerylliumHolding.rocketBoost = this.getBerylliumRocketEffect(); }
 
   private generateForgedElements(speed: Num): void {
     const lithiumDefinition = this.elementDefinitions[0];
@@ -274,13 +278,27 @@ export class BluePhaseService {
   getLithiumBatteryCapacity(): Num { return new Num(1, 2).mul(new Num(1.6, 0).pow(this.lithiumCapacityUpgrades)); }
   getLithiumTotalCapacity(): Num { return this.lithiumBatteries.mul(this.getLithiumBatteryCapacity()); }
   getLithiumTotalCharge(): Num { return this.lithiumCharge.lt(this.getLithiumTotalCapacity()) ? this.lithiumCharge : this.getLithiumTotalCapacity(); }
+  getLithiumDischargeThreshold(): Num { return BluePhaseService.lithiumDischargeBaseCharge.pow(this.lithiumBatteryTier).mul(new Num(1, 4)); }
+  getLithiumBatteryTierEffect(): Num { return Num.TWO.pow(this.lithiumBatteryTier); }
+  canDischargeLithiumBattery(): boolean { return this.getLithiumTotalCharge().greq(this.getLithiumDischargeThreshold()); }
+  dischargeLithiumBattery(): void {
+    if (!this.canDischargeLithiumBattery()) return;
 
-  canBuyLithiumBattery(): boolean { return HoldingRecord.lithium.amount.greq(this.getLithiumBatteryCost()); }
-  buyLithiumBattery(): void { if (!this.canBuyLithiumBattery()) return; HoldingRecord.lithium.sub(this.getLithiumBatteryCost()); this.lithiumBatteries = this.lithiumBatteries.add(Num.ONE); }
-  canBuyLithiumChargeGenerator(): boolean { return HoldingRecord.electrons.amount.greq(this.getLithiumChargeGeneratorCost()); }
-  buyLithiumChargeGenerator(): void { if (!this.canBuyLithiumChargeGenerator()) return; HoldingRecord.electrons.sub(this.getLithiumChargeGeneratorCost()); this.lithiumChargeGenerators = this.lithiumChargeGenerators.add(Num.ONE); }
-  canBuyLithiumCapacityUpgrade(): boolean { return HoldingRecord.protons.amount.greq(this.getLithiumCapacityCost()); }
-  buyLithiumCapacityUpgrade(): void { if (!this.canBuyLithiumCapacityUpgrade()) return; HoldingRecord.protons.sub(this.getLithiumCapacityCost()); this.lithiumCapacityUpgrades = this.lithiumCapacityUpgrades.add(Num.ONE); }
+    this.lithiumBatteryTier = this.lithiumBatteryTier.add(Num.ONE);
+    HoldingRecord.lithium.amount = Num.ZERO.copy();
+    this.lithiumBatteries = Num.ZERO.copy();
+    this.lithiumChargeGenerators = Num.ZERO.copy();
+    this.lithiumCapacityUpgrades = Num.ZERO.copy();
+    this.lithiumCharge = Num.ZERO.copy();
+    this.syncLithiumBatteryState();
+  }
+
+  canBuyLithiumBattery(): boolean { return this.isLithiumUnlocked() && HoldingRecord.lithium.amount.greq(this.getLithiumBatteryCost()); }
+  buyLithiumBattery(): void { if (!this.canBuyLithiumBattery()) return; HoldingRecord.lithium.sub(this.getLithiumBatteryCost()); this.lithiumBatteries = this.lithiumBatteries.add(Num.ONE); this.toggleParticle(); }
+  canBuyLithiumChargeGenerator(): boolean { return this.isLithiumUnlocked() && HoldingRecord.electrons.amount.greq(this.getLithiumChargeGeneratorCost()); }
+  buyLithiumChargeGenerator(): void { if (!this.canBuyLithiumChargeGenerator()) return; HoldingRecord.electrons.sub(this.getLithiumChargeGeneratorCost()); this.lithiumChargeGenerators = this.lithiumChargeGenerators.add(Num.ONE); this.toggleParticle(); }
+  canBuyLithiumCapacityUpgrade(): boolean { return this.isLithiumUnlocked() && HoldingRecord.protons.amount.greq(this.getLithiumCapacityCost()); }
+  buyLithiumCapacityUpgrade(): void { if (!this.canBuyLithiumCapacityUpgrade()) return; HoldingRecord.protons.sub(this.getLithiumCapacityCost()); this.lithiumCapacityUpgrades = this.lithiumCapacityUpgrades.add(Num.ONE); this.toggleParticle(); }
 
   private generateLithiumCharge(speed: Num): void {
     if (this.lithiumChargeGenerators.lt(Num.ONE) || this.lithiumBatteries.lt(Num.ONE)) return;
@@ -288,6 +306,11 @@ export class BluePhaseService {
     this.lithiumCharge = this.lithiumCharge.add(gain);
     const capacity = this.getLithiumTotalCapacity();
     if (this.lithiumCharge.gt(capacity)) this.lithiumCharge = capacity.copy();
+  }
+
+  private syncLithiumBatteryState(): void {
+    LithiumHolding.batteryCharge = this.getLithiumTotalCharge();
+    LithiumHolding.batteryTier = this.lithiumBatteryTier.copy();
   }
 
   private getBuyables(): {key: string, buyable: Buyable}[] {
@@ -311,14 +334,25 @@ export class BluePhaseService {
     return entries;
   }
 
-  private detectFirstPurchases(): void {
+  private detectPurchases(): void {
     this.getBuyables().forEach(({key, buyable}) => {
-      const bought = buyable.hasBought();
-      if (bought && !this.purchaseStates[key]) {
+      const bought = buyable.bought;
+      if (bought.gt(this.getStoredPurchaseCount(key))) {
         this.toggleParticle();
       }
-      this.purchaseStates[key] = bought;
+      this.setPurchaseState(key, bought);
     });
+  }
+
+  private getStoredPurchaseCount(key: string): Num {
+    const stored = this.purchaseStates[key];
+    if (stored === true) return Num.ONE.copy();
+    if (!stored) return Num.ZERO.copy();
+    return Num.fromStorage(stored);
+  }
+
+  private setPurchaseState(key: string, bought: Num): void {
+    this.purchaseStates[key] = bought.saveData();
   }
 
   private toggleParticle(): void {
@@ -339,7 +373,7 @@ export class BluePhaseService {
   synchronizePurchases(): void {
     this.purchaseStates = {};
     this.getBuyables().forEach(({key, buyable}) => {
-      this.purchaseStates[key] = buyable.hasBought();
+      this.setPurchaseState(key, buyable.bought);
     });
   }
 
@@ -351,6 +385,7 @@ export class BluePhaseService {
     this.storage.saveNum(this.lithiumChargeGenerators, 'lithiumChargeGenerators');
     this.storage.saveNum(this.lithiumCapacityUpgrades, 'lithiumCapacityUpgrades');
     this.storage.saveNum(this.lithiumCharge, 'lithiumCharge');
+    this.storage.saveNum(this.lithiumBatteryTier, 'lithiumBatteryTier');
     this.storage.saveNum(this.berylliumRockets, 'berylliumRockets');
     this.storage.saveNum(this.berylliumFuelSystems, 'berylliumFuelSystems');
     this.storage.saveNum(this.berylliumLogicSystems, 'berylliumLogicSystems');
@@ -364,18 +399,19 @@ export class BluePhaseService {
     this.lithiumChargeGenerators = this.storage.loadNum(this.lithiumChargeGenerators, 'lithiumChargeGenerators');
     this.lithiumCapacityUpgrades = this.storage.loadNum(this.lithiumCapacityUpgrades, 'lithiumCapacityUpgrades');
     this.lithiumCharge = this.storage.loadNum(this.lithiumCharge, 'lithiumCharge');
+    this.lithiumBatteryTier = this.storage.loadNum(this.lithiumBatteryTier, 'lithiumBatteryTier');
     this.berylliumRockets = this.storage.loadNum(this.berylliumRockets, 'berylliumRockets');
     this.berylliumFuelSystems = this.storage.loadNum(this.berylliumFuelSystems, 'berylliumFuelSystems');
     this.berylliumLogicSystems = this.storage.loadNum(this.berylliumLogicSystems, 'berylliumLogicSystems');
     this.synchronizePurchases();
-    LithiumHolding.batteryCharge = this.getLithiumTotalCharge();
+    this.syncLithiumBatteryState();
     BerylliumHolding.rocketBoost = this.getBerylliumRocketEffect();
     this.applyNeutronMeltdown();
   }
 
   init(): void {
     this.synchronizePurchases();
-    LithiumHolding.batteryCharge = this.getLithiumTotalCharge();
+    this.syncLithiumBatteryState();
     BerylliumHolding.rocketBoost = this.getBerylliumRocketEffect();
     this.applyNeutronMeltdown();
   }

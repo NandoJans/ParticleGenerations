@@ -79,7 +79,7 @@ export class NavigationsService {
       {requirement: HoldingRecord.greenParticles, amount: new Num(1, 1000)},
     ], false),
     blueElements: new SubNavigation('blueElements', faMountain, 'elements', this.navigations['blue'], [
-      {requirement: HoldingRecord.neutronClump, amount: new Num(1, 1)},
+      {requirement: HoldingRecord.bluePrestiges, amount: Num.ONE},
     ], false),
 
     // Automators

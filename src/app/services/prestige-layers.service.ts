@@ -92,6 +92,12 @@ export class PrestigeLayersService {
         gainMultiplier: MultiplierRecord.blueParticleGain,
         idleGeneration: true
       },
+      {
+        holding: HoldingRecord.bluePrestiges,
+        basedOnRequiredHolding: false,
+        gainMultiplier: MultiplierRecord.bluePrestigeGain,
+        idleGeneration: false
+      },
     ],
     ResetKey.BLUE,
     ResetKey.PURPLE,

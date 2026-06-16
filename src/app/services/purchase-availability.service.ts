@@ -6,13 +6,20 @@ import {SubNavigation} from '../classes/features/sub-navigation';
 import {ChallengeRecord} from '../classes/records/challenges/challenge-record';
 import {GeneratorRecord} from '../classes/records/generators/generator-record';
 import {UpgradeRecord} from '../classes/records/upgrades/upgrade-record';
+import {BluePhaseService} from './blue-phase.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PurchaseAvailabilityService {
+  constructor(private bluePhaseService: BluePhaseService) {}
+
   hasAvailablePurchase(subNavigation: SubNavigation): boolean {
     if (!subNavigation.isUnlocked()) return false;
+
+    if (`${subNavigation.parent.location}/${subNavigation.location}` === 'blue/elements') {
+      return this.hasAvailableBlueElementPurchase();
+    }
 
     return this.getBuyables(subNavigation).some(buyable =>
       buyable.isUnlocked()
@@ -111,5 +118,15 @@ export class PurchaseAvailabilityService {
 
   private withGeneratorUpgrades(generators: Generator[]): Buyable[] {
     return generators.flatMap(generator => [generator, ...generator.getUpgrades()]);
+  }
+
+  private hasAvailableBlueElementPurchase(): boolean {
+    return this.bluePhaseService.canBuyLithiumBattery()
+      || this.bluePhaseService.canBuyLithiumChargeGenerator()
+      || this.bluePhaseService.canBuyLithiumCapacityUpgrade()
+      || this.bluePhaseService.canDischargeLithiumBattery()
+      || this.bluePhaseService.canBuyBerylliumRocket()
+      || this.bluePhaseService.canBuyBerylliumFuel()
+      || this.bluePhaseService.canBuyBerylliumLogic();
   }
 }

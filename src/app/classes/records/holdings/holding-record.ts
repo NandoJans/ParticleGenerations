@@ -29,6 +29,7 @@ import {
   ProtonHolding
 } from "../../features/holdings/blue-holdings";
 import {BlueParticleHolding} from "../../features/holdings/blue-particle-holding";
+import {BluePrestigeHolding} from "../../features/holdings/blue-prestige-holding";
 
 @Injectable({
   providedIn: 'root'
@@ -60,6 +61,7 @@ export class HoldingRecord {
 
   // Blue Phase
   static blueParticles: BlueParticleHolding = new BlueParticleHolding();
+  static bluePrestiges: BluePrestigeHolding = new BluePrestigeHolding();
   static protons: ProtonHolding = new ProtonHolding();
   static electrons: ElectronHolding = new ElectronHolding();
   static neutrons: NeutronHolding = new NeutronHolding();
@@ -93,6 +95,7 @@ export class HoldingRecord {
       HoldingRecord.greenKeys,
 
       HoldingRecord.blueParticles,
+      HoldingRecord.bluePrestiges,
       HoldingRecord.protons,
       HoldingRecord.electrons,
       HoldingRecord.neutrons,
