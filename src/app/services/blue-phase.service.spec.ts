@@ -9,6 +9,7 @@ import {Num} from '../num';
 import {Multiplier} from '../classes/features/multiplier';
 import {Automator} from '../classes/features/automator';
 import {PrestigeLayersService} from './prestige-layers.service';
+import {ChargerRecord} from '../classes/records/charger/charger-record';
 
 describe('BluePhaseService', () => {
   let service: BluePhaseService;
@@ -80,20 +81,24 @@ describe('BluePhaseService', () => {
     service.unlockFromPrestige();
 
     expect(service.unlocked).toBeTrue();
-    expect(service.activeParticle).toBe('none');
+    expect(service.activeParticle).toBe('protons');
   });
 
-  it('alternates the active particle on first generator and upgrade purchases', () => {
+  it('starts generating protons immediately and alternates the active particle on first generator and upgrade purchases', () => {
+    service.unlockFromPrestige();
+    service.tick(Num.ONE);
+    expect(HoldingRecord.protons.amount.toNumber()).toBeGreaterThan(0);
+
     GeneratorRecord.firstRedGenerator.bought = Num.ONE.copy();
     service.tick(Num.ZERO);
-    expect(service.activeParticle).toBe('protons');
+    expect(service.activeParticle).toBe('electrons');
 
     GeneratorRecord.firstRedGenerator.multiplierUpgrade.bought = Num.ONE.copy();
     service.tick(Num.ZERO);
-    expect(service.activeParticle).toBe('electrons');
+    expect(service.activeParticle).toBe('protons');
 
     service.tick(Num.ZERO);
-    expect(service.activeParticle).toBe('electrons');
+    expect(service.activeParticle).toBe('protons');
   });
 
   it('collides matched pairs into persistent neutrons', () => {
@@ -105,7 +110,23 @@ describe('BluePhaseService', () => {
 
     expect(ResetHelper.reset).toHaveBeenCalledWith(ResetKey.BLUE);
     expect(HoldingRecord.neutrons.amount.toNumber()).toBe(5);
-    expect(service.activeParticle).toBe('none');
+    expect(service.activeParticle).toBe('protons');
+  });
+
+  it('resets dark star chargers when Blue is unlocked from prestige', () => {
+    const charger = ChargerRecord.redGeneratorDarkCharger;
+    charger.unlocked = true;
+    charger.charge = new Num(5, 0);
+    charger.tier = new Num(3, 0);
+    charger.highestTier = new Num(3, 0);
+    charger.startCharging();
+
+    service.unlockFromPrestige();
+
+    expect(charger.charge.equals(charger.startCharge)).toBeTrue();
+    expect(charger.tier.equals(charger.startTier)).toBeTrue();
+    expect(charger.highestTier.equals(charger.startTier)).toBeTrue();
+    expect(charger.isUnlocked()).toBeFalse();
   });
 
   it('uses Blue Particles for Blue Particle research upgrades', () => {
