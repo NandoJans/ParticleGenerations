@@ -108,7 +108,8 @@ export class BluePhaseService {
   }
 
   getParticleGeneration(): Num {
-    let generation = new Num(1, -2);
+    let generation = new Num(1, -3);
+    generation = generation.mul(this.getRedParticleGenerationBoost());
     generation = generation.mul(MultiplierRecord.nucleusGeneration.getNum(false));
     // if (MilestoneRecord.denseParticleCollision.unlocked) generation = new Num(5, 0);
     return generation.mul(
@@ -116,6 +117,10 @@ export class BluePhaseService {
     ).mul(
       UpgradeRecord.blueParticleResonance.buffer.pow(UpgradeRecord.blueParticleResonance.amount)
     );
+  }
+
+  getRedParticleGenerationBoost(): Num {
+    return HoldingRecord.redParticles.amount.log10().max(Num.ONE);
   }
 
   getCollisionGain(): Num {
