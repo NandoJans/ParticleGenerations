@@ -150,7 +150,7 @@ export class LithiumHolding extends BlueHolding {
   }
 
   getEffect(): Num {
-    return LithiumHolding.batteryCharge.add(Num.ONE).log10().add(Num.ONE);
+    return LithiumHolding.batteryCharge.pow(new Num(5, -1));
   }
 }
 
