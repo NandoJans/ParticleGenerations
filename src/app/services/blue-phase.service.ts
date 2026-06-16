@@ -25,7 +25,7 @@ export interface BlueElementDefinition {
 })
 export class BluePhaseService {
   static readonly unlockRequirement = new Num(1, 1000);
-  static readonly neutronRestorationTarget = new Num(1, 4);
+  static readonly neutronRestorationTarget = new Num(1, 6);
   static readonly minimumMeltdownPower = new Num(1, -1);
   private readonly storage = new LocalStorageHelper('blue-phase', 'state');
   private purchaseStates: {[key: string]: boolean} = {};
@@ -133,7 +133,7 @@ export class BluePhaseService {
     ).mul(
       UpgradeRecord.blueCollisionCalibration.buffer.pow(UpgradeRecord.blueCollisionCalibration.amount)
     );
-    return pairs.pow(new Num(5, -1))
+    return pairs.pow(new Num(2.5, -1))
       .sub(Num.ONE)
       .max(Num.ZERO)
       .floor()
