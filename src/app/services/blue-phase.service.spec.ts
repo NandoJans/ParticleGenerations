@@ -29,6 +29,7 @@ describe('BluePhaseService', () => {
     HoldingRecord.carbon.amount = Num.ZERO.copy();
     HoldingRecord.nitrogen.amount = Num.ZERO.copy();
     HoldingRecord.greenParticles.amount = Num.ZERO.copy();
+    HoldingRecord.redParticles.amount = Num.ONE.copy();
 
     GeneratorRecord.firstRedGenerator.bought = Num.ZERO.copy();
     GeneratorRecord.firstRedGenerator.multiplierUpgrade.bought = Num.ZERO.copy();
@@ -62,6 +63,7 @@ describe('BluePhaseService', () => {
     HoldingRecord.carbon.amount = Num.ZERO.copy();
     HoldingRecord.nitrogen.amount = Num.ZERO.copy();
     HoldingRecord.greenParticles.amount = Num.ZERO.copy();
+    HoldingRecord.redParticles.amount = Num.ONE.copy();
     GeneratorRecord.firstRedGenerator.bought = Num.ZERO.copy();
     GeneratorRecord.firstRedGenerator.multiplierUpgrade.bought = Num.ZERO.copy();
     UpgradeRecord.blueBeamIntensity.amount = Num.ZERO.copy();
@@ -145,13 +147,23 @@ describe('BluePhaseService', () => {
     expect(UpgradeRecord.blueBeamIntensity.currency).toBe(HoldingRecord.neutrons);
   });
 
+  it('boosts beam generation by red particle orders of magnitude from a lower base rate', () => {
+    expect(service.getParticleGeneration().toNumber()).toBeCloseTo(0.001, 8);
+
+    HoldingRecord.redParticles.amount = new Num(1, 6);
+
+    expect(service.getRedParticleGenerationBoost().toNumber()).toBe(6);
+    expect(service.getParticleGeneration().toNumber()).toBeCloseTo(0.006, 8);
+  });
+
   it('applies Blue Particle research to beam generation and collision gain', () => {
     UpgradeRecord.blueParticleResonance.amount = Num.ONE.copy();
     UpgradeRecord.blueCollisionCalibration.amount = Num.ONE.copy();
+    HoldingRecord.redParticles.amount = new Num(1, 3);
     HoldingRecord.protons.amount = new Num(8, 0);
     HoldingRecord.electrons.amount = new Num(5, 0);
 
-    expect(service.getParticleGeneration().toNumber()).toBeCloseTo(0.03, 8);
+    expect(service.getParticleGeneration().toNumber()).toBeCloseTo(0.009, 8);
     expect(service.getCollisionGain().toNumber()).toBe(2);
   });
 
