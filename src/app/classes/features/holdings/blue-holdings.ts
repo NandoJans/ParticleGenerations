@@ -139,7 +139,7 @@ export class LithiumHolding extends BlueHolding {
   override action(): Num {
     const effect = this.getEffect();
     MultiplierRecord.redParticleGenerators.correct(effect);
-    this.nucleusEffect = this.amount.add(Num.ONE).log10();
+    this.nucleusEffect = this.amount.log10().add(Num.ONE);
     MultiplierRecord.nucleusGeneration.correct(this.nucleusEffect);
     return effect;
   }
