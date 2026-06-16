@@ -110,24 +110,55 @@
   <section *ngIf="selectedElement.holding.name === 'beryllium'" class="beryllium-lab">
     <div class="section-heading">
       <div>
-        <p class="eyebrow">BERYLLIUM REACTOR ARRAY</p>
-        <h2>Moderator & Reflector Systems</h2>
+        <p class="eyebrow">BERYLLIUM ROCKET HANGAR</p>
+        <h2>Accelerator Rocket Program</h2>
       </div>
-      <p>Beryllium compresses 10 Lithium into 1 Beryllium, then uses neutron moderation and reflection to stabilize the forge and recover more collision neutrons.</p>
+      <p>Beryllium builds rocket frames, Protons refine fuel, and Electrons assemble guidance logic. Completed rockets boost red accelerator generation.</p>
+    </div>
+
+    <div class="rocket-showcase">
+      <div class="rocket-visual" aria-hidden="true">
+        <div class="rocket-stars"><span></span><span></span><span></span></div>
+        <div class="rocket-body">
+          <span class="rocket-window"></span>
+          <i class="rocket-fin left"></i>
+          <i class="rocket-fin right"></i>
+          <em class="rocket-flame"></em>
+        </div>
+        <div class="fuel-source">
+          <span>p+</span>
+          <strong>FUEL</strong>
+        </div>
+        <div class="logic-source">
+          <span>e-</span>
+          <strong>LOGIC</strong>
+        </div>
+      </div>
+      <div class="charge-panel">
+        <span>ROCKET THRUST</span>
+        <strong>{{ bluePhase.getBerylliumRocketEffect().toString(3) }}x</strong>
+        <p>Rockets multiply red accelerator generation. Fuel systems multiply rocket thrust by {{ bluePhase.getBerylliumFuelEffect().toString(2) }}x, while guidance logic multiplies it by {{ bluePhase.getBerylliumLogicEffect().toString(2) }}x.</p>
+      </div>
     </div>
 
     <div class="battery-grid">
       <article class="battery-card">
-        <span>Moderators</span>
-        <strong>{{ bluePhase.berylliumModerators.toString() }}</strong>
-        <p>Lithium forge speed: {{ bluePhase.getBerylliumModeratorEffect().toString(2) }}x</p>
-        <button (click)="bluePhase.buyBerylliumModerator()" [disabled]="!bluePhase.canBuyBerylliumModerator()">Buy for {{ bluePhase.getBerylliumModeratorCost().toString() }} Beryllium</button>
+        <span>Rocket Frames</span>
+        <strong>{{ bluePhase.berylliumRockets.toString() }}</strong>
+        <p>Beryllium hulls ready for accelerator launches.</p>
+        <button (click)="bluePhase.buyBerylliumRocket()" [disabled]="!bluePhase.canBuyBerylliumRocket()">Build for {{ bluePhase.getBerylliumRocketCost().toString() }} Beryllium</button>
       </article>
       <article class="battery-card">
-        <span>Reflectors</span>
-        <strong>{{ bluePhase.berylliumReflectors.toString() }}</strong>
-        <p>Collision neutron gain: {{ bluePhase.getBerylliumReflectorEffect().toString(2) }}x</p>
-        <button (click)="bluePhase.buyBerylliumReflector()" [disabled]="!bluePhase.canBuyBerylliumReflector()">Buy for {{ bluePhase.getBerylliumReflectorCost().toString() }} Beryllium</button>
+        <span>Fuel Systems</span>
+        <strong>{{ bluePhase.berylliumFuelSystems.toString() }}</strong>
+        <p>Fuel thrust: {{ bluePhase.getBerylliumFuelEffect().toString(2) }}x</p>
+        <button (click)="bluePhase.buyBerylliumFuel()" [disabled]="!bluePhase.canBuyBerylliumFuel()">Refine for {{ bluePhase.getBerylliumFuelCost().toString() }} Protons</button>
+      </article>
+      <article class="battery-card">
+        <span>Logic Systems</span>
+        <strong>{{ bluePhase.berylliumLogicSystems.toString() }}</strong>
+        <p>Guidance logic: {{ bluePhase.getBerylliumLogicEffect().toString(2) }}x</p>
+        <button (click)="bluePhase.buyBerylliumLogic()" [disabled]="!bluePhase.canBuyBerylliumLogic()">Assemble for {{ bluePhase.getBerylliumLogicCost().toString() }} Electrons</button>
       </article>
     </div>
   </section>

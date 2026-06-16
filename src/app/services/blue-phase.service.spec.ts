@@ -43,8 +43,9 @@ describe('BluePhaseService', () => {
     UpgradeRecord.blueCollisionCalibration.bought = Num.ZERO.copy();
     MilestoneRecord.stableParticleBeam.unlocked = false;
     MilestoneRecord.denseParticleCollision.unlocked = false;
-    service.berylliumModerators = Num.ZERO.copy();
-    service.berylliumReflectors = Num.ZERO.copy();
+    service.berylliumRockets = Num.ZERO.copy();
+    service.berylliumFuelSystems = Num.ZERO.copy();
+    service.berylliumLogicSystems = Num.ZERO.copy();
     service.synchronizePurchases();
   });
 
@@ -76,8 +77,9 @@ describe('BluePhaseService', () => {
     UpgradeRecord.blueParticleResonance.bought = Num.ZERO.copy();
     UpgradeRecord.blueCollisionCalibration.amount = Num.ZERO.copy();
     UpgradeRecord.blueCollisionCalibration.bought = Num.ZERO.copy();
-    service.berylliumModerators = Num.ZERO.copy();
-    service.berylliumReflectors = Num.ZERO.copy();
+    service.berylliumRockets = Num.ZERO.copy();
+    service.berylliumFuelSystems = Num.ZERO.copy();
+    service.berylliumLogicSystems = Num.ZERO.copy();
   });
 
   it('does not automatically enter Blue when the unlock threshold is reached', () => {
@@ -208,22 +210,20 @@ describe('BluePhaseService', () => {
     expect(service.getCurrentElementName()).toBe('Lithium, Beryllium, Boron');
   });
 
-  it('uses Beryllium moderators and reflectors to boost forging and neutron collision gain', () => {
+  it('uses Beryllium rockets, Proton fuel, and Electron logic to boost red accelerators', () => {
     HoldingRecord.beryllium.amount = new Num(2, 1);
-    HoldingRecord.neutronClump.amount = new Num(1, 2);
     HoldingRecord.protons.amount = new Num(1, 2);
     HoldingRecord.electrons.amount = new Num(1, 2);
 
-    const baseLithiumGeneration = service.getLithiumGeneration();
-    const baseCollisionGain = service.getCollisionGain();
+    service.buyBerylliumRocket();
+    service.buyBerylliumFuel();
+    service.buyBerylliumLogic();
+    service.tick(Num.ZERO);
 
-    service.buyBerylliumModerator();
-    service.buyBerylliumReflector();
-
-    expect(service.getBerylliumModeratorEffect().toNumber()).toBeCloseTo(1.25, 8);
-    expect(service.getBerylliumReflectorEffect().toNumber()).toBeCloseTo(1.5, 8);
-    expect(service.getLithiumGeneration().toNumber()).toBeCloseTo(baseLithiumGeneration.mul(new Num(1.25, 0)).toNumber(), 8);
-    expect(service.getCollisionGain().toNumber()).toBeGreaterThan(baseCollisionGain.toNumber());
+    expect(service.getBerylliumFuelEffect().toNumber()).toBeCloseTo(1.25, 8);
+    expect(service.getBerylliumLogicEffect().toNumber()).toBeCloseTo(1.15, 8);
+    expect(service.getBerylliumRocketEffect().toNumber()).toBeCloseTo(2.4375, 8);
+    expect(HoldingRecord.beryllium.getEffect().toNumber()).toBeCloseTo(2.4375, 8);
   });
 
 
