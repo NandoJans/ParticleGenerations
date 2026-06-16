@@ -42,7 +42,7 @@ export class NuclearConfig {
       target: 'nuclearFissionGain',
       baseCost: new Num(1, 1),
       costIncrease: new Num(1, 1),
-      buffPerLevel: new Num(2, 0),
+      buffPerLevel: new Num(3, 0),
     },
     {
       key: 'nuclear-green-generators',
@@ -51,7 +51,7 @@ export class NuclearConfig {
       target: 'greenGenerators',
       baseCost: new Num(2.5, 1),
       costIncrease: new Num(1, 1),
-      buffPerLevel: new Num(3, 0),
+      buffPerLevel: new Num(2, 1),
     },
     {
       key: 'nuclear-potential-gain',
@@ -60,7 +60,7 @@ export class NuclearConfig {
       target: 'nuclearPotentialGain',
       baseCost: new Num(1, 2),
       costIncrease: new Num(1, 1),
-      buffPerLevel: new Num(1.5, 0),
+      buffPerLevel: new Num(2, 0),
     },
     {
       key: 'nuclear-dark-stars',
