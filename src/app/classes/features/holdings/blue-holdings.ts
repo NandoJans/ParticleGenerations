@@ -123,6 +123,7 @@ export class NeutronClumpHolding extends BlueHolding {
 }
 
 export class LithiumHolding extends BlueHolding {
+  static batteryCharge: Num = Num.ZERO.copy();
   name = 'lithium';
   displayName = 'Lithium';
   abbreviation = 'Li';
@@ -149,7 +150,9 @@ export class LithiumHolding extends BlueHolding {
   }
 
   getEffect(): Num {
-    return new Num(1, 1).pow(this.amount.sqrt());
+    const forgedLithiumEffect = new Num(1, 1).pow(this.amount.sqrt());
+    const batteryEffect = LithiumHolding.batteryCharge.add(Num.ONE).log10().add(Num.ONE);
+    return forgedLithiumEffect.mul(batteryEffect);
   }
 }
 

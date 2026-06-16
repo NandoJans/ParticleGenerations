@@ -53,6 +53,7 @@ import {GreenAutomatorsPageComponent} from "./pages/automator/green-automators-p
 import {GreenNuclearComponent} from "./pages/green/green-nuclear/green-nuclear.component";
 import {BlueParticlesComponent} from "./pages/blue/blue-particles/blue-particles.component";
 import {BlueTimelineComponent} from "./pages/timeline/blue-timeline/blue-timeline.component";
+import {BlueElementsComponent} from "./pages/blue/blue-elements/blue-elements.component";
 import {DarkStarAutomatorComponent} from "./components/particles/dark-star-automator/dark-star-automator.component";
 
 @NgModule({
@@ -104,6 +105,7 @@ import {DarkStarAutomatorComponent} from "./components/particles/dark-star-autom
     GreenAutomatorsPageComponent,
     GreenNuclearComponent,
     BlueParticlesComponent,
+    BlueElementsComponent,
     BlueTimelineComponent,
     DarkStarAutomatorComponent
   ],

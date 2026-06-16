@@ -1,0 +1,75 @@
+<section class="elements-page">
+  <section class="neutron-section">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">PERSISTENT MATTER</p>
+        <h2>Neutron Clump</h2>
+      </div>
+      <div class="stage-readout">
+        <span>CLUMP STAGE</span>
+        <strong>{{ bluePhase.getClumpStage() }}</strong>
+      </div>
+    </div>
+
+    <div class="neutron-grid">
+      <article class="matter-card">
+        <app-number-display [holding]="neutrons"></app-number-display>
+        <button class="deposit-button" [disabled]="!bluePhase.canDepositNeutrons()" (click)="bluePhase.depositAllNeutrons()">
+          DEPOSIT ALL INTO CLUMP
+        </button>
+      </article>
+      <article class="matter-card clump-card">
+        <app-number-display [holding]="neutronClump"></app-number-display>
+        <p>Unlocked elements: <strong>{{ bluePhase.getCurrentElementName() }}</strong></p>
+        <p>Next unlock: {{ bluePhase.getNextStageRequirement().toString() }} clumped Neutrons</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="element-browser" (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)">
+    <button class="arrow" type="button" aria-label="Previous element" (click)="previousElement()">‹</button>
+
+    <article class="element-view" [class.locked]="!bluePhase.isElementUnlocked(selectedElement)">
+      <div class="element-orb">
+        <span>{{ selectedElement.holding.abbreviation }}</span>
+      </div>
+      <div class="element-copy">
+        <p class="eyebrow">ELEMENT {{ selectedElementIndex + 1 }} / {{ bluePhase.elementDefinitions.length }}</p>
+        <h2>{{ selectedElement.holding.displayName }}</h2>
+        <app-number-display [holding]="selectedElement.holding"></app-number-display>
+        <p>Unlocks at {{ selectedElement.unlockAmount.toString() }} clumped Neutrons.</p>
+        <p *ngIf="bluePhase.isElementUnlocked(selectedElement)">
+          Generation: {{ getElementGeneration(selectedElement).toString(3) }} / sec from clump size ÷ unlock amount.
+        </p>
+        <p *ngIf="!bluePhase.isElementUnlocked(selectedElement)" class="locked-copy">Compress more Neutrons to unlock this element.</p>
+      </div>
+    </article>
+
+    <button class="arrow" type="button" aria-label="Next element" (click)="nextElement()">›</button>
+  </section>
+
+  <div class="element-dots" aria-label="Element shortcuts">
+    @for (element of bluePhase.elementDefinitions; track element.holding.name) {
+      <button type="button" [class.active]="$index === selectedElementIndex" [class.unlocked]="bluePhase.isElementUnlocked(element)" (click)="selectElement($index)">
+        {{ element.holding.abbreviation }}
+      </button>
+    }
+  </div>
+
+  <section *ngIf="selectedElement.holding.name === 'lithium'" class="lithium-lab">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">LITHIUM-ION ARRAY</p>
+        <h2>Battery Foundry</h2>
+      </div>
+      <p>Build ion batteries, charge them with electron generators, and expand capacity with proton lattice frames.</p>
+    </div>
+
+    <div class="battery-grid">
+      <article class="battery-card"><span>Batteries</span><strong>{{ bluePhase.lithiumBatteries.toString() }}</strong><button (click)="bluePhase.buyLithiumBattery()" [disabled]="!bluePhase.canBuyLithiumBattery()">Buy for {{ bluePhase.getLithiumBatteryCost().toString() }} Lithium</button></article>
+      <article class="battery-card"><span>Chargers</span><strong>{{ bluePhase.lithiumChargeGenerators.toString() }}</strong><button (click)="bluePhase.buyLithiumChargeGenerator()" [disabled]="!bluePhase.canBuyLithiumChargeGenerator()">Buy for {{ bluePhase.getLithiumChargeGeneratorCost().toString() }} Electrons</button></article>
+      <article class="battery-card"><span>Capacity Level</span><strong>{{ bluePhase.lithiumCapacityUpgrades.toString() }}</strong><button (click)="bluePhase.buyLithiumCapacityUpgrade()" [disabled]="!bluePhase.canBuyLithiumCapacityUpgrade()">Upgrade for {{ bluePhase.getLithiumCapacityCost().toString() }} Protons</button></article>
+      <article class="battery-card charged"><span>Total Charge</span><strong>{{ bluePhase.getLithiumTotalCharge().toString(3) }}</strong><p>Red generator multiplier: {{ getLithiumRedMultiplier().toString(3) }}x</p></article>
+    </div>
+  </section>
+</section>

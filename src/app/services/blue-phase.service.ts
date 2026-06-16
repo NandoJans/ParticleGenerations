@@ -12,12 +12,15 @@ import {Multiplier} from '../classes/features/multiplier';
 import {MultiplierRecord} from "../classes/records/multipliers/multiplier-record";
 import {ChargerRecord} from "../classes/records/charger/charger-record";
 import {Holding} from '../classes/features/holding';
+import {LithiumHolding} from '../classes/features/holdings/blue-holdings';
 
 export type BlueParticleMode = 'none' | 'protons' | 'electrons';
 
 export interface BlueElementDefinition {
   requiredStage: number;
+  unlockAmount: Num;
   holding: Holding;
+  theme: string;
 }
 
 @Injectable({
@@ -32,12 +35,17 @@ export class BluePhaseService {
   activeParticle: BlueParticleMode = 'none';
   unlocked = false;
 
+  lithiumBatteries = Num.ZERO.copy();
+  lithiumChargeGenerators = Num.ZERO.copy();
+  lithiumCapacityUpgrades = Num.ZERO.copy();
+  lithiumCharge = Num.ZERO.copy();
+
   readonly elementDefinitions: BlueElementDefinition[] = [
-    {requiredStage: 1, holding: HoldingRecord.lithium},
-    {requiredStage: 2, holding: HoldingRecord.beryllium},
-    {requiredStage: 3, holding: HoldingRecord.boron},
-    {requiredStage: 4, holding: HoldingRecord.carbon},
-    {requiredStage: 5, holding: HoldingRecord.nitrogen}
+    {requiredStage: 1, unlockAmount: new Num(1, 1), holding: HoldingRecord.lithium, theme: 'Lithium-ion batteries'},
+    {requiredStage: 2, unlockAmount: new Num(1, 2), holding: HoldingRecord.beryllium, theme: 'Aerospace alloys'},
+    {requiredStage: 3, unlockAmount: new Num(1, 3), holding: HoldingRecord.boron, theme: 'Neutron shielding'},
+    {requiredStage: 4, unlockAmount: new Num(1, 4), holding: HoldingRecord.carbon, theme: 'Carbon lattice computing'},
+    {requiredStage: 5, unlockAmount: new Num(1, 5), holding: HoldingRecord.nitrogen, theme: 'Cryogenic atmospheres'}
   ];
 
   constructor() {
@@ -65,8 +73,10 @@ export class BluePhaseService {
     }
 
     this.getActiveElementDefinitions().forEach(element => {
-      element.holding.generate(this.getElementGeneration(element.requiredStage).mul(speed));
+      element.holding.generate(this.getElementGeneration(element).mul(speed));
     });
+    this.generateLithiumCharge(speed);
+    LithiumHolding.batteryCharge = this.getLithiumTotalCharge();
   }
 
   applyNeutronMeltdown(): void {
@@ -104,6 +114,7 @@ export class BluePhaseService {
     this.resetDarkStarChargers();
     this.startParticleGeneration();
     this.synchronizePurchases();
+    LithiumHolding.batteryCharge = this.getLithiumTotalCharge();
     this.applyNeutronMeltdown();
   }
 
@@ -171,8 +182,11 @@ export class BluePhaseService {
   }
 
   getActiveElementDefinitions(): BlueElementDefinition[] {
-    const clumpStage = this.getClumpStage();
-    return this.elementDefinitions.filter(element => clumpStage >= element.requiredStage);
+    return this.elementDefinitions.filter(element => this.isElementUnlocked(element));
+  }
+
+  isElementUnlocked(element: BlueElementDefinition): boolean {
+    return HoldingRecord.neutronClump.amount.greq(element.unlockAmount);
   }
 
   getCurrentElementName(): string {
@@ -186,11 +200,31 @@ export class BluePhaseService {
     return new Num(1, this.getClumpStage() + 1);
   }
 
-  private getElementGeneration(requiredStage: number): Num {
-    return new Num(2, 0)
-      .pow(HoldingRecord.neutronClump.amount.log10())
-      .pow(this.getClumpStage() - requiredStage + 1)
-      .mul(new Num(1, -2));
+  getElementGeneration(element: BlueElementDefinition): Num {
+    if (!this.isElementUnlocked(element)) return Num.ZERO.copy();
+    return HoldingRecord.neutronClump.amount.div(element.unlockAmount).mul(new Num(1, -2));
+  }
+
+  getLithiumBatteryCost(): Num { return new Num(5, 0).mul(new Num(1.75, 0).pow(this.lithiumBatteries)); }
+  getLithiumChargeGeneratorCost(): Num { return new Num(1, 1).mul(new Num(2, 0).pow(this.lithiumChargeGenerators)); }
+  getLithiumCapacityCost(): Num { return new Num(1, 1).mul(new Num(2.25, 0).pow(this.lithiumCapacityUpgrades)); }
+  getLithiumBatteryCapacity(): Num { return new Num(1, 2).mul(new Num(1.6, 0).pow(this.lithiumCapacityUpgrades)); }
+  getLithiumTotalCapacity(): Num { return this.lithiumBatteries.mul(this.getLithiumBatteryCapacity()); }
+  getLithiumTotalCharge(): Num { return this.lithiumCharge.lt(this.getLithiumTotalCapacity()) ? this.lithiumCharge : this.getLithiumTotalCapacity(); }
+
+  canBuyLithiumBattery(): boolean { return HoldingRecord.lithium.amount.greq(this.getLithiumBatteryCost()); }
+  buyLithiumBattery(): void { if (!this.canBuyLithiumBattery()) return; HoldingRecord.lithium.sub(this.getLithiumBatteryCost()); this.lithiumBatteries = this.lithiumBatteries.add(Num.ONE); }
+  canBuyLithiumChargeGenerator(): boolean { return HoldingRecord.electrons.amount.greq(this.getLithiumChargeGeneratorCost()); }
+  buyLithiumChargeGenerator(): void { if (!this.canBuyLithiumChargeGenerator()) return; HoldingRecord.electrons.sub(this.getLithiumChargeGeneratorCost()); this.lithiumChargeGenerators = this.lithiumChargeGenerators.add(Num.ONE); }
+  canBuyLithiumCapacityUpgrade(): boolean { return HoldingRecord.protons.amount.greq(this.getLithiumCapacityCost()); }
+  buyLithiumCapacityUpgrade(): void { if (!this.canBuyLithiumCapacityUpgrade()) return; HoldingRecord.protons.sub(this.getLithiumCapacityCost()); this.lithiumCapacityUpgrades = this.lithiumCapacityUpgrades.add(Num.ONE); }
+
+  private generateLithiumCharge(speed: Num): void {
+    if (this.lithiumChargeGenerators.lt(Num.ONE) || this.lithiumBatteries.lt(Num.ONE)) return;
+    const gain = this.lithiumChargeGenerators.mul(new Num(5, 0)).mul(speed);
+    this.lithiumCharge = this.lithiumCharge.add(gain);
+    const capacity = this.getLithiumTotalCapacity();
+    if (this.lithiumCharge.gt(capacity)) this.lithiumCharge = capacity.copy();
   }
 
   private getBuyables(): {key: string, buyable: Buyable}[] {
@@ -250,18 +284,28 @@ export class BluePhaseService {
     this.storage.save(this.unlocked, 'unlocked');
     this.storage.save(this.activeParticle, 'activeParticle');
     this.storage.save(this.purchaseStates, 'purchaseStates');
+    this.storage.saveNum(this.lithiumBatteries, 'lithiumBatteries');
+    this.storage.saveNum(this.lithiumChargeGenerators, 'lithiumChargeGenerators');
+    this.storage.saveNum(this.lithiumCapacityUpgrades, 'lithiumCapacityUpgrades');
+    this.storage.saveNum(this.lithiumCharge, 'lithiumCharge');
   }
 
   load(): void {
     this.unlocked = this.storage.load(this.unlocked, 'unlocked');
     this.activeParticle = this.storage.load(this.activeParticle, 'activeParticle');
     this.purchaseStates = this.storage.load({}, 'purchaseStates');
+    this.lithiumBatteries = this.storage.loadNum(this.lithiumBatteries, 'lithiumBatteries');
+    this.lithiumChargeGenerators = this.storage.loadNum(this.lithiumChargeGenerators, 'lithiumChargeGenerators');
+    this.lithiumCapacityUpgrades = this.storage.loadNum(this.lithiumCapacityUpgrades, 'lithiumCapacityUpgrades');
+    this.lithiumCharge = this.storage.loadNum(this.lithiumCharge, 'lithiumCharge');
     this.synchronizePurchases();
+    LithiumHolding.batteryCharge = this.getLithiumTotalCharge();
     this.applyNeutronMeltdown();
   }
 
   init(): void {
     this.synchronizePurchases();
+    LithiumHolding.batteryCharge = this.getLithiumTotalCharge();
     this.applyNeutronMeltdown();
   }
 }

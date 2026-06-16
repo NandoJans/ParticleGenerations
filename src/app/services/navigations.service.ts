@@ -78,6 +78,9 @@ export class NavigationsService {
     blueParticles: new SubNavigation('blueParticles', faAtom, 'particles', this.navigations['blue'], [
       {requirement: HoldingRecord.greenParticles, amount: new Num(1, 1000)},
     ], false),
+    blueElements: new SubNavigation('blueElements', faMountain, 'elements', this.navigations['blue'], [
+      {requirement: HoldingRecord.neutronClump, amount: new Num(1, 1)},
+    ], false),
 
     // Automators
     redAutomators: new SubNavigation('redParticles', faAtom, 'red', this.navigations['automators'], [], true),
