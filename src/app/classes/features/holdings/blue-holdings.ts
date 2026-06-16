@@ -131,8 +131,8 @@ export class LithiumHolding extends BlueHolding {
   holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
     .withAmountPrefix('The neutron clump has forged')
     .withAmountSuffix(' Lithium')
-    .withEffectPrefix('They multiply red particle generators by')
-    .addLine('And multiply nucleus generators by', () => this.nucleusEffect.toString(2) + 'x', '')
+    .withEffectPrefix('The battery charge multiplies red particle generators by')
+    .addLine('Forged Lithium multiplies nucleus generators by', () => this.nucleusEffect.toString(2) + 'x', '')
     .build();
 
   nucleusEffect: Num = new Num(1, 0);
@@ -150,9 +150,7 @@ export class LithiumHolding extends BlueHolding {
   }
 
   getEffect(): Num {
-    const forgedLithiumEffect = new Num(1, 1).pow(this.amount.sqrt());
-    const batteryEffect = LithiumHolding.batteryCharge.add(Num.ONE).log10().add(Num.ONE);
-    return forgedLithiumEffect.mul(batteryEffect);
+    return LithiumHolding.batteryCharge.add(Num.ONE).log10().add(Num.ONE);
   }
 }
 
