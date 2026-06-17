@@ -231,27 +231,29 @@ describe('BluePhaseService', () => {
   });
 
 
-  it('compresses Lithium into Beryllium at clump stage 2', () => {
+  it('generates Beryllium without consuming Lithium at clump stage 2', () => {
     HoldingRecord.neutronClump.amount = new Num(1, 2);
 
     service.tick(Num.ONE);
 
     expect(service.getCurrentElementName()).toBe('Lithium, Beryllium');
     expect(HoldingRecord.beryllium.amount.toNumber()).toBeCloseTo(0.1, 8);
-    expect(HoldingRecord.lithium.amount.toNumber()).toBeCloseTo(0, 8);
+    expect(HoldingRecord.lithium.amount.toNumber()).toBeCloseTo(0.1, 8);
   });
 
-  it('compresses each subsequent element from ten of the previous element', () => {
+  it('generates each unlocked element directly from clump size', () => {
     HoldingRecord.neutronClump.amount = new Num(1, 3);
     HoldingRecord.lithium.amount = new Num(1, 2);
     HoldingRecord.beryllium.amount = new Num(1, 1);
 
-    expect(service.getElementGeneration(service.elementDefinitions[1]).toNumber()).toBe(10);
+    expect(service.getElementGeneration(service.elementDefinitions[1]).toNumber()).toBe(1);
     expect(service.getElementGeneration(service.elementDefinitions[2]).toNumber()).toBe(1);
 
     service.tick(Num.ONE);
 
-    expect(HoldingRecord.boron.amount.gt(Num.ZERO)).toBeTrue();
+    expect(HoldingRecord.lithium.amount.toNumber()).toBe(101);
+    expect(HoldingRecord.beryllium.amount.toNumber()).toBe(11);
+    expect(HoldingRecord.boron.amount.toNumber()).toBe(1);
     expect(HoldingRecord.carbon.amount.toNumber()).toBe(0);
     expect(service.getCurrentElementName()).toBe('Lithium, Beryllium, Boron');
   });

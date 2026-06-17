@@ -56,7 +56,7 @@
         <app-number-display [holding]="selectedElement.holding"></app-number-display>
         <p>Unlocks at {{ selectedElement.unlockAmount.toString() }} clumped Neutrons.</p>
         <p *ngIf="bluePhase.isElementUnlocked(selectedElement)">
-          Generation: {{ getElementGeneration(selectedElement).toString(3) }} / sec {{ selectedElement.requiredStage === 1 ? 'from clump size' : 'by compressing 10 ' + bluePhase.elementDefinitions[selectedElement.requiredStage - 2].holding.displayName }}.
+          Generation: {{ getElementGeneration(selectedElement).toString(3) }} / sec from clump size.
         </p>
         <p *ngIf="!bluePhase.isElementUnlocked(selectedElement)" class="locked-copy">Compress more Neutrons to unlock this element.</p>
       </div>
