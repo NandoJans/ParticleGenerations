@@ -14,6 +14,7 @@ export class BlueElementsComponent {
   neutrons: Holding = HoldingRecord.neutrons;
   neutronClump: Holding = HoldingRecord.neutronClump;
   lithium: Holding = HoldingRecord.lithium;
+  boron: Holding = HoldingRecord.boron;
   electrons: Holding = HoldingRecord.electrons;
   protons: Holding = HoldingRecord.protons;
   selectedElementIndex = 0;
