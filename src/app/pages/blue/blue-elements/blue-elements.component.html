@@ -136,7 +136,7 @@
         <p class="eyebrow">BERYLLIUM ROCKET HANGAR</p>
         <h2>Accelerator Rocket Program</h2>
       </div>
-      <p>Beryllium builds rocket frames, Protons refine fuel, and Electrons assemble guidance logic. Completed rockets boost red accelerator generation.</p>
+      <p>Beryllium builds rocket frames, Protons refine fuel, and Electrons assemble guidance logic. Completed rockets boost red extension power.</p>
     </div>
 
     <div class="rocket-showcase">
@@ -162,7 +162,7 @@
       <div class="charge-panel">
         <span>ROCKET THRUST</span>
         <strong>{{ bluePhase.getBerylliumRocketEffect().toString(3) }}x</strong>
-        <p>Rockets multiply red accelerator generation. Fuel systems multiply rocket thrust by {{ bluePhase.getBerylliumFuelEffect().toString(2) }}x, while guidance logic multiplies it by {{ bluePhase.getBerylliumLogicEffect().toString(2) }}x.</p>
+        <p>Rockets multiply red extension power. Fuel systems multiply rocket thrust by {{ bluePhase.getBerylliumFuelEffect().toString(2) }}x, while guidance logic multiplies it by {{ bluePhase.getBerylliumLogicEffect().toString(2) }}x.</p>
       </div>
     </div>
 
@@ -170,7 +170,7 @@
       <article class="battery-card">
         <span>Rocket Frames</span>
         <strong>{{ bluePhase.berylliumRockets.toString() }}</strong>
-        <p>Beryllium hulls ready for accelerator launches.</p>
+        <p>Beryllium hulls ready for extension launches.</p>
         <button (click)="bluePhase.buyBerylliumRocket()" [disabled]="!bluePhase.canBuyBerylliumRocket()">Build for {{ bluePhase.getBerylliumRocketCost().toString() }} Beryllium</button>
       </article>
       <article class="battery-card">

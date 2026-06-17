@@ -47,7 +47,7 @@ export class BluePhaseService {
 
   readonly elementDefinitions: BlueElementDefinition[] = [
     {requiredStage: 1, unlockAmount: new Num(1, 1), holding: HoldingRecord.lithium, theme: 'Lithium-ion batteries'},
-    {requiredStage: 2, unlockAmount: new Num(1, 2), holding: HoldingRecord.beryllium, theme: 'Rocket construction and accelerator thrust'},
+    {requiredStage: 2, unlockAmount: new Num(1, 2), holding: HoldingRecord.beryllium, theme: 'Rocket construction and extension thrust'},
     {requiredStage: 3, unlockAmount: new Num(1, 3), holding: HoldingRecord.boron, theme: 'Neutron shielding'},
     {requiredStage: 4, unlockAmount: new Num(1, 4), holding: HoldingRecord.carbon, theme: 'Carbon lattice computing'},
     {requiredStage: 5, unlockAmount: new Num(1, 5), holding: HoldingRecord.nitrogen, theme: 'Cryogenic atmospheres'}
@@ -207,13 +207,13 @@ export class BluePhaseService {
 
   getElementGeneration(element: BlueElementDefinition): Num {
     if (!this.isElementUnlocked(element)) return Num.ZERO.copy();
-    return this.getLithiumGeneration();
+    return HoldingRecord.neutronClump.amount
+      .div(element.unlockAmount)
+      .mul(new Num(1, -2));
   }
 
   getLithiumGeneration(): Num {
-    return HoldingRecord.neutronClump.amount
-      .div(this.elementDefinitions[0].unlockAmount)
-      .mul(new Num(1, -2));
+    return this.getElementGeneration(this.elementDefinitions[0]);
   }
 
   getBerylliumRocketCost(): Num { return new Num(5, 0).mul(new Num(2, 0).pow(this.berylliumRockets)); }

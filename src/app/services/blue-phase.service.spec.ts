@@ -11,6 +11,7 @@ import {Automator} from '../classes/features/automator';
 import {PrestigeLayersService} from './prestige-layers.service';
 import {ChargerRecord} from '../classes/records/charger/charger-record';
 import {LithiumHolding} from '../classes/features/holdings/blue-holdings';
+import {MultiplierRecord} from '../classes/records/multipliers/multiplier-record';
 
 describe('BluePhaseService', () => {
   let service: BluePhaseService;
@@ -55,6 +56,8 @@ describe('BluePhaseService', () => {
     LithiumHolding.batteryTier = Num.ZERO.copy();
     LithiumHolding.batteryCharge = Num.ZERO.copy();
     service.synchronizePurchases();
+    MultiplierRecord.redAcceleratorGenerators.reset();
+    MultiplierRecord.redGeneratorExtensionBuffer.reset();
   });
 
   afterEach(() => {
@@ -95,6 +98,8 @@ describe('BluePhaseService', () => {
     service.lithiumCapacityUpgrades = Num.ZERO.copy();
     LithiumHolding.batteryTier = Num.ZERO.copy();
     LithiumHolding.batteryCharge = Num.ZERO.copy();
+    MultiplierRecord.redAcceleratorGenerators.reset();
+    MultiplierRecord.redGeneratorExtensionBuffer.reset();
   });
 
   it('does not automatically enter Blue when the unlock threshold is reached', () => {
@@ -237,7 +242,7 @@ describe('BluePhaseService', () => {
     service.tick(Num.ONE);
 
     expect(service.getCurrentElementName()).toBe('Lithium, Beryllium');
-    expect(HoldingRecord.beryllium.amount.toNumber()).toBeCloseTo(0.1, 8);
+    expect(HoldingRecord.beryllium.amount.toNumber()).toBeCloseTo(0.01, 8);
     expect(HoldingRecord.lithium.amount.toNumber()).toBeCloseTo(0.1, 8);
   });
 
@@ -246,19 +251,19 @@ describe('BluePhaseService', () => {
     HoldingRecord.lithium.amount = new Num(1, 2);
     HoldingRecord.beryllium.amount = new Num(1, 1);
 
-    expect(service.getElementGeneration(service.elementDefinitions[1]).toNumber()).toBe(1);
-    expect(service.getElementGeneration(service.elementDefinitions[2]).toNumber()).toBe(1);
+    expect(service.getElementGeneration(service.elementDefinitions[1]).toNumber()).toBe(0.1);
+    expect(service.getElementGeneration(service.elementDefinitions[2]).toNumber()).toBe(0.01);
 
     service.tick(Num.ONE);
 
     expect(HoldingRecord.lithium.amount.toNumber()).toBe(101);
-    expect(HoldingRecord.beryllium.amount.toNumber()).toBe(11);
-    expect(HoldingRecord.boron.amount.toNumber()).toBe(1);
+    expect(HoldingRecord.beryllium.amount.toNumber()).toBe(10.1);
+    expect(HoldingRecord.boron.amount.toNumber()).toBe(0.01);
     expect(HoldingRecord.carbon.amount.toNumber()).toBe(0);
     expect(service.getCurrentElementName()).toBe('Lithium, Beryllium, Boron');
   });
 
-  it('uses Beryllium rockets, Proton fuel, and Electron logic to boost red accelerators', () => {
+  it('uses Beryllium rockets, Proton fuel, and Electron logic to boost red extensions', () => {
     HoldingRecord.neutronClump.amount = new Num(1, 2);
     HoldingRecord.beryllium.amount = new Num(2, 1);
     HoldingRecord.protons.amount = new Num(1, 2);
@@ -272,7 +277,9 @@ describe('BluePhaseService', () => {
     expect(service.getBerylliumFuelEffect().toNumber()).toBeCloseTo(1.25, 8);
     expect(service.getBerylliumLogicEffect().toNumber()).toBeCloseTo(1.15, 8);
     expect(service.getBerylliumRocketEffect().toNumber()).toBeCloseTo(2.4375, 8);
-    expect(HoldingRecord.beryllium.getEffect().toNumber()).toBeCloseTo(2.4375, 8);
+    expect(HoldingRecord.beryllium.action().toNumber()).toBeCloseTo(2.4375, 8);
+    expect(MultiplierRecord.redGeneratorExtensionBuffer.getNum().toNumber()).toBeCloseTo(2.4375, 8);
+    expect(MultiplierRecord.redAcceleratorGenerators.getNum(false).toNumber()).toBe(1);
   });
 
   it('keeps Beryllium upgrades locked until Beryllium is unlocked', () => {
