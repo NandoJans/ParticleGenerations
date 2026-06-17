@@ -8,6 +8,7 @@ import {Enhancement} from "../enhancements/enhancement";
 import {Transaction} from "../interfaces/transaction";
 import {HoldingRecord} from "../../records/holdings/holding-record";
 import {MultiplierRecord} from '../../records/multipliers/multiplier-record';
+import {BerylliumHolding} from '../holdings/blue-holdings';
 
 export class RedGeneratorExtensionUpgrade extends RedUpgrade {
   baseCost: Num = new Num(1, 3)
@@ -60,7 +61,9 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
   }
 
   getEffectiveBuffer(): Num {
-    return this.buffer.mul(MultiplierRecord.redGeneratorExtensionBuffer.getNum());
+    return this.buffer
+      .mul(MultiplierRecord.redGeneratorExtensionBuffer.getNum())
+      .mul(BerylliumHolding.rocketBoost);
   }
 
   override effectString() {

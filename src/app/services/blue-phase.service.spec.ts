@@ -278,7 +278,8 @@ describe('BluePhaseService', () => {
     expect(service.getBerylliumLogicEffect().toNumber()).toBeCloseTo(1.15, 8);
     expect(service.getBerylliumRocketEffect().toNumber()).toBeCloseTo(2.4375, 8);
     expect(HoldingRecord.beryllium.action().toNumber()).toBeCloseTo(2.4375, 8);
-    expect(MultiplierRecord.redGeneratorExtensionBuffer.getNum().toNumber()).toBeCloseTo(2.4375, 8);
+    expect(UpgradeRecord.redGeneratorExtension.getEffectiveBuffer().toNumber()).toBeCloseTo(4.875, 8);
+    expect(MultiplierRecord.redGeneratorExtensionBuffer.getNum().toNumber()).toBe(1);
     expect(MultiplierRecord.redAcceleratorGenerators.getNum(false).toNumber()).toBe(1);
   });
 
