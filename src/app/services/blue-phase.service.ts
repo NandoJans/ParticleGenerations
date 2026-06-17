@@ -207,15 +207,8 @@ export class BluePhaseService {
 
   getElementGeneration(element: BlueElementDefinition): Num {
     if (!this.isElementUnlocked(element)) return Num.ZERO.copy();
-    if (element.requiredStage === 1) return this.getLithiumGeneration();
-
-    const previousElement = this.getPreviousElementDefinition(element);
-    if (!previousElement) return Num.ZERO.copy();
-
-    return previousElement.holding.amount.div(this.getElementCompressionRatio());
+    return this.getLithiumGeneration();
   }
-
-  getElementCompressionRatio(): Num { return new Num(1, 1); }
 
   getLithiumGeneration(): Num {
     return HoldingRecord.neutronClump.amount
@@ -244,32 +237,8 @@ export class BluePhaseService {
   buyBerylliumLogic(): void { if (!this.canBuyBerylliumLogic()) return; HoldingRecord.electrons.sub(this.getBerylliumLogicCost()); this.berylliumLogicSystems = this.berylliumLogicSystems.add(Num.ONE); this.toggleParticle(); BerylliumHolding.rocketBoost = this.getBerylliumRocketEffect(); }
 
   private generateForgedElements(speed: Num): void {
-    const lithiumDefinition = this.elementDefinitions[0];
-    if (this.isElementUnlocked(lithiumDefinition)) {
-      lithiumDefinition.holding.generate(this.getLithiumGeneration().mul(speed));
-    }
-
     this.getActiveElementDefinitions()
-      .filter(element => element.requiredStage > 1)
-      .forEach(element => this.compressElement(element, speed));
-  }
-
-  private compressElement(element: BlueElementDefinition, speed: Num): void {
-    const previousElement = this.getPreviousElementDefinition(element);
-    if (!previousElement) return;
-
-    const requestedOutput = this.getElementGeneration(element).mul(speed);
-    const availableOutput = previousElement.holding.amount.div(this.getElementCompressionRatio());
-    const output = requestedOutput.lt(availableOutput) ? requestedOutput : availableOutput;
-    if (output.lt(Num.ZERO) || output.equals(Num.ZERO)) return;
-
-    previousElement.holding.sub(output.mul(this.getElementCompressionRatio()));
-    element.holding.generate(output);
-  }
-
-  private getPreviousElementDefinition(element: BlueElementDefinition): BlueElementDefinition | undefined {
-    const index = this.elementDefinitions.indexOf(element);
-    return index > 0 ? this.elementDefinitions[index - 1] : undefined;
+      .forEach(element => element.holding.generate(this.getElementGeneration(element).mul(speed)));
   }
 
   getLithiumBatteryCost(): Num { return new Num(5, 0).mul(new Num(1.75, 0).pow(this.lithiumBatteries)); }
