@@ -171,12 +171,12 @@ export class BerylliumHolding extends BlueHolding {
   holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
     .withAmountPrefix('The neutron clump has forged')
     .withAmountSuffix(' Beryllium')
-    .withEffectPrefix('Beryllium rocket fleets multiply red accelerator generation by')
+    .withEffectPrefix('Beryllium rocket fleets multiply red extension power by')
     .build();
 
   override action(): Num {
     const effect = this.getEffect();
-    MultiplierRecord.redAcceleratorGenerators.correct(effect);
+    MultiplierRecord.redGeneratorExtensionBuffer.correct(effect);
     return effect;
   }
 

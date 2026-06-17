@@ -7,6 +7,7 @@ import {GeneratorRecord} from "../../records/generators/generator-record";
 import {Enhancement} from "../enhancements/enhancement";
 import {Transaction} from "../interfaces/transaction";
 import {HoldingRecord} from "../../records/holdings/holding-record";
+import {MultiplierRecord} from '../../records/multipliers/multiplier-record';
 
 export class RedGeneratorExtensionUpgrade extends RedUpgrade {
   baseCost: Num = new Num(1, 3)
@@ -43,19 +44,23 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
     generators.forEach((generator, index) => {
       const compare = new Num(index, 0);
       if (this.amount.greq(compare)) {
-        const buff: Num = this.buffer.pow(this.amount.sub(compare));
+        const buff: Num = this.getEffectiveBuffer().pow(this.amount.sub(compare));
         generator.mulMod = generator.mulMod.mul(buff);
       }
     });
-    return this.buffer.pow(this.amount);
+    return this.getEffectiveBuffer().pow(this.amount);
   }
 
   getDescription(): string {
     if (this.amount.greq(new Num(4, 0))) {
-      return `Multiply red generator production by ${this.buffer.toString(2)}x.`;
+      return `Multiply red generator production by ${this.getEffectiveBuffer().toString(2)}x.`;
     } else {
-      return `Get a new generator and apply ${this.buffer.toString(2)}x`;
+      return `Get a new generator and apply ${this.getEffectiveBuffer().toString(2)}x`;
     }
+  }
+
+  getEffectiveBuffer(): Num {
+    return this.buffer.mul(MultiplierRecord.redGeneratorExtensionBuffer.getNum());
   }
 
   override effectString() {

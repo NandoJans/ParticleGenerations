@@ -12,6 +12,7 @@ export class MultiplierRecord {
   static redAcceleratorGenerators: Multiplier = new Multiplier('redAcceleratorGenerators', new Num(1, 0));
   static freeRedGeneratorBoosters: Multiplier = new Multiplier('freeRedGeneratorBoosters', new Num(0, 0), 50);
   static redGeneratorBoosterBuyMultiplier: Multiplier = new Multiplier('redGeneratorBoosterBuyMultiplier', new Num(1, 0));
+  static redGeneratorExtensionBuffer: Multiplier = new Multiplier('redGeneratorExtensionBuffer', Num.ONE, 1150, true);
 
   // Yellow Phase
   static yellowParticleGain: Multiplier = new Multiplier('yellowParticleGain', new Num(1, 0), 50);
@@ -59,6 +60,7 @@ export class MultiplierRecord {
     MultiplierRecord.redAcceleratorGenerators,
     MultiplierRecord.freeRedGeneratorBoosters,
     MultiplierRecord.redGeneratorBoosterBuyMultiplier,
+    MultiplierRecord.redGeneratorExtensionBuffer,
 
     // Yellow Phase
     MultiplierRecord.yellowParticleGain,
