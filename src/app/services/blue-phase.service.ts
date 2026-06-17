@@ -12,7 +12,7 @@ import {Multiplier} from '../classes/features/multiplier';
 import {MultiplierRecord} from "../classes/records/multipliers/multiplier-record";
 import {ChargerRecord} from "../classes/records/charger/charger-record";
 import {Holding} from '../classes/features/holding';
-import {BerylliumHolding, LithiumHolding} from '../classes/features/holdings/blue-holdings';
+import {BerylliumHolding, BoronHolding, LithiumHolding} from '../classes/features/holdings/blue-holdings';
 
 export type BlueParticleMode = 'none' | 'protons' | 'electrons';
 
@@ -31,6 +31,8 @@ export class BluePhaseService {
   static readonly neutronRestorationTarget = new Num(1, 6);
   static readonly minimumMeltdownPower = new Num(1, -1);
   static readonly lithiumDischargeBaseCharge = new Num(1, 1);
+  static readonly berylliumLaunchBaseThrust = new Num(1, 1);
+  static readonly boronLaminateBaseStrength = new Num(1, 1);
   private readonly storage = new LocalStorageHelper('blue-phase', 'state');
   private purchaseStates: {[key: string]: {mantissa: number, exponent: number} | boolean} = {};
   activeParticle: BlueParticleMode = 'none';
@@ -44,11 +46,16 @@ export class BluePhaseService {
   berylliumRockets = Num.ZERO.copy();
   berylliumFuelSystems = Num.ZERO.copy();
   berylliumLogicSystems = Num.ZERO.copy();
+  berylliumRocketTier = Num.ZERO.copy();
+  boronFiberSpools = Num.ZERO.copy();
+  boronResinInfusers = Num.ZERO.copy();
+  boronWeaveLooms = Num.ZERO.copy();
+  boronFiberglassTier = Num.ZERO.copy();
 
   readonly elementDefinitions: BlueElementDefinition[] = [
     {requiredStage: 1, unlockAmount: new Num(1, 1), holding: HoldingRecord.lithium, theme: 'Lithium-ion batteries'},
     {requiredStage: 2, unlockAmount: new Num(1, 2), holding: HoldingRecord.beryllium, theme: 'Rocket construction and extension thrust'},
-    {requiredStage: 3, unlockAmount: new Num(1, 3), holding: HoldingRecord.boron, theme: 'Neutron shielding'},
+    {requiredStage: 3, unlockAmount: new Num(1, 3), holding: HoldingRecord.boron, theme: 'Fiberglass accelerator reinforcement'},
     {requiredStage: 4, unlockAmount: new Num(1, 4), holding: HoldingRecord.carbon, theme: 'Carbon lattice computing'},
     {requiredStage: 5, unlockAmount: new Num(1, 5), holding: HoldingRecord.nitrogen, theme: 'Cryogenic atmospheres'}
   ];
@@ -81,6 +88,7 @@ export class BluePhaseService {
     this.generateLithiumCharge(speed);
     this.syncLithiumBatteryState();
     BerylliumHolding.rocketBoost = this.getBerylliumRocketEffect();
+    BoronHolding.fiberglassBoost = this.getBoronFiberglassEffect();
   }
 
   applyNeutronMeltdown(): void {
@@ -120,6 +128,7 @@ export class BluePhaseService {
     this.synchronizePurchases();
     this.syncLithiumBatteryState();
     BerylliumHolding.rocketBoost = this.getBerylliumRocketEffect();
+    BoronHolding.fiberglassBoost = this.getBoronFiberglassEffect();
     this.applyNeutronMeltdown();
   }
 
@@ -221,14 +230,60 @@ export class BluePhaseService {
   getBerylliumLogicCost(): Num { return new Num(1, 1).mul(new Num(2, 0).pow(this.berylliumLogicSystems)); }
   getBerylliumFuelEffect(): Num { return this.berylliumFuelSystems.mul(new Num(2.5, -1)).add(Num.ONE); }
   getBerylliumLogicEffect(): Num { return this.berylliumLogicSystems.mul(new Num(1.5, -1)).add(Num.ONE); }
-  getBerylliumRocketEffect(): Num {
+  getBerylliumRocketBaseEffect(): Num {
     return this.berylliumRockets
       .mul(this.getBerylliumFuelEffect())
       .mul(this.getBerylliumLogicEffect())
       .add(Num.ONE);
   }
+  getBerylliumRocketEffect(): Num { return this.getBerylliumRocketBaseEffect().pow(this.getBerylliumRocketTierEffect()); }
+  getBerylliumLaunchThreshold(): Num { return BluePhaseService.berylliumLaunchBaseThrust.pow(this.berylliumRocketTier).mul(new Num(1, 4)); }
+  getBerylliumRocketTierEffect(): Num { return Num.TWO.pow(this.berylliumRocketTier); }
+  canLaunchBerylliumRockets(): boolean { return this.getBerylliumRocketBaseEffect().greq(this.getBerylliumLaunchThreshold()); }
+  launchBerylliumRockets(): void {
+    if (!this.canLaunchBerylliumRockets()) return;
+
+    this.berylliumRocketTier = this.berylliumRocketTier.add(Num.ONE);
+    HoldingRecord.beryllium.amount = Num.ZERO.copy();
+    this.berylliumRockets = Num.ZERO.copy();
+    this.berylliumFuelSystems = Num.ZERO.copy();
+    this.berylliumLogicSystems = Num.ZERO.copy();
+    BerylliumHolding.rocketBoost = this.getBerylliumRocketEffect();
+  }
   isLithiumUnlocked(): boolean { return this.isElementUnlocked(this.elementDefinitions[0]); }
   isBerylliumUnlocked(): boolean { return this.isElementUnlocked(this.elementDefinitions[1]); }
+  isBoronUnlocked(): boolean { return this.isElementUnlocked(this.elementDefinitions[2]); }
+  getBoronFiberCost(): Num { return new Num(5, 0).mul(new Num(2.1, 0).pow(this.boronFiberSpools)); }
+  getBoronResinCost(): Num { return new Num(2.5, 1).mul(new Num(2, 0).pow(this.boronResinInfusers)); }
+  getBoronWeaveCost(): Num { return new Num(2.5, 1).mul(new Num(2, 0).pow(this.boronWeaveLooms)); }
+  getBoronResinEffect(): Num { return this.boronResinInfusers.mul(new Num(2, -1)).add(Num.ONE); }
+  getBoronWeaveEffect(): Num { return this.boronWeaveLooms.mul(new Num(1.5, -1)).add(Num.ONE); }
+  getBoronFiberglassBaseEffect(): Num {
+    return this.boronFiberSpools
+      .add(Num.ONE)
+      .mul(this.getBoronResinEffect())
+      .mul(this.getBoronWeaveEffect());
+  }
+  getBoronFiberglassEffect(): Num { return this.getBoronFiberglassBaseEffect().pow(this.getBoronFiberglassTierEffect()); }
+  getBoronLaminateThreshold(): Num { return BluePhaseService.boronLaminateBaseStrength.pow(this.boronFiberglassTier).mul(new Num(1, 4)); }
+  getBoronFiberglassTierEffect(): Num { return Num.TWO.pow(this.boronFiberglassTier); }
+  canLaminateBoronFiberglass(): boolean { return this.getBoronFiberglassBaseEffect().greq(this.getBoronLaminateThreshold()); }
+  laminateBoronFiberglass(): void {
+    if (!this.canLaminateBoronFiberglass()) return;
+
+    this.boronFiberglassTier = this.boronFiberglassTier.add(Num.ONE);
+    HoldingRecord.boron.amount = Num.ZERO.copy();
+    this.boronFiberSpools = Num.ZERO.copy();
+    this.boronResinInfusers = Num.ZERO.copy();
+    this.boronWeaveLooms = Num.ZERO.copy();
+    BoronHolding.fiberglassBoost = this.getBoronFiberglassEffect();
+  }
+  canBuyBoronFiber(): boolean { return this.isBoronUnlocked() && HoldingRecord.boron.amount.greq(this.getBoronFiberCost()); }
+  buyBoronFiber(): void { if (!this.canBuyBoronFiber()) return; HoldingRecord.boron.sub(this.getBoronFiberCost()); this.boronFiberSpools = this.boronFiberSpools.add(Num.ONE); this.toggleParticle(); BoronHolding.fiberglassBoost = this.getBoronFiberglassEffect(); }
+  canBuyBoronResin(): boolean { return this.isBoronUnlocked() && HoldingRecord.protons.amount.greq(this.getBoronResinCost()); }
+  buyBoronResin(): void { if (!this.canBuyBoronResin()) return; HoldingRecord.protons.sub(this.getBoronResinCost()); this.boronResinInfusers = this.boronResinInfusers.add(Num.ONE); this.toggleParticle(); BoronHolding.fiberglassBoost = this.getBoronFiberglassEffect(); }
+  canBuyBoronWeave(): boolean { return this.isBoronUnlocked() && HoldingRecord.electrons.amount.greq(this.getBoronWeaveCost()); }
+  buyBoronWeave(): void { if (!this.canBuyBoronWeave()) return; HoldingRecord.electrons.sub(this.getBoronWeaveCost()); this.boronWeaveLooms = this.boronWeaveLooms.add(Num.ONE); this.toggleParticle(); BoronHolding.fiberglassBoost = this.getBoronFiberglassEffect(); }
   canBuyBerylliumRocket(): boolean { return this.isBerylliumUnlocked() && HoldingRecord.beryllium.amount.greq(this.getBerylliumRocketCost()); }
   buyBerylliumRocket(): void { if (!this.canBuyBerylliumRocket()) return; HoldingRecord.beryllium.sub(this.getBerylliumRocketCost()); this.berylliumRockets = this.berylliumRockets.add(Num.ONE); this.toggleParticle(); BerylliumHolding.rocketBoost = this.getBerylliumRocketEffect(); }
   canBuyBerylliumFuel(): boolean { return this.isBerylliumUnlocked() && HoldingRecord.protons.amount.greq(this.getBerylliumFuelCost()); }
@@ -358,6 +413,11 @@ export class BluePhaseService {
     this.storage.saveNum(this.berylliumRockets, 'berylliumRockets');
     this.storage.saveNum(this.berylliumFuelSystems, 'berylliumFuelSystems');
     this.storage.saveNum(this.berylliumLogicSystems, 'berylliumLogicSystems');
+    this.storage.saveNum(this.berylliumRocketTier, 'berylliumRocketTier');
+    this.storage.saveNum(this.boronFiberSpools, 'boronFiberSpools');
+    this.storage.saveNum(this.boronResinInfusers, 'boronResinInfusers');
+    this.storage.saveNum(this.boronWeaveLooms, 'boronWeaveLooms');
+    this.storage.saveNum(this.boronFiberglassTier, 'boronFiberglassTier');
   }
 
   load(): void {
@@ -372,9 +432,15 @@ export class BluePhaseService {
     this.berylliumRockets = this.storage.loadNum(this.berylliumRockets, 'berylliumRockets');
     this.berylliumFuelSystems = this.storage.loadNum(this.berylliumFuelSystems, 'berylliumFuelSystems');
     this.berylliumLogicSystems = this.storage.loadNum(this.berylliumLogicSystems, 'berylliumLogicSystems');
+    this.berylliumRocketTier = this.storage.loadNum(this.berylliumRocketTier, 'berylliumRocketTier');
+    this.boronFiberSpools = this.storage.loadNum(this.boronFiberSpools, 'boronFiberSpools');
+    this.boronResinInfusers = this.storage.loadNum(this.boronResinInfusers, 'boronResinInfusers');
+    this.boronWeaveLooms = this.storage.loadNum(this.boronWeaveLooms, 'boronWeaveLooms');
+    this.boronFiberglassTier = this.storage.loadNum(this.boronFiberglassTier, 'boronFiberglassTier');
     this.synchronizePurchases();
     this.syncLithiumBatteryState();
     BerylliumHolding.rocketBoost = this.getBerylliumRocketEffect();
+    BoronHolding.fiberglassBoost = this.getBoronFiberglassEffect();
     this.applyNeutronMeltdown();
   }
 
@@ -382,6 +448,7 @@ export class BluePhaseService {
     this.synchronizePurchases();
     this.syncLithiumBatteryState();
     BerylliumHolding.rocketBoost = this.getBerylliumRocketEffect();
+    BoronHolding.fiberglassBoost = this.getBoronFiberglassEffect();
     this.applyNeutronMeltdown();
   }
 }

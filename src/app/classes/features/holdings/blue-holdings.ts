@@ -188,6 +188,7 @@ export class BerylliumHolding extends BlueHolding {
 }
 
 export class BoronHolding extends BlueHolding {
+  static fiberglassBoost: Num = Num.ONE.copy();
   name = 'boron';
   displayName = 'Boron';
   abbreviation = 'B';
@@ -195,7 +196,21 @@ export class BoronHolding extends BlueHolding {
   holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
     .withAmountPrefix('The neutron clump has forged')
     .withAmountSuffix(' Boron')
+    .withEffectPrefix('Fiberglass composites multiply red accelerator generation by')
     .build();
+
+  override action(): Num {
+    MultiplierRecord.redAcceleratorGenerators.correct(this.getEffect());
+    return this.getEffect();
+  }
+
+  override effectString(effect: Num): string {
+    return effect.toString(3) + 'x';
+  }
+
+  getEffect(): Num {
+    return BoronHolding.fiberglassBoost;
+  }
 }
 
 export class CarbonHolding extends BlueHolding {
