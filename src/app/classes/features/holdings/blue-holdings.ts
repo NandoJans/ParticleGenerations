@@ -175,9 +175,7 @@ export class BerylliumHolding extends BlueHolding {
     .build();
 
   override action(): Num {
-    const effect = this.getEffect();
-    MultiplierRecord.redGeneratorExtensionBuffer.correct(effect);
-    return effect;
+    return this.getEffect();
   }
 
   override effectString(effect: Num): string {
