@@ -239,8 +239,8 @@ export class BluePhaseService {
   }
 
   getBerylliumRocketCost(): Num { return new Num(5, 0).mul(new Num(2, 0).pow(this.berylliumRockets)); }
-  getBerylliumFuelCost(): Num { return new Num(1, 1).mul(new Num(2, 0).pow(this.berylliumFuelSystems)); }
-  getBerylliumLogicCost(): Num { return new Num(1, 1).mul(new Num(2, 0).pow(this.berylliumLogicSystems)); }
+  getBerylliumFuelCost(): Num { return new Num(1, 3).mul(new Num(2, 0).pow(this.berylliumFuelSystems)); }
+  getBerylliumLogicCost(): Num { return new Num(1, 3).mul(new Num(2, 0).pow(this.berylliumLogicSystems)); }
   getBerylliumFuelCapacity(): Num { return new Num(2, 0).pow(this.berylliumRockets).mul(new Num(1, 2)); }
   getBerylliumTotalFuel(): Num { return this.berylliumFuel.lt(this.getBerylliumFuelCapacity()) ? this.berylliumFuel : this.getBerylliumFuelCapacity(); }
   getBerylliumFuelEffect(): Num { return this.getBerylliumTotalFuel().add(Num.ONE); }
@@ -268,8 +268,8 @@ export class BluePhaseService {
   isBoronUnlocked(): boolean { return this.isElementUnlocked(this.elementDefinitions[2]); }
   isCarbonUnlocked(): boolean { return this.isElementUnlocked(this.elementDefinitions[3]); }
   getBoronFiberCost(): Num { return new Num(5, 0).mul(new Num(2.1, 0).pow(this.boronFiberSpools)); }
-  getBoronResinCost(): Num { return new Num(2.5, 1).mul(new Num(2, 0).pow(this.boronResinInfusers)); }
-  getBoronWeaveCost(): Num { return new Num(2.5, 1).mul(new Num(2, 0).pow(this.boronWeaveLooms)); }
+  getBoronResinCost(): Num { return new Num(1, 5).mul(new Num(2, 0).pow(this.boronResinInfusers)); }
+  getBoronWeaveCost(): Num { return new Num(1, 5).mul(new Num(2, 0).pow(this.boronWeaveLooms)); }
   getBoronResinEffect(): Num { return this.boronResinInfusers.mul(new Num(2, -1)).add(Num.ONE); }
   getBoronWeaveEffect(): Num { return this.boronWeaveLooms.mul(new Num(1.5, -1)).add(Num.ONE); }
   getBoronFiberglassCapacity(): Num { return new Num(2, 0).pow(this.boronFiberSpools).mul(new Num(1, 2)); }
