@@ -250,4 +250,56 @@
     </div>
   </section>
 
+
+  <section *ngIf="selectedElement.holding.name === 'carbon' && bluePhase.isCarbonUnlocked()" class="carbon-lab">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">CARBON BIOSPHERE</p>
+        <h2>Life Growth and Biomass Burn</h2>
+      </div>
+      <p>Carbon grows Life on purchased land. Life slightly boosts booster acceleration, or can be burned into energy that charges Lithium batteries until they are full.</p>
+    </div>
+
+    <div class="battery-showcase carbon-showcase">
+      <div class="battery-visual carbon-visual" aria-hidden="true">
+        <div class="life-world"><span></span><span></span><span></span></div>
+        <div class="burn-flame" [class.active]="bluePhase.carbonBurningLife">BURN</div>
+      </div>
+      <div class="charge-panel">
+        <span>LIFE BIOMASS</span>
+        <strong>{{ bluePhase.carbonLife.toString(3) }} Life</strong>
+        <p>Life grows at {{ bluePhase.getCarbonLifeGeneration().toString(3) }}/s from {{ bluePhase.getCarbonLandArea().toString() }} land area and Carbon abundance. Current Life boosts booster acceleration by {{ bluePhase.getCarbonLifeEffect().toString(3) }}x.</p>
+        <div class="charge-track"><span [style.width.%]="getLithiumChargeBurnPercent()"></span></div>
+        <div class="discharge-panel">
+          <span>BIOMASS COMBUSTION</span>
+          <strong>{{ bluePhase.carbonBurningLife ? 'BURNING' : 'GROWING' }}</strong>
+          <p>Burning pauses Life growth, spends Life, and adds {{ bluePhase.getCarbonBurnChargeMultiplier().toString(2) }} Lithium charge per Life until batteries are full or Life runs out.</p>
+          <button type="button" class="discharge-button" [disabled]="!bluePhase.carbonBurningLife && !bluePhase.canToggleCarbonBurn()" (click)="bluePhase.toggleCarbonBurn()">
+            {{ bluePhase.carbonBurningLife ? 'STOP BURNING' : 'BURN LIFE FOR CHARGE' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="battery-grid">
+      <article class="battery-card carbon-card">
+        <span>Land Plots</span>
+        <strong>{{ bluePhase.carbonLandPlots.toString() }}</strong>
+        <p class="resource-balance">{{ protons.amount.toString(3) }} Protons</p>
+        <button (click)="bluePhase.buyCarbonLand()" [disabled]="!bluePhase.canBuyCarbonLand()">Buy for {{ bluePhase.getCarbonLandCost().toString() }} Protons</button>
+      </article>
+      <article class="battery-card carbon-card">
+        <span>Land Area</span>
+        <strong>{{ bluePhase.getCarbonLandArea().toString() }}</strong>
+        <p>Electrons determine usable area; spend them to enlarge each land plot.</p>
+        <button (click)="bluePhase.buyCarbonLandArea()" [disabled]="!bluePhase.canBuyCarbonLandArea()">Expand for {{ bluePhase.getCarbonLandAreaCost().toString() }} Electrons</button>
+      </article>
+      <article class="battery-card carbon-card">
+        <span>Lithium Charge</span>
+        <strong>{{ bluePhase.getLithiumTotalCharge().toString() }} / {{ bluePhase.getLithiumTotalCapacity().toString() }}</strong>
+        <p>Burning automatically stops when Lithium batteries are fully charged.</p>
+      </article>
+    </div>
+  </section>
+
 </section>

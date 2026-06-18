@@ -11,6 +11,7 @@ import {Transaction} from "../interfaces/transaction";
 import {StatsService} from "../../../services/stats.service";
 import { Enhancement } from "../enhancements/enhancement";
 import {EnhancementRecord} from "../../records/enhancement-record";
+import {CarbonHolding} from '../holdings/blue-holdings';
 
 export class BoosterAccelerationUpgrade extends Upgrade {
   baseCost: Num = new Num(1, 10);
@@ -49,7 +50,7 @@ export class BoosterAccelerationUpgrade extends Upgrade {
   }
 
   action(): Num {
-    const effect: Num = this.buffer.mul(this.amount);
+    const effect: Num = this.buffer.mul(CarbonHolding.lifeBoost).mul(this.amount);
     const effect2: Num = this.freeBuys.mul(this.amount);
 
     this.freeBuys = this.baseFreeBuys.copy();

@@ -227,6 +227,7 @@ export class BoronHolding extends BlueHolding {
 }
 
 export class CarbonHolding extends BlueHolding {
+  static lifeBoost: Num = Num.ONE.copy();
   name = 'carbon';
   displayName = 'Carbon';
   abbreviation = 'C';
@@ -234,15 +235,21 @@ export class CarbonHolding extends BlueHolding {
   holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
     .withAmountPrefix('The neutron clump has forged')
     .withAmountSuffix(' Carbon')
-    .withEffectPrefix('Forged Carbon multiplies proton and electron generation by')
+    .withEffectPrefix('Life biomass multiplies booster acceleration power by')
+    .addLine('Forged Carbon multiplies proton and electron generation by', () => this.particleGenerationEffect.toString(2) + 'x', '')
     .build();
 
   override action(): Num {
-    return this.boostParticleGenerationFromForgedElement();
+    this.boostParticleGenerationFromForgedElement();
+    return this.getEffect();
   }
 
   override effectString(effect: Num): string {
     return effect.toString(3) + 'x';
+  }
+
+  getEffect(): Num {
+    return CarbonHolding.lifeBoost;
   }
 }
 
