@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {Holding} from "../../../classes/features/holding";
 import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 import {HoldingDisplay} from "../../../classes/displays/holding-display";
@@ -10,7 +10,7 @@ import {HoldingDisplayLine} from "../../../interfaces/holding-display-line";
     styleUrls: ['./number-display.component.css'],
     standalone: false
 })
-export class NumberDisplayComponent implements OnInit {
+export class NumberDisplayComponent implements OnInit, OnChanges {
   @Input() holding: Holding = HoldingRecord.redParticles;
   holdingDisplay: HoldingDisplay;
 
@@ -37,6 +37,14 @@ export class NumberDisplayComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.refreshHoldingDisplay();
+  }
+
+  ngOnChanges() {
+    this.refreshHoldingDisplay();
+  }
+
+  private refreshHoldingDisplay(): void {
     this.holdingDisplay = this.holding.getHoldingDisplay();
   }
 }

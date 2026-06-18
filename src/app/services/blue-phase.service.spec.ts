@@ -10,7 +10,7 @@ import {Multiplier} from '../classes/features/multiplier';
 import {Automator} from '../classes/features/automator';
 import {PrestigeLayersService} from './prestige-layers.service';
 import {ChargerRecord} from '../classes/records/charger/charger-record';
-import {LithiumHolding} from '../classes/features/holdings/blue-holdings';
+import {CarbonHolding, LithiumHolding} from '../classes/features/holdings/blue-holdings';
 import {MultiplierRecord} from '../classes/records/multipliers/multiplier-record';
 
 describe('BluePhaseService', () => {
@@ -54,8 +54,13 @@ describe('BluePhaseService', () => {
     service.lithiumBatteries = Num.ZERO.copy();
     service.lithiumChargeGenerators = Num.ZERO.copy();
     service.lithiumCapacityUpgrades = Num.ZERO.copy();
+    service.carbonLandPlots = Num.ZERO.copy();
+    service.carbonLandAreaUpgrades = Num.ZERO.copy();
+    service.carbonLife = Num.ZERO.copy();
+    service.carbonBurningLife = false;
     LithiumHolding.batteryTier = Num.ZERO.copy();
     LithiumHolding.batteryCharge = Num.ZERO.copy();
+    CarbonHolding.lifeBoost = Num.ONE.copy();
     service.synchronizePurchases();
     MultiplierRecord.redAcceleratorGenerators.reset();
     MultiplierRecord.redGeneratorExtensionBuffer.reset();
@@ -99,8 +104,13 @@ describe('BluePhaseService', () => {
     service.lithiumBatteries = Num.ZERO.copy();
     service.lithiumChargeGenerators = Num.ZERO.copy();
     service.lithiumCapacityUpgrades = Num.ZERO.copy();
+    service.carbonLandPlots = Num.ZERO.copy();
+    service.carbonLandAreaUpgrades = Num.ZERO.copy();
+    service.carbonLife = Num.ZERO.copy();
+    service.carbonBurningLife = false;
     LithiumHolding.batteryTier = Num.ZERO.copy();
     LithiumHolding.batteryCharge = Num.ZERO.copy();
+    CarbonHolding.lifeBoost = Num.ONE.copy();
     MultiplierRecord.redAcceleratorGenerators.reset();
     MultiplierRecord.redGeneratorExtensionBuffer.reset();
     MultiplierRecord.nucleusGeneration.reset();
@@ -371,6 +381,39 @@ describe('BluePhaseService', () => {
     expect(HoldingRecord.electrons.amount.toNumber()).toBe(8);
     expect(HoldingRecord.beryllium.amount.toNumber()).toBe(9);
     expect(service.getLithiumDischargeThreshold().toNumber()).toBe(200000);
+  });
+
+  it('grows carbon life from land and pauses growth while burning into lithium charge', () => {
+    HoldingRecord.neutronClump.amount = new Num(1, 4);
+    HoldingRecord.carbon.amount = new Num(1, 2);
+    HoldingRecord.lithium.amount = new Num(1, 2);
+    service.lithiumBatteries = Num.ONE.copy();
+    service.carbonLandPlots = Num.TWO.copy();
+    service.carbonLandAreaUpgrades = Num.ONE.copy();
+
+    service.tick(Num.ONE);
+
+    expect(service.carbonLife.toNumber()).toBeCloseTo(1.2, 8);
+    expect(service.getCarbonLifeEffect().toNumber()).toBeGreaterThan(1);
+
+    service.toggleCarbonBurn();
+    service.tick(Num.ONE);
+
+    expect(service.carbonBurningLife).toBeFalse();
+    expect(service.carbonLife.toNumber()).toBeCloseTo(0.2, 8);
+    expect(service.lithiumCharge.toNumber()).toBeGreaterThan(10);
+  });
+
+  it('uses carbon life to boost booster acceleration effect without changing its base buffer', () => {
+    service.carbonLife = new Num(1, 4);
+    CarbonHolding.lifeBoost = service.getCarbonLifeEffect();
+    UpgradeRecord.boosterAccelerationUpgrade.amount = Num.TWO.copy();
+    UpgradeRecord.boosterAccelerationUpgrade.buffer = UpgradeRecord.boosterAccelerationUpgrade.baseBuffer.copy();
+
+    const effect = UpgradeRecord.boosterAccelerationUpgrade.action();
+
+    expect(effect.toNumber()).toBeCloseTo(0.07, 8);
+    expect(UpgradeRecord.boosterAccelerationUpgrade.buffer.toNumber()).toBeCloseTo(0.025, 8);
   });
 
   it('increases lithium red generator boost from battery tiers', () => {
