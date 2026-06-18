@@ -684,3 +684,25 @@ button:disabled {
   background: linear-gradient(#d9fff0, #ffcf7b 45%, var(--proton));
   animation: rocketBurn 0.45s ease-in-out infinite alternate;
 }
+
+.boron-lab .battery-showcase {
+  border-color: rgba(102, 199, 255, 0.36);
+}
+
+.boron-lab .charge-panel strong,
+.boron-card strong {
+  color: var(--electron);
+}
+
+.fiberglass-fill {
+  position: absolute;
+  left: 10%;
+  bottom: 1.1rem;
+  display: block;
+  height: 0.5rem;
+  max-width: 80%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--electron), #d9f3ff, var(--lithium));
+  box-shadow: 0 0 14px rgba(102, 199, 255, 0.55);
+  transition: width 0.25s ease;
+}

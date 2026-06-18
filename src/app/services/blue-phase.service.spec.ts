@@ -54,6 +54,10 @@ describe('BluePhaseService', () => {
     service.lithiumBatteries = Num.ZERO.copy();
     service.lithiumChargeGenerators = Num.ZERO.copy();
     service.lithiumCapacityUpgrades = Num.ZERO.copy();
+    service.boronFiberSpools = Num.ZERO.copy();
+    service.boronFiberglass = Num.ZERO.copy();
+    service.boronResinInfusers = Num.ZERO.copy();
+    service.boronWeaveLooms = Num.ZERO.copy();
     service.carbonLandPlots = Num.ZERO.copy();
     service.carbonLandAreaUpgrades = Num.ZERO.copy();
     service.carbonLife = Num.ZERO.copy();
@@ -104,6 +108,10 @@ describe('BluePhaseService', () => {
     service.lithiumBatteries = Num.ZERO.copy();
     service.lithiumChargeGenerators = Num.ZERO.copy();
     service.lithiumCapacityUpgrades = Num.ZERO.copy();
+    service.boronFiberSpools = Num.ZERO.copy();
+    service.boronFiberglass = Num.ZERO.copy();
+    service.boronResinInfusers = Num.ZERO.copy();
+    service.boronWeaveLooms = Num.ZERO.copy();
     service.carbonLandPlots = Num.ZERO.copy();
     service.carbonLandAreaUpgrades = Num.ZERO.copy();
     service.carbonLife = Num.ZERO.copy();
@@ -326,6 +334,26 @@ describe('BluePhaseService', () => {
     expect(service.canBuyBerylliumLogic()).toBeFalse();
   });
 
+
+  it('generates Boron fiberglass from fiber spools to boost red accelerators', () => {
+    HoldingRecord.neutronClump.amount = new Num(1, 3);
+    HoldingRecord.boron.amount = new Num(2, 1);
+    HoldingRecord.protons.amount = new Num(1, 2);
+    HoldingRecord.electrons.amount = new Num(1, 2);
+
+    service.buyBoronFiber();
+    service.buyBoronResin();
+    service.buyBoronWeave();
+
+    expect(service.getBoronFiberglassBaseEffect().toNumber()).toBeCloseTo(1.38, 8);
+
+    service.tick(Num.ONE);
+
+    expect(service.boronFiberglass.toNumber()).toBeCloseTo(2, 8);
+    expect(service.getBoronTotalFiberglass().toNumber()).toBeCloseTo(2, 8);
+    expect(service.getBoronFiberglassBaseEffect().toNumber()).toBeCloseTo(4.14, 8);
+    expect(HoldingRecord.boron.action().toNumber()).toBeCloseTo(4.14, 8);
+  });
 
   it('boosts red generators with lithium battery charge but not raw Lithium', () => {
     HoldingRecord.lithium.amount = new Num(1, 6);
