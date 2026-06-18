@@ -28,7 +28,7 @@ export interface BlueElementDefinition {
 })
 export class BluePhaseService {
   static readonly unlockRequirement = new Num(1, 1000);
-  static readonly neutronRestorationTarget = new Num(1, 6);
+  static readonly neutronRestorationTarget = new Num(1, 10);
   static readonly minimumMeltdownPower = new Num(1, -1);
   static readonly lithiumDischargeBaseCharge = new Num(1, 1);
   static readonly berylliumLaunchBaseThrust = new Num(1, 1);
