@@ -67,4 +67,12 @@ export class BlueElementsComponent {
     const charge = this.bluePhase.getLithiumTotalCharge().toNumber();
     return Math.max(0, Math.min(100, (charge / capacity) * 100));
   }
+
+  getBerylliumFuelPercent(): number {
+    const capacity = this.bluePhase.getBerylliumFuelCapacity().toNumber();
+    if (!Number.isFinite(capacity) || capacity <= 0) return 0;
+
+    const fuel = this.bluePhase.getBerylliumTotalFuel().toNumber();
+    return Math.max(0, Math.min(100, (fuel / capacity) * 100));
+  }
 }

@@ -142,6 +142,7 @@
     <div class="rocket-showcase">
       <div class="rocket-visual" aria-hidden="true">
         <div class="rocket-shell">
+          <div style="position:absolute;inset:0 auto 0 0;background:rgba(255,57,78,.55)" [style.width.%]="getBerylliumFuelPercent()"></div>
           <div class="rocket-stars"><span></span><span></span><span></span></div>
           <div class="rocket-body">
             <span class="rocket-window"></span>
@@ -162,7 +163,7 @@
       <div class="charge-panel">
         <span>ROCKET THRUST</span>
         <strong>{{ bluePhase.getBerylliumRocketEffect().toString(3) }}x</strong>
-        <p>Rockets multiply red extension power. Fuel systems multiply rocket thrust by {{ bluePhase.getBerylliumFuelEffect().toString(2) }}x, while guidance logic multiplies it by {{ bluePhase.getBerylliumLogicEffect().toString(2) }}x.</p>
+        <p>Fueled rockets multiply red extension power. Fuel tanks hold {{ bluePhase.getBerylliumTotalFuel().toString() }} / {{ bluePhase.getBerylliumFuelCapacity().toString() }} fuel for a {{ bluePhase.getBerylliumFuelEffect().toString(2) }}x fuel boost, while guidance logic multiplies it by {{ bluePhase.getBerylliumLogicEffect().toString(2) }}x.</p>
         <div class="discharge-panel">
           <span>ROCKET TIER</span>
           <strong>{{ bluePhase.berylliumRocketTier.toString() }} // ^{{ bluePhase.getBerylliumRocketTierEffect().toString(2) }}</strong>
@@ -178,13 +179,13 @@
       <article class="battery-card">
         <span>Rocket Frames</span>
         <strong>{{ bluePhase.berylliumRockets.toString() }}</strong>
-        <p>Beryllium hulls ready for extension launches.</p>
+        <p>Beryllium hulls add fuel capacity for extension launches.</p>
         <button (click)="bluePhase.buyBerylliumRocket()" [disabled]="!bluePhase.canBuyBerylliumRocket()">Build for {{ bluePhase.getBerylliumRocketCost().toString() }} Beryllium</button>
       </article>
       <article class="battery-card">
         <span>Fuel Systems</span>
         <strong>{{ bluePhase.berylliumFuelSystems.toString() }}</strong>
-        <p>Fuel thrust: {{ bluePhase.getBerylliumFuelEffect().toString(2) }}x</p>
+        <p>Refineries add fuel over time: {{ bluePhase.getBerylliumTotalFuel().toString() }} / {{ bluePhase.getBerylliumFuelCapacity().toString() }}</p>
         <button (click)="bluePhase.buyBerylliumFuel()" [disabled]="!bluePhase.canBuyBerylliumFuel()">Refine for {{ bluePhase.getBerylliumFuelCost().toString() }} Protons</button>
       </article>
       <article class="battery-card">
