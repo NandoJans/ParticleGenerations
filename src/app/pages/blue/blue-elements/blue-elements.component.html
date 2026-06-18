@@ -209,6 +209,7 @@
     <div class="battery-showcase">
       <div class="battery-visual" aria-hidden="true">
         <div class="fiber-spool"><span></span><span></span><span></span></div>
+        <span class="fiberglass-fill" [style.width.%]="getBoronFiberglassPercent()"></span>
         <div class="woven-panel"><i></i><i></i><i></i><i></i></div>
         <div class="resin-drop">p+</div>
         <div class="loom-spark">e-</div>
@@ -216,7 +217,7 @@
       <div class="charge-panel">
         <span>FIBERGLASS ACCELERATOR BOOST</span>
         <strong>{{ bluePhase.getBoronFiberglassEffect().toString(3) }}x</strong>
-        <p>Fiber spools provide the base composite count. Resin infusers multiply that by {{ bluePhase.getBoronResinEffect().toString(2) }}x, while weave looms multiply it by {{ bluePhase.getBoronWeaveEffect().toString(2) }}x.</p>
+        <p>Fiber spools generate {{ bluePhase.getBoronTotalFiberglass().toString() }} / {{ bluePhase.getBoronFiberglassCapacity().toString() }} fiberglass. Resin infusers multiply that by {{ bluePhase.getBoronResinEffect().toString(2) }}x, while weave looms multiply it by {{ bluePhase.getBoronWeaveEffect().toString(2) }}x.</p>
         <div class="discharge-panel">
           <span>FIBERGLASS TIER</span>
           <strong>{{ bluePhase.boronFiberglassTier.toString() }} // ^{{ bluePhase.getBoronFiberglassTierEffect().toString(2) }}</strong>
@@ -233,6 +234,7 @@
         <span>Fiber Spools</span>
         <strong>{{ bluePhase.boronFiberSpools.toString() }}</strong>
         <p class="resource-balance">{{ boron.amount.toString(3) }} Boron</p>
+        <p>Generates fiberglass: {{ bluePhase.getBoronTotalFiberglass().toString() }} / {{ bluePhase.getBoronFiberglassCapacity().toString() }}</p>
         <button (click)="bluePhase.buyBoronFiber()" [disabled]="!bluePhase.canBuyBoronFiber()">Pull for {{ bluePhase.getBoronFiberCost().toString() }} Boron</button>
       </article>
       <article class="battery-card boron-card">

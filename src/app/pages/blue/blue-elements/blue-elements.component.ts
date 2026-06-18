@@ -84,4 +84,12 @@ export class BlueElementsComponent {
     const fuel = this.bluePhase.getBerylliumTotalFuel().toNumber();
     return Math.max(0, Math.min(100, (fuel / capacity) * 100));
   }
+
+  getBoronFiberglassPercent(): number {
+    const capacity = this.bluePhase.getBoronFiberglassCapacity().toNumber();
+    if (!Number.isFinite(capacity) || capacity <= 0) return 0;
+
+    const fiberglass = this.bluePhase.getBoronTotalFiberglass().toNumber();
+    return Math.max(0, Math.min(100, (fiberglass / capacity) * 100));
+  }
 }

@@ -50,6 +50,7 @@ export class BluePhaseService {
   berylliumLogicSystems = Num.ZERO.copy();
   berylliumRocketTier = Num.ZERO.copy();
   boronFiberSpools = Num.ZERO.copy();
+  boronFiberglass = Num.ZERO.copy();
   boronResinInfusers = Num.ZERO.copy();
   boronWeaveLooms = Num.ZERO.copy();
   boronFiberglassTier = Num.ZERO.copy();
@@ -95,6 +96,7 @@ export class BluePhaseService {
     this.generateCarbonLife(speed);
     this.burnCarbonLife(speed);
     this.generateBerylliumFuel(speed);
+    this.generateBoronFiberglass(speed);
     this.syncLithiumBatteryState();
     BerylliumHolding.rocketBoost = this.getBerylliumRocketEffect();
     BoronHolding.fiberglassBoost = this.getBoronFiberglassEffect();
@@ -270,8 +272,10 @@ export class BluePhaseService {
   getBoronWeaveCost(): Num { return new Num(2.5, 1).mul(new Num(2, 0).pow(this.boronWeaveLooms)); }
   getBoronResinEffect(): Num { return this.boronResinInfusers.mul(new Num(2, -1)).add(Num.ONE); }
   getBoronWeaveEffect(): Num { return this.boronWeaveLooms.mul(new Num(1.5, -1)).add(Num.ONE); }
+  getBoronFiberglassCapacity(): Num { return new Num(2, 0).pow(this.boronFiberSpools); }
+  getBoronTotalFiberglass(): Num { return this.boronFiberglass.lt(this.getBoronFiberglassCapacity()) ? this.boronFiberglass : this.getBoronFiberglassCapacity(); }
   getBoronFiberglassBaseEffect(): Num {
-    return this.boronFiberSpools
+    return this.getBoronTotalFiberglass()
       .add(Num.ONE)
       .mul(this.getBoronResinEffect())
       .mul(this.getBoronWeaveEffect());
@@ -286,6 +290,7 @@ export class BluePhaseService {
     this.boronFiberglassTier = this.boronFiberglassTier.add(Num.ONE);
     HoldingRecord.boron.amount = Num.ZERO.copy();
     this.boronFiberSpools = Num.ZERO.copy();
+    this.boronFiberglass = Num.ZERO.copy();
     this.boronResinInfusers = Num.ZERO.copy();
     this.boronWeaveLooms = Num.ZERO.copy();
     BoronHolding.fiberglassBoost = this.getBoronFiberglassEffect();
@@ -409,6 +414,14 @@ export class BluePhaseService {
     if (this.berylliumFuel.gt(capacity)) this.berylliumFuel = capacity.copy();
   }
 
+  private generateBoronFiberglass(speed: Num): void {
+    if (this.boronFiberSpools.lt(Num.ONE)) return;
+    const gain = this.boronFiberSpools.mul(new Num(5, 0)).mul(speed);
+    this.boronFiberglass = this.boronFiberglass.add(gain);
+    const capacity = this.getBoronFiberglassCapacity();
+    if (this.boronFiberglass.gt(capacity)) this.boronFiberglass = capacity.copy();
+  }
+
   private syncLithiumBatteryState(): void {
     LithiumHolding.batteryCharge = this.getLithiumTotalCharge();
     LithiumHolding.batteryTier = this.lithiumBatteryTier.copy();
@@ -493,6 +506,7 @@ export class BluePhaseService {
     this.storage.saveNum(this.berylliumLogicSystems, 'berylliumLogicSystems');
     this.storage.saveNum(this.berylliumRocketTier, 'berylliumRocketTier');
     this.storage.saveNum(this.boronFiberSpools, 'boronFiberSpools');
+    this.storage.saveNum(this.boronFiberglass, 'boronFiberglass');
     this.storage.saveNum(this.boronResinInfusers, 'boronResinInfusers');
     this.storage.saveNum(this.boronWeaveLooms, 'boronWeaveLooms');
     this.storage.saveNum(this.boronFiberglassTier, 'boronFiberglassTier');
@@ -517,6 +531,7 @@ export class BluePhaseService {
     this.berylliumLogicSystems = this.storage.loadNum(this.berylliumLogicSystems, 'berylliumLogicSystems');
     this.berylliumRocketTier = this.storage.loadNum(this.berylliumRocketTier, 'berylliumRocketTier');
     this.boronFiberSpools = this.storage.loadNum(this.boronFiberSpools, 'boronFiberSpools');
+    this.boronFiberglass = this.storage.loadNum(this.boronFiberglass, 'boronFiberglass');
     this.boronResinInfusers = this.storage.loadNum(this.boronResinInfusers, 'boronResinInfusers');
     this.boronWeaveLooms = this.storage.loadNum(this.boronWeaveLooms, 'boronWeaveLooms');
     this.boronFiberglassTier = this.storage.loadNum(this.boronFiberglassTier, 'boronFiberglassTier');
