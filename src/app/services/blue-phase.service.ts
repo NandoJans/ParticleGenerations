@@ -278,7 +278,8 @@ export class BluePhaseService {
     return this.getBoronTotalFiberglass()
       .add(Num.ONE)
       .mul(this.getBoronResinEffect())
-      .mul(this.getBoronWeaveEffect());
+      .mul(this.getBoronWeaveEffect())
+      .pow(new Num(2.5, 0));
   }
   getBoronFiberglassEffect(): Num { return this.getBoronFiberglassBaseEffect().pow(this.getBoronFiberglassTierEffect()); }
   getBoronLaminateThreshold(): Num { return BluePhaseService.boronLaminateBaseStrength.pow(this.boronFiberglassTier).mul(new Num(1, 4)); }
