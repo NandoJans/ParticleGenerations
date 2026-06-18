@@ -239,7 +239,7 @@ export class BluePhaseService {
   getBerylliumRocketCost(): Num { return new Num(5, 0).mul(new Num(2, 0).pow(this.berylliumRockets)); }
   getBerylliumFuelCost(): Num { return new Num(1, 1).mul(new Num(2, 0).pow(this.berylliumFuelSystems)); }
   getBerylliumLogicCost(): Num { return new Num(1, 1).mul(new Num(2, 0).pow(this.berylliumLogicSystems)); }
-  getBerylliumFuelCapacity(): Num { return this.berylliumRockets.mul(new Num(1, 2)); }
+  getBerylliumFuelCapacity(): Num { return new Num(2, 0).pow(this.berylliumRockets); }
   getBerylliumTotalFuel(): Num { return this.berylliumFuel.lt(this.getBerylliumFuelCapacity()) ? this.berylliumFuel : this.getBerylliumFuelCapacity(); }
   getBerylliumFuelEffect(): Num { return this.getBerylliumTotalFuel().add(Num.ONE); }
   getBerylliumLogicEffect(): Num { return this.berylliumLogicSystems.mul(new Num(1.5, -1)).add(Num.ONE); }
