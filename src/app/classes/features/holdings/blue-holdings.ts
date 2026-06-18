@@ -10,11 +10,23 @@ import {MultiplierRecord} from '../../records/multipliers/multiplier-record';
 abstract class BlueHolding extends Holding {
   amount = Num.ZERO.copy();
   startAmount = Num.ZERO.copy();
+  particleGenerationEffect: Num = Num.ONE.copy();
 
   getStyle(): Styles {
     return Styles.BLUE;
   }
+
+  getForgedParticleGenerationEffect(): Num {
+    return this.amount.log10().add(Num.ONE);
+  }
+
+  protected boostParticleGenerationFromForgedElement(): Num {
+    this.particleGenerationEffect = this.getForgedParticleGenerationEffect();
+    MultiplierRecord.nucleusGeneration.correct(this.particleGenerationEffect);
+    return this.particleGenerationEffect;
+  }
 }
+
 
 export class ProtonHolding extends BlueHolding {
   name = 'protons';
@@ -134,16 +146,13 @@ export class LithiumHolding extends BlueHolding {
     .withAmountSuffix(' Lithium')
     .withEffectPrefix('The battery charge multiplies red particle generators by')
     .addLine('Battery tier multiplier: ', () => this.getBatteryTierEffect().toString(2) + 'x', '')
-    .addLine('Forged Lithium multiplies nucleus generators by', () => this.nucleusEffect.toString(2) + 'x', '')
+    .addLine('Forged Lithium multiplies proton and electron generation by', () => this.particleGenerationEffect.toString(2) + 'x', '')
     .build();
-
-  nucleusEffect: Num = new Num(1, 0);
 
   override action(): Num {
     const effect = this.getEffect();
     MultiplierRecord.redParticleGenerators.correct(effect);
-    this.nucleusEffect = this.amount.log10().add(Num.ONE);
-    MultiplierRecord.nucleusGeneration.correct(this.nucleusEffect);
+    this.boostParticleGenerationFromForgedElement();
     return effect;
   }
 
@@ -172,9 +181,11 @@ export class BerylliumHolding extends BlueHolding {
     .withAmountPrefix('The neutron clump has forged')
     .withAmountSuffix(' Beryllium')
     .withEffectPrefix('Beryllium rocket fleets multiply red extension power by')
+    .addLine('Forged Beryllium multiplies proton and electron generation by', () => this.particleGenerationEffect.toString(2) + 'x', '')
     .build();
 
   override action(): Num {
+    this.boostParticleGenerationFromForgedElement();
     return this.getEffect();
   }
 
@@ -197,10 +208,12 @@ export class BoronHolding extends BlueHolding {
     .withAmountPrefix('The neutron clump has forged')
     .withAmountSuffix(' Boron')
     .withEffectPrefix('Fiberglass composites multiply red accelerator generation by')
+    .addLine('Forged Boron multiplies proton and electron generation by', () => this.particleGenerationEffect.toString(2) + 'x', '')
     .build();
 
   override action(): Num {
     MultiplierRecord.redAcceleratorGenerators.correct(this.getEffect());
+    this.boostParticleGenerationFromForgedElement();
     return this.getEffect();
   }
 
@@ -221,7 +234,16 @@ export class CarbonHolding extends BlueHolding {
   holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
     .withAmountPrefix('The neutron clump has forged')
     .withAmountSuffix(' Carbon')
+    .withEffectPrefix('Forged Carbon multiplies proton and electron generation by')
     .build();
+
+  override action(): Num {
+    return this.boostParticleGenerationFromForgedElement();
+  }
+
+  override effectString(effect: Num): string {
+    return effect.toString(3) + 'x';
+  }
 }
 
 export class NitrogenHolding extends BlueHolding {
@@ -232,5 +254,14 @@ export class NitrogenHolding extends BlueHolding {
   holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
     .withAmountPrefix('The neutron clump has forged')
     .withAmountSuffix(' Nitrogen')
+    .withEffectPrefix('Forged Nitrogen multiplies proton and electron generation by')
     .build();
+
+  override action(): Num {
+    return this.boostParticleGenerationFromForgedElement();
+  }
+
+  override effectString(effect: Num): string {
+    return effect.toString(3) + 'x';
+  }
 }

@@ -59,6 +59,7 @@ describe('BluePhaseService', () => {
     service.synchronizePurchases();
     MultiplierRecord.redAcceleratorGenerators.reset();
     MultiplierRecord.redGeneratorExtensionBuffer.reset();
+    MultiplierRecord.nucleusGeneration.reset();
   });
 
   afterEach(() => {
@@ -102,6 +103,7 @@ describe('BluePhaseService', () => {
     LithiumHolding.batteryCharge = Num.ZERO.copy();
     MultiplierRecord.redAcceleratorGenerators.reset();
     MultiplierRecord.redGeneratorExtensionBuffer.reset();
+    MultiplierRecord.nucleusGeneration.reset();
   });
 
   it('does not automatically enter Blue when the unlock threshold is reached', () => {
@@ -326,6 +328,22 @@ describe('BluePhaseService', () => {
     service.tick(Num.ONE);
 
     expect(HoldingRecord.lithium.getEffect().toNumber()).toBeGreaterThan(1);
+  });
+
+  it('boosts proton and electron generation from every forged element', () => {
+    HoldingRecord.lithium.amount = new Num(1, 2);
+    HoldingRecord.beryllium.amount = new Num(1, 3);
+    HoldingRecord.boron.amount = new Num(1, 4);
+    HoldingRecord.carbon.amount = new Num(1, 5);
+    HoldingRecord.nitrogen.amount = new Num(1, 6);
+
+    HoldingRecord.lithium.action();
+    HoldingRecord.beryllium.action();
+    HoldingRecord.boron.action();
+    HoldingRecord.carbon.action();
+    HoldingRecord.nitrogen.action();
+
+    expect(MultiplierRecord.nucleusGeneration.getNum(false).toNumber()).toBeCloseTo(2520, 8);
   });
 
   it('discharges charged lithium batteries into tiers and resets only lithium battery progress', () => {
