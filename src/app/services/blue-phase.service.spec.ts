@@ -47,6 +47,7 @@ describe('BluePhaseService', () => {
     MilestoneRecord.denseParticleCollision.unlocked = false;
     service.berylliumRockets = Num.ZERO.copy();
     service.berylliumFuelSystems = Num.ZERO.copy();
+    service.berylliumFuel = Num.ZERO.copy();
     service.berylliumLogicSystems = Num.ZERO.copy();
     service.lithiumBatteryTier = Num.ZERO.copy();
     service.lithiumCharge = Num.ZERO.copy();
@@ -90,6 +91,7 @@ describe('BluePhaseService', () => {
     UpgradeRecord.blueCollisionCalibration.bought = Num.ZERO.copy();
     service.berylliumRockets = Num.ZERO.copy();
     service.berylliumFuelSystems = Num.ZERO.copy();
+    service.berylliumFuel = Num.ZERO.copy();
     service.berylliumLogicSystems = Num.ZERO.copy();
     service.lithiumBatteryTier = Num.ZERO.copy();
     service.lithiumCharge = Num.ZERO.copy();
@@ -263,7 +265,7 @@ describe('BluePhaseService', () => {
     expect(service.getCurrentElementName()).toBe('Lithium, Beryllium, Boron');
   });
 
-  it('uses Beryllium rockets, Proton fuel, and Electron logic to boost red extensions', () => {
+  it('fills Beryllium rockets with fuel to boost red extensions', () => {
     HoldingRecord.neutronClump.amount = new Num(1, 2);
     HoldingRecord.beryllium.amount = new Num(2, 1);
     HoldingRecord.protons.amount = new Num(1, 2);
@@ -272,15 +274,32 @@ describe('BluePhaseService', () => {
     service.buyBerylliumRocket();
     service.buyBerylliumFuel();
     service.buyBerylliumLogic();
-    service.tick(Num.ZERO);
 
-    expect(service.getBerylliumFuelEffect().toNumber()).toBeCloseTo(1.25, 8);
+    expect(service.getBerylliumFuelEffect().toNumber()).toBe(1);
+
+    service.tick(Num.ONE);
+
+    expect(service.berylliumFuel.toNumber()).toBeCloseTo(5, 8);
+    expect(service.getBerylliumFuelEffect().toNumber()).toBeCloseTo(6, 8);
     expect(service.getBerylliumLogicEffect().toNumber()).toBeCloseTo(1.15, 8);
-    expect(service.getBerylliumRocketEffect().toNumber()).toBeCloseTo(2.4375, 8);
-    expect(HoldingRecord.beryllium.action().toNumber()).toBeCloseTo(2.4375, 8);
-    expect(UpgradeRecord.redGeneratorExtension.getEffectiveBuffer().toNumber()).toBeCloseTo(4.875, 8);
+    expect(service.getBerylliumRocketEffect().toNumber()).toBeCloseTo(6.75, 8);
+    expect(HoldingRecord.beryllium.action().toNumber()).toBeCloseTo(6.75, 8);
+    expect(UpgradeRecord.redGeneratorExtension.getEffectiveBuffer().toNumber()).toBeCloseTo(13.5, 8);
     expect(MultiplierRecord.redGeneratorExtensionBuffer.getNum().toNumber()).toBe(1);
     expect(MultiplierRecord.redAcceleratorGenerators.getNum(false).toNumber()).toBe(1);
+  });
+
+  it('caps Beryllium fuel at rocket capacity', () => {
+    HoldingRecord.neutronClump.amount = new Num(1, 2);
+    HoldingRecord.beryllium.amount = new Num(2, 1);
+    HoldingRecord.protons.amount = new Num(1, 2);
+
+    service.buyBerylliumRocket();
+    service.buyBerylliumFuel();
+    service.tick(new Num(1, 3));
+
+    expect(service.getBerylliumTotalFuel().toNumber()).toBe(100);
+    expect(service.getBerylliumFuelEffect().toNumber()).toBe(101);
   });
 
   it('keeps Beryllium upgrades locked until Beryllium is unlocked', () => {

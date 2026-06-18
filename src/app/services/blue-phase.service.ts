@@ -45,6 +45,7 @@ export class BluePhaseService {
   lithiumBatteryTier = Num.ZERO.copy();
   berylliumRockets = Num.ZERO.copy();
   berylliumFuelSystems = Num.ZERO.copy();
+  berylliumFuel = Num.ZERO.copy();
   berylliumLogicSystems = Num.ZERO.copy();
   berylliumRocketTier = Num.ZERO.copy();
   boronFiberSpools = Num.ZERO.copy();
@@ -86,6 +87,7 @@ export class BluePhaseService {
 
     this.generateForgedElements(speed);
     this.generateLithiumCharge(speed);
+    this.generateBerylliumFuel(speed);
     this.syncLithiumBatteryState();
     BerylliumHolding.rocketBoost = this.getBerylliumRocketEffect();
     BoronHolding.fiberglassBoost = this.getBoronFiberglassEffect();
@@ -228,13 +230,12 @@ export class BluePhaseService {
   getBerylliumRocketCost(): Num { return new Num(5, 0).mul(new Num(2, 0).pow(this.berylliumRockets)); }
   getBerylliumFuelCost(): Num { return new Num(1, 1).mul(new Num(2, 0).pow(this.berylliumFuelSystems)); }
   getBerylliumLogicCost(): Num { return new Num(1, 1).mul(new Num(2, 0).pow(this.berylliumLogicSystems)); }
-  getBerylliumFuelEffect(): Num { return this.berylliumFuelSystems.mul(new Num(2.5, -1)).add(Num.ONE); }
+  getBerylliumFuelCapacity(): Num { return this.berylliumRockets.mul(new Num(1, 2)); }
+  getBerylliumTotalFuel(): Num { return this.berylliumFuel.lt(this.getBerylliumFuelCapacity()) ? this.berylliumFuel : this.getBerylliumFuelCapacity(); }
+  getBerylliumFuelEffect(): Num { return this.getBerylliumTotalFuel().add(Num.ONE); }
   getBerylliumLogicEffect(): Num { return this.berylliumLogicSystems.mul(new Num(1.5, -1)).add(Num.ONE); }
   getBerylliumRocketBaseEffect(): Num {
-    return this.berylliumRockets
-      .mul(this.getBerylliumFuelEffect())
-      .mul(this.getBerylliumLogicEffect())
-      .add(Num.ONE);
+    return Num.ONE.add(this.getBerylliumTotalFuel().mul(this.getBerylliumLogicEffect()));
   }
   getBerylliumRocketEffect(): Num { return this.getBerylliumRocketBaseEffect().pow(this.getBerylliumRocketTierEffect()); }
   getBerylliumLaunchThreshold(): Num { return BluePhaseService.berylliumLaunchBaseThrust.pow(this.berylliumRocketTier).mul(new Num(1, 4)); }
@@ -247,6 +248,7 @@ export class BluePhaseService {
     HoldingRecord.beryllium.amount = Num.ZERO.copy();
     this.berylliumRockets = Num.ZERO.copy();
     this.berylliumFuelSystems = Num.ZERO.copy();
+    this.berylliumFuel = Num.ZERO.copy();
     this.berylliumLogicSystems = Num.ZERO.copy();
     BerylliumHolding.rocketBoost = this.getBerylliumRocketEffect();
   }
@@ -332,6 +334,14 @@ export class BluePhaseService {
     if (this.lithiumCharge.gt(capacity)) this.lithiumCharge = capacity.copy();
   }
 
+  private generateBerylliumFuel(speed: Num): void {
+    if (this.berylliumFuelSystems.lt(Num.ONE) || this.berylliumRockets.lt(Num.ONE)) return;
+    const gain = this.berylliumFuelSystems.mul(new Num(5, 0)).mul(speed);
+    this.berylliumFuel = this.berylliumFuel.add(gain);
+    const capacity = this.getBerylliumFuelCapacity();
+    if (this.berylliumFuel.gt(capacity)) this.berylliumFuel = capacity.copy();
+  }
+
   private syncLithiumBatteryState(): void {
     LithiumHolding.batteryCharge = this.getLithiumTotalCharge();
     LithiumHolding.batteryTier = this.lithiumBatteryTier.copy();
@@ -412,6 +422,7 @@ export class BluePhaseService {
     this.storage.saveNum(this.lithiumBatteryTier, 'lithiumBatteryTier');
     this.storage.saveNum(this.berylliumRockets, 'berylliumRockets');
     this.storage.saveNum(this.berylliumFuelSystems, 'berylliumFuelSystems');
+    this.storage.saveNum(this.berylliumFuel, 'berylliumFuel');
     this.storage.saveNum(this.berylliumLogicSystems, 'berylliumLogicSystems');
     this.storage.saveNum(this.berylliumRocketTier, 'berylliumRocketTier');
     this.storage.saveNum(this.boronFiberSpools, 'boronFiberSpools');
@@ -431,6 +442,7 @@ export class BluePhaseService {
     this.lithiumBatteryTier = this.storage.loadNum(this.lithiumBatteryTier, 'lithiumBatteryTier');
     this.berylliumRockets = this.storage.loadNum(this.berylliumRockets, 'berylliumRockets');
     this.berylliumFuelSystems = this.storage.loadNum(this.berylliumFuelSystems, 'berylliumFuelSystems');
+    this.berylliumFuel = this.storage.loadNum(this.berylliumFuel, 'berylliumFuel');
     this.berylliumLogicSystems = this.storage.loadNum(this.berylliumLogicSystems, 'berylliumLogicSystems');
     this.berylliumRocketTier = this.storage.loadNum(this.berylliumRocketTier, 'berylliumRocketTier');
     this.boronFiberSpools = this.storage.loadNum(this.boronFiberSpools, 'boronFiberSpools');
