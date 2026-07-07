@@ -13,6 +13,7 @@ import {MultiplierRecord} from "../classes/records/multipliers/multiplier-record
 import {ChargerRecord} from "../classes/records/charger/charger-record";
 import {Holding} from '../classes/features/holding';
 import {BerylliumHolding, BoronHolding, CarbonHolding, LithiumHolding} from '../classes/features/holdings/blue-holdings';
+import {BlueElement, ElementBatteryUpgrade, ElementCapacityUpgrade, ElementChargerUpgrade, ElementUpgrade, ElementUpgradeHost, ForgedBlueElement} from '../classes/features/elements/blue-element';
 
 export type BlueParticleMode = 'none' | 'protons' | 'electrons';
 
@@ -21,12 +22,13 @@ export interface BlueElementDefinition {
   unlockAmount: Num;
   holding: Holding;
   theme: string;
+  element: BlueElement;
 }
 
 @Injectable({
   providedIn: 'root'
 })
-export class BluePhaseService {
+export class BluePhaseService implements ElementUpgradeHost {
   static readonly unlockRequirement = new Num(1, 1000);
   static readonly neutronRestorationTarget = new Num(1, 10);
   static readonly minimumMeltdownPower = new Num(1, -1);
@@ -60,19 +62,93 @@ export class BluePhaseService {
   carbonBurningLife = false;
 
   readonly elementDefinitions: BlueElementDefinition[] = [
-    {requiredStage: 1, unlockAmount: new Num(1, 1), holding: HoldingRecord.lithium, theme: 'Lithium-ion batteries'},
-    {requiredStage: 2, unlockAmount: new Num(1, 2), holding: HoldingRecord.beryllium, theme: 'Rocket construction and extension thrust'},
-    {requiredStage: 3, unlockAmount: new Num(1, 3), holding: HoldingRecord.boron, theme: 'Fiberglass accelerator reinforcement'},
-    {requiredStage: 4, unlockAmount: new Num(1, 4), holding: HoldingRecord.carbon, theme: 'Life growth and biomass combustion'},
-    {requiredStage: 5, unlockAmount: new Num(1, 5), holding: HoldingRecord.nitrogen, theme: 'Cryogenic atmospheres'}
+    this.createElementDefinition(1, new Num(1, 1), HoldingRecord.lithium, 'Lithium-ion batteries', 'battery'),
+    this.createElementDefinition(2, new Num(1, 2), HoldingRecord.beryllium, 'Rocket construction and extension thrust', 'rocket'),
+    this.createElementDefinition(3, new Num(1, 3), HoldingRecord.boron, 'Fiberglass accelerator reinforcement', 'composite'),
+    this.createElementDefinition(4, new Num(1, 4), HoldingRecord.carbon, 'Life growth and biomass combustion', 'biosphere'),
+    this.createElementDefinition(5, new Num(1, 5), HoldingRecord.nitrogen, 'Cryogenic atmospheres', 'cryo')
   ];
 
   constructor() {
+    this.elementDefinitions.forEach(definition => definition.element.initializeUpgrades(this, HoldingRecord.protons, HoldingRecord.electrons));
     ResetHelper.registerResetListener('blue-phase-unlock', resetKey => {
       if (resetKey === ResetKey.BLUE) {
         this.unlockFromPrestige();
       }
     });
+  }
+
+  private createElementDefinition(requiredStage: number, unlockAmount: Num, holding: Holding, theme: string, componentName: string): BlueElementDefinition {
+    return {requiredStage, unlockAmount, holding, theme, element: new ForgedBlueElement(holding, theme, componentName)};
+  }
+
+  getSelectedElementUpgradeSet(element: BlueElementDefinition): BlueElement {
+    return element.element;
+  }
+
+  getElementUpgradeCost(upgrade: ElementUpgrade): Num {
+    if (upgrade instanceof ElementBatteryUpgrade) return upgrade.baseCost.mul(new Num(1.75, 0).pow(upgrade.bought));
+    if (upgrade instanceof ElementChargerUpgrade) return upgrade.baseCost.mul(new Num(2, 0).pow(upgrade.bought));
+    if (upgrade instanceof ElementCapacityUpgrade) return upgrade.baseCost.mul(new Num(2.25, 0).pow(upgrade.bought));
+    return upgrade.baseCost.copy();
+  }
+
+  canBuyElementUpgrade(element: BlueElement, upgrade: ElementUpgrade): boolean {
+    const definition = this.elementDefinitions.find(entry => entry.element === element);
+    return !!definition && this.isElementUnlocked(definition) && upgrade.currency.amount.greq(this.getElementUpgradeCost(upgrade));
+  }
+
+  buyElementUpgrade(element: BlueElement, upgrade: ElementUpgrade): void {
+    if (!this.canBuyElementUpgrade(element, upgrade)) return;
+    upgrade.currency.sub(this.getElementUpgradeCost(upgrade));
+    upgrade.bought = upgrade.bought.add(Num.ONE);
+    upgrade.amount = upgrade.bought.copy();
+    this.toggleParticle();
+    this.syncLithiumLegacyFromElement(element);
+    this.syncLithiumBatteryState();
+  }
+
+  private syncLithiumLegacyFromElement(element: BlueElement): void {
+    if (element !== this.elementDefinitions[0].element) return;
+    this.lithiumBatteries = element.batteryUpgrade.bought.copy();
+    this.lithiumChargeGenerators = element.chargerUpgrade.bought.copy();
+    this.lithiumCapacityUpgrades = element.capacityUpgrade.bought.copy();
+    this.lithiumCharge = element.batteryCharge.amount.copy();
+    this.lithiumBatteryTier = element.batteryTier.amount.copy();
+  }
+
+  private syncLithiumElementFromLegacy(): void {
+    const lithium = this.elementDefinitions[0].element;
+    lithium.batteryUpgrade.bought = this.lithiumBatteries.copy();
+    lithium.batteryUpgrade.amount = this.lithiumBatteries.copy();
+    lithium.chargerUpgrade.bought = this.lithiumChargeGenerators.copy();
+    lithium.chargerUpgrade.amount = this.lithiumChargeGenerators.copy();
+    lithium.capacityUpgrade.bought = this.lithiumCapacityUpgrades.copy();
+    lithium.capacityUpgrade.amount = this.lithiumCapacityUpgrades.copy();
+    lithium.batteryCharge.amount = this.lithiumCharge.copy();
+    lithium.batteryTier.amount = this.lithiumBatteryTier.copy();
+  }
+
+  getElementChargePercent(element: BlueElement): number {
+    const capacity = element.getTotalCapacity().toNumber();
+    if (!Number.isFinite(capacity) || capacity <= 0) return 0;
+
+    return Math.max(0, Math.min(100, (element.getTotalCharge().toNumber() / capacity) * 100));
+  }
+
+  canDischargeElementBattery(element: BlueElement): boolean { return element.getTotalCharge().greq(element.getDischargeThreshold()); }
+  dischargeElementBattery(element: BlueElement): void {
+    if (!this.canDischargeElementBattery(element)) return;
+    element.batteryTier.amount = element.batteryTier.amount.add(Num.ONE);
+    element.holding.amount = Num.ZERO.copy();
+    element.batteryUpgrade.bought = Num.ZERO.copy();
+    element.batteryUpgrade.amount = Num.ZERO.copy();
+    element.chargerUpgrade.bought = Num.ZERO.copy();
+    element.chargerUpgrade.amount = Num.ZERO.copy();
+    element.capacityUpgrade.bought = Num.ZERO.copy();
+    element.capacityUpgrade.amount = Num.ZERO.copy();
+    element.batteryCharge.amount = Num.ZERO.copy();
+    this.syncLithiumBatteryState();
   }
 
   isUnlocked(): boolean {
@@ -93,6 +169,7 @@ export class BluePhaseService {
 
     this.generateForgedElements(speed);
     this.generateLithiumCharge(speed);
+    this.generateElementCharges(speed);
     this.generateCarbonLife(speed);
     this.burnCarbonLife(speed);
     this.generateBerylliumFuel(speed);
@@ -342,40 +419,43 @@ export class BluePhaseService {
       .forEach(element => element.holding.generate(this.getElementGeneration(element).mul(speed)));
   }
 
-  getLithiumBatteryCost(): Num { return new Num(5, 0).mul(new Num(1.75, 0).pow(this.lithiumBatteries)); }
-  getLithiumChargeGeneratorCost(): Num { return new Num(1, 1).mul(new Num(2, 0).pow(this.lithiumChargeGenerators)); }
-  getLithiumCapacityCost(): Num { return new Num(1, 1).mul(new Num(2.25, 0).pow(this.lithiumCapacityUpgrades)); }
-  getLithiumBatteryCapacity(): Num { return new Num(1, 2).mul(new Num(1.6, 0).pow(this.lithiumCapacityUpgrades)); }
-  getLithiumTotalCapacity(): Num { return this.lithiumBatteries.mul(this.getLithiumBatteryCapacity()); }
-  getLithiumTotalCharge(): Num { return this.lithiumCharge.lt(this.getLithiumTotalCapacity()) ? this.lithiumCharge : this.getLithiumTotalCapacity(); }
-  getLithiumDischargeThreshold(): Num { return BluePhaseService.lithiumDischargeBaseCharge.pow(this.lithiumBatteryTier).mul(new Num(1, 4)); }
-  getLithiumBatteryTierEffect(): Num { return Num.TWO.pow(this.lithiumBatteryTier); }
-  canDischargeLithiumBattery(): boolean { return this.getLithiumTotalCharge().greq(this.getLithiumDischargeThreshold()); }
-  dischargeLithiumBattery(): void {
-    if (!this.canDischargeLithiumBattery()) return;
+  getLithiumBatteryCost(): Num { return this.getElementUpgradeCost(this.elementDefinitions[0].element.batteryUpgrade); }
+  getLithiumChargeGeneratorCost(): Num { return this.getElementUpgradeCost(this.elementDefinitions[0].element.chargerUpgrade); }
+  getLithiumCapacityCost(): Num { return this.getElementUpgradeCost(this.elementDefinitions[0].element.capacityUpgrade); }
+  getLithiumBatteryCapacity(): Num { return this.elementDefinitions[0].element.getChargeCapacity(); }
+  getLithiumTotalCapacity(): Num { return this.elementDefinitions[0].element.getTotalCapacity(); }
+  getLithiumTotalCharge(): Num { return this.elementDefinitions[0].element.getTotalCharge(); }
+  getLithiumDischargeThreshold(): Num { return this.elementDefinitions[0].element.getDischargeThreshold(); }
+  getLithiumBatteryTierEffect(): Num { return this.elementDefinitions[0].element.getTierEffect(); }
+  canDischargeLithiumBattery(): boolean { return this.canDischargeElementBattery(this.elementDefinitions[0].element); }
+  dischargeLithiumBattery(): void { this.dischargeElementBattery(this.elementDefinitions[0].element); }
 
-    this.lithiumBatteryTier = this.lithiumBatteryTier.add(Num.ONE);
-    HoldingRecord.lithium.amount = Num.ZERO.copy();
-    this.lithiumBatteries = Num.ZERO.copy();
-    this.lithiumChargeGenerators = Num.ZERO.copy();
-    this.lithiumCapacityUpgrades = Num.ZERO.copy();
-    this.lithiumCharge = Num.ZERO.copy();
-    this.syncLithiumBatteryState();
+  canBuyLithiumBattery(): boolean { return this.canBuyElementUpgrade(this.elementDefinitions[0].element, this.elementDefinitions[0].element.batteryUpgrade); }
+  buyLithiumBattery(): void { this.buyElementUpgrade(this.elementDefinitions[0].element, this.elementDefinitions[0].element.batteryUpgrade); }
+  canBuyLithiumChargeGenerator(): boolean { return this.canBuyElementUpgrade(this.elementDefinitions[0].element, this.elementDefinitions[0].element.chargerUpgrade); }
+  buyLithiumChargeGenerator(): void { this.buyElementUpgrade(this.elementDefinitions[0].element, this.elementDefinitions[0].element.chargerUpgrade); }
+  canBuyLithiumCapacityUpgrade(): boolean { return this.canBuyElementUpgrade(this.elementDefinitions[0].element, this.elementDefinitions[0].element.capacityUpgrade); }
+  buyLithiumCapacityUpgrade(): void { this.buyElementUpgrade(this.elementDefinitions[0].element, this.elementDefinitions[0].element.capacityUpgrade); }
+
+  private generateElementCharges(speed: Num): void {
+    this.elementDefinitions.slice(1).forEach(definition => {
+      const element = definition.element;
+      if (element.chargerUpgrade.bought.lt(Num.ONE) || element.batteryUpgrade.bought.lt(Num.ONE)) return;
+
+      element.batteryCharge.amount = element.batteryCharge.amount.add(element.chargerUpgrade.bought.mul(new Num(5, 0)).mul(speed));
+      const capacity = element.getTotalCapacity();
+      if (element.batteryCharge.amount.gt(capacity)) element.batteryCharge.amount = capacity.copy();
+    });
   }
-
-  canBuyLithiumBattery(): boolean { return this.isLithiumUnlocked() && HoldingRecord.lithium.amount.greq(this.getLithiumBatteryCost()); }
-  buyLithiumBattery(): void { if (!this.canBuyLithiumBattery()) return; HoldingRecord.lithium.sub(this.getLithiumBatteryCost()); this.lithiumBatteries = this.lithiumBatteries.add(Num.ONE); this.toggleParticle(); }
-  canBuyLithiumChargeGenerator(): boolean { return this.isLithiumUnlocked() && HoldingRecord.electrons.amount.greq(this.getLithiumChargeGeneratorCost()); }
-  buyLithiumChargeGenerator(): void { if (!this.canBuyLithiumChargeGenerator()) return; HoldingRecord.electrons.sub(this.getLithiumChargeGeneratorCost()); this.lithiumChargeGenerators = this.lithiumChargeGenerators.add(Num.ONE); this.toggleParticle(); }
-  canBuyLithiumCapacityUpgrade(): boolean { return this.isLithiumUnlocked() && HoldingRecord.protons.amount.greq(this.getLithiumCapacityCost()); }
-  buyLithiumCapacityUpgrade(): void { if (!this.canBuyLithiumCapacityUpgrade()) return; HoldingRecord.protons.sub(this.getLithiumCapacityCost()); this.lithiumCapacityUpgrades = this.lithiumCapacityUpgrades.add(Num.ONE); this.toggleParticle(); }
 
   private generateLithiumCharge(speed: Num): void {
     if (this.lithiumChargeGenerators.lt(Num.ONE) || this.lithiumBatteries.lt(Num.ONE)) return;
     const gain = this.lithiumChargeGenerators.mul(new Num(5, 0)).mul(speed);
     this.lithiumCharge = this.lithiumCharge.add(gain);
+    this.elementDefinitions[0].element.batteryCharge.amount = this.lithiumCharge.copy();
     const capacity = this.getLithiumTotalCapacity();
     if (this.lithiumCharge.gt(capacity)) this.lithiumCharge = capacity.copy();
+    this.elementDefinitions[0].element.batteryCharge.amount = this.lithiumCharge.copy();
   }
 
   private generateCarbonLife(speed: Num): void {
@@ -395,6 +475,7 @@ export class BluePhaseService {
     const spent = this.carbonLife.lt(burn) ? this.carbonLife : burn;
     this.carbonLife = this.carbonLife.sub(spent);
     this.lithiumCharge = this.lithiumCharge.add(spent.mul(this.getCarbonBurnChargeMultiplier()));
+    this.elementDefinitions[0].element.batteryCharge.amount = this.lithiumCharge.copy();
 
     const capacity = this.getLithiumTotalCapacity();
     if (this.lithiumCharge.greq(capacity)) {
@@ -424,6 +505,7 @@ export class BluePhaseService {
   }
 
   private syncLithiumBatteryState(): void {
+    this.syncLithiumElementFromLegacy();
     LithiumHolding.batteryCharge = this.getLithiumTotalCharge();
     LithiumHolding.batteryTier = this.lithiumBatteryTier.copy();
   }
