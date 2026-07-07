@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {Holding} from '../../../classes/features/holding';
 import {HoldingRecord} from '../../../classes/records/holdings/holding-record';
 import {BlueElementDefinition, BluePhaseService} from '../../../services/blue-phase.service';
+import {BlueElement} from '../../../classes/features/elements/blue-element';
 import {Num} from '../../../num';
 
 @Component({
@@ -59,6 +60,10 @@ export class BlueElementsComponent {
 
   getLithiumRedMultiplier(): Num {
     return HoldingRecord.lithium.getEffect();
+  }
+
+  getSelectedElementUpgradeSet(): BlueElement {
+    return this.bluePhase.getSelectedElementUpgradeSet(this.selectedElement);
   }
 
   getLithiumChargePercent(): number {
