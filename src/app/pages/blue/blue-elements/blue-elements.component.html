@@ -130,61 +130,6 @@
     </div>
   </section>
 
-  <section *ngIf="selectedElement.holding.name !== 'lithium' && bluePhase.isElementUnlocked(selectedElement)" class="lithium-lab">
-    <div class="section-heading">
-      <div>
-        <p class="eyebrow">{{ selectedElement.holding.displayName | uppercase }} ELEMENT ARRAY</p>
-        <h2>{{ getSelectedElementUpgradeSet().visualComponent | titlecase }} Foundry</h2>
-      </div>
-      <p>{{ selectedElement.holding.displayName }} now uses the shared element system: batteries, chargers, and capacity upgrades are generated from the same classes for every element.</p>
-    </div>
-
-    <div class="battery-showcase">
-      <div class="battery-visual" aria-hidden="true">
-        <div class="battery-shell">
-          <span class="battery-fill" [style.width.%]="bluePhase.getElementChargePercent(getSelectedElementUpgradeSet())"></span>
-          <i></i><i></i><i></i>
-        </div>
-      </div>
-      <div class="charge-panel">
-        <span>CHARGE STORED</span>
-        <strong>{{ getSelectedElementUpgradeSet().getTotalCharge().toString(3) }} / {{ getSelectedElementUpgradeSet().getTotalCapacity().toString(3) }}</strong>
-        <div class="charge-track" role="progressbar" [attr.aria-valuenow]="bluePhase.getElementChargePercent(getSelectedElementUpgradeSet())" aria-valuemin="0" aria-valuemax="100">
-          <span [style.width.%]="bluePhase.getElementChargePercent(getSelectedElementUpgradeSet())"></span>
-        </div>
-        <p>Element battery multiplier: {{ getSelectedElementUpgradeSet().getChargeEffect().toString(3) }}x</p>
-        <div class="discharge-panel">
-          <span>BATTERY TIER</span>
-          <strong>{{ getSelectedElementUpgradeSet().batteryTier.amount.toString() }} // {{ getSelectedElementUpgradeSet().getTierEffect().toString(2) }}x</strong>
-          <p>Next discharge: {{ getSelectedElementUpgradeSet().getDischargeThreshold().toString() }} stored charge</p>
-          <button type="button" class="discharge-button" [disabled]="!bluePhase.canDischargeElementBattery(getSelectedElementUpgradeSet())" (click)="bluePhase.dischargeElementBattery(getSelectedElementUpgradeSet())">
-            DISCHARGE BATTERIES
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="battery-grid">
-      <article class="battery-card">
-        <span>Batteries</span>
-        <strong>{{ getSelectedElementUpgradeSet().batteryUpgrade.bought.toString() }}</strong>
-        <p class="resource-balance">{{ selectedElement.holding.amount.toString(3) }} {{ selectedElement.holding.displayName }}</p>
-        <button (click)="bluePhase.buyElementUpgrade(getSelectedElementUpgradeSet(), getSelectedElementUpgradeSet().batteryUpgrade)" [disabled]="!bluePhase.canBuyElementUpgrade(getSelectedElementUpgradeSet(), getSelectedElementUpgradeSet().batteryUpgrade)">Buy for {{ bluePhase.getElementUpgradeCost(getSelectedElementUpgradeSet().batteryUpgrade).toString() }} {{ selectedElement.holding.displayName }}</button>
-      </article>
-      <article class="battery-card">
-        <span>Chargers</span>
-        <strong>{{ getSelectedElementUpgradeSet().chargerUpgrade.bought.toString() }}</strong>
-        <p class="resource-balance">{{ electrons.amount.toString(3) }} Electrons</p>
-        <button (click)="bluePhase.buyElementUpgrade(getSelectedElementUpgradeSet(), getSelectedElementUpgradeSet().chargerUpgrade)" [disabled]="!bluePhase.canBuyElementUpgrade(getSelectedElementUpgradeSet(), getSelectedElementUpgradeSet().chargerUpgrade)">Buy for {{ bluePhase.getElementUpgradeCost(getSelectedElementUpgradeSet().chargerUpgrade).toString() }} Electrons</button>
-      </article>
-      <article class="battery-card">
-        <span>Capacity Level</span>
-        <strong>{{ getSelectedElementUpgradeSet().capacityUpgrade.bought.toString() }}</strong>
-        <p class="resource-balance">{{ protons.amount.toString(3) }} Protons</p>
-        <button (click)="bluePhase.buyElementUpgrade(getSelectedElementUpgradeSet(), getSelectedElementUpgradeSet().capacityUpgrade)" [disabled]="!bluePhase.canBuyElementUpgrade(getSelectedElementUpgradeSet(), getSelectedElementUpgradeSet().capacityUpgrade)">Upgrade for {{ bluePhase.getElementUpgradeCost(getSelectedElementUpgradeSet().capacityUpgrade).toString() }} Protons</button>
-      </article>
-    </div>
-  </section>
 
 
   <section *ngIf="selectedElement.holding.name === 'beryllium' && bluePhase.isBerylliumUnlocked()" class="beryllium-lab">

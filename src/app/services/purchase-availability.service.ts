@@ -121,15 +121,10 @@ export class PurchaseAvailabilityService {
   }
 
   private hasAvailableBlueElementPurchase(): boolean {
-    const hasGenericElementPurchase = this.bluePhaseService.elementDefinitions.some(definition => {
-      const element = definition.element;
-      return this.bluePhaseService.canBuyElementUpgrade(element, element.batteryUpgrade)
-        || this.bluePhaseService.canBuyElementUpgrade(element, element.chargerUpgrade)
-        || this.bluePhaseService.canBuyElementUpgrade(element, element.capacityUpgrade)
-        || this.bluePhaseService.canDischargeElementBattery(element);
-    });
-
-    return hasGenericElementPurchase
+    return this.bluePhaseService.canBuyLithiumBattery()
+      || this.bluePhaseService.canBuyLithiumChargeGenerator()
+      || this.bluePhaseService.canBuyLithiumCapacityUpgrade()
+      || this.bluePhaseService.canDischargeLithiumBattery()
       || this.bluePhaseService.canBuyBerylliumRocket()
       || this.bluePhaseService.canBuyBerylliumFuel()
       || this.bluePhaseService.canBuyBerylliumLogic();

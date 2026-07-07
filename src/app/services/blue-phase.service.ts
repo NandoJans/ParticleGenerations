@@ -13,7 +13,7 @@ import {MultiplierRecord} from "../classes/records/multipliers/multiplier-record
 import {ChargerRecord} from "../classes/records/charger/charger-record";
 import {Holding} from '../classes/features/holding';
 import {BerylliumHolding, BoronHolding, CarbonHolding, LithiumHolding} from '../classes/features/holdings/blue-holdings';
-import {BlueElement, ElementBatteryUpgrade, ElementCapacityUpgrade, ElementChargerUpgrade, ElementUpgrade, ElementUpgradeHost, ForgedBlueElement} from '../classes/features/elements/blue-element';
+import {BlueElement, ElementBatteryUpgrade, ElementCapacityUpgrade, ElementChargerUpgrade, ElementUpgrade, ElementUpgradeHost, ForgedBlueElement, LithiumElement} from '../classes/features/elements/blue-element';
 
 export type BlueParticleMode = 'none' | 'protons' | 'electrons';
 
@@ -62,7 +62,7 @@ export class BluePhaseService implements ElementUpgradeHost {
   carbonBurningLife = false;
 
   readonly elementDefinitions: BlueElementDefinition[] = [
-    this.createElementDefinition(1, new Num(1, 1), HoldingRecord.lithium, 'Lithium-ion batteries', 'battery'),
+    this.createElementDefinition(1, new Num(1, 1), HoldingRecord.lithium, 'Lithium-ion batteries', 'battery', true),
     this.createElementDefinition(2, new Num(1, 2), HoldingRecord.beryllium, 'Rocket construction and extension thrust', 'rocket'),
     this.createElementDefinition(3, new Num(1, 3), HoldingRecord.boron, 'Fiberglass accelerator reinforcement', 'composite'),
     this.createElementDefinition(4, new Num(1, 4), HoldingRecord.carbon, 'Life growth and biomass combustion', 'biosphere'),
@@ -78,8 +78,12 @@ export class BluePhaseService implements ElementUpgradeHost {
     });
   }
 
-  private createElementDefinition(requiredStage: number, unlockAmount: Num, holding: Holding, theme: string, componentName: string): BlueElementDefinition {
-    return {requiredStage, unlockAmount, holding, theme, element: new ForgedBlueElement(holding, theme, componentName)};
+  private createElementDefinition(requiredStage: number, unlockAmount: Num, holding: Holding, theme: string, componentName: string, usesSharedUpgrades = false): BlueElementDefinition {
+    const element = usesSharedUpgrades
+      ? new LithiumElement(holding, theme, componentName)
+      : new ForgedBlueElement(holding, theme, componentName);
+
+    return {requiredStage, unlockAmount, holding, theme, element};
   }
 
   getSelectedElementUpgradeSet(element: BlueElementDefinition): BlueElement {
@@ -95,7 +99,7 @@ export class BluePhaseService implements ElementUpgradeHost {
 
   canBuyElementUpgrade(element: BlueElement, upgrade: ElementUpgrade): boolean {
     const definition = this.elementDefinitions.find(entry => entry.element === element);
-    return !!definition && this.isElementUnlocked(definition) && upgrade.currency.amount.greq(this.getElementUpgradeCost(upgrade));
+    return !!definition && element.hasSharedUpgrades && this.isElementUnlocked(definition) && upgrade.currency.amount.greq(this.getElementUpgradeCost(upgrade));
   }
 
   buyElementUpgrade(element: BlueElement, upgrade: ElementUpgrade): void {
@@ -136,7 +140,7 @@ export class BluePhaseService implements ElementUpgradeHost {
     return Math.max(0, Math.min(100, (element.getTotalCharge().toNumber() / capacity) * 100));
   }
 
-  canDischargeElementBattery(element: BlueElement): boolean { return element.getTotalCharge().greq(element.getDischargeThreshold()); }
+  canDischargeElementBattery(element: BlueElement): boolean { return element.hasSharedUpgrades && element.getTotalCharge().greq(element.getDischargeThreshold()); }
   dischargeElementBattery(element: BlueElement): void {
     if (!this.canDischargeElementBattery(element)) return;
     element.batteryTier.amount = element.batteryTier.amount.add(Num.ONE);
@@ -438,7 +442,7 @@ export class BluePhaseService implements ElementUpgradeHost {
   buyLithiumCapacityUpgrade(): void { this.buyElementUpgrade(this.elementDefinitions[0].element, this.elementDefinitions[0].element.capacityUpgrade); }
 
   private generateElementCharges(speed: Num): void {
-    this.elementDefinitions.slice(1).forEach(definition => {
+    this.elementDefinitions.filter(definition => definition.element.hasSharedUpgrades).forEach(definition => {
       const element = definition.element;
       if (element.chargerUpgrade.bought.lt(Num.ONE) || element.batteryUpgrade.bought.lt(Num.ONE)) return;
 

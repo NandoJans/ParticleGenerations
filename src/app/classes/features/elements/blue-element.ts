@@ -75,6 +75,7 @@ export class ElementCapacityUpgrade extends ElementUpgrade {
 }
 
 export abstract class BlueElement {
+  abstract readonly hasSharedUpgrades: boolean;
   batteries: Holding;
   batteryCharge: Holding;
   batteryTier: Holding;
@@ -93,6 +94,8 @@ export abstract class BlueElement {
   }
 
   initializeUpgrades(host: ElementUpgradeHost, protons: Holding, electrons: Holding): void {
+    if (!this.hasSharedUpgrades) return;
+
     this.batteryUpgrade = new ElementBatteryUpgrade(this, host, `${this.holding.name}-battery`, `${this.holding.displayName} Batteries`, new Num(5, 0), new Num(5, 0), this.holding);
     this.chargerUpgrade = new ElementChargerUpgrade(this, host, `${this.holding.name}-charger`, `${this.holding.displayName} Chargers`, new Num(1, 1), new Num(1, 1), electrons);
     this.capacityUpgrade = new ElementCapacityUpgrade(this, host, `${this.holding.name}-capacity`, `${this.holding.displayName} Capacity`, new Num(1, 1), new Num(1, 1), protons);
@@ -107,7 +110,17 @@ export abstract class BlueElement {
   getChargeEffect(): Num { return this.getTotalCharge().add(Num.ONE).pow(this.getTierEffect()); }
 }
 
+export class LithiumElement extends BlueElement {
+  readonly hasSharedUpgrades = true;
+
+  constructor(holding: Holding, theme: string, componentName: string) {
+    super(holding, theme, componentName);
+  }
+}
+
 export class ForgedBlueElement extends BlueElement {
+  readonly hasSharedUpgrades = false;
+
   constructor(holding: Holding, theme: string, componentName: string) {
     super(holding, theme, componentName);
   }
