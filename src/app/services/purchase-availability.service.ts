@@ -121,12 +121,14 @@ export class PurchaseAvailabilityService {
   }
 
   private hasAvailableBlueElementPurchase(): boolean {
-    return this.bluePhaseService.canBuyLithiumBattery()
-      || this.bluePhaseService.canBuyLithiumChargeGenerator()
-      || this.bluePhaseService.canBuyLithiumCapacityUpgrade()
+    const hasElementUpgradePurchase = this.bluePhaseService.elementDefinitions.some(definition =>
+      definition.element.getUpgrades().some(upgrade => this.bluePhaseService.canBuyElementUpgrade(definition.element, upgrade))
+    );
+
+    return hasElementUpgradePurchase
       || this.bluePhaseService.canDischargeLithiumBattery()
-      || this.bluePhaseService.canBuyBerylliumRocket()
-      || this.bluePhaseService.canBuyBerylliumFuel()
-      || this.bluePhaseService.canBuyBerylliumLogic();
+      || this.bluePhaseService.canLaunchBerylliumRockets()
+      || this.bluePhaseService.canLaminateBoronFiberglass()
+      || this.bluePhaseService.canToggleCarbonBurn();
   }
 }
