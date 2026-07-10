@@ -24,6 +24,7 @@ import {
   ElectronHolding,
   LithiumHolding,
   NitrogenHolding,
+  OxygenHolding,
   NeutronClumpHolding,
   NeutronHolding,
   ProtonHolding
@@ -71,6 +72,7 @@ export class HoldingRecord {
   static boron: BoronHolding = new BoronHolding();
   static carbon: CarbonHolding = new CarbonHolding();
   static nitrogen: NitrogenHolding = new NitrogenHolding();
+  static oxygen: OxygenHolding = new OxygenHolding();
 
   static getList(): Holding[] {
     return [
@@ -105,6 +107,7 @@ export class HoldingRecord {
       HoldingRecord.boron,
       HoldingRecord.carbon,
       HoldingRecord.nitrogen,
+      HoldingRecord.oxygen,
     ]
   }
 

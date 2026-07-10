@@ -130,61 +130,6 @@
     </div>
   </section>
 
-  <section *ngIf="selectedElement.holding.name !== 'lithium' && bluePhase.isElementUnlocked(selectedElement)" class="lithium-lab">
-    <div class="section-heading">
-      <div>
-        <p class="eyebrow">{{ selectedElement.holding.displayName | uppercase }} ELEMENT ARRAY</p>
-        <h2>{{ getSelectedElementUpgradeSet().visualComponent | titlecase }} Foundry</h2>
-      </div>
-      <p>{{ selectedElement.holding.displayName }} now uses the shared element system: batteries, chargers, and capacity upgrades are generated from the same classes for every element.</p>
-    </div>
-
-    <div class="battery-showcase">
-      <div class="battery-visual" aria-hidden="true">
-        <div class="battery-shell">
-          <span class="battery-fill" [style.width.%]="bluePhase.getElementChargePercent(getSelectedElementUpgradeSet())"></span>
-          <i></i><i></i><i></i>
-        </div>
-      </div>
-      <div class="charge-panel">
-        <span>CHARGE STORED</span>
-        <strong>{{ getSelectedElementUpgradeSet().getTotalCharge().toString(3) }} / {{ getSelectedElementUpgradeSet().getTotalCapacity().toString(3) }}</strong>
-        <div class="charge-track" role="progressbar" [attr.aria-valuenow]="bluePhase.getElementChargePercent(getSelectedElementUpgradeSet())" aria-valuemin="0" aria-valuemax="100">
-          <span [style.width.%]="bluePhase.getElementChargePercent(getSelectedElementUpgradeSet())"></span>
-        </div>
-        <p>Element battery multiplier: {{ getSelectedElementUpgradeSet().getChargeEffect().toString(3) }}x</p>
-        <div class="discharge-panel">
-          <span>BATTERY TIER</span>
-          <strong>{{ getSelectedElementUpgradeSet().batteryTier.amount.toString() }} // {{ getSelectedElementUpgradeSet().getTierEffect().toString(2) }}x</strong>
-          <p>Next discharge: {{ getSelectedElementUpgradeSet().getDischargeThreshold().toString() }} stored charge</p>
-          <button type="button" class="discharge-button" [disabled]="!bluePhase.canDischargeElementBattery(getSelectedElementUpgradeSet())" (click)="bluePhase.dischargeElementBattery(getSelectedElementUpgradeSet())">
-            DISCHARGE BATTERIES
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="battery-grid">
-      <article class="battery-card">
-        <span>Batteries</span>
-        <strong>{{ getSelectedElementUpgradeSet().batteryUpgrade.bought.toString() }}</strong>
-        <p class="resource-balance">{{ selectedElement.holding.amount.toString(3) }} {{ selectedElement.holding.displayName }}</p>
-        <button (click)="bluePhase.buyElementUpgrade(getSelectedElementUpgradeSet(), getSelectedElementUpgradeSet().batteryUpgrade)" [disabled]="!bluePhase.canBuyElementUpgrade(getSelectedElementUpgradeSet(), getSelectedElementUpgradeSet().batteryUpgrade)">Buy for {{ bluePhase.getElementUpgradeCost(getSelectedElementUpgradeSet().batteryUpgrade).toString() }} {{ selectedElement.holding.displayName }}</button>
-      </article>
-      <article class="battery-card">
-        <span>Chargers</span>
-        <strong>{{ getSelectedElementUpgradeSet().chargerUpgrade.bought.toString() }}</strong>
-        <p class="resource-balance">{{ electrons.amount.toString(3) }} Electrons</p>
-        <button (click)="bluePhase.buyElementUpgrade(getSelectedElementUpgradeSet(), getSelectedElementUpgradeSet().chargerUpgrade)" [disabled]="!bluePhase.canBuyElementUpgrade(getSelectedElementUpgradeSet(), getSelectedElementUpgradeSet().chargerUpgrade)">Buy for {{ bluePhase.getElementUpgradeCost(getSelectedElementUpgradeSet().chargerUpgrade).toString() }} Electrons</button>
-      </article>
-      <article class="battery-card">
-        <span>Capacity Level</span>
-        <strong>{{ getSelectedElementUpgradeSet().capacityUpgrade.bought.toString() }}</strong>
-        <p class="resource-balance">{{ protons.amount.toString(3) }} Protons</p>
-        <button (click)="bluePhase.buyElementUpgrade(getSelectedElementUpgradeSet(), getSelectedElementUpgradeSet().capacityUpgrade)" [disabled]="!bluePhase.canBuyElementUpgrade(getSelectedElementUpgradeSet(), getSelectedElementUpgradeSet().capacityUpgrade)">Upgrade for {{ bluePhase.getElementUpgradeCost(getSelectedElementUpgradeSet().capacityUpgrade).toString() }} Protons</button>
-      </article>
-    </div>
-  </section>
 
 
   <section *ngIf="selectedElement.holding.name === 'beryllium' && bluePhase.isBerylliumUnlocked()" class="beryllium-lab">
@@ -314,29 +259,19 @@
     <div class="section-heading">
       <div>
         <p class="eyebrow">CARBON BIOSPHERE</p>
-        <h2>Life Growth and Biomass Burn</h2>
+        <h2>Life Growth</h2>
       </div>
-      <p>Carbon grows Life on purchased land. Life slightly boosts booster acceleration, or can be burned into energy that charges Lithium batteries until they are full.</p>
+      <p>Carbon grows Life on purchased land. Life slightly boosts booster acceleration; Oxygen handles burning Life into Lithium charge once it is unlocked.</p>
     </div>
 
     <div class="battery-showcase carbon-showcase">
       <div class="battery-visual carbon-visual" aria-hidden="true">
         <div class="life-world"><span></span><span></span><span></span></div>
-        <div class="burn-flame" [class.active]="bluePhase.carbonBurningLife">BURN</div>
       </div>
       <div class="charge-panel">
         <span>LIFE BIOMASS</span>
         <strong>{{ bluePhase.carbonLife.toString(3) }} Life</strong>
         <p>Life grows at {{ bluePhase.getCarbonLifeGeneration().toString(3) }}/s from {{ bluePhase.getCarbonLandArea().toString() }} land area and Carbon abundance. Current Life boosts booster acceleration by {{ bluePhase.getCarbonLifeEffect().toString(3) }}x.</p>
-        <div class="charge-track"><span [style.width.%]="getLithiumChargeBurnPercent()"></span></div>
-        <div class="discharge-panel">
-          <span>BIOMASS COMBUSTION</span>
-          <strong>{{ bluePhase.carbonBurningLife ? 'BURNING' : 'GROWING' }}</strong>
-          <p>Burning pauses Life growth, spends Life, and adds {{ bluePhase.getCarbonBurnChargeMultiplier().toString(2) }} Lithium charge per Life until batteries are full or Life runs out.</p>
-          <button type="button" class="discharge-button" [disabled]="!bluePhase.carbonBurningLife && !bluePhase.canToggleCarbonBurn()" (click)="bluePhase.toggleCarbonBurn()">
-            {{ bluePhase.carbonBurningLife ? 'STOP BURNING' : 'BURN LIFE FOR CHARGE' }}
-          </button>
-        </div>
       </div>
     </div>
 
@@ -353,10 +288,52 @@
         <p>Electrons determine usable area; spend them to enlarge each land plot.</p>
         <button (click)="bluePhase.buyCarbonLandArea()" [disabled]="!bluePhase.canBuyCarbonLandArea()">Expand for {{ bluePhase.getCarbonLandAreaCost().toString() }} Electrons</button>
       </article>
+    </div>
+  </section>
+
+
+  <section *ngIf="selectedElement.holding.name === 'oxygen' && bluePhase.isOxygenUnlocked()" class="carbon-lab">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">OXYGEN COMBUSTION CHAMBER</p>
+        <h2>Life Burn and Stored Charge</h2>
+      </div>
+      <p>Oxygen burns Carbon Life into Lithium battery charge. Carbon still grows Life; Oxygen controls whether that biomass can be combusted.</p>
+    </div>
+
+    <div class="battery-showcase carbon-showcase">
+      <div class="battery-visual carbon-visual" aria-hidden="true">
+        <div class="life-world"><span></span><span></span><span></span></div>
+        <div class="burn-flame" [class.active]="bluePhase.oxygenBurningLife">BURN</div>
+      </div>
+      <div class="charge-panel">
+        <span>OXYGEN LIFE COMBUSTION</span>
+        <strong>{{ bluePhase.oxygenBurningLife ? 'BURNING' : 'READY' }}</strong>
+        <p>Combustion spends Carbon Life and adds {{ bluePhase.getOxygenBurnChargeMultiplier().toString(2) }} Lithium charge per Life until batteries are full or Life runs out.</p>
+        <div class="charge-track"><span [style.width.%]="getLithiumChargeBurnPercent()"></span></div>
+        <div class="discharge-panel">
+          <span>LITHIUM CHARGE</span>
+          <strong>{{ bluePhase.getLithiumTotalCharge().toString() }} / {{ bluePhase.getLithiumTotalCapacity().toString() }}</strong>
+          <p>Burning automatically stops when Lithium batteries are fully charged.</p>
+          <button type="button" class="discharge-button" [disabled]="!bluePhase.oxygenBurningLife && !bluePhase.canToggleOxygenBurn()" (click)="bluePhase.toggleOxygenBurn()">
+            {{ bluePhase.oxygenBurningLife ? 'STOP BURNING' : 'BURN LIFE FOR CHARGE' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="battery-grid">
       <article class="battery-card carbon-card">
-        <span>Lithium Charge</span>
-        <strong>{{ bluePhase.getLithiumTotalCharge().toString() }} / {{ bluePhase.getLithiumTotalCapacity().toString() }}</strong>
-        <p>Burning automatically stops when Lithium batteries are fully charged.</p>
+        <span>Combustion Chambers</span>
+        <strong>{{ bluePhase.oxygenCombustionUpgrades.toString() }}</strong>
+        <p class="resource-balance">{{ oxygen.amount.toString(3) }} Oxygen</p>
+        <p>Oxygen combustion effect: {{ bluePhase.getOxygenCombustionEffect().toString(2) }}x</p>
+        <button (click)="bluePhase.buyOxygenCombustion()" [disabled]="!bluePhase.canBuyOxygenCombustion()">Build for {{ bluePhase.getOxygenCombustionCost().toString() }} Oxygen</button>
+      </article>
+      <article class="battery-card carbon-card">
+        <span>Carbon Life</span>
+        <strong>{{ bluePhase.carbonLife.toString(3) }} Life</strong>
+        <p>Oxygen consumes this Life while combustion is active.</p>
       </article>
     </div>
   </section>
