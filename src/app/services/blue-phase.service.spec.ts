@@ -167,7 +167,7 @@ describe('BluePhaseService', () => {
 
   it('alternates the active particle on successful blue element purchases', () => {
     service.unlockFromPrestige();
-    HoldingRecord.neutronClump.amount = new Num(1, 2);
+    HoldingRecord.neutrons.amount = new Num(1, 2);
     HoldingRecord.lithium.amount = new Num(1, 3);
     HoldingRecord.protons.amount = new Num(1, 3);
     HoldingRecord.electrons.amount = new Num(1, 3);
@@ -245,21 +245,32 @@ describe('BluePhaseService', () => {
     expect(service.getParticleGeneration().toNumber()).toBeCloseTo(0.009, 8);
     expect(service.getCollisionGain().toNumber()).toBe(2);
   });
+  it('merges legacy neutron clump matter back into persistent neutrons', () => {
+    HoldingRecord.neutrons.amount = new Num(4, 0);
+    HoldingRecord.neutronClump.amount = new Num(6, 0);
 
-  it('advances one clump stage for every power of ten', () => {
-    HoldingRecord.neutronClump.amount = new Num(9, 0);
-    expect(service.getClumpStage()).toBe(0);
+    service.mergeLegacyNeutronClump();
 
-    HoldingRecord.neutronClump.amount = new Num(1, 1);
-    expect(service.getClumpStage()).toBe(1);
-
-    HoldingRecord.neutronClump.amount = new Num(1, 3);
-    expect(service.getClumpStage()).toBe(3);
+    expect(HoldingRecord.neutrons.amount.toNumber()).toBe(10);
+    expect(HoldingRecord.neutronClump.amount.toNumber()).toBe(0);
+    expect(service.isElementUnlocked(service.elementDefinitions[0])).toBeTrue();
   });
 
 
-  it('generates Beryllium without consuming Lithium at clump stage 2', () => {
-    HoldingRecord.neutronClump.amount = new Num(1, 2);
+  it('advances one neutron stage for every power of ten', () => {
+    HoldingRecord.neutrons.amount = new Num(9, 0);
+    expect(service.getNeutronStage()).toBe(0);
+
+    HoldingRecord.neutrons.amount = new Num(1, 1);
+    expect(service.getNeutronStage()).toBe(1);
+
+    HoldingRecord.neutrons.amount = new Num(1, 3);
+    expect(service.getNeutronStage()).toBe(3);
+  });
+
+
+  it('generates Beryllium without consuming Lithium at neutron stage 2', () => {
+    HoldingRecord.neutrons.amount = new Num(1, 2);
 
     service.tick(Num.ONE);
 
@@ -268,8 +279,8 @@ describe('BluePhaseService', () => {
     expect(HoldingRecord.lithium.amount.toNumber()).toBeCloseTo(0.1, 8);
   });
 
-  it('generates each unlocked element directly from clump size', () => {
-    HoldingRecord.neutronClump.amount = new Num(1, 3);
+  it('generates each unlocked element directly from persistent neutron count', () => {
+    HoldingRecord.neutrons.amount = new Num(1, 3);
     HoldingRecord.lithium.amount = new Num(1, 2);
     HoldingRecord.beryllium.amount = new Num(1, 1);
 
@@ -286,7 +297,7 @@ describe('BluePhaseService', () => {
   });
 
   it('fills Beryllium rockets with fuel to boost red extensions', () => {
-    HoldingRecord.neutronClump.amount = new Num(1, 2);
+    HoldingRecord.neutrons.amount = new Num(1, 2);
     HoldingRecord.beryllium.amount = new Num(2, 1);
     HoldingRecord.protons.amount = new Num(1, 2);
     HoldingRecord.electrons.amount = new Num(1, 2);
@@ -310,7 +321,7 @@ describe('BluePhaseService', () => {
   });
 
   it('caps Beryllium fuel at rocket capacity', () => {
-    HoldingRecord.neutronClump.amount = new Num(1, 2);
+    HoldingRecord.neutrons.amount = new Num(1, 2);
     HoldingRecord.beryllium.amount = new Num(2, 1);
     HoldingRecord.protons.amount = new Num(1, 2);
 
@@ -323,7 +334,7 @@ describe('BluePhaseService', () => {
   });
 
   it('keeps Beryllium upgrades locked until Beryllium is unlocked', () => {
-    HoldingRecord.neutronClump.amount = new Num(1, 1);
+    HoldingRecord.neutrons.amount = new Num(1, 1);
     HoldingRecord.beryllium.amount = new Num(1, 3);
     HoldingRecord.protons.amount = new Num(1, 3);
     HoldingRecord.electrons.amount = new Num(1, 3);
@@ -336,7 +347,7 @@ describe('BluePhaseService', () => {
 
 
   it('generates Boron fiberglass from fiber spools to boost red accelerators', () => {
-    HoldingRecord.neutronClump.amount = new Num(1, 3);
+    HoldingRecord.neutrons.amount = new Num(1, 3);
     HoldingRecord.boron.amount = new Num(2, 1);
     HoldingRecord.protons.amount = new Num(1, 2);
     HoldingRecord.electrons.amount = new Num(1, 2);
@@ -385,7 +396,7 @@ describe('BluePhaseService', () => {
   });
 
   it('discharges charged lithium batteries into tiers and resets only lithium battery progress', () => {
-    HoldingRecord.neutronClump.amount = new Num(1, 1);
+    HoldingRecord.neutrons.amount = new Num(1, 1);
     HoldingRecord.lithium.amount = new Num(4, 2);
     HoldingRecord.protons.amount = new Num(7, 0);
     HoldingRecord.electrons.amount = new Num(8, 0);
@@ -412,7 +423,7 @@ describe('BluePhaseService', () => {
   });
 
   it('grows carbon life from land and pauses growth while burning into lithium charge', () => {
-    HoldingRecord.neutronClump.amount = new Num(1, 4);
+    HoldingRecord.neutrons.amount = new Num(1, 4);
     HoldingRecord.carbon.amount = new Num(1, 2);
     HoldingRecord.lithium.amount = new Num(1, 2);
     service.lithiumBatteries = Num.ONE.copy();
@@ -459,8 +470,7 @@ describe('BluePhaseService', () => {
   it('starts the neutron meltdown at ^0.001 and fully restores at 10,000 neutron matter', () => {
     expect(service.getNeutronMeltdownPower().toNumber()).toBeCloseTo(0.001, 8);
 
-    HoldingRecord.neutrons.amount = new Num(4, 3);
-    HoldingRecord.neutronClump.amount = new Num(6, 3);
+    HoldingRecord.neutrons.amount = new Num(1, 4);
 
     expect(service.getTotalNeutronMatter().toNumber()).toBe(10000);
     expect(service.getNeutronMeltdownPower().toNumber()).toBeCloseTo(1, 8);
