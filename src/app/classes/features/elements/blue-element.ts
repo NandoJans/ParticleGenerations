@@ -106,6 +106,10 @@ export class CarbonLandAreaUpgrade extends ElementUpgrade {
   description = 'Uses Electrons to expand usable area on each Carbon land plot.';
 }
 
+export class OxygenCombustionUpgrade extends ElementUpgrade {
+  description = 'Uses Oxygen to burn Carbon Life into Lithium battery charge.';
+}
+
 export abstract class BlueElement {
   protected constructor(
     public holding: Holding,
@@ -199,6 +203,20 @@ export class CarbonElement extends BlueElement {
   }
 
   getUpgrades(): ElementUpgrade[] { return [this.landUpgrade, this.landAreaUpgrade]; }
+}
+
+export class OxygenElement extends BlueElement {
+  constructor(holding: Holding, theme: string, componentName: string) {
+    super(holding, theme, componentName);
+  }
+
+  combustionUpgrade!: OxygenCombustionUpgrade;
+
+  initializeUpgrades(host: ElementUpgradeHost, protons: Holding, electrons: Holding): void {
+    this.combustionUpgrade = new OxygenCombustionUpgrade(this, host, `${this.holding.name}-combustion`, 'Life Combustion', new Num(5, 0), new Num(5, 0), this.holding);
+  }
+
+  getUpgrades(): ElementUpgrade[] { return [this.combustionUpgrade]; }
 }
 
 export class ForgedBlueElement extends BlueElement {

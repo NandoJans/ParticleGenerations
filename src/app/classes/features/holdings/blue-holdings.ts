@@ -253,6 +253,28 @@ export class CarbonHolding extends BlueHolding {
   }
 }
 
+
+export class OxygenHolding extends BlueHolding {
+  name = 'oxygen';
+  displayName = 'Oxygen';
+  abbreviation = 'O';
+  resetId = ResetHelper.registerReset(ResetKey.PURPLE, this);
+  holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
+    .withAmountPrefix('The neutron clump has forged')
+    .withAmountSuffix(' Oxygen')
+    .withEffectPrefix('Forged Oxygen enables Life combustion into Lithium charge')
+    .addLine('Forged Oxygen multiplies proton and electron generation by', () => this.particleGenerationEffect.toString(2) + 'x', '')
+    .build();
+
+  override action(): Num {
+    return this.boostParticleGenerationFromForgedElement();
+  }
+
+  override effectString(effect: Num): string {
+    return effect.toString(3) + 'x';
+  }
+}
+
 export class NitrogenHolding extends BlueHolding {
   name = 'nitrogen';
   displayName = 'Nitrogen';
