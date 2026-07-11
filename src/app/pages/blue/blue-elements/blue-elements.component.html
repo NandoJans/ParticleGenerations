@@ -221,7 +221,7 @@
         <div class="discharge-panel">
           <span>FIBERGLASS TIER</span>
           <strong>{{ bluePhase.boronFiberglassTier.toString() }} // ^{{ bluePhase.getBoronFiberglassTierEffect().toString(2) }}</strong>
-          <p>Next lamination: {{ bluePhase.getBoronLaminateThreshold().toString() }} base composite strength</p>
+          <p>Next lamination: {{ bluePhase.getBoronLaminateThreshold().toString() }} fiber spools</p>
           <button type="button" class="discharge-button" [disabled]="!bluePhase.canLaminateBoronFiberglass()" (click)="bluePhase.laminateBoronFiberglass()">
             LAMINATE FIBERGLASS
           </button>
