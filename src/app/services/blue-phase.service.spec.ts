@@ -62,6 +62,7 @@ describe('BluePhaseService', () => {
     service.carbonLandAreaUpgrades = Num.ZERO.copy();
     service.carbonLifeUpgrades = Num.ZERO.copy();
     service.carbonLife = Num.ZERO.copy();
+    service.carbonLifeTier = Num.ZERO.copy();
     service.carbonBurningLife = false;
     LithiumHolding.batteryTier = Num.ZERO.copy();
     LithiumHolding.batteryCharge = Num.ZERO.copy();
@@ -117,6 +118,7 @@ describe('BluePhaseService', () => {
     service.carbonLandAreaUpgrades = Num.ZERO.copy();
     service.carbonLifeUpgrades = Num.ZERO.copy();
     service.carbonLife = Num.ZERO.copy();
+    service.carbonLifeTier = Num.ZERO.copy();
     service.carbonBurningLife = false;
     LithiumHolding.batteryTier = Num.ZERO.copy();
     LithiumHolding.batteryCharge = Num.ZERO.copy();
@@ -495,6 +497,37 @@ describe('BluePhaseService', () => {
     service.tick(Num.ONE);
 
     expect(service.carbonLife.toNumber()).toBeGreaterThan(1.2);
+  });
+
+
+
+  it('prestiges Carbon life into life tiers and resets only Carbon biosphere progress', () => {
+    HoldingRecord.carbon.amount = new Num(5, 2);
+    HoldingRecord.protons.amount = new Num(7, 0);
+    HoldingRecord.electrons.amount = new Num(8, 0);
+    HoldingRecord.lithium.amount = new Num(9, 0);
+    service.carbonLandPlots = new Num(4, 0);
+    service.carbonLandAreaUpgrades = new Num(3, 0);
+    service.carbonLifeUpgrades = new Num(2, 0);
+    service.carbonLife = BluePhaseService.carbonLifePrestigeBaseBiomass.copy();
+    service.carbonBurningLife = true;
+
+    expect(service.canPrestigeCarbonLife()).toBeTrue();
+
+    service.prestigeCarbonLife();
+
+    expect(service.carbonLifeTier.toNumber()).toBe(1);
+    expect(HoldingRecord.carbon.amount.equals(Num.ZERO)).toBeTrue();
+    expect(service.carbonLandPlots.equals(Num.ZERO)).toBeTrue();
+    expect(service.carbonLandAreaUpgrades.equals(Num.ZERO)).toBeTrue();
+    expect(service.carbonLifeUpgrades.equals(Num.ZERO)).toBeTrue();
+    expect(service.carbonLife.equals(Num.ZERO)).toBeTrue();
+    expect(service.carbonBurningLife).toBeFalse();
+    expect(HoldingRecord.protons.amount.toNumber()).toBe(7);
+    expect(HoldingRecord.electrons.amount.toNumber()).toBe(8);
+    expect(HoldingRecord.lithium.amount.toNumber()).toBe(9);
+    expect(service.getCarbonLifeTierEffect().toNumber()).toBe(2);
+    expect(service.getCarbonLifePrestigeThreshold().toNumber()).toBe(100000000);
   });
 
   it('uses carbon life to boost booster acceleration effect without changing its base buffer', () => {

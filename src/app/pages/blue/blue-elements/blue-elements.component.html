@@ -270,6 +270,14 @@
         <span>LIFE BIOMASS</span>
         <strong>{{ bluePhase.carbonLife.toString(3) }} Life</strong>
         <p>Life grows at {{ bluePhase.getCarbonLifeGeneration().toString(3) }}/s from {{ bluePhase.getCarbonLandArea().toString() }} land area, Carbon abundance, and {{ bluePhase.getCarbonLifeUpgradeEffect().toString(2) }}x cultivation. Current Life boosts booster acceleration by {{ bluePhase.getCarbonLifeEffect().toString(3) }}x.</p>
+        <div class="discharge-panel">
+          <span>LIFE TIER</span>
+          <strong>{{ bluePhase.carbonLifeTier.toString() }} // ^{{ bluePhase.getCarbonLifeTierEffect().toString(2) }}</strong>
+          <p>Next biosphere prestige: {{ bluePhase.getCarbonLifePrestigeThreshold().toString() }} Life</p>
+          <button type="button" class="discharge-button" [disabled]="!bluePhase.canPrestigeCarbonLife()" (click)="bluePhase.prestigeCarbonLife()">
+            PRESTIGE LIFE
+          </button>
+        </div>
       </div>
     </div>
 
