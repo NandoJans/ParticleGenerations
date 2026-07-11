@@ -106,6 +106,10 @@ export class CarbonLandAreaUpgrade extends ElementUpgrade {
   description = 'Uses Electrons to expand usable area on each Carbon land plot.';
 }
 
+export class CarbonLifeUpgrade extends ElementUpgrade {
+  description = 'Spends Carbon to cultivate richer Life growth on the biosphere.';
+}
+
 export class OxygenCombustionUpgrade extends ElementUpgrade {
   description = 'Uses Oxygen to burn Carbon Life into Lithium battery charge.';
 }
@@ -196,13 +200,15 @@ export class CarbonElement extends BlueElement {
 
   landUpgrade!: CarbonLandUpgrade;
   landAreaUpgrade!: CarbonLandAreaUpgrade;
+  lifeUpgrade!: CarbonLifeUpgrade;
 
   initializeUpgrades(host: ElementUpgradeHost, protons: Holding, electrons: Holding): void {
     this.landUpgrade = new CarbonLandUpgrade(this, host, `${this.holding.name}-land`, 'Land Plots', new Num(5, 0), new Num(5, 0), protons);
     this.landAreaUpgrade = new CarbonLandAreaUpgrade(this, host, `${this.holding.name}-land-area`, 'Land Area', new Num(2.5, 1), new Num(2.5, 1), electrons);
+    this.lifeUpgrade = new CarbonLifeUpgrade(this, host, `${this.holding.name}-life`, 'Life Cultivation', new Num(1, 1), new Num(1, 1), this.holding);
   }
 
-  getUpgrades(): ElementUpgrade[] { return [this.landUpgrade, this.landAreaUpgrade]; }
+  getUpgrades(): ElementUpgrade[] { return [this.landUpgrade, this.landAreaUpgrade, this.lifeUpgrade]; }
 }
 
 export class OxygenElement extends BlueElement {

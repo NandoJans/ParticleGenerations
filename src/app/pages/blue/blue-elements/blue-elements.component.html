@@ -269,7 +269,7 @@
       <div class="charge-panel">
         <span>LIFE BIOMASS</span>
         <strong>{{ bluePhase.carbonLife.toString(3) }} Life</strong>
-        <p>Life grows at {{ bluePhase.getCarbonLifeGeneration().toString(3) }}/s from {{ bluePhase.getCarbonLandArea().toString() }} land area and Carbon abundance. Current Life boosts booster acceleration by {{ bluePhase.getCarbonLifeEffect().toString(3) }}x.</p>
+        <p>Life grows at {{ bluePhase.getCarbonLifeGeneration().toString(3) }}/s from {{ bluePhase.getCarbonLandArea().toString() }} land area, Carbon abundance, and {{ bluePhase.getCarbonLifeUpgradeEffect().toString(2) }}x cultivation. Current Life boosts booster acceleration by {{ bluePhase.getCarbonLifeEffect().toString(3) }}x.</p>
       </div>
     </div>
 
@@ -285,6 +285,12 @@
         <strong>{{ bluePhase.getCarbonLandArea().toString() }}</strong>
         <p>Electrons determine usable area; spend them to enlarge each land plot.</p>
         <button (click)="bluePhase.buyCarbonLandArea()" [disabled]="!bluePhase.canBuyCarbonLandArea()">Expand for {{ bluePhase.getCarbonLandAreaCost().toString() }} Electrons</button>
+      </article>
+      <article class="battery-card carbon-card">
+        <span>Life Cultivation</span>
+        <strong>{{ bluePhase.carbonLifeUpgrades.toString() }} // {{ bluePhase.getCarbonLifeUpgradeEffect().toString(2) }}x</strong>
+        <p class="resource-balance">{{ carbon.amount.toString(3) }} Carbon</p>
+        <button (click)="bluePhase.buyCarbonLifeUpgrade()" [disabled]="!bluePhase.canBuyCarbonLifeUpgrade()">Cultivate for {{ bluePhase.getCarbonLifeUpgradeCost().toString() }} Carbon</button>
       </article>
     </div>
   </section>

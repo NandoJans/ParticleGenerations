@@ -13,7 +13,7 @@ import {MultiplierRecord} from "../classes/records/multipliers/multiplier-record
 import {ChargerRecord} from "../classes/records/charger/charger-record";
 import {Holding} from '../classes/features/holding';
 import {BerylliumHolding, BoronHolding, CarbonHolding, LithiumHolding} from '../classes/features/holdings/blue-holdings';
-import {BerylliumElement, BerylliumFuelUpgrade, BerylliumLogicUpgrade, BerylliumRocketUpgrade, BlueElement, BoronElement, BoronFiberUpgrade, BoronResinUpgrade, BoronWeaveUpgrade, CarbonElement, CarbonLandAreaUpgrade, CarbonLandUpgrade, ElementBatteryUpgrade, ElementCapacityUpgrade, ElementChargerUpgrade, ElementUpgrade, ElementUpgradeHost, ForgedBlueElement, LithiumElement, OxygenCombustionUpgrade, OxygenElement} from '../classes/features/elements/blue-element';
+import {BerylliumElement, BerylliumFuelUpgrade, BerylliumLogicUpgrade, BerylliumRocketUpgrade, BlueElement, BoronElement, BoronFiberUpgrade, BoronResinUpgrade, BoronWeaveUpgrade, CarbonElement, CarbonLandAreaUpgrade, CarbonLandUpgrade, CarbonLifeUpgrade, ElementBatteryUpgrade, ElementCapacityUpgrade, ElementChargerUpgrade, ElementUpgrade, ElementUpgradeHost, ForgedBlueElement, LithiumElement, OxygenCombustionUpgrade, OxygenElement} from '../classes/features/elements/blue-element';
 
 export type BlueParticleMode = 'none' | 'protons' | 'electrons';
 
@@ -58,6 +58,7 @@ export class BluePhaseService implements ElementUpgradeHost {
   boronFiberglassTier = Num.ZERO.copy();
   carbonLandPlots = Num.ZERO.copy();
   carbonLandAreaUpgrades = Num.ZERO.copy();
+  carbonLifeUpgrades = Num.ZERO.copy();
   carbonLife = Num.ZERO.copy();
   oxygenCombustionUpgrades = Num.ZERO.copy();
   oxygenBurningLife = false;
@@ -117,19 +118,28 @@ export class BluePhaseService implements ElementUpgradeHost {
   private get oxygenElement(): OxygenElement { return this.elementDefinitions[5].element as OxygenElement; }
 
   getElementUpgradeCost(upgrade: ElementUpgrade): Num {
-    if (upgrade instanceof ElementBatteryUpgrade) return upgrade.baseCost.mul(new Num(1.75, 0).pow(upgrade.bought));
-    if (upgrade instanceof ElementChargerUpgrade) return upgrade.baseCost.mul(new Num(2, 0).pow(upgrade.bought));
-    if (upgrade instanceof ElementCapacityUpgrade) return upgrade.baseCost.mul(new Num(2.25, 0).pow(upgrade.bought));
-    if (upgrade instanceof BerylliumRocketUpgrade) return upgrade.baseCost.mul(new Num(2, 0).pow(upgrade.bought));
-    if (upgrade instanceof BerylliumFuelUpgrade) return upgrade.baseCost.mul(new Num(2, 0).pow(upgrade.bought));
-    if (upgrade instanceof BerylliumLogicUpgrade) return upgrade.baseCost.mul(new Num(2, 0).pow(upgrade.bought));
-    if (upgrade instanceof BoronFiberUpgrade) return upgrade.baseCost.mul(new Num(2.1, 0).pow(upgrade.bought));
-    if (upgrade instanceof BoronResinUpgrade) return upgrade.baseCost.mul(new Num(2, 0).pow(upgrade.bought));
-    if (upgrade instanceof BoronWeaveUpgrade) return upgrade.baseCost.mul(new Num(2, 0).pow(upgrade.bought));
-    if (upgrade instanceof CarbonLandUpgrade) return upgrade.baseCost.mul(new Num(2.4, 0).pow(upgrade.bought));
-    if (upgrade instanceof CarbonLandAreaUpgrade) return upgrade.baseCost.mul(new Num(2.2, 0).pow(upgrade.bought));
-    if (upgrade instanceof OxygenCombustionUpgrade) return upgrade.baseCost.mul(new Num(2, 0).pow(upgrade.bought));
-    return upgrade.baseCost.copy();
+    const baseCost = this.getNeutronScaledElementUpgradeBaseCost(upgrade);
+    if (upgrade instanceof ElementBatteryUpgrade) return baseCost.mul(new Num(1.75, 0).pow(upgrade.bought));
+    if (upgrade instanceof ElementChargerUpgrade) return baseCost.mul(new Num(2, 0).pow(upgrade.bought));
+    if (upgrade instanceof ElementCapacityUpgrade) return baseCost.mul(new Num(2.25, 0).pow(upgrade.bought));
+    if (upgrade instanceof BerylliumRocketUpgrade) return baseCost.mul(new Num(2, 0).pow(upgrade.bought));
+    if (upgrade instanceof BerylliumFuelUpgrade) return baseCost.mul(new Num(2, 0).pow(upgrade.bought));
+    if (upgrade instanceof BerylliumLogicUpgrade) return baseCost.mul(new Num(2, 0).pow(upgrade.bought));
+    if (upgrade instanceof BoronFiberUpgrade) return baseCost.mul(new Num(2.1, 0).pow(upgrade.bought));
+    if (upgrade instanceof BoronResinUpgrade) return baseCost.mul(new Num(2, 0).pow(upgrade.bought));
+    if (upgrade instanceof BoronWeaveUpgrade) return baseCost.mul(new Num(2, 0).pow(upgrade.bought));
+    if (upgrade instanceof CarbonLandUpgrade) return baseCost.mul(new Num(2.4, 0).pow(upgrade.bought));
+    if (upgrade instanceof CarbonLandAreaUpgrade) return baseCost.mul(new Num(2.2, 0).pow(upgrade.bought));
+    if (upgrade instanceof CarbonLifeUpgrade) return upgrade.baseCost.mul(new Num(2.1, 0).pow(upgrade.bought));
+    if (upgrade instanceof OxygenCombustionUpgrade) return baseCost.mul(new Num(2, 0).pow(upgrade.bought));
+    return baseCost.copy();
+  }
+
+  private getNeutronScaledElementUpgradeBaseCost(upgrade: ElementUpgrade): Num {
+    if (upgrade.currency !== HoldingRecord.protons && upgrade.currency !== HoldingRecord.electrons) return upgrade.baseCost.copy();
+
+    const definition = this.elementDefinitions.find(entry => entry.element === upgrade.element);
+    return definition ? upgrade.baseCost.mul(definition.unlockAmount) : upgrade.baseCost.copy();
   }
 
   canBuyElementUpgrade(element: BlueElement, upgrade: ElementUpgrade): boolean {
@@ -171,6 +181,7 @@ export class BluePhaseService implements ElementUpgradeHost {
     } else if (element instanceof CarbonElement) {
       if (upgrade === element.landUpgrade) this.carbonLandPlots = upgrade.bought.copy();
       if (upgrade === element.landAreaUpgrade) this.carbonLandAreaUpgrades = upgrade.bought.copy();
+      if (upgrade === element.lifeUpgrade) this.carbonLifeUpgrades = upgrade.bought.copy();
     } else if (element instanceof OxygenElement) {
       if (upgrade === element.combustionUpgrade) this.oxygenCombustionUpgrades = upgrade.bought.copy();
     }
@@ -185,6 +196,7 @@ export class BluePhaseService implements ElementUpgradeHost {
     this.setElementUpgradeAmount(this.boronElement.weaveUpgrade, this.boronWeaveLooms);
     this.setElementUpgradeAmount(this.carbonElement.landUpgrade, this.carbonLandPlots);
     this.setElementUpgradeAmount(this.carbonElement.landAreaUpgrade, this.carbonLandAreaUpgrades);
+    this.setElementUpgradeAmount(this.carbonElement.lifeUpgrade, this.carbonLifeUpgrades);
     this.setElementUpgradeAmount(this.oxygenElement.combustionUpgrade, this.oxygenCombustionUpgrades);
   }
 
@@ -461,12 +473,15 @@ export class BluePhaseService implements ElementUpgradeHost {
 
   getCarbonLandCost(): Num { return this.getElementUpgradeCost(this.carbonElement.landUpgrade); }
   getCarbonLandAreaCost(): Num { return this.getElementUpgradeCost(this.carbonElement.landAreaUpgrade); }
+  getCarbonLifeUpgradeCost(): Num { return this.getElementUpgradeCost(this.carbonElement.lifeUpgrade); }
+  getCarbonLifeUpgradeEffect(): Num { return this.carbonLifeUpgrades.mul(new Num(2.5, -1)).add(Num.ONE); }
   getCarbonLandArea(): Num { return this.carbonLandPlots.mul(this.carbonLandAreaUpgrades.add(Num.ONE)); }
   getCarbonLifeGeneration(): Num {
     if (!this.isCarbonUnlocked() || this.oxygenBurningLife) return Num.ZERO.copy();
 
     return this.getCarbonLandArea()
       .mul(HoldingRecord.carbon.amount.add(Num.ONE).log10().add(Num.ONE))
+      .mul(this.getCarbonLifeUpgradeEffect())
       .mul(new Num(1, -1));
   }
   getCarbonLifeEffect(): Num { return this.carbonLife.add(Num.ONE).log10().mul(new Num(2, -2)).add(Num.ONE); }
@@ -481,6 +496,8 @@ export class BluePhaseService implements ElementUpgradeHost {
   buyCarbonLand(): void { this.buyElementUpgrade(this.carbonElement, this.carbonElement.landUpgrade); }
   canBuyCarbonLandArea(): boolean { return this.canBuyElementUpgrade(this.carbonElement, this.carbonElement.landAreaUpgrade); }
   buyCarbonLandArea(): void { this.buyElementUpgrade(this.carbonElement, this.carbonElement.landAreaUpgrade); }
+  canBuyCarbonLifeUpgrade(): boolean { return this.canBuyElementUpgrade(this.carbonElement, this.carbonElement.lifeUpgrade); }
+  buyCarbonLifeUpgrade(): void { this.buyElementUpgrade(this.carbonElement, this.carbonElement.lifeUpgrade); }
   canToggleCarbonBurn(): boolean { return this.canToggleOxygenBurn(); }
   toggleCarbonBurn(): void { this.toggleOxygenBurn(); }
 
@@ -682,6 +699,7 @@ export class BluePhaseService implements ElementUpgradeHost {
     this.storage.saveNum(this.boronFiberglassTier, 'boronFiberglassTier');
     this.storage.saveNum(this.carbonLandPlots, 'carbonLandPlots');
     this.storage.saveNum(this.carbonLandAreaUpgrades, 'carbonLandAreaUpgrades');
+    this.storage.saveNum(this.carbonLifeUpgrades, 'carbonLifeUpgrades');
     this.storage.saveNum(this.carbonLife, 'carbonLife');
     this.storage.saveNum(this.oxygenCombustionUpgrades, 'oxygenCombustionUpgrades');
     this.storage.save(this.oxygenBurningLife, 'oxygenBurningLife');
@@ -708,6 +726,7 @@ export class BluePhaseService implements ElementUpgradeHost {
     this.boronFiberglassTier = this.storage.loadNum(this.boronFiberglassTier, 'boronFiberglassTier');
     this.carbonLandPlots = this.storage.loadNum(this.carbonLandPlots, 'carbonLandPlots');
     this.carbonLandAreaUpgrades = this.storage.loadNum(this.carbonLandAreaUpgrades, 'carbonLandAreaUpgrades');
+    this.carbonLifeUpgrades = this.storage.loadNum(this.carbonLifeUpgrades, 'carbonLifeUpgrades');
     this.carbonLife = this.storage.loadNum(this.carbonLife, 'carbonLife');
     this.oxygenCombustionUpgrades = this.storage.loadNum(this.oxygenCombustionUpgrades, 'oxygenCombustionUpgrades');
     this.oxygenBurningLife = this.storage.load(this.oxygenBurningLife, 'oxygenBurningLife');
