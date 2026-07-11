@@ -4,11 +4,11 @@
     <div>
       <p class="eyebrow">BLUE PHASE // ELEMENT FORGE</p>
       <h1>Persistent Matter Synthesis</h1>
-      <p>Compress neutrons into a lasting clump, then forge heavier elements that carry power between Blue resets.</p>
+      <p>Collide charged particles into persistent neutrons, then forge heavier elements that carry power between Blue resets.</p>
     </div>
     <div class="stage-readout">
-      <span>CLUMP STAGE</span>
-      <strong>{{ bluePhase.getClumpStage() }}</strong>
+      <span>NEUTRON STAGE</span>
+      <strong>{{ bluePhase.getNeutronStage() }}</strong>
     </div>
   </header>
 
@@ -16,24 +16,22 @@
     <div class="section-heading">
       <div>
         <p class="eyebrow">PERSISTENT MATTER</p>
-        <h2>Neutron Clump</h2>
+        <h2>Neutron Forge</h2>
       </div>
-      <p>Deposit fresh neutrons to widen the forge and unlock the element chain.</p>
+      <p>Persistent neutrons now directly widen the forge and unlock the element chain.</p>
     </div>
 
     <div class="neutron-grid">
       <article class="matter-card">
         <div class="card-visual neutron-visual" aria-hidden="true"><span></span><span></span><span></span></div>
         <app-number-display [holding]="neutrons"></app-number-display>
-        <button class="deposit-button" [disabled]="!bluePhase.canDepositNeutrons()" (click)="bluePhase.depositAllNeutrons()">
-          DEPOSIT ALL INTO CLUMP
-        </button>
+        <p>Unlocked elements: <strong>{{ bluePhase.getCurrentElementName() }}</strong></p>
+        <p>Next unlock: {{ bluePhase.getNextStageRequirement().toString() }} persistent Neutrons</p>
       </article>
       <article class="matter-card clump-card">
         <div class="card-visual clump-visual" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-        <app-number-display [holding]="neutronClump"></app-number-display>
-        <p>Unlocked elements: <strong>{{ bluePhase.getCurrentElementName() }}</strong></p>
-        <p>Next unlock: {{ bluePhase.getNextStageRequirement().toString() }} clumped Neutrons</p>
+        <h3>Neutron Star Preview</h3>
+        <p>The clump has been reserved for a later Blue phase feature where these persistent neutrons will help build a neutron star.</p>
       </article>
     </div>
   </section>
@@ -54,11 +52,11 @@
         <h2>{{ selectedElement.holding.displayName }}</h2>
         <p class="element-theme">{{ selectedElement.theme }}</p>
         <app-number-display [holding]="selectedElement.holding"></app-number-display>
-        <p>Unlocks at {{ selectedElement.unlockAmount.toString() }} clumped Neutrons.</p>
+        <p>Unlocks at {{ selectedElement.unlockAmount.toString() }} persistent Neutrons.</p>
         <p *ngIf="bluePhase.isElementUnlocked(selectedElement)">
-          Generation: {{ getElementGeneration(selectedElement).toString(3) }} / sec from clump size.
+          Generation: {{ getElementGeneration(selectedElement).toString(3) }} / sec from persistent neutrons.
         </p>
-        <p *ngIf="!bluePhase.isElementUnlocked(selectedElement)" class="locked-copy">Compress more Neutrons to unlock this element.</p>
+        <p *ngIf="!bluePhase.isElementUnlocked(selectedElement)" class="locked-copy">Collide more Neutrons to unlock this element.</p>
       </div>
     </article>
 

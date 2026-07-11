@@ -193,10 +193,10 @@ export class TimelineService {
     )
     .build()
     .addTimelineEvent(
-      'blue-neutron-clump',
-      'Neutron Clump',
-      'Commit Neutrons to a growing clump. The first logarithmic stage begins Lithium production, establishing the path toward heavier elements.',
-      HoldingRecord.neutronClump,
+      'blue-element-forge',
+      'Element Forge',
+      'Collect persistent Neutrons directly. The first logarithmic stage begins Lithium production, establishing the path toward heavier elements.',
+      HoldingRecord.neutrons,
       new Num(1, 1)
     )
     .build()

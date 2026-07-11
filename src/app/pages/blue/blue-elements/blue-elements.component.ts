@@ -13,7 +13,6 @@ import {Num} from '../../../num';
 })
 export class BlueElementsComponent {
   neutrons: Holding = HoldingRecord.neutrons;
-  neutronClump: Holding = HoldingRecord.neutronClump;
   lithium: Holding = HoldingRecord.lithium;
   carbon: Holding = HoldingRecord.carbon;
   oxygen: Holding = HoldingRecord.oxygen;

@@ -142,7 +142,7 @@ export class LithiumHolding extends BlueHolding {
   abbreviation = 'Li';
   resetId = ResetHelper.registerReset(ResetKey.PURPLE, this);
   holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
-    .withAmountPrefix('The neutron clump has forged')
+    .withAmountPrefix('Persistent neutrons have forged')
     .withAmountSuffix(' Lithium')
     .withEffectPrefix('The battery charge multiplies red particle generators by')
     .addLine('Battery tier multiplier: ', () => this.getBatteryTierEffect().toString(2) + 'x', '')
@@ -178,7 +178,7 @@ export class BerylliumHolding extends BlueHolding {
   abbreviation = 'Be';
   resetId = ResetHelper.registerReset(ResetKey.PURPLE, this);
   holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
-    .withAmountPrefix('The neutron clump has forged')
+    .withAmountPrefix('Persistent neutrons have forged')
     .withAmountSuffix(' Beryllium')
     .withEffectPrefix('Beryllium rocket fleets multiply red extension power by')
     .addLine('Forged Beryllium multiplies proton and electron generation by', () => this.particleGenerationEffect.toString(2) + 'x', '')
@@ -205,7 +205,7 @@ export class BoronHolding extends BlueHolding {
   abbreviation = 'B';
   resetId = ResetHelper.registerReset(ResetKey.PURPLE, this);
   holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
-    .withAmountPrefix('The neutron clump has forged')
+    .withAmountPrefix('Persistent neutrons have forged')
     .withAmountSuffix(' Boron')
     .withEffectPrefix('Fiberglass composites multiply red accelerator generation by')
     .addLine('Forged Boron multiplies proton and electron generation by', () => this.particleGenerationEffect.toString(2) + 'x', '')
@@ -233,7 +233,7 @@ export class CarbonHolding extends BlueHolding {
   abbreviation = 'C';
   resetId = ResetHelper.registerReset(ResetKey.PURPLE, this);
   holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
-    .withAmountPrefix('The neutron clump has forged')
+    .withAmountPrefix('Persistent neutrons have forged')
     .withAmountSuffix(' Carbon')
     .withEffectPrefix('Life biomass multiplies booster acceleration power by')
     .addLine('Forged Carbon multiplies proton and electron generation by', () => this.particleGenerationEffect.toString(2) + 'x', '')
@@ -260,7 +260,7 @@ export class OxygenHolding extends BlueHolding {
   abbreviation = 'O';
   resetId = ResetHelper.registerReset(ResetKey.PURPLE, this);
   holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
-    .withAmountPrefix('The neutron clump has forged')
+    .withAmountPrefix('Persistent neutrons have forged')
     .withAmountSuffix(' Oxygen')
     .withEffectPrefix('Forged Oxygen enables Life combustion into Lithium charge')
     .addLine('Forged Oxygen multiplies proton and electron generation by', () => this.particleGenerationEffect.toString(2) + 'x', '')
@@ -281,7 +281,7 @@ export class NitrogenHolding extends BlueHolding {
   abbreviation = 'N';
   resetId = ResetHelper.registerReset(ResetKey.PURPLE, this);
   holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this)
-    .withAmountPrefix('The neutron clump has forged')
+    .withAmountPrefix('Persistent neutrons have forged')
     .withAmountSuffix(' Nitrogen')
     .withEffectPrefix('Forged Nitrogen multiplies proton and electron generation by')
     .build();

@@ -349,19 +349,15 @@ export class BluePhaseService implements ElementUpgradeHost {
     this.synchronizePurchases();
   }
 
-  depositAllNeutrons(): void {
-    if (HoldingRecord.neutrons.amount.lt(Num.ONE)) return;
-    HoldingRecord.neutronClump.add(HoldingRecord.neutrons.amount);
-    HoldingRecord.neutrons.amount = Num.ZERO.copy();
+  mergeLegacyNeutronClump(): void {
+    if (HoldingRecord.neutronClump.amount.lt(Num.ONE)) return;
+    HoldingRecord.neutrons.add(HoldingRecord.neutronClump.amount);
+    HoldingRecord.neutronClump.amount = Num.ZERO.copy();
   }
 
-  canDepositNeutrons(): boolean {
-    return HoldingRecord.neutrons.amount.greq(Num.ONE);
-  }
-
-  getClumpStage(): number {
-    if (HoldingRecord.neutronClump.amount.lt(new Num(1, 1))) return 0;
-    return Math.max(0, Math.floor(HoldingRecord.neutronClump.amount.log10().toNumber()));
+  getNeutronStage(): number {
+    if (HoldingRecord.neutrons.amount.lt(new Num(1, 1))) return 0;
+    return Math.max(0, Math.floor(HoldingRecord.neutrons.amount.log10().toNumber()));
   }
 
   getActiveElementDefinitions(): BlueElementDefinition[] {
@@ -369,7 +365,7 @@ export class BluePhaseService implements ElementUpgradeHost {
   }
 
   isElementUnlocked(element: BlueElementDefinition): boolean {
-    return HoldingRecord.neutronClump.amount.greq(element.unlockAmount);
+    return HoldingRecord.neutrons.amount.greq(element.unlockAmount);
   }
 
   getCurrentElementName(): string {
@@ -380,12 +376,12 @@ export class BluePhaseService implements ElementUpgradeHost {
   }
 
   getNextStageRequirement(): Num {
-    return new Num(1, this.getClumpStage() + 1);
+    return new Num(1, this.getNeutronStage() + 1);
   }
 
   getElementGeneration(element: BlueElementDefinition): Num {
     if (!this.isElementUnlocked(element)) return Num.ZERO.copy();
-    return HoldingRecord.neutronClump.amount
+    return HoldingRecord.neutrons.amount
       .div(element.unlockAmount)
       .mul(new Num(1, -2));
   }
@@ -715,6 +711,7 @@ export class BluePhaseService implements ElementUpgradeHost {
     this.carbonLife = this.storage.loadNum(this.carbonLife, 'carbonLife');
     this.oxygenCombustionUpgrades = this.storage.loadNum(this.oxygenCombustionUpgrades, 'oxygenCombustionUpgrades');
     this.oxygenBurningLife = this.storage.load(this.oxygenBurningLife, 'oxygenBurningLife');
+    this.mergeLegacyNeutronClump();
     this.synchronizePurchases();
     this.syncLithiumBatteryState();
     this.syncElementUpgradesFromLegacy();

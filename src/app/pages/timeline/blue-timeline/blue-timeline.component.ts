@@ -11,8 +11,8 @@ import {TimelineService} from '../../../services/timeline.service';
 export class BlueTimelineComponent {
   timeline: Timeline = TimelineService.blueTimeline;
   infoText: string[] = [
-    'The Blue Timeline follows the separation of charged particles, their collisions, and the compression of neutrons.',
+    'The Blue Timeline follows the separation of charged particles, their collisions, and persistent neutron synthesis.',
     'Blue milestones are powered by persistent Neutrons and improve later particle runs.',
-    'The first clump stage produces Lithium; later logarithmic stages will extend the heavy-element chain.'
+    'The first neutron stage produces Lithium; later logarithmic stages extend the heavy-element chain.'
   ];
 }
