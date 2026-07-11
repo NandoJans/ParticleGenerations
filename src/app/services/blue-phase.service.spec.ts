@@ -60,6 +60,7 @@ describe('BluePhaseService', () => {
     service.boronWeaveLooms = Num.ZERO.copy();
     service.carbonLandPlots = Num.ZERO.copy();
     service.carbonLandAreaUpgrades = Num.ZERO.copy();
+    service.carbonLifeUpgrades = Num.ZERO.copy();
     service.carbonLife = Num.ZERO.copy();
     service.carbonBurningLife = false;
     LithiumHolding.batteryTier = Num.ZERO.copy();
@@ -114,6 +115,7 @@ describe('BluePhaseService', () => {
     service.boronWeaveLooms = Num.ZERO.copy();
     service.carbonLandPlots = Num.ZERO.copy();
     service.carbonLandAreaUpgrades = Num.ZERO.copy();
+    service.carbonLifeUpgrades = Num.ZERO.copy();
     service.carbonLife = Num.ZERO.copy();
     service.carbonBurningLife = false;
     LithiumHolding.batteryTier = Num.ZERO.copy();
@@ -445,6 +447,17 @@ describe('BluePhaseService', () => {
     expect(service.getLithiumDischargeThreshold().toNumber()).toBe(200000);
   });
 
+  it('scales proton and electron element upgrade costs by each element neutron unlock amount', () => {
+    expect(service.getLithiumChargeGeneratorCost().toNumber()).toBe(100);
+    expect(service.getLithiumCapacityCost().toNumber()).toBe(100);
+    expect(service.getBerylliumFuelCost().toNumber()).toBe(100000);
+    expect(service.getBerylliumLogicCost().toNumber()).toBe(100000);
+    expect(service.getBoronResinCost().toNumber()).toBe(100000000);
+    expect(service.getBoronWeaveCost().toNumber()).toBe(100000000);
+    expect(service.getCarbonLandCost().toNumber()).toBe(50000);
+    expect(service.getCarbonLandAreaCost().toNumber()).toBe(250000);
+  });
+
   it('grows carbon life from land and pauses growth while burning into lithium charge', () => {
     HoldingRecord.neutrons.amount = new Num(1, 4);
     HoldingRecord.carbon.amount = new Num(1, 2);
@@ -464,6 +477,24 @@ describe('BluePhaseService', () => {
     expect(service.carbonBurningLife).toBeFalse();
     expect(service.carbonLife.toNumber()).toBeCloseTo(0.2, 8);
     expect(service.lithiumCharge.toNumber()).toBeGreaterThan(10);
+  });
+
+  it('spends carbon on life cultivation upgrades that improve life growth', () => {
+    HoldingRecord.neutrons.amount = new Num(1, 4);
+    HoldingRecord.carbon.amount = new Num(2, 1);
+    service.carbonLandPlots = Num.TWO.copy();
+    service.carbonLandAreaUpgrades = Num.ONE.copy();
+
+    expect(service.canBuyCarbonLifeUpgrade()).toBeTrue();
+    service.buyCarbonLifeUpgrade();
+
+    expect(service.carbonLifeUpgrades.toNumber()).toBe(1);
+    expect(HoldingRecord.carbon.amount.toNumber()).toBe(10);
+    expect(service.getCarbonLifeUpgradeEffect().toNumber()).toBe(1.25);
+
+    service.tick(Num.ONE);
+
+    expect(service.carbonLife.toNumber()).toBeGreaterThan(1.2);
   });
 
   it('uses carbon life to boost booster acceleration effect without changing its base buffer', () => {
