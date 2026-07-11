@@ -36,6 +36,7 @@ export class BluePhaseService implements ElementUpgradeHost {
   static readonly berylliumLaunchBaseThrust = new Num(1, 1);
   static readonly boronLaminateBaseStrength = new Num(1, 1);
   static readonly carbonLifeBurnBaseRate = new Num(1, 0);
+  static readonly carbonLifePrestigeBaseBiomass = new Num(1, 4);
   private readonly storage = new LocalStorageHelper('blue-phase', 'state');
   private purchaseStates: {[key: string]: {mantissa: number, exponent: number} | boolean} = {};
   activeParticle: BlueParticleMode = 'none';
@@ -60,6 +61,7 @@ export class BluePhaseService implements ElementUpgradeHost {
   carbonLandAreaUpgrades = Num.ZERO.copy();
   carbonLifeUpgrades = Num.ZERO.copy();
   carbonLife = Num.ZERO.copy();
+  carbonLifeTier = Num.ZERO.copy();
   oxygenCombustionUpgrades = Num.ZERO.copy();
   oxygenBurningLife = false;
 
@@ -476,6 +478,7 @@ export class BluePhaseService implements ElementUpgradeHost {
   getCarbonLifeUpgradeCost(): Num { return this.getElementUpgradeCost(this.carbonElement.lifeUpgrade); }
   getCarbonLifeUpgradeEffect(): Num { return this.carbonLifeUpgrades.mul(new Num(2.5, -1)).add(Num.ONE); }
   getCarbonLandArea(): Num { return this.carbonLandPlots.mul(this.carbonLandAreaUpgrades.add(Num.ONE)); }
+  getCarbonLifeCapacity(): Num { return this.getCarbonLandArea().mul(new Num(1, 2)); }
   getCarbonLifeGeneration(): Num {
     if (!this.isCarbonUnlocked() || this.oxygenBurningLife) return Num.ZERO.copy();
 
@@ -484,7 +487,24 @@ export class BluePhaseService implements ElementUpgradeHost {
       .mul(this.getCarbonLifeUpgradeEffect())
       .mul(new Num(1, -1));
   }
-  getCarbonLifeEffect(): Num { return this.carbonLife.add(Num.ONE).log10().mul(new Num(2, -2)).add(Num.ONE); }
+  getCarbonLifeBaseEffect(): Num { return this.carbonLife.add(Num.ONE).log10().mul(new Num(2, -2)).add(Num.ONE); }
+  getCarbonLifeEffect(): Num { return this.getCarbonLifeBaseEffect().pow(this.getCarbonLifeTierEffect()); }
+  getCarbonLifePrestigeThreshold(): Num { return BluePhaseService.carbonLifePrestigeBaseBiomass.pow(this.carbonLifeTier).mul(new Num(1, 4)); }
+  getCarbonLifeTierEffect(): Num { return Num.TWO.pow(this.carbonLifeTier); }
+  canPrestigeCarbonLife(): boolean { return this.carbonLife.greq(this.getCarbonLifePrestigeThreshold()); }
+  prestigeCarbonLife(): void {
+    if (!this.canPrestigeCarbonLife()) return;
+
+    this.carbonLifeTier = this.carbonLifeTier.add(Num.ONE);
+    HoldingRecord.carbon.amount = Num.ZERO.copy();
+    this.carbonLandPlots = Num.ZERO.copy();
+    this.carbonLandAreaUpgrades = Num.ZERO.copy();
+    this.carbonLifeUpgrades = Num.ZERO.copy();
+    this.carbonLife = Num.ZERO.copy();
+    this.oxygenBurningLife = false;
+    this.syncElementUpgradesFromLegacy();
+    CarbonHolding.lifeBoost = this.getCarbonLifeEffect();
+  }
   get carbonBurningLife(): boolean { return this.oxygenBurningLife; }
   set carbonBurningLife(value: boolean) { this.oxygenBurningLife = value; }
   getCarbonBurnChargeMultiplier(): Num { return this.getOxygenBurnChargeMultiplier(); }
@@ -565,6 +585,8 @@ export class BluePhaseService implements ElementUpgradeHost {
   private generateCarbonLife(speed: Num): void {
     const gain = this.getCarbonLifeGeneration().mul(speed);
     if (gain.gt(Num.ZERO)) this.carbonLife = this.carbonLife.add(gain);
+    const capacity = this.getCarbonLifeCapacity();
+    if (capacity.gt(Num.ZERO) && this.carbonLife.gt(capacity)) this.carbonLife = capacity.copy();
     CarbonHolding.lifeBoost = this.getCarbonLifeEffect();
   }
 
@@ -701,6 +723,7 @@ export class BluePhaseService implements ElementUpgradeHost {
     this.storage.saveNum(this.carbonLandAreaUpgrades, 'carbonLandAreaUpgrades');
     this.storage.saveNum(this.carbonLifeUpgrades, 'carbonLifeUpgrades');
     this.storage.saveNum(this.carbonLife, 'carbonLife');
+    this.storage.saveNum(this.carbonLifeTier, 'carbonLifeTier');
     this.storage.saveNum(this.oxygenCombustionUpgrades, 'oxygenCombustionUpgrades');
     this.storage.save(this.oxygenBurningLife, 'oxygenBurningLife');
   }
@@ -728,6 +751,7 @@ export class BluePhaseService implements ElementUpgradeHost {
     this.carbonLandAreaUpgrades = this.storage.loadNum(this.carbonLandAreaUpgrades, 'carbonLandAreaUpgrades');
     this.carbonLifeUpgrades = this.storage.loadNum(this.carbonLifeUpgrades, 'carbonLifeUpgrades');
     this.carbonLife = this.storage.loadNum(this.carbonLife, 'carbonLife');
+    this.carbonLifeTier = this.storage.loadNum(this.carbonLifeTier, 'carbonLifeTier');
     this.oxygenCombustionUpgrades = this.storage.loadNum(this.oxygenCombustionUpgrades, 'oxygenCombustionUpgrades');
     this.oxygenBurningLife = this.storage.load(this.oxygenBurningLife, 'oxygenBurningLife');
     this.mergeLegacyNeutronClump();

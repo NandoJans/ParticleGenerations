@@ -97,4 +97,12 @@ export class BlueElementsComponent {
     const fiberglass = this.bluePhase.getBoronTotalFiberglass().toNumber();
     return Math.max(0, Math.min(100, (fiberglass / capacity) * 100));
   }
+
+  getCarbonLifePercent(): number {
+    const capacity = this.bluePhase.getCarbonLifeCapacity().toNumber();
+    if (!Number.isFinite(capacity) || capacity <= 0) return 0;
+
+    const life = this.bluePhase.carbonLife.toNumber();
+    return Math.max(0, Math.min(100, (life / capacity) * 100));
+  }
 }

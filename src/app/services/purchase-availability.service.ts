@@ -129,6 +129,7 @@ export class PurchaseAvailabilityService {
       || this.bluePhaseService.canDischargeLithiumBattery()
       || this.bluePhaseService.canLaunchBerylliumRockets()
       || this.bluePhaseService.canLaminateBoronFiberglass()
+      || this.bluePhaseService.canPrestigeCarbonLife()
       || this.bluePhaseService.canToggleOxygenBurn();
   }
 }
