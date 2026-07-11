@@ -438,7 +438,7 @@ export class BluePhaseService implements ElementUpgradeHost {
   getBoronFiberglassEffect(): Num { return this.getBoronFiberglassBaseEffect().pow(this.getBoronFiberglassTierEffect()); }
   getBoronLaminateThreshold(): Num { return BluePhaseService.boronLaminateBaseStrength.pow(this.boronFiberglassTier).mul(new Num(1, 4)); }
   getBoronFiberglassTierEffect(): Num { return Num.TWO.pow(this.boronFiberglassTier); }
-  canLaminateBoronFiberglass(): boolean { return this.getBoronFiberglassBaseEffect().greq(this.getBoronLaminateThreshold()); }
+  canLaminateBoronFiberglass(): boolean { return this.boronFiberSpools.greq(this.getBoronLaminateThreshold()); }
   laminateBoronFiberglass(): void {
     if (!this.canLaminateBoronFiberglass()) return;
 

@@ -366,6 +366,29 @@ describe('BluePhaseService', () => {
     expect(HoldingRecord.boron.action().toNumber()).toBeCloseTo(4.14, 8);
   });
 
+  it('requires enough Boron fiber spools, not fiberglass effect, to laminate', () => {
+    const threshold = service.getBoronLaminateThreshold();
+    service.boronFiberSpools = threshold.sub(Num.ONE);
+    service.boronFiberglass = new Num(1, 100);
+    service.boronResinInfusers = new Num(1, 6);
+    service.boronWeaveLooms = new Num(1, 6);
+
+    expect(service.getBoronFiberglassBaseEffect().greq(threshold)).toBeTrue();
+    expect(service.canLaminateBoronFiberglass()).toBeFalse();
+
+    service.boronFiberSpools = threshold.copy();
+    service.boronFiberglass = Num.ZERO.copy();
+    service.boronResinInfusers = Num.ZERO.copy();
+    service.boronWeaveLooms = Num.ZERO.copy();
+
+    expect(service.getBoronFiberglassBaseEffect().lt(threshold)).toBeTrue();
+    expect(service.canLaminateBoronFiberglass()).toBeTrue();
+
+    service.laminateBoronFiberglass();
+
+    expect(service.boronFiberglassTier.toNumber()).toBe(1);
+  });
+
   it('boosts red generators with lithium battery charge but not raw Lithium', () => {
     HoldingRecord.lithium.amount = new Num(1, 6);
     service.lithiumCharge = Num.ZERO.copy();
