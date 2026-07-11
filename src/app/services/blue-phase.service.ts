@@ -478,6 +478,7 @@ export class BluePhaseService implements ElementUpgradeHost {
   getCarbonLifeUpgradeCost(): Num { return this.getElementUpgradeCost(this.carbonElement.lifeUpgrade); }
   getCarbonLifeUpgradeEffect(): Num { return this.carbonLifeUpgrades.mul(new Num(2.5, -1)).add(Num.ONE); }
   getCarbonLandArea(): Num { return this.carbonLandPlots.mul(this.carbonLandAreaUpgrades.add(Num.ONE)); }
+  getCarbonLifeCapacity(): Num { return this.getCarbonLandArea().mul(new Num(1, 2)); }
   getCarbonLifeGeneration(): Num {
     if (!this.isCarbonUnlocked() || this.oxygenBurningLife) return Num.ZERO.copy();
 
@@ -584,6 +585,8 @@ export class BluePhaseService implements ElementUpgradeHost {
   private generateCarbonLife(speed: Num): void {
     const gain = this.getCarbonLifeGeneration().mul(speed);
     if (gain.gt(Num.ZERO)) this.carbonLife = this.carbonLife.add(gain);
+    const capacity = this.getCarbonLifeCapacity();
+    if (capacity.gt(Num.ZERO) && this.carbonLife.gt(capacity)) this.carbonLife = capacity.copy();
     CarbonHolding.lifeBoost = this.getCarbonLifeEffect();
   }
 

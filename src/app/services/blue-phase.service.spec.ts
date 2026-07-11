@@ -481,6 +481,20 @@ describe('BluePhaseService', () => {
     expect(service.lithiumCharge.toNumber()).toBeGreaterThan(10);
   });
 
+
+  it('caps Carbon life by fillable land area', () => {
+    HoldingRecord.neutrons.amount = new Num(1, 4);
+    HoldingRecord.carbon.amount = new Num(1, 8);
+    service.carbonLandPlots = Num.TWO.copy();
+    service.carbonLandAreaUpgrades = Num.ONE.copy();
+
+    expect(service.getCarbonLifeCapacity().toNumber()).toBe(400);
+
+    service.tick(new Num(1, 6));
+
+    expect(service.carbonLife.toNumber()).toBe(400);
+  });
+
   it('spends carbon on life cultivation upgrades that improve life growth', () => {
     HoldingRecord.neutrons.amount = new Num(1, 4);
     HoldingRecord.carbon.amount = new Num(2, 1);
@@ -498,7 +512,6 @@ describe('BluePhaseService', () => {
 
     expect(service.carbonLife.toNumber()).toBeGreaterThan(1.2);
   });
-
 
 
   it('prestiges Carbon life into life tiers and resets only Carbon biosphere progress', () => {
