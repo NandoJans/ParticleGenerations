@@ -31,11 +31,36 @@
     <div class="active-slots">
       @for (slot of activeSlots; track $index) {
         <div class="active-slot" [class.filled]="slot" (dragover)="$event.preventDefault()" (drop)="dropIntoActiveSlot($event)">
-          @if (slot) { <strong>LVL {{ slot.level }}</strong><span>ACTIVE COIN</span> }
+          @if (slot) {
+            <button class="element-coin active active-coin" type="button"
+                    [style.--rarity]="bluePhase.getSecondaryColor(slot)" [style.--primary]="slot.primaryColor"
+                    (click)="showDetails(slot)"
+                    [attr.aria-label]="slot.name + ', level ' + slot.level + ', active. Click for details.'">
+              <span class="coin-symbol">{{ slot.symbol }}</span>
+              <strong>{{ slot.name }}</strong>
+              <span class="coin-level">LVL {{ slot.level }}</span>
+              <em>ACTIVE</em>
+            </button>
+          }
           @else { <span>DROP COIN TO ACTIVATE</span> }
         </div>
       }
     </div>
+    @if (bluePhase.activeElementCardIds.length) {
+      <details class="active-effects">
+        <summary>Active effect breakdown <span>{{ bluePhase.activeElementCardIds.length }}</span></summary>
+        <ul>
+          @for (slot of activeSlots; track $index) {
+            @if (slot) {
+              <li>
+                <span class="effect-symbol" [style.--primary]="slot.primaryColor">{{ slot.symbol }}</span>
+                <p><strong>{{ slot.name }} · Level {{ slot.level }}</strong><small>{{ slot.getEffectDescription() }}</small></p>
+              </li>
+            }
+          }
+        </ul>
+      </details>
+    }
   </section>
 
   <section class="inventory-section">
@@ -48,8 +73,11 @@
         <button class="element-coin" type="button" draggable="true" [class.active]="bluePhase.isElementCardActive(element)"
                 [style.--rarity]="bluePhase.getSecondaryColor(element)" (dragstart)="startDrag($event, element)"
                 (click)="showDetails(element)" (dblclick)="equip(element)"
-                [attr.aria-label]="'Level ' + element.level + ' ' + bluePhase.getRarityName(element) + ' element coin. Click for details; double-click to activate.'">
-          <span>LVL</span><strong>{{ element.level }}</strong>
+                [style.--primary]="element.primaryColor"
+                [attr.aria-label]="element.name + ', level ' + element.level + ', ' + bluePhase.getRarityName(element) + ' element coin. Click for details; double-click to activate.'">
+          <span class="coin-symbol">{{ element.symbol }}</span>
+          <strong>{{ element.name }}</strong>
+          <span class="coin-level">LVL {{ element.level }}</span>
           @if (bluePhase.isElementCardActive(element)) { <em>ACTIVE</em> }
         </button>
       } @empty {
