@@ -74,7 +74,7 @@ describe('BluePhaseService', () => {
     MultiplierRecord.nucleusGeneration.reset();
   });
 
-  it('keeps an active element selected until the Blue phase resets', () => {
+  it('keeps an active element selected through Blue phase resets', () => {
     const element = createBlueElement('helium', 'coin-1', 2, 15);
     service.elements = [element];
 
@@ -83,7 +83,19 @@ describe('BluePhaseService', () => {
 
     expect(service.activeElementCardIds).toEqual(['coin-1']);
     ResetHelper.reset(ResetKey.BLUE);
+    expect(service.activeElementCardIds).toEqual(['coin-1']);
+  });
+
+  it('clears active elements only on request and triggers a Blue phase reset', () => {
+    const element = createBlueElement('helium', 'coin-1', 2, 15);
+    service.elements = [element];
+    service.equipElementCard(element);
+    const resetSpy = spyOn(ResetHelper, 'reset').and.callThrough();
+
+    service.clearActiveElementCards();
+
     expect(service.activeElementCardIds).toEqual([]);
+    expect(resetSpy).toHaveBeenCalledOnceWith(ResetKey.BLUE);
   });
 
   it('does not equip more element coins than there are active slots', () => {
