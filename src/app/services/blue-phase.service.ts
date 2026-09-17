@@ -13,22 +13,25 @@ import {MultiplierRecord} from "../classes/records/multipliers/multiplier-record
 import {ChargerRecord} from "../classes/records/charger/charger-record";
 import {Holding} from '../classes/features/holding';
 import {BerylliumHolding, BoronHolding, CarbonHolding, LithiumHolding} from '../classes/features/holdings/blue-holdings';
-import {BerylliumElement, BerylliumFuelUpgrade, BerylliumLogicUpgrade, BerylliumRocketUpgrade, BlueElement, BoronElement, BoronFiberUpgrade, BoronResinUpgrade, BoronWeaveUpgrade, CarbonElement, CarbonLandAreaUpgrade, CarbonLandUpgrade, CarbonLifeUpgrade, ElementBatteryUpgrade, ElementCapacityUpgrade, ElementChargerUpgrade, ElementUpgrade, ElementUpgradeHost, ForgedBlueElement, LithiumElement, OxygenCombustionUpgrade, OxygenElement} from '../classes/features/elements/blue-element';
+import {BerylliumElementUpgradeSet, BerylliumFuelUpgrade, BerylliumLogicUpgrade, BerylliumRocketUpgrade, BlueElementUpgradeSet, BoronElementUpgradeSet, BoronFiberUpgrade, BoronResinUpgrade, BoronWeaveUpgrade, CarbonElementUpgradeSet, CarbonLandAreaUpgrade, CarbonLandUpgrade, CarbonLifeUpgrade, ElementBatteryUpgrade, ElementCapacityUpgrade, ElementChargerUpgrade, ElementUpgrade, ElementUpgradeHost, ForgedElementUpgradeSet, LithiumElementUpgradeSet, OxygenCombustionUpgrade, OxygenElementUpgradeSet} from '../classes/features/elements/element-upgrade-set';
+import {BlueElement, createBlueElement, ElementCardEffects, ElementCardKind, restoreBlueElement, StoredBlueElement} from '../classes/features/elements/blue-element';
 
 export type BlueParticleMode = 'none' | 'protons' | 'electrons';
 
-export interface BlueElementDefinition {
+export interface BlueElementUpgradeSetDefinition {
   requiredStage: number;
   unlockAmount: Num;
   holding: Holding;
   theme: string;
-  element: BlueElement;
+  element: BlueElementUpgradeSet;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class BluePhaseService implements ElementUpgradeHost {
+  static readonly elementInventorySlots = 12;
+  static readonly activeElementSlots = 2;
   static readonly unlockRequirement = new Num(1, 1000);
   static readonly neutronRestorationTarget = new Num(1, 10);
   static readonly minimumMeltdownPower = new Num(1, -1);
@@ -41,6 +44,8 @@ export class BluePhaseService implements ElementUpgradeHost {
   private purchaseStates: {[key: string]: {mantissa: number, exponent: number} | boolean} = {};
   activeParticle: BlueParticleMode = 'none';
   unlocked = false;
+  elements: BlueElement[] = [];
+  activeElementCardIds: string[] = [];
 
   lithiumBatteries = Num.ZERO.copy();
   lithiumChargeGenerators = Num.ZERO.copy();
@@ -65,7 +70,7 @@ export class BluePhaseService implements ElementUpgradeHost {
   oxygenCombustionUpgrades = Num.ZERO.copy();
   oxygenBurningLife = false;
 
-  readonly elementDefinitions: BlueElementDefinition[] = [
+  readonly elementDefinitions: BlueElementUpgradeSetDefinition[] = [
     this.createElementDefinition(1, new Num(1, 1), HoldingRecord.lithium, 'Lithium-ion batteries', 'battery'),
     this.createElementDefinition(2, new Num(1, 2), HoldingRecord.beryllium, 'Rocket construction and extension thrust', 'rocket'),
     this.createElementDefinition(3, new Num(1, 3), HoldingRecord.boron, 'Fiberglass accelerator reinforcement', 'composite'),
@@ -83,41 +88,41 @@ export class BluePhaseService implements ElementUpgradeHost {
     });
   }
 
-  private createElementDefinition(requiredStage: number, unlockAmount: Num, holding: Holding, theme: string, componentName: string): BlueElementDefinition {
-    let element: BlueElement;
+  private createElementDefinition(requiredStage: number, unlockAmount: Num, holding: Holding, theme: string, componentName: string): BlueElementUpgradeSetDefinition {
+    let element: BlueElementUpgradeSet;
     switch (holding) {
       case HoldingRecord.lithium:
-        element = new LithiumElement(holding, theme, componentName);
+        element = new LithiumElementUpgradeSet(holding, theme, componentName);
         break;
       case HoldingRecord.beryllium:
-        element = new BerylliumElement(holding, theme, componentName);
+        element = new BerylliumElementUpgradeSet(holding, theme, componentName);
         break;
       case HoldingRecord.boron:
-        element = new BoronElement(holding, theme, componentName);
+        element = new BoronElementUpgradeSet(holding, theme, componentName);
         break;
       case HoldingRecord.carbon:
-        element = new CarbonElement(holding, theme, componentName);
+        element = new CarbonElementUpgradeSet(holding, theme, componentName);
         break;
       case HoldingRecord.oxygen:
-        element = new OxygenElement(holding, theme, componentName);
+        element = new OxygenElementUpgradeSet(holding, theme, componentName);
         break;
       default:
-        element = new ForgedBlueElement(holding, theme, componentName);
+        element = new ForgedElementUpgradeSet(holding, theme, componentName);
         break;
     }
 
     return {requiredStage, unlockAmount, holding, theme, element};
   }
 
-  getSelectedElementUpgradeSet(element: BlueElementDefinition): BlueElement {
+  getSelectedElementUpgradeSet(element: BlueElementUpgradeSetDefinition): BlueElementUpgradeSet {
     return element.element;
   }
 
-  private get lithiumElement(): LithiumElement { return this.elementDefinitions[0].element as LithiumElement; }
-  private get berylliumElement(): BerylliumElement { return this.elementDefinitions[1].element as BerylliumElement; }
-  private get boronElement(): BoronElement { return this.elementDefinitions[2].element as BoronElement; }
-  private get carbonElement(): CarbonElement { return this.elementDefinitions[3].element as CarbonElement; }
-  private get oxygenElement(): OxygenElement { return this.elementDefinitions[5].element as OxygenElement; }
+  private get lithiumElement(): LithiumElementUpgradeSet { return this.elementDefinitions[0].element as LithiumElementUpgradeSet; }
+  private get berylliumElement(): BerylliumElementUpgradeSet { return this.elementDefinitions[1].element as BerylliumElementUpgradeSet; }
+  private get boronElement(): BoronElementUpgradeSet { return this.elementDefinitions[2].element as BoronElementUpgradeSet; }
+  private get carbonElement(): CarbonElementUpgradeSet { return this.elementDefinitions[3].element as CarbonElementUpgradeSet; }
+  private get oxygenElement(): OxygenElementUpgradeSet { return this.elementDefinitions[5].element as OxygenElementUpgradeSet; }
 
   getElementUpgradeCost(upgrade: ElementUpgrade): Num {
     const baseCost = this.getNeutronScaledElementUpgradeBaseCost(upgrade);
@@ -144,12 +149,12 @@ export class BluePhaseService implements ElementUpgradeHost {
     return definition ? upgrade.baseCost.mul(definition.unlockAmount) : upgrade.baseCost.copy();
   }
 
-  canBuyElementUpgrade(element: BlueElement, upgrade: ElementUpgrade): boolean {
+  canBuyElementUpgrade(element: BlueElementUpgradeSet, upgrade: ElementUpgrade): boolean {
     const definition = this.elementDefinitions.find(entry => entry.element === element);
     return !!definition && element.getUpgrades().includes(upgrade) && this.isElementUnlocked(definition) && upgrade.currency.amount.greq(this.getElementUpgradeCost(upgrade));
   }
 
-  buyElementUpgrade(element: BlueElement, upgrade: ElementUpgrade): void {
+  buyElementUpgrade(element: BlueElementUpgradeSet, upgrade: ElementUpgrade): void {
     if (!this.canBuyElementUpgrade(element, upgrade)) return;
     upgrade.currency.sub(this.getElementUpgradeCost(upgrade));
     upgrade.bought = upgrade.bought.add(Num.ONE);
@@ -159,7 +164,7 @@ export class BluePhaseService implements ElementUpgradeHost {
     this.syncLithiumBatteryState();
   }
 
-  private syncLithiumLegacyFromElement(element: BlueElement): void {
+  private syncLithiumLegacyFromElement(element: BlueElementUpgradeSet): void {
     if (element !== this.lithiumElement) return;
     this.lithiumBatteries = this.lithiumElement.batteryUpgrade.bought.copy();
     this.lithiumChargeGenerators = this.lithiumElement.chargerUpgrade.bought.copy();
@@ -167,24 +172,24 @@ export class BluePhaseService implements ElementUpgradeHost {
     this.lithiumCharge = this.lithiumElement.batteryCharge.amount.copy();
     this.lithiumBatteryTier = this.lithiumElement.batteryTier.amount.copy();
   }
-  private syncElementLegacyFromUpgrade(element: BlueElement, upgrade: ElementUpgrade): void {
+  private syncElementLegacyFromUpgrade(element: BlueElementUpgradeSet, upgrade: ElementUpgrade): void {
     this.syncLithiumLegacyFromElement(element);
 
-    if (element instanceof BerylliumElement) {
+    if (element instanceof BerylliumElementUpgradeSet) {
       if (upgrade === element.rocketUpgrade) this.berylliumRockets = upgrade.bought.copy();
       if (upgrade === element.fuelUpgrade) this.berylliumFuelSystems = upgrade.bought.copy();
       if (upgrade === element.logicUpgrade) this.berylliumLogicSystems = upgrade.bought.copy();
       BerylliumHolding.rocketBoost = this.getBerylliumRocketEffect();
-    } else if (element instanceof BoronElement) {
+    } else if (element instanceof BoronElementUpgradeSet) {
       if (upgrade === element.fiberUpgrade) this.boronFiberSpools = upgrade.bought.copy();
       if (upgrade === element.resinUpgrade) this.boronResinInfusers = upgrade.bought.copy();
       if (upgrade === element.weaveUpgrade) this.boronWeaveLooms = upgrade.bought.copy();
       BoronHolding.fiberglassBoost = this.getBoronFiberglassEffect();
-    } else if (element instanceof CarbonElement) {
+    } else if (element instanceof CarbonElementUpgradeSet) {
       if (upgrade === element.landUpgrade) this.carbonLandPlots = upgrade.bought.copy();
       if (upgrade === element.landAreaUpgrade) this.carbonLandAreaUpgrades = upgrade.bought.copy();
       if (upgrade === element.lifeUpgrade) this.carbonLifeUpgrades = upgrade.bought.copy();
-    } else if (element instanceof OxygenElement) {
+    } else if (element instanceof OxygenElementUpgradeSet) {
       if (upgrade === element.combustionUpgrade) this.oxygenCombustionUpgrades = upgrade.bought.copy();
     }
   }
@@ -208,7 +213,7 @@ export class BluePhaseService implements ElementUpgradeHost {
   }
 
 
-  private syncLithiumElementFromLegacy(): void {
+  private syncLithiumElementUpgradeSetFromLegacy(): void {
     const lithium = this.lithiumElement;
     lithium.batteryUpgrade.bought = this.lithiumBatteries.copy();
     lithium.batteryUpgrade.amount = this.lithiumBatteries.copy();
@@ -220,16 +225,16 @@ export class BluePhaseService implements ElementUpgradeHost {
     lithium.batteryTier.amount = this.lithiumBatteryTier.copy();
   }
 
-  getElementChargePercent(element: LithiumElement): number {
+  getElementChargePercent(element: LithiumElementUpgradeSet): number {
     const capacity = element.getTotalCapacity().toNumber();
     if (!Number.isFinite(capacity) || capacity <= 0) return 0;
 
     return Math.max(0, Math.min(100, (element.getTotalCharge().toNumber() / capacity) * 100));
   }
 
-  canDischargeElementBattery(element: BlueElement): boolean { return element instanceof LithiumElement && element.getTotalCharge().greq(element.getDischargeThreshold()); }
-  dischargeElementBattery(element: BlueElement): void {
-    if (!this.canDischargeElementBattery(element) || !(element instanceof LithiumElement)) return;
+  canDischargeElementBattery(element: BlueElementUpgradeSet): boolean { return element instanceof LithiumElementUpgradeSet && element.getTotalCharge().greq(element.getDischargeThreshold()); }
+  dischargeElementBattery(element: BlueElementUpgradeSet): void {
+    if (!this.canDischargeElementBattery(element) || !(element instanceof LithiumElementUpgradeSet)) return;
     element.batteryTier.amount = element.batteryTier.amount.add(Num.ONE);
     element.holding.amount = Num.ZERO.copy();
     element.batteryUpgrade.bought = Num.ZERO.copy();
@@ -258,7 +263,7 @@ export class BluePhaseService implements ElementUpgradeHost {
       HoldingRecord.electrons.generate(generation);
     }
 
-    this.generateForgedElements(speed);
+    this.applyElementCardEffects();
     this.generateLithiumCharge(speed);
     this.generateElementCharges(speed);
     this.generateCarbonLife(speed);
@@ -374,11 +379,74 @@ export class BluePhaseService implements ElementUpgradeHost {
     return Math.max(0, Math.floor(HoldingRecord.neutrons.amount.log10().toNumber()));
   }
 
-  getActiveElementDefinitions(): BlueElementDefinition[] {
+  canFuseElement(): boolean {
+    return HoldingRecord.neutrons.amount.greq(new Num(1, 1))
+      && this.elements.length < BluePhaseService.elementInventorySlots;
+  }
+
+  getUnlockedCardKinds(): ElementCardKind[] {
+    const stage = this.getNeutronStage();
+    return (['helium', 'lithium', 'beryllium', 'boron'] as ElementCardKind[]).slice(0, Math.min(4, stage));
+  }
+
+  fuseElement(random: () => number = Math.random): BlueElement | null {
+    if (!this.canFuseElement()) return null;
+    const neutronCount = Math.max(10, HoldingRecord.neutrons.amount.toNumber());
+    const kinds = this.getUnlockedCardKinds();
+    const weights = kinds.map((_, index) => Math.pow(10, kinds.length - index - 1));
+    let roll = random() * weights.reduce((sum, weight) => sum + weight, 0);
+    let kind = kinds[0];
+    for (let index = 0; index < kinds.length; index++) {
+      roll -= weights[index];
+      if (roll <= 0) { kind = kinds[index]; break; }
+    }
+
+    const stage = Math.floor(Math.log10(neutronCount));
+    const rarityCeiling = Math.min(99.99, stage * 10);
+    const rarity = Math.min(rarityCeiling, Math.pow(random(), 2.5) * rarityCeiling);
+    const element = createBlueElement(kind, `${Date.now()}-${Math.floor(random() * 1e9)}`, stage, rarity);
+
+    ResetHelper.reset(ResetKey.BLUE);
+    HoldingRecord.protons.amount = Num.ZERO.copy();
+    HoldingRecord.electrons.amount = Num.ZERO.copy();
+    HoldingRecord.neutrons.amount = Num.ZERO.copy();
+    HoldingRecord.neutronClump.amount = Num.ZERO.copy();
+    this.elements.push(element);
+    this.startParticleGeneration();
+    this.synchronizePurchases();
+    this.applyElementCardEffects();
+    this.save();
+    return element;
+  }
+
+  toggleElementCard(element: BlueElement): void {
+    const index = this.activeElementCardIds.indexOf(element.id);
+    if (index >= 0) this.activeElementCardIds.splice(index, 1);
+    else if (this.activeElementCardIds.length < BluePhaseService.activeElementSlots) this.activeElementCardIds.push(element.id);
+    this.applyElementCardEffects();
+    this.save();
+  }
+
+  isElementCardActive(element: BlueElement): boolean { return this.activeElementCardIds.includes(element.id); }
+  getRarityTier(element: BlueElement): number { return Math.min(9, Math.floor(element.rarity / 10)); }
+  getRarityName(element: BlueElement): string {
+    return ['Common', 'Uncommon', 'Notable', 'Rare', 'Epic', 'Mythic', 'Ancient', 'Cosmic', 'Transcendent', 'Impossible'][this.getRarityTier(element)];
+  }
+  getSecondaryColor(element: BlueElement): string {
+    return ['#94a3b8', '#4ade80', '#2dd4bf', '#38bdf8', '#818cf8', '#c084fc', '#f472b6', '#fb7185', '#fb923c', '#facc15'][this.getRarityTier(element)];
+  }
+  private applyElementCardEffects(): void {
+    const activeElements = this.elements.filter(element => this.isElementCardActive(element));
+    // Each instance applies its own behavior; the service never branches on an element kind.
+    ElementCardEffects.reset();
+    activeElements.forEach(element => element.applyEffect());
+  }
+
+  getActiveElementDefinitions(): BlueElementUpgradeSetDefinition[] {
     return this.elementDefinitions.filter(element => this.isElementUnlocked(element));
   }
 
-  isElementUnlocked(element: BlueElementDefinition): boolean {
+  isElementUnlocked(element: BlueElementUpgradeSetDefinition): boolean {
     return HoldingRecord.neutrons.amount.greq(element.unlockAmount);
   }
 
@@ -393,7 +461,7 @@ export class BluePhaseService implements ElementUpgradeHost {
     return new Num(1, this.getNeutronStage() + 1);
   }
 
-  getElementGeneration(element: BlueElementDefinition): Num {
+  getElementGeneration(element: BlueElementUpgradeSetDefinition): Num {
     if (!this.isElementUnlocked(element)) return Num.ZERO.copy();
     return HoldingRecord.neutrons.amount
       .div(element.unlockAmount)
@@ -631,7 +699,7 @@ export class BluePhaseService implements ElementUpgradeHost {
   }
 
   private syncLithiumBatteryState(): void {
-    this.syncLithiumElementFromLegacy();
+    this.syncLithiumElementUpgradeSetFromLegacy();
     LithiumHolding.batteryCharge = this.getLithiumTotalCharge();
     LithiumHolding.batteryTier = this.lithiumBatteryTier.copy();
   }
@@ -704,6 +772,8 @@ export class BluePhaseService implements ElementUpgradeHost {
     this.storage.save(this.unlocked, 'unlocked');
     this.storage.save(this.activeParticle, 'activeParticle');
     this.storage.save(this.purchaseStates, 'purchaseStates');
+    this.storage.save(this.elements.map(element => element.toStorage()), 'elements');
+    this.storage.save(this.activeElementCardIds, 'activeElementCardIds');
     this.storage.saveNum(this.lithiumBatteries, 'lithiumBatteries');
     this.storage.saveNum(this.lithiumChargeGenerators, 'lithiumChargeGenerators');
     this.storage.saveNum(this.lithiumCapacityUpgrades, 'lithiumCapacityUpgrades');
@@ -732,6 +802,14 @@ export class BluePhaseService implements ElementUpgradeHost {
     this.unlocked = this.storage.load(this.unlocked, 'unlocked');
     this.activeParticle = this.storage.load(this.activeParticle, 'activeParticle');
     this.purchaseStates = this.storage.load({}, 'purchaseStates');
+    const storedElements = this.storage.load(
+      this.storage.load([] as StoredBlueElement[], 'elementCards'),
+      'elements'
+    ) as StoredBlueElement[];
+    this.elements = storedElements.map(restoreBlueElement);
+    this.activeElementCardIds = this.storage.load([] as string[], 'activeElementCardIds')
+      .filter((id: string) => this.elements.some(element => element.id === id))
+      .slice(0, BluePhaseService.activeElementSlots);
     this.lithiumBatteries = this.storage.loadNum(this.lithiumBatteries, 'lithiumBatteries');
     this.lithiumChargeGenerators = this.storage.loadNum(this.lithiumChargeGenerators, 'lithiumChargeGenerators');
     this.lithiumCapacityUpgrades = this.storage.loadNum(this.lithiumCapacityUpgrades, 'lithiumCapacityUpgrades');
@@ -762,6 +840,7 @@ export class BluePhaseService implements ElementUpgradeHost {
     BoronHolding.fiberglassBoost = this.getBoronFiberglassEffect();
     CarbonHolding.lifeBoost = this.getCarbonLifeEffect();
     this.applyNeutronMeltdown();
+    this.applyElementCardEffects();
   }
 
   init(): void {
@@ -772,5 +851,6 @@ export class BluePhaseService implements ElementUpgradeHost {
     BoronHolding.fiberglassBoost = this.getBoronFiberglassEffect();
     CarbonHolding.lifeBoost = this.getCarbonLifeEffect();
     this.applyNeutronMeltdown();
+    this.applyElementCardEffects();
   }
 }

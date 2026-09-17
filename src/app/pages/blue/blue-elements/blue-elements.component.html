@@ -2,355 +2,61 @@
   <header class="elements-header">
     <div class="atom-mark" aria-hidden="true"><span></span><span></span><span></span><i></i></div>
     <div>
-      <p class="eyebrow">BLUE PHASE // ELEMENT FORGE</p>
-      <h1>Persistent Matter Synthesis</h1>
-      <p>Collide charged particles into persistent neutrons, then forge heavier elements that carry power between Blue resets.</p>
+      <p class="eyebrow">BLUE PHASE // ELEMENT DECK</p>
+      <h1>Element Fusion</h1>
+      <p>Spend a Blue run to fuse one permanent element card. Only equipped cards apply their effects.</p>
     </div>
-    <div class="stage-readout">
-      <span>NEUTRON STAGE</span>
-      <strong>{{ bluePhase.getNeutronStage() }}</strong>
-    </div>
+    <div class="stage-readout"><span>NEUTRONS</span><strong>{{ neutrons.amount.toString() }}</strong></div>
   </header>
 
-  <section class="neutron-section">
+  <section class="fusion-panel">
+    <div>
+      <p class="eyebrow">FUSION CHAMBER</p>
+      <h2>{{ bluePhase.canFuseElement() ? 'A nucleus is ready' : 'Collect 10 neutrons' }}</h2>
+      <p>Fusion resets all Protons, Electrons, and Neutrons. Every 10× Neutrons unlocks another possible element: Helium, Lithium, Beryllium, then Boron.</p>
+      <p class="pool">Current fusion pool: <strong>{{ getFusionPool() }}</strong></p>
+    </div>
+    <button class="fuse-button" type="button" [disabled]="!bluePhase.canFuseElement()" (click)="fuse()">
+      FUSE ELEMENT
+      <small>Reset the Blue phase</small>
+    </button>
+  </section>
+
+  <section class="slot-section">
     <div class="section-heading">
-      <div>
-        <p class="eyebrow">PERSISTENT MATTER</p>
-        <h2>Neutron Forge</h2>
-      </div>
-      <p>Persistent neutrons now directly widen the forge and unlock the element chain.</p>
+      <div><p class="eyebrow">ACTIVE SLOTS</p><h2>Equipped Elements</h2></div>
+      <strong>{{ bluePhase.activeElementCardIds.length }} / {{ activeSlotCount }}</strong>
     </div>
-
-    <div class="neutron-grid">
-      <article class="matter-card">
-        <div class="card-visual neutron-visual" aria-hidden="true"><span></span><span></span><span></span></div>
-        <app-number-display [holding]="neutrons"></app-number-display>
-        <p>Unlocked elements: <strong>{{ bluePhase.getCurrentElementName() }}</strong></p>
-        <p>Next unlock: {{ bluePhase.getNextStageRequirement().toString() }} persistent Neutrons</p>
-      </article>
-      <article class="matter-card clump-card">
-        <div class="card-visual clump-visual" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-        <h3>Neutron Star Preview</h3>
-        <p>The clump has been reserved for a later Blue phase feature where these persistent neutrons will help build a neutron star.</p>
-      </article>
+    <p class="slot-help">Active cards provide their listed effect. Stored cards are safe, but inactive.</p>
+    <div class="active-slots">
+      @for (slot of activeSlots; track $index) {
+        <div class="active-slot" [class.filled]="slot">
+          @if (slot) { <strong>{{ slot.symbol }} · {{ slot.name }}</strong><span>{{ slot.getEffectDescription() }}</span> }
+          @else { <span>EMPTY ACTIVE SLOT</span> }
+        </div>
+      }
     </div>
   </section>
 
-  <section class="element-browser" (touchstart)="onTouchStart($event)" (touchend)="onTouchEnd($event)">
-    <button class="arrow" type="button" aria-label="Previous element" (click)="previousElement()">‹</button>
-
-    <article class="element-view" [class.locked]="!bluePhase.isElementUnlocked(selectedElement)">
-      <div class="element-visual" [ngClass]="selectedElement.holding.name">
-        <div class="element-orb"><span>{{ selectedElement.holding.abbreviation }}</span></div>
-        <span class="orbit orbit-one"></span>
-        <span class="orbit orbit-two"></span>
-        <span class="orbit orbit-three"></span>
-        <i class="spark spark-one"></i><i class="spark spark-two"></i><i class="spark spark-three"></i>
-      </div>
-      <div class="element-copy">
-        <p class="eyebrow">ELEMENT {{ selectedElementIndex + 1 }} / {{ bluePhase.elementDefinitions.length }}</p>
-        <h2>{{ selectedElement.holding.displayName }}</h2>
-        <p class="element-theme">{{ selectedElement.theme }}</p>
-        <app-number-display [holding]="selectedElement.holding"></app-number-display>
-        <p>Unlocks at {{ selectedElement.unlockAmount.toString() }} persistent Neutrons.</p>
-        <p *ngIf="bluePhase.isElementUnlocked(selectedElement)">
-          Generation: {{ getElementGeneration(selectedElement).toString(3) }} / sec from persistent neutrons.
-        </p>
-        <p *ngIf="!bluePhase.isElementUnlocked(selectedElement)" class="locked-copy">Collide more Neutrons to unlock this element.</p>
-      </div>
-    </article>
-
-    <button class="arrow" type="button" aria-label="Next element" (click)="nextElement()">›</button>
-  </section>
-
-  <div class="element-dots" aria-label="Element shortcuts">
-    @for (element of bluePhase.elementDefinitions; track element.holding.name) {
-      <button type="button" [class.active]="$index === selectedElementIndex" [class.unlocked]="bluePhase.isElementUnlocked(element)" (click)="selectElement($index)">
-        {{ element.holding.abbreviation }}
-      </button>
-    }
-  </div>
-
-  <section *ngIf="selectedElement.holding.name === 'lithium' && bluePhase.isLithiumUnlocked()" class="lithium-lab">
+  <section class="inventory-section">
     <div class="section-heading">
-      <div>
-        <p class="eyebrow">LITHIUM-ION ARRAY</p>
-        <h2>Battery Foundry</h2>
-      </div>
-      <p>Only charged lithium batteries boost red generator multipliers; raw Lithium now powers battery construction and nucleus generation.</p>
+      <div><p class="eyebrow">NORMAL SLOTS</p><h2>Element Collection</h2></div>
+      <strong>{{ bluePhase.elements.length }} / {{ inventorySlotCount }}</strong>
     </div>
-
-    <div class="battery-showcase">
-      <div class="battery-visual" aria-hidden="true">
-        <div class="battery-shell">
-          <span class="battery-fill" [style.width.%]="getLithiumChargePercent()"></span>
-          <i></i><i></i><i></i>
-        </div>
-        <div class="charge-bolts"><span></span><span></span><span></span></div>
-      </div>
-      <div class="charge-panel">
-        <span>CHARGE STORED</span>
-        <strong>{{ bluePhase.getLithiumTotalCharge().toString(3) }} / {{ bluePhase.getLithiumTotalCapacity().toString(3) }}</strong>
-        <div class="charge-track" role="progressbar" [attr.aria-valuenow]="getLithiumChargePercent()" aria-valuemin="0" aria-valuemax="100">
-          <span [style.width.%]="getLithiumChargePercent()"></span>
-        </div>
-        <p>Battery red generator multiplier: {{ getLithiumRedMultiplier().toString(3) }}x</p>
-        <div class="discharge-panel">
-          <span>BATTERY TIER</span>
-          <strong>{{ bluePhase.lithiumBatteryTier.toString() }} // {{ bluePhase.getLithiumBatteryTierEffect().toString(2) }}x</strong>
-          <p>Next discharge: {{ bluePhase.getLithiumDischargeThreshold().toString() }} stored charge</p>
-          <button type="button" class="discharge-button" [disabled]="!bluePhase.canDischargeLithiumBattery()" (click)="bluePhase.dischargeLithiumBattery()">
-            DISCHARGE BATTERIES
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="battery-grid">
-      <article class="battery-card">
-        <span>Batteries</span>
-        <strong>{{ bluePhase.lithiumBatteries.toString() }}</strong>
-        <p class="resource-balance">{{ lithium.amount.toString(3) }} Lithium</p>
-        <button (click)="bluePhase.buyLithiumBattery()" [disabled]="!bluePhase.canBuyLithiumBattery()">Buy for {{ bluePhase.getLithiumBatteryCost().toString() }} Lithium</button>
-      </article>
-      <article class="battery-card">
-        <span>Chargers</span>
-        <strong>{{ bluePhase.lithiumChargeGenerators.toString() }}</strong>
-        <p class="resource-balance">{{ electrons.amount.toString(3) }} Electrons</p>
-        <button (click)="bluePhase.buyLithiumChargeGenerator()" [disabled]="!bluePhase.canBuyLithiumChargeGenerator()">Buy for {{ bluePhase.getLithiumChargeGeneratorCost().toString() }} Electrons</button>
-      </article>
-      <article class="battery-card">
-        <span>Capacity Level</span>
-        <strong>{{ bluePhase.lithiumCapacityUpgrades.toString() }}</strong>
-        <p class="resource-balance">{{ protons.amount.toString(3) }} Protons</p>
-        <button (click)="bluePhase.buyLithiumCapacityUpgrade()" [disabled]="!bluePhase.canBuyLithiumCapacityUpgrade()">Upgrade for {{ bluePhase.getLithiumCapacityCost().toString() }} Protons</button>
-      </article>
+    <div class="card-grid">
+      @for (element of bluePhase.elements; track element.id) {
+        <button class="element-card" type="button" [class.active]="bluePhase.isElementCardActive(element)"
+                [style.--primary]="element.primaryColor" [style.--secondary]="bluePhase.getSecondaryColor(element)"
+                (click)="bluePhase.toggleElementCard(element)">
+          <span class="rarity">{{ bluePhase.getRarityName(element) }} · {{ element.rarity | number:'1.1-1' }}%</span>
+          <span class="symbol">{{ element.symbol }}</span>
+          <strong>{{ element.name }}</strong><span>Level {{ element.level }}</span>
+          <p>{{ element.getEffectDescription() }}</p>
+          <em>{{ bluePhase.isElementCardActive(element) ? 'ACTIVE — CLICK TO STORE' : 'STORED — CLICK TO EQUIP' }}</em>
+        </button>
+      } @empty {
+        <div class="empty-collection">Your first 10 Neutrons can be fused into a Helium card.</div>
+      }
     </div>
   </section>
-
-
-
-  <section *ngIf="selectedElement.holding.name === 'beryllium' && bluePhase.isBerylliumUnlocked()" class="beryllium-lab">
-    <div class="section-heading">
-      <div>
-        <p class="eyebrow">BERYLLIUM ROCKET HANGAR</p>
-        <h2>Accelerator Rocket Program</h2>
-      </div>
-      <p>Beryllium builds rocket frames, Protons refine fuel, and Electrons assemble guidance logic. Completed rockets boost red extension power.</p>
-    </div>
-
-    <div class="rocket-showcase">
-      <div class="rocket-visual" aria-hidden="true">
-        <div class="rocket-shell">
-          <div style="position:absolute;inset:0 auto 0 0;background:rgba(255,57,78,.55)" [style.width.%]="getBerylliumFuelPercent()"></div>
-          <div class="rocket-stars"><span></span><span></span><span></span></div>
-          <div class="rocket-body">
-            <span class="rocket-window"></span>
-            <i class="rocket-fin left"></i>
-            <i class="rocket-fin right"></i>
-            <em class="rocket-flame"></em>
-          </div>
-        </div>
-        <div class="fuel-source">
-          <span>p+</span>
-          <strong>FUEL</strong>
-        </div>
-        <div class="logic-source">
-          <span>e-</span>
-          <strong>LOGIC</strong>
-        </div>
-      </div>
-      <div class="charge-panel">
-        <span>ROCKET THRUST</span>
-        <strong>{{ bluePhase.getBerylliumRocketEffect().toString(3) }}x</strong>
-        <p>Fueled rockets multiply red extension power. Fuel tanks hold {{ bluePhase.getBerylliumTotalFuel().toString() }} / {{ bluePhase.getBerylliumFuelCapacity().toString() }} fuel for a {{ bluePhase.getBerylliumFuelEffect().toString(2) }}x fuel boost, while guidance logic multiplies it by {{ bluePhase.getBerylliumLogicEffect().toString(2) }}x.</p>
-        <div class="discharge-panel">
-          <span>ROCKET TIER</span>
-          <strong>{{ bluePhase.berylliumRocketTier.toString() }} // ^{{ bluePhase.getBerylliumRocketTierEffect().toString(2) }}</strong>
-          <p>Next launch: {{ bluePhase.getBerylliumLaunchThreshold().toString() }} base thrust</p>
-          <button type="button" class="discharge-button" [disabled]="!bluePhase.canLaunchBerylliumRockets()" (click)="bluePhase.launchBerylliumRockets()">
-            LAUNCH ROCKET FLEET
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="battery-grid">
-      <article class="battery-card">
-        <span>Rocket Frames</span>
-        <strong>{{ bluePhase.berylliumRockets.toString() }}</strong>
-        <p>Beryllium hulls add fuel capacity for extension launches.</p>
-        <button (click)="bluePhase.buyBerylliumRocket()" [disabled]="!bluePhase.canBuyBerylliumRocket()">Build for {{ bluePhase.getBerylliumRocketCost().toString() }} Beryllium</button>
-      </article>
-      <article class="battery-card">
-        <span>Fuel Systems</span>
-        <strong>{{ bluePhase.berylliumFuelSystems.toString() }}</strong>
-        <p>Refineries add fuel over time: {{ bluePhase.getBerylliumTotalFuel().toString() }} / {{ bluePhase.getBerylliumFuelCapacity().toString() }}</p>
-        <button (click)="bluePhase.buyBerylliumFuel()" [disabled]="!bluePhase.canBuyBerylliumFuel()">Refine for {{ bluePhase.getBerylliumFuelCost().toString() }} Protons</button>
-      </article>
-      <article class="battery-card">
-        <span>Logic Systems</span>
-        <strong>{{ bluePhase.berylliumLogicSystems.toString() }}</strong>
-        <p>Guidance logic: {{ bluePhase.getBerylliumLogicEffect().toString(2) }}x</p>
-        <button (click)="bluePhase.buyBerylliumLogic()" [disabled]="!bluePhase.canBuyBerylliumLogic()">Assemble for {{ bluePhase.getBerylliumLogicCost().toString() }} Electrons</button>
-      </article>
-    </div>
-  </section>
-
-  <section *ngIf="selectedElement.holding.name === 'boron' && bluePhase.isBoronUnlocked()" class="boron-lab">
-    <div class="section-heading">
-      <div>
-        <p class="eyebrow">BORON FIBERGLASS MILL</p>
-        <h2>Composite Accelerator Shells</h2>
-      </div>
-      <p>Boron fibers are pulled into fiberglass sleeves, resin-bonded with Protons, and electron-woven into accelerator conduits that boost red accelerator generation.</p>
-    </div>
-
-    <div class="battery-showcase">
-      <div class="battery-visual" aria-hidden="true">
-        <div class="fiber-spool"><span></span><span></span><span></span></div>
-        <span class="fiberglass-fill" [style.width.%]="getBoronFiberglassPercent()"></span>
-        <div class="woven-panel"><i></i><i></i><i></i><i></i></div>
-        <div class="resin-drop">p+</div>
-        <div class="loom-spark">e-</div>
-      </div>
-      <div class="charge-panel">
-        <span>FIBERGLASS ACCELERATOR BOOST</span>
-        <strong>{{ bluePhase.getBoronFiberglassEffect().toString(3) }}x</strong>
-        <p>Fiber spools generate {{ bluePhase.getBoronTotalFiberglass().toString() }} / {{ bluePhase.getBoronFiberglassCapacity().toString() }} fiberglass. Resin infusers multiply that by {{ bluePhase.getBoronResinEffect().toString(2) }}x, while weave looms multiply it by {{ bluePhase.getBoronWeaveEffect().toString(2) }}x.</p>
-        <div class="discharge-panel">
-          <span>FIBERGLASS TIER</span>
-          <strong>{{ bluePhase.boronFiberglassTier.toString() }} // ^{{ bluePhase.getBoronFiberglassTierEffect().toString(2) }}</strong>
-          <p>Next lamination: {{ bluePhase.getBoronLaminateThreshold().toString() }} fiber spools</p>
-          <button type="button" class="discharge-button" [disabled]="!bluePhase.canLaminateBoronFiberglass()" (click)="bluePhase.laminateBoronFiberglass()">
-            LAMINATE FIBERGLASS
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="battery-grid">
-      <article class="battery-card boron-card">
-        <span>Fiber Spools</span>
-        <strong>{{ bluePhase.boronFiberSpools.toString() }}</strong>
-        <p class="resource-balance">{{ boron.amount.toString(3) }} Boron</p>
-        <p>Generates fiberglass: {{ bluePhase.getBoronTotalFiberglass().toString() }} / {{ bluePhase.getBoronFiberglassCapacity().toString() }}</p>
-        <button (click)="bluePhase.buyBoronFiber()" [disabled]="!bluePhase.canBuyBoronFiber()">Pull for {{ bluePhase.getBoronFiberCost().toString() }} Boron</button>
-      </article>
-      <article class="battery-card boron-card">
-        <span>Resin Infusers</span>
-        <strong>{{ bluePhase.boronResinInfusers.toString() }}</strong>
-        <p>Resin bond: {{ bluePhase.getBoronResinEffect().toString(2) }}x</p>
-        <button (click)="bluePhase.buyBoronResin()" [disabled]="!bluePhase.canBuyBoronResin()">Bond for {{ bluePhase.getBoronResinCost().toString() }} Protons</button>
-      </article>
-      <article class="battery-card boron-card">
-        <span>Weave Looms</span>
-        <strong>{{ bluePhase.boronWeaveLooms.toString() }}</strong>
-        <p>Loom weave: {{ bluePhase.getBoronWeaveEffect().toString(2) }}x</p>
-        <button (click)="bluePhase.buyBoronWeave()" [disabled]="!bluePhase.canBuyBoronWeave()">Weave for {{ bluePhase.getBoronWeaveCost().toString() }} Electrons</button>
-      </article>
-    </div>
-  </section>
-
-
-  <section *ngIf="selectedElement.holding.name === 'carbon' && bluePhase.isCarbonUnlocked()" class="carbon-lab">
-    <div class="section-heading">
-      <div>
-        <p class="eyebrow">CARBON BIOSPHERE</p>
-        <h2>Life Growth</h2>
-      </div>
-      <p>Carbon grows Life on purchased land. Life slightly boosts booster acceleration; Oxygen handles burning Life into Lithium charge once it is unlocked.</p>
-    </div>
-
-    <div class="battery-showcase carbon-showcase">
-      <div class="battery-visual carbon-visual" aria-hidden="true">
-        <div class="life-world"><div class="life-fill" [style.height.%]="getCarbonLifePercent()"></div><span></span><span></span><span></span></div>
-      </div>
-      <div class="charge-panel">
-        <span>LIFE BIOMASS</span>
-        <strong>{{ bluePhase.carbonLife.toString(3) }} / {{ bluePhase.getCarbonLifeCapacity().toString(3) }} Life</strong>
-        <div class="charge-track" role="progressbar" [attr.aria-valuenow]="getCarbonLifePercent()" aria-valuemin="0" aria-valuemax="100">
-          <span [style.width.%]="getCarbonLifePercent()"></span>
-        </div>
-        <p>Life grows at {{ bluePhase.getCarbonLifeGeneration().toString(3) }}/s from {{ bluePhase.getCarbonLandArea().toString() }} land area, Carbon abundance, and {{ bluePhase.getCarbonLifeUpgradeEffect().toString(2) }}x cultivation. Current Life boosts booster acceleration by {{ bluePhase.getCarbonLifeEffect().toString(3) }}x.</p>
-        <div class="discharge-panel">
-          <span>LIFE TIER</span>
-          <strong>{{ bluePhase.carbonLifeTier.toString() }} // ^{{ bluePhase.getCarbonLifeTierEffect().toString(2) }}</strong>
-          <p>Next biosphere prestige: {{ bluePhase.getCarbonLifePrestigeThreshold().toString() }} Life</p>
-          <button type="button" class="discharge-button" [disabled]="!bluePhase.canPrestigeCarbonLife()" (click)="bluePhase.prestigeCarbonLife()">
-            PRESTIGE LIFE
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="battery-grid">
-      <article class="battery-card carbon-card">
-        <span>Land Plots</span>
-        <strong>{{ bluePhase.carbonLandPlots.toString() }}</strong>
-        <p class="resource-balance">{{ protons.amount.toString(3) }} Protons</p>
-        <button (click)="bluePhase.buyCarbonLand()" [disabled]="!bluePhase.canBuyCarbonLand()">Buy for {{ bluePhase.getCarbonLandCost().toString() }} Protons</button>
-      </article>
-      <article class="battery-card carbon-card">
-        <span>Land Area</span>
-        <strong>{{ bluePhase.getCarbonLandArea().toString() }}</strong>
-        <p>Electrons determine usable area; spend them to enlarge each land plot.</p>
-        <button (click)="bluePhase.buyCarbonLandArea()" [disabled]="!bluePhase.canBuyCarbonLandArea()">Expand for {{ bluePhase.getCarbonLandAreaCost().toString() }} Electrons</button>
-      </article>
-      <article class="battery-card carbon-card">
-        <span>Life Cultivation</span>
-        <strong>{{ bluePhase.carbonLifeUpgrades.toString() }} // {{ bluePhase.getCarbonLifeUpgradeEffect().toString(2) }}x</strong>
-        <p class="resource-balance">{{ carbon.amount.toString(3) }} Carbon</p>
-        <button (click)="bluePhase.buyCarbonLifeUpgrade()" [disabled]="!bluePhase.canBuyCarbonLifeUpgrade()">Cultivate for {{ bluePhase.getCarbonLifeUpgradeCost().toString() }} Carbon</button>
-      </article>
-    </div>
-  </section>
-
-
-  <section *ngIf="selectedElement.holding.name === 'oxygen' && bluePhase.isOxygenUnlocked()" class="carbon-lab">
-    <div class="section-heading">
-      <div>
-        <p class="eyebrow">OXYGEN COMBUSTION CHAMBER</p>
-        <h2>Life Burn and Stored Charge</h2>
-      </div>
-      <p>Oxygen burns Carbon Life into Lithium battery charge. Carbon still grows Life; Oxygen controls whether that biomass can be combusted.</p>
-    </div>
-
-    <div class="battery-showcase carbon-showcase">
-      <div class="battery-visual carbon-visual" aria-hidden="true">
-        <div class="life-world"><div class="life-fill" [style.height.%]="getCarbonLifePercent()"></div><span></span><span></span><span></span></div>
-        <div class="burn-flame" [class.active]="bluePhase.oxygenBurningLife">BURN</div>
-      </div>
-      <div class="charge-panel">
-        <span>OXYGEN LIFE COMBUSTION</span>
-        <strong>{{ bluePhase.oxygenBurningLife ? 'BURNING' : 'READY' }}</strong>
-        <p>Combustion spends Carbon Life and adds {{ bluePhase.getOxygenBurnChargeMultiplier().toString(2) }} Lithium charge per Life until batteries are full or Life runs out.</p>
-        <div class="charge-track"><span [style.width.%]="getLithiumChargeBurnPercent()"></span></div>
-        <div class="discharge-panel">
-          <span>LITHIUM CHARGE</span>
-          <strong>{{ bluePhase.getLithiumTotalCharge().toString() }} / {{ bluePhase.getLithiumTotalCapacity().toString() }}</strong>
-          <p>Burning automatically stops when Lithium batteries are fully charged.</p>
-          <button type="button" class="discharge-button" [disabled]="!bluePhase.oxygenBurningLife && !bluePhase.canToggleOxygenBurn()" (click)="bluePhase.toggleOxygenBurn()">
-            {{ bluePhase.oxygenBurningLife ? 'STOP BURNING' : 'BURN LIFE FOR CHARGE' }}
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="battery-grid">
-      <article class="battery-card carbon-card">
-        <span>Combustion Chambers</span>
-        <strong>{{ bluePhase.oxygenCombustionUpgrades.toString() }}</strong>
-        <p class="resource-balance">{{ oxygen.amount.toString(3) }} Oxygen</p>
-        <p>Oxygen combustion effect: {{ bluePhase.getOxygenCombustionEffect().toString(2) }}x</p>
-        <button (click)="bluePhase.buyOxygenCombustion()" [disabled]="!bluePhase.canBuyOxygenCombustion()">Build for {{ bluePhase.getOxygenCombustionCost().toString() }} Oxygen</button>
-      </article>
-      <article class="battery-card carbon-card">
-        <span>Carbon Life</span>
-        <strong>{{ bluePhase.carbonLife.toString(3) }} Life</strong>
-        <p>Oxygen consumes this Life while combustion is active.</p>
-      </article>
-    </div>
-  </section>
-
 </section>

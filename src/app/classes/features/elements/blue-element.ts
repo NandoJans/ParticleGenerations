@@ -1,235 +1,89 @@
 import {Num} from '../../../num';
-import {Holding} from '../holding';
-import {HoldingDisplay} from '../../displays/holding-display';
-import {HoldingDisplayFactory} from '../../factories/holding-display-factory';
-import {ResetKey} from '../../enums/reset-key';
-import {Styles} from '../../enums/styles';
-import {Upgrade} from '../upgrade';
-import {Enhancement} from '../enhancements/enhancement';
 
-class ElementResourceHolding extends Holding {
-  amount = Num.ZERO.copy();
-  startAmount = Num.ZERO.copy();
-  resetId = ResetKey.PURPLE;
-  holdingDisplay: HoldingDisplay = HoldingDisplayFactory.start(this).withAmountPrefix('Stored').withAmountSuffix(` ${this.displayName}`).build();
+export type ElementCardKind = 'helium' | 'lithium' | 'beryllium' | 'boron';
 
-  constructor(
-    public name: string,
-    public displayName: string,
-    public abbreviation: string
-  ) { super(); }
-
-  getStyle(): Styles { return Styles.BLUE; }
+export interface StoredBlueElement {
+  id: string;
+  kind: ElementCardKind;
+  level: number;
+  rarity: number;
 }
 
-export interface ElementUpgradeHost {
-  canBuyElementUpgrade(element: BlueElement, upgrade: ElementUpgrade): boolean;
-  buyElementUpgrade(element: BlueElement, upgrade: ElementUpgrade): void;
+export class ElementCardEffects {
+  static heliumPower = Num.ONE.copy();
+  static lithiumBuyMultiplier = Num.ONE.copy();
+  static berylliumExtensionStrength = Num.ONE.copy();
+  static boronFreeExtensions = Num.ZERO.copy();
+
+  static reset(): void {
+    this.heliumPower = Num.ONE.copy();
+    this.lithiumBuyMultiplier = Num.ONE.copy();
+    this.berylliumExtensionStrength = Num.ONE.copy();
+    this.boronFreeExtensions = Num.ZERO.copy();
+  }
 }
 
-export abstract class ElementUpgrade extends Upgrade {
-  override amount = Num.ZERO.copy();
-  override bought = Num.ZERO.copy();
-  override costMultiplier = Num.ONE.copy();
-  increase = Num.ONE.copy();
-  startIncrease = Num.ONE.copy();
-  type = 'blue-element';
-  resetId = ResetKey.PURPLE;
-  style = Styles.BLUE;
-  nav = 'blue';
-  subNav = 'blueElements';
-  allowedEnhancements: Enhancement[] = [];
-  requirement = [];
-
-  constructor(
-    public element: BlueElement,
-    public host: ElementUpgradeHost,
-    public override name: string,
-    public displayName: string,
-    public baseCost: Num,
-    public cost: Num,
-    public currency: Holding
-  ) { super(name); }
-
-  getDescription(): string { return this.description; }
-  action(): Num | undefined { return this.bought; }
-  enhancementString(): string { return ''; }
-  canEnhance(): boolean { return false; }
-  enhance(): void {}
-  override isBuyable(): boolean { return this.host.canBuyElementUpgrade(this.element, this); }
-  override buy(): any { this.host.buyElementUpgrade(this.element, this); return {success: true}; }
-
-  abstract description: string;
-}
-
-export class ElementBatteryUpgrade extends ElementUpgrade {
-  description = 'Builds Lithium-ion battery storage containers.';
-}
-
-export class ElementChargerUpgrade extends ElementUpgrade {
-  description = 'Generates Lithium charge while battery storage exists.';
-}
-
-export class ElementCapacityUpgrade extends ElementUpgrade {
-  description = 'Increases Lithium charge capacity per battery.';
-}
-
-export class BerylliumRocketUpgrade extends ElementUpgrade {
-  description = 'Builds Beryllium rocket frames that add fuel capacity for extension launches.';
-}
-
-export class BerylliumFuelUpgrade extends ElementUpgrade {
-  description = 'Adds Proton refineries that generate Beryllium rocket fuel over time.';
-}
-
-export class BerylliumLogicUpgrade extends ElementUpgrade {
-  description = 'Adds Electron guidance logic that multiplies rocket thrust.';
-}
-
-export class BoronFiberUpgrade extends ElementUpgrade {
-  description = 'Pulls Boron fiber spools that generate fiberglass accelerator sleeves.';
-}
-
-export class BoronResinUpgrade extends ElementUpgrade {
-  description = 'Bonds fiberglass with Proton resin for stronger composites.';
-}
-
-export class BoronWeaveUpgrade extends ElementUpgrade {
-  description = 'Weaves fiberglass with Electron looms for stronger accelerator conduits.';
-}
-
-export class CarbonLandUpgrade extends ElementUpgrade {
-  description = 'Buys Proton-seeded land plots where Carbon Life can grow.';
-}
-
-export class CarbonLandAreaUpgrade extends ElementUpgrade {
-  description = 'Uses Electrons to expand usable area on each Carbon land plot.';
-}
-
-export class CarbonLifeUpgrade extends ElementUpgrade {
-  description = 'Spends Carbon to cultivate richer Life growth on the biosphere.';
-}
-
-export class OxygenCombustionUpgrade extends ElementUpgrade {
-  description = 'Uses Oxygen to burn Carbon Life into Lithium battery charge.';
-}
-
+/** One independently rolled and stored element. Concrete element classes own
+ * their identity and effect instead of being discriminated data objects. */
 export abstract class BlueElement {
-  protected constructor(
-    public holding: Holding,
-    public theme: string,
-    public componentName: string
+  abstract readonly kind: ElementCardKind;
+  abstract readonly name: string;
+  abstract readonly symbol: string;
+  abstract readonly primaryColor: string;
+
+  constructor(
+    public readonly id: string,
+    public readonly level: number,
+    public readonly rarity: number
   ) {}
 
-  abstract initializeUpgrades(host: ElementUpgradeHost, protons: Holding, electrons: Holding): void;
-  abstract getUpgrades(): ElementUpgrade[];
+  protected get quality(): number { return 1 + this.rarity / 100; }
+  abstract getEffect(): Num;
+  abstract getEffectDescription(): string;
+  abstract applyEffect(): void;
 
-  get visualComponent(): string { return this.componentName; }
+  toStorage(): StoredBlueElement {
+    return {id: this.id, kind: this.kind, level: this.level, rarity: this.rarity};
+  }
+}
+
+export class HeliumElement extends BlueElement {
+  readonly kind = 'helium'; readonly name = 'Helium'; readonly symbol = 'He'; readonly primaryColor = '#8be9fd';
+  getEffect(): Num { return new Num(1.1 + Math.log10(Math.max(1, this.level)) * this.quality * .08, 0); }
+  getEffectDescription(): string { return `Raises red generator multiplier upgrades to ^${this.getEffect().toString(3)}`; }
+  applyEffect(): void { ElementCardEffects.heliumPower = ElementCardEffects.heliumPower.mul(this.getEffect()); }
 }
 
 export class LithiumElement extends BlueElement {
-  batteries: Holding;
-  batteryCharge: Holding;
-  batteryTier: Holding;
-  batteryUpgrade!: ElementBatteryUpgrade;
-  chargerUpgrade!: ElementChargerUpgrade;
-  capacityUpgrade!: ElementCapacityUpgrade;
-
-  constructor(holding: Holding, theme: string, componentName: string) {
-    super(holding, theme, componentName);
-    this.batteries = new ElementResourceHolding(`${holding.name}-batteries`, `${holding.displayName} Batteries`, `${holding.abbreviation} Bat`);
-    this.batteryCharge = new ElementResourceHolding(`${holding.name}-battery-charge`, `${holding.displayName} Battery Charge`, `${holding.abbreviation} Charge`);
-    this.batteryTier = new ElementResourceHolding(`${holding.name}-battery-tier`, `${holding.displayName} Battery Tier`, `${holding.abbreviation} Tier`);
-  }
-
-  initializeUpgrades(host: ElementUpgradeHost, protons: Holding, electrons: Holding): void {
-    this.batteryUpgrade = new ElementBatteryUpgrade(this, host, `${this.holding.name}-battery`, `${this.holding.displayName} Batteries`, new Num(5, 0), new Num(5, 0), this.holding);
-    this.chargerUpgrade = new ElementChargerUpgrade(this, host, `${this.holding.name}-charger`, `${this.holding.displayName} Chargers`, new Num(1, 1), new Num(1, 1), electrons);
-    this.capacityUpgrade = new ElementCapacityUpgrade(this, host, `${this.holding.name}-capacity`, `${this.holding.displayName} Capacity`, new Num(1, 1), new Num(1, 1), protons);
-  }
-
-  getUpgrades(): ElementUpgrade[] { return [this.batteryUpgrade, this.chargerUpgrade, this.capacityUpgrade]; }
-  getChargeCapacity(): Num { return new Num(1, 2).mul(new Num(1.6, 0).pow(this.capacityUpgrade.bought)); }
-  getTotalCapacity(): Num { return this.batteryUpgrade.bought.mul(this.getChargeCapacity()); }
-  getTotalCharge(): Num { return this.batteryCharge.amount.lt(this.getTotalCapacity()) ? this.batteryCharge.amount : this.getTotalCapacity(); }
-  getDischargeThreshold(): Num { return new Num(1, 1).pow(this.batteryTier.amount).mul(new Num(1, 4)); }
-  getTierEffect(): Num { return Num.TWO.pow(this.batteryTier.amount); }
-  getChargeEffect(): Num { return this.getTotalCharge().add(Num.ONE).pow(this.getTierEffect()); }
+  readonly kind = 'lithium'; readonly name = 'Lithium'; readonly symbol = 'Li'; readonly primaryColor = '#d8b4fe';
+  getEffect(): Num { return new Num(1 + Math.log10(this.level + 1) * this.quality, 0); }
+  getEffectDescription(): string { return `Multiplies red generator buy multipliers by ${this.getEffect().toString(3)}x`; }
+  applyEffect(): void { ElementCardEffects.lithiumBuyMultiplier = ElementCardEffects.lithiumBuyMultiplier.mul(this.getEffect()); }
 }
 
 export class BerylliumElement extends BlueElement {
-  constructor(holding: Holding, theme: string, componentName: string) {
-    super(holding, theme, componentName);
-  }
-
-  rocketUpgrade!: BerylliumRocketUpgrade;
-  fuelUpgrade!: BerylliumFuelUpgrade;
-  logicUpgrade!: BerylliumLogicUpgrade;
-
-  initializeUpgrades(host: ElementUpgradeHost, protons: Holding, electrons: Holding): void {
-    this.rocketUpgrade = new BerylliumRocketUpgrade(this, host, `${this.holding.name}-rocket`, 'Rocket Frames', new Num(5, 0), new Num(5, 0), this.holding);
-    this.fuelUpgrade = new BerylliumFuelUpgrade(this, host, `${this.holding.name}-fuel`, 'Fuel Systems', new Num(1, 3), new Num(1, 3), protons);
-    this.logicUpgrade = new BerylliumLogicUpgrade(this, host, `${this.holding.name}-logic`, 'Logic Systems', new Num(1, 3), new Num(1, 3), electrons);
-  }
-
-  getUpgrades(): ElementUpgrade[] { return [this.rocketUpgrade, this.fuelUpgrade, this.logicUpgrade]; }
+  readonly kind = 'beryllium'; readonly name = 'Beryllium'; readonly symbol = 'Be'; readonly primaryColor = '#86efac';
+  getEffect(): Num { return new Num(1 + Math.log10(this.level + 1) * this.quality * 2, 0); }
+  getEffectDescription(): string { return `Multiplies red extension strength by ${this.getEffect().toString(3)}x`; }
+  applyEffect(): void { ElementCardEffects.berylliumExtensionStrength = ElementCardEffects.berylliumExtensionStrength.mul(this.getEffect()); }
 }
 
 export class BoronElement extends BlueElement {
-  constructor(holding: Holding, theme: string, componentName: string) {
-    super(holding, theme, componentName);
-  }
-
-  fiberUpgrade!: BoronFiberUpgrade;
-  resinUpgrade!: BoronResinUpgrade;
-  weaveUpgrade!: BoronWeaveUpgrade;
-
-  initializeUpgrades(host: ElementUpgradeHost, protons: Holding, electrons: Holding): void {
-    this.fiberUpgrade = new BoronFiberUpgrade(this, host, `${this.holding.name}-fiber`, 'Fiber Spools', new Num(5, 0), new Num(5, 0), this.holding);
-    this.resinUpgrade = new BoronResinUpgrade(this, host, `${this.holding.name}-resin`, 'Resin Infusers', new Num(1, 5), new Num(1, 5), protons);
-    this.weaveUpgrade = new BoronWeaveUpgrade(this, host, `${this.holding.name}-weave`, 'Weave Looms', new Num(1, 5), new Num(1, 5), electrons);
-  }
-
-  getUpgrades(): ElementUpgrade[] { return [this.fiberUpgrade, this.resinUpgrade, this.weaveUpgrade]; }
+  readonly kind = 'boron'; readonly name = 'Boron'; readonly symbol = 'B'; readonly primaryColor = '#fca5a5';
+  getEffect(): Num { return new Num(Math.max(1, Math.floor(Math.log10(this.level + 1) * (1 + this.rarity / 20))), 0); }
+  getEffectDescription(): string { return `Provides +${this.getEffect().toString(3)} free red extensions until the next Blue reset`; }
+  applyEffect(): void { ElementCardEffects.boronFreeExtensions = ElementCardEffects.boronFreeExtensions.add(this.getEffect()); }
 }
 
-export class CarbonElement extends BlueElement {
-  constructor(holding: Holding, theme: string, componentName: string) {
-    super(holding, theme, componentName);
+export function createBlueElement(kind: ElementCardKind, id: string, level: number, rarity: number): BlueElement {
+  switch (kind) {
+    case 'helium': return new HeliumElement(id, level, rarity);
+    case 'lithium': return new LithiumElement(id, level, rarity);
+    case 'beryllium': return new BerylliumElement(id, level, rarity);
+    case 'boron': return new BoronElement(id, level, rarity);
   }
-
-  landUpgrade!: CarbonLandUpgrade;
-  landAreaUpgrade!: CarbonLandAreaUpgrade;
-  lifeUpgrade!: CarbonLifeUpgrade;
-
-  initializeUpgrades(host: ElementUpgradeHost, protons: Holding, electrons: Holding): void {
-    this.landUpgrade = new CarbonLandUpgrade(this, host, `${this.holding.name}-land`, 'Land Plots', new Num(5, 0), new Num(5, 0), protons);
-    this.landAreaUpgrade = new CarbonLandAreaUpgrade(this, host, `${this.holding.name}-land-area`, 'Land Area', new Num(2.5, 1), new Num(2.5, 1), electrons);
-    this.lifeUpgrade = new CarbonLifeUpgrade(this, host, `${this.holding.name}-life`, 'Life Cultivation', new Num(1, 1), new Num(1, 1), this.holding);
-  }
-
-  getUpgrades(): ElementUpgrade[] { return [this.landUpgrade, this.landAreaUpgrade, this.lifeUpgrade]; }
 }
 
-export class OxygenElement extends BlueElement {
-  constructor(holding: Holding, theme: string, componentName: string) {
-    super(holding, theme, componentName);
-  }
-
-  combustionUpgrade!: OxygenCombustionUpgrade;
-
-  initializeUpgrades(host: ElementUpgradeHost, protons: Holding, electrons: Holding): void {
-    this.combustionUpgrade = new OxygenCombustionUpgrade(this, host, `${this.holding.name}-combustion`, 'Life Combustion', new Num(5, 0), new Num(5, 0), this.holding);
-  }
-
-  getUpgrades(): ElementUpgrade[] { return [this.combustionUpgrade]; }
-}
-
-export class ForgedBlueElement extends BlueElement {
-  constructor(holding: Holding, theme: string, componentName: string) {
-    super(holding, theme, componentName);
-  }
-
-  initializeUpgrades(_host: ElementUpgradeHost, _protons: Holding, _electrons: Holding): void {}
-  getUpgrades(): ElementUpgrade[] { return []; }
+export function restoreBlueElement(stored: StoredBlueElement): BlueElement {
+  return createBlueElement(stored.kind, stored.id, stored.level, stored.rarity);
 }
