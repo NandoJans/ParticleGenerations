@@ -9,13 +9,18 @@ import {BalanceService} from "../../services/dev/balance.service";
 })
 export class BalanceComponent {
   selectedPhaseId: string = '';
+  speed = 10;
+  maxIdleHours = 24;
 
   constructor(
     private balanceService: BalanceService,
   ) {}
 
   start() {
-    const settings: any = {};
+    const settings: any = {
+      speed: Math.max(0.1, Number(this.speed) || 10),
+      maxTime: Math.max(1, Number(this.maxIdleHours) || 24) * 3600,
+    };
     if (this.selectedPhaseId) {
       settings.phaseId = this.selectedPhaseId;
     }
@@ -27,7 +32,20 @@ export class BalanceComponent {
   }
 
   getResults() {
-    return Object.values(this.balanceService.getResults()).reverse();
+    return this.balanceService.getOrderedResults().slice().reverse();
+  }
+
+  getAnalysis() { return this.balanceService.getAnalysis(); }
+
+  getPace(timeBetween: number) { return this.balanceService.getPace(timeBetween); }
+
+  exportCsv() {
+    const blob = new Blob([this.balanceService.exportCsv()], { type: 'text/csv;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'particle-generations-balance.csv';
+    link.click();
+    URL.revokeObjectURL(link.href);
   }
 
   // --- Snapshots UI helpers ---
@@ -45,19 +63,6 @@ export class BalanceComponent {
 
   saveSnapshot(label: string = 'Manual') {
     this.balanceService.saveSnapshot(label);
-  }
-
-  getColorCode(timeBetween: number) {
-    const fast = 3600;
-    const balanced = 3600 * 24;
-
-    if (timeBetween < fast) {
-      return 'green';
-    } else if (timeBetween < balanced) {
-      return 'orange';
-    } else {
-      return 'red';
-    }
   }
 
   formatTime(timeBetween: number) {

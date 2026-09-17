@@ -12,6 +12,7 @@ export interface BuyableCtx {
   totalElapsedTime: number;
   elapsedSincePrevious: number;
   markNew: () => void;
+  nextSequence?: () => number;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -47,6 +48,7 @@ export class BuyableHelperService {
           time: ctx.totalElapsedTime,
           timeBetween: ctx.elapsedSincePrevious,
           style: (buyable as any).style,
+          sequence: ctx.nextSequence?.(),
         };
         ctx.markNew();
 
@@ -58,7 +60,7 @@ export class BuyableHelperService {
             elapsed: ctx.totalElapsedTime,
             extra: { key: (buyable as any).name }
           });
-          ctx.results[(buyable as any).name].snapshotId = snapId;
+          ctx.results[saveName].snapshotId = snapId;
         } catch {}
       }
     }

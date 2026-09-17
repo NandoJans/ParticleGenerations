@@ -1,7 +1,25 @@
 table {
-  width: 80%;
+  width: 100%;
   margin: auto;
 }
+
+.analysis {
+  background: var(--background-color-1);
+  border: 1px solid var(--background-color-4);
+  border-radius: 8px;
+  margin: 0 auto 16px;
+  max-width: 1000px;
+  padding: 12px 18px;
+}
+
+.analysis h2, .analysis h3 { margin: 4px 0 10px; }
+.scorecards { display: flex; flex-wrap: wrap; gap: 8px; }
+.pace { border-radius: 12px; display: inline-block; font-weight: bold; padding: 3px 9px; text-transform: capitalize; }
+.pace.burst { background: #295477; color: #d8efff; }
+.pace.balanced { background: #245c3a; color: #d8ffe6; }
+.pace.slow { background: #705b1c; color: #fff2bd; }
+.pace.stalled { background: #702929; color: #ffe0e0; }
+.actions input { width: 76px; }
 
 thead {
   font-weight: bold;
