@@ -9,6 +9,7 @@ import {Transaction} from "../interfaces/transaction";
 import {HoldingRecord} from "../../records/holdings/holding-record";
 import {MultiplierRecord} from '../../records/multipliers/multiplier-record';
 import {BerylliumHolding} from '../holdings/blue-holdings';
+import {ElementCardEffects} from '../elements/blue-element';
 
 export class RedGeneratorExtensionUpgrade extends RedUpgrade {
   baseCost: Num = new Num(1, 3)
@@ -44,12 +45,13 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
     ];
     generators.forEach((generator, index) => {
       const compare = new Num(index, 0);
-      if (this.amount.greq(compare)) {
-        const buff: Num = this.getEffectiveBuffer().pow(this.amount.sub(compare));
+      const effectiveAmount = this.amount.add(ElementCardEffects.boronFreeExtensions);
+      if (effectiveAmount.greq(compare)) {
+        const buff: Num = this.getEffectiveBuffer().pow(effectiveAmount.sub(compare));
         generator.mulMod = generator.mulMod.mul(buff);
       }
     });
-    return this.getEffectiveBuffer().pow(this.amount);
+    return this.getEffectiveBuffer().pow(this.amount.add(ElementCardEffects.boronFreeExtensions));
   }
 
   getDescription(): string {
@@ -63,10 +65,14 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
   getEffectiveBuffer(): Num {
     return this.buffer
       .mul(MultiplierRecord.redGeneratorExtensionBuffer.getNum())
-      .mul(BerylliumHolding.rocketBoost);
+      .mul(BerylliumHolding.rocketBoost)
+      .mul(ElementCardEffects.berylliumExtensionStrength);
   }
 
   override effectString() {
+    if (ElementCardEffects.boronFreeExtensions.gt(Num.ZERO)) {
+      return `${this.amount.toString()} purchased + ${ElementCardEffects.boronFreeExtensions.toString()} free from Boron`;
+    }
     if (this.amount.toNumber() < 5) {
       switch (this.amount.toNumber()) {
         case 0:

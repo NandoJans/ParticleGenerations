@@ -6,6 +6,7 @@ import {RedGenerator} from "../generators/red-generator";
 import {Requirement} from "../interfaces/requirement";
 import {Enhancement} from "../enhancements/enhancement";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {ElementCardEffects} from '../elements/blue-element';
 
 export class RedGeneratorBuyMultiplierUpgrade extends RedGeneratorUpgrade {
 
@@ -47,7 +48,7 @@ export class RedGeneratorBuyMultiplierUpgrade extends RedGeneratorUpgrade {
   }
 
   private getModifiedBuffer(): Num {
-    return this.buffer.mul(MultiplierRecord.electronRedGeneratorUpgradeBuffer.getNum());
+    return this.buffer.mul(MultiplierRecord.electronRedGeneratorUpgradeBuffer.getNum()).mul(ElementCardEffects.lithiumBuyMultiplier);
   }
 
   override enhance() {
