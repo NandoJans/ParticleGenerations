@@ -46,6 +46,7 @@ export class BluePhaseService implements ElementUpgradeHost {
   unlocked = false;
   elements: BlueElement[] = [];
   activeElementCardIds: string[] = [];
+  showClearActiveElementsWarning = true;
 
   lithiumBatteries = Num.ZERO.copy();
   lithiumChargeGenerators = Num.ZERO.copy();
@@ -83,7 +84,6 @@ export class BluePhaseService implements ElementUpgradeHost {
     this.elementDefinitions.forEach(definition => definition.element.initializeUpgrades(this, HoldingRecord.protons, HoldingRecord.electrons));
     ResetHelper.registerResetListener('blue-phase-unlock', resetKey => {
       if (resetKey === ResetKey.BLUE) {
-        this.activeElementCardIds = [];
         this.unlockFromPrestige();
         this.applyElementCardEffects();
         this.save();
@@ -429,7 +429,20 @@ export class BluePhaseService implements ElementUpgradeHost {
     this.save();
   }
 
-  /** Kept for saved callers: an equipped coin stays selected until a Blue reset. */
+  clearActiveElementCards(): void {
+    if (!this.activeElementCardIds.length) return;
+    this.activeElementCardIds = [];
+    ResetHelper.reset(ResetKey.BLUE);
+    this.applyElementCardEffects();
+    this.save();
+  }
+
+  setClearActiveElementsWarning(enabled: boolean): void {
+    this.showClearActiveElementsWarning = enabled;
+    this.save();
+  }
+
+  /** Kept for saved callers: an equipped coin stays selected until explicitly cleared. */
   toggleElementCard(element: BlueElement): void { this.equipElementCard(element); }
 
   isElementCardActive(element: BlueElement): boolean { return this.activeElementCardIds.includes(element.id); }
@@ -779,6 +792,7 @@ export class BluePhaseService implements ElementUpgradeHost {
     this.storage.save(this.purchaseStates, 'purchaseStates');
     this.storage.save(this.elements.map(element => element.toStorage()), 'elements');
     this.storage.save(this.activeElementCardIds, 'activeElementCardIds');
+    this.storage.save(this.showClearActiveElementsWarning, 'showClearActiveElementsWarning');
     this.storage.saveNum(this.lithiumBatteries, 'lithiumBatteries');
     this.storage.saveNum(this.lithiumChargeGenerators, 'lithiumChargeGenerators');
     this.storage.saveNum(this.lithiumCapacityUpgrades, 'lithiumCapacityUpgrades');
@@ -815,6 +829,7 @@ export class BluePhaseService implements ElementUpgradeHost {
     this.activeElementCardIds = this.storage.load([] as string[], 'activeElementCardIds')
       .filter((id: string) => this.elements.some(element => element.id === id))
       .slice(0, BluePhaseService.activeElementSlots);
+    this.showClearActiveElementsWarning = this.storage.load(true, 'showClearActiveElementsWarning');
     this.lithiumBatteries = this.storage.loadNum(this.lithiumBatteries, 'lithiumBatteries');
     this.lithiumChargeGenerators = this.storage.loadNum(this.lithiumChargeGenerators, 'lithiumChargeGenerators');
     this.lithiumCapacityUpgrades = this.storage.loadNum(this.lithiumCapacityUpgrades, 'lithiumCapacityUpgrades');

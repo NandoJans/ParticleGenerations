@@ -25,9 +25,12 @@
   <section class="slot-section">
     <div class="section-heading">
       <div><p class="eyebrow">ACTIVE SLOTS</p><h2>Equipped Elements</h2></div>
-      <strong>{{ bluePhase.activeElementCardIds.length }} / {{ activeSlotCount }}</strong>
+      <div class="active-actions">
+        <strong>{{ bluePhase.activeElementCardIds.length }} / {{ activeSlotCount }}</strong>
+        <button class="clear-button" type="button" [disabled]="!bluePhase.activeElementCardIds.length" (click)="requestClearActiveElements()">CLEAR ACTIVE ELEMENTS</button>
+      </div>
     </div>
-    <p class="slot-help">Drag a coin here or double-click it to make it active. Active coins remain locked in until the next Blue reset.</p>
+    <p class="slot-help">Drag a coin here or double-click it to make it active. Active coins stay equipped through Blue resets until you clear them.</p>
     <div class="active-slots">
       @for (slot of activeSlots; track $index) {
         <div class="active-slot" [class.filled]="slot" (dragover)="$event.preventDefault()" (drop)="dropIntoActiveSlot($event)">
@@ -98,8 +101,26 @@
         <p>{{ selectedElement.getEffectDescription() }}</p>
         <button class="activate-button" type="button" [disabled]="bluePhase.isElementCardActive(selectedElement) || bluePhase.activeElementCardIds.length >= activeSlotCount"
                 (click)="equip(selectedElement); closeDetails()">
-          {{ bluePhase.isElementCardActive(selectedElement) ? 'ACTIVE UNTIL RESET' : 'ACTIVATE COIN' }}
+          {{ bluePhase.isElementCardActive(selectedElement) ? 'ACTIVE UNTIL CLEARED' : 'ACTIVATE COIN' }}
         </button>
+      </section>
+    </div>
+  }
+
+  @if (showClearWarning) {
+    <div class="details-backdrop" (click)="cancelClearActiveElements()">
+      <section class="clear-warning" role="alertdialog" aria-modal="true" aria-labelledby="clear-warning-title" aria-describedby="clear-warning-description" (click)="$event.stopPropagation()">
+        <p class="eyebrow">BLUE RESET WARNING</p>
+        <h2 id="clear-warning-title">Clear all active elements?</h2>
+        <p id="clear-warning-description">Clearing your active element slots triggers a Blue phase reset. Your element coins remain in your collection and can be equipped again afterward.</p>
+        <label class="warning-toggle">
+          <input type="checkbox" [(ngModel)]="disableClearWarning">
+          <span>Do not show this warning again</span>
+        </label>
+        <div class="warning-actions">
+          <button class="cancel-button" type="button" (click)="cancelClearActiveElements()">CANCEL</button>
+          <button class="confirm-clear-button" type="button" (click)="confirmClearActiveElements()">CLEAR &amp; RESET BLUE</button>
+        </div>
       </section>
     </div>
   }
