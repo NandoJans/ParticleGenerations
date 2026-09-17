@@ -12,6 +12,7 @@ import {PrestigeLayersService} from './prestige-layers.service';
 import {ChargerRecord} from '../classes/records/charger/charger-record';
 import {CarbonHolding, LithiumHolding} from '../classes/features/holdings/blue-holdings';
 import {MultiplierRecord} from '../classes/records/multipliers/multiplier-record';
+import {createBlueElement} from '../classes/features/elements/blue-element';
 
 describe('BluePhaseService', () => {
   let service: BluePhaseService;
@@ -71,6 +72,30 @@ describe('BluePhaseService', () => {
     MultiplierRecord.redAcceleratorGenerators.reset();
     MultiplierRecord.redGeneratorExtensionBuffer.reset();
     MultiplierRecord.nucleusGeneration.reset();
+  });
+
+  it('keeps an active element selected until the Blue phase resets', () => {
+    const element = createBlueElement('helium', 'coin-1', 2, 15);
+    service.elements = [element];
+
+    service.equipElementCard(element);
+    service.toggleElementCard(element);
+
+    expect(service.activeElementCardIds).toEqual(['coin-1']);
+    ResetHelper.reset(ResetKey.BLUE);
+    expect(service.activeElementCardIds).toEqual([]);
+  });
+
+  it('does not equip more element coins than there are active slots', () => {
+    service.elements = [
+      createBlueElement('helium', 'coin-1', 1, 1),
+      createBlueElement('lithium', 'coin-2', 1, 1),
+      createBlueElement('beryllium', 'coin-3', 1, 1)
+    ];
+
+    service.elements.forEach(element => service.equipElementCard(element));
+
+    expect(service.activeElementCardIds).toEqual(['coin-1', 'coin-2']);
   });
 
   afterEach(() => {

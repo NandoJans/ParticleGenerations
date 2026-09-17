@@ -14,6 +14,8 @@ export class BlueElementsComponent {
   neutrons: Holding = HoldingRecord.neutrons;
   readonly activeSlotCount = BluePhaseService.activeElementSlots;
   readonly inventorySlotCount = BluePhaseService.elementInventorySlots;
+  selectedElement?: BlueElement;
+  private detailsTimer?: ReturnType<typeof setTimeout>;
 
   constructor(public bluePhase: BluePhaseService) {}
 
@@ -22,10 +24,35 @@ export class BlueElementsComponent {
     return Array.from({length: this.activeSlotCount}, (_, index) => elements[index]);
   }
 
-  getFusionPool(): string {
-    const kinds = this.bluePhase.getUnlockedCardKinds();
-    return kinds.length ? kinds.map(kind => kind[0].toUpperCase() + kind.slice(1)).join(' · ') : 'Helium unlocks at 10';
-  }
+  get fusionLevel(): number { return this.bluePhase.getNeutronStage(); }
 
   fuse(): void { this.bluePhase.fuseElement(); }
+
+  showDetails(element: BlueElement): void {
+    if (this.detailsTimer) clearTimeout(this.detailsTimer);
+    this.detailsTimer = setTimeout(() => {
+      this.selectedElement = element;
+      this.detailsTimer = undefined;
+    }, 220);
+  }
+
+  equip(element: BlueElement): void {
+    if (this.detailsTimer) clearTimeout(this.detailsTimer);
+    this.detailsTimer = undefined;
+    this.bluePhase.equipElementCard(element);
+  }
+
+  startDrag(event: DragEvent, element: BlueElement): void {
+    event.dataTransfer?.setData('text/plain', element.id);
+    if (event.dataTransfer) event.dataTransfer.effectAllowed = 'move';
+  }
+
+  dropIntoActiveSlot(event: DragEvent): void {
+    event.preventDefault();
+    const id = event.dataTransfer?.getData('text/plain');
+    const element = this.bluePhase.elements.find(candidate => candidate.id === id);
+    if (element) this.bluePhase.equipElementCard(element);
+  }
+
+  closeDetails(): void { this.selectedElement = undefined; }
 }

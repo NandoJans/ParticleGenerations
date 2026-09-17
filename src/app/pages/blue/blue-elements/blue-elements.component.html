@@ -4,7 +4,7 @@
     <div>
       <p class="eyebrow">BLUE PHASE // ELEMENT DECK</p>
       <h1>Element Fusion</h1>
-      <p>Spend a Blue run to fuse one permanent element card. Only equipped cards apply their effects.</p>
+      <p>Spend a Blue run to mint one permanent element coin. Only active coins apply their effects.</p>
     </div>
     <div class="stage-readout"><span>NEUTRONS</span><strong>{{ neutrons.amount.toString() }}</strong></div>
   </header>
@@ -12,9 +12,9 @@
   <section class="fusion-panel">
     <div>
       <p class="eyebrow">FUSION CHAMBER</p>
-      <h2>{{ bluePhase.canFuseElement() ? 'A nucleus is ready' : 'Collect 10 neutrons' }}</h2>
-      <p>Fusion resets all Protons, Electrons, and Neutrons. Every 10× Neutrons unlocks another possible element: Helium, Lithium, Beryllium, then Boron.</p>
-      <p class="pool">Current fusion pool: <strong>{{ getFusionPool() }}</strong></p>
+      <h2>{{ bluePhase.canFuseElement() ? 'Level ' + fusionLevel + ' coin ready' : 'Collect 10 neutrons' }}</h2>
+      <p>Fusion resets all Protons, Electrons, and Neutrons. Before minting, only the coin's level is known; its identity and rarity are revealed afterward.</p>
+      <p class="pool">Predicted level: <strong>{{ fusionLevel || '—' }}</strong></p>
     </div>
     <button class="fuse-button" type="button" [disabled]="!bluePhase.canFuseElement()" (click)="fuse()">
       FUSE ELEMENT
@@ -27,12 +27,12 @@
       <div><p class="eyebrow">ACTIVE SLOTS</p><h2>Equipped Elements</h2></div>
       <strong>{{ bluePhase.activeElementCardIds.length }} / {{ activeSlotCount }}</strong>
     </div>
-    <p class="slot-help">Active cards provide their listed effect. Stored cards are safe, but inactive.</p>
+    <p class="slot-help">Drag a coin here or double-click it to make it active. Active coins remain locked in until the next Blue reset.</p>
     <div class="active-slots">
       @for (slot of activeSlots; track $index) {
-        <div class="active-slot" [class.filled]="slot">
-          @if (slot) { <strong>{{ slot.symbol }} · {{ slot.name }}</strong><span>{{ slot.getEffectDescription() }}</span> }
-          @else { <span>EMPTY ACTIVE SLOT</span> }
+        <div class="active-slot" [class.filled]="slot" (dragover)="$event.preventDefault()" (drop)="dropIntoActiveSlot($event)">
+          @if (slot) { <strong>LVL {{ slot.level }}</strong><span>ACTIVE COIN</span> }
+          @else { <span>DROP COIN TO ACTIVATE</span> }
         </div>
       }
     </div>
@@ -43,20 +43,36 @@
       <div><p class="eyebrow">NORMAL SLOTS</p><h2>Element Collection</h2></div>
       <strong>{{ bluePhase.elements.length }} / {{ inventorySlotCount }}</strong>
     </div>
-    <div class="card-grid">
+    <div class="coin-grid">
       @for (element of bluePhase.elements; track element.id) {
-        <button class="element-card" type="button" [class.active]="bluePhase.isElementCardActive(element)"
-                [style.--primary]="element.primaryColor" [style.--secondary]="bluePhase.getSecondaryColor(element)"
-                (click)="bluePhase.toggleElementCard(element)">
-          <span class="rarity">{{ bluePhase.getRarityName(element) }} · {{ element.rarity | number:'1.1-1' }}%</span>
-          <span class="symbol">{{ element.symbol }}</span>
-          <strong>{{ element.name }}</strong><span>Level {{ element.level }}</span>
-          <p>{{ element.getEffectDescription() }}</p>
-          <em>{{ bluePhase.isElementCardActive(element) ? 'ACTIVE — CLICK TO STORE' : 'STORED — CLICK TO EQUIP' }}</em>
+        <button class="element-coin" type="button" draggable="true" [class.active]="bluePhase.isElementCardActive(element)"
+                [style.--rarity]="bluePhase.getSecondaryColor(element)" (dragstart)="startDrag($event, element)"
+                (click)="showDetails(element)" (dblclick)="equip(element)"
+                [attr.aria-label]="'Level ' + element.level + ' ' + bluePhase.getRarityName(element) + ' element coin. Click for details; double-click to activate.'">
+          <span>LVL</span><strong>{{ element.level }}</strong>
+          @if (bluePhase.isElementCardActive(element)) { <em>ACTIVE</em> }
         </button>
       } @empty {
         <div class="empty-collection">Your first 10 Neutrons can be fused into a Helium card.</div>
       }
     </div>
   </section>
+
+  @if (selectedElement) {
+    <div class="details-backdrop" (click)="closeDetails()">
+      <section class="details-popup" role="dialog" aria-modal="true" aria-labelledby="element-details-title" (click)="$event.stopPropagation()"
+               [style.--primary]="selectedElement.primaryColor" [style.--rarity]="bluePhase.getSecondaryColor(selectedElement)">
+        <button class="close-button" type="button" aria-label="Close element details" (click)="closeDetails()">×</button>
+        <p class="rarity">{{ bluePhase.getRarityName(selectedElement) }} · {{ selectedElement.rarity | number:'1.1-1' }}%</p>
+        <span class="detail-symbol">{{ selectedElement.symbol }}</span>
+        <h2 id="element-details-title">{{ selectedElement.name }}</h2>
+        <strong>Level {{ selectedElement.level }}</strong>
+        <p>{{ selectedElement.getEffectDescription() }}</p>
+        <button class="activate-button" type="button" [disabled]="bluePhase.isElementCardActive(selectedElement) || bluePhase.activeElementCardIds.length >= activeSlotCount"
+                (click)="equip(selectedElement); closeDetails()">
+          {{ bluePhase.isElementCardActive(selectedElement) ? 'ACTIVE UNTIL RESET' : 'ACTIVATE COIN' }}
+        </button>
+      </section>
+    </div>
+  }
 </section>

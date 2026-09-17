@@ -83,7 +83,10 @@ export class BluePhaseService implements ElementUpgradeHost {
     this.elementDefinitions.forEach(definition => definition.element.initializeUpgrades(this, HoldingRecord.protons, HoldingRecord.electrons));
     ResetHelper.registerResetListener('blue-phase-unlock', resetKey => {
       if (resetKey === ResetKey.BLUE) {
+        this.activeElementCardIds = [];
         this.unlockFromPrestige();
+        this.applyElementCardEffects();
+        this.save();
       }
     });
   }
@@ -419,13 +422,15 @@ export class BluePhaseService implements ElementUpgradeHost {
     return element;
   }
 
-  toggleElementCard(element: BlueElement): void {
-    const index = this.activeElementCardIds.indexOf(element.id);
-    if (index >= 0) this.activeElementCardIds.splice(index, 1);
-    else if (this.activeElementCardIds.length < BluePhaseService.activeElementSlots) this.activeElementCardIds.push(element.id);
+  equipElementCard(element: BlueElement): void {
+    if (this.isElementCardActive(element) || this.activeElementCardIds.length >= BluePhaseService.activeElementSlots) return;
+    this.activeElementCardIds.push(element.id);
     this.applyElementCardEffects();
     this.save();
   }
+
+  /** Kept for saved callers: an equipped coin stays selected until a Blue reset. */
+  toggleElementCard(element: BlueElement): void { this.equipElementCard(element); }
 
   isElementCardActive(element: BlueElement): boolean { return this.activeElementCardIds.includes(element.id); }
   getRarityTier(element: BlueElement): number { return Math.min(9, Math.floor(element.rarity / 10)); }
