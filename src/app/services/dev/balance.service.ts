@@ -9,7 +9,6 @@ import {HoldingRecord} from "../../classes/records/holdings/holding-record";
 import {AutomatorRecord} from "../../classes/records/automators/automator-record";
 import {Generator} from "../../classes/features/generator";
 import {Upgrade} from "../../classes/features/upgrade";
-import {generate} from "rxjs";
 import {EnhancementRecord} from "../../classes/records/enhancement-record";
 import {EnhancementService} from "../enhancement.service";
 import {App} from "../../App";
@@ -37,9 +36,9 @@ import {CompressionService} from "../compression.service";
   providedIn: 'root'
 })
 export class BalanceService {
-  private readonly PRESTIGE_TIMEOUT_SECONDS = 3000; // 5 minutes (300 seconds) of simulated game time when no yellow fusion
-  private readonly PRESTIGE_TIMEOUT_FUSION_SECONDS = 1; // Wait 5 seconds after reaching best gain before prestiging
-  private readonly WAIT_AFTER_BEST_SECONDS = 1; // Wait 5 seconds after reaching best gain before prestiging
+  private readonly PRESTIGE_TIMEOUT_SECONDS = 300;
+  private readonly PRESTIGE_TIMEOUT_FUSION_SECONDS = 5;
+  private readonly WAIT_AFTER_BEST_SECONDS = 5;
   private readonly YELLOW_PRESTIGES_IMMEDIATE_THRESHOLD = 1000; // Below 1000 yellow prestiges, prestige immediately
   private readonly STAR_PARTICLES_LOW_THRESHOLD = new Num(1, 10); // 1e10 star particles threshold
   private readonly STAR_PARTICLES_HIGH_POWER = 1.05; // Above threshold, wait for bestPrestige^1.05
@@ -78,7 +77,10 @@ export class BalanceService {
     timeBetween: number,
     style: string,
     snapshotId?: string,
+    sequence?: number,
   }} = {};
+
+  private resultSequence = 0;
 
   totalElapsedTime: number = 0;
   elapsedSincePrevious: number = 0;
@@ -117,6 +119,9 @@ export class BalanceService {
 
     // Clear previous run results when starting a new simulation
     this.clearResults();
+    this.totalElapsedTime = 0;
+    this.elapsedSincePrevious = 0;
+    this.resultSequence = 0;
 
     // Stop any existing loops
     clearInterval(this.loopTimeout);
@@ -167,9 +172,6 @@ export class BalanceService {
     this.tickService.gameTick(new Num(this.settings.speed, 0));
     this.totalElapsedTime += this.settings.speed / 2;
     this.elapsedSincePrevious += this.settings.speed / 2;
-
-    // Run active challenges so their elements progress
-    this.challengeService.tick();
 
     // Ensure automators are disabled during balance run
     AutomatorRecord.list.forEach(automator => {
@@ -245,6 +247,7 @@ export class BalanceService {
             time: this.totalElapsedTime,
             timeBetween: this.elapsedSincePrevious,
             style: prestigeLayer.style,
+            sequence: this.nextResultSequence(),
           }
           this.newResultsThisLoop = true;
         }
@@ -355,6 +358,7 @@ export class BalanceService {
       totalElapsedTime: this.totalElapsedTime,
       elapsedSincePrevious: this.elapsedSincePrevious,
       markNew: () => { this.newResultsThisLoop = true; },
+      nextSequence: () => this.nextResultSequence(),
     }, buyable);
   }
 
@@ -456,6 +460,43 @@ export class BalanceService {
 
   getResults() {
     return this.results;
+  }
+
+  getOrderedResults() {
+    return Object.values(this.results).sort((a, b) =>
+      (a.time - b.time) || ((a.sequence ?? 0) - (b.sequence ?? 0))
+    );
+  }
+
+  /** A pace band deliberately based on the gap between meaningful unlocks, not total run time. */
+  getPace(timeBetween: number): 'burst' | 'balanced' | 'slow' | 'stalled' {
+    if (timeBetween < 60) return 'burst';
+    if (timeBetween <= 6 * 3600) return 'balanced';
+    if (timeBetween <= 24 * 3600) return 'slow';
+    return 'stalled';
+  }
+
+  getAnalysis() {
+    const ordered = this.getOrderedResults();
+    const counts = { burst: 0, balanced: 0, slow: 0, stalled: 0 };
+    ordered.forEach(result => counts[this.getPace(result.timeBetween)]++);
+    const bottlenecks = ordered
+      .filter(result => this.getPace(result.timeBetween) === 'slow' || this.getPace(result.timeBetween) === 'stalled')
+      .sort((a, b) => b.timeBetween - a.timeBetween)
+      .slice(0, 5);
+    return { counts, bottlenecks, total: ordered.length };
+  }
+
+  exportCsv(): string {
+    const escape = (value: string | number) => `"${String(value).replace(/"/g, '""')}"`;
+    const rows = this.getOrderedResults().map(result => [
+      result.element, result.timeBetween, result.time, this.getPace(result.timeBetween)
+    ].map(escape).join(','));
+    return ['Milestone,Gap seconds,Total seconds,Pace', ...rows].join('\n');
+  }
+
+  nextResultSequence(): number {
+    return this.resultSequence++;
   }
 
   // Get available phases for starting the simulation
@@ -571,6 +612,7 @@ export class BalanceService {
       const parsed = raw ? JSON.parse(raw) : {};
       // Ensure object shape
       this.results = (parsed && typeof parsed === 'object') ? parsed : {};
+      this.resultSequence = Object.keys(this.results).length;
     } catch {
       this.results = {};
     }

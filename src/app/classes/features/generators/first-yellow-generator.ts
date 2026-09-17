@@ -13,8 +13,9 @@ export class FirstYellowGenerator extends YellowGenerator {
 
   stringRank: string = '1';
   rank: number = 1;
-  baseCost: Num = new Num(1, 2);
-  cost: Num = new Num(1, 2);
+  // Bring the first active Yellow purchase closer to the first prestige instead of leaving a dead zone.
+  baseCost: Num = new Num(7.5, 1);
+  cost: Num = new Num(7.5, 1);
   increase: Num = new Num(1, 1);
   startIncrease: Num = new Num(1, 1);
   multiplierUpgrade: YellowGeneratorMultiplierUpgrade = new YellowGeneratorMultiplierUpgrade(

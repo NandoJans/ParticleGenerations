@@ -12,5 +12,8 @@ Access the tool at: `#/dev/phase`
 
 ### Balance Tool
 
-The Balance Tool helps analyze game progression and balance. Access it at: `#/dev/balance`
-
+The Balance Tool simulates progression, separates sub-minute purchase bursts from healthy
+1-minute–6-hour unlock gaps, and calls out slow (6–24 hour) and stalled (24+ hour)
+segments. Runs can start at any phase, use a configurable simulation step and idle
+cutoff, preserve milestone snapshots, and export ordered CSV data for comparisons.
+Access it at: `#/dev/balance`.

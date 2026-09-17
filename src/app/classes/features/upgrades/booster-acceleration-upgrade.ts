@@ -23,8 +23,9 @@ export class BoosterAccelerationUpgrade extends Upgrade {
   bought: Num = new Num(0, 0);
   override limit: Num|undefined = new Num(1, 1);
 
-  override buffer: Num = new Num(0.025, 0);
-  override baseBuffer: Num = new Num(0.025, 0);
+  // A 20% stronger step smooths the multi-hour accelerator wall without changing its reset trade-off.
+  override buffer: Num = new Num(0.03, 0);
+  override baseBuffer: Num = new Num(0.03, 0);
 
   freeBuys: Num = new Num(1, 1);
   baseFreeBuys: Num = new Num(1, 1);

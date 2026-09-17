@@ -255,17 +255,25 @@ describe('BalanceService', () => {
       expect(service['PRESTIGE_TIMEOUT_SECONDS']).toBe(300);
     });
 
-    it('should have look ahead constant', () => {
-      expect(service['LOOK_AHEAD_SECONDS']).toBe(10);
+    it('classifies meaningful progression gaps', () => {
+      expect(service.getPace(30)).toBe('burst');
+      expect(service.getPace(60)).toBe('balanced');
+      expect(service.getPace(7 * 3600)).toBe('slow');
+      expect(service.getPace(25 * 3600)).toBe('stalled');
     });
+  });
 
-    it('should have efficiency threshold constant', () => {
-      expect(service['PRESTIGE_EFFICIENCY_THRESHOLD']).toBe(0.8);
-    });
+  describe('Analysis export', () => {
+    it('orders results and reports bottlenecks', () => {
+      service.results = {
+        late: { element: 'Late', time: 100000, timeBetween: 90000, style: 'red' },
+        early: { element: 'Early', time: 60, timeBetween: 60, style: 'red' },
+      };
 
-    it('should have yellow prestige min gain constants', () => {
-      expect(service['YELLOW_PRESTIGE_MIN_GAIN']).toBe(2.0);
-      expect(service['YELLOW_PRESTIGE_MIN_GAIN_AFTER_FUSION']).toBe(3.0);
+      expect(service.getOrderedResults().map(result => result.element)).toEqual(['Early', 'Late']);
+      expect(service.getAnalysis().counts.stalled).toBe(1);
+      expect(service.getAnalysis().bottlenecks[0].element).toBe('Late');
+      expect(service.exportCsv()).toContain('"Late","90000","100000","stalled"');
     });
   });
 });

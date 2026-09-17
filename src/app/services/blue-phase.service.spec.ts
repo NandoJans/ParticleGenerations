@@ -552,7 +552,7 @@ describe('BluePhaseService', () => {
     const effect = UpgradeRecord.boosterAccelerationUpgrade.action();
 
     expect(effect.toNumber()).toBeCloseTo(0.07, 8);
-    expect(UpgradeRecord.boosterAccelerationUpgrade.buffer.toNumber()).toBeCloseTo(0.025, 8);
+    expect(UpgradeRecord.boosterAccelerationUpgrade.buffer.toNumber()).toBeCloseTo(0.03, 8);
   });
 
   it('increases lithium red generator boost from battery tiers', () => {

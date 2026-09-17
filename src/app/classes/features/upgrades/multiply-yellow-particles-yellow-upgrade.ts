@@ -9,8 +9,9 @@ export class MultiplyYellowParticlesYellowUpgrade extends YellowUpgrade {
   }
   displayName: string = 'Multiply Star Particles';
 
-  override buffer: Num = new Num(2, 0);
-  override baseBuffer: Num = new Num(2, 0);
+  // Slightly compound late Yellow production to reduce the 30–50% star-particle plateau.
+  override buffer: Num = new Num(2.25, 0);
+  override baseBuffer: Num = new Num(2.25, 0);
 
   getDescription(): string {
     return "Multiply star particle gain by " + this.buffer.toString(2) + "x";

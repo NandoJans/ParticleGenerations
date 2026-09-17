@@ -8,9 +8,30 @@
       }
     </select>
   </div>
+  <label>Step (seconds) <input type="number" min="0.1" [(ngModel)]="speed"></label>
+  <label>Stop after idle (hours) <input type="number" min="1" [(ngModel)]="maxIdleHours"></label>
   <app-button [style]="'button green'" (click)="start()" [text]="'Start'"></app-button>
   <app-button [style]="'button'" (click)="saveSnapshot('Manual')" [text]="'Save snapshot'"></app-button>
+  <app-button [style]="'button blue'" (click)="exportCsv()" [text]="'Export CSV'"></app-button>
 </div>
+
+<section class="analysis" aria-label="Pacing analysis">
+  <h2>Pacing diagnosis</h2>
+  <div class="scorecards">
+    <span class="pace burst">{{ getAnalysis().counts.burst }} bursts (&lt; 1m)</span>
+    <span class="pace balanced">{{ getAnalysis().counts.balanced }} balanced (1m–6h)</span>
+    <span class="pace slow">{{ getAnalysis().counts.slow }} slow (6–24h)</span>
+    <span class="pace stalled">{{ getAnalysis().counts.stalled }} stalled (&gt; 24h)</span>
+  </div>
+  @if (getAnalysis().bottlenecks.length) {
+    <h3>Largest progression gaps</h3>
+    <ol>
+      @for (result of getAnalysis().bottlenecks; track result.element) {
+        <li><strong>{{ result.element }}</strong> — {{ formatTime(result.timeBetween) }}</li>
+      }
+    </ol>
+  }
+</section>
 
 <div class="layout" style="display:flex; gap:16px; align-items:flex-start; flex-wrap: wrap;">
   <div class="results-pane" style="flex:1; min-width: 320px;">
@@ -18,7 +39,8 @@
       <thead>
         <tr>
           <th>Name</th>
-          <th>Reach time</th>
+          <th>Gap</th>
+          <th>Diagnosis</th>
           <th>Total time</th>
           <th>Action</th>
         </tr>
@@ -26,7 +48,8 @@
       @for (result of getResults(); track result) {
         <tr>
           <td [class]="result.style+' name'">{{ result.element }}</td>
-          <td [style.color]="getColorCode(result.timeBetween)">{{ formatTime(result.timeBetween) }}</td>
+          <td>{{ formatTime(result.timeBetween) || 'Same tick' }}</td>
+          <td><span [class]="'pace ' + getPace(result.timeBetween)">{{ getPace(result.timeBetween) }}</span></td>
           <td>{{ formatTime(result.time) }}</td>
           <td>
             @if (result.snapshotId) {
