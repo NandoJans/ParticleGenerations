@@ -1,7 +1,6 @@
 import {Num} from "../../../num";
 import {Generatable} from "../interfaces/generatable";
 import {RedGenerator} from "./red-generator";
-import {GeneratorRecord} from "../../records/generators/generator-record";
 import {Requirement} from "../interfaces/requirement";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {RedGeneratorMultiplierUpgrade} from "../upgrades/red-generator-multiplier-upgrade";
@@ -26,7 +25,6 @@ export class SecondRedGenerator extends RedGenerator {
   }
 
   override init() {
-    this.generates = GeneratorRecord.firstRedGenerator;
     this.requirement = [
       new Requirement(UpgradeRecord.redGeneratorExtension, new Num(1, 0), this)
     ]

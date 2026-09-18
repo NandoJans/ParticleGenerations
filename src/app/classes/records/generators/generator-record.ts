@@ -106,6 +106,26 @@ export class GeneratorRecord extends Record {
     GeneratorRecord.fifthGreenGenerator
   ];
 
+  // Link production chains only after every generator has been constructed. Keeping
+  // these links here prevents generator subclasses from importing this record while
+  // its static fields are still being initialized.
+  static {
+    GeneratorRecord.secondRedGenerator.generates = GeneratorRecord.firstRedGenerator;
+    GeneratorRecord.thirdRedGenerator.generates = GeneratorRecord.secondRedGenerator;
+    GeneratorRecord.fourthRedGenerator.generates = GeneratorRecord.thirdRedGenerator;
+    GeneratorRecord.fifthRedGenerator.generates = GeneratorRecord.fourthRedGenerator;
+
+    GeneratorRecord.secondYellowGenerator.generates = GeneratorRecord.firstYellowGenerator;
+    GeneratorRecord.thirdYellowGenerator.generates = GeneratorRecord.secondYellowGenerator;
+    GeneratorRecord.fourthYellowGenerator.generates = GeneratorRecord.thirdYellowGenerator;
+    GeneratorRecord.fifthYellowGenerator.generates = GeneratorRecord.fourthYellowGenerator;
+
+    GeneratorRecord.secondGreenGenerator.generates = GeneratorRecord.firstGreenGenerator;
+    GeneratorRecord.thirdGreenGenerator.generates = GeneratorRecord.secondGreenGenerator;
+    GeneratorRecord.fourthGreenGenerator.generates = GeneratorRecord.thirdGreenGenerator;
+    GeneratorRecord.fifthGreenGenerator.generates = GeneratorRecord.fourthGreenGenerator;
+  }
+
   getList(): Generator[] {
     return GeneratorRecord.list;
   }

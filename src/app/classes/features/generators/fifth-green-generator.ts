@@ -1,7 +1,6 @@
 import {GreenGenerator} from './green-generator';
 import {Num} from '../../../num';
 import {Requirement} from '../interfaces/requirement';
-import {GeneratorRecord} from '../../records/generators/generator-record';
 import {UpgradeRecord} from '../../records/upgrades/upgrade-record';
 import {GreenGeneratorMultiplierUpgrade} from '../upgrades/green-generator-multiplier-upgrade';
 import {GreenGeneratorBuyMultiplierUpgrade} from '../upgrades/green-generator-buy-multiplier-upgrade';
@@ -47,7 +46,6 @@ export class FifthGreenGenerator extends GreenGenerator {
   );
 
   override init(): void {
-    this.generates = GeneratorRecord.fourthGreenGenerator;
     this.requirement = [
       new Requirement(UpgradeRecord.unlockFifthGreenGeneratorNuclear, Num.ONE, this),
     ];

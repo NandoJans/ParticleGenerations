@@ -3,7 +3,6 @@ import {Generatable} from "../interfaces/generatable";
 import {Num} from "../../../num";
 import {YellowGeneratorMultiplierUpgrade} from "../upgrades/yellow-generator-multiplier-upgrade";
 import {YellowGeneratorBuyMultiplierUpgrade} from "../upgrades/yellow-generator-buy-multiplier-upgrade";
-import {GeneratorRecord} from "../../records/generators/generator-record";
 
 export class SecondYellowGenerator extends YellowGenerator {
   constructor(saveName: string) {
@@ -37,6 +36,5 @@ export class SecondYellowGenerator extends YellowGenerator {
 
   override init() {
     super.init();
-    this.generates = GeneratorRecord.firstYellowGenerator;
   }
 }

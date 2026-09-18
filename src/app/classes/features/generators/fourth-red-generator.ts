@@ -1,6 +1,5 @@
 import {Num} from "../../../num";
 import {Generatable} from "../interfaces/generatable";
-import {GeneratorRecord} from "../../records/generators/generator-record";
 import {RedGenerator} from "./red-generator";
 import {Requirement} from "../interfaces/requirement";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
@@ -23,7 +22,6 @@ export class FourthRedGenerator extends RedGenerator {
   rank: number = 4;
 
   override init() {
-    this.generates = GeneratorRecord.thirdRedGenerator;
     this.requirement = [
       new Requirement(UpgradeRecord.redGeneratorExtension, new Num(3, 0), this)
     ]

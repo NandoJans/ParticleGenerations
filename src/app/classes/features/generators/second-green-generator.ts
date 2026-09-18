@@ -2,7 +2,6 @@ import {GreenGenerator} from "./green-generator";
 import {Num} from "../../../num";
 import {Requirement} from "../interfaces/requirement";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
-import {GeneratorRecord} from "../../records/generators/generator-record";
 import {GreenGeneratorMultiplierUpgrade} from "../upgrades/green-generator-multiplier-upgrade";
 import {GreenGeneratorBuyMultiplierUpgrade} from "../upgrades/green-generator-buy-multiplier-upgrade";
 import {GreenGeneratorCostDivisorUpgrade} from "../upgrades/green-generator-cost-divisor-upgrade";
@@ -49,7 +48,6 @@ export class SecondGreenGenerator extends GreenGenerator {
   )
 
   override init() {
-    this.generates = GeneratorRecord.firstGreenGenerator;
     this.requirement = [
       new Requirement(UpgradeRecord.unlockSecondGreenGeneratorGalaxyTree, new Num(1, 0), this)
     ];
