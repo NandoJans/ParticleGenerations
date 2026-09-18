@@ -9,13 +9,21 @@ import {
   faCogs, faCompactDisc, faExclamation, faFire,
   faForward, faFlask,
   faIndustry, faKey,
-  faMountain, faRadiation, faStar, faSun
+  faMountain, faRadiation, faStar, faSun, faMeteor
 } from "@fortawesome/free-solid-svg-icons";
 import {HoldingRecord} from "../classes/records/holdings/holding-record";
 import {Num} from "../num";
 import {UpgradeRecord} from "../classes/records/upgrades/upgrade-record";
 import {App} from "../App";
 import {environment} from "../../environments/environment";
+import {BluePhaseService} from './blue-phase.service';
+import {Require} from '../classes/features/interfaces/require';
+
+class ElementDiscoveryRequirement implements Require {
+  requirementSatisfied(amount: Num): boolean {
+    return BluePhaseService.elementsDiscoveredCount >= amount.toNumber();
+  }
+}
 
 @Injectable({
   providedIn: 'root'
@@ -80,6 +88,9 @@ export class NavigationsService {
     ], false),
     blueElements: new SubNavigation('blueElements', faMountain, 'elements', this.navigations['blue'], [
       {requirement: HoldingRecord.bluePrestiges, amount: Num.ONE},
+    ], false),
+    blueNeutronStar: new SubNavigation('blueNeutronStar', faMeteor, 'neutronStar', this.navigations['blue'], [
+      {requirement: new ElementDiscoveryRequirement(), amount: new Num(1, 1)},
     ], false),
 
     // Automators

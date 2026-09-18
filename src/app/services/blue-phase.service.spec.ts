@@ -10,15 +10,16 @@ import {Multiplier} from '../classes/features/multiplier';
 import {Automator} from '../classes/features/automator';
 import {PrestigeLayersService} from './prestige-layers.service';
 import {ChargerRecord} from '../classes/records/charger/charger-record';
-import {CarbonHolding, LithiumHolding} from '../classes/features/holdings/blue-holdings';
+import {BerylliumHolding, CarbonHolding, LithiumHolding} from '../classes/features/holdings/blue-holdings';
 import {MultiplierRecord} from '../classes/records/multipliers/multiplier-record';
-import {createBlueElement} from '../classes/features/elements/blue-element';
+import {createBlueElement, ElementCardEffects} from '../classes/features/elements/blue-element';
 
 describe('BluePhaseService', () => {
   let service: BluePhaseService;
 
   beforeEach(() => {
     service = new BluePhaseService();
+    ElementCardEffects.reset();
     service.unlocked = true;
     service.activeParticle = 'none';
 
@@ -110,6 +111,44 @@ describe('BluePhaseService', () => {
     expect(service.activeElementCardIds).toEqual(['coin-1', 'coin-2']);
   });
 
+  it('gives every unlocked element an equal quarter of the fusion roll', () => {
+    const rolls = [0, 0.249999, 0.25, 0.499999, 0.5, 0.749999, 0.75, 0.999999];
+    const generatedKinds: string[] = [];
+
+    rolls.forEach(roll => {
+      HoldingRecord.neutrons.amount = new Num(1, 4);
+      const randomValues = [roll, 0, 0];
+      const element = service.fuseElement(() => randomValues.shift() as number);
+      generatedKinds.push(element?.kind as string);
+    });
+
+    expect(generatedKinds).toEqual([
+      'helium', 'helium',
+      'lithium', 'lithium',
+      'beryllium', 'beryllium',
+      'boron', 'boron'
+    ]);
+  });
+
+  it('applies active Helium and Beryllium effects to their red upgrade calculations', () => {
+    const helium = createBlueElement('helium', 'helium-1', 10, 25);
+    const beryllium = createBlueElement('beryllium', 'beryllium-1', 10, 25);
+    service.elements = [helium, beryllium];
+
+    service.equipElementCard(helium);
+    service.equipElementCard(beryllium);
+
+    expect(ElementCardEffects.heliumPower.toNumber()).toBeCloseTo(helium.getEffect().toNumber(), 10);
+    expect(UpgradeRecord.redGeneratorExtension.getEffectiveBuffer().toNumber()).toBeCloseTo(
+      UpgradeRecord.redGeneratorExtension.buffer
+        .mul(MultiplierRecord.redGeneratorExtensionBuffer.getNum())
+        .mul(BerylliumHolding.rocketBoost)
+        .mul(beryllium.getEffect())
+        .toNumber(),
+      10
+    );
+  });
+
   it('charges a level-one Lithium red generator multiplier to 1e10 in one hour', () => {
     const lithium = createBlueElement('lithium', 'lithium-1', 1, 0);
     service.elements = [lithium];
@@ -131,6 +170,43 @@ describe('BluePhaseService', () => {
 
     service.tick(new Num(1.8, 3));
     expect(UpgradeRecord.redGeneratorExtension.effectString()).toContain('1 free from Boron');
+  });
+
+  it('turns sacrificed elements into neutron-star mass based on weight, level, and rarity', () => {
+    const boron = createBlueElement('boron', 'boron-sacrifice', 2, 50);
+    service.elementsDiscovered = 10;
+    service.elements = [boron];
+    service.equipElementCard(boron);
+
+    service.sacrificeElement(boron);
+
+    expect(service.neutronStarMass.toNumber()).toBeCloseTo(33, 8);
+    expect(service.elements).toEqual([]);
+    expect(service.activeElementCardIds).toEqual([]);
+    expect(ElementCardEffects.boronExtensionRate.toNumber()).toBe(0);
+  });
+
+  it('generates strange quarks from the square root of neutron-star mass', () => {
+    service.neutronStarMass = new Num(1, 2);
+
+    service.tick(new Num(1, 1));
+
+    expect(service.strangeQuarks.toNumber()).toBeCloseTo(10, 8);
+    expect(service.getStrangeQuarkGeneration().toNumber()).toBeCloseTo(1, 8);
+  });
+
+  it('spends strange quarks on blue boosts and capacity upgrades', () => {
+    const protonUpgrade = service.neutronStarUpgradeDefinitions.find(upgrade => upgrade.key === 'protons')!;
+    const activeSlotUpgrade = service.neutronStarUpgradeDefinitions.find(upgrade => upgrade.key === 'activeSlots')!;
+    service.strangeQuarks = new Num(1, 4);
+    service.activeParticle = 'protons';
+    const generationBefore = service.getParticleGeneration();
+
+    service.buyNeutronStarUpgrade(protonUpgrade);
+    service.buyNeutronStarUpgrade(activeSlotUpgrade);
+
+    expect(service.getParticleGeneration().div(generationBefore).toNumber()).toBeCloseTo(2, 8);
+    expect(service.getActiveElementSlots()).toBe(3);
   });
 
   it('resets accumulated Lithium and Boron card effects on a Blue reset', () => {
