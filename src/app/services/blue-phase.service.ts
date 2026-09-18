@@ -17,6 +17,16 @@ import {BerylliumElementUpgradeSet, BerylliumFuelUpgrade, BerylliumLogicUpgrade,
 import {BlueElement, createBlueElement, ElementCardEffects, ElementCardKind, restoreBlueElement, StoredBlueElement} from '../classes/features/elements/blue-element';
 
 export type BlueParticleMode = 'none' | 'protons' | 'electrons';
+export type NeutronStarUpgradeKey = 'protons' | 'electrons' | 'neutrons' | 'activeSlots' | 'inventorySlots' | 'elementLevel' | 'rarity';
+
+export interface NeutronStarUpgrade {
+  key: NeutronStarUpgradeKey;
+  name: string;
+  description: string;
+  baseCost: number;
+  costScale: number;
+  maxLevel?: number;
+}
 
 export interface BlueElementUpgradeSetDefinition {
   requiredStage: number;
@@ -32,6 +42,7 @@ export interface BlueElementUpgradeSetDefinition {
 export class BluePhaseService implements ElementUpgradeHost {
   static readonly elementInventorySlots = 12;
   static readonly activeElementSlots = 2;
+  static elementsDiscoveredCount = 0;
   static readonly unlockRequirement = new Num(1, 1000);
   static readonly neutronRestorationTarget = new Num(1, 10);
   static readonly minimumMeltdownPower = new Num(1, -1);
@@ -47,6 +58,22 @@ export class BluePhaseService implements ElementUpgradeHost {
   elements: BlueElement[] = [];
   activeElementCardIds: string[] = [];
   showClearActiveElementsWarning = true;
+  elementsDiscovered = 0;
+  neutronStarMass = Num.ZERO.copy();
+  strangeQuarks = Num.ZERO.copy();
+  neutronStarUpgrades: Record<NeutronStarUpgradeKey, number> = {
+    protons: 0, electrons: 0, neutrons: 0, activeSlots: 0,
+    inventorySlots: 0, elementLevel: 0, rarity: 0
+  };
+  readonly neutronStarUpgradeDefinitions: NeutronStarUpgrade[] = [
+    {key: 'protons', name: 'Proton Jet', description: 'Double proton generation per level.', baseCost: 10, costScale: 4},
+    {key: 'electrons', name: 'Electron Aurora', description: 'Double electron generation per level.', baseCost: 10, costScale: 4},
+    {key: 'neutrons', name: 'Neutron Compression', description: 'Double neutron gain per level.', baseCost: 25, costScale: 5},
+    {key: 'activeSlots', name: 'Orbital Harmonics', description: 'Add one active element slot.', baseCost: 250, costScale: 20, maxLevel: 4},
+    {key: 'inventorySlots', name: 'Gravitational Vault', description: 'Add four element inventory slots.', baseCost: 150, costScale: 10, maxLevel: 8},
+    {key: 'elementLevel', name: 'Fusion Pressure', description: 'Generate elements one level higher.', baseCost: 500, costScale: 8},
+    {key: 'rarity', name: 'Exotic Catalysis', description: 'Improve the probability of high-rarity elements.', baseCost: 750, costScale: 8}
+  ];
 
   lithiumBatteries = Num.ZERO.copy();
   lithiumChargeGenerators = Num.ZERO.copy();
@@ -272,6 +299,7 @@ export class BluePhaseService implements ElementUpgradeHost {
 
     this.applyElementCardEffects();
     this.chargeElementCardEffects(speed);
+    this.generateStrangeQuarks(speed);
     this.generateLithiumCharge(speed);
     this.generateElementCharges(speed);
     this.generateCarbonLife(speed);
@@ -333,11 +361,14 @@ export class BluePhaseService implements ElementUpgradeHost {
     generation = generation.mul(this.getRedParticleGenerationBoost());
     generation = generation.mul(MultiplierRecord.nucleusGeneration.getNum(false));
     // if (MilestoneRecord.denseParticleCollision.unlocked) generation = new Num(5, 0);
-    return generation.mul(
+    generation = generation.mul(
       UpgradeRecord.blueBeamIntensity.buffer.pow(UpgradeRecord.blueBeamIntensity.amount)
     ).mul(
       UpgradeRecord.blueParticleResonance.buffer.pow(UpgradeRecord.blueParticleResonance.amount)
     );
+    if (this.activeParticle === 'protons') generation = generation.mul(Num.TWO.pow(this.neutronStarUpgrades.protons));
+    if (this.activeParticle === 'electrons') generation = generation.mul(Num.TWO.pow(this.neutronStarUpgrades.electrons));
+    return generation;
   }
 
   getRedParticleGenerationBoost(): Num {
@@ -359,6 +390,7 @@ export class BluePhaseService implements ElementUpgradeHost {
       .max(Num.ZERO)
       .floor()
       .mul(multiplier)
+      .mul(Num.TWO.pow(this.neutronStarUpgrades.neutrons))
       .floor();
   }
 
@@ -389,7 +421,7 @@ export class BluePhaseService implements ElementUpgradeHost {
 
   canFuseElement(): boolean {
     return HoldingRecord.neutrons.amount.greq(new Num(1, 1))
-      && this.elements.length < BluePhaseService.elementInventorySlots;
+      && this.elements.length < this.getElementInventorySlots();
   }
 
   getUnlockedCardKinds(): ElementCardKind[] {
@@ -401,18 +433,18 @@ export class BluePhaseService implements ElementUpgradeHost {
     if (!this.canFuseElement()) return null;
     const neutronCount = Math.max(10, HoldingRecord.neutrons.amount.toNumber());
     const kinds = this.getUnlockedCardKinds();
-    const weights = kinds.map((_, index) => Math.pow(10, kinds.length - index - 1));
-    let roll = random() * weights.reduce((sum, weight) => sum + weight, 0);
-    let kind = kinds[0];
-    for (let index = 0; index < kinds.length; index++) {
-      roll -= weights[index];
-      if (roll <= 0) { kind = kinds[index]; break; }
-    }
+    // Every element in the currently unlocked pool has the same chance to be
+    // generated. Clamp the injected random value as well so deterministic
+    // callers cannot select past the end of the pool with a value of exactly 1.
+    const kindIndex = Math.min(kinds.length - 1, Math.floor(Math.max(0, random()) * kinds.length));
+    const kind = kinds[kindIndex];
 
-    const stage = Math.floor(Math.log10(neutronCount));
-    const rarityCeiling = Math.min(99.99, stage * 10);
-    const rarity = Math.min(rarityCeiling, Math.pow(random(), 2.5) * rarityCeiling);
-    const element = createBlueElement(kind, `${Date.now()}-${Math.floor(random() * 1e9)}`, stage, rarity);
+    const neutronStage = Math.floor(Math.log10(neutronCount));
+    const elementLevel = neutronStage + this.neutronStarUpgrades.elementLevel;
+    const rarityCeiling = Math.min(99.99, neutronStage * 10);
+    const rarityExponent = 2.5 / (1 + this.neutronStarUpgrades.rarity * .2);
+    const rarity = Math.min(rarityCeiling, Math.pow(random(), rarityExponent) * rarityCeiling);
+    const element = createBlueElement(kind, `${Date.now()}-${Math.floor(random() * 1e9)}`, elementLevel, rarity);
 
     ResetHelper.reset(ResetKey.BLUE);
     HoldingRecord.protons.amount = Num.ZERO.copy();
@@ -420,6 +452,8 @@ export class BluePhaseService implements ElementUpgradeHost {
     HoldingRecord.neutrons.amount = Num.ZERO.copy();
     HoldingRecord.neutronClump.amount = Num.ZERO.copy();
     this.elements.push(element);
+    this.elementsDiscovered++;
+    BluePhaseService.elementsDiscoveredCount = this.elementsDiscovered;
     this.startParticleGeneration();
     this.synchronizePurchases();
     this.applyElementCardEffects();
@@ -428,7 +462,7 @@ export class BluePhaseService implements ElementUpgradeHost {
   }
 
   equipElementCard(element: BlueElement): void {
-    if (this.isElementCardActive(element) || this.activeElementCardIds.length >= BluePhaseService.activeElementSlots) return;
+    if (this.isElementCardActive(element) || this.activeElementCardIds.length >= this.getActiveElementSlots()) return;
     this.activeElementCardIds.push(element.id);
     this.applyElementCardEffects();
     this.save();
@@ -491,6 +525,52 @@ export class BluePhaseService implements ElementUpgradeHost {
 
   getBoronCardProgressPercent(): number {
     return this.boronCardExtensionProgress.sub(this.boronCardExtensionProgress.floor()).toNumber() * 100;
+  }
+
+  getActiveElementSlots(): number { return BluePhaseService.activeElementSlots + this.neutronStarUpgrades.activeSlots; }
+  getElementInventorySlots(): number { return BluePhaseService.elementInventorySlots + this.neutronStarUpgrades.inventorySlots * 4; }
+  isNeutronStarUnlocked(): boolean { return this.elementsDiscovered >= 10; }
+
+  getElementMass(element: BlueElement): Num {
+    const atomicWeight: Record<ElementCardKind, number> = {helium: 4, lithium: 7, beryllium: 9, boron: 11};
+    return new Num(atomicWeight[element.kind] * Math.max(1, element.level) * (1 + element.rarity / 100), 0);
+  }
+
+  sacrificeElement(element: BlueElement): void {
+    if (!this.isNeutronStarUnlocked() || !this.elements.includes(element)) return;
+    this.neutronStarMass = this.neutronStarMass.add(this.getElementMass(element));
+    this.elements = this.elements.filter(candidate => candidate.id !== element.id);
+    this.activeElementCardIds = this.activeElementCardIds.filter(id => id !== element.id);
+    this.applyElementCardEffects();
+    this.save();
+  }
+
+  getStrangeQuarkGeneration(): Num {
+    if (this.neutronStarMass.lte(Num.ZERO)) return Num.ZERO.copy();
+    return this.neutronStarMass.sqrt().div(new Num(1, 1));
+  }
+
+  private generateStrangeQuarks(speed: Num): void {
+    this.strangeQuarks = this.strangeQuarks.add(this.getStrangeQuarkGeneration().mul(speed));
+  }
+
+  getNeutronStarUpgradeCost(upgrade: NeutronStarUpgrade): Num {
+    return new Num(upgrade.baseCost, 0).mul(new Num(upgrade.costScale, 0).pow(this.neutronStarUpgrades[upgrade.key]));
+  }
+
+  isNeutronStarUpgradeMaxed(upgrade: NeutronStarUpgrade): boolean {
+    return upgrade.maxLevel !== undefined && this.neutronStarUpgrades[upgrade.key] >= upgrade.maxLevel;
+  }
+
+  canBuyNeutronStarUpgrade(upgrade: NeutronStarUpgrade): boolean {
+    return !this.isNeutronStarUpgradeMaxed(upgrade) && this.strangeQuarks.greq(this.getNeutronStarUpgradeCost(upgrade));
+  }
+
+  buyNeutronStarUpgrade(upgrade: NeutronStarUpgrade): void {
+    if (!this.canBuyNeutronStarUpgrade(upgrade)) return;
+    this.strangeQuarks = this.strangeQuarks.sub(this.getNeutronStarUpgradeCost(upgrade));
+    this.neutronStarUpgrades[upgrade.key]++;
+    this.save();
   }
 
   getActiveElementDefinitions(): BlueElementUpgradeSetDefinition[] {
@@ -826,6 +906,10 @@ export class BluePhaseService implements ElementUpgradeHost {
     this.storage.save(this.elements.map(element => element.toStorage()), 'elements');
     this.storage.save(this.activeElementCardIds, 'activeElementCardIds');
     this.storage.save(this.showClearActiveElementsWarning, 'showClearActiveElementsWarning');
+    this.storage.save(this.elementsDiscovered, 'elementsDiscovered');
+    this.storage.saveNum(this.neutronStarMass, 'neutronStarMass');
+    this.storage.saveNum(this.strangeQuarks, 'strangeQuarks');
+    this.storage.save(this.neutronStarUpgrades, 'neutronStarUpgrades');
     this.storage.saveNum(this.lithiumBatteries, 'lithiumBatteries');
     this.storage.saveNum(this.lithiumChargeGenerators, 'lithiumChargeGenerators');
     this.storage.saveNum(this.lithiumCapacityUpgrades, 'lithiumCapacityUpgrades');
@@ -861,9 +945,17 @@ export class BluePhaseService implements ElementUpgradeHost {
       'elements'
     ) as StoredBlueElement[];
     this.elements = storedElements.map(restoreBlueElement);
+    this.elementsDiscovered = this.storage.load(this.elements.length, 'elementsDiscovered');
+    BluePhaseService.elementsDiscoveredCount = this.elementsDiscovered;
+    this.neutronStarMass = this.storage.loadNum(this.neutronStarMass, 'neutronStarMass');
+    this.strangeQuarks = this.storage.loadNum(this.strangeQuarks, 'strangeQuarks');
+    this.neutronStarUpgrades = {
+      ...this.neutronStarUpgrades,
+      ...this.storage.load({}, 'neutronStarUpgrades')
+    };
     this.activeElementCardIds = this.storage.load([] as string[], 'activeElementCardIds')
       .filter((id: string) => this.elements.some(element => element.id === id))
-      .slice(0, BluePhaseService.activeElementSlots);
+      .slice(0, this.getActiveElementSlots());
     this.showClearActiveElementsWarning = this.storage.load(true, 'showClearActiveElementsWarning');
     this.lithiumBatteries = this.storage.loadNum(this.lithiumBatteries, 'lithiumBatteries');
     this.lithiumChargeGenerators = this.storage.loadNum(this.lithiumChargeGenerators, 'lithiumChargeGenerators');

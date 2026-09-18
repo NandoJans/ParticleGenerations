@@ -12,8 +12,8 @@ import {BluePhaseService} from '../../../services/blue-phase.service';
 })
 export class BlueElementsComponent {
   neutrons: Holding = HoldingRecord.neutrons;
-  readonly activeSlotCount = BluePhaseService.activeElementSlots;
-  readonly inventorySlotCount = BluePhaseService.elementInventorySlots;
+  get activeSlotCount(): number { return this.bluePhase.getActiveElementSlots(); }
+  get inventorySlotCount(): number { return this.bluePhase.getElementInventorySlots(); }
   selectedElement?: BlueElement;
   showClearWarning = false;
   disableClearWarning = false;

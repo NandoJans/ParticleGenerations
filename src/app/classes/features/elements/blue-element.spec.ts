@@ -1,4 +1,11 @@
-import {ElementCardEffects, LithiumElement, restoreBlueElement} from './blue-element';
+import {
+  BerylliumElement,
+  BoronElement,
+  ElementCardEffects,
+  HeliumElement,
+  LithiumElement,
+  restoreBlueElement
+} from './blue-element';
 
 describe('ElementCardEffects', () => {
   it('resets every element effect to its neutral value', () => {
@@ -28,5 +35,37 @@ describe('ElementCardEffects', () => {
 
     expect(element).toEqual(jasmine.any(LithiumElement));
     expect(element.toStorage()).toEqual({id: 'saved-lithium', kind: 'lithium', level: 3, rarity: 25});
+  });
+
+  it('applies the Helium multiplier-upgrade power', () => {
+    const element = new HeliumElement('helium-1', 10, 25);
+
+    element.applyEffect();
+
+    expect(ElementCardEffects.heliumPower.toNumber()).toBeCloseTo(element.getEffect().toNumber(), 10);
+  });
+
+  it('applies the Lithium charge rate', () => {
+    const element = new LithiumElement('lithium-1', 3, 25);
+
+    element.applyEffect();
+
+    expect(ElementCardEffects.lithiumChargeRate.toNumber()).toBeCloseTo(element.getEffect().toNumber(), 10);
+  });
+
+  it('applies the Beryllium extension-strength multiplier', () => {
+    const element = new BerylliumElement('beryllium-1', 10, 25);
+
+    element.applyEffect();
+
+    expect(ElementCardEffects.berylliumExtensionStrength.toNumber()).toBeCloseTo(element.getEffect().toNumber(), 10);
+  });
+
+  it('applies the Boron free-extension generation rate', () => {
+    const element = new BoronElement('boron-1', 3, 25);
+
+    element.applyEffect();
+
+    expect(ElementCardEffects.boronExtensionRate.toNumber()).toBeCloseTo(element.getEffect().toNumber(), 10);
   });
 });

@@ -23,6 +23,7 @@ import {GreenNuclearComponent} from "./pages/green/green-nuclear/green-nuclear.c
 import {BlueParticlesComponent} from "./pages/blue/blue-particles/blue-particles.component";
 import {BlueTimelineComponent} from "./pages/timeline/blue-timeline/blue-timeline.component";
 import {BlueElementsComponent} from "./pages/blue/blue-elements/blue-elements.component";
+import {BlueNeutronStarComponent} from './pages/blue/blue-neutron-star/blue-neutron-star.component';
 
 const routes: Routes = [
   { path: '', component: RedComponent },
@@ -43,6 +44,7 @@ const routes: Routes = [
   // Blue
   { path: 'blue/particles', component: BlueParticlesComponent },
   { path: 'blue/elements', component: BlueElementsComponent },
+  { path: 'blue/neutronStar', component: BlueNeutronStarComponent },
   // Automators
   { path: 'automators/red' , component: RedAutomatorsComponent },
   { path: 'automators/yellow' , component: YellowAutomatorsComponent },
