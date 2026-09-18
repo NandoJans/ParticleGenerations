@@ -1,4 +1,4 @@
-import {Timeline} from "./timeline";
+import type {Timeline} from "./timeline";
 import {Holding} from "../holding";
 import {Num} from "../../../num";
 import {Storable} from "../interfaces/storable";

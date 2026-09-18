@@ -1,4 +1,4 @@
-import {TimelineEvent} from "./timeline-event";
+import type {TimelineEvent} from "./timeline-event";
 import {Styles} from "../../enums/styles";
 import {DropDownMessageService} from "../../../services/visuals/drop-down-message.service";
 import {Resetable} from "../interfaces/resetable";
