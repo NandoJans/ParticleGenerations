@@ -14,20 +14,27 @@ export class RedGeneratorAutomator extends Automator {
   name: string;
   goal: Num = new Num(2, 1);
   goalString: string;
-  generator: RedGenerator;
+  private readonly getGenerator: () => RedGenerator;
   style: Styles = Styles.RED_AUTOMATOR;
   resetId: ResetKey;
 
-  constructor(saveName: string, generator: RedGenerator) {
+  constructor(saveName: string, getGenerator: () => RedGenerator, rank: number, stringRank: string) {
     super(saveName);
-    this.displayName = generator.stringRank + ' Red Generator Automator';
-    this.name = 'red-generator-automator-' + generator.rank;
-    this.goalString = 'Buy ' + this.goal.toString() + ' ' + generator.stringRank + ' Red Generators';
-    this.requirement = [
-      new Requirement(generator, new Num(1, 0), this)
-    ]
+    this.displayName = stringRank + ' Red Generator Automator';
+    this.name = 'red-generator-automator-' + rank;
+    this.goalString = 'Buy ' + this.goal.toString() + ' ' + stringRank + ' Red Generators';
     this.resetId = ResetHelper.registerReset(ResetKey.RED, this);
-    this.generator = generator
+    this.getGenerator = getGenerator;
+  }
+
+  get generator(): RedGenerator {
+    return this.getGenerator();
+  }
+
+  override init(): void {
+    this.requirement = [
+      new Requirement(this.generator, new Num(1, 0), this)
+    ];
   }
 
   buyables(): Buyable[] {

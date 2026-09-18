@@ -30,6 +30,28 @@ const invalidExtensions = extensions.filter(({parentName, index}) => {
   return parentIndex !== undefined && parentIndex > index;
 });
 
+// AutomatorRecord constructs generator automators during module initialization.
+// If a dependency cycle makes the generated GeneratorRecord variable run later,
+// the bundle loads successfully but crashes while reading firstRedGenerator from
+// an undefined variable. Guard that initialization edge as well as class extends.
+const firstGeneratorDependency = bundle.match(
+  /"firstRedGenerator",([A-Za-z_$][\w$]*)\.firstRedGenerator/
+);
+
+if (firstGeneratorDependency) {
+  const generatorRecordName = firstGeneratorDependency[1];
+  const generatorRecordDeclaration = declarations.get(generatorRecordName);
+
+  if (
+    generatorRecordDeclaration === undefined ||
+    generatorRecordDeclaration > firstGeneratorDependency.index
+  ) {
+    throw new Error(
+      'Bundle initializes generator automators before GeneratorRecord; check for a circular dependency through AutomatorRecord.'
+    );
+  }
+}
+
 if (invalidExtensions.length > 0) {
   const details = invalidExtensions
     .map(({className, parentName}) => `${className} extends ${parentName}`)
