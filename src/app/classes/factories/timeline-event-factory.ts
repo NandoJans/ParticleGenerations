@@ -1,5 +1,5 @@
 import {Timeline} from "../features/timeline/timeline";
-import {TimelineFactory} from "./timeline-factory";
+import type {TimelineFactory} from "./timeline-factory";
 import {TimelineEvent} from "../features/timeline/timeline-event";
 import { Holding } from "../features/holding";
 import {Num} from "../../num";
