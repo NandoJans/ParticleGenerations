@@ -1,7 +1,7 @@
 import {RedGeneratorAutomator} from "../../features/automators/red-generator-automator";
 import {Record} from "../record";
 import {Automator} from "../../features/automator";
-import {GeneratorRecord} from "../generators/generator-record";
+import type {GeneratorRecord} from "../generators/generator-record";
 import {Injectable} from '@angular/core';
 import {RedGeneratorBoosterAutomator} from "../../features/automators/red-generator-booster-automator";
 import {MultiplyRedAccelerationGenerationAutomator} from "../../features/automators/multiply-red-acceleration-generation-automator";
@@ -37,11 +37,11 @@ import {DarkStarChargerAutomator} from "../../features/automators/dark-star-char
 })
 export class AutomatorRecord extends Record {
   // Red Phase
-  static firstRedGenerator = new RedGeneratorAutomator('firstRedGenerator', () => GeneratorRecord.firstRedGenerator, 1, 'First');
-  static secondRedGenerator = new RedGeneratorAutomator('secondRedGenerator', () => GeneratorRecord.secondRedGenerator, 2, 'Second');
-  static thirdRedGenerator = new RedGeneratorAutomator('thirdRedGenerator', () => GeneratorRecord.thirdRedGenerator, 3, 'Third');
-  static fourthRedGenerator = new RedGeneratorAutomator('fourthRedGenerator', () => GeneratorRecord.fourthRedGenerator, 4, 'Fourth');
-  static fifthRedGenerator = new RedGeneratorAutomator('fifthRedGenerator', () => GeneratorRecord.fifthRedGenerator, 5, 'Fifth');
+  static firstRedGenerator = new RedGeneratorAutomator('firstRedGenerator', 1, 'First');
+  static secondRedGenerator = new RedGeneratorAutomator('secondRedGenerator', 2, 'Second');
+  static thirdRedGenerator = new RedGeneratorAutomator('thirdRedGenerator', 3, 'Third');
+  static fourthRedGenerator = new RedGeneratorAutomator('fourthRedGenerator', 4, 'Fourth');
+  static fifthRedGenerator = new RedGeneratorAutomator('fifthRedGenerator', 5, 'Fifth');
 
   static redGeneratorExtension: RedGeneratorExtensionAutomator = new RedGeneratorExtensionAutomator('redGeneratorExtension');
   static redGeneratorBooster: RedGeneratorBoosterAutomator = new RedGeneratorBoosterAutomator('redGeneratorBooster');
@@ -60,11 +60,11 @@ export class AutomatorRecord extends Record {
   static multiplyYellowKeysYellow: MultiplyYellowKeysYellowAutomator = new MultiplyYellowKeysYellowAutomator('multiplyYellowKeysYellow');
   static yellowEnhancementAutomator: YellowEnhancementAutomator = new YellowEnhancementAutomator('yellowEnhancementAutomator');
 
-  static firstYellowGenerator = new YellowGeneratorAutomator('firstYellowGenerator', () => GeneratorRecord.firstYellowGenerator, 1, '1');
-  static secondYellowGenerator = new YellowGeneratorAutomator('secondYellowGenerator', () => GeneratorRecord.secondYellowGenerator, 2, '2');
-  static thirdYellowGenerator = new YellowGeneratorAutomator('thirdYellowGenerator', () => GeneratorRecord.thirdYellowGenerator, 3, '3');
-  static fourthYellowGenerator = new YellowGeneratorAutomator('fourthYellowGenerator', () => GeneratorRecord.fourthYellowGenerator, 4, '4');
-  static fifthYellowGenerator = new YellowGeneratorAutomator('fifthYellowGenerator', () => GeneratorRecord.fifthYellowGenerator, 5, '5');
+  static firstYellowGenerator = new YellowGeneratorAutomator('firstYellowGenerator', 1, '1');
+  static secondYellowGenerator = new YellowGeneratorAutomator('secondYellowGenerator', 2, '2');
+  static thirdYellowGenerator = new YellowGeneratorAutomator('thirdYellowGenerator', 3, '3');
+  static fourthYellowGenerator = new YellowGeneratorAutomator('fourthYellowGenerator', 4, '4');
+  static fifthYellowGenerator = new YellowGeneratorAutomator('fifthYellowGenerator', 5, '5');
 
   static increaseYellowPowerUpgrade: IncreaseYellowPowerUpgradeAutomator = new IncreaseYellowPowerUpgradeAutomator('increaseYellowPowerUpgrade');
 
@@ -170,6 +170,28 @@ export class AutomatorRecord extends Record {
 
   getList(): Automator[] {
     return AutomatorRecord.list;
+  }
+
+  bindGenerators(generatorRecord: GeneratorRecord): void {
+    const byRank = <T extends {rank: number}>(items: T[], rank: number): T => {
+      const generator = items.find(item => item.rank === rank);
+      if (!generator) throw new Error(`Missing rank ${rank} generator`);
+      return generator;
+    };
+
+    const redGenerators = generatorRecord.getRedGenerators();
+    const yellowGenerators = generatorRecord.getYellowGenerators();
+
+    AutomatorRecord.firstRedGenerator.bindGenerator(byRank(redGenerators, 1));
+    AutomatorRecord.secondRedGenerator.bindGenerator(byRank(redGenerators, 2));
+    AutomatorRecord.thirdRedGenerator.bindGenerator(byRank(redGenerators, 3));
+    AutomatorRecord.fourthRedGenerator.bindGenerator(byRank(redGenerators, 4));
+    AutomatorRecord.fifthRedGenerator.bindGenerator(byRank(redGenerators, 5));
+    AutomatorRecord.firstYellowGenerator.bindGenerator(byRank(yellowGenerators, 1));
+    AutomatorRecord.secondYellowGenerator.bindGenerator(byRank(yellowGenerators, 2));
+    AutomatorRecord.thirdYellowGenerator.bindGenerator(byRank(yellowGenerators, 3));
+    AutomatorRecord.fourthYellowGenerator.bindGenerator(byRank(yellowGenerators, 4));
+    AutomatorRecord.fifthYellowGenerator.bindGenerator(byRank(yellowGenerators, 5));
   }
 
   runAutomators(): Automator[] {

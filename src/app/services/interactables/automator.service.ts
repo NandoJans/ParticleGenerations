@@ -3,6 +3,7 @@ import {AutomatorRecord} from "../../classes/records/automators/automator-record
 import {DropDownMessageService} from "../visuals/drop-down-message.service";
 import {Automator} from "../../classes/features/automator";
 import {Generator} from "../../classes/features/generator";
+import {GeneratorRecord} from "../../classes/records/generators/generator-record";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ import {Generator} from "../../classes/features/generator";
 export class AutomatorService {
   constructor(
     private automatorRecord: AutomatorRecord,
+    private generatorRecord: GeneratorRecord,
     private dropDownMessageService: DropDownMessageService,
   ) {}
 
@@ -42,6 +44,7 @@ export class AutomatorService {
   }
 
   init() {
+    this.automatorRecord.bindGenerators(this.generatorRecord);
     this.automatorRecord.getList().forEach(automator => {
       automator.init();
     });
