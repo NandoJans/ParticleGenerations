@@ -44,6 +44,7 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
       GeneratorRecord.fifthRedGenerator,
     ];
     generators.forEach((generator, index) => {
+      generator.mulMod = generator.mulMod.mul(ElementCardEffects.lithiumChargeMultiplier);
       const compare = new Num(index, 0);
       const effectiveAmount = this.amount.add(ElementCardEffects.boronFreeExtensions);
       if (effectiveAmount.greq(compare)) {

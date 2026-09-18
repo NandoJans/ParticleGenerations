@@ -11,15 +11,19 @@ export interface StoredBlueElement {
 
 export class ElementCardEffects {
   static heliumPower = Num.ONE.copy();
-  static lithiumBuyMultiplier = Num.ONE.copy();
+  static lithiumChargeRate = Num.ZERO.copy();
+  static lithiumChargeMultiplier = Num.ONE.copy();
   static berylliumExtensionStrength = Num.ONE.copy();
   static boronFreeExtensions = Num.ZERO.copy();
+  static boronExtensionRate = Num.ZERO.copy();
 
   static reset(): void {
     this.heliumPower = Num.ONE.copy();
-    this.lithiumBuyMultiplier = Num.ONE.copy();
+    this.lithiumChargeRate = Num.ZERO.copy();
+    this.lithiumChargeMultiplier = Num.ONE.copy();
     this.berylliumExtensionStrength = Num.ONE.copy();
     this.boronFreeExtensions = Num.ZERO.copy();
+    this.boronExtensionRate = Num.ZERO.copy();
   }
 }
 
@@ -56,9 +60,9 @@ export class HeliumElement extends BlueElement {
 
 export class LithiumElement extends BlueElement {
   readonly kind = 'lithium'; readonly name = 'Lithium'; readonly symbol = 'Li'; readonly primaryColor = '#d8b4fe';
-  getEffect(): Num { return new Num(1 + Math.log10(this.level + 1) * this.quality, 0); }
-  getEffectDescription(): string { return `Multiplies red generator buy multipliers by ${this.getEffect().toString(3)}x`; }
-  applyEffect(): void { ElementCardEffects.lithiumBuyMultiplier = ElementCardEffects.lithiumBuyMultiplier.mul(this.getEffect()); }
+  getEffect(): Num { return new Num(Math.max(1, this.level) * this.quality, 0); }
+  getEffectDescription(): string { return `Charges a growing red generator multiplier at ${this.getEffect().toString(3)}x speed (level 1 reaches 1e10x in one hour)`; }
+  applyEffect(): void { ElementCardEffects.lithiumChargeRate = ElementCardEffects.lithiumChargeRate.add(this.getEffect()); }
 }
 
 export class BerylliumElement extends BlueElement {
@@ -70,9 +74,9 @@ export class BerylliumElement extends BlueElement {
 
 export class BoronElement extends BlueElement {
   readonly kind = 'boron'; readonly name = 'Boron'; readonly symbol = 'B'; readonly primaryColor = '#fca5a5';
-  getEffect(): Num { return new Num(Math.max(1, Math.floor(Math.log10(this.level + 1) * (1 + this.rarity / 20))), 0); }
-  getEffectDescription(): string { return `Provides +${this.getEffect().toString(3)} free red extensions until the next Blue reset`; }
-  applyEffect(): void { ElementCardEffects.boronFreeExtensions = ElementCardEffects.boronFreeExtensions.add(this.getEffect()); }
+  getEffect(): Num { return new Num(Math.max(1, this.level) * this.quality, 0); }
+  getEffectDescription(): string { return `Slowly generates free red extensions at ${this.getEffect().toString(3)}x speed until the next Blue reset`; }
+  applyEffect(): void { ElementCardEffects.boronExtensionRate = ElementCardEffects.boronExtensionRate.add(this.getEffect()); }
 }
 
 export function createBlueElement(kind: ElementCardKind, id: string, level: number, rarity: number): BlueElement {

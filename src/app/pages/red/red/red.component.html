@@ -21,6 +21,16 @@
     <span>RED PARTICLES</span>
   </div>
 
+  <section class="element-effects" *ngIf="elementEffects.heliumPower.gt(one) || elementEffects.lithiumChargeRate.gt(zero) || elementEffects.berylliumExtensionStrength.gt(one) || elementEffects.boronExtensionRate.gt(zero)" aria-label="Active blue element modifiers">
+    <p class="eyebrow">BLUE ELEMENT MODIFIERS // ACTIVE HERE</p>
+    <div class="effect-grid">
+      <div *ngIf="elementEffects.heliumPower.gt(one)"><span>He</span><strong>^{{ elementEffects.heliumPower.toString(3) }}</strong><small>Multiplier upgrades</small></div>
+      <div *ngIf="elementEffects.lithiumChargeRate.gt(zero)"><span>Li</span><strong>{{ elementEffects.lithiumChargeMultiplier.toString(3) }}x</strong><small>All red generators · charging</small></div>
+      <div *ngIf="elementEffects.berylliumExtensionStrength.gt(one)"><span>Be</span><strong>{{ elementEffects.berylliumExtensionStrength.toString(3) }}x</strong><small>Red extension strength</small></div>
+      <div *ngIf="elementEffects.boronExtensionRate.gt(zero)"><span>B</span><strong>+{{ elementEffects.boronFreeExtensions.toString(0) }}</strong><small>Free extensions · {{ bluePhase.getBoronCardProgressPercent() | number:'1.0-1' }}% to next</small></div>
+    </div>
+  </section>
+
   <section class="generator-bay">
     <div class="section-heading">
       <div>

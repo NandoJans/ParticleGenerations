@@ -3,6 +3,9 @@ import {GeneratorRecord} from "../../../classes/records/generators/generator-rec
 import {Upgrade} from "../../../classes/features/upgrade";
 import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
 import {RedGenerator} from "../../../classes/features/generators/red-generator";
+import {BluePhaseService} from '../../../services/blue-phase.service';
+import {ElementCardEffects} from '../../../classes/features/elements/blue-element';
+import {Num} from '../../../num';
 
 @Component({
     selector: 'app-red',
@@ -11,6 +14,9 @@ import {RedGenerator} from "../../../classes/features/generators/red-generator";
     standalone: false
 })
 export class RedComponent {
+  readonly elementEffects = ElementCardEffects;
+  readonly zero = Num.ZERO;
+  readonly one = Num.ONE;
   generators: RedGenerator[] = [
     GeneratorRecord.firstRedGenerator,
     GeneratorRecord.secondRedGenerator,
@@ -28,7 +34,7 @@ export class RedComponent {
     'Red Extensions unlock additional generator slots. You can have up to 5 different red generators active at once. Extensions become more valuable as you progress and unlock new boosts.',
     'Focus on balancing your generator purchases - higher tiers are more expensive but generate multiple lower-tier generators. This exponential growth is key to progression!'
   ]
-  constructor() {
+  constructor(public bluePhase: BluePhaseService) {
 
   }
 }

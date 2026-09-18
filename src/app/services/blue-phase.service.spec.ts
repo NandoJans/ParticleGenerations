@@ -110,6 +110,39 @@ describe('BluePhaseService', () => {
     expect(service.activeElementCardIds).toEqual(['coin-1', 'coin-2']);
   });
 
+  it('charges a level-one Lithium red generator multiplier to 1e10 in one hour', () => {
+    const lithium = createBlueElement('lithium', 'lithium-1', 1, 0);
+    service.elements = [lithium];
+    service.equipElementCard(lithium);
+
+    service.tick(new Num(3.6, 3));
+
+    expect(service.getLithiumCardMultiplier().log10().toNumber()).toBeCloseTo(10, 8);
+  });
+
+  it('slowly generates whole free red extensions with Boron', () => {
+    const boron = createBlueElement('boron', 'boron-1', 1, 0);
+    service.elements = [boron];
+    service.equipElementCard(boron);
+
+    service.tick(new Num(1.8, 3));
+    expect(service.getBoronCardProgressPercent()).toBeCloseTo(50, 8);
+    expect(UpgradeRecord.redGeneratorExtension.effectString()).not.toContain('free from Boron');
+
+    service.tick(new Num(1.8, 3));
+    expect(UpgradeRecord.redGeneratorExtension.effectString()).toContain('1 free from Boron');
+  });
+
+  it('resets accumulated Lithium and Boron card effects on a Blue reset', () => {
+    service.lithiumCardChargeSeconds = new Num(3.6, 3);
+    service.boronCardExtensionProgress = new Num(2.5, 0);
+
+    ResetHelper.reset(ResetKey.BLUE);
+
+    expect(service.lithiumCardChargeSeconds.toNumber()).toBe(0);
+    expect(service.boronCardExtensionProgress.toNumber()).toBe(0);
+  });
+
   afterEach(() => {
     Automator.keepOnReset = false;
     PrestigeLayersService.yellowPrestigeLayer.passivePrestige = false;
