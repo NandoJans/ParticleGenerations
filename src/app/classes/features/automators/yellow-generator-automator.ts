@@ -13,21 +13,20 @@ export class YellowGeneratorAutomator extends Automator {
   name: string;
   goal: Num = new Num(2, 1);
   goalString: string;
-  private readonly getGenerator: () => YellowGenerator;
+  generator!: YellowGenerator;
   style: Styles = Styles.YELLOW;
   resetId: ResetKey;
 
-  constructor(saveName: string, getGenerator: () => YellowGenerator, rank: number, stringRank: string) {
+  constructor(saveName: string, rank: number, stringRank: string) {
     super(saveName);
     this.displayName = stringRank + ' Yellow Generator Automator';
     this.name = 'yellow-generator-automator-' + rank;
     this.goalString = 'Buy ' + this.goal.toString() + ' ' + stringRank + ' Yellow Generators';
     this.resetId = ResetHelper.registerReset(ResetKey.YELLOW, this);
-    this.getGenerator = getGenerator;
   }
 
-  get generator(): YellowGenerator {
-    return this.getGenerator();
+  bindGenerator(generator: YellowGenerator): void {
+    this.generator = generator;
   }
 
   override init(): void {

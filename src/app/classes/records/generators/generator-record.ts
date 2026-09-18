@@ -110,6 +110,14 @@ export class GeneratorRecord extends Record {
     return GeneratorRecord.list;
   }
 
+  getRedGenerators(): RedGenerator[] {
+    return GeneratorRecord.redGenerators;
+  }
+
+  getYellowGenerators(): YellowGenerator[] {
+    return GeneratorRecord.yellowGenerators;
+  }
+
   load() {
     this.getList().forEach((generator) => {
       generator.tryLoad();
