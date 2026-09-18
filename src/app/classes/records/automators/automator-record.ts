@@ -37,11 +37,11 @@ import {DarkStarChargerAutomator} from "../../features/automators/dark-star-char
 })
 export class AutomatorRecord extends Record {
   // Red Phase
-  static firstRedGenerator: RedGeneratorAutomator = new RedGeneratorAutomator('firstRedGenerator', GeneratorRecord.firstRedGenerator);
-  static secondRedGenerator: RedGeneratorAutomator = new RedGeneratorAutomator('secondRedGenerator', GeneratorRecord.secondRedGenerator);
-  static thirdRedGenerator: RedGeneratorAutomator = new RedGeneratorAutomator('thirdRedGenerator', GeneratorRecord.thirdRedGenerator);
-  static fourthRedGenerator: RedGeneratorAutomator = new RedGeneratorAutomator('fourthRedGenerator', GeneratorRecord.fourthRedGenerator);
-  static fifthRedGenerator: RedGeneratorAutomator = new RedGeneratorAutomator('fifthRedGenerator', GeneratorRecord.fifthRedGenerator);
+  static firstRedGenerator = new RedGeneratorAutomator('firstRedGenerator', () => GeneratorRecord.firstRedGenerator, 1, 'First');
+  static secondRedGenerator = new RedGeneratorAutomator('secondRedGenerator', () => GeneratorRecord.secondRedGenerator, 2, 'Second');
+  static thirdRedGenerator = new RedGeneratorAutomator('thirdRedGenerator', () => GeneratorRecord.thirdRedGenerator, 3, 'Third');
+  static fourthRedGenerator = new RedGeneratorAutomator('fourthRedGenerator', () => GeneratorRecord.fourthRedGenerator, 4, 'Fourth');
+  static fifthRedGenerator = new RedGeneratorAutomator('fifthRedGenerator', () => GeneratorRecord.fifthRedGenerator, 5, 'Fifth');
 
   static redGeneratorExtension: RedGeneratorExtensionAutomator = new RedGeneratorExtensionAutomator('redGeneratorExtension');
   static redGeneratorBooster: RedGeneratorBoosterAutomator = new RedGeneratorBoosterAutomator('redGeneratorBooster');
@@ -60,11 +60,11 @@ export class AutomatorRecord extends Record {
   static multiplyYellowKeysYellow: MultiplyYellowKeysYellowAutomator = new MultiplyYellowKeysYellowAutomator('multiplyYellowKeysYellow');
   static yellowEnhancementAutomator: YellowEnhancementAutomator = new YellowEnhancementAutomator('yellowEnhancementAutomator');
 
-  static firstYellowGenerator: YellowGeneratorAutomator = new YellowGeneratorAutomator('firstYellowGenerator', GeneratorRecord.firstYellowGenerator);
-  static secondYellowGenerator: YellowGeneratorAutomator = new YellowGeneratorAutomator('secondYellowGenerator', GeneratorRecord.secondYellowGenerator);
-  static thirdYellowGenerator: YellowGeneratorAutomator = new YellowGeneratorAutomator('thirdYellowGenerator', GeneratorRecord.thirdYellowGenerator);
-  static fourthYellowGenerator: YellowGeneratorAutomator = new YellowGeneratorAutomator('fourthYellowGenerator', GeneratorRecord.fourthYellowGenerator);
-  static fifthYellowGenerator: YellowGeneratorAutomator = new YellowGeneratorAutomator('fifthYellowGenerator', GeneratorRecord.fifthYellowGenerator);
+  static firstYellowGenerator = new YellowGeneratorAutomator('firstYellowGenerator', () => GeneratorRecord.firstYellowGenerator, 1, '1');
+  static secondYellowGenerator = new YellowGeneratorAutomator('secondYellowGenerator', () => GeneratorRecord.secondYellowGenerator, 2, '2');
+  static thirdYellowGenerator = new YellowGeneratorAutomator('thirdYellowGenerator', () => GeneratorRecord.thirdYellowGenerator, 3, '3');
+  static fourthYellowGenerator = new YellowGeneratorAutomator('fourthYellowGenerator', () => GeneratorRecord.fourthYellowGenerator, 4, '4');
+  static fifthYellowGenerator = new YellowGeneratorAutomator('fifthYellowGenerator', () => GeneratorRecord.fifthYellowGenerator, 5, '5');
 
   static increaseYellowPowerUpgrade: IncreaseYellowPowerUpgradeAutomator = new IncreaseYellowPowerUpgradeAutomator('increaseYellowPowerUpgrade');
 

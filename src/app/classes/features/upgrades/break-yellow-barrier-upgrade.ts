@@ -4,8 +4,6 @@ import {PrestigeLayersService} from "../../../services/prestige-layers.service";
 import {Styles} from "../../enums/styles";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {Requirement} from "../interfaces/requirement";
-import {Milestone} from "../milestone";
-import {MilestoneRecord} from "../../records/milestones/milestone-record";
 import {HoldingRecord} from "../../records/holdings/holding-record";
 
 export class BreakYellowBarrierUpgrade extends YellowUpgrade {
