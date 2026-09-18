@@ -3,12 +3,12 @@ import {ElementCardEffects, LithiumElement, restoreBlueElement} from './blue-ele
 describe('ElementCardEffects', () => {
   it('resets every element effect to its neutral value', () => {
     ElementCardEffects.heliumPower = ElementCardEffects.heliumPower.mul(2);
-    ElementCardEffects.lithiumBuyMultiplier = ElementCardEffects.lithiumBuyMultiplier.mul(3);
+    ElementCardEffects.lithiumChargeMultiplier = ElementCardEffects.lithiumChargeMultiplier.mul(3);
 
     ElementCardEffects.reset();
 
     expect(ElementCardEffects.heliumPower.toNumber()).toBe(1);
-    expect(ElementCardEffects.lithiumBuyMultiplier.toNumber()).toBe(1);
+    expect(ElementCardEffects.lithiumChargeMultiplier.toNumber()).toBe(1);
     expect(ElementCardEffects.berylliumExtensionStrength.toNumber()).toBe(1);
     expect(ElementCardEffects.boronFreeExtensions.toNumber()).toBe(0);
   });

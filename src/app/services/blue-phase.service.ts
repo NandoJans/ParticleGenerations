@@ -70,6 +70,8 @@ export class BluePhaseService implements ElementUpgradeHost {
   carbonLifeTier = Num.ZERO.copy();
   oxygenCombustionUpgrades = Num.ZERO.copy();
   oxygenBurningLife = false;
+  lithiumCardChargeSeconds = Num.ZERO.copy();
+  boronCardExtensionProgress = Num.ZERO.copy();
 
   readonly elementDefinitions: BlueElementUpgradeSetDefinition[] = [
     this.createElementDefinition(1, new Num(1, 1), HoldingRecord.lithium, 'Lithium-ion batteries', 'battery'),
@@ -84,6 +86,8 @@ export class BluePhaseService implements ElementUpgradeHost {
     this.elementDefinitions.forEach(definition => definition.element.initializeUpgrades(this, HoldingRecord.protons, HoldingRecord.electrons));
     ResetHelper.registerResetListener('blue-phase-unlock', resetKey => {
       if (resetKey === ResetKey.BLUE) {
+        this.lithiumCardChargeSeconds = Num.ZERO.copy();
+        this.boronCardExtensionProgress = Num.ZERO.copy();
         this.unlockFromPrestige();
         this.applyElementCardEffects();
         this.save();
@@ -267,6 +271,7 @@ export class BluePhaseService implements ElementUpgradeHost {
     }
 
     this.applyElementCardEffects();
+    this.chargeElementCardEffects(speed);
     this.generateLithiumCharge(speed);
     this.generateElementCharges(speed);
     this.generateCarbonLife(speed);
@@ -458,6 +463,34 @@ export class BluePhaseService implements ElementUpgradeHost {
     // Each instance applies its own behavior; the service never branches on an element kind.
     ElementCardEffects.reset();
     activeElements.forEach(element => element.applyEffect());
+    ElementCardEffects.lithiumChargeMultiplier = this.getLithiumCardMultiplier();
+    ElementCardEffects.boronFreeExtensions = this.boronCardExtensionProgress.floor();
+  }
+
+  private chargeElementCardEffects(speed: Num): void {
+    if (ElementCardEffects.lithiumChargeRate.gt(Num.ZERO)) {
+      this.lithiumCardChargeSeconds = this.lithiumCardChargeSeconds.add(speed.mul(ElementCardEffects.lithiumChargeRate));
+    }
+    if (ElementCardEffects.boronExtensionRate.gt(Num.ZERO)) {
+      // A level-one Boron produces one extension per hour; whole extensions are applied.
+      this.boronCardExtensionProgress = this.boronCardExtensionProgress.add(
+        speed.mul(ElementCardEffects.boronExtensionRate).div(new Num(3.6, 3))
+      );
+    }
+    ElementCardEffects.lithiumChargeMultiplier = this.getLithiumCardMultiplier();
+    ElementCardEffects.boronFreeExtensions = this.boronCardExtensionProgress.floor();
+  }
+
+  getLithiumCardMultiplier(): Num {
+    const seconds = Math.max(0, this.lithiumCardChargeSeconds.toNumber());
+    if (!seconds) return Num.ONE.copy();
+    // Logarithmic charge gain gives rapid exponential growth while tapering over time.
+    const exponent = 10 * Math.log1p(seconds) / Math.log1p(3600);
+    return new Num(1, exponent);
+  }
+
+  getBoronCardProgressPercent(): number {
+    return this.boronCardExtensionProgress.sub(this.boronCardExtensionProgress.floor()).toNumber() * 100;
   }
 
   getActiveElementDefinitions(): BlueElementUpgradeSetDefinition[] {
@@ -815,6 +848,8 @@ export class BluePhaseService implements ElementUpgradeHost {
     this.storage.saveNum(this.carbonLifeTier, 'carbonLifeTier');
     this.storage.saveNum(this.oxygenCombustionUpgrades, 'oxygenCombustionUpgrades');
     this.storage.save(this.oxygenBurningLife, 'oxygenBurningLife');
+    this.storage.saveNum(this.lithiumCardChargeSeconds, 'lithiumCardChargeSeconds');
+    this.storage.saveNum(this.boronCardExtensionProgress, 'boronCardExtensionProgress');
   }
 
   load(): void {
@@ -852,6 +887,8 @@ export class BluePhaseService implements ElementUpgradeHost {
     this.carbonLifeTier = this.storage.loadNum(this.carbonLifeTier, 'carbonLifeTier');
     this.oxygenCombustionUpgrades = this.storage.loadNum(this.oxygenCombustionUpgrades, 'oxygenCombustionUpgrades');
     this.oxygenBurningLife = this.storage.load(this.oxygenBurningLife, 'oxygenBurningLife');
+    this.lithiumCardChargeSeconds = this.storage.loadNum(this.lithiumCardChargeSeconds, 'lithiumCardChargeSeconds');
+    this.boronCardExtensionProgress = this.storage.loadNum(this.boronCardExtensionProgress, 'boronCardExtensionProgress');
     this.mergeLegacyNeutronClump();
     this.synchronizePurchases();
     this.syncLithiumBatteryState();
