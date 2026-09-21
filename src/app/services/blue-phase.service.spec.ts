@@ -28,6 +28,9 @@ describe('BluePhaseService', () => {
     HoldingRecord.neutronClump.amount = Num.ZERO.copy();
     HoldingRecord.greenParticles.amount = Num.ZERO.copy();
     HoldingRecord.redParticles.amount = Num.ONE.copy();
+    HoldingRecord.yellowPrestiges.amount = Num.ZERO.copy();
+    HoldingRecord.yellowParticles.amount = Num.ZERO.copy();
+    HoldingRecord.yellowKeys.amount = Num.ZERO.copy();
 
     GeneratorRecord.firstRedGenerator.bought = Num.ZERO.copy();
     GeneratorRecord.firstRedGenerator.multiplierUpgrade.bought = Num.ZERO.copy();
@@ -166,6 +169,26 @@ describe('BluePhaseService', () => {
     expect(ElementCardEffects.boronExtensionRate.toNumber()).toBe(0);
   });
 
+  it('bases neutron meltdown power on the highest neutron amount reached', () => {
+    HoldingRecord.neutrons.amount = new Num(1, 10);
+    expect(service.getNeutronMeltdownPower().toNumber()).toBeCloseTo(1, 8);
+
+    HoldingRecord.neutrons.amount = Num.ZERO.copy();
+
+    expect(service.highestNeutrons.equals(new Num(1, 10))).toBeTrue();
+    expect(service.getNeutronMeltdownPower().toNumber()).toBeCloseTo(1, 8);
+  });
+
+  it('starts Blue runs with one of each Yellow resource after the first mass milestone', () => {
+    service.neutronStarMass = new Num(1, 1);
+
+    service.unlockFromPrestige();
+
+    expect(HoldingRecord.yellowPrestiges.amount.equals(Num.ONE)).toBeTrue();
+    expect(HoldingRecord.yellowParticles.amount.equals(Num.ONE)).toBeTrue();
+    expect(HoldingRecord.yellowKeys.amount.equals(Num.ONE)).toBeTrue();
+  });
+
   it('generates strange quarks from the square root of neutron-star mass', () => {
     service.neutronStarMass = new Num(1, 2);
 
@@ -212,6 +235,9 @@ describe('BluePhaseService', () => {
     HoldingRecord.neutronClump.amount = Num.ZERO.copy();
     HoldingRecord.greenParticles.amount = Num.ZERO.copy();
     HoldingRecord.redParticles.amount = Num.ONE.copy();
+    HoldingRecord.yellowPrestiges.amount = Num.ZERO.copy();
+    HoldingRecord.yellowParticles.amount = Num.ZERO.copy();
+    HoldingRecord.yellowKeys.amount = Num.ZERO.copy();
     GeneratorRecord.firstRedGenerator.bought = Num.ZERO.copy();
     GeneratorRecord.firstRedGenerator.multiplierUpgrade.bought = Num.ZERO.copy();
     UpgradeRecord.blueBeamIntensity.amount = Num.ZERO.copy();
