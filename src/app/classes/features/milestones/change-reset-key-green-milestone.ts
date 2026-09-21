@@ -5,19 +5,31 @@ import {ResetHelper} from "../../helpers/reset-helper";
 import {ResetKey} from "../../enums/reset-key";
 import {Automator} from "../automator";
 
+type ResetableProvider = () => Resetable|Resetable[];
+
 export class ChangeResetKeyGreenMilestone extends GreenMilestone {
-  resetable: Resetable|Resetable[];
+  private readonly resetableSource: Resetable|Resetable[]|ResetableProvider;
   groupName: string;
 
-  constructor(name: string, displayName: string, goal: Num, resetable: Resetable|Resetable[], groupName: string) {
+  constructor(
+    name: string,
+    displayName: string,
+    goal: Num,
+    resetable: Resetable|Resetable[]|ResetableProvider,
+    groupName: string
+  ) {
     super(name, displayName, goal);
-    this.resetable = resetable;
+    this.resetableSource = resetable;
     this.groupName = groupName;
   }
 
   override action(): void {
-    if (Array.isArray(this.resetable)) {
-      this.resetable.forEach(resetable => {
+    const resetable = typeof this.resetableSource === 'function'
+      ? this.resetableSource()
+      : this.resetableSource;
+
+    if (Array.isArray(resetable)) {
+      resetable.forEach(resetable => {
         resetable.softResetId = ResetKey.GREEN;
         resetable.resetId = ResetHelper.registerReset(ResetKey.GREEN, resetable);
 
@@ -34,7 +46,7 @@ export class ChangeResetKeyGreenMilestone extends GreenMilestone {
       });
       return;
     } else {
-      this.resetable.resetId = ResetHelper.registerReset(ResetKey.GREEN, this.resetable);
+      resetable.resetId = ResetHelper.registerReset(ResetKey.GREEN, resetable);
     }
   }
 

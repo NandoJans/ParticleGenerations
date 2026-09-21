@@ -300,7 +300,7 @@ export class MilestoneRecord extends Record {
     'keepAllYellowUpgrades',
     'Keep all yellow upgrades',
     new Num(1.1, 1),
-    UpgradeRecord.yellowUpgradeList,
+    () => UpgradeRecord.yellowUpgradeList,
     'all yellow upgrades',
   )
 
@@ -308,7 +308,7 @@ export class MilestoneRecord extends Record {
     'keepPostBreakYellowUpgrades',
     'Keep post-break yellow upgrades',
     new Num(1.15, 1),
-    UpgradeRecord.postBreakYellowUpgradeList,
+    () => UpgradeRecord.postBreakYellowUpgradeList,
     'post-break yellow upgrades',
   )
 
@@ -464,7 +464,7 @@ export class MilestoneRecord extends Record {
     'startWithStarKeyCompressionUnlocked',
     'Start with star key compression unlocked',
     new Num(8, 1),
-    [
+    () => [
       UpgradeRecord.unlockStarKeyCompression,
     ],
     'green prestige automator'
@@ -474,7 +474,7 @@ export class MilestoneRecord extends Record {
     'fusionBoosterAccelerationNoReset',
     'Fusion Booster Acceleration No Reset',
     new Num(1, 2),
-    [
+    () => [
       UpgradeRecord.fusionBoosterAcceleration,
     ],
     'fusion booster acceleration automator',
