@@ -37,12 +37,12 @@ export class BlueNeutronStarComponent {
   }
 
   get starSize(): number {
-    return Math.min(290, 3 + Math.log10(1 + this.massMagnitude * 9) * 112);
+    return Math.min(290, 3 + this.massMagnitude);
   }
 
-  get jetStrength(): number { return Math.min(1, .16 + this.massMagnitude / 8); }
+  get jetStrength(): number { return Math.min(1, .16 + this.massMagnitude / 32); }
 
-  get jetHeight(): number { return Math.min(360, 70 + this.massMagnitude * 34); }
+  get jetHeight(): number { return Math.min(360, 70 + this.massMagnitude * 3); }
 
   private createStarLayer(count: number, speed: number, maximumSize: number): BackgroundStar[] {
     return Array.from({length: count}, () => ({
