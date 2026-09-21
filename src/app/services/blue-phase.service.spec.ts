@@ -198,7 +198,7 @@ describe('BluePhaseService', () => {
   it('spends strange quarks on blue boosts and capacity upgrades', () => {
     const protonUpgrade = service.neutronStarUpgradeDefinitions.find(upgrade => upgrade.key === 'protons')!;
     const activeSlotUpgrade = service.neutronStarUpgradeDefinitions.find(upgrade => upgrade.key === 'activeSlots')!;
-    service.strangeQuarks = new Num(1, 4);
+    service.strangeQuarks = new Num(1, 8);
     service.activeParticle = 'protons';
     const generationBefore = service.getParticleGeneration();
 
