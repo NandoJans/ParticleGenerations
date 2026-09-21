@@ -66,13 +66,13 @@ export class BluePhaseService implements ElementUpgradeHost {
     inventorySlots: 0, elementLevel: 0, rarity: 0
   };
   readonly neutronStarUpgradeDefinitions: NeutronStarUpgrade[] = [
-    {key: 'protons', name: 'Proton Jet', description: 'Double proton generation per level.', baseCost: 10, costScale: 4},
-    {key: 'electrons', name: 'Electron Aurora', description: 'Double electron generation per level.', baseCost: 10, costScale: 4},
-    {key: 'neutrons', name: 'Neutron Compression', description: 'Double neutron gain per level.', baseCost: 25, costScale: 5},
-    {key: 'activeSlots', name: 'Orbital Harmonics', description: 'Add one active element slot.', baseCost: 250, costScale: 20, maxLevel: 4},
-    {key: 'inventorySlots', name: 'Gravitational Vault', description: 'Add four element inventory slots.', baseCost: 150, costScale: 10, maxLevel: 8},
-    {key: 'elementLevel', name: 'Fusion Pressure', description: 'Generate elements one level higher.', baseCost: 500, costScale: 8},
-    {key: 'rarity', name: 'Exotic Catalysis', description: 'Improve the probability of high-rarity elements.', baseCost: 750, costScale: 8}
+    {key: 'protons', name: 'Proton Jet', description: 'Double proton generation per level.', baseCost: 1000, costScale: 5},
+    {key: 'electrons', name: 'Electron Aurora', description: 'Double electron generation per level.', baseCost: 1000, costScale: 5},
+    {key: 'neutrons', name: 'Neutron Compression', description: 'Double neutron gain per level.', baseCost: 2500, costScale: 6},
+    {key: 'activeSlots', name: 'Orbital Harmonics', description: 'Add one active element slot.', baseCost: 25000, costScale: 25, maxLevel: 4},
+    {key: 'inventorySlots', name: 'Gravitational Vault', description: 'Add four element inventory slots.', baseCost: 15000, costScale: 12, maxLevel: 8},
+    {key: 'elementLevel', name: 'Fusion Pressure', description: 'Generate elements one level higher.', baseCost: 50000, costScale: 10},
+    {key: 'rarity', name: 'Exotic Catalysis', description: 'Improve the probability of high-rarity elements.', baseCost: 75000, costScale: 10}
   ];
 
   lithiumBatteries = Num.ZERO.copy();

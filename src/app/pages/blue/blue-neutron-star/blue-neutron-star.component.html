@@ -13,31 +13,27 @@
     </header>
 
     <section class="observatory">
-      <div class="space" aria-label="Neutron star visualization">
-        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
-        <div class="jet jet-top"></div><div class="jet jet-bottom"></div>
-        <div class="neutron-star" [style.transform]="'scale(' + starScale + ')'">
-          <i></i><b></b><span></span>
+      <div class="space" role="button" tabindex="0" aria-label="Open element sacrifice window"
+           (click)="openSacrifice()" (keydown.enter)="openSacrifice()" (keydown.space)="openSacrifice(); $event.preventDefault()">
+        <div class="starfield" aria-hidden="true">
+          @for (layer of starLayers; track $index) {
+            <div class="star-layer layer-{{ $index }}">
+              @for (star of layer; track $index) {
+                <i [style.left]="star.left" [style.top]="star.top" [style.width]="star.size" [style.height]="star.size"
+                   [style.opacity]="star.opacity" [style.animation-delay]="star.delay" [style.animation-duration]="star.duration"></i>
+              }
+            </div>
+          }
         </div>
+        @if (hasStar) {
+          <div class="stellar-system" [style.--star-size.px]="starSize" [style.--jet-strength]="jetStrength" [style.--jet-height.px]="jetHeight">
+            <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+            <div class="jet jet-top"><i></i><b></b></div><div class="jet jet-bottom"><i></i><b></b></div>
+            <div class="neutron-star"><i></i><b></b><span></span></div>
+          </div>
+        }
+        <div class="sacrifice-prompt"><strong>FEED THE STAR</strong><span>Press to select element coins</span></div>
         <div class="mass-readout"><span>STELLAR MASS</span><strong>{{ bluePhase.neutronStarMass.toString(3) }} nM</strong></div>
-      </div>
-      <div class="sacrifice-panel">
-        <p class="eyebrow">GRAVITATIONAL INTAKE</p>
-        <h2>Feed the star</h2>
-        <p>Collapse an element into the star permanently. Atomic weight, level, and rarity determine the mass it adds.</p>
-        <div class="element-list">
-          @for (element of bluePhase.elements; track element.id) {
-            <button type="button" [class.selected]="selectedElement === element" (click)="selectElement(element)" [style.--element-color]="element.primaryColor">
-              <span>{{ element.symbol }}</span>
-              <p><strong>{{ element.name }} · LVL {{ element.level }}</strong><small>{{ bluePhase.getRarityName(element) }} · {{ element.rarity | number:'1.1-1' }}%</small></p>
-              <b>+{{ bluePhase.getElementMass(element).toString(3) }} nM</b>
-            </button>
-          } @empty { <div class="empty">No elements available. Fuse another element to feed the star.</div> }
-        </div>
-        <button class="sacrifice" type="button" [disabled]="!selectedElement" (click)="sacrificeSelected()">
-          {{ selectedElement ? 'SACRIFICE ' + selectedElement.name.toUpperCase() : 'SELECT AN ELEMENT' }}
-        </button>
-        @if (selectedElement && bluePhase.isElementCardActive(selectedElement)) { <small class="active-warning">This element is active. Sacrificing it will remove its effect.</small> }
       </div>
     </section>
 
@@ -45,15 +41,46 @@
       <div class="upgrade-heading"><p class="eyebrow">STRANGE MATTER RESEARCH</p><h2>Stellar upgrades</h2><span>Permanent upgrades fueled by strange quarks</span></div>
       <div class="upgrade-grid">
         @for (upgrade of bluePhase.neutronStarUpgradeDefinitions; track upgrade.key) {
-          <article [class.maxed]="bluePhase.isNeutronStarUpgradeMaxed(upgrade)">
+          <article [class.maxed]="bluePhase.isNeutronStarUpgradeMaxed(upgrade)" [class.buyable]="bluePhase.canBuyNeutronStarUpgrade(upgrade)">
             <span class="upgrade-level">LVL {{ bluePhase.neutronStarUpgrades[upgrade.key] }}{{ upgrade.maxLevel ? ' / ' + upgrade.maxLevel : '' }}</span>
             <h3>{{ upgrade.name }}</h3><p>{{ upgrade.description }}</p>
             <button type="button" [disabled]="!bluePhase.canBuyNeutronStarUpgrade(upgrade)" (click)="bluePhase.buyNeutronStarUpgrade(upgrade)">
-              {{ bluePhase.isNeutronStarUpgradeMaxed(upgrade) ? 'MAXIMUM' : bluePhase.getNeutronStarUpgradeCost(upgrade).toString(3) + ' SQ' }}
+              {{ bluePhase.isNeutronStarUpgradeMaxed(upgrade) ? 'MAXIMUM' : 'BUY · ' + bluePhase.getNeutronStarUpgradeCost(upgrade).toString(3) + ' SQ' }}
             </button>
           </article>
         }
       </div>
     </section>
+
+    @if (sacrificeOpen) {
+      <div class="sacrifice-backdrop" (click)="closeSacrifice()">
+        <section class="sacrifice-dialog" role="dialog" aria-modal="true" aria-labelledby="sacrifice-title" (click)="$event.stopPropagation()">
+          <button class="close-button" type="button" aria-label="Close sacrifice window" (click)="closeSacrifice()">×</button>
+          <p class="eyebrow">GRAVITATIONAL INTAKE</p>
+          <h2 id="sacrifice-title">Select element coins</h2>
+          <p class="dialog-help">Choose one or more inactive coins. Active elements are protected until you clear their active slots.</p>
+          <div class="sacrifice-coins">
+            @for (element of bluePhase.elements; track element.id) {
+              <button class="element-coin" type="button"
+                      [class.selected]="selectedElementIds.has(element.id)"
+                      [class.active]="bluePhase.isElementCardActive(element)"
+                      [disabled]="bluePhase.isElementCardActive(element)"
+                      [style.--rarity]="bluePhase.getSecondaryColor(element)" [style.--primary]="element.primaryColor"
+                      (click)="toggleElement(element)">
+                <span class="coin-symbol">{{ element.symbol }}</span>
+                <strong>{{ element.name }}</strong>
+                <span class="coin-level">LVL {{ element.level }}</span>
+                <b>+{{ bluePhase.getElementMass(element).toString(3) }} nM</b>
+                @if (bluePhase.isElementCardActive(element)) { <em>ACTIVE</em> }
+                @else if (selectedElementIds.has(element.id)) { <em>SELECTED</em> }
+              </button>
+            } @empty { <div class="empty">No element coins are available to sacrifice.</div> }
+          </div>
+          <button class="confirm-sacrifice" type="button" [disabled]="!selectedElements.length" (click)="sacrificeSelectedElements()">
+            Sacrifice for {{ selectedMass.toString(3) }} mass
+          </button>
+        </section>
+      </div>
+    }
   }
 </main>
