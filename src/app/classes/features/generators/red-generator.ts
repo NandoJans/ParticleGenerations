@@ -12,6 +12,7 @@ import {Upgrade} from "../upgrade";
 import {Enhancement} from "../enhancements/enhancement";
 import {EnhancementRecord} from "../../records/enhancement-record";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
+import {ElementCardEffects} from "../elements/blue-element";
 
 export abstract class RedGenerator extends Generator {
   type: string = 'red-particle-generator';
@@ -47,5 +48,9 @@ export abstract class RedGenerator extends Generator {
       this.multiplierUpgrade,
       this.buyMultiplierUpgrade,
     ];
+  }
+
+  protected override applyFinalMultiplierEffects(multiplier: Num): Num {
+    return multiplier.pow(ElementCardEffects.heliumPower);
   }
 }

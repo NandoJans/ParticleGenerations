@@ -6,7 +6,6 @@ import {ResetKey} from "../../enums/reset-key";
 import {Requirement} from "../interfaces/requirement";
 import {Enhancement} from "../enhancements/enhancement";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
-import {ElementCardEffects} from '../elements/blue-element';
 
 export class RedGeneratorMultiplierUpgrade extends RedGeneratorUpgrade {
 
@@ -34,13 +33,13 @@ export class RedGeneratorMultiplierUpgrade extends RedGeneratorUpgrade {
 
   action(): Num {
     const modifiedBuffer = this.getModifiedBuffer();
-    const buff: Num = modifiedBuffer.pow(this.amount).pow(ElementCardEffects.heliumPower);
+    const buff: Num = modifiedBuffer.pow(this.amount);
     this.generator.mulMod = this.generator.mulMod.mul(buff);
     return buff;
   }
 
   getDescription(): string {
-    return `${this.getModifiedBuffer().toString(3)}x Production per level, raised to ^${ElementCardEffects.heliumPower.toString(3)} by active Helium`;
+    return `${this.getModifiedBuffer().toString(3)}x Production per level`;
   }
 
   override getDisplayName(): string {

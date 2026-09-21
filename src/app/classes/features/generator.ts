@@ -52,7 +52,9 @@ export abstract class Generator extends Buyable implements Generatable, Storable
     localMultiplier = Multiplier.applyHook(localMultiplier, { source: this, kind: this.type })
     localMultiplier = Multiplier.applyHook(localMultiplier, { source: this, kind: this.name })
 
-    const combinedMultiplier = localMultiplier.mul(this.globalMultiplier.getNum(false)) as Num
+    const combinedMultiplier = this.applyFinalMultiplierEffects(
+      localMultiplier.mul(this.globalMultiplier.getNum(false)) as Num
+    )
     this.multiplier = Multiplier.applyNeutronMeltdown(
       combinedMultiplier,
       this.globalMultiplier.neutronMeltdownImmune
@@ -63,6 +65,11 @@ export abstract class Generator extends Buyable implements Generatable, Storable
     this.baseMulMod = new Num(1, 0)
     this.mulMod = new Num(1, 0)
     this.correctCost();
+  }
+
+  /** Apply generator-type-specific effects to the complete local and global multiplier. */
+  protected applyFinalMultiplierEffects(multiplier: Num): Num {
+    return multiplier;
   }
 
   generate(amount: Num): any {

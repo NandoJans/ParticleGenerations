@@ -24,6 +24,13 @@ export class Num {
       this.exponent = 0;
       return;
     }
+    // Num stores the power of ten as an integer. Move any fractional part of a
+    // supplied exponent into the mantissa before doing the usual normalization.
+    // Without this, values such as `new Num(1, 6.25)` format the decimal part of
+    // the exponent as though it were additional exponent digits.
+    const integerExponent = Math.floor(this.exponent);
+    this.mantissa *= Math.pow(10, this.exponent - integerExponent);
+    this.exponent = integerExponent;
     // shift so mantissa in [1,10)
     const shift = Math.floor(Math.log10(Math.abs(this.mantissa)));
     this.mantissa /= Math.pow(10, shift);
