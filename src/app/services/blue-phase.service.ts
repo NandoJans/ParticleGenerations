@@ -25,6 +25,12 @@ export interface NeutronStarUpgrade {
   maxLevel?: number;
 }
 
+export interface NeutronStarMassMilestone {
+  goal: Num;
+  name: string;
+  description: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -43,6 +49,7 @@ export class BluePhaseService {
   activeElementCardIds: string[] = [];
   showClearActiveElementsWarning = true;
   elementsDiscovered = 0;
+  highestNeutrons = Num.ZERO.copy();
   neutronStarMass = Num.ZERO.copy();
   strangeQuarks = Num.ZERO.copy();
   neutronStarUpgrades: Record<NeutronStarUpgradeKey, number> = {
@@ -57,6 +64,13 @@ export class BluePhaseService {
     {key: 'inventorySlots', name: 'Gravitational Vault', description: 'Add four element inventory slots.', baseCost: 15000, costScale: 12, maxLevel: 8},
     {key: 'elementLevel', name: 'Fusion Pressure', description: 'Generate elements one level higher.', baseCost: 50000, costScale: 10},
     {key: 'rarity', name: 'Exotic Catalysis', description: 'Improve the probability of high-rarity elements.', baseCost: 75000, costScale: 10}
+  ];
+  readonly neutronStarMassMilestones: NeutronStarMassMilestone[] = [
+    {
+      goal: new Num(1, 1),
+      name: 'Yellow Spark',
+      description: 'Start Blue runs with 1 Yellow Prestige, 1 Yellow Particle, and 1 Yellow Key.'
+    }
   ];
 
   lithiumCardChargeSeconds = Num.ZERO.copy();
@@ -81,6 +95,7 @@ export class BluePhaseService {
   tick(speed: Num): void {
     if (!this.isUnlocked()) return;
 
+    this.recordHighestNeutrons();
     this.detectPurchases();
     const generation = this.getParticleGeneration().mul(speed);
 
@@ -105,12 +120,19 @@ export class BluePhaseService {
     return HoldingRecord.neutrons.amount.add(HoldingRecord.neutronClump.amount);
   }
 
+  private recordHighestNeutrons(): void {
+    if (HoldingRecord.neutrons.amount.gt(this.highestNeutrons)) {
+      this.highestNeutrons = HoldingRecord.neutrons.amount.copy();
+    }
+  }
+
   getNeutronRestorationTarget(): Num {
     return BluePhaseService.neutronRestorationTarget;
   }
 
   getNeutronMeltdownProgress(): number {
-    const total = Math.max(0, this.getTotalNeutronMatter().toNumber());
+    this.recordHighestNeutrons();
+    const total = Math.max(0, this.highestNeutrons.toNumber());
     const target = BluePhaseService.neutronRestorationTarget.toNumber();
     return Math.min(1, Math.log10(total + 1) / Math.log10(target + 1));
   }
@@ -131,6 +153,7 @@ export class BluePhaseService {
     this.startParticleGeneration();
     this.synchronizePurchases();
     this.applyNeutronMeltdown();
+    this.applyNeutronStarMassMilestones();
   }
 
   getParticleGeneration(): Num {
@@ -181,6 +204,7 @@ export class BluePhaseService {
 
     ResetHelper.reset(ResetKey.BLUE);
     HoldingRecord.neutrons.add(gain);
+    this.recordHighestNeutrons();
     this.startParticleGeneration();
     this.synchronizePurchases();
   }
@@ -208,6 +232,7 @@ export class BluePhaseService {
 
   fuseElement(random: () => number = Math.random): BlueElement | null {
     if (!this.canFuseElement()) return null;
+    this.recordHighestNeutrons();
     const neutronCount = Math.max(10, HoldingRecord.neutrons.amount.toNumber());
     const kinds = this.getUnlockedCardKinds();
     // Every element in the currently unlocked pool has the same chance to be
@@ -316,10 +341,23 @@ export class BluePhaseService {
   sacrificeElement(element: BlueElement): void {
     if (!this.isNeutronStarUnlocked() || !this.elements.includes(element)) return;
     this.neutronStarMass = this.neutronStarMass.add(this.getElementMass(element));
+    this.applyNeutronStarMassMilestones();
     this.elements = this.elements.filter(candidate => candidate.id !== element.id);
     this.activeElementCardIds = this.activeElementCardIds.filter(id => id !== element.id);
     this.applyElementCardEffects();
     this.save();
+  }
+
+  isNeutronStarMassMilestoneUnlocked(milestone: NeutronStarMassMilestone): boolean {
+    return this.neutronStarMass.greq(milestone.goal);
+  }
+
+  private applyNeutronStarMassMilestones(): void {
+    if (!this.isNeutronStarMassMilestoneUnlocked(this.neutronStarMassMilestones[0])) return;
+    [HoldingRecord.yellowPrestiges, HoldingRecord.yellowParticles, HoldingRecord.yellowKeys]
+      .forEach(holding => {
+        if (holding.amount.lt(Num.ONE)) holding.amount = Num.ONE.copy();
+      });
   }
 
   getStrangeQuarkGeneration(): Num {
@@ -422,6 +460,7 @@ export class BluePhaseService {
     this.storage.save(this.activeElementCardIds, 'activeElementCardIds');
     this.storage.save(this.showClearActiveElementsWarning, 'showClearActiveElementsWarning');
     this.storage.save(this.elementsDiscovered, 'elementsDiscovered');
+    this.storage.saveNum(this.highestNeutrons, 'highestNeutrons');
     this.storage.saveNum(this.neutronStarMass, 'neutronStarMass');
     this.storage.saveNum(this.strangeQuarks, 'strangeQuarks');
     this.storage.save(this.neutronStarUpgrades, 'neutronStarUpgrades');
@@ -440,6 +479,8 @@ export class BluePhaseService {
     this.elements = storedElements.map(restoreBlueElement);
     this.elementsDiscovered = this.storage.load(this.elements.length, 'elementsDiscovered');
     BluePhaseService.elementsDiscoveredCount = this.elementsDiscovered;
+    this.highestNeutrons = this.storage.loadNum(HoldingRecord.neutrons.amount, 'highestNeutrons')
+      .max(HoldingRecord.neutrons.amount);
     this.neutronStarMass = this.storage.loadNum(this.neutronStarMass, 'neutronStarMass');
     this.strangeQuarks = this.storage.loadNum(this.strangeQuarks, 'strangeQuarks');
     this.neutronStarUpgrades = {
@@ -456,6 +497,7 @@ export class BluePhaseService {
     this.synchronizePurchases();
     this.applyNeutronMeltdown();
     this.applyElementCardEffects();
+    this.applyNeutronStarMassMilestones();
   }
 
   init(): void {

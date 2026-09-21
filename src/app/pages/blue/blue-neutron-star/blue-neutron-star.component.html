@@ -37,6 +37,20 @@
       </div>
     </section>
 
+    <section class="mass-milestones">
+      <div class="upgrade-heading"><p class="eyebrow">STELLAR MASS MILESTONES</p><h2>Gravitational thresholds</h2><span>Permanent rewards based on total neutron-star mass</span></div>
+      <div class="milestone-grid">
+        @for (milestone of bluePhase.neutronStarMassMilestones; track milestone.name) {
+          <article [class.unlocked]="bluePhase.isNeutronStarMassMilestoneUnlocked(milestone)">
+            <span>{{ milestone.goal.toString() }} nM</span>
+            <h3>{{ milestone.name }}</h3>
+            <p>{{ milestone.description }}</p>
+            <strong>{{ bluePhase.isNeutronStarMassMilestoneUnlocked(milestone) ? 'UNLOCKED' : 'LOCKED' }}</strong>
+          </article>
+        }
+      </div>
+    </section>
+
     <section class="upgrades">
       <div class="upgrade-heading"><p class="eyebrow">STRANGE MATTER RESEARCH</p><h2>Stellar upgrades</h2><span>Permanent upgrades fueled by strange quarks</span></div>
       <div class="upgrade-grid">
