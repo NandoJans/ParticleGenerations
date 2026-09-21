@@ -130,6 +130,15 @@ describe('BluePhaseService', () => {
     expect(service.getLithiumCardMultiplier().log10().toNumber()).toBeCloseTo(10, 8);
   });
 
+  it('formats a Lithium multiplier above 1e6 with an integer scientific exponent', () => {
+    service.lithiumCardChargeSeconds = new Num(1, 2);
+
+    const multiplier = service.getLithiumCardMultiplier();
+
+    expect(multiplier.exponent).toBe(Math.floor(multiplier.exponent));
+    expect(multiplier.toString(3)).toMatch(/^\d\.\d{2}e\d+$/);
+  });
+
   it('slowly generates whole free red extensions with Boron', () => {
     const boron = createBlueElement('boron', 'boron-1', 1, 0);
     service.elements = [boron];
