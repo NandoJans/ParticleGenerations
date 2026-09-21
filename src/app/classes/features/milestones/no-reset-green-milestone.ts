@@ -3,30 +3,43 @@ import {Num} from "../../../num";
 import {Buyable} from "../buyable";
 import {ResetKey} from "../../enums/reset-key";
 
+type BuyableProvider = () => Buyable|Buyable[];
+
 export class NoResetGreenMilestone extends GreenMilestone {
-  resetter: Buyable|Buyable[];
+  private readonly resetterSource: Buyable|Buyable[]|BuyableProvider;
   groupName: string;
   noMax?: boolean = false;
 
-  constructor(name: string, displayName: string, goal: Num, resetter: Buyable|Buyable[], groupName: string, noMax?: boolean) {
+  constructor(
+    name: string,
+    displayName: string,
+    goal: Num,
+    resetter: Buyable|Buyable[]|BuyableProvider,
+    groupName: string,
+    noMax?: boolean
+  ) {
     super(name, displayName, goal);
-    this.resetter = resetter;
+    this.resetterSource = resetter;
     this.groupName = groupName;
     this.noMax = noMax;
   }
 
   override action(): void {
-    if (Array.isArray(this.resetter)) {
-      this.resetter.forEach(resetter => {
+    const resetter = typeof this.resetterSource === 'function'
+      ? this.resetterSource()
+      : this.resetterSource;
+
+    if (Array.isArray(resetter)) {
+      resetter.forEach(resetter => {
         resetter.resets = ResetKey.NONE;
         if (this.noMax !== undefined) {
           resetter.noMax = this.noMax;
         }
       });
     } else {
-      this.resetter.resets = ResetKey.NONE;
+      resetter.resets = ResetKey.NONE;
       if (this.noMax !== undefined) {
-        this.resetter.noMax = this.noMax;
+        resetter.noMax = this.noMax;
       }
     }
   }

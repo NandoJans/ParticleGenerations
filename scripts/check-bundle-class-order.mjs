@@ -43,6 +43,13 @@ if (/this\.name="(?:yellow|green)-prestige-automator"[^}]*this\.prestigeLayer=/.
   throw new Error('Prestige automators still capture PrestigeLayersService during module initialization.');
 }
 
+// Milestones are emitted before UpgradeRecord in optimized builds. Upgrade
+// collections therefore have to be supplied by a callback and resolved when
+// the milestone runs, rather than while its static fields are initialized.
+if (/"keepAllYellowUpgrades"[^;]*?,[A-Za-z_$][\w$]*\.yellowUpgradeList,"all yellow upgrades"/.test(bundle)) {
+  throw new Error('Milestones still capture UpgradeRecord during module initialization.');
+}
+
 if (invalidExtensions.length > 0) {
   const details = invalidExtensions
     .map(({className, parentName}) => `${className} extends ${parentName}`)
