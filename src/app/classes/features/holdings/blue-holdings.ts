@@ -44,15 +44,15 @@ export class ProtonHolding extends BlueHolding {
   }
 
   getRedEffect(): Num {
-    return this.getEffect(new Num(2, 1));
+    return this.getEffect(new Num(5, -1));
   }
 
   getYellowEffect(): Num {
-    return this.getEffect(new Num(2, 0));
+    return this.getEffect(new Num(2, -1));
   }
 
   getGreenEffect(): Num {
-    return this.getEffect(new Num(2, -1));
+    return this.getEffect(new Num(5, -2));
   }
 
   private getEffect(power: Num): Num {
@@ -86,15 +86,15 @@ export class ElectronHolding extends BlueHolding {
   }
 
   getRedEffect(): Num {
-    return this.getEffect(new Num(1, -1));
+    return this.getEffect(new Num(5, -2));
   }
 
   getYellowEffect(): Num {
-    return this.getEffect(new Num(4, -2));
+    return this.getEffect(new Num(2, -2));
   }
 
   getGreenEffect(): Num {
-    return this.getEffect(new Num(1, -2));
+    return this.getEffect(new Num(5, -3));
   }
 
   private getEffect(coefficient: Num): Num {
