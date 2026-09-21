@@ -36,6 +36,13 @@ if (/new [A-Za-z_$][\w$]*\("firstRedGenerator",\(\)=>/.test(bundle)) {
   throw new Error('Generator automators still capture GeneratorRecord during module initialization.');
 }
 
+// Prestige automators are initialized before PrestigeLayersService in the
+// production bundle. They must resolve their layer lazily instead of reading a
+// static prestige layer from their field initializers.
+if (/this\.name="(?:yellow|green)-prestige-automator"[^}]*this\.prestigeLayer=/.test(bundle)) {
+  throw new Error('Prestige automators still capture PrestigeLayersService during module initialization.');
+}
+
 if (invalidExtensions.length > 0) {
   const details = invalidExtensions
     .map(({className, parentName}) => `${className} extends ${parentName}`)
