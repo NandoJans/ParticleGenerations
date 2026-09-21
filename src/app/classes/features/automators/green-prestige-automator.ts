@@ -1,7 +1,7 @@
 import {Num} from "src/app/num";
 import {ResetKey} from "../../enums/reset-key";
 import {Styles} from "../../enums/styles";
-import {PrestigeLayer} from "../prestiges/prestige-layer";
+import type {PrestigeLayer} from "../prestiges/prestige-layer";
 import {PrestigeAutomator} from "./prestige-automator";
 import {PrestigeLayersService} from "../../../services/prestige-layers.service";
 import {ResetHelper} from "../../helpers/reset-helper";
@@ -15,7 +15,9 @@ export class GreenPrestigeAutomator extends PrestigeAutomator {
   override requirement: Requirement[] = [
     new Requirement(HoldingRecord.greenPrestiges, new Num(1, 0), this)
   ];
-  prestigeLayer: PrestigeLayer = PrestigeLayersService.greenPrestigeLayer;
+  get prestigeLayer(): PrestigeLayer {
+    return PrestigeLayersService.greenPrestigeLayer;
+  }
   style: Styles = Styles.GREEN;
   resetId: ResetKey = ResetHelper.registerReset(ResetKey.GREEN, this);
   goal: Num = new Num(5, 1);
