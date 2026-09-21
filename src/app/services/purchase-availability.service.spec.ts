@@ -6,49 +6,32 @@ import {Num} from '../num';
 describe('PurchaseAvailabilityService', () => {
   let bluePhaseService: BluePhaseService;
   let service: PurchaseAvailabilityService;
+  const blueElements = {
+    location: 'elements',
+    parent: {location: 'blue'},
+    isUnlocked: () => true,
+  } as any;
 
   beforeEach(() => {
     bluePhaseService = new BluePhaseService();
     service = new PurchaseAvailabilityService(bluePhaseService);
-    HoldingRecord.lithium.amount = Num.ZERO.copy();
-    HoldingRecord.electrons.amount = Num.ZERO.copy();
-    HoldingRecord.protons.amount = Num.ZERO.copy();
-    HoldingRecord.beryllium.amount = Num.ZERO.copy();
+    HoldingRecord.neutrons.amount = Num.ZERO.copy();
   });
 
-  it('highlights blue elements when a lithium battery upgrade is available', () => {
-    HoldingRecord.neutronClump.amount = new Num(1, 1);
-    HoldingRecord.lithium.amount = new Num(5, 0);
-    const subNavigation = {
-      location: 'elements',
-      parent: {location: 'blue'},
-      isUnlocked: () => true,
-    } as any;
+  it('highlights blue elements when an element can be fused', () => {
+    HoldingRecord.neutrons.amount = new Num(1, 1);
 
-    expect(service.hasAvailablePurchase(subNavigation)).toBeTrue();
+    expect(service.hasAvailablePurchase(blueElements)).toBeTrue();
   });
 
-  it('does not highlight locked blue elements even when a purchase is affordable', () => {
-    HoldingRecord.neutronClump.amount = new Num(1, 1);
-    HoldingRecord.lithium.amount = new Num(5, 0);
-    const subNavigation = {
-      location: 'elements',
-      parent: {location: 'blue'},
-      isUnlocked: () => false,
-    } as any;
+  it('does not highlight locked blue elements when an element can be fused', () => {
+    HoldingRecord.neutrons.amount = new Num(1, 1);
+    const lockedBlueElements = {...blueElements, isUnlocked: () => false};
 
-    expect(service.hasAvailablePurchase(subNavigation)).toBeFalse();
+    expect(service.hasAvailablePurchase(lockedBlueElements)).toBeFalse();
   });
 
-  it('highlights blue elements when lithium batteries can discharge', () => {
-    bluePhaseService.lithiumBatteries = new Num(1, 3);
-    bluePhaseService.lithiumCharge = BluePhaseService.lithiumDischargeBaseCharge.copy();
-    const subNavigation = {
-      location: 'elements',
-      parent: {location: 'blue'},
-      isUnlocked: () => true,
-    } as any;
-
-    expect(service.hasAvailablePurchase(subNavigation)).toBeTrue();
+  it('does not highlight blue elements before fusion is available', () => {
+    expect(service.hasAvailablePurchase(blueElements)).toBeFalse();
   });
 });
