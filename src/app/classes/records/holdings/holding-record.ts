@@ -18,13 +18,7 @@ import {NuclearPotentialHolding} from "../../features/holdings/nuclear-potential
 import {NuclearFissionHolding} from "../../features/holdings/nuclear-fission-holding";
 import {GreenKeyHolding} from "../../features/holdings/green-key-holding";
 import {
-  BerylliumHolding,
-  BoronHolding,
-  CarbonHolding,
   ElectronHolding,
-  LithiumHolding,
-  NitrogenHolding,
-  OxygenHolding,
   NeutronClumpHolding,
   NeutronHolding,
   ProtonHolding
@@ -67,12 +61,6 @@ export class HoldingRecord {
   static electrons: ElectronHolding = new ElectronHolding();
   static neutrons: NeutronHolding = new NeutronHolding();
   static neutronClump: NeutronClumpHolding = new NeutronClumpHolding();
-  static lithium: LithiumHolding = new LithiumHolding();
-  static beryllium: BerylliumHolding = new BerylliumHolding();
-  static boron: BoronHolding = new BoronHolding();
-  static carbon: CarbonHolding = new CarbonHolding();
-  static nitrogen: NitrogenHolding = new NitrogenHolding();
-  static oxygen: OxygenHolding = new OxygenHolding();
 
   static getList(): Holding[] {
     return [
@@ -102,12 +90,6 @@ export class HoldingRecord {
       HoldingRecord.electrons,
       HoldingRecord.neutrons,
       HoldingRecord.neutronClump,
-      HoldingRecord.lithium,
-      HoldingRecord.beryllium,
-      HoldingRecord.boron,
-      HoldingRecord.carbon,
-      HoldingRecord.nitrogen,
-      HoldingRecord.oxygen,
     ]
   }
 

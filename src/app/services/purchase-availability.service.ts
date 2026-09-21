@@ -121,15 +121,6 @@ export class PurchaseAvailabilityService {
   }
 
   private hasAvailableBlueElementPurchase(): boolean {
-    const hasElementUpgradePurchase = this.bluePhaseService.elementDefinitions.some(definition =>
-      definition.element.getUpgrades().some(upgrade => this.bluePhaseService.canBuyElementUpgrade(definition.element, upgrade))
-    );
-
-    return hasElementUpgradePurchase
-      || this.bluePhaseService.canDischargeLithiumBattery()
-      || this.bluePhaseService.canLaunchBerylliumRockets()
-      || this.bluePhaseService.canLaminateBoronFiberglass()
-      || this.bluePhaseService.canPrestigeCarbonLife()
-      || this.bluePhaseService.canToggleOxygenBurn();
+    return this.bluePhaseService.canFuseElement();
   }
 }
