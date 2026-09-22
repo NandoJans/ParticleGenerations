@@ -44,6 +44,9 @@ describe('BluePhaseService', () => {
     UpgradeRecord.blueParticleResonance.bought = Num.ZERO.copy();
     UpgradeRecord.blueCollisionCalibration.amount = Num.ZERO.copy();
     UpgradeRecord.blueCollisionCalibration.bought = Num.ZERO.copy();
+    UpgradeRecord.redGeneratorExtension.amount = Num.ZERO.copy();
+    UpgradeRecord.redGeneratorExtension.bought = Num.ZERO.copy();
+    UpgradeRecord.redGeneratorExtension.effect = undefined;
     MilestoneRecord.stableParticleBeam.unlocked = false;
     MilestoneRecord.denseParticleCollision.unlocked = false;
     service.synchronizePurchases();
@@ -144,17 +147,30 @@ describe('BluePhaseService', () => {
     expect(multiplier.toString(3)).toMatch(/^\d\.\d{2}e\d+$/);
   });
 
-  it('slowly generates whole free red extensions with Boron', () => {
+  it('generates an early Boron extension quickly and scales later extension times by amount^1.1', () => {
     const boron = createBlueElement('boron', 'boron-1', 1, 0);
     service.elements = [boron];
     service.equipElementCard(boron);
 
-    service.tick(new Num(1.8, 3));
+    service.tick(new Num(3, 1));
     expect(service.getBoronCardProgressPercent()).toBeCloseTo(50, 8);
     expect(UpgradeRecord.redGeneratorExtension.effectString()).not.toContain('free from Boron');
 
-    service.tick(new Num(1.8, 3));
+    service.tick(new Num(3, 1));
     expect(UpgradeRecord.redGeneratorExtension.effectString()).toContain('1 free from Boron');
+
+    service.tick(new Num(6, 1));
+    expect(ElementCardEffects.boronFreeExtensions.toNumber()).toBe(1);
+    expect(service.getBoronCardProgressPercent()).toBeCloseTo(100 / Math.pow(2, 1.1), 8);
+  });
+
+  it('keeps the extension multiplier visible alongside Boron free extensions', () => {
+    const extension = UpgradeRecord.redGeneratorExtension;
+    extension.amount = new Num(2, 0);
+    extension.effect = new Num(8, 0);
+    ElementCardEffects.boronFreeExtensions = new Num(1, 0);
+
+    expect(extension.effectString()).toBe('8x (2 purchased + 1 free from Boron)');
   });
 
   it('turns sacrificed elements into neutron-star mass based on weight, level, and rarity', () => {
