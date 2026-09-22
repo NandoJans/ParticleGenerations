@@ -114,7 +114,7 @@ export class BluePhaseService {
 
   getStrangeQuarkEffect(): Num {
     if (this.strangeQuarks.lte(Num.ONE)) return Num.ONE.copy();
-    return this.strangeQuarks.pow(new Num(2.5, -1));
+    return this.strangeQuarks.pow(new Num(5, -1));
   }
 
   applyStrangeQuarkEffect(): void {
