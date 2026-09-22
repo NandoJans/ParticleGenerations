@@ -12,6 +12,7 @@ import {Multiplier} from '../classes/features/multiplier';
 import {MultiplierRecord} from "../classes/records/multipliers/multiplier-record";
 import {ChargerRecord} from "../classes/records/charger/charger-record";
 import {BlueElement, createBlueElement, ElementCardEffects, ElementCardKind, restoreBlueElement, StoredBlueElement} from '../classes/features/elements/blue-element';
+import {StrangeQuarkEffects} from '../classes/features/strange-quark-effects';
 
 export type BlueParticleMode = 'none' | 'protons' | 'electrons';
 export type NeutronStarUpgradeKey = 'protons' | 'electrons' | 'neutrons' | 'activeSlots' | 'inventorySlots' | 'elementLevel' | 'rarity';
@@ -95,6 +96,7 @@ export class BluePhaseService {
   tick(speed: Num): void {
     if (!this.isUnlocked()) return;
 
+    this.applyStrangeQuarkEffect();
     this.recordHighestNeutrons();
     this.detectPurchases();
     const generation = this.getParticleGeneration().mul(speed);
@@ -108,6 +110,17 @@ export class BluePhaseService {
     this.applyElementCardEffects();
     this.chargeElementCardEffects(speed);
     this.generateStrangeQuarks(speed);
+  }
+
+  getStrangeQuarkEffect(): Num {
+    if (this.strangeQuarks.lte(Num.ONE)) return Num.ONE.copy();
+    return this.strangeQuarks.pow(new Num(2.5, -1));
+  }
+
+  applyStrangeQuarkEffect(): void {
+    StrangeQuarkEffects.redGeneratorBuyMultiplier = this.isUnlocked()
+      ? this.getStrangeQuarkEffect()
+      : Num.ONE.copy();
   }
 
   applyNeutronMeltdown(): void {
@@ -385,6 +398,7 @@ export class BluePhaseService {
     if (!this.canBuyNeutronStarUpgrade(upgrade)) return;
     this.strangeQuarks = this.strangeQuarks.sub(this.getNeutronStarUpgradeCost(upgrade));
     this.neutronStarUpgrades[upgrade.key]++;
+    this.applyStrangeQuarkEffect();
     this.save();
   }
 
@@ -496,6 +510,7 @@ export class BluePhaseService {
     this.mergeLegacyNeutronClump();
     this.synchronizePurchases();
     this.applyNeutronMeltdown();
+    this.applyStrangeQuarkEffect();
     this.applyElementCardEffects();
     this.applyNeutronStarMassMilestones();
   }
@@ -503,6 +518,7 @@ export class BluePhaseService {
   init(): void {
     this.synchronizePurchases();
     this.applyNeutronMeltdown();
+    this.applyStrangeQuarkEffect();
     this.applyElementCardEffects();
   }
 }

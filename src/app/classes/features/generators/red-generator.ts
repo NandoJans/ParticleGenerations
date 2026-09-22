@@ -13,6 +13,7 @@ import {Enhancement} from "../enhancements/enhancement";
 import {EnhancementRecord} from "../../records/enhancement-record";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
 import {ElementCardEffects} from "../elements/blue-element";
+import {StrangeQuarkEffects} from "../strange-quark-effects";
 
 export abstract class RedGenerator extends Generator {
   type: string = 'red-particle-generator';
@@ -48,6 +49,11 @@ export abstract class RedGenerator extends Generator {
       this.multiplierUpgrade,
       this.buyMultiplierUpgrade,
     ];
+  }
+
+  override run(speed: Num): any {
+    this.baseMulMod = this.baseMulMod.mul(StrangeQuarkEffects.redGeneratorBuyMultiplier);
+    return super.run(speed);
   }
 
   protected override applyFinalMultiplierEffects(multiplier: Num): Num {
