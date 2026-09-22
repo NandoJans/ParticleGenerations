@@ -71,6 +71,7 @@ export class TickService {
     this.checkRequirements();
     this.fixes();
     this.bluePhaseService.applyNeutronMeltdown();
+    this.bluePhaseService.applyStrangeQuarkEffect();
 
     this.calculationOrder.forEach((elements, index) => {
       App.currentCalculationOrder = index;

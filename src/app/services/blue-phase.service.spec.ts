@@ -12,6 +12,7 @@ import {PrestigeLayersService} from './prestige-layers.service';
 import {ChargerRecord} from '../classes/records/charger/charger-record';
 import {MultiplierRecord} from '../classes/records/multipliers/multiplier-record';
 import {createBlueElement, ElementCardEffects} from '../classes/features/elements/blue-element';
+import {StrangeQuarkEffects} from '../classes/features/strange-quark-effects';
 
 describe('BluePhaseService', () => {
   let service: BluePhaseService;
@@ -19,6 +20,7 @@ describe('BluePhaseService', () => {
   beforeEach(() => {
     service = new BluePhaseService();
     ElementCardEffects.reset();
+    StrangeQuarkEffects.reset();
     service.unlocked = true;
     service.activeParticle = 'none';
 
@@ -196,6 +198,23 @@ describe('BluePhaseService', () => {
 
     expect(service.strangeQuarks.toNumber()).toBeCloseTo(10, 8);
     expect(service.getStrangeQuarkGeneration().toNumber()).toBeCloseTo(1, 8);
+  });
+
+  it('raises strange quarks to the 0.25 power for the red generator buy multiplier', () => {
+    service.strangeQuarks = new Num(1.6, 1);
+
+    service.applyStrangeQuarkEffect();
+
+    expect(service.getStrangeQuarkEffect().toNumber()).toBeCloseTo(2, 8);
+    expect(StrangeQuarkEffects.redGeneratorBuyMultiplier.toNumber()).toBeCloseTo(2, 8);
+  });
+
+  it('keeps the strange-quark buy multiplier at one below one strange quark', () => {
+    service.strangeQuarks = new Num(6.25, -2);
+
+    service.applyStrangeQuarkEffect();
+
+    expect(StrangeQuarkEffects.redGeneratorBuyMultiplier.equals(Num.ONE)).toBeTrue();
   });
 
   it('spends strange quarks on blue boosts and capacity upgrades', () => {
