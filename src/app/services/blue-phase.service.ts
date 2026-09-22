@@ -321,13 +321,36 @@ export class BluePhaseService {
       this.lithiumCardChargeSeconds = this.lithiumCardChargeSeconds.add(speed.mul(ElementCardEffects.lithiumChargeRate));
     }
     if (ElementCardEffects.boronExtensionRate.gt(Num.ZERO)) {
-      // A level-one Boron produces one extension per hour; whole extensions are applied.
-      this.boronCardExtensionProgress = this.boronCardExtensionProgress.add(
-        speed.mul(ElementCardEffects.boronExtensionRate).div(new Num(3.6, 3))
-      );
+      this.chargeBoronExtensions(speed.mul(ElementCardEffects.boronExtensionRate).toNumber());
     }
     ElementCardEffects.lithiumChargeMultiplier = this.getLithiumCardMultiplier();
     ElementCardEffects.boronFreeExtensions = this.boronCardExtensionProgress.floor();
+  }
+
+  /**
+   * Spend Boron's effective charge time one extension at a time. The first free
+   * extension takes one minute, while extension n takes n^1.1 minutes. Besides
+   * making the early reward visible quickly, consuming each tier separately
+   * prevents a long/offline tick from receiving every extension at tier-one speed.
+   */
+  private chargeBoronExtensions(effectiveSeconds: number): void {
+    let completed = Math.floor(this.boronCardExtensionProgress.toNumber());
+    let partial = this.boronCardExtensionProgress.toNumber() - completed;
+
+    while (effectiveSeconds > 0) {
+      const secondsForNext = 60 * Math.pow(completed + 1, 1.1);
+      const secondsRemaining = (1 - partial) * secondsForNext;
+      if (effectiveSeconds < secondsRemaining) {
+        partial += effectiveSeconds / secondsForNext;
+        effectiveSeconds = 0;
+      } else {
+        effectiveSeconds -= secondsRemaining;
+        completed++;
+        partial = 0;
+      }
+    }
+
+    this.boronCardExtensionProgress = new Num(completed + partial, 0);
   }
 
   getLithiumCardMultiplier(): Num {

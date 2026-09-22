@@ -75,7 +75,7 @@ export class BerylliumElement extends BlueElement {
 export class BoronElement extends BlueElement {
   readonly kind = 'boron'; readonly name = 'Boron'; readonly symbol = 'B'; readonly primaryColor = '#fca5a5';
   getEffect(): Num { return new Num(Math.max(1, this.level) * this.quality, 0); }
-  getEffectDescription(): string { return `Slowly generates free red extensions at ${this.getEffect().toString(3)}x speed until the next Blue reset`; }
+  getEffectDescription(): string { return `Generates free red extensions at ${this.getEffect().toString(3)}x speed; the first is quick, then each one takes amount^1.1 longer until the next Blue reset`; }
   applyEffect(): void { ElementCardEffects.boronExtensionRate = ElementCardEffects.boronExtensionRate.add(this.getEffect()); }
 }
 

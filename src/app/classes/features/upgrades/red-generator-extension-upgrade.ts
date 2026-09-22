@@ -70,7 +70,9 @@ export class RedGeneratorExtensionUpgrade extends RedUpgrade {
 
   override effectString() {
     if (ElementCardEffects.boronFreeExtensions.gt(Num.ZERO)) {
-      return `${this.amount.toString()} purchased + ${ElementCardEffects.boronFreeExtensions.toString()} free from Boron`;
+      const extensionEffect = super.effectString();
+      const sourceBreakdown = `${this.amount.toString()} purchased + ${ElementCardEffects.boronFreeExtensions.toString()} free from Boron`;
+      return extensionEffect ? `${extensionEffect} (${sourceBreakdown})` : sourceBreakdown;
     }
     if (this.amount.toNumber() < 5) {
       switch (this.amount.toNumber()) {
