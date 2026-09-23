@@ -71,6 +71,11 @@ export class BluePhaseService {
       goal: new Num(1, 1),
       name: 'Yellow Spark',
       description: 'Start Blue runs with 1 Yellow Prestige, 1 Yellow Particle, and 1 Yellow Key.'
+    },
+    {
+      goal: new Num(2.5, 2),
+      name: 'Particle Compression',
+      description: 'Square the log10(red particles) multiplier to electron and proton generation.'
     }
   ];
 
@@ -185,7 +190,10 @@ export class BluePhaseService {
   }
 
   getRedParticleGenerationBoost(): Num {
-    return HoldingRecord.redParticles.amount.log10().max(Num.ONE);
+    const redParticleOrders = HoldingRecord.redParticles.amount.log10().max(Num.ONE);
+    return this.isNeutronStarMassMilestoneUnlocked(this.neutronStarMassMilestones[1])
+      ? redParticleOrders.pow(Num.TWO)
+      : redParticleOrders;
   }
 
   getCollisionGain(): Num {

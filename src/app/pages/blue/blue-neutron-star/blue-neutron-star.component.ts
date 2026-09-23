@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {BlueElement} from '../../../classes/features/elements/blue-element';
-import {BluePhaseService} from '../../../services/blue-phase.service';
+import {BluePhaseService, NeutronStarMassMilestone} from '../../../services/blue-phase.service';
 import {Num} from '../../../num';
 
 interface BackgroundStar {
@@ -20,6 +20,7 @@ interface BackgroundStar {
 })
 export class BlueNeutronStarComponent {
   sacrificeOpen = false;
+  milestonesOpen = false;
   readonly selectedElementIds = new Set<string>();
   readonly starLayers = [
     this.createStarLayer(34, .65, 2.1),
@@ -43,6 +44,24 @@ export class BlueNeutronStarComponent {
   get jetStrength(): number { return Math.min(1, .16 + this.massMagnitude / 32); }
 
   get jetHeight(): number { return Math.min(360, 70 + this.massMagnitude * 3); }
+
+  get nextMassMilestone(): NeutronStarMassMilestone | undefined {
+    return this.bluePhase.neutronStarMassMilestones.find(
+      milestone => !this.bluePhase.isNeutronStarMassMilestoneUnlocked(milestone)
+    );
+  }
+
+  get previousMassMilestones(): NeutronStarMassMilestone[] {
+    return this.bluePhase.neutronStarMassMilestones.filter(
+      milestone => this.bluePhase.isNeutronStarMassMilestoneUnlocked(milestone)
+    );
+  }
+
+  get upcomingMassMilestones(): NeutronStarMassMilestone[] {
+    return this.bluePhase.neutronStarMassMilestones.filter(
+      milestone => !this.bluePhase.isNeutronStarMassMilestoneUnlocked(milestone)
+    );
+  }
 
   private createStarLayer(count: number, speed: number, maximumSize: number): BackgroundStar[] {
     return Array.from({length: count}, () => ({
