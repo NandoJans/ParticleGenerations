@@ -10,6 +10,7 @@ import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {Styles} from "../../enums/styles";
 import {UpgradeRecord} from "../../records/upgrades/upgrade-record";
+import {ElementCardEffects} from "../elements/blue-element";
 
 export class RedAcceleratorGenerator extends Generator {
   baseCost: Num = new Num(1, 1e100);
@@ -41,7 +42,7 @@ export class RedAcceleratorGenerator extends Generator {
   }
 
   protected override getGenerateAmount(): Num {
-    let generate: Num = super.getGenerateAmount();
+    let generate: Num = super.getGenerateAmount().mul(ElementCardEffects.carbonAcceleratorGeneration);
 
     let log = HoldingRecord.redParticles.amount
       .div(new Num(1, 75))
@@ -50,7 +51,7 @@ export class RedAcceleratorGenerator extends Generator {
       log = new Num(1, 0);
 
     }
-    generate = generate.mul(log)
+    generate = generate.mul(log).mul(ElementCardEffects.oxygenRedParticleEffect)
 
     generate = generate.mul(new Num(1, -2));
 

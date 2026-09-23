@@ -110,6 +110,31 @@ describe('BluePhaseService', () => {
     ]);
   });
 
+  it('unlocks Carbon, Nitrogen, and Oxygen at neutron stages five through seven', () => {
+    HoldingRecord.neutrons.amount = new Num(1, 5);
+    expect(service.getUnlockedCardKinds()).toEqual(['helium', 'lithium', 'beryllium', 'boron', 'carbon']);
+
+    HoldingRecord.neutrons.amount = new Num(1, 6);
+    expect(service.getUnlockedCardKinds()).toEqual(['helium', 'lithium', 'beryllium', 'boron', 'carbon', 'nitrogen']);
+
+    HoldingRecord.neutrons.amount = new Num(1, 7);
+    expect(service.getUnlockedCardKinds()).toEqual(['helium', 'lithium', 'beryllium', 'boron', 'carbon', 'nitrogen', 'oxygen']);
+  });
+
+  it('applies active Carbon, Nitrogen, and Oxygen accelerator boosts', () => {
+    const carbon = createBlueElement('carbon', 'carbon-1', 5, 20);
+    const nitrogen = createBlueElement('nitrogen', 'nitrogen-1', 6, 20);
+    const oxygen = createBlueElement('oxygen', 'oxygen-1', 7, 20);
+    service.neutronStarUpgrades.activeSlots = 1;
+    service.elements = [carbon, nitrogen, oxygen];
+
+    service.elements.forEach(element => service.equipElementCard(element));
+
+    expect(ElementCardEffects.carbonAcceleratorGeneration.toNumber()).toBeCloseTo(carbon.getEffect().toNumber(), 10);
+    expect(ElementCardEffects.nitrogenAcceleratorEffect.toNumber()).toBeCloseTo(nitrogen.getEffect().toNumber(), 10);
+    expect(ElementCardEffects.oxygenRedParticleEffect.toNumber()).toBeCloseTo(oxygen.getEffect().toNumber(), 10);
+  });
+
   it('applies active Helium and Beryllium effects to their red upgrade calculations', () => {
     const helium = createBlueElement('helium', 'helium-1', 10, 25);
     const beryllium = createBlueElement('beryllium', 'beryllium-1', 10, 25);
