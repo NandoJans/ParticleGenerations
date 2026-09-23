@@ -1,9 +1,12 @@
 import {
   BerylliumElement,
   BoronElement,
+  CarbonElement,
   ElementCardEffects,
   HeliumElement,
   LithiumElement,
+  NitrogenElement,
+  OxygenElement,
   restoreBlueElement
 } from './blue-element';
 
@@ -18,6 +21,9 @@ describe('ElementCardEffects', () => {
     expect(ElementCardEffects.lithiumChargeMultiplier.toNumber()).toBe(1);
     expect(ElementCardEffects.berylliumExtensionStrength.toNumber()).toBe(1);
     expect(ElementCardEffects.boronFreeExtensions.toNumber()).toBe(0);
+    expect(ElementCardEffects.carbonAcceleratorGeneration.toNumber()).toBe(1);
+    expect(ElementCardEffects.nitrogenAcceleratorEffect.toNumber()).toBe(1);
+    expect(ElementCardEffects.oxygenRedParticleEffect.toNumber()).toBe(1);
   });
 
   it('creates independently stored concrete element instances', () => {
@@ -67,5 +73,19 @@ describe('ElementCardEffects', () => {
     element.applyEffect();
 
     expect(ElementCardEffects.boronExtensionRate.toNumber()).toBeCloseTo(element.getEffect().toNumber(), 10);
+  });
+
+  it('applies Carbon, Nitrogen, and Oxygen to their Red Accelerator effects', () => {
+    const elements = [
+      new CarbonElement('carbon-1', 5, 20),
+      new NitrogenElement('nitrogen-1', 6, 20),
+      new OxygenElement('oxygen-1', 7, 20)
+    ];
+
+    elements.forEach(element => element.applyEffect());
+
+    expect(ElementCardEffects.carbonAcceleratorGeneration.toNumber()).toBeCloseTo(elements[0].getEffect().toNumber(), 10);
+    expect(ElementCardEffects.nitrogenAcceleratorEffect.toNumber()).toBeCloseTo(elements[1].getEffect().toNumber(), 10);
+    expect(ElementCardEffects.oxygenRedParticleEffect.toNumber()).toBeCloseTo(elements[2].getEffect().toNumber(), 10);
   });
 });

@@ -248,7 +248,8 @@ export class BluePhaseService {
 
   getUnlockedCardKinds(): ElementCardKind[] {
     const stage = this.getNeutronStage();
-    return (['helium', 'lithium', 'beryllium', 'boron'] as ElementCardKind[]).slice(0, Math.min(4, stage));
+    return (['helium', 'lithium', 'beryllium', 'boron', 'carbon', 'nitrogen', 'oxygen'] as ElementCardKind[])
+      .slice(0, Math.min(7, stage));
   }
 
   fuseElement(random: () => number = Math.random): BlueElement | null {
@@ -378,7 +379,9 @@ export class BluePhaseService {
   isNeutronStarUnlocked(): boolean { return this.elementsDiscovered >= 10; }
 
   getElementMass(element: BlueElement): Num {
-    const atomicWeight: Record<ElementCardKind, number> = {helium: 4, lithium: 7, beryllium: 9, boron: 11};
+    const atomicWeight: Record<ElementCardKind, number> = {
+      helium: 4, lithium: 7, beryllium: 9, boron: 11, carbon: 12, nitrogen: 14, oxygen: 16
+    };
     return new Num(atomicWeight[element.kind] * Math.max(1, element.level) * (1 + element.rarity / 100), 0);
   }
 

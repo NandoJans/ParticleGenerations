@@ -7,6 +7,7 @@ import {HoldingDisplayFactory} from "../../factories/holding-display-factory";
 import {GeneratorRecord} from "../../records/generators/generator-record";
 import {ResetHelper} from "../../helpers/reset-helper";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
+import {ElementCardEffects} from "../elements/blue-element";
 
 export class RedAcceleratorHolding extends Holding {
   abbreviation: string = 'RA';
@@ -33,7 +34,7 @@ export class RedAcceleratorHolding extends Holding {
   override action(): Num {
     let effect = this.amount.sqrt();
     if (effect.gt(new Num(0, 0))) {
-      effect = effect.mul(this.mulEffect);
+      effect = effect.mul(this.mulEffect).mul(ElementCardEffects.nitrogenAcceleratorEffect);
       MultiplierRecord.redParticleGenerators.correct(effect);
       this.mulEffect = new Num(1, 0);
       return effect

@@ -1,6 +1,6 @@
 import {Num} from '../../../num';
 
-export type ElementCardKind = 'helium' | 'lithium' | 'beryllium' | 'boron';
+export type ElementCardKind = 'helium' | 'lithium' | 'beryllium' | 'boron' | 'carbon' | 'nitrogen' | 'oxygen';
 
 export interface StoredBlueElement {
   id: string;
@@ -16,6 +16,9 @@ export class ElementCardEffects {
   static berylliumExtensionStrength = Num.ONE.copy();
   static boronFreeExtensions = Num.ZERO.copy();
   static boronExtensionRate = Num.ZERO.copy();
+  static carbonAcceleratorGeneration = Num.ONE.copy();
+  static nitrogenAcceleratorEffect = Num.ONE.copy();
+  static oxygenRedParticleEffect = Num.ONE.copy();
 
   static reset(): void {
     this.heliumPower = Num.ONE.copy();
@@ -24,6 +27,9 @@ export class ElementCardEffects {
     this.berylliumExtensionStrength = Num.ONE.copy();
     this.boronFreeExtensions = Num.ZERO.copy();
     this.boronExtensionRate = Num.ZERO.copy();
+    this.carbonAcceleratorGeneration = Num.ONE.copy();
+    this.nitrogenAcceleratorEffect = Num.ONE.copy();
+    this.oxygenRedParticleEffect = Num.ONE.copy();
   }
 }
 
@@ -79,12 +85,37 @@ export class BoronElement extends BlueElement {
   applyEffect(): void { ElementCardEffects.boronExtensionRate = ElementCardEffects.boronExtensionRate.add(this.getEffect()); }
 }
 
+abstract class RedAcceleratorElement extends BlueElement {
+  getEffect(): Num { return new Num(1 + Math.log10(this.level + 1) * this.quality * 2, 0); }
+}
+
+export class CarbonElement extends RedAcceleratorElement {
+  readonly kind = 'carbon'; readonly name = 'Carbon'; readonly symbol = 'C'; readonly primaryColor = '#64748b';
+  getEffectDescription(): string { return `Multiplies Red Accelerator generation by ${this.getEffect().toString(3)}x`; }
+  applyEffect(): void { ElementCardEffects.carbonAcceleratorGeneration = ElementCardEffects.carbonAcceleratorGeneration.mul(this.getEffect()); }
+}
+
+export class NitrogenElement extends RedAcceleratorElement {
+  readonly kind = 'nitrogen'; readonly name = 'Nitrogen'; readonly symbol = 'N'; readonly primaryColor = '#60a5fa';
+  getEffectDescription(): string { return `Multiplies the Red Accelerator effect by ${this.getEffect().toString(3)}x`; }
+  applyEffect(): void { ElementCardEffects.nitrogenAcceleratorEffect = ElementCardEffects.nitrogenAcceleratorEffect.mul(this.getEffect()); }
+}
+
+export class OxygenElement extends RedAcceleratorElement {
+  readonly kind = 'oxygen'; readonly name = 'Oxygen'; readonly symbol = 'O'; readonly primaryColor = '#f87171';
+  getEffectDescription(): string { return `Multiplies the Red Particle effect on Red Accelerator generation by ${this.getEffect().toString(3)}x`; }
+  applyEffect(): void { ElementCardEffects.oxygenRedParticleEffect = ElementCardEffects.oxygenRedParticleEffect.mul(this.getEffect()); }
+}
+
 export function createBlueElement(kind: ElementCardKind, id: string, level: number, rarity: number): BlueElement {
   switch (kind) {
     case 'helium': return new HeliumElement(id, level, rarity);
     case 'lithium': return new LithiumElement(id, level, rarity);
     case 'beryllium': return new BerylliumElement(id, level, rarity);
     case 'boron': return new BoronElement(id, level, rarity);
+    case 'carbon': return new CarbonElement(id, level, rarity);
+    case 'nitrogen': return new NitrogenElement(id, level, rarity);
+    case 'oxygen': return new OxygenElement(id, level, rarity);
   }
 }
 
