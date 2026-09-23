@@ -38,17 +38,18 @@
     </section>
 
     <section class="mass-milestones">
-      <div class="upgrade-heading"><p class="eyebrow">STELLAR MASS MILESTONES</p><h2>Gravitational thresholds</h2><span>Permanent rewards based on total neutron-star mass</span></div>
+      <div class="upgrade-heading"><p class="eyebrow">STELLAR MASS MILESTONES</p><h2>Next gravitational threshold</h2><span>Permanent rewards based on total neutron-star mass</span></div>
       <div class="milestone-grid">
-        @for (milestone of bluePhase.neutronStarMassMilestones; track milestone.name) {
-          <article [class.unlocked]="bluePhase.isNeutronStarMassMilestoneUnlocked(milestone)">
-            <span>{{ milestone.goal.toString() }} nM</span>
-            <h3>{{ milestone.name }}</h3>
-            <p>{{ milestone.description }}</p>
-            <strong>{{ bluePhase.isNeutronStarMassMilestoneUnlocked(milestone) ? 'UNLOCKED' : 'LOCKED' }}</strong>
+        @if (nextMassMilestone; as milestone) {
+          <article>
+            <span>{{ bluePhase.neutronStarMass.toString(3) }} / {{ milestone.goal.toString() }} nM</span>
+            <h3>{{ milestone.name }}</h3><p>{{ milestone.description }}</p><strong>NEXT MILESTONE</strong>
           </article>
+        } @else {
+          <article class="unlocked"><h3>All thresholds reached</h3><p>Every stellar mass milestone is active.</p><strong>COMPLETE</strong></article>
         }
       </div>
+      <button class="milestone-history-button" type="button" (click)="milestonesOpen = true">View previous &amp; upcoming milestones</button>
     </section>
 
     <section class="upgrades">
@@ -93,6 +94,27 @@
           <button class="confirm-sacrifice" type="button" [disabled]="!selectedElements.length" (click)="sacrificeSelectedElements()">
             Sacrifice for {{ selectedMass.toString(3) }} mass
           </button>
+        </section>
+      </div>
+    }
+
+    @if (milestonesOpen) {
+      <div class="sacrifice-backdrop" (click)="milestonesOpen = false">
+        <section class="sacrifice-dialog milestone-dialog" role="dialog" aria-modal="true" aria-labelledby="milestones-title" (click)="$event.stopPropagation()">
+          <button class="close-button" type="button" aria-label="Close milestone history" (click)="milestonesOpen = false">×</button>
+          <p class="eyebrow">STELLAR ARCHIVE</p><h2 id="milestones-title">Mass milestones</h2>
+          <h3 class="milestone-section-title">Previous</h3>
+          <div class="milestone-grid compact">
+            @for (milestone of previousMassMilestones; track milestone.name) {
+              <article class="unlocked"><span>{{ milestone.goal.toString() }} nM</span><h3>{{ milestone.name }}</h3><p>{{ milestone.description }}</p><strong>UNLOCKED</strong></article>
+            } @empty { <p class="empty-milestones">No milestones reached yet.</p> }
+          </div>
+          <h3 class="milestone-section-title">Upcoming</h3>
+          <div class="milestone-grid compact">
+            @for (milestone of upcomingMassMilestones; track milestone.name) {
+              <article><span>{{ milestone.goal.toString() }} nM</span><h3>{{ milestone.name }}</h3><p>{{ milestone.description }}</p><strong>LOCKED</strong></article>
+            } @empty { <p class="empty-milestones">All milestones reached.</p> }
+          </div>
         </section>
       </div>
     }

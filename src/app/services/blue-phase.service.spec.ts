@@ -372,6 +372,20 @@ describe('BluePhaseService', () => {
     expect(service.getParticleGeneration().toNumber()).toBeCloseTo(0.006, 8);
   });
 
+  it('squares the red-particle electron and proton multiplier at 250 neutron-star mass', () => {
+    HoldingRecord.redParticles.amount = new Num(1, 6);
+    service.neutronStarMass = new Num(2.49, 2);
+    expect(service.getRedParticleGenerationBoost().toNumber()).toBe(6);
+
+    service.neutronStarMass = new Num(2.5, 2);
+
+    expect(service.getRedParticleGenerationBoost().toNumber()).toBe(36);
+    service.activeParticle = 'protons';
+    expect(service.getParticleGeneration().toNumber()).toBeCloseTo(0.036, 8);
+    service.activeParticle = 'electrons';
+    expect(service.getParticleGeneration().toNumber()).toBeCloseTo(0.036, 8);
+  });
+
   it('applies Blue Particle research to beam generation and collision gain', () => {
     UpgradeRecord.blueParticleResonance.amount = Num.ONE.copy();
     UpgradeRecord.blueCollisionCalibration.amount = Num.ONE.copy();
