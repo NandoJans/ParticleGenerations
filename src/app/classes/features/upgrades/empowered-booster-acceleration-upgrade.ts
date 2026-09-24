@@ -35,8 +35,8 @@ export class EmpoweredBoosterAccelerationUpgrade extends YellowUpgrade {
   baseCost: Num = new Num(1, 12);
   cost: Num = new Num(1, 12);
 
-  override buffer: Num = new Num(1.5, 0);
-  override baseBuffer: Num = new Num(1.5, 0);
+  override buffer: Num = new Num(2, 0);
+  override baseBuffer: Num = new Num(2, 0);
 
 
   override canEnhance(): boolean {
