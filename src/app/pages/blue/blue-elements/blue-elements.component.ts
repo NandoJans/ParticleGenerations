@@ -26,7 +26,7 @@ export class BlueElementsComponent {
     return Array.from({length: this.activeSlotCount}, (_, index) => elements[index]);
   }
 
-  get fusionLevel(): number { return this.bluePhase.getNeutronStage(); }
+  get fusionLevel(): number { return this.bluePhase.getElementGenerationLevel(); }
 
   fuse(): void { this.bluePhase.fuseElement(); }
 

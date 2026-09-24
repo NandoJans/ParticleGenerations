@@ -246,6 +246,14 @@ export class BluePhaseService {
     return Math.max(0, Math.floor(HoldingRecord.neutrons.amount.log10().toNumber()));
   }
 
+  getElementGenerationLevel(): number {
+    let elementLevel = this.getNeutronStage() + this.neutronStarUpgrades.elementLevel;
+    if (this.isNeutronStarMassMilestoneUnlocked(this.neutronStarMassMilestones[2])) {
+      elementLevel += (HoldingRecord.protons.amount.exponent + HoldingRecord.electrons.amount.exponent) / 2;
+    }
+    return Math.floor(elementLevel);
+  }
+
   canFuseElement(): boolean {
     return HoldingRecord.neutrons.amount.greq(new Num(1, 1))
       && this.elements.length < this.getElementInventorySlots();
@@ -260,7 +268,6 @@ export class BluePhaseService {
   fuseElement(random: () => number = Math.random): BlueElement | null {
     if (!this.canFuseElement()) return null;
     this.recordHighestNeutrons();
-    const neutronCount = Math.max(10, HoldingRecord.neutrons.amount.toNumber());
     const kinds = this.getUnlockedCardKinds();
     // Every element in the currently unlocked pool has the same chance to be
     // generated. Clamp the injected random value as well so deterministic
@@ -268,11 +275,8 @@ export class BluePhaseService {
     const kindIndex = Math.min(kinds.length - 1, Math.floor(Math.max(0, random()) * kinds.length));
     const kind = kinds[kindIndex];
 
-    const neutronStage = Math.floor(Math.log10(neutronCount));
-    let elementLevel = neutronStage + this.neutronStarUpgrades.elementLevel;
-    if (this.isNeutronStarMassMilestoneUnlocked(this.neutronStarMassMilestones[2])) {
-      elementLevel += (HoldingRecord.protons.amount.exponent + HoldingRecord.electrons.amount.exponent) / 2;
-    }
+    const neutronStage = this.getNeutronStage();
+    const elementLevel = this.getElementGenerationLevel();
     const rarityCeiling = Math.min(99.99, neutronStage * 10);
     const rarityExponent = 2.5 / (1 + this.neutronStarUpgrades.rarity * .2);
     const rarity = Math.min(rarityCeiling, Math.pow(random(), rarityExponent) * rarityCeiling);

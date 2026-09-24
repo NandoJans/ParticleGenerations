@@ -18,7 +18,7 @@
     </div>
     <button class="fuse-button" type="button" [disabled]="!bluePhase.canFuseElement()" (click)="fuse()">
       FUSE ELEMENT
-      <small>Reset the Blue phase</small>
+      <small>{{ bluePhase.canFuseElement() ? 'Create Level ' + fusionLevel + ' coin' : 'Reset the Blue phase' }}</small>
     </button>
   </section>
 
