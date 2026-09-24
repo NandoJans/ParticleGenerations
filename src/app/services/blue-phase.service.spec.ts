@@ -425,7 +425,8 @@ describe('BluePhaseService', () => {
     HoldingRecord.electrons.amount = new Num(1, 11);
     service.neutronStarMass = new Num(5, 2);
 
-    expect(service.fuseElement(() => 0)?.level).toBe(21.5);
+    expect(service.getElementGenerationLevel()).toBe(21);
+    expect(service.fuseElement(() => 0)?.level).toBe(21);
   });
 
   it('applies Blue Particle research to beam generation and collision gain', () => {
