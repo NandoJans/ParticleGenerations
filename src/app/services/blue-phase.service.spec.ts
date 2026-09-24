@@ -121,6 +121,16 @@ describe('BluePhaseService', () => {
     expect(service.getUnlockedCardKinds()).toEqual(['helium', 'lithium', 'beryllium', 'boron', 'carbon', 'nitrogen', 'oxygen']);
   });
 
+  it('unlocks elements at powers of five after reaching 2,500 neutron-star mass', () => {
+    service.neutronStarMass = new Num(2.5, 3);
+
+    HoldingRecord.neutrons.amount = new Num(2.5, 1);
+    expect(service.getUnlockedCardKinds()).toEqual(['helium', 'lithium']);
+
+    HoldingRecord.neutrons.amount = new Num(1.25, 2);
+    expect(service.getUnlockedCardKinds()).toEqual(['helium', 'lithium', 'beryllium']);
+  });
+
   it('applies active Carbon, Nitrogen, and Oxygen accelerator boosts', () => {
     const carbon = createBlueElement('carbon', 'carbon-1', 5, 20);
     const nitrogen = createBlueElement('nitrogen', 'nitrogen-1', 6, 20);

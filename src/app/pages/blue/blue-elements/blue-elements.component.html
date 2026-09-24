@@ -6,7 +6,10 @@
       <h1>Element Fusion</h1>
       <p>Spend a Blue run to mint one permanent element coin. Only active coins apply their effects.</p>
     </div>
-    <div class="stage-readout"><span>NEUTRONS</span><strong>{{ neutrons.amount.toString() }}</strong></div>
+    <div class="header-actions">
+      <button class="guide-button" type="button" (click)="showElementGuide = true">ELEMENT GUIDE</button>
+      <div class="stage-readout"><span>NEUTRONS</span><strong>{{ neutrons.amount.toString() }}</strong></div>
+    </div>
   </header>
 
   <section class="fusion-panel">
@@ -103,6 +106,46 @@
                 (click)="equip(selectedElement); closeDetails()">
           {{ bluePhase.isElementCardActive(selectedElement) ? 'ACTIVE UNTIL CLEARED' : 'ACTIVATE COIN' }}
         </button>
+      </section>
+    </div>
+  }
+
+  @if (showElementGuide) {
+    <div class="details-backdrop" (click)="closeElementGuide()">
+      <section class="element-guide" role="dialog" aria-modal="true" aria-labelledby="element-guide-title" (click)="$event.stopPropagation()">
+        <button class="close-button" type="button" aria-label="Close element guide" (click)="closeElementGuide()">×</button>
+        <p class="eyebrow">FUSION CHAMBER // DISCOVERY TABLE</p>
+        <h2 id="element-guide-title">Creatable elements</h2>
+        <p class="guide-intro">Your current Neutrons determine the possible result of the next fusion. Every available element has an equal chance.</p>
+        <p class="unlock-rule">
+          New elements unlock at powers of <strong>{{ bluePhase.usesCompressedElementUnlocks() ? '5' : '10' }}</strong>.
+          @if (!bluePhase.usesCompressedElementUnlocks()) { Reach <strong>2,500 stellar mass</strong> to reduce these requirements. }
+        </p>
+        <div class="discovery-grid">
+          @for (discovery of bluePhase.elementDiscoveries; track discovery.kind; let index = $index) {
+            @if (bluePhase.getUnlockedCardKinds().includes(discovery.kind)) {
+              <button class="discovery-card unlocked" type="button" [class.selected]="selectedGuideKind === discovery.kind"
+                      (click)="inspectGuideElement(discovery.kind)">
+                <span>{{ getElementPreview(discovery.kind).symbol }}</span>
+                <strong>{{ getElementPreview(discovery.kind).name }}</strong>
+                <small>UNLOCKED · {{ bluePhase.getElementUnlockRequirement(discovery.unlockIndex).toString() }} N</small>
+              </button>
+            } @else {
+              <div class="discovery-card locked" [attr.aria-label]="'Hidden element; unlocks at ' + bluePhase.getElementUnlockRequirement(discovery.unlockIndex).toString() + ' Neutrons'">
+                <span>?</span><strong>Hidden</strong>
+                <small>{{ bluePhase.getElementUnlockRequirement(discovery.unlockIndex).toString() }} N REQUIRED</small>
+              </div>
+            }
+          }
+        </div>
+        @if (guideElement; as element) {
+          <article class="guide-details" [style.--primary]="element.primaryColor">
+            <span>{{ element.symbol }}</span>
+            <div><h3>{{ element.name }}</h3><p>{{ element.getEffectDescription() }}</p><small>Previewed at your next coin's Level {{ element.level }} with base rarity.</small></div>
+          </article>
+        } @else {
+          <p class="guide-prompt">Select an unlocked element to inspect its effect.</p>
+        }
       </section>
     </div>
   }

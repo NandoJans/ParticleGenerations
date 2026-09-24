@@ -32,6 +32,11 @@ export interface NeutronStarMassMilestone {
   description: string;
 }
 
+export interface ElementDiscovery {
+  kind: ElementCardKind;
+  unlockIndex: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -81,8 +86,17 @@ export class BluePhaseService {
       goal: new Num(5, 2),
       name: 'Atomic Compression',
       description: 'Add half the combined proton and electron exponents to generated element levels.'
+    },
+    {
+      goal: new Num(2.5, 3),
+      name: 'Elemental Compression',
+      description: 'Unlock new elements at powers of 5 Neutrons instead of powers of 10.'
     }
   ];
+
+  readonly elementDiscoveries: ElementDiscovery[] = (
+    ['helium', 'lithium', 'beryllium', 'boron', 'carbon', 'nitrogen', 'oxygen'] as ElementCardKind[]
+  ).map((kind, index) => ({kind, unlockIndex: index + 1}));
 
   lithiumCardChargeSeconds = Num.ZERO.copy();
   boronCardExtensionProgress = Num.ZERO.copy();
@@ -260,9 +274,19 @@ export class BluePhaseService {
   }
 
   getUnlockedCardKinds(): ElementCardKind[] {
-    const stage = this.getNeutronStage();
-    return (['helium', 'lithium', 'beryllium', 'boron', 'carbon', 'nitrogen', 'oxygen'] as ElementCardKind[])
-      .slice(0, Math.min(7, stage));
+    const neutrons = HoldingRecord.neutrons.amount;
+    return this.elementDiscoveries
+      .filter(discovery => neutrons.greq(this.getElementUnlockRequirement(discovery.unlockIndex)))
+      .map(discovery => discovery.kind);
+  }
+
+  usesCompressedElementUnlocks(): boolean {
+    return this.isNeutronStarMassMilestoneUnlocked(this.neutronStarMassMilestones[3]);
+  }
+
+  getElementUnlockRequirement(unlockIndex: number): Num {
+    const base = this.usesCompressedElementUnlocks() ? 5 : 10;
+    return new Num(base, 0).pow(unlockIndex);
   }
 
   fuseElement(random: () => number = Math.random): BlueElement | null {
