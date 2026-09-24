@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {Holding} from '../../../classes/features/holding';
 import {HoldingRecord} from '../../../classes/records/holdings/holding-record';
-import {BlueElement} from '../../../classes/features/elements/blue-element';
+import {BlueElement, createBlueElement, ElementCardKind} from '../../../classes/features/elements/blue-element';
 import {BluePhaseService} from '../../../services/blue-phase.service';
 
 @Component({
@@ -16,6 +16,8 @@ export class BlueElementsComponent {
   get inventorySlotCount(): number { return this.bluePhase.getElementInventorySlots(); }
   selectedElement?: BlueElement;
   showClearWarning = false;
+  showElementGuide = false;
+  selectedGuideKind?: ElementCardKind;
   disableClearWarning = false;
   private detailsTimer?: ReturnType<typeof setTimeout>;
 
@@ -78,4 +80,24 @@ export class BlueElementsComponent {
   }
 
   closeDetails(): void { this.selectedElement = undefined; }
+
+  inspectGuideElement(kind: ElementCardKind): void {
+    if (!this.bluePhase.getUnlockedCardKinds().includes(kind)) return;
+    this.selectedGuideKind = this.selectedGuideKind === kind ? undefined : kind;
+  }
+
+  getElementPreview(kind: ElementCardKind): BlueElement {
+    return createBlueElement(kind, 'element-guide-preview', Math.max(1, this.fusionLevel), 0);
+  }
+
+  get guideElement(): BlueElement | undefined {
+    return this.selectedGuideKind
+      ? createBlueElement(this.selectedGuideKind, 'element-guide', Math.max(1, this.fusionLevel), 0)
+      : undefined;
+  }
+
+  closeElementGuide(): void {
+    this.showElementGuide = false;
+    this.selectedGuideKind = undefined;
+  }
 }
