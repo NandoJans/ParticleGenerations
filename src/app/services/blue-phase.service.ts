@@ -76,6 +76,11 @@ export class BluePhaseService {
       goal: new Num(2.5, 2),
       name: 'Particle Compression',
       description: 'Square the log10(red particles) multiplier to electron and proton generation.'
+    },
+    {
+      goal: new Num(5, 2),
+      name: 'Atomic Compression',
+      description: 'Add half the combined proton and electron exponents to generated element levels.'
     }
   ];
 
@@ -264,7 +269,10 @@ export class BluePhaseService {
     const kind = kinds[kindIndex];
 
     const neutronStage = Math.floor(Math.log10(neutronCount));
-    const elementLevel = neutronStage + this.neutronStarUpgrades.elementLevel;
+    let elementLevel = neutronStage + this.neutronStarUpgrades.elementLevel;
+    if (this.isNeutronStarMassMilestoneUnlocked(this.neutronStarMassMilestones[2])) {
+      elementLevel += (HoldingRecord.protons.amount.exponent + HoldingRecord.electrons.amount.exponent) / 2;
+    }
     const rarityCeiling = Math.min(99.99, neutronStage * 10);
     const rarityExponent = 2.5 / (1 + this.neutronStarUpgrades.rarity * .2);
     const rarity = Math.min(rarityCeiling, Math.pow(random(), rarityExponent) * rarityCeiling);
