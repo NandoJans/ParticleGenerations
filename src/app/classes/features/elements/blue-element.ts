@@ -91,6 +91,7 @@ abstract class RedAcceleratorElement extends BlueElement {
 
 export class CarbonElement extends RedAcceleratorElement {
   readonly kind = 'carbon'; readonly name = 'Carbon'; readonly symbol = 'C'; readonly primaryColor = '#64748b';
+  override getEffect(): Num { return new Num(1, Math.max(1, this.level) * this.quality); }
   getEffectDescription(): string { return `Multiplies Red Accelerator generation by ${this.getEffect().toString(3)}x`; }
   applyEffect(): void { ElementCardEffects.carbonAcceleratorGeneration = ElementCardEffects.carbonAcceleratorGeneration.mul(this.getEffect()); }
 }

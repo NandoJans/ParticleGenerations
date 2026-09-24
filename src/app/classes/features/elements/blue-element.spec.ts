@@ -75,6 +75,14 @@ describe('ElementCardEffects', () => {
     expect(ElementCardEffects.boronExtensionRate.toNumber()).toBeCloseTo(element.getEffect().toNumber(), 10);
   });
 
+  it('gives Carbon a powerful exponential generation multiplier', () => {
+    const commonCarbon = new CarbonElement('carbon-1', 1, 0);
+    const strongerCarbon = new CarbonElement('carbon-2', 5, 20);
+
+    expect(commonCarbon.getEffect().toNumber()).toBe(10);
+    expect(strongerCarbon.getEffect().toNumber()).toBe(1e6);
+  });
+
   it('applies Carbon, Nitrogen, and Oxygen to their Red Accelerator effects', () => {
     const elements = [
       new CarbonElement('carbon-1', 5, 20),
