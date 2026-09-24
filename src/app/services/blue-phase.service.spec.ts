@@ -411,6 +411,23 @@ describe('BluePhaseService', () => {
     expect(service.getParticleGeneration().toNumber()).toBeCloseTo(0.036, 8);
   });
 
+  it('adds half the combined proton and electron exponents to element levels at 500 neutron-star mass', () => {
+    HoldingRecord.neutrons.amount = new Num(1, 4);
+    HoldingRecord.protons.amount = new Num(1, 20);
+    HoldingRecord.electrons.amount = new Num(1, 11);
+    service.neutronStarUpgrades.elementLevel = 2;
+    service.neutronStarMass = new Num(4.99, 2);
+
+    expect(service.fuseElement(() => 0)?.level).toBe(6);
+
+    HoldingRecord.neutrons.amount = new Num(1, 4);
+    HoldingRecord.protons.amount = new Num(1, 20);
+    HoldingRecord.electrons.amount = new Num(1, 11);
+    service.neutronStarMass = new Num(5, 2);
+
+    expect(service.fuseElement(() => 0)?.level).toBe(21.5);
+  });
+
   it('applies Blue Particle research to beam generation and collision gain', () => {
     UpgradeRecord.blueParticleResonance.amount = Num.ONE.copy();
     UpgradeRecord.blueCollisionCalibration.amount = Num.ONE.copy();
