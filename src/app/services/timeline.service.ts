@@ -183,6 +183,7 @@ export class TimelineService {
     )
     .addMilestone(MilestoneRecord.stableParticleBeam)
     .addMilestone(MilestoneRecord.denseParticleCollision)
+    .addMilestone(MilestoneRecord.stableRedExtensions)
     .build()
     .addTimelineEvent(
       'blue-first-collision',
