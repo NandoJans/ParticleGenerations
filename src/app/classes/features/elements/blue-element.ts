@@ -22,6 +22,12 @@ export class ElementCardEffects {
   static fluorineBoosterAccelerationRate = Num.ZERO.copy();
   static fluorineFreeBoosterAccelerations = Num.ZERO.copy();
 
+  static addPower(currentPower: Num, additionalPower: Num): Num {
+    return currentPower.equals(Num.ONE)
+      ? additionalPower.copy()
+      : currentPower.add(additionalPower);
+  }
+
   static reset(): void {
     this.heliumPower = Num.ONE.copy();
     this.lithiumChargeRate = Num.ZERO.copy();
@@ -65,7 +71,9 @@ export class HeliumElement extends BlueElement {
   readonly kind = 'helium'; readonly name = 'Helium'; readonly symbol = 'He'; readonly primaryColor = '#8be9fd';
   getEffect(): Num { return new Num(1.1 + Math.log10(Math.max(1, this.level)) * this.quality * .08, 0); }
   getEffectDescription(): string { return `Raises red generator multiplier upgrades to ^${this.getEffect().toString(3)}`; }
-  applyEffect(): void { ElementCardEffects.heliumPower = ElementCardEffects.heliumPower.mul(this.getEffect()); }
+  applyEffect(): void {
+    ElementCardEffects.heliumPower = ElementCardEffects.addPower(ElementCardEffects.heliumPower, this.getEffect());
+  }
 }
 
 export class LithiumElement extends BlueElement {
@@ -103,13 +111,23 @@ export class CarbonElement extends RedAcceleratorElement {
 export class NitrogenElement extends RedAcceleratorElement {
   readonly kind = 'nitrogen'; readonly name = 'Nitrogen'; readonly symbol = 'N'; readonly primaryColor = '#60a5fa';
   getEffectDescription(): string { return `Improves the Red Accelerator to Red Generator effect formula from RA^0.5 to RA^${this.getEffect().div(new Num(2, 0)).toString(3)}`; }
-  applyEffect(): void { ElementCardEffects.nitrogenAcceleratorEffect = ElementCardEffects.nitrogenAcceleratorEffect.mul(this.getEffect()); }
+  applyEffect(): void {
+    ElementCardEffects.nitrogenAcceleratorEffect = ElementCardEffects.addPower(
+      ElementCardEffects.nitrogenAcceleratorEffect,
+      this.getEffect()
+    );
+  }
 }
 
 export class OxygenElement extends RedAcceleratorElement {
   readonly kind = 'oxygen'; readonly name = 'Oxygen'; readonly symbol = 'O'; readonly primaryColor = '#f87171';
   getEffectDescription(): string { return `Improves the Red Particle to Red Accelerator formula from log10(RP / 1e75)^1 to ^${this.getEffect().toString(3)}`; }
-  applyEffect(): void { ElementCardEffects.oxygenRedParticleEffect = ElementCardEffects.oxygenRedParticleEffect.mul(this.getEffect()); }
+  applyEffect(): void {
+    ElementCardEffects.oxygenRedParticleEffect = ElementCardEffects.addPower(
+      ElementCardEffects.oxygenRedParticleEffect,
+      this.getEffect()
+    );
+  }
 }
 
 export class FluorineElement extends BlueElement {
