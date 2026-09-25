@@ -115,7 +115,7 @@ describe('BluePhaseService', () => {
     ]);
   });
 
-  it('unlocks Carbon, Nitrogen, and Oxygen at neutron stages five through seven', () => {
+  it('unlocks Carbon through Fluorine at neutron stages five through eight', () => {
     HoldingRecord.neutrons.amount = new Num(1, 5);
     expect(service.getUnlockedCardKinds()).toEqual(['helium', 'lithium', 'beryllium', 'boron', 'carbon']);
 
@@ -124,6 +124,9 @@ describe('BluePhaseService', () => {
 
     HoldingRecord.neutrons.amount = new Num(1, 7);
     expect(service.getUnlockedCardKinds()).toEqual(['helium', 'lithium', 'beryllium', 'boron', 'carbon', 'nitrogen', 'oxygen']);
+
+    HoldingRecord.neutrons.amount = new Num(1, 8);
+    expect(service.getUnlockedCardKinds()).toEqual(['helium', 'lithium', 'beryllium', 'boron', 'carbon', 'nitrogen', 'oxygen', 'fluorine']);
   });
 
   it('unlocks elements at powers of five after reaching 2,500 neutron-star mass', () => {
@@ -202,6 +205,19 @@ describe('BluePhaseService', () => {
     service.tick(new Num(6, 1));
     expect(ElementCardEffects.boronFreeExtensions.toNumber()).toBe(1);
     expect(service.getBoronCardProgressPercent()).toBeCloseTo(100 / Math.pow(2, 1.1), 8);
+  });
+
+  it('slowly generates free Booster Accelerations with Fluorine', () => {
+    const fluorine = createBlueElement('fluorine', 'fluorine-1', 1, 0);
+    service.elements = [fluorine];
+    service.equipElementCard(fluorine);
+
+    service.tick(new Num(1.8, 3));
+    expect(service.getFluorineCardProgressPercent()).toBeCloseTo(50, 8);
+    expect(ElementCardEffects.fluorineFreeBoosterAccelerations.toNumber()).toBe(0);
+
+    service.tick(new Num(1.8, 3));
+    expect(ElementCardEffects.fluorineFreeBoosterAccelerations.toNumber()).toBe(1);
   });
 
   it('keeps the extension multiplier visible alongside Boron free extensions', () => {

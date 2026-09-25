@@ -101,17 +101,19 @@ export class BluePhaseService {
   ];
 
   readonly elementDiscoveries: ElementDiscovery[] = (
-    ['helium', 'lithium', 'beryllium', 'boron', 'carbon', 'nitrogen', 'oxygen'] as ElementCardKind[]
+    ['helium', 'lithium', 'beryllium', 'boron', 'carbon', 'nitrogen', 'oxygen', 'fluorine'] as ElementCardKind[]
   ).map((kind, index) => ({kind, unlockIndex: index + 1}));
 
   lithiumCardChargeSeconds = Num.ZERO.copy();
   boronCardExtensionProgress = Num.ZERO.copy();
+  fluorineBoosterAccelerationProgress = Num.ZERO.copy();
 
   constructor() {
     ResetHelper.registerResetListener('blue-phase-unlock', resetKey => {
       if (resetKey === ResetKey.BLUE) {
         this.lithiumCardChargeSeconds = Num.ZERO.copy();
         this.boronCardExtensionProgress = Num.ZERO.copy();
+        this.fluorineBoosterAccelerationProgress = Num.ZERO.copy();
         this.unlockFromPrestige();
         this.applyElementCardEffects();
         this.save();
@@ -365,6 +367,7 @@ export class BluePhaseService {
     activeElements.forEach(element => element.applyEffect());
     ElementCardEffects.lithiumChargeMultiplier = this.getLithiumCardMultiplier();
     ElementCardEffects.boronFreeExtensions = this.boronCardExtensionProgress.floor();
+    ElementCardEffects.fluorineFreeBoosterAccelerations = this.fluorineBoosterAccelerationProgress.floor();
   }
 
   private chargeElementCardEffects(speed: Num): void {
@@ -374,8 +377,12 @@ export class BluePhaseService {
     if (ElementCardEffects.boronExtensionRate.gt(Num.ZERO)) {
       this.chargeBoronExtensions(speed.mul(ElementCardEffects.boronExtensionRate).toNumber());
     }
+    if (ElementCardEffects.fluorineBoosterAccelerationRate.gt(Num.ZERO)) {
+      this.chargeFluorineBoosterAccelerations(speed.mul(ElementCardEffects.fluorineBoosterAccelerationRate).toNumber());
+    }
     ElementCardEffects.lithiumChargeMultiplier = this.getLithiumCardMultiplier();
     ElementCardEffects.boronFreeExtensions = this.boronCardExtensionProgress.floor();
+    ElementCardEffects.fluorineFreeBoosterAccelerations = this.fluorineBoosterAccelerationProgress.floor();
   }
 
   /**
@@ -404,6 +411,25 @@ export class BluePhaseService {
     this.boronCardExtensionProgress = new Num(completed + partial, 0);
   }
 
+  private chargeFluorineBoosterAccelerations(effectiveSeconds: number): void {
+    let completed = Math.floor(this.fluorineBoosterAccelerationProgress.toNumber());
+    let partial = this.fluorineBoosterAccelerationProgress.toNumber() - completed;
+
+    while (effectiveSeconds > 0) {
+      const secondsForNext = 3600 * Math.pow(completed + 1, 1.1);
+      const secondsRemaining = (1 - partial) * secondsForNext;
+      if (effectiveSeconds < secondsRemaining) {
+        partial += effectiveSeconds / secondsForNext;
+        effectiveSeconds = 0;
+      } else {
+        effectiveSeconds -= secondsRemaining;
+        completed++;
+        partial = 0;
+      }
+    }
+    this.fluorineBoosterAccelerationProgress = new Num(completed + partial, 0);
+  }
+
   getLithiumCardMultiplier(): Num {
     const seconds = Math.max(0, this.lithiumCardChargeSeconds.toNumber());
     if (!seconds) return Num.ONE.copy();
@@ -416,13 +442,17 @@ export class BluePhaseService {
     return this.boronCardExtensionProgress.sub(this.boronCardExtensionProgress.floor()).toNumber() * 100;
   }
 
+  getFluorineCardProgressPercent(): number {
+    return this.fluorineBoosterAccelerationProgress.sub(this.fluorineBoosterAccelerationProgress.floor()).toNumber() * 100;
+  }
+
   getActiveElementSlots(): number { return BluePhaseService.activeElementSlots + this.neutronStarUpgrades.activeSlots; }
   getElementInventorySlots(): number { return BluePhaseService.elementInventorySlots + this.neutronStarUpgrades.inventorySlots * 4; }
   isNeutronStarUnlocked(): boolean { return this.elementsDiscovered >= 10; }
 
   getElementMass(element: BlueElement): Num {
     const atomicWeight: Record<ElementCardKind, number> = {
-      helium: 4, lithium: 7, beryllium: 9, boron: 11, carbon: 12, nitrogen: 14, oxygen: 16
+      helium: 4, lithium: 7, beryllium: 9, boron: 11, carbon: 12, nitrogen: 14, oxygen: 16, fluorine: 19
     };
     return new Num(atomicWeight[element.kind] * Math.max(1, element.level) * (1 + element.rarity / 100), 0);
   }
@@ -568,6 +598,7 @@ export class BluePhaseService {
     this.storage.save(this.neutronStarUpgrades, 'neutronStarUpgrades');
     this.storage.saveNum(this.lithiumCardChargeSeconds, 'lithiumCardChargeSeconds');
     this.storage.saveNum(this.boronCardExtensionProgress, 'boronCardExtensionProgress');
+    this.storage.saveNum(this.fluorineBoosterAccelerationProgress, 'fluorineBoosterAccelerationProgress');
   }
 
   load(): void {
@@ -595,6 +626,7 @@ export class BluePhaseService {
     this.showClearActiveElementsWarning = this.storage.load(true, 'showClearActiveElementsWarning');
     this.lithiumCardChargeSeconds = this.storage.loadNum(this.lithiumCardChargeSeconds, 'lithiumCardChargeSeconds');
     this.boronCardExtensionProgress = this.storage.loadNum(this.boronCardExtensionProgress, 'boronCardExtensionProgress');
+    this.fluorineBoosterAccelerationProgress = this.storage.loadNum(this.fluorineBoosterAccelerationProgress, 'fluorineBoosterAccelerationProgress');
     this.mergeLegacyNeutronClump();
     this.synchronizePurchases();
     this.applyNeutronMeltdown();

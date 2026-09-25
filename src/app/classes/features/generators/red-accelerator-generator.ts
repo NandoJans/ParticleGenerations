@@ -51,7 +51,10 @@ export class RedAcceleratorGenerator extends Generator {
       log = new Num(1, 0);
 
     }
-    generate = generate.mul(log).mul(ElementCardEffects.oxygenRedParticleEffect)
+    // Oxygen changes the logarithmic formula instead of adding a flat multiplier.
+    // Keeping the particle contribution logarithmic avoids a runaway feedback loop
+    // between Red Accelerators and the generators that create Red Particles.
+    generate = generate.mul(log.pow(ElementCardEffects.oxygenRedParticleEffect))
 
     generate = generate.mul(new Num(1, -2));
 

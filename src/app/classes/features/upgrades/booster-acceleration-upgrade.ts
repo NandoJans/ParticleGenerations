@@ -11,6 +11,7 @@ import {Transaction} from "../interfaces/transaction";
 import {StatsService} from "../../../services/stats.service";
 import { Enhancement } from "../enhancements/enhancement";
 import {EnhancementRecord} from "../../records/enhancement-record";
+import {ElementCardEffects} from "../elements/blue-element";
 
 export class BoosterAccelerationUpgrade extends Upgrade {
   baseCost: Num = new Num(1, 10);
@@ -50,8 +51,9 @@ export class BoosterAccelerationUpgrade extends Upgrade {
   }
 
   action(): Num {
-    const effect: Num = this.buffer.mul(this.amount);
-    const effect2: Num = this.freeBuys.mul(this.amount);
+    const effectiveAmount = this.amount.add(ElementCardEffects.fluorineFreeBoosterAccelerations);
+    const effect: Num = this.buffer.mul(effectiveAmount);
+    const effect2: Num = this.freeBuys.mul(effectiveAmount);
 
     this.freeBuys = this.baseFreeBuys.copy();
     UpgradeRecord.redGeneratorBooster.buffer = UpgradeRecord.redGeneratorBooster.buffer.add(effect);
@@ -68,7 +70,12 @@ export class BoosterAccelerationUpgrade extends Upgrade {
   }
 
   override effectString(): string {
-    return this.effect ? this.effect.toString(3) + ' and ' + this.totalFreeBuys.toString() + ' free buys' : '';
+    if (!this.effect) return '';
+    const fluorine = ElementCardEffects.fluorineFreeBoosterAccelerations;
+    const source = fluorine.gt(Num.ZERO)
+      ? ` (${this.amount.toString()} purchased + ${fluorine.toString()} free from Fluorine)`
+      : '';
+    return this.effect.toString(3) + ' and ' + this.totalFreeBuys.toString() + ' free buys' + source;
   }
 
   override buy(amount?: Num): Transaction {

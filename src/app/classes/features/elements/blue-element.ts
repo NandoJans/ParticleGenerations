@@ -1,6 +1,6 @@
 import {Num} from '../../../num';
 
-export type ElementCardKind = 'helium' | 'lithium' | 'beryllium' | 'boron' | 'carbon' | 'nitrogen' | 'oxygen';
+export type ElementCardKind = 'helium' | 'lithium' | 'beryllium' | 'boron' | 'carbon' | 'nitrogen' | 'oxygen' | 'fluorine';
 
 export interface StoredBlueElement {
   id: string;
@@ -19,6 +19,8 @@ export class ElementCardEffects {
   static carbonAcceleratorGeneration = Num.ONE.copy();
   static nitrogenAcceleratorEffect = Num.ONE.copy();
   static oxygenRedParticleEffect = Num.ONE.copy();
+  static fluorineBoosterAccelerationRate = Num.ZERO.copy();
+  static fluorineFreeBoosterAccelerations = Num.ZERO.copy();
 
   static reset(): void {
     this.heliumPower = Num.ONE.copy();
@@ -30,6 +32,8 @@ export class ElementCardEffects {
     this.carbonAcceleratorGeneration = Num.ONE.copy();
     this.nitrogenAcceleratorEffect = Num.ONE.copy();
     this.oxygenRedParticleEffect = Num.ONE.copy();
+    this.fluorineBoosterAccelerationRate = Num.ZERO.copy();
+    this.fluorineFreeBoosterAccelerations = Num.ZERO.copy();
   }
 }
 
@@ -104,8 +108,15 @@ export class NitrogenElement extends RedAcceleratorElement {
 
 export class OxygenElement extends RedAcceleratorElement {
   readonly kind = 'oxygen'; readonly name = 'Oxygen'; readonly symbol = 'O'; readonly primaryColor = '#f87171';
-  getEffectDescription(): string { return `Multiplies the Red Particle effect on Red Accelerator generation by ${this.getEffect().toString(3)}x`; }
+  getEffectDescription(): string { return `Improves the Red Particle to Red Accelerator formula from log10(RP / 1e75)^1 to ^${this.getEffect().toString(3)}`; }
   applyEffect(): void { ElementCardEffects.oxygenRedParticleEffect = ElementCardEffects.oxygenRedParticleEffect.mul(this.getEffect()); }
+}
+
+export class FluorineElement extends BlueElement {
+  readonly kind = 'fluorine'; readonly name = 'Fluorine'; readonly symbol = 'F'; readonly primaryColor = '#a3e635';
+  getEffect(): Num { return new Num(Math.max(1, this.level) * this.quality, 0); }
+  getEffectDescription(): string { return `Generates free Booster Accelerations at ${this.getEffect().toString(3)}x speed; the first takes one hour and later accelerations take amount^1.1 longer until the next Blue reset`; }
+  applyEffect(): void { ElementCardEffects.fluorineBoosterAccelerationRate = ElementCardEffects.fluorineBoosterAccelerationRate.add(this.getEffect()); }
 }
 
 export function createBlueElement(kind: ElementCardKind, id: string, level: number, rarity: number): BlueElement {
@@ -117,6 +128,7 @@ export function createBlueElement(kind: ElementCardKind, id: string, level: numb
     case 'carbon': return new CarbonElement(id, level, rarity);
     case 'nitrogen': return new NitrogenElement(id, level, rarity);
     case 'oxygen': return new OxygenElement(id, level, rarity);
+    case 'fluorine': return new FluorineElement(id, level, rarity);
   }
 }
 
