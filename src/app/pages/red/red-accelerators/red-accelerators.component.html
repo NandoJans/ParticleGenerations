@@ -53,6 +53,9 @@
         <p class="eyebrow">GENERATOR SYNERGY</p>
         <h2>Booster Acceleration</h2>
         <p>Link accelerator momentum to the red generator booster system.</p>
+        @if (elementEffects.fluorineBoosterAccelerationRate.gt(zero)) {
+          <p class="fluorine-readout"><strong>F · +{{ elementEffects.fluorineFreeBoosterAccelerations.toString(0) }}</strong> free · {{ bluePhase.getFluorineCardProgressPercent() | number:'1.0-1' }}% to next</p>
+        }
       </div>
       <div class="panel-upgrade">
         @if (boosterAccelerationUpgrade.isFirstUnlocked()) {

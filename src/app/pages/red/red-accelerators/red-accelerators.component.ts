@@ -3,6 +3,9 @@ import {Upgrade} from "../../../classes/features/upgrade";
 import {Holding} from "../../../classes/features/holding";
 import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
+import {ElementCardEffects} from '../../../classes/features/elements/blue-element';
+import {BluePhaseService} from '../../../services/blue-phase.service';
+import {Num} from '../../../num';
 
 @Component({
     selector: 'app-red-accelerators',
@@ -11,6 +14,8 @@ import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
     standalone: false
 })
 export class RedAcceleratorsComponent implements OnInit {
+  readonly elementEffects = ElementCardEffects;
+  readonly zero = Num.ZERO;
   unlockRedAccelerators: Upgrade = UpgradeRecord.unlockRedAccelerators;
   boosterAccelerationUpgrade: Upgrade = UpgradeRecord.boosterAccelerationUpgrade;
   upgrades: Upgrade[] = [
@@ -28,7 +33,7 @@ export class RedAcceleratorsComponent implements OnInit {
     'Booster Acceleration upgrades create a synergy between accelerators and other game mechanics for exponential growth.'
   ]
 
-  constructor() { }
+  constructor(public bluePhase: BluePhaseService) { }
 
   ngOnInit(): void {
   }

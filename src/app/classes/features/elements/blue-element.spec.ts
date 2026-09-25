@@ -3,6 +3,7 @@ import {
   BoronElement,
   CarbonElement,
   ElementCardEffects,
+  FluorineElement,
   HeliumElement,
   LithiumElement,
   NitrogenElement,
@@ -24,6 +25,8 @@ describe('ElementCardEffects', () => {
     expect(ElementCardEffects.carbonAcceleratorGeneration.toNumber()).toBe(1);
     expect(ElementCardEffects.nitrogenAcceleratorEffect.toNumber()).toBe(1);
     expect(ElementCardEffects.oxygenRedParticleEffect.toNumber()).toBe(1);
+    expect(ElementCardEffects.fluorineBoosterAccelerationRate.toNumber()).toBe(0);
+    expect(ElementCardEffects.fluorineFreeBoosterAccelerations.toNumber()).toBe(0);
   });
 
   it('creates independently stored concrete element instances', () => {
@@ -95,5 +98,14 @@ describe('ElementCardEffects', () => {
     expect(ElementCardEffects.carbonAcceleratorGeneration.toNumber()).toBeCloseTo(elements[0].getEffect().toNumber(), 10);
     expect(ElementCardEffects.nitrogenAcceleratorEffect.toNumber()).toBeCloseTo(elements[1].getEffect().toNumber(), 10);
     expect(ElementCardEffects.oxygenRedParticleEffect.toNumber()).toBeCloseTo(elements[2].getEffect().toNumber(), 10);
+  });
+
+  it('applies Fluorine as a free Booster Acceleration generation rate', () => {
+    const element = new FluorineElement('fluorine-1', 8, 25);
+
+    element.applyEffect();
+
+    expect(ElementCardEffects.fluorineBoosterAccelerationRate.toNumber())
+      .toBeCloseTo(element.getEffect().toNumber(), 10);
   });
 });
