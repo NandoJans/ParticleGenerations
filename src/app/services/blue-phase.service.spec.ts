@@ -53,6 +53,11 @@ describe('BluePhaseService', () => {
     MultiplierRecord.redAcceleratorGenerators.reset();
     MultiplierRecord.redGeneratorExtensionBuffer.reset();
     MultiplierRecord.nucleusGeneration.reset();
+    MultiplierRecord.yellowPrestigeGain.reset();
+    MultiplierRecord.yellowKeyGain.reset();
+    PrestigeLayersService.yellowPrestigeLayer.gainHoldings.forEach(gain => {
+      gain.logarithmicBaseHolding = undefined;
+    });
   });
 
   it('keeps an active element selected through Blue phase resets', () => {
@@ -240,6 +245,22 @@ describe('BluePhaseService', () => {
     expect(HoldingRecord.yellowPrestiges.amount.equals(Num.ONE)).toBeTrue();
     expect(HoldingRecord.yellowParticles.amount.equals(Num.ONE)).toBeTrue();
     expect(HoldingRecord.yellowKeys.amount.equals(Num.ONE)).toBeTrue();
+  });
+
+  it('bases Yellow Prestige and Yellow Key rewards on log10(Yellow Particles) at 5,000 mass', () => {
+    MultiplierRecord.yellowPrestigeGain.correct(new Num(2, 0));
+    MultiplierRecord.yellowKeyGain.correct(new Num(3, 0));
+    service.neutronStarMass = new Num(5, 3);
+    service.unlockFromPrestige();
+    HoldingRecord.yellowParticles.amount = new Num(1, 100);
+    HoldingRecord.yellowPrestiges.amount = Num.ZERO.copy();
+    HoldingRecord.yellowKeys.amount = Num.ZERO.copy();
+    PrestigeLayersService.yellowPrestigeLayer.reached = true;
+
+    PrestigeLayersService.yellowPrestigeLayer.prestige();
+
+    expect(HoldingRecord.yellowPrestiges.amount.toNumber()).toBe(200);
+    expect(HoldingRecord.yellowKeys.amount.toNumber()).toBe(300);
   });
 
   it('generates strange quarks from the square root of neutron-star mass', () => {

@@ -12,6 +12,14 @@ import {Multiplier} from "../multiplier";
 import {ChallengeService} from "../../../services/interactables/challenge.service";
 import {App} from "../../../App";
 
+export interface PrestigeGain {
+  holding: Holding;
+  basedOnRequiredHolding: boolean;
+  gainMultiplier: Multiplier;
+  idleGeneration: boolean;
+  logarithmicBaseHolding?: Holding;
+}
+
 export class PrestigeLayer extends GameElement implements Resetable, Storable {
   private static readonly passivePrestigeRate = new Num(1, -2);
   name: string;
@@ -23,7 +31,7 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
   limitPhaseBelow: boolean = true;
   holdingPhaseBelow: Holding;
   amountRequired: Num;
-  gainHoldings: {holding: Holding, basedOnRequiredHolding: boolean, gainMultiplier: Multiplier, idleGeneration: boolean}[] = [];
+  gainHoldings: PrestigeGain[] = [];
   resets: ResetKey;
   messageSteps: MessageSteps;
   firstTimeText: string;
@@ -42,7 +50,7 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     holdingRequired: Holding,
     amountRequired: Num,
     style: string,
-    gainHoldings: {holding: Holding, basedOnRequiredHolding: boolean, gainMultiplier: Multiplier, idleGeneration: boolean}[],
+    gainHoldings: PrestigeGain[],
     resets: ResetKey,
     resetId: ResetKey,
     message: MessageSteps,
@@ -134,14 +142,10 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     }
   }
 
-  private calculateHoldingGain(gain: {
-    holding: Holding,
-    basedOnRequiredHolding: boolean,
-    gainMultiplier: Multiplier,
-    idleGeneration: boolean
-  }, includeOfflineSpeed: boolean = true): Num {
-    // start with the normal gain
-    let baseGain = new Num(1, 0).mul(gain.gainMultiplier.getNum());
+  private calculateHoldingGain(gain: PrestigeGain, includeOfflineSpeed: boolean = true): Num {
+    let baseGain = gain.logarithmicBaseHolding
+      ? gain.logarithmicBaseHolding.amount.log10().max(Num.ZERO)
+      : Num.ONE.copy();
 
     if (gain.basedOnRequiredHolding) {
       const exponent = this.holdingPhaseBelow.amount.log10();
@@ -150,6 +154,8 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
       if (thresholds.lt(Num.ZERO)) thresholds = Num.ZERO.copy();
       baseGain = baseGain.mul(new Num(2, 0).pow(thresholds));
     }
+
+    baseGain = baseGain.mul(gain.gainMultiplier.getNum());
 
     if (includeOfflineSpeed && App.offlineCalculation) {
       baseGain = baseGain.mul(App.gameSpeed);
