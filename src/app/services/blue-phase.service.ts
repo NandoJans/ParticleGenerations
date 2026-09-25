@@ -13,6 +13,7 @@ import {MultiplierRecord} from "../classes/records/multipliers/multiplier-record
 import {ChargerRecord} from "../classes/records/charger/charger-record";
 import {BlueElement, createBlueElement, ElementCardEffects, ElementCardKind, restoreBlueElement, StoredBlueElement} from '../classes/features/elements/blue-element';
 import {StrangeQuarkEffects} from '../classes/features/strange-quark-effects';
+import {PrestigeLayersService} from './prestige-layers.service';
 
 export type BlueParticleMode = 'none' | 'protons' | 'electrons';
 export type NeutronStarUpgradeKey = 'protons' | 'electrons' | 'neutrons' | 'activeSlots' | 'inventorySlots' | 'elementLevel' | 'rarity';
@@ -91,6 +92,11 @@ export class BluePhaseService {
       goal: new Num(2.5, 3),
       name: 'Elemental Compression',
       description: 'Unlock new elements at powers of 5 Neutrons instead of powers of 10.'
+    },
+    {
+      goal: new Num(5, 3),
+      name: 'Solar Compression',
+      description: 'Generate Yellow Prestiges and Yellow Keys based on log10(Yellow Particles).'
     }
   ];
 
@@ -436,11 +442,23 @@ export class BluePhaseService {
   }
 
   private applyNeutronStarMassMilestones(): void {
-    if (!this.isNeutronStarMassMilestoneUnlocked(this.neutronStarMassMilestones[0])) return;
-    [HoldingRecord.yellowPrestiges, HoldingRecord.yellowParticles, HoldingRecord.yellowKeys]
-      .forEach(holding => {
-        if (holding.amount.lt(Num.ONE)) holding.amount = Num.ONE.copy();
-      });
+    const yellowLogarithmicGainUnlocked = this.isNeutronStarMassMilestoneUnlocked(
+      this.neutronStarMassMilestones[4]
+    );
+    PrestigeLayersService.yellowPrestigeLayer.gainHoldings.forEach(gain => {
+      if (gain.holding === HoldingRecord.yellowPrestiges || gain.holding === HoldingRecord.yellowKeys) {
+        gain.logarithmicBaseHolding = yellowLogarithmicGainUnlocked
+          ? HoldingRecord.yellowParticles
+          : undefined;
+      }
+    });
+
+    if (this.isNeutronStarMassMilestoneUnlocked(this.neutronStarMassMilestones[0])) {
+      [HoldingRecord.yellowPrestiges, HoldingRecord.yellowParticles, HoldingRecord.yellowKeys]
+        .forEach(holding => {
+          if (holding.amount.lt(Num.ONE)) holding.amount = Num.ONE.copy();
+        });
+    }
   }
 
   getStrangeQuarkGeneration(): Num {
