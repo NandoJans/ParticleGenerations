@@ -27,6 +27,7 @@ import {
 import {NoResetGreenMilestone} from "../../features/milestones/no-reset-green-milestone";
 import {BlueMilestone} from "../../features/milestones/blue-milestone";
 import {AutomationSingularityBlueMilestone} from "../../features/milestones/automation-singularity-blue-milestone";
+import {StableRedExtensionsBlueMilestone} from "../../features/milestones/stable-red-extensions-blue-milestone";
 
 @Injectable({
   providedIn: 'root'
@@ -496,6 +497,13 @@ export class MilestoneRecord extends Record {
     'Generate 5 particles per second and gain twice as many Neutrons from collisions.'
   );
 
+  static stableRedExtensions: StableRedExtensionsBlueMilestone = new StableRedExtensionsBlueMilestone(
+    'stableRedExtensions',
+    'Stable Red Extensions',
+    new Num(1, 4),
+    'Red extensions no longer reset anything.'
+  );
+
   // Purple Phase
 
   static override list: Milestone[] = [
@@ -572,6 +580,7 @@ export class MilestoneRecord extends Record {
     // Blue particle milestones
     MilestoneRecord.stableParticleBeam,
     MilestoneRecord.denseParticleCollision,
+    MilestoneRecord.stableRedExtensions,
   ];
 
   getList(): Milestone[] {
