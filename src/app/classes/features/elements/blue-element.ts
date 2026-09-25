@@ -98,7 +98,7 @@ export class CarbonElement extends RedAcceleratorElement {
 
 export class NitrogenElement extends RedAcceleratorElement {
   readonly kind = 'nitrogen'; readonly name = 'Nitrogen'; readonly symbol = 'N'; readonly primaryColor = '#60a5fa';
-  getEffectDescription(): string { return `Multiplies the Red Accelerator effect by ${this.getEffect().toString(3)}x`; }
+  getEffectDescription(): string { return `Improves the Red Accelerator to Red Generator effect formula from RA^0.5 to RA^${this.getEffect().div(new Num(2, 0)).toString(3)}`; }
   applyEffect(): void { ElementCardEffects.nitrogenAcceleratorEffect = ElementCardEffects.nitrogenAcceleratorEffect.mul(this.getEffect()); }
 }
 
