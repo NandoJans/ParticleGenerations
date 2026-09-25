@@ -97,6 +97,11 @@ export class BluePhaseService {
       goal: new Num(5, 3),
       name: 'Solar Compression',
       description: 'Generate Yellow Prestiges and Yellow Keys based on log10(Yellow Particles).'
+    },
+    {
+      goal: new Num(1, 4),
+      name: 'Yellow Compression',
+      description: 'Multiply proton and electron generation by the exponent of Yellow Particles.'
     }
   ];
 
@@ -204,6 +209,7 @@ export class BluePhaseService {
   getParticleGeneration(): Num {
     let generation = new Num(1, -2);
     generation = generation.mul(this.getRedParticleGenerationBoost());
+    generation = generation.mul(this.getYellowParticleGenerationBoost());
     generation = generation.mul(MultiplierRecord.nucleusGeneration.getNum(false));
     // if (MilestoneRecord.denseParticleCollision.unlocked) generation = new Num(5, 0);
     generation = generation.mul(
@@ -221,6 +227,14 @@ export class BluePhaseService {
     return this.isNeutronStarMassMilestoneUnlocked(this.neutronStarMassMilestones[1])
       ? redParticleOrders.pow(Num.TWO)
       : redParticleOrders;
+  }
+
+  getYellowParticleGenerationBoost(): Num {
+    if (!this.isNeutronStarMassMilestoneUnlocked(this.neutronStarMassMilestones[5])) {
+      return Num.ONE.copy();
+    }
+
+    return new Num(Math.max(1, HoldingRecord.yellowParticles.amount.exponent), 0);
   }
 
   getCollisionGain(): Num {

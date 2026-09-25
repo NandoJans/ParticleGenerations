@@ -458,6 +458,29 @@ describe('BluePhaseService', () => {
     expect(service.getParticleGeneration().toNumber()).toBeCloseTo(0.036, 8);
   });
 
+  it('boosts proton and electron generation by the Yellow Particle exponent at 10,000 neutron-star mass', () => {
+    HoldingRecord.yellowParticles.amount = new Num(5, 100);
+    service.neutronStarMass = new Num(9.999, 3);
+
+    expect(service.getYellowParticleGenerationBoost().equals(Num.ONE)).toBeTrue();
+
+    service.neutronStarMass = new Num(1, 4);
+
+    expect(service.getYellowParticleGenerationBoost().toNumber()).toBe(100);
+    service.activeParticle = 'protons';
+    expect(service.getParticleGeneration().toNumber()).toBeCloseTo(0.1, 8);
+    service.activeParticle = 'electrons';
+    expect(service.getParticleGeneration().toNumber()).toBeCloseTo(0.1, 8);
+  });
+
+  it('does not reduce particle generation when the Yellow Particle exponent is below one', () => {
+    service.neutronStarMass = new Num(1, 4);
+    HoldingRecord.yellowParticles.amount = new Num(5, -2);
+
+    expect(service.getYellowParticleGenerationBoost().equals(Num.ONE)).toBeTrue();
+    expect(service.getParticleGeneration().toNumber()).toBeCloseTo(0.001, 8);
+  });
+
   it('adds half the combined proton and electron exponents to element levels at 500 neutron-star mass', () => {
     HoldingRecord.neutrons.amount = new Num(1, 4);
     HoldingRecord.protons.amount = new Num(1, 20);

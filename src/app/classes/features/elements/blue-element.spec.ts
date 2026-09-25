@@ -12,6 +12,8 @@ import {
 } from './blue-element';
 
 describe('ElementCardEffects', () => {
+  beforeEach(() => ElementCardEffects.reset());
+
   it('resets every element effect to its neutral value', () => {
     ElementCardEffects.heliumPower = ElementCardEffects.heliumPower.mul(2);
     ElementCardEffects.lithiumChargeMultiplier = ElementCardEffects.lithiumChargeMultiplier.mul(3);
@@ -98,6 +100,39 @@ describe('ElementCardEffects', () => {
     expect(ElementCardEffects.carbonAcceleratorGeneration.toNumber()).toBeCloseTo(elements[0].getEffect().toNumber(), 10);
     expect(ElementCardEffects.nitrogenAcceleratorEffect.toNumber()).toBeCloseTo(elements[1].getEffect().toNumber(), 10);
     expect(ElementCardEffects.oxygenRedParticleEffect.toNumber()).toBeCloseTo(elements[2].getEffect().toNumber(), 10);
+  });
+
+  it('adds the powers from multiple elements instead of multiplying them', () => {
+    const helium = [
+      new HeliumElement('helium-1', 10, 25),
+      new HeliumElement('helium-2', 20, 50),
+      new HeliumElement('helium-3', 30, 75)
+    ];
+    const nitrogen = [
+      new NitrogenElement('nitrogen-1', 10, 25),
+      new NitrogenElement('nitrogen-2', 20, 50),
+      new NitrogenElement('nitrogen-3', 30, 75)
+    ];
+    const oxygen = [
+      new OxygenElement('oxygen-1', 10, 25),
+      new OxygenElement('oxygen-2', 20, 50),
+      new OxygenElement('oxygen-3', 30, 75)
+    ];
+
+    [...helium, ...nitrogen, ...oxygen].forEach(element => element.applyEffect());
+
+    expect(ElementCardEffects.heliumPower.toNumber()).toBeCloseTo(
+      helium.reduce((sum, element) => sum + element.getEffect().toNumber(), 0),
+      10
+    );
+    expect(ElementCardEffects.nitrogenAcceleratorEffect.toNumber()).toBeCloseTo(
+      nitrogen.reduce((sum, element) => sum + element.getEffect().toNumber(), 0),
+      10
+    );
+    expect(ElementCardEffects.oxygenRedParticleEffect.toNumber()).toBeCloseTo(
+      oxygen.reduce((sum, element) => sum + element.getEffect().toNumber(), 0),
+      10
+    );
   });
 
   it('applies Fluorine as a free Booster Acceleration generation rate', () => {
