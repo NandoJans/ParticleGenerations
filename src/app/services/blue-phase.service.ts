@@ -96,7 +96,7 @@ export class BluePhaseService {
     {
       goal: new Num(5, 3),
       name: 'Solar Compression',
-      description: 'Generate Yellow Prestiges and Yellow Keys based on log10(Yellow Particles).'
+      description: 'Generate log10(Yellow Particles) Yellow Prestiges and Yellow Keys per second.'
     },
     {
       goal: new Num(1, 4),
@@ -146,6 +146,7 @@ export class BluePhaseService {
 
     this.applyElementCardEffects();
     this.chargeElementCardEffects(speed);
+    this.generateYellowPrestigesAndKeys(speed);
     this.generateStrangeQuarks(speed);
   }
 
@@ -486,17 +487,6 @@ export class BluePhaseService {
   }
 
   private applyNeutronStarMassMilestones(): void {
-    const yellowLogarithmicGainUnlocked = this.isNeutronStarMassMilestoneUnlocked(
-      this.neutronStarMassMilestones[4]
-    );
-    PrestigeLayersService.yellowPrestigeLayer.gainHoldings.forEach(gain => {
-      if (gain.holding === HoldingRecord.yellowPrestiges || gain.holding === HoldingRecord.yellowKeys) {
-        gain.logarithmicBaseHolding = yellowLogarithmicGainUnlocked
-          ? HoldingRecord.yellowParticles
-          : undefined;
-      }
-    });
-
     if (this.isNeutronStarMassMilestoneUnlocked(this.neutronStarMassMilestones[0])) {
       [HoldingRecord.yellowPrestiges, HoldingRecord.yellowParticles, HoldingRecord.yellowKeys]
         .forEach(holding => {
@@ -508,6 +498,17 @@ export class BluePhaseService {
   getStrangeQuarkGeneration(): Num {
     if (this.neutronStarMass.lte(Num.ZERO)) return Num.ZERO.copy();
     return this.neutronStarMass.sqrt().div(new Num(1, 1));
+  }
+
+  private generateYellowPrestigesAndKeys(speed: Num): void {
+    if (!this.isNeutronStarMassMilestoneUnlocked(this.neutronStarMassMilestones[4])) return;
+
+    const gainPerSecond = HoldingRecord.yellowParticles.amount.lte(Num.ONE)
+      ? Num.ZERO.copy()
+      : HoldingRecord.yellowParticles.amount.log10();
+    const gain = gainPerSecond.mul(speed);
+    HoldingRecord.yellowPrestiges.generate(gain);
+    HoldingRecord.yellowKeys.generate(gain);
   }
 
   private generateStrangeQuarks(speed: Num): void {

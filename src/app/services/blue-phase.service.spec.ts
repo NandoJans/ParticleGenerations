@@ -401,6 +401,26 @@ describe('BluePhaseService', () => {
     expect(service.activeParticle).toBe('electrons');
   });
 
+  it('generates log10 yellow particles in yellow prestiges and keys per second at the Solar Compression milestone', () => {
+    service.neutronStarMass = service.neutronStarMassMilestones[4].goal.copy();
+    HoldingRecord.yellowParticles.amount = new Num(1, 8);
+
+    service.tick(new Num(5, -1));
+
+    expect(HoldingRecord.yellowPrestiges.amount.toNumber()).toBeCloseTo(4);
+    expect(HoldingRecord.yellowKeys.amount.toNumber()).toBeCloseTo(4);
+  });
+
+  it('does not passively generate yellow prestiges or keys before Solar Compression', () => {
+    service.neutronStarMass = service.neutronStarMassMilestones[4].goal.sub(Num.ONE);
+    HoldingRecord.yellowParticles.amount = new Num(1, 8);
+
+    service.tick(Num.ONE);
+
+    expect(HoldingRecord.yellowPrestiges.amount.equals(Num.ZERO)).toBeTrue();
+    expect(HoldingRecord.yellowKeys.amount.equals(Num.ZERO)).toBeTrue();
+  });
+
   it('collides matched pairs into persistent neutrons', () => {
     HoldingRecord.protons.amount = new Num(8, 0);
     HoldingRecord.electrons.amount = new Num(5, 0);
