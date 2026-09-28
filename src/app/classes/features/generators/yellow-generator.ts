@@ -12,6 +12,7 @@ import {YellowGeneratorBuyMultiplierUpgrade} from "../upgrades/yellow-generator-
 import {ResetHelper} from "../../helpers/reset-helper";
 import {ResetKey} from "../../enums/reset-key";
 import {Enhancement} from "../enhancements/enhancement";
+import {ElementCardEffects} from "../elements/blue-element";
 
 export abstract class YellowGenerator extends Generator {
   type: string = 'yellow-generator';
@@ -52,6 +53,15 @@ export abstract class YellowGenerator extends Generator {
   abstract buyMultiplierUpgrade: YellowGeneratorBuyMultiplierUpgrade;
 
   override allowedEnhancements: Enhancement[] = [];
+
+  override run(speed: Num): any {
+    this.baseMulMod = this.baseMulMod.mul(ElementCardEffects.aluminumYellowGeneratorBuyMultiplier);
+    return super.run(speed);
+  }
+
+  protected override applyFinalMultiplierEffects(multiplier: Num): Num {
+    return multiplier.pow(ElementCardEffects.neonYellowGeneratorPower);
+  }
 
 
   override getUpgrades(): Upgrade[] {

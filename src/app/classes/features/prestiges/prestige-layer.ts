@@ -11,6 +11,7 @@ import {MessageSteps} from "../../display/message-steps";
 import {Multiplier} from "../multiplier";
 import {ChallengeService} from "../../../services/interactables/challenge.service";
 import {App} from "../../../App";
+import {ElementCardEffects} from "../elements/blue-element";
 
 export interface PrestigeGain {
   holding: Holding;
@@ -156,6 +157,9 @@ export class PrestigeLayer extends GameElement implements Resetable, Storable {
     }
 
     baseGain = baseGain.mul(gain.gainMultiplier.getNum());
+    if (gain.holding.name === 'yellow-particles') {
+      baseGain = baseGain.mul(ElementCardEffects.magnesiumYellowParticleGain);
+    }
 
     if (includeOfflineSpeed && App.offlineCalculation) {
       baseGain = baseGain.mul(App.gameSpeed);

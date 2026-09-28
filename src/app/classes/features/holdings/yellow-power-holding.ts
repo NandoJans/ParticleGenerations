@@ -8,6 +8,7 @@ import {ResetHelper} from "../../helpers/reset-helper";
 import {MultiplierRecord} from "../../records/multipliers/multiplier-record";
 import {ChallengeRecord} from "../../records/challenges/challenge-record";
 import {BuffSoftCapHelper} from "../../helpers/buff-soft-cap-helper";
+import {ElementCardEffects} from "../elements/blue-element";
 
 export class YellowPowerHolding extends Holding {
     name: string = 'yellow-power-holding';
@@ -32,7 +33,7 @@ export class YellowPowerHolding extends Holding {
     }
 
     override action(): Num {
-      const rawEffect = this.amount.pow(this.yellowPower);
+      const rawEffect = this.amount.pow(this.yellowPower).pow(ElementCardEffects.sodiumYellowPowerPower);
       const effect = BuffSoftCapHelper.applyPowerSoftCap(rawEffect, this.effectSoftCap);
       MultiplierRecord.redParticleGenerators.correct(effect);
       this.yellowPower = new Num(1, 0);
