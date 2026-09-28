@@ -26,6 +26,16 @@
     <div class="charge-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
   </section>
 
+  <section class="element-effects" *ngIf="elementEffects.neonYellowGeneratorPower.gt(one) || elementEffects.sodiumYellowPowerPower.gt(one) || elementEffects.magnesiumYellowParticleGain.gt(one) || elementEffects.aluminumYellowGeneratorBuyMultiplier.gt(one)" aria-label="Active blue element modifiers">
+    <p class="eyebrow">BLUE ELEMENT MODIFIERS // ACTIVE HERE</p>
+    <div class="effect-grid">
+      <div *ngIf="elementEffects.neonYellowGeneratorPower.gt(one)"><span>Ne</span><strong>^{{ elementEffects.neonYellowGeneratorPower.toString(3) }}</strong><small>Total Yellow Generator multiplier</small></div>
+      <div *ngIf="elementEffects.sodiumYellowPowerPower.gt(one)"><span>Na</span><strong>^{{ elementEffects.sodiumYellowPowerPower.toString(3) }}</strong><small>Yellow Power effect</small></div>
+      <div *ngIf="elementEffects.magnesiumYellowParticleGain.gt(one)"><span>Mg</span><strong>{{ elementEffects.magnesiumYellowParticleGain.toString(3) }}x</strong><small>Yellow Particle gain</small></div>
+      <div *ngIf="elementEffects.aluminumYellowGeneratorBuyMultiplier.gt(one)"><span>Al</span><strong>{{ elementEffects.aluminumYellowGeneratorBuyMultiplier.toString(3) }}x</strong><small>Yellow Generator buy multipliers</small></div>
+    </div>
+  </section>
+
   <div class="flow-guide" aria-label="Production flow">
     <span>STELLAR INPUT</span><div class="flow-line"><i></i></div><strong>RADIANT CASCADE</strong><div class="flow-line"><i></i></div><span>YELLOW POWER</span>
   </div>

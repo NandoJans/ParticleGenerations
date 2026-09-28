@@ -1,6 +1,7 @@
 import {Num} from '../../../num';
 
-export type ElementCardKind = 'helium' | 'lithium' | 'beryllium' | 'boron' | 'carbon' | 'nitrogen' | 'oxygen' | 'fluorine';
+export type ElementCardKind = 'helium' | 'lithium' | 'beryllium' | 'boron' | 'carbon' | 'nitrogen' | 'oxygen' | 'fluorine'
+  | 'neon' | 'sodium' | 'magnesium' | 'aluminum';
 
 export interface StoredBlueElement {
   id: string;
@@ -22,6 +23,10 @@ export class ElementCardEffects {
   static oxygenRedParticleEffect = Num.ONE.copy();
   static fluorineBoosterAccelerationRate = Num.ZERO.copy();
   static fluorineFreeBoosterAccelerations = Num.ZERO.copy();
+  static neonYellowGeneratorPower = Num.ONE.copy();
+  static sodiumYellowPowerPower = Num.ONE.copy();
+  static magnesiumYellowParticleGain = Num.ONE.copy();
+  static aluminumYellowGeneratorBuyMultiplier = Num.ONE.copy();
 
   static addPower(currentPower: Num, additionalPower: Num): Num {
     return currentPower.add(additionalPower.sub(Num.ONE));
@@ -51,6 +56,10 @@ export class ElementCardEffects {
     this.oxygenRedParticleEffect = Num.ONE.copy();
     this.fluorineBoosterAccelerationRate = Num.ZERO.copy();
     this.fluorineFreeBoosterAccelerations = Num.ZERO.copy();
+    this.neonYellowGeneratorPower = Num.ONE.copy();
+    this.sodiumYellowPowerPower = Num.ONE.copy();
+    this.magnesiumYellowParticleGain = Num.ONE.copy();
+    this.aluminumYellowGeneratorBuyMultiplier = Num.ONE.copy();
   }
 }
 
@@ -151,6 +160,50 @@ export class FluorineElement extends BlueElement {
   applyEffect(): void { ElementCardEffects.fluorineBoosterAccelerationRate = ElementCardEffects.fluorineBoosterAccelerationRate.add(this.getEffect()); }
 }
 
+abstract class YellowPhaseElement extends BlueElement {
+  getEffect(): Num { return new Num(1 + Math.log10(this.level + 1) * this.quality * .2, 0); }
+}
+
+export class NeonElement extends YellowPhaseElement {
+  readonly kind = 'neon'; readonly name = 'Neon'; readonly symbol = 'Ne'; readonly primaryColor = '#fb7185';
+  getEffectDescription(): string { return `Raises the total Yellow Generator multiplier to ^${this.getEffect().toString(3)}`; }
+  applyEffect(): void {
+    ElementCardEffects.neonYellowGeneratorPower = ElementCardEffects.addPower(
+      ElementCardEffects.neonYellowGeneratorPower,
+      this.getEffect()
+    );
+  }
+}
+
+export class SodiumElement extends YellowPhaseElement {
+  readonly kind = 'sodium'; readonly name = 'Sodium'; readonly symbol = 'Na'; readonly primaryColor = '#fbbf24';
+  override getEffect(): Num { return new Num(1 + Math.log10(this.level + 1) * this.quality * .01, 0); }
+  getEffectDescription(): string { return `Raises the Yellow Power effect to ^${this.getEffect().toString(3)}`; }
+  applyEffect(): void {
+    ElementCardEffects.sodiumYellowPowerPower = ElementCardEffects.addPower(
+      ElementCardEffects.sodiumYellowPowerPower,
+      this.getEffect()
+    );
+  }
+}
+
+export class MagnesiumElement extends YellowPhaseElement {
+  readonly kind = 'magnesium'; readonly name = 'Magnesium'; readonly symbol = 'Mg'; readonly primaryColor = '#e2e8f0';
+  override getEffect(): Num { return new Num(1 + Math.log10(this.level + 1) * this.quality * 2, 0); }
+  getEffectDescription(): string { return `Multiplies Yellow Particle gain by ${this.getEffect().toString(3)}x`; }
+  applyEffect(): void {
+    ElementCardEffects.magnesiumYellowParticleGain = ElementCardEffects.magnesiumYellowParticleGain.mul(this.getEffect());
+  }
+}
+
+export class AluminumElement extends YellowPhaseElement {
+  readonly kind = 'aluminum'; readonly name = 'Aluminum'; readonly symbol = 'Al'; readonly primaryColor = '#94a3b8';
+  getEffectDescription(): string { return `Multiplies Yellow Generator buy multipliers by ${this.getEffect().toString(3)}x`; }
+  applyEffect(): void {
+    ElementCardEffects.aluminumYellowGeneratorBuyMultiplier = ElementCardEffects.aluminumYellowGeneratorBuyMultiplier.mul(this.getEffect());
+  }
+}
+
 export function createBlueElement(kind: ElementCardKind, id: string, level: number, rarity: number): BlueElement {
   switch (kind) {
     case 'helium': return new HeliumElement(id, level, rarity);
@@ -161,6 +214,10 @@ export function createBlueElement(kind: ElementCardKind, id: string, level: numb
     case 'nitrogen': return new NitrogenElement(id, level, rarity);
     case 'oxygen': return new OxygenElement(id, level, rarity);
     case 'fluorine': return new FluorineElement(id, level, rarity);
+    case 'neon': return new NeonElement(id, level, rarity);
+    case 'sodium': return new SodiumElement(id, level, rarity);
+    case 'magnesium': return new MagnesiumElement(id, level, rarity);
+    case 'aluminum': return new AluminumElement(id, level, rarity);
   }
 }
 

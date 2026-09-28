@@ -5,6 +5,8 @@ import {GeneratorRecord} from "../../../classes/records/generators/generator-rec
 import {YellowGenerator} from "../../../classes/features/generators/yellow-generator";
 import {UpgradeRecord} from "../../../classes/records/upgrades/upgrade-record";
 import {Upgrade} from "../../../classes/features/upgrade";
+import {ElementCardEffects} from "../../../classes/features/elements/blue-element";
+import {Num} from "../../../num";
 
 @Component({
     selector: 'app-yellow-generators',
@@ -13,6 +15,8 @@ import {Upgrade} from "../../../classes/features/upgrade";
     standalone: false
 })
 export class YellowGeneratorsComponent implements OnInit {
+  readonly elementEffects = ElementCardEffects;
+  readonly one = Num.ONE;
   yellowPower: Holding = HoldingRecord.yellowPower;
   generators: YellowGenerator[] = [
     GeneratorRecord.firstYellowGenerator,

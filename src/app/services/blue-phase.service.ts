@@ -106,7 +106,8 @@ export class BluePhaseService {
   ];
 
   readonly elementDiscoveries: ElementDiscovery[] = (
-    ['helium', 'lithium', 'beryllium', 'boron', 'carbon', 'nitrogen', 'oxygen', 'fluorine'] as ElementCardKind[]
+    ['helium', 'lithium', 'beryllium', 'boron', 'carbon', 'nitrogen', 'oxygen', 'fluorine',
+      'neon', 'sodium', 'magnesium', 'aluminum'] as ElementCardKind[]
   ).map((kind, index) => ({kind, unlockIndex: index + 1}));
 
   lithiumCardChargeSeconds = Num.ZERO.copy();
@@ -467,7 +468,8 @@ export class BluePhaseService {
 
   getElementMass(element: BlueElement): Num {
     const atomicWeight: Record<ElementCardKind, number> = {
-      helium: 4, lithium: 7, beryllium: 9, boron: 11, carbon: 12, nitrogen: 14, oxygen: 16, fluorine: 19
+      helium: 4, lithium: 7, beryllium: 9, boron: 11, carbon: 12, nitrogen: 14, oxygen: 16, fluorine: 19,
+      neon: 20, sodium: 23, magnesium: 24, aluminum: 27
     };
     return new Num(atomicWeight[element.kind] * Math.max(1, element.level) * (1 + element.rarity / 100), 0);
   }

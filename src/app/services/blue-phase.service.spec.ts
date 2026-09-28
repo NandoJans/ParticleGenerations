@@ -11,7 +11,7 @@ import {Automator} from '../classes/features/automator';
 import {PrestigeLayersService} from './prestige-layers.service';
 import {ChargerRecord} from '../classes/records/charger/charger-record';
 import {MultiplierRecord} from '../classes/records/multipliers/multiplier-record';
-import {createBlueElement, ElementCardEffects} from '../classes/features/elements/blue-element';
+import {createBlueElement, ElementCardEffects, ElementCardKind} from '../classes/features/elements/blue-element';
 import {StrangeQuarkEffects} from '../classes/features/strange-quark-effects';
 
 describe('BluePhaseService', () => {
@@ -127,6 +127,16 @@ describe('BluePhaseService', () => {
 
     HoldingRecord.neutrons.amount = new Num(1, 8);
     expect(service.getUnlockedCardKinds()).toEqual(['helium', 'lithium', 'beryllium', 'boron', 'carbon', 'nitrogen', 'oxygen', 'fluorine']);
+  });
+
+  it('unlocks the Yellow phase elements at neutron stages nine through twelve', () => {
+    const expected: ElementCardKind[] = ['helium', 'lithium', 'beryllium', 'boron', 'carbon', 'nitrogen', 'oxygen', 'fluorine'];
+
+    (['neon', 'sodium', 'magnesium', 'aluminum'] as ElementCardKind[]).forEach((kind, index) => {
+      HoldingRecord.neutrons.amount = new Num(1, index + 9);
+      expected.push(kind);
+      expect(service.getUnlockedCardKinds()).toEqual(expected);
+    });
   });
 
   it('unlocks elements at powers of five after reaching 2,500 neutron-star mass', () => {

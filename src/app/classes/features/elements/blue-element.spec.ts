@@ -6,8 +6,12 @@ import {
   FluorineElement,
   HeliumElement,
   LithiumElement,
+  MagnesiumElement,
+  NeonElement,
   NitrogenElement,
   OxygenElement,
+  SodiumElement,
+  AluminumElement,
   restoreBlueElement
 } from './blue-element';
 import {Num} from '../../../num';
@@ -30,6 +34,10 @@ describe('ElementCardEffects', () => {
     expect(ElementCardEffects.oxygenRedParticleEffect.toNumber()).toBe(1);
     expect(ElementCardEffects.fluorineBoosterAccelerationRate.toNumber()).toBe(0);
     expect(ElementCardEffects.fluorineFreeBoosterAccelerations.toNumber()).toBe(0);
+    expect(ElementCardEffects.neonYellowGeneratorPower.toNumber()).toBe(1);
+    expect(ElementCardEffects.sodiumYellowPowerPower.toNumber()).toBe(1);
+    expect(ElementCardEffects.magnesiumYellowParticleGain.toNumber()).toBe(1);
+    expect(ElementCardEffects.aluminumYellowGeneratorBuyMultiplier.toNumber()).toBe(1);
   });
 
   it('creates independently stored concrete element instances', () => {
@@ -180,5 +188,29 @@ describe('ElementCardEffects', () => {
 
     expect(ElementCardEffects.fluorineBoosterAccelerationRate.toNumber())
       .toBeCloseTo(element.getEffect().toNumber(), 10);
+  });
+
+  it('applies Neon through Aluminum to their Yellow phase effects', () => {
+    const elements = [
+      new NeonElement('neon-1', 9, 20),
+      new SodiumElement('sodium-1', 10, 20),
+      new MagnesiumElement('magnesium-1', 11, 20),
+      new AluminumElement('aluminum-1', 12, 20)
+    ];
+
+    elements.forEach(element => element.applyEffect());
+
+    expect(ElementCardEffects.neonYellowGeneratorPower.toNumber()).toBeCloseTo(elements[0].getEffect().toNumber(), 10);
+    expect(ElementCardEffects.sodiumYellowPowerPower.toNumber()).toBeCloseTo(elements[1].getEffect().toNumber(), 10);
+    expect(ElementCardEffects.magnesiumYellowParticleGain.toNumber()).toBeCloseTo(elements[2].getEffect().toNumber(), 10);
+    expect(ElementCardEffects.aluminumYellowGeneratorBuyMultiplier.toNumber()).toBeCloseTo(elements[3].getEffect().toNumber(), 10);
+  });
+
+  it('keeps the Sodium Yellow Power increase slight', () => {
+    const sodium = new SodiumElement('sodium-1', 10, 25);
+    const neon = new NeonElement('neon-1', 10, 25);
+
+    expect(sodium.getEffect().gt(Num.ONE)).toBeTrue();
+    expect(sodium.getEffect().lt(neon.getEffect())).toBeTrue();
   });
 });
