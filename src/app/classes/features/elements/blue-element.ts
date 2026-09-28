@@ -23,9 +23,7 @@ export class ElementCardEffects {
   static fluorineFreeBoosterAccelerations = Num.ZERO.copy();
 
   static addPower(currentPower: Num, additionalPower: Num): Num {
-    return currentPower.equals(Num.ONE)
-      ? additionalPower.copy()
-      : currentPower.add(additionalPower);
+    return currentPower.add(additionalPower.sub(Num.ONE));
   }
 
   static reset(): void {
@@ -98,7 +96,7 @@ export class BoronElement extends BlueElement {
 }
 
 abstract class RedAcceleratorElement extends BlueElement {
-  getEffect(): Num { return new Num(1 + Math.log10(this.level + 1) * this.quality * 2, 0); }
+  getEffect(): Num { return new Num(1 + Math.log10(this.level + 1) * this.quality * .2, 0); }
 }
 
 export class CarbonElement extends RedAcceleratorElement {

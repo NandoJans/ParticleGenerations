@@ -10,6 +10,7 @@ import {
   OxygenElement,
   restoreBlueElement
 } from './blue-element';
+import {Num} from '../../../num';
 
 describe('ElementCardEffects', () => {
   beforeEach(() => ElementCardEffects.reset());
@@ -102,7 +103,7 @@ describe('ElementCardEffects', () => {
     expect(ElementCardEffects.oxygenRedParticleEffect.toNumber()).toBeCloseTo(elements[2].getEffect().toNumber(), 10);
   });
 
-  it('adds the powers from multiple elements instead of multiplying them', () => {
+  it('adds only the power above one from multiple elements', () => {
     const helium = [
       new HeliumElement('helium-1', 10, 25),
       new HeliumElement('helium-2', 20, 50),
@@ -122,17 +123,35 @@ describe('ElementCardEffects', () => {
     [...helium, ...nitrogen, ...oxygen].forEach(element => element.applyEffect());
 
     expect(ElementCardEffects.heliumPower.toNumber()).toBeCloseTo(
-      helium.reduce((sum, element) => sum + element.getEffect().toNumber(), 0),
+      1 + helium.reduce((sum, element) => sum + element.getEffect().toNumber() - 1, 0),
       10
     );
     expect(ElementCardEffects.nitrogenAcceleratorEffect.toNumber()).toBeCloseTo(
-      nitrogen.reduce((sum, element) => sum + element.getEffect().toNumber(), 0),
+      1 + nitrogen.reduce((sum, element) => sum + element.getEffect().toNumber() - 1, 0),
       10
     );
     expect(ElementCardEffects.oxygenRedParticleEffect.toNumber()).toBeCloseTo(
-      oxygen.reduce((sum, element) => sum + element.getEffect().toNumber(), 0),
+      1 + oxygen.reduce((sum, element) => sum + element.getEffect().toNumber() - 1, 0),
       10
     );
+  });
+
+  it('combines two 1.2 power effects as 1 + 0.2 + 0.2', () => {
+    const combinedPower = ElementCardEffects.addPower(
+      ElementCardEffects.addPower(new Num(1, 0), new Num(1.2, 0)),
+      new Num(1.2, 0)
+    );
+
+    expect(combinedPower.toNumber()).toBeCloseTo(1.4, 10);
+  });
+
+  it('uses reduced power scaling for both accelerator formula elements', () => {
+    const nitrogen = new NitrogenElement('nitrogen-1', 10, 25);
+    const oxygen = new OxygenElement('oxygen-1', 10, 25);
+    const expectedPower = 1 + Math.log10(11) * 1.25 * .2;
+
+    expect(nitrogen.getEffect().toNumber()).toBeCloseTo(expectedPower, 10);
+    expect(oxygen.getEffect().toNumber()).toBeCloseTo(expectedPower, 10);
   });
 
   it('applies Fluorine as a free Booster Acceleration generation rate', () => {
