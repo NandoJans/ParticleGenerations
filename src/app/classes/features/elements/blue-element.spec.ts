@@ -112,7 +112,25 @@ describe('ElementCardEffects', () => {
     const strongerCarbon = new CarbonElement('carbon-2', 5, 20);
 
     expect(commonCarbon.getEffect().toNumber()).toBe(10);
-    expect(strongerCarbon.getEffect().toNumber()).toBe(1e6);
+    expect(strongerCarbon.getEffect().log10().toNumber()).toBeCloseTo(43.2, 10);
+  });
+
+  it('scales every generation element strongly with both level and rarity', () => {
+    const generationElementTypes = [LithiumElement, BoronElement, CarbonElement, FluorineElement];
+
+    generationElementTypes.forEach((ElementType) => {
+      const base = new ElementType('base', 1, 0).getEffect();
+      const leveled = new ElementType('leveled', 5, 0).getEffect();
+      const rare = new ElementType('rare', 5, 20).getEffect();
+
+      if (ElementType === CarbonElement) {
+        expect(leveled.log10().toNumber()).toBeCloseTo(25, 10);
+        expect(rare.log10().toNumber()).toBeCloseTo(43.2, 10);
+      } else {
+        expect(leveled.div(base).toNumber()).toBeCloseTo(25, 10);
+        expect(rare.div(leveled).toNumber()).toBeCloseTo(Math.pow(1.2, 3), 10);
+      }
+    });
   });
 
   it('applies Carbon, Nitrogen, and Oxygen to their Red Accelerator effects', () => {
