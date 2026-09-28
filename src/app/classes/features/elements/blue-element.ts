@@ -78,6 +78,16 @@ export abstract class BlueElement {
   ) {}
 
   protected get quality(): number { return 1 + this.rarity / 100; }
+
+  /**
+   * Generation effects are the engine of their respective phase, so their
+   * rolled level and rarity should remain meaningful well beyond the first
+   * few coins. Squaring level and cubing the rarity bonus preserves every
+   * common level-one effect while letting strong rolls scale decisively.
+   */
+  protected get generationStrength(): number {
+    return Math.pow(Math.max(1, this.level), 2) * Math.pow(this.quality, 3);
+  }
   abstract getEffect(): Num;
   abstract getEffectDescription(): string;
   abstract applyEffect(): void;
@@ -101,7 +111,7 @@ export class HeliumElement extends BlueElement {
 
 export class LithiumElement extends BlueElement {
   readonly kind = 'lithium'; readonly name = 'Lithium'; readonly symbol = 'Li'; readonly primaryColor = '#d8b4fe';
-  getEffect(): Num { return new Num(Math.max(1, this.level) * this.quality, 0); }
+  getEffect(): Num { return new Num(this.generationStrength, 0); }
   getEffectDescription(): string { return `Charges a growing red generator multiplier at ${this.getEffect().toString(3)}x speed (level 1 reaches 1e10x in one hour)`; }
   applyEffect(): void { ElementCardEffects.lithiumChargeRate = ElementCardEffects.lithiumChargeRate.add(this.getEffect()); }
 }
@@ -115,7 +125,7 @@ export class BerylliumElement extends BlueElement {
 
 export class BoronElement extends BlueElement {
   readonly kind = 'boron'; readonly name = 'Boron'; readonly symbol = 'B'; readonly primaryColor = '#fca5a5';
-  getEffect(): Num { return new Num(Math.max(1, this.level) * this.quality, 0); }
+  getEffect(): Num { return new Num(this.generationStrength, 0); }
   getEffectDescription(): string { return `Generates free red extensions at ${this.getEffect().toString(3)}x speed; the first is quick, then each one takes amount^1.1 longer until the next Blue reset`; }
   applyEffect(): void { ElementCardEffects.boronExtensionRate = ElementCardEffects.boronExtensionRate.add(this.getEffect()); }
 }
@@ -126,7 +136,7 @@ abstract class RedAcceleratorElement extends BlueElement {
 
 export class CarbonElement extends RedAcceleratorElement {
   readonly kind = 'carbon'; readonly name = 'Carbon'; readonly symbol = 'C'; readonly primaryColor = '#64748b';
-  override getEffect(): Num { return new Num(1, Math.max(1, this.level) * this.quality); }
+  override getEffect(): Num { return new Num(1, this.generationStrength); }
   getEffectDescription(): string { return `Multiplies Red Accelerator generation by ${this.getEffect().toString(3)}x`; }
   applyEffect(): void { ElementCardEffects.carbonAcceleratorGeneration = ElementCardEffects.carbonAcceleratorGeneration.mul(this.getEffect()); }
 }
@@ -155,7 +165,7 @@ export class OxygenElement extends RedAcceleratorElement {
 
 export class FluorineElement extends BlueElement {
   readonly kind = 'fluorine'; readonly name = 'Fluorine'; readonly symbol = 'F'; readonly primaryColor = '#a3e635';
-  getEffect(): Num { return new Num(Math.max(1, this.level) * this.quality, 0); }
+  getEffect(): Num { return new Num(this.generationStrength, 0); }
   getEffectDescription(): string { return `Generates free Booster Accelerations at ${this.getEffect().toString(3)}x speed; the first takes one hour and later accelerations take amount^1.1 longer until the next Blue reset`; }
   applyEffect(): void { ElementCardEffects.fluorineBoosterAccelerationRate = ElementCardEffects.fluorineBoosterAccelerationRate.add(this.getEffect()); }
 }
