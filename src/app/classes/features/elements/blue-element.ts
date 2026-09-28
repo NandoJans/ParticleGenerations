@@ -10,6 +10,7 @@ export interface StoredBlueElement {
 }
 
 export class ElementCardEffects {
+  static readonly HELIUM_POWER_LIMIT = 1.99;
   static heliumPower = Num.ONE.copy();
   static lithiumChargeRate = Num.ZERO.copy();
   static lithiumChargeMultiplier = Num.ONE.copy();
@@ -24,6 +25,18 @@ export class ElementCardEffects {
 
   static addPower(currentPower: Num, additionalPower: Num): Num {
     return currentPower.add(additionalPower.sub(Num.ONE));
+  }
+
+  static addHeliumPower(currentPower: Num, additionalPower: Num): Num {
+    const currentBonus = Math.max(0, currentPower.toNumber() - 1);
+    const additionalBonus = Math.max(0, additionalPower.toNumber() - 1);
+    const maximumBonus = this.HELIUM_POWER_LIMIT - 1;
+    const remainingBonus = Math.max(0, maximumBonus - currentBonus);
+
+    // Each card contributes a fraction of the room left below the cap. This
+    // keeps duplicate Helium cards useful without allowing them to reach ^2.
+    const combinedBonus = currentBonus + remainingBonus * Math.min(1, additionalBonus / maximumBonus);
+    return new Num(1 + Math.min(combinedBonus, maximumBonus), 0);
   }
 
   static reset(): void {
@@ -67,10 +80,13 @@ export abstract class BlueElement {
 
 export class HeliumElement extends BlueElement {
   readonly kind = 'helium'; readonly name = 'Helium'; readonly symbol = 'He'; readonly primaryColor = '#8be9fd';
-  getEffect(): Num { return new Num(1.1 + Math.log10(Math.max(1, this.level)) * this.quality * .08, 0); }
+  getEffect(): Num {
+    const power = 1.03 + Math.log10(Math.max(1, this.level)) * this.quality * .01;
+    return new Num(Math.min(power, ElementCardEffects.HELIUM_POWER_LIMIT), 0);
+  }
   getEffectDescription(): string { return `Raises red generator multiplier upgrades to ^${this.getEffect().toString(3)}`; }
   applyEffect(): void {
-    ElementCardEffects.heliumPower = ElementCardEffects.addPower(ElementCardEffects.heliumPower, this.getEffect());
+    ElementCardEffects.heliumPower = ElementCardEffects.addHeliumPower(ElementCardEffects.heliumPower, this.getEffect());
   }
 }
 

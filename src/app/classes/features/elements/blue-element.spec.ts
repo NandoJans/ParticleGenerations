@@ -57,6 +57,24 @@ describe('ElementCardEffects', () => {
     expect(ElementCardEffects.heliumPower.toNumber()).toBeCloseTo(element.getEffect().toNumber(), 10);
   });
 
+  it('starts Helium at +^0.03 and keeps its power below two', () => {
+    const startingHelium = new HeliumElement('helium-1', 1, 0);
+    const extremeHelium = new HeliumElement('helium-2', Number.MAX_VALUE, Number.MAX_VALUE);
+
+    expect(startingHelium.getEffect().toNumber()).toBeCloseTo(1.03, 10);
+    expect(extremeHelium.getEffect().lt(new Num(2, 0))).toBeTrue();
+  });
+
+  it('applies diminishing returns when multiple Helium cards are combined', () => {
+    const helium = new HeliumElement('helium-1', 1, 0);
+
+    for (let index = 0; index < 1_000; index++) helium.applyEffect();
+
+    expect(ElementCardEffects.heliumPower.gt(helium.getEffect())).toBeTrue();
+    expect(ElementCardEffects.heliumPower.lt(new Num(2, 0))).toBeTrue();
+    expect(ElementCardEffects.heliumPower.toNumber()).toBeLessThanOrEqual(ElementCardEffects.HELIUM_POWER_LIMIT);
+  });
+
   it('applies the Lithium charge rate', () => {
     const element = new LithiumElement('lithium-1', 3, 25);
 
@@ -122,10 +140,11 @@ describe('ElementCardEffects', () => {
 
     [...helium, ...nitrogen, ...oxygen].forEach(element => element.applyEffect());
 
-    expect(ElementCardEffects.heliumPower.toNumber()).toBeCloseTo(
-      1 + helium.reduce((sum, element) => sum + element.getEffect().toNumber() - 1, 0),
-      10
+    const expectedHeliumPower = helium.reduce(
+      (power, element) => ElementCardEffects.addHeliumPower(power, element.getEffect()),
+      Num.ONE.copy()
     );
+    expect(ElementCardEffects.heliumPower.toNumber()).toBeCloseTo(expectedHeliumPower.toNumber(), 10);
     expect(ElementCardEffects.nitrogenAcceleratorEffect.toNumber()).toBeCloseTo(
       1 + nitrogen.reduce((sum, element) => sum + element.getEffect().toNumber() - 1, 0),
       10
