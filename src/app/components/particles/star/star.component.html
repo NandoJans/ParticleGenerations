@@ -37,7 +37,13 @@
       <p>{{ star.getCurrency().displayName }}</p>
     </div>
     <div class="start">
-      <button [class]="'button '+((star.isCompleted()) ? 'completed' : '')" (click)="startChallenge()">{{ getButtonText() }}</button>
+      @if (isBluePhase()) {
+        <button class="button" [class.completed]="star.isCompleted()" [disabled]="!canBuyCompletion()" (click)="buyCompletion()">
+          {{ star.isCompleted() ? 'Completed' : 'Buy completion · ' + getCompletionCost() + ' Yellow Particles' }}
+        </button>
+      } @else {
+        <button [class]="'button '+((star.isCompleted()) ? 'completed' : '')" (click)="startChallenge()">{{ getButtonText() }}</button>
+      }
     </div>
   </div>
 </div>

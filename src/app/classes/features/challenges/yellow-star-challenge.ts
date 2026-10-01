@@ -7,6 +7,12 @@ import {EnhancementRecord} from "../../records/enhancement-record";
 import {Num} from "../../../num";
 
 export abstract class YellowStarChallenge extends Challenge {
+  /**
+   * The stellar-challenge page unlocks around the early-yellow 1e3 particle
+   * benchmark. Using that same progression landmark keeps old challenge
+   * rewards accessible after Blue removes manual yellow prestiges.
+   */
+  static readonly BLUE_COMPLETION_COST: Num = new Num(1, 3);
   type: string = "yellow-star-challenge";
   prestigeLayer: string = "yellow";
   prestige: ResetKey = ResetKey.RED;
@@ -47,5 +53,25 @@ export abstract class YellowStarChallenge extends Challenge {
 
   override getCurrency(): Holding {
     return HoldingRecord.redParticles;
+  }
+
+  getCompletionPurchaseCost(): Num {
+    return YellowStarChallenge.BLUE_COMPLETION_COST.copy();
+  }
+
+  canBuyCompletion(): boolean {
+    return !this.isCompleted()
+      && HoldingRecord.yellowParticles.amount.greq(this.getCompletionPurchaseCost());
+  }
+
+  buyCompletion(): boolean {
+    if (!this.canBuyCompletion()) return false;
+
+    HoldingRecord.yellowParticles.sub(this.getCompletionPurchaseCost());
+    this.complete();
+    this.run();
+    this.refreshUpgrades();
+    this.save();
+    return true;
   }
 }
