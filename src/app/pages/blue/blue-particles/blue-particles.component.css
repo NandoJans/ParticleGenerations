@@ -170,6 +170,18 @@
 .beam-status.electron { border-color: var(--electron); }
 .beam-status.electron strong { color: var(--electron); }
 
+.beam-status .yellow-particle-boost {
+  margin-top: .35rem;
+  color: #f3d35c;
+}
+
+.beam-status .yellow-particle-boost span {
+  color: #9a8f65;
+  font: 600 .6rem monospace;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
 .particle-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
