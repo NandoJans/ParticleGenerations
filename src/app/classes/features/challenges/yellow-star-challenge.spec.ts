@@ -19,11 +19,13 @@ describe('YellowStarChallenge', () => {
     challenge.completed = Num.ZERO.copy();
     HoldingRecord.yellowParticles.amount = new Num(2, 3);
     spyOn(challenge, 'save');
+    const rewardRun = spyOn(challenge, 'run').and.callThrough();
 
     expect(challenge.buyCompletion()).toBeTrue();
     expect(challenge.getCompletions().equals(Num.ONE)).toBeTrue();
     expect(HoldingRecord.yellowParticles.amount.equals(new Num(1, 3))).toBeTrue();
     expect(ChallengeRecord.currentChallenges['yellow']).toBeUndefined();
+    expect(rewardRun).not.toHaveBeenCalled();
   });
 
   it('does not buy a completion when the player cannot afford it', () => {
