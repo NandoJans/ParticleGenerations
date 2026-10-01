@@ -49,6 +49,7 @@ describe('BluePhaseService', () => {
     UpgradeRecord.redGeneratorExtension.effect = undefined;
     MilestoneRecord.stableParticleBeam.unlocked = false;
     MilestoneRecord.denseParticleCollision.unlocked = false;
+    MilestoneRecord.automaticParticleCollisions.unlocked = false;
     service.synchronizePurchases();
     MultiplierRecord.redAcceleratorGenerators.reset();
     MultiplierRecord.redGeneratorExtensionBuffer.reset();
@@ -501,6 +502,41 @@ describe('BluePhaseService', () => {
     expect(service.getParticleGeneration().toNumber()).toBeCloseTo(0.1, 8);
     service.activeParticle = 'electrons';
     expect(service.getParticleGeneration().toNumber()).toBeCloseTo(0.1, 8);
+  });
+
+  it('boosts neutron generation by the Yellow Particle exponent at 10,000 neutron-star mass', () => {
+    HoldingRecord.protons.amount = new Num(1, 2);
+    HoldingRecord.electrons.amount = new Num(1, 2);
+    HoldingRecord.yellowParticles.amount = new Num(5, 10);
+    service.neutronStarMass = new Num(9.999, 3);
+
+    expect(service.getCollisionGain().toNumber()).toBe(2);
+
+    service.neutronStarMass = new Num(1, 4);
+
+    expect(service.getCollisionGain().toNumber()).toBe(20);
+  });
+
+  it('automatically collides when its unlocked threshold is met', () => {
+    HoldingRecord.protons.amount = new Num(1, 2);
+    HoldingRecord.electrons.amount = new Num(1, 2);
+    service.collisionAutomatorThreshold = new Num(2, 0);
+    MilestoneRecord.automaticParticleCollisions.unlocked = true;
+
+    service.runCollisionAutomator();
+
+    expect(HoldingRecord.neutrons.amount.toNumber()).toBe(2);
+  });
+
+  it('does not automatically collide below the configured threshold', () => {
+    HoldingRecord.protons.amount = new Num(1, 2);
+    HoldingRecord.electrons.amount = new Num(1, 2);
+    service.collisionAutomatorThreshold = new Num(3, 0);
+    MilestoneRecord.automaticParticleCollisions.unlocked = true;
+
+    service.runCollisionAutomator();
+
+    expect(HoldingRecord.neutrons.amount.equals(Num.ZERO)).toBeTrue();
   });
 
   it('does not reduce particle generation when the Yellow Particle exponent is below one', () => {

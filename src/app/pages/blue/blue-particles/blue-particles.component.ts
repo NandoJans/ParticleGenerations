@@ -43,6 +43,22 @@ export class BlueParticlesComponent {
     this.bluePhase.collide();
   }
 
+  setCollisionAutomatorActive(event: Event): void {
+    this.bluePhase.setCollisionAutomatorActive((event.target as HTMLInputElement).checked);
+  }
+
+  setCollisionAutomatorThreshold(event: Event): void {
+    const rawValue = (event.target as HTMLInputElement).value.replace(/,/g, '').trim();
+    const scientificParts = rawValue.toLowerCase().split('e');
+    if (scientificParts.length > 2) return;
+
+    const mantissa = Number(scientificParts[0]);
+    const exponent = scientificParts.length === 2 ? Number(scientificParts[1]) : 0;
+    if (!Number.isFinite(mantissa) || !Number.isInteger(exponent) || mantissa <= 0) return;
+
+    this.bluePhase.setCollisionAutomatorThreshold(new Num(mantissa, exponent));
+  }
+
 
   getProtonBufferEffect(phase: 'red' | 'yellow' | 'green'): string {
     const generators = phase === 'red'

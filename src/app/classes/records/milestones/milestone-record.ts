@@ -504,6 +504,13 @@ export class MilestoneRecord extends Record {
     'Red extensions no longer reset anything.'
   );
 
+  static automaticParticleCollisions: BlueMilestone = new BlueMilestone(
+    'automaticParticleCollisions',
+    'Automatic Particle Collisions',
+    new Num(1, 6),
+    'Unlock a configurable automator that collides particles when the pending Neutron gain reaches its threshold.'
+  );
+
   // Purple Phase
 
   static override list: Milestone[] = [
@@ -581,6 +588,7 @@ export class MilestoneRecord extends Record {
     MilestoneRecord.stableParticleBeam,
     MilestoneRecord.denseParticleCollision,
     MilestoneRecord.stableRedExtensions,
+    MilestoneRecord.automaticParticleCollisions,
   ];
 
   getList(): Milestone[] {
