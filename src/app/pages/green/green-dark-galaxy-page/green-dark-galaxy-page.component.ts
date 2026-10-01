@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {AppModule} from "../../../app.module";
 import {Holding} from "../../../classes/features/holding";
 import {HoldingRecord} from "../../../classes/records/holdings/holding-record";
 import {DarkGalaxyChallenge} from "../../../classes/features/challenges/dark-galaxy-challenge";
