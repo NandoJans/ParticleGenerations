@@ -69,7 +69,11 @@ export abstract class YellowStarChallenge extends Challenge {
 
     HoldingRecord.yellowParticles.sub(this.getCompletionPurchaseCost());
     this.complete();
-    this.run();
+    // Rewards are applied by the normal calculation-order tick. Applying the
+    // reward here as well is unsafe because many rewards mutate global
+    // multipliers (and Lalande mutates upgrade amounts). Those effects have
+    // already been applied for the current tick, so running again compounds
+    // them every time a completion is purchased.
     this.refreshUpgrades();
     this.save();
     return true;
