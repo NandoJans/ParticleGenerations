@@ -7,6 +7,7 @@ import {Requirement} from "../interfaces/requirement";
 import {Num} from "../../../num";
 import {ChallengeRecord} from "../../records/challenges/challenge-record";
 import {HoldingRecord} from "../../records/holdings/holding-record";
+import {BluePhaseService} from "../../../services/blue-phase.service";
 
 export class StarChallengeAutomator extends ChallengeAutomator {
   resetId: ResetKey;
@@ -46,6 +47,10 @@ export class StarChallengeAutomator extends ChallengeAutomator {
   }
 
   override action() {
+    if (BluePhaseService.isPhaseUnlocked()) {
+      super.action();
+      return;
+    }
     // Check if we are not in a challenge, and we have the requirements to start one.
     if (
       !ChallengeRecord.currentChallenges[this.challenge.prestigeLayer] && (

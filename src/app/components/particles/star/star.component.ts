@@ -4,6 +4,7 @@ import {ChallengeRecord} from "../../../classes/records/challenges/challenge-rec
 import {ChallengeService} from "../../../services/interactables/challenge.service";
 import {Num} from "../../../num";
 import {EnhancementService} from "../../../services/enhancement.service";
+import {BluePhaseService} from "../../../services/blue-phase.service";
 
 @Component({
     selector: 'app-star',
@@ -17,6 +18,7 @@ export class StarComponent implements OnInit {
   constructor(
     private challengeService: ChallengeService,
     private enhancementService: EnhancementService,
+    private bluePhaseService: BluePhaseService,
   ) { }
 
   ngOnInit(): void {
@@ -28,6 +30,22 @@ export class StarComponent implements OnInit {
     } else {
       this.challengeService.startChallenge(this.star);
     }
+  }
+
+  buyCompletion(): void {
+    this.challengeService.buyStarCompletion(this.star);
+  }
+
+  isBluePhase(): boolean {
+    return this.bluePhaseService.isUnlocked();
+  }
+
+  canBuyCompletion(): boolean {
+    return this.star.canBuyCompletion();
+  }
+
+  getCompletionCost(): string {
+    return this.star.getCompletionPurchaseCost().toString();
   }
 
   isEnhancing(): boolean {

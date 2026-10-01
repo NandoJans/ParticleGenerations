@@ -42,6 +42,7 @@ export interface ElementDiscovery {
   providedIn: 'root'
 })
 export class BluePhaseService {
+  private static phaseUnlocked = false;
   static readonly elementInventorySlots = 12;
   static readonly activeElementSlots = 2;
   static elementsDiscoveredCount = 0;
@@ -131,6 +132,10 @@ export class BluePhaseService {
 
   isUnlocked(): boolean {
     return this.unlocked;
+  }
+
+  static isPhaseUnlocked(): boolean {
+    return BluePhaseService.phaseUnlocked;
   }
 
   tick(speed: Num): void {
@@ -228,6 +233,7 @@ export class BluePhaseService {
 
   unlockFromPrestige(): void {
     this.unlocked = true;
+    BluePhaseService.phaseUnlocked = true;
     this.resetDarkStarChargers();
     this.startParticleGeneration();
     this.synchronizePurchases();
@@ -651,6 +657,7 @@ export class BluePhaseService {
 
   load(): void {
     this.unlocked = this.storage.load(this.unlocked, 'unlocked');
+    BluePhaseService.phaseUnlocked = this.unlocked;
     this.activeParticle = this.storage.load(this.activeParticle, 'activeParticle');
     this.purchaseStates = this.storage.load({}, 'purchaseStates');
     const storedElements = this.storage.load(

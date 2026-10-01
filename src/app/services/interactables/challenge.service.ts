@@ -3,12 +3,16 @@ import {Challenge} from "../../classes/features/challenge";
 import {LocalStorageHelper} from "../../classes/helpers/local-storage-helper";
 import {ChallengeRecord} from "../../classes/records/challenges/challenge-record";
 import {ResetHelper} from "../../classes/helpers/reset-helper";
+import {BluePhaseService} from "../blue-phase.service";
+import {YellowStarChallenge} from "../../classes/features/challenges/yellow-star-challenge";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChallengeService {
   static localStorageHelper: LocalStorageHelper = new LocalStorageHelper('challenge', 'currentChallenge');
+
+  constructor(private bluePhaseService: BluePhaseService = new BluePhaseService()) {}
 
   getList(): Challenge[] {
     return ChallengeRecord.list;
@@ -77,6 +81,7 @@ export class ChallengeService {
   }
 
   static startChallenge(challenge: Challenge) {
+    if (challenge instanceof YellowStarChallenge && BluePhaseService.isPhaseUnlocked()) return;
     if (ChallengeRecord.currentChallenges[challenge.prestigeLayer]) {
       const currentChallenge = ChallengeRecord.currentChallenges[challenge.prestigeLayer];
       currentChallenge.end();
@@ -92,7 +97,13 @@ export class ChallengeService {
   }
 
   startChallenge(challenge: Challenge) {
+    if (challenge instanceof YellowStarChallenge && this.bluePhaseService.isUnlocked()) return;
     ChallengeService.startChallenge(challenge);
+  }
+
+  buyStarCompletion(challenge: YellowStarChallenge): boolean {
+    if (!this.bluePhaseService.isUnlocked() || !challenge.isUnlocked()) return false;
+    return challenge.buyCompletion();
   }
 
   endChallenge(challenge: Challenge) {

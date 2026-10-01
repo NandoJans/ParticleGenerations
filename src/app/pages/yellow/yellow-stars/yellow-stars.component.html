@@ -1,7 +1,7 @@
 <section class="observatory-shell">
   <header class="observatory-header">
     <div class="star-map" aria-hidden="true"><span class="star star-main"></span><span class="star star-one"></span><span class="star star-two"></span><span class="star star-three"></span><i></i><b></b></div>
-    <div><p class="eyebrow">YELLOW PHASE // DEEP-SPACE OBSERVATORY</p><h1>Stellar Challenges</h1><p>Chart nearby stars, enter their hostile conditions, and return with permanent rewards for the yellow phase.</p></div>
+    <div><p class="eyebrow">YELLOW PHASE // DEEP-SPACE OBSERVATORY</p><h1>Stellar Challenges</h1><p>{{ bluePhaseService.isUnlocked() ? 'Blue-phase stability prevents new missions. Spend Yellow Particles to secure remaining completions.' : 'Chart nearby stars, enter their hostile conditions, and return with permanent rewards for the yellow phase.' }}</p></div>
   </header>
 
   <section class="mission-console">

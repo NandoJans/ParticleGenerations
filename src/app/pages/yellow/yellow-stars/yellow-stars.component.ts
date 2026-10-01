@@ -3,6 +3,7 @@ import {YellowStarChallenge} from "../../../classes/features/challenges/yellow-s
 import {ChallengeRecord} from "../../../classes/records/challenges/challenge-record";
 import {ChallengeService} from "../../../services/interactables/challenge.service";
 import {Holding} from "../../../classes/features/holding";
+import {BluePhaseService} from "../../../services/blue-phase.service";
 
 @Component({
     selector: 'app-yellow-stars',
@@ -19,6 +20,7 @@ export class YellowStarsComponent implements OnInit {
   ]
   constructor(
     private challengeService: ChallengeService,
+    public bluePhaseService: BluePhaseService,
   ) { }
 
   ngOnInit(): void {
@@ -66,7 +68,8 @@ export class YellowStarsComponent implements OnInit {
     'While in a star challenge, you have access to special generators, upgrades, and mechanics.',
     'Completing star challenges grants powerful rewards that boost your overall progression.',
     'Stars unlock progressively - complete easier stars to access more difficult ones.',
-    'Use the "Leave challenge" button if you need to exit and return to normal gameplay.'
+    'Use the "Leave challenge" button if you need to exit and return to normal gameplay.',
+    'After the Blue phase begins, star challenges can no longer be entered. Spend Yellow Particles to buy their remaining completions instead.'
   ]
 
   getCurrentStarStyle() {
