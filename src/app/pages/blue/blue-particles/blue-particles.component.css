@@ -17,6 +17,7 @@
 
 .phase-header,
 .collider-panel,
+.collision-automator-panel,
 .neutron-section,
 .particle-card,
 .meltdown-panel {
@@ -24,6 +25,23 @@
   background: linear-gradient(145deg, #111c24, #070b0f);
   box-shadow: inset 0 0 28px rgba(0, 0, 0, .58);
 }
+
+.collision-automator-panel {
+  display: grid;
+  grid-template-columns: 1fr minmax(12rem, auto) auto;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  padding: 1.25rem 1.5rem;
+  text-align: left;
+}
+
+.collision-automator-panel h2,
+.collision-automator-panel p { margin: .2rem 0; }
+.collision-automator-panel > label span { display: block; margin-bottom: .35rem; color: #8ba0ab; }
+.collision-automator-panel input[type='text'] { padding: .65rem; border: 1px solid rgba(92,184,227,.45); background: #05090c; color: #dff6ff; }
+.collision-automator-panel .automator-toggle { text-align: center; }
+.collision-automator-panel .automator-toggle input { width: 1.2rem; height: 1.2rem; accent-color: var(--blue); }
 
 .meltdown-panel {
   display: grid;
@@ -340,6 +358,7 @@
 @media (max-width: 760px) {
   .phase-header,
   .collider-panel,
+  .collision-automator-panel,
   .meltdown-panel {
     grid-template-columns: 1fr;
   }

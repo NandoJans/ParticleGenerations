@@ -101,7 +101,7 @@ export class BluePhaseService {
     {
       goal: new Num(1, 4),
       name: 'Yellow Compression',
-      description: 'Multiply proton and electron generation by the exponent of Yellow Particles.'
+      description: 'Multiply proton, electron, and Neutron generation by the exponent of Yellow Particles.'
     }
   ];
 
@@ -113,6 +113,8 @@ export class BluePhaseService {
   lithiumCardChargeSeconds = Num.ZERO.copy();
   boronCardExtensionProgress = Num.ZERO.copy();
   fluorineBoosterAccelerationProgress = Num.ZERO.copy();
+  collisionAutomatorActive = true;
+  collisionAutomatorThreshold = Num.ONE.copy();
 
   constructor() {
     ResetHelper.registerResetListener('blue-phase-unlock', resetKey => {
@@ -149,6 +151,31 @@ export class BluePhaseService {
     this.chargeElementCardEffects(speed);
     this.generateYellowPrestigesAndKeys(speed);
     this.generateStrangeQuarks(speed);
+    this.runCollisionAutomator();
+  }
+
+  isCollisionAutomatorUnlocked(): boolean {
+    return MilestoneRecord.automaticParticleCollisions.unlocked;
+  }
+
+  setCollisionAutomatorActive(active: boolean): void {
+    this.collisionAutomatorActive = active;
+    this.save();
+  }
+
+  setCollisionAutomatorThreshold(threshold: Num): void {
+    this.collisionAutomatorThreshold = threshold.max(Num.ONE);
+    this.save();
+  }
+
+  runCollisionAutomator(): void {
+    if (
+      this.isCollisionAutomatorUnlocked()
+      && this.collisionAutomatorActive
+      && this.getCollisionGain().greq(this.collisionAutomatorThreshold)
+    ) {
+      this.collide();
+    }
   }
 
   getStrangeQuarkEffect(): Num {
@@ -248,6 +275,8 @@ export class BluePhaseService {
       UpgradeRecord.blueColliderEfficiency.buffer.pow(UpgradeRecord.blueColliderEfficiency.amount)
     ).mul(
       UpgradeRecord.blueCollisionCalibration.buffer.pow(UpgradeRecord.blueCollisionCalibration.amount)
+    ).mul(
+      this.getYellowParticleGenerationBoost()
     );
     return pairs.pow(new Num(2.5, -1))
       .sub(Num.ONE)
@@ -616,6 +645,8 @@ export class BluePhaseService {
     this.storage.saveNum(this.lithiumCardChargeSeconds, 'lithiumCardChargeSeconds');
     this.storage.saveNum(this.boronCardExtensionProgress, 'boronCardExtensionProgress');
     this.storage.saveNum(this.fluorineBoosterAccelerationProgress, 'fluorineBoosterAccelerationProgress');
+    this.storage.save(this.collisionAutomatorActive, 'collisionAutomatorActive');
+    this.storage.saveNum(this.collisionAutomatorThreshold, 'collisionAutomatorThreshold');
   }
 
   load(): void {
@@ -644,6 +675,9 @@ export class BluePhaseService {
     this.lithiumCardChargeSeconds = this.storage.loadNum(this.lithiumCardChargeSeconds, 'lithiumCardChargeSeconds');
     this.boronCardExtensionProgress = this.storage.loadNum(this.boronCardExtensionProgress, 'boronCardExtensionProgress');
     this.fluorineBoosterAccelerationProgress = this.storage.loadNum(this.fluorineBoosterAccelerationProgress, 'fluorineBoosterAccelerationProgress');
+    this.collisionAutomatorActive = this.storage.load(this.collisionAutomatorActive, 'collisionAutomatorActive');
+    this.collisionAutomatorThreshold = this.storage.loadNum(this.collisionAutomatorThreshold, 'collisionAutomatorThreshold')
+      .max(Num.ONE);
     this.mergeLegacyNeutronClump();
     this.synchronizePurchases();
     this.applyNeutronMeltdown();

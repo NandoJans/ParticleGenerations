@@ -72,6 +72,28 @@
     </button>
   </article>
 
+  @if (bluePhase.isCollisionAutomatorUnlocked()) {
+    <article class="collision-automator-panel">
+      <div>
+        <p class="eyebrow">COLLISION AUTOMATOR</p>
+        <h2>Automatic Particle Collisions</h2>
+        <p>Automatically collide when the pending Neutron gain reaches the configured threshold.</p>
+      </div>
+      <label>
+        <span>Minimum Neutron gain</span>
+        <input type="text"
+               [value]="bluePhase.collisionAutomatorThreshold.toString()"
+               (change)="setCollisionAutomatorThreshold($event)" />
+      </label>
+      <label class="automator-toggle">
+        <input type="checkbox"
+               [checked]="bluePhase.collisionAutomatorActive"
+               (change)="setCollisionAutomatorActive($event)" />
+        <span>{{ bluePhase.collisionAutomatorActive ? 'ACTIVE' : 'STANDBY' }}</span>
+      </label>
+    </article>
+  }
+
   <section class="blue-upgrades">
     <div class="section-heading">
       <div>

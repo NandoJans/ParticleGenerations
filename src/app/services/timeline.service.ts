@@ -192,6 +192,7 @@ export class TimelineService {
       HoldingRecord.neutrons,
       Num.ONE
     )
+    .addMilestone(MilestoneRecord.automaticParticleCollisions)
     .build()
     .addTimelineEvent(
       'blue-element-forge',
