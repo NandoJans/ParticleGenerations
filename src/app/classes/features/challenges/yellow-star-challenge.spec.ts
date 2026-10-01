@@ -3,6 +3,7 @@ import { ProximaCentauriStarChallenge } from './proxima-centauri-star-challenge'
 import { HoldingRecord } from '../../records/holdings/holding-record';
 import { Num } from '../../../num';
 import { ChallengeRecord } from '../../records/challenges/challenge-record';
+import { BluePhaseService } from '../../../services/blue-phase.service';
 
 describe('YellowStarChallenge', () => {
   it('should create an instance', () => {
@@ -37,5 +38,17 @@ describe('YellowStarChallenge', () => {
     expect(challenge.buyCompletion()).toBeFalse();
     expect(challenge.getCompletions().equals(Num.ZERO)).toBeTrue();
     expect(HoldingRecord.yellowParticles.amount.equals(new Num(9, 2))).toBeTrue();
+  });
+
+  it('keeps star challenge rewards dormant after the neutron star forms', () => {
+    const challenge = new ProximaCentauriStarChallenge('test-dormant-blue-reward');
+    challenge.completed = Num.ONE.copy();
+    challenge.effect = new Num(2, 0);
+    const reward = spyOn(challenge, 'reward').and.returnValue(new Num(10, 0));
+    spyOn(BluePhaseService, 'isPhaseUnlocked').and.returnValue(true);
+
+    expect(challenge.run()).toBeUndefined();
+    expect(reward).not.toHaveBeenCalled();
+    expect(challenge.effect).toBeUndefined();
   });
 });

@@ -62,10 +62,16 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
 
   override run(): Num | undefined {
     if (this.completed) {
-
-      const reward = this.reward();
-      if (reward) {
-        this.effect = reward;
+      let reward: Num | undefined;
+      if (this.rewardsEnabled()) {
+        reward = this.reward();
+        if (reward) {
+          this.effect = reward;
+        }
+      } else {
+        // Do not leave a pre-reset reward visible while this challenge's
+        // rewards are dormant.
+        this.effect = undefined;
       }
 
       this.correctCompleted();
@@ -76,6 +82,10 @@ export abstract class Challenge extends GameElement implements Resetable, Storab
     }
     this.buffer = this.baseBuffer.copy();
     return;
+  }
+
+  protected rewardsEnabled(): boolean {
+    return true;
   }
 
   private correctCompleted() {

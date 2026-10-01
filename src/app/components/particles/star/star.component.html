@@ -25,11 +25,11 @@
     </div>
     <div class="data-row reward">
       <span>REWARD</span>
-      <p>{{ star.getRewardDescription() }}</p>
+      <p>{{ isBluePhase() ? 'Dormant after neutron-star formation. Future discoveries may restore this power.' : star.getRewardDescription() }}</p>
     </div>
     <div class="data-row effect">
       <span>CURRENT EFFECT</span>
-      <p>{{ star.getEffectDisplay() }}</p>
+      <p>{{ isBluePhase() ? 'Dormant' : star.getEffectDisplay() }}</p>
     </div>
     <div class="goal">
       <span>MISSION GOAL</span>
