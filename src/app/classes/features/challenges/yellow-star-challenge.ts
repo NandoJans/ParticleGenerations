@@ -5,6 +5,7 @@ import {HoldingRecord} from "../../records/holdings/holding-record";
 import {Enhancement} from "../enhancements/enhancement";
 import {EnhancementRecord} from "../../records/enhancement-record";
 import {Num} from "../../../num";
+import {BluePhaseService} from "../../../services/blue-phase.service";
 
 export abstract class YellowStarChallenge extends Challenge {
   /**
@@ -18,6 +19,15 @@ export abstract class YellowStarChallenge extends Challenge {
   prestige: ResetKey = ResetKey.RED;
   enhancement: Enhancement | null = null;
   allowedEnhancements: Enhancement[] = [EnhancementRecord.green];
+
+  /**
+   * Forming the neutron star removes the stellar challenges and their power.
+   * Completions can still be purchased for future restoration, but must not
+   * apply their rewards during the Blue phase.
+   */
+  protected override rewardsEnabled(): boolean {
+    return !BluePhaseService.isPhaseUnlocked();
+  }
 
   canEnhance(): boolean {
     return true;
