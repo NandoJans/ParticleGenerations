@@ -489,6 +489,30 @@ export class BluePhaseService {
     return new Num(1, exponent);
   }
 
+  /** Reset service-owned Blue progress when a developer simulation starts. */
+  resetForSimulation(): void {
+    this.unlocked = false;
+    BluePhaseService.phaseUnlocked = false;
+    this.activeParticle = 'none';
+    this.purchaseStates = {};
+    this.elements = [];
+    this.activeElementCardIds = [];
+    this.elementsDiscovered = 0;
+    BluePhaseService.elementsDiscoveredCount = 0;
+    this.highestNeutrons = Num.ZERO.copy();
+    this.neutronStarMass = Num.ZERO.copy();
+    this.strangeQuarks = Num.ZERO.copy();
+    Object.keys(this.neutronStarUpgrades).forEach(key => {
+      this.neutronStarUpgrades[key as NeutronStarUpgradeKey] = 0;
+    });
+    this.lithiumCardChargeSeconds = Num.ZERO.copy();
+    this.boronCardExtensionProgress = Num.ZERO.copy();
+    this.fluorineBoosterAccelerationProgress = Num.ZERO.copy();
+    this.collisionAutomatorActive = true;
+    this.collisionAutomatorThreshold = Num.ONE.copy();
+    this.applyElementCardEffects();
+  }
+
   getBoronCardProgressPercent(): number {
     return this.boronCardExtensionProgress.sub(this.boronCardExtensionProgress.floor()).toNumber() * 100;
   }

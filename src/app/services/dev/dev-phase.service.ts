@@ -13,6 +13,7 @@ import { TimelineService } from '../timeline.service';
 import { ChallengeService } from '../interactables/challenge.service';
 import {ChargerRecord} from "../../classes/records/charger/charger-record";
 import {Generator} from "../../classes/features/generator";
+import {BluePhaseService} from "../blue-phase.service";
 
 export interface PhaseConfig {
   id: string;
@@ -358,6 +359,23 @@ export class DevPhaseService {
       }
     },
     {
+      id: 'blue-start',
+      name: 'Blue Start',
+      description: 'Blue particle laboratory just unlocked',
+      setup: () => {
+        this.fullReset();
+        this.bluePhaseService.resetForSimulation();
+
+        // A clean Blue prestige. Earlier resources deliberately start small so
+        // the balance run measures Blue's rebuilding curve instead of inheriting
+        // late-Green production.
+        HoldingRecord.blueParticles.amount = Num.ONE.copy();
+        HoldingRecord.bluePrestiges.amount = Num.ONE.copy();
+        HoldingRecord.redParticles.amount = Num.ONE.copy();
+        this.bluePhaseService.unlockFromPrestige();
+      }
+    },
+    {
       id: 'dark-galaxy-start',
       name: 'Dark Galaxy Start',
       description: 'Ready to start the dark galaxy challenge with dark star chargers',
@@ -424,6 +442,7 @@ export class DevPhaseService {
   constructor(
     private dataManagerService: DataManagerService,
     private challengeService: ChallengeService,
+    private bluePhaseService: BluePhaseService,
   ) {}
 
   private fullReset(): void {

@@ -61,6 +61,8 @@ export class ProtonHolding extends BlueHolding {
 }
 
 export class ElectronHolding extends BlueHolding {
+  private static readonly diminishingReturnsStart = new Num(1, 1);
+  private static readonly diminishingReturnsPower = new Num(5, -1);
   name = 'electrons';
   displayName = 'Electrons';
   abbreviation = 'e-';
@@ -98,7 +100,18 @@ export class ElectronHolding extends BlueHolding {
   }
 
   private getEffect(coefficient: Num): Num {
-    return Num.ONE.add(this.amount.add(Num.ONE).log10().mul(coefficient));
+    const orders = this.amount.add(Num.ONE).log10();
+    // Electron effects modify the base of generator buy multipliers, which is
+    // compounded once per purchase tier. Preserve the original curve for the
+    // first ten orders, then only count the square root of additional orders so
+    // late-Blue electrons cannot feed an exponential lower-phase runaway.
+    const effectiveOrders = orders.lte(ElectronHolding.diminishingReturnsStart)
+      ? orders
+      : ElectronHolding.diminishingReturnsStart.add(
+        orders.sub(ElectronHolding.diminishingReturnsStart)
+          .pow(ElectronHolding.diminishingReturnsPower)
+      );
+    return Num.ONE.add(effectiveOrders.mul(coefficient));
   }
 }
 
