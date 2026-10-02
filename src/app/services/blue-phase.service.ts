@@ -102,7 +102,7 @@ export class BluePhaseService {
     {
       goal: new Num(1, 4),
       name: 'Yellow Compression',
-      description: 'Multiply proton, electron, and Neutron generation by the exponent of Yellow Particles.'
+      description: 'Multiply proton and electron generation by the exponent of Yellow Particles.'
     }
   ];
 
@@ -281,8 +281,6 @@ export class BluePhaseService {
       UpgradeRecord.blueColliderEfficiency.buffer.pow(UpgradeRecord.blueColliderEfficiency.amount)
     ).mul(
       UpgradeRecord.blueCollisionCalibration.buffer.pow(UpgradeRecord.blueCollisionCalibration.amount)
-    ).mul(
-      this.getYellowParticleGenerationBoost()
     );
     return pairs.pow(new Num(2.5, -1))
       .sub(Num.ONE)

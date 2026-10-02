@@ -504,7 +504,7 @@ describe('BluePhaseService', () => {
     expect(service.getParticleGeneration().toNumber()).toBeCloseTo(0.1, 8);
   });
 
-  it('boosts neutron generation by the Yellow Particle exponent at 10,000 neutron-star mass', () => {
+  it('does not boost neutron generation with Yellow Particles at 10,000 neutron-star mass', () => {
     HoldingRecord.protons.amount = new Num(1, 2);
     HoldingRecord.electrons.amount = new Num(1, 2);
     HoldingRecord.yellowParticles.amount = new Num(5, 10);
@@ -514,7 +514,7 @@ describe('BluePhaseService', () => {
 
     service.neutronStarMass = new Num(1, 4);
 
-    expect(service.getCollisionGain().toNumber()).toBe(20);
+    expect(service.getCollisionGain().toNumber()).toBe(2);
   });
 
   it('automatically collides when its unlocked threshold is met', () => {
