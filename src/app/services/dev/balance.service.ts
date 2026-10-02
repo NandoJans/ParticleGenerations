@@ -31,6 +31,7 @@ import { SacrificeHelperService } from './helpers/sacrifice-helper.service';
 import { DevPhaseService } from './dev-phase.service';
 import {TimelineService} from "../timeline.service";
 import {CompressionService} from "../compression.service";
+import {BluePhaseService} from "../blue-phase.service";
 
 @Injectable({
   providedIn: 'root'
@@ -109,6 +110,7 @@ export class BalanceService {
     private devPhaseService: DevPhaseService,
     private timelineService: TimelineService,
     private compressionService: CompressionService,
+    private bluePhaseService: BluePhaseService,
   ) {
     // Load persisted results (if any) on service creation
     this.loadResults();
@@ -134,6 +136,7 @@ export class BalanceService {
     this.dataManagerService.enableSimulation();
 
     this.dataManagerService.clearSim();
+    this.bluePhaseService.resetForSimulation();
     this.fullReset();
     // Ensure no lingering challenges from previous sessions
 
@@ -235,6 +238,10 @@ export class BalanceService {
 
     // Handle galaxy tree upgrade purchases (uses dark energy)
     this.handleGalaxyTreeUpgrades();
+
+    // Blue has active decisions (beam direction, collisions, element fusion,
+    // sacrifices, and neutron-star research) which generic buyables cannot make.
+    this.handleBluePhase();
 
     this.prestigeLayerService.getList().forEach(prestigeLayer => {
       if (prestigeLayer.limitPhaseBelow && prestigeLayer.requirementsMet()) {
@@ -413,6 +420,70 @@ export class BalanceService {
       elapsedSincePrevious: this.elapsedSincePrevious,
       markNew: () => { this.newResultsThisLoop = true; },
     });
+  }
+
+  private handleBluePhase(): void {
+    if (!this.bluePhaseService.isUnlocked()) return;
+
+    // Keep the two beam currencies close enough to collide. Purchases still
+    // alternate the beam naturally; this prevents a long no-purchase stretch
+    // from leaving the simulation permanently on one side.
+    this.bluePhaseService.activeParticle = HoldingRecord.protons.amount.lte(HoldingRecord.electrons.amount)
+      ? 'protons'
+      : 'electrons';
+
+    // Before the collision automator unlocks, make every useful collision. At
+    // later stages the in-game automator performs the same action during tick().
+    if (!this.bluePhaseService.isCollisionAutomatorUnlocked() && this.bluePhaseService.canCollide()) {
+      this.bluePhaseService.collide();
+    }
+
+    if (this.bluePhaseService.canFuseElement()) {
+      const kindCount = Math.max(1, this.bluePhaseService.getUnlockedCardKinds().length);
+      const kindRoll = ((this.bluePhaseService.elementsDiscovered % kindCount) + 0.5) / kindCount;
+      const rolls = [kindRoll, 0.5, 0.5];
+      const element = this.bluePhaseService.fuseElement(() => rolls.shift() ?? 0.5);
+      if (element) {
+        this.recordBlueResult(`Element ${this.bluePhaseService.elementsDiscovered}: ${element.name}`);
+        this.bluePhaseService.equipElementCard(element);
+      }
+    }
+
+    if (this.bluePhaseService.isNeutronStarUnlocked()) {
+      // Turn unequipped inventory into permanent mass, leaving equipped cards
+      // active. This also prevents the finite inventory from stalling fusion.
+      this.bluePhaseService.elements
+        .filter(element => !this.bluePhaseService.isElementCardActive(element))
+        .forEach(element => this.bluePhaseService.sacrificeElement(element));
+
+      this.bluePhaseService.neutronStarMassMilestones.forEach(milestone => {
+        const key = `blue-mass:${milestone.name}`;
+        if (this.bluePhaseService.isNeutronStarMassMilestoneUnlocked(milestone)
+          && !this.trackedMilestones.has(key)) {
+          this.trackedMilestones.add(key);
+          this.recordBlueResult(`Neutron Star: ${milestone.name}`);
+        }
+      });
+
+      this.bluePhaseService.neutronStarUpgradeDefinitions.forEach(upgrade => {
+        while (this.bluePhaseService.canBuyNeutronStarUpgrade(upgrade)) {
+          this.bluePhaseService.buyNeutronStarUpgrade(upgrade);
+          this.recordBlueResult(`${upgrade.name} ${this.bluePhaseService.neutronStarUpgrades[upgrade.key]}`);
+        }
+      });
+    }
+  }
+
+  private recordBlueResult(element: string): void {
+    if (this.results[element]) return;
+    this.results[element] = {
+      element,
+      time: this.totalElapsedTime,
+      timeBetween: this.elapsedSincePrevious,
+      style: 'blue',
+      sequence: this.nextResultSequence(),
+    };
+    this.newResultsThisLoop = true;
   }
 
   done() {
