@@ -15,11 +15,15 @@ export class StarChallengeAutomator extends ChallengeAutomator {
 
   constructor(
     saveName: string,
-    challenge: Challenge
+    getChallenge: () => Challenge,
+    challengeName: string,
+    challengeDisplayName: string,
   ) {
     super(
       saveName,
-      challenge,
+      getChallenge,
+      challengeName,
+      challengeDisplayName,
     );
     this.requirement = [
       new Requirement(HoldingRecord.yellowPrestiges, new Num(1, 3), this),

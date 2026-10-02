@@ -43,6 +43,13 @@ if (/this\.name="(?:yellow|green)-prestige-automator"[^}]*this\.prestigeLayer=/.
   throw new Error('Prestige automators still capture PrestigeLayersService during module initialization.');
 }
 
+// ChallengeRecord and AutomatorRecord belong to the same dependency cycle.
+// Star challenge automators must defer reading the challenge registry until
+// runtime rather than dereferencing it in an AutomatorRecord field initializer.
+if (/new [A-Za-z_$][\w$]*\("proximaCentauriStarChallenge",[A-Za-z_$][\w$]*\.proximaCentauriStar\)/.test(bundle)) {
+  throw new Error('Star challenge automators still capture ChallengeRecord during module initialization.');
+}
+
 // Milestones are emitted before UpgradeRecord in optimized builds. Upgrade
 // collections therefore have to be supplied by a callback and resolved when
 // the milestone runs, rather than while its static fields are initialized.
