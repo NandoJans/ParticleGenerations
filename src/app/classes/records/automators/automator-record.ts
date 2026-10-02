@@ -70,10 +70,10 @@ export class AutomatorRecord extends Record {
 
   static increaseChallengeGoalUpgrades: IncreaseChallengeGoalUpgradesAutomator = new IncreaseChallengeGoalUpgradesAutomator('increaseChallengeGoalUpgrades');
 
-  static proximaCentauriStarChallenge: StarChallengeAutomator = new StarChallengeAutomator('proximaCentauriStarChallenge', ChallengeRecord.proximaCentauriStar);
-  static lalandeStarChallenge: StarChallengeAutomator = new StarChallengeAutomator('lalandeStarChallenge', ChallengeRecord.lalandeStar);
-  static sunStarChallenge: StarChallengeAutomator = new StarChallengeAutomator('sunStarChallenge', ChallengeRecord.sunStar);
-  static siriusStarChallenge: StarChallengeAutomator = new StarChallengeAutomator('siriusStarChallenge', ChallengeRecord.siriusStar);
+  static proximaCentauriStarChallenge: StarChallengeAutomator = new StarChallengeAutomator('proximaCentauriStarChallenge', () => ChallengeRecord.proximaCentauriStar, 'proxima-centauri-star-challenge', 'Proxima Centauri');
+  static lalandeStarChallenge: StarChallengeAutomator = new StarChallengeAutomator('lalandeStarChallenge', () => ChallengeRecord.lalandeStar, 'lalande-star-challenge', 'Lalande 21185');
+  static sunStarChallenge: StarChallengeAutomator = new StarChallengeAutomator('sunStarChallenge', () => ChallengeRecord.sunStar, 'sun-star-challenge', 'Sun');
+  static siriusStarChallenge: StarChallengeAutomator = new StarChallengeAutomator('siriusStarChallenge', () => ChallengeRecord.siriusStar, 'sirius-star-challenge', 'Sirius A');
 
   static yellowFusionUpgrades: YellowFusionUpgradesAutomator = new YellowFusionUpgradesAutomator('yellowFusionUpgrades');
 

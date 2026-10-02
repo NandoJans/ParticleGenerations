@@ -10,11 +10,22 @@ export abstract class ChallengeAutomator extends Automator {
 
   protected constructor(
     saveName: string,
-    public challenge: Challenge
+    private readonly getChallenge: () => Challenge,
+    challengeName: string,
+    challengeDisplayName: string,
   ) {
     super(saveName);
-    this.displayName = challenge.displayName + "-Automator";
-    this.name = challenge.name + "-automator";
+    this.displayName = challengeDisplayName + "-Automator";
+    this.name = challengeName + "-automator";
+  }
+
+  /**
+   * Challenge records and automator records are both static registries. Resolve
+   * the challenge only when the automator runs so neither registry has to be
+   * initialized first.
+   */
+  get challenge(): Challenge {
+    return this.getChallenge();
   }
 
   buyables(): Buyable[] {
