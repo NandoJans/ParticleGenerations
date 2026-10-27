@@ -31,6 +31,7 @@ import {IncreaseChallengeGoalUpgradesAutomator} from "../../features/automators/
 import {GreenPrestigeAutomator} from "../../features/automators/green-prestige-automator";
 import {YellowEnhancementAutomator} from "../../features/automators/yellow-enhancement-automator";
 import {DarkStarChargerAutomator} from "../../features/automators/dark-star-charger-automator";
+import {YellowOneTimeUpgradesAutomator} from '../../features/automators/yellow-one-time-upgrades-automator';
 
 @Injectable({
   providedIn: 'root'
@@ -86,6 +87,9 @@ export class AutomatorRecord extends Record {
   // Green prestige automators
   static greenPrestige: GreenPrestigeAutomator = new GreenPrestigeAutomator('greenPrestige');
   static darkStarCharger: DarkStarChargerAutomator = new DarkStarChargerAutomator('darkStarCharger');
+
+  // Blue phase automators
+  static yellowOneTimeUpgrades = new YellowOneTimeUpgradesAutomator('yellowOneTimeUpgrades');
 
   static redAutomators: Automator[] = [
     AutomatorRecord.firstRedGenerator,
@@ -166,6 +170,7 @@ export class AutomatorRecord extends Record {
 
     AutomatorRecord.greenPrestige,
     AutomatorRecord.darkStarCharger,
+    AutomatorRecord.yellowOneTimeUpgrades,
   ]
 
   getList(): Automator[] {
