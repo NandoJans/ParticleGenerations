@@ -17,11 +17,18 @@ import {UpgradeRecord} from "../classes/records/upgrades/upgrade-record";
 import {App} from "../App";
 import {environment} from "../../environments/environment";
 import {BluePhaseService} from './blue-phase.service';
+import {AutomatorRecord} from '../classes/records/automators/automator-record';
 import {Require} from '../classes/features/interfaces/require';
 
 class ElementDiscoveryRequirement implements Require {
   requirementSatisfied(amount: Num): boolean {
     return BluePhaseService.elementsDiscoveredCount >= amount.toNumber();
+  }
+}
+
+class YellowOneTimeUpgradeRequirement implements Require {
+  requirementSatisfied(amount: Num): boolean {
+    return AutomatorRecord.yellowOneTimeUpgrades.task().greq(amount);
   }
 }
 
@@ -100,6 +107,9 @@ export class NavigationsService {
     ], false),
     greenAutomators: new SubNavigation('greenAutomators', faStar, 'green', this.navigations['automators'], [
       {requirement: HoldingRecord.greenPrestiges, amount: new Num(1, 0)},
+    ], false),
+    blueAutomators: new SubNavigation('blueAutomators', faAtom, 'blue', this.navigations['automators'], [
+      {requirement: new YellowOneTimeUpgradeRequirement(), amount: new Num(5, 2)},
     ], false),
 
     // Timeline

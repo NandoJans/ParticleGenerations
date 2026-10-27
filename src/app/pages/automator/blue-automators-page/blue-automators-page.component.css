@@ -1,0 +1,5 @@
+.blue-automation {
+  --automation-accent: var(--accent-color-blue);
+  --automation-accent-rgb: 92, 184, 227;
+  --automation-muted: #80a8bd;
+}

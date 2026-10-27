@@ -56,6 +56,7 @@ import {BlueTimelineComponent} from "./pages/timeline/blue-timeline/blue-timelin
 import {BlueElementsComponent} from "./pages/blue/blue-elements/blue-elements.component";
 import {BlueNeutronStarComponent} from './pages/blue/blue-neutron-star/blue-neutron-star.component';
 import {DarkStarAutomatorComponent} from "./components/particles/dark-star-automator/dark-star-automator.component";
+import {BlueAutomatorsPageComponent} from './pages/automator/blue-automators-page/blue-automators-page.component';
 
 @NgModule({
   declarations: [
@@ -109,7 +110,8 @@ import {DarkStarAutomatorComponent} from "./components/particles/dark-star-autom
     BlueElementsComponent,
     BlueNeutronStarComponent,
     BlueTimelineComponent,
-    DarkStarAutomatorComponent
+    DarkStarAutomatorComponent,
+    BlueAutomatorsPageComponent
   ],
   imports: [
     BrowserModule,

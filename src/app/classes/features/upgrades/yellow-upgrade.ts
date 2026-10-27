@@ -7,8 +7,19 @@ import {Holding} from "../holding";
 import {Requirement} from "../interfaces/requirement";
 import {Upgrade} from "../upgrade";
 import {HoldingRecord} from "../../records/holdings/holding-record";
+import {StatsService} from "../../../services/stats.service";
+import {Transaction} from "../interfaces/transaction";
 
 export abstract class YellowUpgrade extends Upgrade {
+  static readonly purchaseStat = 'yellow-one-time-upgrades';
+
+  override buy(amount?: Num): Transaction {
+    const transaction = super.buy(amount);
+    if (this.limit?.equals(Num.ONE) && transaction.amount.gt(Num.ZERO)) {
+      StatsService.addNum(YellowUpgrade.purchaseStat, 'totalBought', transaction.amount);
+    }
+    return transaction;
+  }
   type: string = "yellow-upgrade";
   resetId: ResetKey;
   name: string;
